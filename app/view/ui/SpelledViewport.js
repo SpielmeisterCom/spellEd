@@ -83,7 +83,18 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                                 },
                                 {
                                     xtype: 'panel',
-                                    title: 'Script'
+                                    title: 'Script',
+                                    items:[
+                                        {
+                                            xtype: 'container',
+                                            width: 850,
+                                            height: 400,
+                                            layout: "fit",
+                                            items: [
+                                                Ext.create('Spelled.view.ui.SpelledEditor')
+                                            ]
+                                        }
+                                    ]
                                 },
                                 {
                                     xtype: 'panel',
