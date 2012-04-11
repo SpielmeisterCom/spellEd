@@ -1,17 +1,18 @@
 Ext.define('Spelled.view.ui.SpelledEditor', {
-    extend: 'Ext.ux.AceEditor',
+    extend: 'Ext.panel.Panel',
+
+    onRender: function() {
+        this.callParent(arguments); // call the superclass onRender method
+
+        this.aceEditor = ace.edit( this.id )
+
+        var JavaScriptMode = require("ace/mode/javascript").Mode;
+        this.aceEditor.getSession().setMode( new JavaScriptMode() );
+
+        this.aceEditor.getSession().setValue( this.id );
+
+        // perform additional rendering tasks here.
 
 
-    initComponent: function() {
-        var me = this;
-
-        Ext.applyIf(me, {
-        });
-
-        me.callParent(arguments);
-
-        me.setValue( "function() { test } " , {
-            mode: "javascript"
-        });
     }
 });
