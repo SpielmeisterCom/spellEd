@@ -1,80 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2ac1964f-a9c5-4067-9e0f-e90aefe68317" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/view/ui/SpelledEditor.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/1B98B0E20B7B60434C721D017DE888F4@/lib/pilot/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/3811E0B2D30557A03C7171B8F7D26B8A@/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/c_cpp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/c_cpp_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/clojure.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/clojure_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/coffee.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/coffee_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/csharp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/csharp_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/css.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/css_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/css_test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/css_tokenizer_test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/doc_comment_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/html.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/html_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/html_test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/html_tokenizer_test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/java.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/java_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/javascript.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/javascript_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/javascript_test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/javascript_tokenizer_test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/javascript_worker.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/javascript_worker_test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/matching_brace_outdent.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/matching_parens_outdent.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/ocaml.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/ocaml_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/perl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/perl_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/php.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/php_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/python.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/python_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/ruby.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/ruby_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/svg.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/svg_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/text.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/text_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/text_test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/textile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/textile_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/xml.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/xml_highlight_rules.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/xml_test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/xml_tokenizer_test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/clouds.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/clouds_midnight.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/cobalt.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/dawn.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/eclipse.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/idle_fingers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/kr_theme.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/merbivore.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/merbivore_soft.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/mono_industrial.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/monokai.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/pastel_on_dark.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/solarized_dark.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/solarized_light.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/textmate.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/twilight.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/theme/vibrant_ink.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extjs4-ace/Component/F7F06C365F61D074DA2CEAC571C46A28@/worker.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    <list id="2ac1964f-a9c5-4067-9e0f-e90aefe68317" name="Default" comment="idea files removed&#10;">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/spelled.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+    </list>
+    <list default="true" id="a70ab661-d5e1-4309-8c96-a03f973b8098" name="ACE" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/ui/SpelledViewport.js" afterPath="$PROJECT_DIR$/app/view/ui/SpelledViewport.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
     <ignored path="spelled.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -101,28 +39,26 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="7" selection-start="377" selection-end="377" vertical-scroll-proportion="-9.375">
+            <state line="15" column="7" selection-start="377" selection-end="377" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="51" selection-start="137" selection-end="137" vertical-scroll-proportion="0.09966777">
+            <state line="4" column="51" selection-start="137" selection-end="137" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SpelledViewport.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="SpelledViewport.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/view/ui/SpelledViewport.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="93" column="91" selection-start="3913" selection-end="3913" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state line="74" column="41" selection-start="2956" selection-end="2956" vertical-scroll-proportion="0.61461794">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -139,7 +75,7 @@
       <file leaf-file-name="SpelledEditor.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/view/ui/SpelledEditor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="45" selection-start="231" selection-end="255" vertical-scroll-proportion="-7.2">
+            <state line="12" column="45" selection-start="231" selection-end="255" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -149,9 +85,7 @@
         <entry file="file://$PROJECT_DIR$/app/store/MyJsonTreeStore.js">
           <provider selected="true" editor-type-id="text-editor">
             <state line="12" column="39" selection-start="348" selection-end="363" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -182,12 +116,13 @@
         <option value="$PROJECT_DIR$/app/view/SpelledViewport.js" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/extjs4-ace/Component.js" />
-        <option value="$PROJECT_DIR$/app/view/ui/SpelledViewport.js" />
         <option value="$PROJECT_DIR$/app/view/ui/SpelledEditor.js" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/app/view/ui/SpelledViewport.js" />
       </list>
     </option>
   </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-5" />
@@ -320,7 +255,7 @@
     </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
       <JSDebuggerConfigurationSettings>
-        <option name="engineId" />
+        <option name="engineId" value="embedded" />
         <option name="fileUrl" />
       </JSDebuggerConfigurationSettings>
       <method />
@@ -348,34 +283,37 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+      <changelist id="2ac1964f-a9c5-4067-9e0f-e90aefe68317" name="Default" comment="" />
+      <changelist id="a70ab661-d5e1-4309-8c96-a03f973b8098" name="ACE" comment="" />
       <created>1334058200093</created>
-      <updated>1334058200093</updated>
+      <updated>1334136551567</updated>
     </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-5" width="1936" height="1093" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32905984" sideWeight="0.49786323" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Atlassian " active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.49839744" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.49786323" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32905984" sideWeight="0.49786323" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Atlassian " active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289183" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.67094016" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25641027" sideWeight="0.67094016" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.49839744" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.49786323" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -412,7 +350,7 @@
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="ACE Editor integrated into EXT" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -426,6 +364,7 @@
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <MESSAGE value="Initial commit" />
+    <MESSAGE value="ACE Editor integrated into EXT" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -452,62 +391,48 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/view/SpelledViewport.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="3" selection-start="550" selection-end="550" vertical-scroll-proportion="0.32967034">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="7" selection-start="377" selection-end="377" vertical-scroll-proportion="-9.375">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/store/MyJsonTreeStore.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="39" selection-start="348" selection-end="363" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/view/ui/SpelledViewport.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="93" column="91" selection-start="3913" selection-end="3913" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
+        <state line="20" column="3" selection-start="550" selection-end="550" vertical-scroll-proportion="0.32967034" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/extjs4-ace/Component/C6EC60C2EDB43751D2D65343D18BD763@/lib/ace/mode/javascript.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.53480476">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.53480476" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/extjs4-ace/Component.js">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3188" column="32" selection-start="106367" selection-end="106367" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/view/ui/SpelledEditor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="45" selection-start="231" selection-end="255" vertical-scroll-proportion="-7.2">
+        <state line="15" column="7" selection-start="377" selection-end="377" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="51" selection-start="137" selection-end="137" vertical-scroll-proportion="0.09966777">
+        <state line="4" column="51" selection-start="137" selection-end="137" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extjs4-ace/Component.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3188" column="32" selection-start="106367" selection-end="106367" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/ui/SpelledEditor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="45" selection-start="231" selection-end="255" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/store/MyJsonTreeStore.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="39" selection-start="348" selection-end="363" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/view/ui/SpelledViewport.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="74" column="41" selection-start="2956" selection-end="2956" vertical-scroll-proportion="0.61461794">
           <folding />
         </state>
       </provider>
