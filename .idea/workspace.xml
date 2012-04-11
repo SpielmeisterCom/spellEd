@@ -4,7 +4,7 @@
     <list id="a70ab661-d5e1-4309-8c96-a03f973b8098" name="ACE" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/view/ui/SpelledViewport.js" afterPath="$PROJECT_DIR$/app/view/ui/SpelledViewport.js" />
     </list>
-    <list default="true" id="db1cb574-d6b5-4308-96e3-283bd375d364" name="Remove Ideafiles" comment="Remove Ideafiles">
+    <list default="true" id="db1cb574-d6b5-4308-96e3-283bd375d364" name="Remove Ideafiles" comment="Git ignore">
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
     </list>
     <ignored path="spelled.iws" />
@@ -47,10 +47,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SpelledViewport.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="SpelledViewport.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/view/ui/SpelledViewport.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="41" selection-start="2956" selection-end="2956" vertical-scroll-proportion="0.61461794">
+            <state line="74" column="41" selection-start="2956" selection-end="2956" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="0" selection-start="6" selection-end="6" vertical-scroll-proportion="0.024916943">
               <folding />
             </state>
           </provider>
@@ -112,6 +121,7 @@
         <option value="$PROJECT_DIR$/app/view/ui/SpelledEditor.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/app/view/ui/SpelledViewport.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -343,7 +353,7 @@
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove Ideafiles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Git ignore" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -360,6 +370,7 @@
     <MESSAGE value="ACE Editor integrated into EXT" />
     <MESSAGE value="idea files removed&#10;" />
     <MESSAGE value="Remove Ideafiles" />
+    <MESSAGE value="Git ignore" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -427,7 +438,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/view/ui/SpelledViewport.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="41" selection-start="2956" selection-end="2956" vertical-scroll-proportion="0.61461794">
+        <state line="74" column="41" selection-start="2956" selection-end="2956" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="6" selection-end="6" vertical-scroll-proportion="0.024916943">
           <folding />
         </state>
       </provider>
