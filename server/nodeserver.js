@@ -1,28 +1,57 @@
-var connect = require('connect'),
-    http    = require('http')
-    CORS    = require('connect-xcors')
-
-var options = {}
+var connect   = require('connect'),
+    http      = require('http'),
+    ExtDirect = require('./ExtDirect')
 
 var app = connect()
+    .use( connect.favicon() )
     .use( connect.logger('dev') )
-    .use( connect.static('data') )
-    .use( CORS( options )  )
-    .use( getPayload )
+    .use( extDirect )
+    .use( connect.static('../') )
 
-function getPayload( req, res, next ) {
+function processPayload( req, res, next ) {
     var payload = [];
 
-    req.on('data', function(data) {
-        payload.push(data);
-    });
+    if( req.readable === true ) {
+        req.on('data', function(data) {
+console.log( "data pushin" )
+            payload.push(data);
+        });
 
-    req.on('end', function() {
-        listing( req, res, next, payload.join('') )
-    });
+        req.on('end', function() {
 
-    req.on('close', next );
+            if( payload.length === 0 ) return next()
+
+            var extDirectManager = new ExtDirect( payload )
+
+            extDirectManager.route()
+            route(
+                req,
+                res,
+                next,
+                payload.join('')
+            )
+        });
+
+    } else {
+        next()
+    }
 }
+
+function route( req, res, next, payload ) {
+
+    console.log( payload )
+    console.log( "muss routen" )
+
+}
+
+function extDirect( req, res, next ) {
+    if( req.url === '/router' ) {
+        processPayload( req, res, next )
+    } else {
+        next()
+    }
+}
+
 
 function listing( req, res, next, payload ) {
 
@@ -34,8 +63,6 @@ function listing( req, res, next, payload ) {
         , join = path.join;
 
     var root = 'data'
-
-console.log( payload )
 
     // root required
     if (!root) throw new Error('directory() root path required');
@@ -90,7 +117,7 @@ console.log( payload )
 
             // content-negotiation
             for (var key in exports) {
-                exports[key](req, res, result, next);
+                exports[key](req, res, result, payload);
                 return;
             }
 
@@ -101,11 +128,22 @@ console.log( payload )
 }
 
 var exports = {
-    json: function(req, res, files){
-        files = JSON.stringify(files);
+    json: function( req, res, files, payload ){
+
+        var result = {}
+
+        if( !!payload ) {
+            result = JSON.parse( payload )
+            result.result = files
+            result = JSON.stringify( result )
+
+        } else {
+            result = JSON.stringify( files )
+        }
+
         res.setHeader('Content-Type', 'application/json');
-        res.setHeader('Content-Length', files.length);
-        res.end(files);
+        res.setHeader('Content-Length', result.length);
+        res.end(result);
     }
 };
 

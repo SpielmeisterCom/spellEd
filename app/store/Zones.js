@@ -4,16 +4,8 @@ Ext.define('Spelled.store.Zones', {
 
     proxy: {
         type: 'direct',
-        directFn: TestAction.getTree
+        directFn: ZoneListing.getTree
     },
-
-//    proxy: {
-//        type: 'direct',
-//        directFn: function() {
-//            console.log( "BACK" )
-//        },
-//        paramOrder: 'id' // Tells the proxy to pass the id as the first parameter to the remoting method.
-//    },
 
     root: {
         text: 'Zones',

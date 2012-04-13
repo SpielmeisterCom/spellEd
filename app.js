@@ -1,14 +1,10 @@
 Ext.ns("Ext.app");
 Ext.app.REMOTING_API = {
-    "url": "http://localhost:3000/",
+    "url": "/router",
     "type": "remoting",
     "actions": {
-        "TestAction": [ {
+        "ZoneListing": [ {
             "name": "getTree",
-            "len": 1
-        }],
-        "Profile": [{
-            "name": "getLocationInfo",
             "len": 1
         }]
     }
