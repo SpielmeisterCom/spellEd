@@ -4,12 +4,12 @@ Ext.define('Spelled.store.Zones', {
 
     proxy: {
         type: 'direct',
-        directFn: ZoneListing.getTree
+        directFn: Spelled.ZoneListing.getTree
     },
 
     root: {
         text: 'Zones',
-        id: 'src',
+        id: 'data',
         expanded: false
     },
 
