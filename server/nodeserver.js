@@ -13,7 +13,6 @@ function processPayload( req, res, next ) {
 
     if( req.readable === true ) {
         req.on('data', function(data) {
-console.log( "data pushin" )
             payload.push(data);
         });
 
@@ -21,15 +20,9 @@ console.log( "data pushin" )
 
             if( payload.length === 0 ) return next()
 
-            var extDirectManager = new ExtDirect( payload )
+            var extDirectManager = ExtDirect.createExtDirect( payload )
 
             extDirectManager.route()
-            route(
-                req,
-                res,
-                next,
-                payload.join('')
-            )
         });
 
     } else {
@@ -37,16 +30,15 @@ console.log( "data pushin" )
     }
 }
 
-function route( req, res, next, payload ) {
-
-    console.log( payload )
-    console.log( "muss routen" )
-
-}
-
 function extDirect( req, res, next ) {
     if( req.url === '/router' ) {
         processPayload( req, res, next )
+
+    } else if( req.url === '/api' ) {
+        var api = ExtDirect.getApi()
+        res.setHeader('Content-Type', 'text/javascript');
+        res.end(api);
+
     } else {
         next()
     }
