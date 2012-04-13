@@ -1,5 +1,6 @@
 Ext.define('Spelled.view.ui.SpelledEditor', {
     extend: 'Ext.panel.Panel',
+    alias : 'widget.aceeditor',
 
     onRender: function() {
         this.callParent(arguments); // call the superclass onRender method
