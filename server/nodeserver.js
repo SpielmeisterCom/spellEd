@@ -1,6 +1,5 @@
 var connect   = require('connect'),
     http      = require('http'),
-    //ExtDirect = require('./ExtDirect')
     ExtDirect = require('../lib/extdirect')
 
 var app = connect()

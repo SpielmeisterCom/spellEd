@@ -3,6 +3,7 @@ Ext.define('Spelled.model.Zone', {
 
     fields: [
         'name',
+        'content',
         'path'
     ]
 });

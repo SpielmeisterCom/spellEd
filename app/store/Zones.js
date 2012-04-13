@@ -1,10 +1,10 @@
 Ext.define('Spelled.store.Zones', {
     extend: 'Ext.data.TreeStore',
-//    model: 'Spelled.model.Zone',
+    model: 'Spelled.model.Zone',
 
     proxy: {
         type: 'direct',
-        directFn: Spelled.ZoneListing.getTree
+        directFn: Spelled.ZonesActions.getListing
     },
 
     root: {
@@ -15,7 +15,7 @@ Ext.define('Spelled.store.Zones', {
 
     folderSort: true,
     sorters: [{
-        property: 'text',
+        property: 'name',
         direction: 'ASC'
     }]
 });

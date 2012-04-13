@@ -23,7 +23,8 @@ Ext.define('Spelled.controller.Zones', {
     },
 
     editZone: function( treePanel, record ) {
-        console.log('Double clicked on ' + record.get('text'));
+
+        console.log('Double clicked on ' + record.get('name'));
     },
 
     onPanelRendered: function() {
