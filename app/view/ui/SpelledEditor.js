@@ -13,7 +13,5 @@ Ext.define('Spelled.view.ui.SpelledEditor', {
         this.aceEditor.getSession().setValue( this.id );
 
         // perform additional rendering tasks here.
-
-
     }
 });

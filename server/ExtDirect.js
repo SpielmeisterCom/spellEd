@@ -92,7 +92,7 @@
         var file = {
             name: path,
             path: path,
-            content: fileContent
+            content: JSON.parse( fileContent )
         }
 
         return file

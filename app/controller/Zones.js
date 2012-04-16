@@ -7,13 +7,13 @@ Ext.define('Spelled.controller.Zones', {
     ],
 
     views: [
-        'zone.TreeList'
+        'zone.TreeList',
+        'zone.Edit'
     ],
 
     init: function() {
         this.control({
             '#ZonesTree': {
-                render: this.onPanelRendered,
                 itemdblclick: this.openZone
             }
         })
@@ -21,22 +21,36 @@ Ext.define('Spelled.controller.Zones', {
 
     openZone: function( treePanel, record ) {
 
-        console.log('Double clicked on ')
-        console.log( record )
+        var mainPanel = Ext.ComponentManager.get( "MainPanel" )
+        var entitiesController = this.application.getController('Spelled.controller.Entities')
 
-        var Zone = Ext.ModelManager.getModel('Spelled.model.Zone');
+        var Zone = Ext.ModelManager.getModel('Spelled.model.Zone')
+
         Zone.load( record.internalId, {
             success: function( result )   {
-                Ext.ComponentManager.get( "MainPanel" ).add(
-                    Ext.create('Spelled.view.ui.SpelledEditor')
+
+
+                entitiesController.showEntitylist()
+
+                var panels = mainPanel.items.items
+
+                //looking for hidden tabs
+                for( var key in panels  ) {
+                    if( panels[ key ].title === result.get('name') ) {
+                        return mainPanel.setActiveTab( panels[ key ] )
+                    }
+                }
+
+                var editZone  = mainPanel.add(
+                    Ext.create( 'Spelled.view.zone.Edit',  {
+                            title: result.get('name'),
+                            html:  JSON.stringify( result.get('content') )
+                        }
+                    )
                 )
-                console.log( result )
+                mainPanel.setActiveTab( editZone )
             }
-        })
+        } )
 
-    },
-
-    onPanelRendered: function() {
-        console.log('The panel was rendered')
     }
 });

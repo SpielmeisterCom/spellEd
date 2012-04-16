@@ -13,10 +13,11 @@ Ext.application({
     appFolder: 'app',
 
     controllers: [
-        'Zones'
+        'Zones',
+        'Entities'
     ],
 
     launch: function() {
-        Ext.create('Spelled.view.SpelledViewport');
+        Ext.create('Spelled.view.ui.SpelledViewport');
     }
 });

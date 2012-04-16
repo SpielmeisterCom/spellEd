@@ -11,18 +11,19 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                 {
                     xtype: 'container',
                     height: 1000,
-                    layout: {
-                        align: 'stretch',
-                        type: 'hbox'
+                    layout: 'border',
+                    defaults: {
+                        collapsible: true,
+                        split: true
                     },
                     items: [
                         {
-                            xtype: 'container',
-                            layout: {
-                                align: 'stretch',
-                                type: 'vbox'
-                            },
-                            flex: 1,
+                            title: "Menu",
+                            region:'west',
+                            margins: '5 0 0 0',
+                            cmargins: '5 5 0 0',
+                            width: 250,
+                            minSize: 100,
                             items: [
                                 {
                                     id: "ZonesTree",
@@ -30,11 +31,9 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                                     height: 200
                                 },
                                 {
-                                    xtype: 'treepanel',
-                                    title: 'Assets & Entities',
-                                    viewConfig: {
-
-                                    }
+                                    id: "EntityList",
+                                    xtype: 'entiteslist',
+                                    height: 200
                                 },
                                 {
                                     xtype: 'propertygrid',
@@ -44,33 +43,16 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                                         'Property 2': true,
                                         'Property 3': '2012-04-10T11:52:41',
                                         'Property 4': 123
-                                    },
-                                    flex: 1
+                                    }
                                 }
                             ]
                         },
                         {
                             id: "MainPanel",
                             xtype: 'tabpanel',
-                            flex: 1,
-                            items: [
-//                                {
-//                                    xtype: 'panel',
-//                                    title: 'Rendered Zone'
-//                                },
-//                                {
-//                                    xtype: 'panel',
-//                                    title: 'Script',
-//                                    layout: "fit",
-//                                    items:[
-//                                        Ext.create('Spelled.view.ui.SpelledEditor')
-//                                    ]
-//                                },
-//                                {
-//                                    xtype: 'panel',
-//                                    title: 'Image'
-//                                }
-                            ]
+                            collapsible: false,
+                            region:'center',
+                            margins: '5 0 0 0'
                         }
                     ]
                 }
