@@ -70,7 +70,7 @@
             , normalize = path.normalize
             , join = path.join;
 
-        var requestedPath = payload[0].node
+        var requestedPath = payload[0].id
 
         var root = '../'
         var root = normalize(root);
@@ -87,7 +87,7 @@
         // malicious path, forbidden
         if (0 != path.indexOf(root)) return next(utils.error(403));
 
-        var fileContent = fs.readFile( path, 'utf8' )
+        var fileContent = fs.readFileSync( path, 'utf8' )
 
         var file = {
             name: path,
@@ -106,7 +106,7 @@
                 func: listing
             },
             {
-                name: "getZone",
+                name: "read",
                 len: 1,
                 func: getZone
             }

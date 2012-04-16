@@ -3,5 +3,5 @@ Ext.define('Spelled.view.zone.TreeList' ,{
     alias : 'widget.zonetreelist',
 
     title : 'All Zones',
-    store : 'Zones'
+    store : 'ZonesTree'
 });

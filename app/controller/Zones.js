@@ -2,12 +2,9 @@ Ext.define('Spelled.controller.Zones', {
     extend: 'Ext.app.Controller',
 
     stores: [
+       'ZonesTree',
        'Zones'
     ],
-
-//    models: [
-//        'Zone'
-//    ],
 
     views: [
         'zone.TreeList'
@@ -17,17 +14,26 @@ Ext.define('Spelled.controller.Zones', {
         this.control({
             '#ZonesTree': {
                 render: this.onPanelRendered,
-                itemdblclick: this.editZone
+                itemdblclick: this.openZone
             }
-        });
+        })
     },
 
-    editZone: function( treePanel, record ) {
+    openZone: function( treePanel, record ) {
 
-        console.log('Double clicked on ' + record.get('name'));
+        console.log('Double clicked on ')
+        console.log( record )
+
+        var Zone = Ext.ModelManager.getModel('Spelled.model.Zone');
+        Zone.load( record.internalId, {
+            success: function( result )   {
+                console.log( result )
+            }
+        })
+
     },
 
     onPanelRendered: function() {
-        console.log('The panel was rendered');
+        console.log('The panel was rendered')
     }
 });
