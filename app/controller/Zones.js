@@ -27,6 +27,9 @@ Ext.define('Spelled.controller.Zones', {
         var Zone = Ext.ModelManager.getModel('Spelled.model.Zone');
         Zone.load( record.internalId, {
             success: function( result )   {
+                Ext.ComponentManager.get( "MainPanel" ).add(
+                    Ext.create('Spelled.view.ui.SpelledEditor')
+                )
                 console.log( result )
             }
         })

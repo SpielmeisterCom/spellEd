@@ -50,26 +50,26 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                             ]
                         },
                         {
+                            id: "MainPanel",
                             xtype: 'tabpanel',
-                            activeTab: 1,
                             flex: 1,
                             items: [
-                                {
-                                    xtype: 'panel',
-                                    title: 'Rendered Zone'
-                                },
-                                {
-                                    xtype: 'panel',
-                                    title: 'Script',
-                                    layout: "fit",
-                                    items:[
-                                        Ext.create('Spelled.view.ui.SpelledEditor')
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    title: 'Image'
-                                }
+//                                {
+//                                    xtype: 'panel',
+//                                    title: 'Rendered Zone'
+//                                },
+//                                {
+//                                    xtype: 'panel',
+//                                    title: 'Script',
+//                                    layout: "fit",
+//                                    items:[
+//                                        Ext.create('Spelled.view.ui.SpelledEditor')
+//                                    ]
+//                                },
+//                                {
+//                                    xtype: 'panel',
+//                                    title: 'Image'
+//                                }
                             ]
                         }
                     ]
