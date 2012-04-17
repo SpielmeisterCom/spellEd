@@ -3,7 +3,10 @@
         "name": "entity1",
         "components": [
             {
-                "name": "component1"
+                "name": "component1",
+                "config": {
+
+                }
             },
             {
                 "name": "component2"

@@ -18,7 +18,7 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                     },
                     items: [
                         {
-                            title: "Menu",
+                            title: "Navigator",
                             region:'west',
                             margins: '5 0 0 0',
                             cmargins: '5 5 0 0',

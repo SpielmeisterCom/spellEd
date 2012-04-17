@@ -14,22 +14,35 @@ Ext.define('Spelled.controller.Zones', {
     init: function() {
         this.control({
             '#ZonesTree': {
-                itemdblclick: this.openZone
+                itemclick   : this.getEntityList,
+                itemdblclick: this.renderZone
             }
         })
     },
 
-    openZone: function( treePanel, record ) {
+    getEntityList: function( treePanel, record ) {
 
-        var mainPanel = Ext.ComponentManager.get( "MainPanel" )
+        if( !record.leaf ) return
+
         var entitiesController = this.application.getController('Spelled.controller.Entities')
 
         var Zone = Ext.ModelManager.getModel('Spelled.model.Zone')
 
         Zone.load( record.internalId, {
             success: function( result )   {
-
                 entitiesController.showEntitylist( result.get('entities') )
+            }
+        } )
+
+    },
+
+    openEditor: function( ) {
+        var mainPanel = Ext.ComponentManager.get( "MainPanel" )
+
+        var Zone = Ext.ModelManager.getModel('Spelled.model.Zone')
+
+        Zone.load( record.internalId, {
+            success: function( result )   {
 
                 var panels = mainPanel.items.items
 
@@ -46,6 +59,41 @@ Ext.define('Spelled.controller.Zones', {
                             html:  JSON.stringify( result.get('content') )
                         }
                     )
+                )
+                mainPanel.setActiveTab( editZone )
+            }
+        } )
+    },
+
+    renderZone: function( treePanel, record ) {
+
+        var mainPanel = Ext.ComponentManager.get( "MainPanel" )
+
+        var Zone = Ext.ModelManager.getModel('Spelled.model.Zone')
+
+        Zone.load( record.internalId, {
+            success: function( result )   {
+
+                var panels = mainPanel.items.items
+
+                //looking for hidden tabs. returning if we found one
+                for( var key in panels  ) {
+                    if( panels[ key ].title === result.get('name') ) {
+                        return mainPanel.setActiveTab( panels[ key ] )
+                    }
+                }
+
+                var editZone  = mainPanel.add(
+                    Ext.create( 'Spelled.view.ui.SpelledRendered',  {
+                              title: result.get('name'),
+                              autoEl : {
+                                  tag : "iframe",
+                                  height: '100%',
+                                  width : '100%',
+                                  src : result.get('name')
+                              }
+                          }
+                      )
                 )
                 mainPanel.setActiveTab( editZone )
             }
