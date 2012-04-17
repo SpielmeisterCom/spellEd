@@ -21,37 +21,30 @@ Ext.define('Spelled.model.Zone', {
         name :  "entities"
     },
 
-    constructor: function()
-    {
-console.log( "Zone-Constructor")
+    constructor: function() {
         this.callParent(arguments);
-        this.data.entities = this.getEntities()
+        this.data.entities = this.parseEntities()
     },
 
-    getEntities: function() {
-        if( !!this.entities ) {
-            return this.entities
+    parseEntities: function() {
+        var result = []
 
-        } else {
-console.log("parsing entities")
-            var result = []
+        var entities = this.get('content')
 
-            var entities = this.get('content')
+        for( var key in entities ) {
+            var components = entities[ key ].components
 
-            for( var key in entities ) {
-                var components = entities[ key ].components
-
-                result.push(
-                    Ext.create( 'Spelled.model.Entity',
-                        {
-                            name:       entities[ key ].name,
-                            components: components
-                        }
-                    )
+            result.push(
+                Ext.create( 'Spelled.model.Entity',
+                    {
+                        name       : entities[ key ].name,
+                        components : components,
+                        zone_id    : this.id
+                    }
                 )
-            }
-
-            return result
+            )
         }
+
+        return result
     }
 });

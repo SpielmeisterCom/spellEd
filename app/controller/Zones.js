@@ -29,12 +29,11 @@ Ext.define('Spelled.controller.Zones', {
         Zone.load( record.internalId, {
             success: function( result )   {
 
-
-                entitiesController.showEntitylist()
+                entitiesController.showEntitylist( result.get('entities') )
 
                 var panels = mainPanel.items.items
 
-                //looking for hidden tabs
+                //looking for hidden tabs. returning if we found one
                 for( var key in panels  ) {
                     if( panels[ key ].title === result.get('name') ) {
                         return mainPanel.setActiveTab( panels[ key ] )

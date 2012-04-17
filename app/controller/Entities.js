@@ -6,7 +6,7 @@ Ext.define('Spelled.controller.Entities', {
         'entity.TreeList'
     ],
 
-    showEntitylist: function() {
+    showEntitylist: function( entities ) {
         console.log( "show entitylist called" )
     }
 });
