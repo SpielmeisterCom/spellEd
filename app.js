@@ -14,7 +14,9 @@ Ext.application({
 
     controllers: [
         'Zones',
-        'Entities'
+        'Entities',
+        'Menu',
+        'Projects'
     ],
 
     launch: function() {

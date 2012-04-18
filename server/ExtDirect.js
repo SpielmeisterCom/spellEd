@@ -2,35 +2,40 @@
 
 (function() {
 
-    var listing = function ( req, res, payload, next ) {
+    var root = '../'
 
-        var fs = require('fs')
-            , utils = require('util')
-            , path = require('path')
-            , normalize = path.normalize
-            , join = path.join;
+    var getPath = function( requestedPath ) {
+        var path = require('path')
+        , pathExistsSync = path.existsSync
+        , normalize = path.normalize
+        , join = path.join
 
-        var requestedPath = payload[0].node
-
-        var root = '../'
-        var root = normalize(root);
-
-        var dir   = decodeURIComponent( requestedPath )
-        , path  = normalize(
+        var dir = decodeURIComponent( requestedPath )
+            , path  = normalize(
             ( 0 != requestedPath.indexOf(root) ? join(root, dir) : dir )
         )
 
-
         // null byte(s), bad request
-        if (~path.indexOf('\0')) return next(utils.error(400));
+        if (~path.indexOf('\0') || 0 != path.indexOf(root) || !pathExistsSync( path ))
+            return false
+        else
+            return path
+    }
 
-        // malicious path, forbidden
-        if (0 != path.indexOf(root)) return next(utils.error(403));
+    var listing = function ( req, res, payload, next ) {
+
+        var fs = require('fs')
+        , path = require('path')
+        , normalize = path.normalize
+        , join = path.join
+
+        var path = getPath( payload[0].node )
+        if ( !path ) return next()
 
         // check if we have a directory
         var stat = fs.statSync( path )
 
-        if (!stat.isDirectory()) return next();
+        if (!stat.isDirectory()) return next()
 
         // fetch files
         var files = fs.readdirSync(path)
@@ -65,30 +70,10 @@
 
     var getZone = function( req, res, payload, next ) {
         var fs = require('fs')
-            , utils = require('util')
-            , path = require('path')
-            , pathExistsSync = path.existsSync
-            , normalize = path.normalize
-            , join = path.join;
 
-        var requestedPath = payload[0].id
+        var path = getPath( payload[0].id )
+        if ( !path ) return {}
 
-        var root = '../'
-        var root = normalize(root);
-
-        var dir   = decodeURIComponent( requestedPath )
-        , path  = normalize(
-            ( 0 != requestedPath.indexOf(root) ? join(root, dir) : dir )
-        )
-
-
-        // null byte(s), bad request
-        if (~path.indexOf('\0')) return next(utils.error(400));
-
-        // malicious path, forbidden
-        if (0 != path.indexOf(root)) return next(utils.error(403));
-
-        if( !pathExistsSync( path ) ) return {}
         var stat = fs.statSync( path )
         if ( stat.isDirectory() ) return {}
 
@@ -103,6 +88,22 @@
         return file
     }
 
+    var createProject = function( req, res, payload, next ) {
+        var fs = require('fs')
+
+        var projectName = payload[0].name,
+            projectDir  = root + '/projects/' + projectName
+
+        fs.mkdirSync( projectDir, 777 )
+
+        var project = {
+            name: projectName,
+            root: projectDir
+        }
+
+        return project
+    }
+
     exports.API = {
         ZonesActions: [
             {
@@ -114,6 +115,18 @@
                 name: "read",
                 len: 1,
                 func: getZone
+            }
+        ],
+        ProjectActions: [
+//            {
+//                name: "getListing",
+//                len: 1,
+//                func: getAllProjects
+//            },
+            {
+                name: "create",
+                len: 1,
+                func: createProject
             }
         ]
     }
