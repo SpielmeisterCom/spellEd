@@ -87,15 +87,20 @@ Ext.define('Spelled.controller.Zones', {
 
                 var editZone  = mainPanel.add(
                     Ext.create( 'Spelled.view.ui.SpelledRendered',  {
-                              title: result.get('name'),
-                              autoEl : {
-                                  tag : "iframe",
-                                  height: '100%',
-                                  width : '100%',
-                                  src : result.get('name')
-                              }
-                          }
-                      )
+                            title: result.get('name'),
+                            items: [
+                                {
+                                    xtype : 'container',
+                                    width : '100%',
+                                    height: '100%',
+                                    autoEl : {
+                                        tag : 'iframe',
+                                        src : result.get('name')
+                                    }
+                                }
+                            ]
+                        }
+                    )
                 )
                 mainPanel.setActiveTab( editZone )
             }
