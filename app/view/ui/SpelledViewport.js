@@ -10,7 +10,7 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
             items: [
                 {
                     xtype: 'container',
-                    height: 1000,
+                    height: '100%',
                     layout: 'border',
                     defaults: {
                         collapsible: true,

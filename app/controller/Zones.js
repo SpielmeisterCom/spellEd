@@ -21,8 +21,7 @@ Ext.define('Spelled.controller.Zones', {
     },
 
     getEntityList: function( treePanel, record ) {
-
-        if( !record.leaf ) return
+        if( !record.data.leaf ) return
 
         var entitiesController = this.application.getController('Spelled.controller.Entities')
 
@@ -37,6 +36,8 @@ Ext.define('Spelled.controller.Zones', {
     },
 
     openEditor: function( ) {
+        if( !record.data.leaf ) return
+
         var mainPanel = Ext.ComponentManager.get( "MainPanel" )
 
         var Zone = Ext.ModelManager.getModel('Spelled.model.Zone')
@@ -66,6 +67,7 @@ Ext.define('Spelled.controller.Zones', {
     },
 
     renderZone: function( treePanel, record ) {
+        if( !record.data.leaf ) return
 
         var mainPanel = Ext.ComponentManager.get( "MainPanel" )
 

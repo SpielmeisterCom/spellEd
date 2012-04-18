@@ -67,6 +67,7 @@
         var fs = require('fs')
             , utils = require('util')
             , path = require('path')
+            , pathExistsSync = path.existsSync
             , normalize = path.normalize
             , join = path.join;
 
@@ -86,6 +87,10 @@
 
         // malicious path, forbidden
         if (0 != path.indexOf(root)) return next(utils.error(403));
+
+        if( !pathExistsSync( path ) ) return {}
+        var stat = fs.statSync( path )
+        if ( stat.isDirectory() ) return {}
 
         var fileContent = fs.readFileSync( path, 'utf8' )
 
