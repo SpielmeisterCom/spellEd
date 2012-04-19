@@ -16,12 +16,30 @@ Ext.define('Spelled.controller.Entities', {
     init: function() {
         this.control({
             '#EntityList': {
-                itemclick: this.showConfig
+                itemdblclick: this.showConfig
             }
         })
     },
 
     showConfig:  function( treePanel, record ) {
+        if( !record.data.leaf ) return
+
+        var mainPanel = Ext.ComponentManager.get( "MainPanel" )
+
+        var title = record.internalId
+
+        var spellEditTab = Ext.create( 'Spelled.view.ui.SpelledEditor', {
+                title: title,
+                html:  JSON.stringify(record.data, null, "\t")
+            }
+        )
+
+        var editZone  = mainPanel.add(
+            spellEditTab
+        )
+
+
+        mainPanel.setActiveTab( editZone )
         console.log( "clicked on" )
         console.log( record )
     },

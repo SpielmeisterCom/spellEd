@@ -1,10 +1,38 @@
-
 Ext.define('Spelled.view.ui.SpelledViewport', {
     extend: 'Ext.container.Viewport',
 
 
     initComponent: function() {
         var me = this;
+
+        var dispatchPostMessages = function( event ) {
+
+            if (event.origin !== location.href){
+               console.log( "WRONG produced origin!")
+               //return;
+            }
+
+            if( event.data.action === 'getConfiguration' ) {
+
+                var cmp = Ext.getCmp( event.data.extId )
+
+                var Zone = Ext.ModelManager.getModel('Spelled.model.Zone')
+
+                Zone.load( cmp.zoneId, {
+                    success: function( zone ) {
+
+                        cmp.el.dom.contentWindow.postMessage( {
+                            id: cmp.id,
+                            type: "setConfiguration",
+                            data: zone.get('content')
+                        }, location.href )
+                    }
+                })
+
+            }
+        }
+
+        window.addEventListener("message", dispatchPostMessages, false);
 
         Ext.applyIf(me, {
             items: [
@@ -57,6 +85,10 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                             collapsible: false,
                             region:'center',
                             margins: '5 0 0 0'
+                        },
+                        {
+                            xtype : 'console',
+                            region: 'south'
                         }
                     ]
                 }

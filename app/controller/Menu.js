@@ -2,7 +2,8 @@ Ext.define('Spelled.controller.Menu', {
     extend: 'Ext.app.Controller',
 
     views: [
-        'menu.Menu'
+        'menu.Menu',
+        'ui.SpelledConsole'
     ],
 
     init: function() {

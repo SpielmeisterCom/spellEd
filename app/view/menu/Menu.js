@@ -1,8 +1,6 @@
 Ext.define('Spelled.view.menu.Menu', {
     extend: 'Ext.panel.Panel',
     alias : 'widget.spelledmenu',
-
-    title: "Spelled - Menu",
     region:'north',
 
     items: [

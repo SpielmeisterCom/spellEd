@@ -8,7 +8,8 @@ Ext.define('Spelled.controller.Zones', {
 
     views: [
         'zone.TreeList',
-        'zone.Edit'
+        'zone.Edit',
+        'ui.SpelledRendered'
     ],
 
     init: function() {
@@ -16,8 +17,32 @@ Ext.define('Spelled.controller.Zones', {
             '#ZonesTree': {
                 itemclick   : this.getEntityList,
                 itemdblclick: this.renderZone
+            },
+            'renderedzone > toolbar button[action="saveZone"]': {
+                click: this.saveZone
+            },
+            'renderedzone > toolbar button[action="reloadZone"]': {
+                click: this.reloadZone
+            },
+            'renderedzone > toolbar button[action="toggleState"]': {
+                click: this.toggleState
             }
         })
+    },
+
+    reloadZone: function( button ) {
+        var panel  = button.up('panel'),
+            iframe = panel.down( 'spellediframe' )
+
+        iframe.el.dom.src = iframe.el.dom.src
+    },
+
+    toggleState: function( button ) {
+        console.log( "should toggle play/pause")
+    },
+
+    saveZone: function( button ) {
+        console.log( "Should save the content ")
     },
 
     getEntityList: function( treePanel, record ) {
@@ -29,6 +54,7 @@ Ext.define('Spelled.controller.Zones', {
 
         Zone.load( record.internalId, {
             success: function( result )   {
+                console.log( result )
                 entitiesController.showEntitylist( result.get('entities') )
             }
         } )
@@ -44,7 +70,6 @@ Ext.define('Spelled.controller.Zones', {
 
         Zone.load( record.internalId, {
             success: function( result )   {
-
                 var panels = mainPanel.items.items
 
                 //looking for hidden tabs. returning if we found one
@@ -71,40 +96,37 @@ Ext.define('Spelled.controller.Zones', {
 
         var mainPanel = Ext.ComponentManager.get( "MainPanel" )
 
-        var Zone = Ext.ModelManager.getModel('Spelled.model.Zone')
+        var title = record.internalId
+        var src   = title
 
-        Zone.load( record.internalId, {
-            success: function( result )   {
+        var panels = mainPanel.items.items
 
-                var panels = mainPanel.items.items
-
-                //looking for hidden tabs. returning if we found one
-                for( var key in panels  ) {
-                    if( panels[ key ].title === result.get('name') ) {
-                        return mainPanel.setActiveTab( panels[ key ] )
-                    }
-                }
-
-                var editZone  = mainPanel.add(
-                    Ext.create( 'Spelled.view.ui.SpelledRendered',  {
-                            title: result.get('name'),
-                            items: [
-                                {
-                                    xtype : 'container',
-                                    width : '100%',
-                                    height: '100%',
-                                    autoEl : {
-                                        tag : 'iframe',
-                                        src : result.get('name')
-                                    }
-                                }
-                            ]
-                        }
-                    )
-                )
-                mainPanel.setActiveTab( editZone )
+        //looking for hidden tabs. returning if we found one
+        for( var key in panels  ) {
+            if( panels[ key ].title === title ) {
+                return mainPanel.setActiveTab( panels[ key ] )
             }
-        } )
+        }
+
+        var spellTab = Ext.create( 'Spelled.view.ui.SpelledRendered', {
+                title: title
+            }
+        )
+
+        var iframe = Ext.create( 'Spelled.view.ui.SpelledIframe')
+
+        iframe.zoneId = record.internalId
+
+        spellTab.add(
+            iframe
+        )
+
+        var editZone  = mainPanel.add(
+            spellTab
+        )
+
+
+        mainPanel.setActiveTab( editZone )
 
     }
 });
