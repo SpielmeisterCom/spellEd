@@ -26,8 +26,43 @@ Ext.define('Spelled.controller.Zones', {
             },
             'renderedzone > toolbar button[action="toggleState"]': {
                 click: this.toggleState
+            },
+            'zonetreelist actioncolumn': {
+                click: this.handleActionColumnClick
             }
         })
+    },
+
+    handleActionColumnClick: function( view, cell, rowIndex, colIndex, e ) {
+        var m = e.getTarget().className.match(/\bact-(\w+)\b/)
+        if (m === null || m === undefined) {
+            return
+        }
+
+        var zone = view.store.data.items[ rowIndex ]
+       if( zone.data.leaf === false ) return
+
+        var action = m[1];
+        switch ( action ) {
+            case 'newZone':
+                this.createNewZone( zone )
+                break;
+            case 'deleteZone':
+                this.deleteZone( zone )
+                break;
+            case 'editZone':
+                this.editZone( zone )
+                break;
+        }
+
+    },
+
+    createNewZone: function( zone ) {
+        console.log( "Creating new Zone")
+    },
+
+    deleteZone: function( zone ) {
+        console.log( "deleting zone" )
     },
 
     reloadZone: function( button ) {
@@ -54,21 +89,20 @@ Ext.define('Spelled.controller.Zones', {
 
         Zone.load( record.internalId, {
             success: function( result )   {
-                console.log( result )
                 entitiesController.showEntitylist( result.get('entities') )
             }
         } )
 
     },
 
-    openEditor: function( ) {
-        if( !record.data.leaf ) return
+    editZone: function( zone ) {
+        if( !zone.data.leaf ) return
 
         var mainPanel = Ext.ComponentManager.get( "MainPanel" )
 
         var Zone = Ext.ModelManager.getModel('Spelled.model.Zone')
 
-        Zone.load( record.internalId, {
+        Zone.load( zone.internalId, {
             success: function( result )   {
                 var panels = mainPanel.items.items
 
@@ -82,7 +116,7 @@ Ext.define('Spelled.controller.Zones', {
                 var editZone  = mainPanel.add(
                     Ext.create( 'Spelled.view.zone.Edit',  {
                             title: result.get('name'),
-                            html:  JSON.stringify( result.get('content') )
+                            html:  JSON.stringify( result.get('content'), null, '\t' )
                         }
                     )
                 )
