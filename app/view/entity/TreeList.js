@@ -24,24 +24,15 @@ Ext.define('Spelled.view.entity.TreeList' ,{
         items: [{
             icon: '/images/icons/add.png',
             tooltip: 'New',
-            handler: function(grid, rowIndex, colIndex) {
-                var rec = grid.getStore().getAt(rowIndex);
-                alert("Edit " + rec.get('name'));
-            }
+            iconCls: 'act-create'
         },{
             icon: '/images/icons/cog_edit.png',
             tooltip: 'Edit',
-            handler: function(grid, rowIndex, colIndex) {
-                var rec = grid.getStore().getAt(rowIndex);
-                alert("Edit " + rec.get('name'));
-            }
+            iconCls: 'act-edit'
         },{
             icon: '/images/icons/delete.png',
             tooltip: 'Delete',
-            handler: function(grid, rowIndex, colIndex) {
-                var rec = grid.getStore().getAt(rowIndex);
-                alert("Terminate " + rec.get('name'));
-            }
+            iconCls: 'act-delete'
         }]
 
     }]

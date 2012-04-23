@@ -7,7 +7,7 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
 
         var dispatchPostMessages = function( event ) {
 
-            if (event.origin !== location.href){
+            if ( event.origin !== location.href ){
                console.log( "WRONG produced origin!")
                //return;
             }
@@ -78,6 +78,11 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                                     }
                                 }
                             ]
+                        },
+                        {
+                            region: 'east',
+                            xtype: 'tabpanel'
+
                         },
                         {
                             id: "MainPanel",

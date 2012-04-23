@@ -18,11 +18,6 @@ Ext.define('Spelled.view.zone.TreeList' ,{
         xtype: 'actioncolumn',
         menuDisabled: true,
         sortable: false,
-//        renderer: function( value, metaData, record, row, col, store, gridView ) {
-//            if( !record.data.leaf ) {
-//                console.log( record.data.text + " sollte kein actionmenu haben!" )
-//            }
-//        },
         flex: 1,
         items: [{
             icon: '/images/icons/add.png',

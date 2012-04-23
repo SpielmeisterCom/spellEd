@@ -17,8 +17,50 @@ Ext.define('Spelled.controller.Entities', {
         this.control({
             '#EntityList': {
                 itemdblclick: this.showConfig
+            },
+            '#EntityList actioncolumn': {
+                click: this.handleActionColumnClick
             }
         })
+    },
+
+    handleActionColumnClick: function( view, cell, rowIndex, colIndex, e ) {
+        var m = e.getTarget().className.match(/\bact-(\w+)\b/)
+        if (m === null || m === undefined) {
+            return
+        }
+
+        var entity = view.store.data.items[ rowIndex ]
+       if( entity.data.leaf === false ) return
+
+        var action = m[1];
+        switch ( action ) {
+            case 'create':
+                this.createEntity( entity )
+                break;
+            case 'delete':
+                this.deleteEntity( entity )
+                break;
+            case 'edit':
+                this.editEntity( entity )
+                break;
+        }
+
+    },
+
+    createEntity: function ( entity ) {
+        console.log( "Create"  )
+        console.log( entity )
+    },
+
+    deleteEntity: function ( entity ) {
+        console.log( "deleteEntity"  )
+        console.log( entity )
+    },
+
+    editEntity: function ( entity ) {
+        console.log( "editEntity"  )
+        console.log( entity )
     },
 
     showConfig:  function( treePanel, record ) {

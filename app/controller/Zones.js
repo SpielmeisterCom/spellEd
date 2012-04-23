@@ -40,7 +40,7 @@ Ext.define('Spelled.controller.Zones', {
         }
 
         var zone = view.store.data.items[ rowIndex ]
-       if( zone.data.leaf === false ) return
+        if( zone.data.leaf === false ) return
 
         var action = m[1];
         switch ( action ) {
