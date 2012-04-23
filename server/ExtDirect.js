@@ -2,7 +2,7 @@
 
 (function() {
 
-    var root = '../'
+    var root = '../data/'
 
     var getPath = function( requestedPath ) {
         var path = require('path')
@@ -104,29 +104,62 @@
         return project
     }
 
+    var readProject = function( req, res, payload, next ) {
+        var fs = require('fs')
+
+        var path = getPath(  root + payload[0].id + "/config.json" )
+
+        if ( !path ) return {}
+
+        var stat = fs.statSync( path )
+        if ( stat.isDirectory() ) return {}
+
+        var fileContent = fs.readFileSync( path, 'utf8' )
+
+        return fileContent
+    }
+
+    var updateProject = function( req, res, payload, next ) {
+        return "errol"
+    }
+
+    var deleteProject = function( req, res, payload, next ) {
+        return "errol"
+    }
+
     exports.API = {
-        ZonesActions: [
-            {
-                name: "getListing",
-                len: 1,
-                func: listing
-            },
-            {
-                name: "read",
-                len: 1,
-                func: getZone
-            }
-        ],
-        ProjectActions: [
+//        ZonesActions: [
 //            {
 //                name: "getListing",
 //                len: 1,
-//                func: getAllProjects
+//                func: listing
 //            },
+//            {
+//                name: "read",
+//                len: 1,
+//                func: getZone
+//            }
+//        ],
+        ProjectActions: [
             {
                 name: "create",
                 len: 1,
                 func: createProject
+            },
+            {
+                name: "read",
+                len: 1,
+                func: readProject
+            },
+            {
+                name: "update",
+                len: 1,
+                func: updateProject
+            },
+            {
+                name: "delete",
+                len: 1,
+                func: deleteProject
             }
         ]
     }

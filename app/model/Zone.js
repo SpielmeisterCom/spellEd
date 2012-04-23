@@ -1,14 +1,5 @@
 Ext.define('Spelled.model.Zone', {
     extend: 'Ext.data.Model',
-    proxy: {
-        type: 'direct',
-        api: {
-            create:  Spelled.ZonesActions.create,
-            read:    Spelled.ZonesActions.read,
-            update:  Spelled.ZonesActions.update,
-            destroy: Spelled.ZonesActions.destroy
-        }
-    },
 
     fields: [
         'name',
@@ -23,7 +14,7 @@ Ext.define('Spelled.model.Zone', {
 
     constructor: function() {
         this.callParent(arguments);
-        this.data.entities = this.parseEntities()
+       // this.data.entities = this.parseEntities()
     },
 
     parseEntities: function() {

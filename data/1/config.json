@@ -1,0 +1,43 @@
+{
+    "name" : "Project1",
+    "configFilePath" : "/data/config.json",
+
+    "zones": [
+        {
+            "name": "Zone1",
+            "entities": [
+                {
+                    "name": "entity1",
+                    "components": [
+                        {
+                            "name": "component1",
+                            "config": {
+
+                            }
+                        },
+                        {
+                            "name": "component2"
+                        },
+                        {
+                            "name": "component3"
+                        }
+                    ]
+                },
+                {
+                    "name": "entity2",
+                    "components": [
+
+                    ]
+                },
+                {
+                    "name": "entity3",
+                    "components": [
+                        {
+                            "name": "component1"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

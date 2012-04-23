@@ -2,8 +2,7 @@ Ext.define('Spelled.controller.Zones', {
     extend: 'Ext.app.Controller',
 
     stores: [
-       'ZonesTree',
-       'Zones'
+       'ZonesTree'
     ],
 
     views: [

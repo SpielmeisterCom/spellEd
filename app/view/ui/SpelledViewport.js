@@ -51,6 +51,8 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                         },
                         {
                             title: "Project - Navigator",
+                            xtype: 'tabpanel',
+                            tabPosition: 'bottom',
                             region:'west',
                             margins: '5 0 0 0',
                             cmargins: '5 5 0 0',
@@ -58,30 +60,40 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                             minSize: 100,
                             items: [
                                 {
-                                    id: "ZonesTree",
-                                    xtype: 'zonetreelist',
-                                    height: 200
+                                    title: "Zones",
+                                    items:[
+                                        {
+                                            id: "ZonesTree",
+                                            xtype: 'zonetreelist',
+                                            height: 200
+                                        },
+                                        {
+                                            id: "EntityList",
+                                            xtype: 'entiteslist',
+                                            height: 200
+                                        },
+                                        {
+                                            xtype: 'propertygrid',
+                                            title: 'Configuration',
+                                            source: {
+                                                'Property 1': 'String',
+                                                'Property 2': true,
+                                                'Property 3': '2012-04-10T11:52:41',
+                                                'Property 4': 123
+                                            }
+                                        }
+                                    ]
                                 },
                                 {
-                                    id: "EntityList",
-                                    xtype: 'entiteslist',
-                                    height: 200
-                                },
-                                {
-                                    xtype: 'propertygrid',
-                                    title: 'Configuration',
-                                    source: {
-                                        'Property 1': 'String',
-                                        'Property 2': true,
-                                        'Property 3': '2012-04-10T11:52:41',
-                                        'Property 4': 123
-                                    }
+                                    title: "Assets"
                                 }
                             ]
                         },
                         {
                             region: 'east',
-                            xtype: 'tabpanel'
+                            xtype: 'tabpanel',
+                            margins: '5 0 0 0',
+                            cmargins: '5 5 0 0'
 
                         },
                         {
