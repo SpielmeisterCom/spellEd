@@ -3,8 +3,8 @@ Ext.define('Spelled.model.Zone', {
 
     fields: [
         'name',
-        'content',
-        'path'
+        'entities',
+        'project_id'
     ],
 
     hasMany: {
@@ -14,13 +14,13 @@ Ext.define('Spelled.model.Zone', {
 
     constructor: function() {
         this.callParent(arguments);
-       // this.data.entities = this.parseEntities()
+        this.data.entities = this.parseEntities()
     },
 
     parseEntities: function() {
         var result = []
 
-        var entities = this.get('content')
+        var entities = this.get('entities')
 
         for( var key in entities ) {
             var components = entities[ key ].components

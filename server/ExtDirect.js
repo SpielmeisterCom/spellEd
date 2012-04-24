@@ -116,7 +116,7 @@
 
         var fileContent = fs.readFileSync( path, 'utf8' )
 
-        return fileContent
+        return JSON.parse(fileContent)
     }
 
     var updateProject = function( req, res, payload, next ) {

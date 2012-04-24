@@ -12,15 +12,38 @@ Ext.define('Spelled.model.Project', {
 
     fields: [
         'name',
-        'configFilePath'
+        'configFilePath',
+        'zones'
     ],
 
     hasMany: {
-        model: 'Spelled.model.Zone',
-        name :  "zones"
+        model: 'Spelled.model.Zone'
     },
 
     constructor: function() {
-        this.callParent(arguments)
+        this.callParent(arguments);
+        this.data.zones = this.parseZones()
+    },
+
+    parseZones: function() {
+        var result = []
+
+        var zones = this.get('zones')
+
+        for( var key in zones ) {
+            var zone = zones[ key ]
+
+            result.push(
+                Ext.create( 'Spelled.model.Zone',
+                    {
+                        name       : zone.name,
+                        entities   : zone.entities,
+                        project_id : this.id
+                    }
+                )
+            )
+        }
+
+        return result
     }
 });

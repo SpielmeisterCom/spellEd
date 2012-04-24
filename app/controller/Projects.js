@@ -18,7 +18,7 @@ Ext.define('Spelled.controller.Projects', {
 
         Project.load( 1, {
             success: function( project ) {
-                console.log( project )
+                console.log( project.get('zones') )
             }
         })
 
