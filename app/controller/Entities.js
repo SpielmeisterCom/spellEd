@@ -1,12 +1,13 @@
 Ext.define('Spelled.controller.Entities', {
     extend: 'Ext.app.Controller',
 
-    stores: [
-       'EntitiesTree'
-    ],
-
     models: [
         'Entity'
+    ],
+
+    stores: [
+       'EntitiesTree',
+       'Entities'
     ],
 
     views: [
@@ -89,22 +90,23 @@ Ext.define('Spelled.controller.Entities', {
     showEntitylist: function( entities ) {
 
         var children = []
-        Ext.each( entities, function( entity, index ) {
-
+        Ext.each( entities.data.items, function( entity ) {
             var componentsAsChildren = []
-            Ext.each( entity.get('components'), function( component ) {
+
+            var configuration = entity.getComponents()
+            Ext.each( configuration.data.items, function( component ) {
                 componentsAsChildren.push( {
-                        text         : component.get('name'),
+                        text         : component.getId(),
                         leaf         : true,
-                        id           : component.id
+                        id           : component.getId()
                     }
                 )
             })
 
             children.push( {
-                text      : entity.get('name'),
-                id        : entity.id,
-                leaf      : ( entity.get('components').length === 0 ) ? true : false,
+                text      : entity.getId(),
+                id        : entity.getId(),
+                leaf      : ( entities.data.items.length === 0 ) ? true : false,
                 children  : componentsAsChildren
             } )
         })

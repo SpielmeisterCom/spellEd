@@ -10,19 +10,23 @@ Ext.define('Spelled.controller.Projects', {
     },
 
     loadProject: function() {
-        //var controller = this.getController('AnotherController');
-        //controller.init();()        //get a reference to the User model class
-
+        var me = this
 
         var Project = this.getProjectModel()
 
         Project.load( 1, {
             success: function( project ) {
-                console.log( project.get('zones') )
+                me.getZonesList( project )
             }
         })
 
-
         console.log( "load project" )
+    },
+
+    getZonesList: function( project ) {
+
+        var zonesController = this.application.getController('Spelled.controller.Zones')
+
+        zonesController.showZoneslist( project.getZones() )
     }
 });
