@@ -16,7 +16,8 @@ Ext.application({
         'Zones',
         'Entities',
         'Menu',
-        'Projects'
+        'Projects',
+        'Components'
     ],
 
     launch: function() {

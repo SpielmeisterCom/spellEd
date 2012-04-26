@@ -1,19 +1,19 @@
-Ext.define('Spelled.model.Zone', {
+Ext.define('Spelled.model.config.Zone', {
     extend: 'Ext.data.Model',
 
     fields: [
         'id'
     ],
 
-    belongsTo: 'Spelled.model.Project',
+    belongsTo: 'Spelled.model.config.Project',
     hasMany: {
-        model: 'Spelled.model.Entity',
+        model: 'Spelled.model.config.Entity',
         associationKey: 'entityInstanceConfigurations',
         name :  'getEntities'
     },
 
     constructor: function() {
         this.callParent(arguments)
-        Ext.getStore( 'Zones' ).add( this )
+        Ext.getStore( 'config.Zones' ).add( this )
     }
 });

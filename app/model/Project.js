@@ -18,7 +18,7 @@ Ext.define('Spelled.model.Project', {
     ],
 
     hasMany: {
-        model: 'Spelled.model.Zone',
+        model: 'Spelled.model.config.Zone',
         name : 'getZones',
         associationKey: 'zones'
     }

@@ -2,12 +2,12 @@ Ext.define('Spelled.controller.Entities', {
     extend: 'Ext.app.Controller',
 
     models: [
-        'Entity'
+        'config.Entity'
     ],
 
     stores: [
        'EntitiesTree',
-       'Entities'
+       'config.Entities'
     ],
 
     views: [
@@ -95,6 +95,9 @@ Ext.define('Spelled.controller.Entities', {
 
             var configuration = entity.getComponents()
             Ext.each( configuration.data.items, function( component ) {
+
+                console.log( component )
+
                 componentsAsChildren.push( {
                         text         : component.getId(),
                         leaf         : true,

@@ -2,7 +2,8 @@ Ext.define('Spelled.model.Component', {
     extend: 'Ext.data.Model',
 
     fields: [
-        'id'
+        'id',
+        'configuration'
     ],
 
     belongsTo: 'Spelled.model.Entity'

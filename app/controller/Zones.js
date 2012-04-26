@@ -2,12 +2,12 @@ Ext.define('Spelled.controller.Zones', {
     extend: 'Ext.app.Controller',
 
     models: [
-        'Zone'
+        'config.Zone'
     ],
 
     stores: [
        'ZonesTree',
-       'Zones'
+       'config.Zones'
     ],
 
     views: [
@@ -87,7 +87,7 @@ Ext.define('Spelled.controller.Zones', {
     getEntityList: function( treePanel, record ) {
         if( !record.data.leaf ) return
 
-        var zone = this.getZonesStore().getById( record.internalId )
+        var zone = this.getConfigZonesStore().getById( record.internalId )
 
         var entitiesController = this.application.getController('Spelled.controller.Entities')
         entitiesController.showEntitylist( zone.getEntities() )
