@@ -5,7 +5,7 @@ Ext.define('Spelled.model.config.Zone', {
         'id'
     ],
 
-    belongsTo: 'Spelled.model.config.Project',
+    belongsTo: 'Spelled.model.Project',
     hasMany: {
         model: 'Spelled.model.config.Entity',
         associationKey: 'entityInstanceConfigurations',

@@ -10,9 +10,8 @@ Ext.define('Spelled.model.Project', {
         }
     },
 
-    idProperty: "name",
-
     fields: [
+        'id',
         'name',
         'configFilePath'
     ],
