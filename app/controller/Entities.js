@@ -17,7 +17,10 @@ Ext.define('Spelled.controller.Entities', {
     init: function() {
         this.control({
             '#EntityList': {
-                itemdblclick: this.showConfig
+                itemdblclick: this.editConfig
+            },
+            '#EntityList': {
+                itemclick: this.getComponentConfig
             },
             '#EntityList actioncolumn': {
                 click: this.handleActionColumnClick
@@ -64,7 +67,7 @@ Ext.define('Spelled.controller.Entities', {
         console.log( entity )
     },
 
-    showConfig:  function( treePanel, record ) {
+    editConfig:  function( treePanel, record ) {
         if( !record.data.leaf ) return
 
         var mainPanel = Ext.ComponentManager.get( "MainPanel" )
@@ -87,6 +90,17 @@ Ext.define('Spelled.controller.Entities', {
         console.log( record )
     },
 
+    getComponentConfig: function( treePanel, record ) {
+        if( !record.data.leaf ) return
+
+        var component = Ext.getStore('config.Components').getById( record.internalId )
+
+        if( component ) {
+            var componentsController = this.application.getController('Spelled.controller.Components')
+            componentsController.showConfig( component )
+        }
+    },
+
     showEntitylist: function( entities ) {
 
         var children = []
@@ -95,8 +109,6 @@ Ext.define('Spelled.controller.Entities', {
 
             var configuration = entity.getComponents()
             Ext.each( configuration.data.items, function( component ) {
-
-                console.log( component )
 
                 componentsAsChildren.push( {
                         text         : component.getId(),

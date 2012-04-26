@@ -10,9 +10,18 @@ Ext.define('Spelled.controller.Zones', {
        'config.Zones'
     ],
 
+    refs: [
+        {
+            ref : 'MainPanel',
+            selector: '#MainPanel'
+        }
+    ],
+
     views: [
         'zone.TreeList',
+        'zone.Navigator',
         'zone.Edit',
+        'zone.Editor',
         'ui.SpelledRendered'
     ],
 
@@ -33,6 +42,17 @@ Ext.define('Spelled.controller.Zones', {
             },
             'zonetreelist actioncolumn': {
                 click: this.handleActionColumnClick
+            },
+            'zonesnavigator': {
+                activate: function() {
+                    var mainPanel = this.getMainPanel()
+
+                    Ext.each( mainPanel.items.items, function( panel ) {
+                        panel.hide()
+                    })
+
+                    Ext.getCmp('ZoneEditor').show()
+                }
             }
         })
     },
@@ -97,47 +117,45 @@ Ext.define('Spelled.controller.Zones', {
     editZone: function( zone ) {
         if( !zone.data.leaf ) return
 
-        var mainPanel = Ext.ComponentManager.get( "MainPanel" )
+        var zoneEditor = Ext.getCmp('ZoneEditor')
 
-        var Zone = this.getZoneModel()
+        var zone = this.getConfigZonesStore().getById( zone.internalId )
 
-        Zone.load( zone.internalId, {
-            success: function( result )   {
-                var panels = mainPanel.items.items
+        var panels = zoneEditor.items.items
 
-                //looking for hidden tabs. returning if we found one
-                for( var key in panels  ) {
-                    if( panels[ key ].title === result.get('name') ) {
-                        return mainPanel.setActiveTab( panels[ key ] )
-                    }
-                }
+        var title = "Source: " + zone.getId()
 
-                var editZone  = mainPanel.add(
-                    Ext.create( 'Spelled.view.zone.Edit',  {
-                            title: result.get('name'),
-                            html:  JSON.stringify( result.get('content'), null, '\t' )
-                        }
-                    )
-                )
-                mainPanel.setActiveTab( editZone )
+        //looking for hidden tabs. returning if we found one
+        for( var key in panels  ) {
+            if( panels[ key ].title === title ) {
+                return zoneEditor.setActiveTab( panels[ key ] )
             }
-        } )
+        }
+
+        var editZone  = zoneEditor.add(
+            Ext.create( 'Spelled.view.zone.Edit',  {
+                    title: title,
+                    html:  JSON.stringify( zone.data, null, '\t' )
+                }
+            )
+        )
+        zoneEditor.setActiveTab( editZone )
+
     },
 
     renderZone: function( treePanel, record ) {
         if( !record.data.leaf ) return
 
-        var mainPanel = Ext.ComponentManager.get( "MainPanel" )
+        var zoneEditor = Ext.getCmp( "ZoneEditor" )
 
-        var title = record.internalId
-        var src   = title
+        var title = "Rendered: " + record.internalId
 
-        var panels = mainPanel.items.items
+        var panels = zoneEditor.items.items
 
         //looking for hidden tabs. returning if we found one
         for( var key in panels  ) {
             if( panels[ key ].title === title ) {
-                return mainPanel.setActiveTab( panels[ key ] )
+                return zoneEditor.setActiveTab( panels[ key ] )
             }
         }
 
@@ -154,12 +172,12 @@ Ext.define('Spelled.controller.Zones', {
             iframe
         )
 
-        var editZone  = mainPanel.add(
+        var editZone  = zoneEditor.add(
             spellTab
         )
 
 
-        mainPanel.setActiveTab( editZone )
+        zoneEditor.setActiveTab( editZone )
 
     },
 

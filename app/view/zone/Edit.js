@@ -2,7 +2,6 @@ Ext.define('Spelled.view.zone.Edit', {
     extend: 'Ext.panel.Panel',
     alias : 'widget.zoneedit',
     closeAction: 'hide',
-
     closable: true,
 
     onRender: function(  ) {

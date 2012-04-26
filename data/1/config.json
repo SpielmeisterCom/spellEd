@@ -24,7 +24,8 @@
                         {
                             "id": "spelljs/core/position",
                             "configuration": {
-                                "value": [ 0,200 ]
+                                "x" : 10,
+                                "y" : 20
                             }
                         },
                         {

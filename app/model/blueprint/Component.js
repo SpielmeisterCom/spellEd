@@ -1,10 +1,10 @@
-Ext.define('Spelled.model.Component', {
+Ext.define('Spelled.model.blueprint.Component', {
     extend: 'Ext.data.Model',
 
     fields: [
-        'id',
-        'configuration'
-    ],
-
-    belongsTo: 'Spelled.model.Entity'
+        "type",
+        "namespace",
+        "name",
+        "attributes"
+    ]
 });

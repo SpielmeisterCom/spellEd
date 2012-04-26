@@ -1,6 +1,12 @@
 Ext.define('Spelled.view.ui.SpelledViewport', {
     extend: 'Ext.container.Viewport',
 
+    layout: 'border',
+
+    defaults: {
+        collapsible: true,
+        split: true
+    },
 
     initComponent: function() {
         var me = this;
@@ -16,18 +22,13 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
 
                 var cmp = Ext.getCmp( event.data.extId )
 
-                var Zone = Ext.ModelManager.getModel('Spelled.model.Zone')
+                var zone = Ext.getStore('config.Zones').getById( cmp.zoneId )
 
-                Zone.load( cmp.zoneId, {
-                    success: function( zone ) {
-
-                        cmp.el.dom.contentWindow.postMessage( {
-                            id: cmp.id,
-                            type: "setConfiguration",
-                            data: zone.get('content')
-                        }, location.href )
-                    }
-                })
+                cmp.el.dom.contentWindow.postMessage( {
+                    id: cmp.id,
+                    type: "setConfiguration",
+                    data: zone.data
+                }, location.href )
 
             }
         }
@@ -37,77 +38,54 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
         Ext.applyIf(me, {
             items: [
                 {
-                    xtype: 'container',
-                    height: '100%',
-                    layout: 'border',
-                    defaults: {
-                        collapsible: true,
-                        split: true
-                    },
+                    xtype: 'spelledmenu',
+                    collapsible: false
+                },
+                {
+                    title: "Project - Navigator",
+                    xtype: 'tabpanel',
+                    tabPosition: 'bottom',
+                    region:'west',
+                    width: 250,
+                    minSize: 100,
                     items: [
                         {
-                            xtype: 'spelledmenu',
-                            collapsible: false
+                            id: "Zones",
+                            xtype: "zonesnavigator"
                         },
                         {
-                            title: "Project - Navigator",
-                            xtype: 'tabpanel',
-                            tabPosition: 'bottom',
-                            region:'west',
-                            margins: '5 0 0 0',
-                            cmargins: '5 5 0 0',
-                            width: 250,
-                            minSize: 100,
-                            items: [
-                                {
-                                    title: "Zones",
-                                    items:[
-                                        {
-                                            id: "ZonesTree",
-                                            xtype: 'zonetreelist',
-                                            height: 200
-                                        },
-                                        {
-                                            id: "EntityList",
-                                            xtype: 'entiteslist',
-                                            height: 200
-                                        },
-                                        {
-                                            xtype: 'propertygrid',
-                                            title: 'Configuration',
-                                            source: {
-                                                'Property 1': 'String',
-                                                'Property 2': true,
-                                                'Property 3': '2012-04-10T11:52:41',
-                                                'Property 4': 123
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    title: "Assets"
-                                }
-                            ]
+                            id: "Assets",
+                            xtype: "assetsnavigator"
                         },
                         {
-                            region: 'east',
-                            xtype: 'tabpanel',
-                            margins: '5 0 0 0',
-                            cmargins: '5 5 0 0'
-
-                        },
-                        {
-                            id: "MainPanel",
-                            xtype: 'tabpanel',
-                            collapsible: false,
-                            region:'center',
-                            margins: '5 0 0 0'
-                        },
-                        {
-                            xtype : 'console',
-                            region: 'south'
+                            id: "Blueprints",
+                            xtype: "blueprintsnavigator"
                         }
                     ]
+                },
+                {
+                    id: "MainPanel",
+                    collapsible: false,
+                    region:'center',
+                    layout: 'fit',
+                    items:[
+                        {
+                            id: "ZoneEditor",
+                            xtype: "zoneeditor"
+                        },
+                        {
+                            id: "AssetEditor",
+                            xtype: "asseteditor"
+                        },
+                        {
+                            id: "BlueprintEditor",
+                            xtype: "blueprinteditor"
+                        }
+                    ]
+                },
+                {
+                    xtype : 'console',
+                    region: 'south'
                 }
             ]
         });
