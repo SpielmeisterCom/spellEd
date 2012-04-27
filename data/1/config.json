@@ -8,10 +8,11 @@
             "id": "Zone1",
             "entityInstanceConfigurations": [
                 {
-                    "id": "spelljs/core/player",
+                    "name" : "player1",
+                    "blueprintId": "spelljs/core/player",
                     "components": [
                         {
-                            "id": "spelljs/core/position",
+                            "blueprintId": "spelljs/core/position",
                             "configuration": {
                                 "value": [ 100,0 ]
                             }
@@ -19,17 +20,18 @@
                     ]
                 },
                 {
-                    "id": "spelljs/core/player",
+                    "name" : "player2",
+                    "blueprintId": "spelljs/core/player",
                     "components": [
                         {
-                            "id": "spelljs/core/position",
+                            "blueprintId": "spelljs/core/position",
                             "configuration": {
                                 "x" : 10,
                                 "y" : 20
                             }
                         },
                         {
-                            "id": "spelljs/core/name",
+                            "blueprintId": "spelljs/core/name",
                             "configuration": {
                                 "firstname": "ahmed",
                                 "surname"  : "lachnet"

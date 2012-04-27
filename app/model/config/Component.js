@@ -2,9 +2,11 @@ Ext.define('Spelled.model.config.Component', {
     extend: 'Ext.data.Model',
 
     fields: [
-        'id',
+        'blueprintId',
         'configuration'
     ],
+
+    idgen: 'uuid',
 
     belongsTo: 'Spelled.model.config.Entity',
 

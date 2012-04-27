@@ -2,8 +2,11 @@ Ext.define('Spelled.model.config.Entity', {
     extend: 'Ext.data.Model',
 
     fields: [
-        'id'
+        'blueprintId',
+        'name'
     ],
+
+    idgen: 'uuid',
 
     belongsTo: 'Spelled.model.config.Zone',
     hasMany: {

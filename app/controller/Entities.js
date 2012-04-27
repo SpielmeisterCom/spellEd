@@ -111,7 +111,7 @@ Ext.define('Spelled.controller.Entities', {
             Ext.each( configuration.data.items, function( component ) {
 
                 componentsAsChildren.push( {
-                        text         : component.getId(),
+                        text         : component.get('blueprintId'),
                         leaf         : true,
                         id           : component.getId()
                     }
@@ -119,7 +119,7 @@ Ext.define('Spelled.controller.Entities', {
             })
 
             children.push( {
-                text      : entity.getId(),
+                text      : entity.get('name'),
                 id        : entity.getId(),
                 leaf      : ( entities.data.items.length === 0 ) ? true : false,
                 children  : componentsAsChildren
@@ -129,21 +129,7 @@ Ext.define('Spelled.controller.Entities', {
         var rootNode = {
             text: "Entities",
             expanded: true,
-            children: [
-                {
-                    text    : 'Entities',
-                    expanded  : true,
-                    children: children
-                },
-                {
-                    text    : 'Assets',
-                    leaf    : true
-                },
-                {
-                    text    : 'Scripts',
-                    leaf    : true
-                }
-            ]
+            children: children
         };
 
         var entitiesPanel = Ext.ComponentManager.get( "EntityList" )
