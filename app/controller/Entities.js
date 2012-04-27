@@ -17,10 +17,7 @@ Ext.define('Spelled.controller.Entities', {
     init: function() {
         this.control({
             '#EntityList': {
-                itemdblclick: this.editConfig
-            },
-            '#EntityList': {
-                itemclick: this.getComponentConfig
+                itemclick : this.handleEntityClick
             },
             '#EntityList actioncolumn': {
                 click: this.handleActionColumnClick
@@ -35,7 +32,7 @@ Ext.define('Spelled.controller.Entities', {
         }
 
         var entity = view.store.data.items[ rowIndex ]
-       if( entity.data.leaf === false ) return
+       if( entity.data.leaf === true ) return
 
         var action = m[1];
         switch ( action ) {
@@ -67,30 +64,21 @@ Ext.define('Spelled.controller.Entities', {
         console.log( entity )
     },
 
-    editConfig:  function( treePanel, record ) {
-        if( !record.data.leaf ) return
-
-        var mainPanel = Ext.ComponentManager.get( "MainPanel" )
-
-        var title = record.internalId
-
-        var spellEditTab = Ext.create( 'Spelled.view.ui.SpelledEditor', {
-                title: title,
-                html:  JSON.stringify(record.data, null, "\t")
-            }
-        )
-
-        var editZone  = mainPanel.add(
-            spellEditTab
-        )
-
-
-        mainPanel.setActiveTab( editZone )
-        console.log( "clicked on" )
-        console.log( record )
+    handleEntityClick: function( treePanel, record ) {
+        if( !record.data.leaf ) {
+            this.getConfig( treePanel, record )
+        } else {
+            this.getComponentConfig( record )
+        }
     },
 
-    getComponentConfig: function( treePanel, record ) {
+    getConfig:  function( treePanel, record ) {
+        if( record.data.leaf ) return
+
+        console.log( "Maybe show a assets list?" )
+    },
+
+    getComponentConfig: function( record ) {
         if( !record.data.leaf ) return
 
         var component = Ext.getStore('config.Components').getById( record.internalId )

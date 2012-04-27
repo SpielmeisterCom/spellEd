@@ -26,6 +26,9 @@ Ext.define('Spelled.controller.Components', {
             config[key] = value
         })
 
-        Ext.getCmp('ComponentProperty').setSource( config )
+        var propertyGrid = Ext.getCmp('ComponentProperty')
+
+        propertyGrid.setSource( config )
+        propertyGrid.componentConfigId = component.getId()
     }
 });

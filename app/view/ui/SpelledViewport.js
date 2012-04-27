@@ -11,30 +11,6 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
     initComponent: function() {
         var me = this;
 
-        var dispatchPostMessages = function( event ) {
-
-            if ( event.origin !== location.href ){
-               console.log( "WRONG produced origin!")
-               //return;
-            }
-
-            if( event.data.action === 'getConfiguration' ) {
-
-                var cmp = Ext.getCmp( event.data.extId )
-
-                var zone = Ext.getStore('config.Zones').getById( cmp.zoneId )
-
-                cmp.el.dom.contentWindow.postMessage( {
-                    id: cmp.id,
-                    type: "setConfiguration",
-                    data: zone.data
-                }, location.href )
-
-            }
-        }
-
-        window.addEventListener("message", dispatchPostMessages, false);
-
         Ext.applyIf(me, {
             items: [
                 {

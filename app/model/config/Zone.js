@@ -15,5 +15,19 @@ Ext.define('Spelled.model.config.Zone', {
     constructor: function() {
         this.callParent(arguments)
         Ext.getStore( 'config.Zones' ).add( this )
+    },
+
+    getJSONConfig: function() {
+
+        var result = this.data
+        var entities = this.getEntities()
+
+        result.entities = []
+        Ext.each( entities.data.items, function( entity ) {
+            console.log( entity )
+            result.entities.push( entity.getJSONConfig() )
+        })
+
+        return result
     }
 });

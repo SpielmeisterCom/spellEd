@@ -26,6 +26,32 @@ Ext.define('Spelled.controller.Zones', {
     ],
 
     init: function() {
+
+        var dispatchPostMessages = function( event ) {
+
+            if ( event.origin !== location.href ){
+                console.log( "WRONG produced origin!")
+                //return;
+            }
+
+            if( event.data.action === 'getConfiguration' ) {
+
+                var cmp = Ext.getCmp( event.data.extId )
+
+                var zone = Ext.getStore('config.Zones').getById( cmp.zoneId )
+
+                cmp.el.dom.contentWindow.postMessage( {
+                    id: cmp.id,
+                    type: "setConfiguration",
+                    data: zone.getJSONConfig()
+                }, location.href )
+
+            }
+        }
+
+        window.addEventListener("message", dispatchPostMessages, false);
+
+
         this.control({
             '#ZonesTree': {
                 itemclick   : this.getEntityList,

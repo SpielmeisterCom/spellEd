@@ -13,5 +13,12 @@ Ext.define('Spelled.model.config.Component', {
     constructor: function() {
         this.callParent(arguments)
         Ext.getStore( 'config.Components' ).add( this )
+    },
+
+    getJSONConfig: function() {
+
+        var result = this.data
+
+        return result
     }
 });
