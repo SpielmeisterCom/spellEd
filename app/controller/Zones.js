@@ -161,7 +161,7 @@ Ext.define('Spelled.controller.Zones', {
         var editZone  = zoneEditor.add(
             Ext.create( 'Spelled.view.zone.Edit',  {
                     title: title,
-                    html:  JSON.stringify( zone.data, null, '\t' )
+                    html:  JSON.stringify( zone.getJSONConfig(), null, '\t' )
                 }
             )
         )
