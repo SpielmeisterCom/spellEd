@@ -109,6 +109,7 @@ Ext.define('Spelled.controller.Entities', {
             children.push( {
                 text      : entity.get('name'),
                 id        : entity.getId(),
+                expanded: true,
                 leaf      : ( entities.data.items.length === 0 ) ? true : false,
                 children  : componentsAsChildren
             } )

@@ -3,19 +3,24 @@ Ext.define('Spelled.view.zone.Navigator', {
     alias : 'widget.zonesnavigator',
 
     title: "Zones",
+    layout: {
+        align: 'stretch',
+        type: 'vbox'
+    },
     items:[
         {
             id: "ZonesTree",
-            xtype: 'zonetreelist',
-            height: 200
+            flex: 2,
+            xtype: 'zonetreelist'
         },
         {
             id: "EntityList",
-            xtype: 'entiteslist',
-            height: 200
+            flex: 2,
+            xtype: 'entiteslist'
         },
         {
             id: "ComponentProperty",
+            flex: 1,
             xtype: 'componentproperties'
         }
     ]

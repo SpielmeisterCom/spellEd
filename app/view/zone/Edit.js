@@ -10,7 +10,7 @@ Ext.define('Spelled.view.zone.Edit', {
 
         var JavaScriptMode = require("ace/mode/javascript").Mode;
         this.aceEditor.getSession().setMode( new JavaScriptMode() );
-        this.aceEditor.getSession().setValue( this.body.dom.innerHTML );
+        this.aceEditor.getSession().setValue( this.body.dom.textContent );
 
         this.aceEditor.commands.addCommand({
             name: 'saveCommand',

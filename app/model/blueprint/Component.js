@@ -6,5 +6,19 @@ Ext.define('Spelled.model.blueprint.Component', {
         "namespace",
         "name",
         "attributes"
-    ]
+    ],
+
+    getFullName: function() {
+        return this.get('namespace') +"/"+ this.get('name')
+    },
+
+    proxy: {
+        type: 'direct',
+        api: {
+            create:  Spelled.ComponentBlueprintActions.create,
+            read:    Spelled.ComponentBlueprintActions.read,
+            update:  Spelled.ComponentBlueprintActions.update,
+            destroy: Spelled.ComponentBlueprintActions.destroy
+        }
+    }
 });

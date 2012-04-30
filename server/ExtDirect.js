@@ -22,14 +22,14 @@
             return path
     }
 
-    var listing = function ( req, res, payload, next ) {
+    var listing = function ( rootPath, req, res, payload, next ) {
 
         var fs = require('fs')
         , path = require('path')
         , normalize = path.normalize
         , join = path.join
 
-        var path = getPath( payload[0].node )
+        var path = getPath( ( payload[0] === "root" ? rootPath : payload[0] ) )
         if ( !path ) return next()
 
         // check if we have a directory
@@ -68,10 +68,21 @@
         return result;
     }
 
-    var getZone = function( req, res, payload, next ) {
+    var listComponentBlueprints = function( req, res, payload, next ) {
+        var rootPath = "/blueprints/components/"
+        return listing( rootPath, req, res, payload, next )
+    }
+
+    var listEntityBlueprints = function( req, res, payload, next ) {
+        var rootPath = "/blueprints/entities/"
+        return listing( rootPath, req, res, payload, next )
+    }
+
+    var readComponentBlueprint = function( req, res, payload, next ) {
         var fs = require('fs')
 
-        var path = getPath( payload[0].id )
+        var path = getPath(  payload[0].id )
+
         if ( !path ) return {}
 
         var stat = fs.statSync( path )
@@ -79,13 +90,7 @@
 
         var fileContent = fs.readFileSync( path, 'utf8' )
 
-        var file = {
-            name: path,
-            path: path,
-            content: JSON.parse( fileContent )
-        }
-
-        return file
+        return JSON.parse(fileContent)
     }
 
     var createProject = function( req, res, payload, next ) {
@@ -128,18 +133,6 @@
     }
 
     exports.API = {
-//        ZonesActions: [
-//            {
-//                name: "getListing",
-//                len: 1,
-//                func: listing
-//            },
-//            {
-//                name: "read",
-//                len: 1,
-//                func: getZone
-//            }
-//        ],
         ProjectActions: [
             {
                 name: "create",
@@ -161,6 +154,61 @@
                 len: 1,
                 func: deleteProject
             }
-        ]
+        ],
+        ComponentBlueprintActions: [
+            {
+                name: "getTree",
+                len: 1,
+                func: listComponentBlueprints
+            },
+            {
+                name: "read",
+                len: 1,
+                func: readComponentBlueprint
+            },
+//            {
+//                name: "create",
+//                len: 1,
+//                func: createComponentBlueprint
+//            },
+//            {
+//                name: "update",
+//                len: 1,
+//                func: updateComponentBlueprint
+//            },
+//            {
+//                name: "delete",
+//                len: 1,
+//                func: deleteComponentBlueprint
+//            }
+        ],
+        EntityBlueprintActions: [
+            {
+                name: "getTree",
+                len: 1,
+                func: listEntityBlueprints
+            }
+//            ,
+//            {
+//                name: "create",
+//                len: 1,
+//                func: createEntityBlueprint
+//            },
+//            {
+//                name: "read",
+//                len: 1,
+//                func: readEntityBlueprint
+//            },
+//            {
+//                name: "update",
+//                len: 1,
+//                func: updateEntityBlueprint
+//            },
+//            {
+//                name: "delete",
+//                len: 1,
+//                func: deleteEntityBlueprint
+//            }
+       ]
     }
 })();

@@ -3,8 +3,23 @@ Ext.define('Spelled.view.blueprint.Navigator', {
     alias : 'widget.blueprintsnavigator',
 
     title: "Blueprints",
-    items:[
 
+    layout: {
+        align: 'stretch',
+        type: 'vbox'
+    },
+
+    items:[
+        {
+            id: "EntitiesBlueprintTree",
+            flex: 1,
+            xtype: 'entitiesblueprinttreelist'
+        },
+        {
+            id: "ComponentsBlueprintTree",
+            flex: 1,
+            xtype: 'componentsblueprinttreelist'
+        }
     ]
 
 });

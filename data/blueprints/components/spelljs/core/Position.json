@@ -1,0 +1,18 @@
+{
+    "type" : "componentBlueprint",
+    "namespace" : "spelljs/core",
+    "name" : "position",
+
+    "attributes" : [
+        {
+            "name" : "x",
+            "type" : "integer",
+            "default" : 0
+        },
+        {
+            "name" : "y",
+            "type" : "integer",
+            "default" : 0
+        }
+    ]
+}
