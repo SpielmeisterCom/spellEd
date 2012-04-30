@@ -35,8 +35,8 @@
                         {
                             "blueprintId": "spelljs/core/name",
                             "configuration": {
-                                "firstname": "ahmed",
-                                "surname"  : "lachnet"
+                                "firstname": "Max",
+                                "surname"  : "Mustermann"
                             }
                         }
                     ]
