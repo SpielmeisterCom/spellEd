@@ -11,7 +11,8 @@ Ext.define('Spelled.controller.Entities', {
     ],
 
     views: [
-        'entity.TreeList'
+        'entity.TreeList',
+        'entity.Create'
     ],
 
     init: function() {
@@ -21,8 +22,24 @@ Ext.define('Spelled.controller.Entities', {
             },
             '#EntityList actioncolumn': {
                 click: this.handleActionColumnClick
+            },
+            'entiteslist button[action="showCreateEntity"]': {
+                click: this.showCreateEntity
+            },
+            'createentity button[action="createEntity"]' : {
+                click: this.createEntity
             }
         })
+    },
+
+    showCreateEntity: function( ) {
+        var CreateView = this.getEntityCreateView()
+        var createView = new CreateView()
+
+        var EntityModel = this.getConfigEntityModel()
+        createView.down('form').loadRecord( new EntityModel() )
+
+        createView.show()
     },
 
     handleActionColumnClick: function( view, cell, rowIndex, colIndex, e ) {
@@ -49,9 +66,19 @@ Ext.define('Spelled.controller.Entities', {
 
     },
 
-    createEntity: function ( entity ) {
-        console.log( "Create"  )
-        console.log( entity )
+    createEntity: function ( button, event, record ) {
+        var window = button.up('window'),
+            form   = window.down('form'),
+            record = form.getRecord()
+
+        //TODO: form validation before sending
+
+        console.log( form.getForm().getFields() )
+        console.log( record )
+
+        record.store.add( record )
+
+        window.close()
     },
 
     deleteEntity: function ( entity ) {

@@ -7,13 +7,6 @@ Ext.define('Spelled.view.blueprint.component.Property', {
     flex: 1,
     items: [
         {
-            xtype: 'displayfield',
-            width: 447,
-            value: 'spelljs/core',
-            fieldLabel: 'Namespace',
-            anchor: '100%'
-        },
-        {
             xtype: 'textfield',
             name: 'name',
             fieldLabel: 'Name',
