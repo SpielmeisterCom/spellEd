@@ -4,9 +4,14 @@ Ext.define('Spelled.model.blueprint.Component', {
     fields: [
         "type",
         "namespace",
-        "name",
-        "attributes"
+        "name"
     ],
+
+    hasMany: {
+        model: 'Spelled.model.blueprint.ComponentAttribute',
+        associationKey: 'attributes',
+        name :  'getAttributes'
+    },
 
     getFullName: function() {
         return this.get('namespace') +"/"+ this.get('name')

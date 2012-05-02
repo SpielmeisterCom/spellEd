@@ -8,17 +8,20 @@ Ext.define('Spelled.controller.Blueprints', {
         'blueprint.component.Edit',
         'blueprint.component.Details',
         'blueprint.component.Attributes',
+        'blueprint.component.Property',
         'blueprint.entity.TreeList'
     ],
 
     models: [
         'blueprint.Component',
+        'blueprint.ComponentAttribute',
         'blueprint.Entity'
     ],
 
     stores: [
         'EntitiesBlueprintTree',
-        'ComponentsBlueprintTree'
+        'ComponentsBlueprintTree',
+        'blueprint.ComponentAttributes'
     ],
 
     refs: [
@@ -37,18 +40,24 @@ Ext.define('Spelled.controller.Blueprints', {
                 itemdblclick: this.openEntityBlueprint
             },
             'componentblueprintattributeslist': {
-               itemclick: this.showAttributeConfig
+                itemclick: this.showAttributeConfig
             },
             '#ComponentsBlueprintTree': {
-                itemclick: this.openComponentBlueprint
+                itemdblclick: this.openComponentBlueprint
             }
         })
     },
 
     showAttributeConfig: function( treePanel, record ) {
-        console.log( "show attribute")
+        if( !record.data.leaf ) return
 
+        var component = Ext.getStore('blueprint.ComponentAttributes').getById( record.internalId )
 
+        if( component ) {
+
+            var propertyView = Ext.getCmp("BlueprintEditor").getActiveTab().down( 'componentblueprintproperty' )
+            propertyView.getForm().loadRecord( component )
+        }
     },
 
     openEntityBlueprint: function( treePanel, record ) {
@@ -67,7 +76,6 @@ Ext.define('Spelled.controller.Blueprints', {
         ComponentBlueprint.load( record.data.id, {
             success: function( componentBlueprint ) {
                 var panels = blueprintEditor.items.items
-
                 var title = componentBlueprint.getFullName()
 
                 //looking for hidden tabs. returning if we found one
@@ -84,6 +92,7 @@ Ext.define('Spelled.controller.Blueprints', {
 
                 var header = editView.down( 'componentblueprintdetails' )
 
+                //TODO: find a better solution for setting the details
                 header.items.items[0].setValue( componentBlueprint.get('type') )
                 header.items.items[1].setValue( componentBlueprint.getFullName() )
 
@@ -91,10 +100,10 @@ Ext.define('Spelled.controller.Blueprints', {
                 var attributes = editView.down( 'componentblueprintattributeslist' )
 
                 var children = []
-                Ext.each( componentBlueprint.get('attributes'), function( attribute ) {
+                Ext.each( componentBlueprint.getAttributes().data.items, function( attribute ) {
                     children.push( {
-                        text      : attribute.name,
-                        id        : attribute.name,
+                        text      : attribute.get('name'),
+                        id        : attribute.getId(),
                         expanded  : true,
                         leaf      : true
                     } )

@@ -7,14 +7,12 @@
         {
             "name" : "firstname",
             "type" : "string",
-            "default": "",
-            "interpolation" : "linear"
+            "default": "FIRSTNAME"
         },
         {
             "name" : "lastname",
             "type" : "string",
-            "default": "",
-            "interpolation" : "linear"
+            "default": "LASTNAME"
         }
     ]
 }
