@@ -73,6 +73,64 @@
         return listing( rootPath, req, res, payload, next )
     }
 
+    var getAllEntityBlueprints = function( req, res, payload, next ) {
+        var fs = require('fs')
+
+        var path = getPath( root + "blueprints/entities/" )
+        if ( !path ) return next()
+
+        // check if we have a directory
+        var stat = fs.statSync( path )
+
+        if (!stat.isDirectory()) return next()
+
+        return getDirFilesAsObjects( path )
+    }
+
+    var getAllComponentBlueprints = function( req, res, payload, next ) {
+        var fs = require('fs')
+
+        var path = getPath( root + "blueprints/components/" )
+        if ( !path ) return next()
+
+        // check if we have a directory
+        var stat = fs.statSync( path )
+
+        if (!stat.isDirectory()) return next()
+
+        return getDirFilesAsObjects( path )
+    }
+
+    var getDirFilesAsObjects = function( readPath ) {
+        var fs = require('fs')
+            , path = require('path')
+            , normalize = path.normalize
+            , join = path.join
+
+        var files = fs.readdirSync( readPath )
+        files.sort();
+
+        var result = []
+
+        for( var key in files) {
+            var filePath = normalize(join( readPath, files[key]))
+
+            var fileStat = fs.statSync( filePath )
+
+            if( !fileStat.isDirectory() ) {
+                var fileContent = fs.readFileSync( filePath, 'utf8' )
+                var object = JSON.parse(fileContent)
+
+                object.id = filePath
+                result.push( object )
+            } else {
+                result = result.concat( getDirFilesAsObjects( filePath ) )
+            }
+        }
+
+        return result;
+    }
+
     var listEntityBlueprints = function( req, res, payload, next ) {
         var rootPath = "/blueprints/entities/"
         return listing( rootPath, req, res, payload, next )
@@ -162,6 +220,11 @@
                 func: listComponentBlueprints
             },
             {
+                name: "getAll",
+                len: 1,
+                func: getAllComponentBlueprints
+            },
+            {
                 name: "read",
                 len: 1,
                 func: readComponentBlueprint
@@ -187,6 +250,11 @@
                 name: "getTree",
                 len: 1,
                 func: listEntityBlueprints
+            },
+            {
+                name: "getAll",
+                len: 1,
+                func: getAllEntityBlueprints
             }
 //            ,
 //            {

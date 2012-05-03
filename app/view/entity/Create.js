@@ -14,32 +14,37 @@ Ext.define('Spelled.view.entity.Create' ,{
                     xtype: 'textfield',
                     name: 'name',
                     fieldLabel: 'Name',
-                    anchor: '100%'
+                    anchor: '100%',
+                    allowBlank:false
                 },
                 {
                     xtype: 'combobox',
-                    name: 'entityBlueprint',
-                    fieldLabel: 'Blueprint',
-                    anchor: '100%'
+                    store: 'blueprint.Entities',
+
+                    valueField: 'id',
+                    displayField:'name',
+                    queryMode: 'local',
+
+                    typeAhead: true,
+                    name: 'blueprintId',
+                    fieldLabel: 'Select a Blueprint',
+                    anchor: '100%',
+                    allowBlank:false
+                }
+            ],
+            buttons: [
+                {
+                    text: "Create",
+                    action: "createEntity",
+                    formBind:true
+                },
+                {
+                    text: "Cancel",
+                    handler: function() {
+                        this.up('window').close()
+                    }
                 }
             ]
-        }
-    ],
-
-    bbar: [
-        {
-            text: "Create",
-            action: "createEntity",
-            tooltip: {
-                text:'Create a new Entity',
-                title:'Create'
-            }
-        },
-        {
-            text: "Cancel",
-            handler: function() {
-                this.up('window').close()
-            }
         }
     ]
 });

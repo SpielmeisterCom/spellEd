@@ -2,12 +2,14 @@ Ext.define('Spelled.controller.Entities', {
     extend: 'Ext.app.Controller',
 
     models: [
-        'config.Entity'
+        'config.Entity',
+        'blueprint.Entity'
     ],
 
     stores: [
        'EntitiesTree',
-       'config.Entities'
+       'config.Entities',
+       'blueprint.Entities'
     ],
 
     views: [
@@ -69,15 +71,21 @@ Ext.define('Spelled.controller.Entities', {
     createEntity: function ( button, event, record ) {
         var window = button.up('window'),
             form   = window.down('form'),
-            record = form.getRecord()
+            record = form.getRecord(),
+            values = form.getValues(),
+            zone   = this.application.getActiveZone()
 
-        //TODO: form validation before sending
 
-        console.log( form.getForm().getFields() )
-        console.log( record )
 
-        record.store.add( record )
 
+        record.getComponents().add( component )
+
+        record.set('blueprintId')
+
+        record.set( values )
+        zone.getEntities().add( record )
+
+        this.showEntitylist( zone.getEntities() )
         window.close()
     },
 

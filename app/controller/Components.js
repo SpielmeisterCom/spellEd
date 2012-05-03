@@ -22,7 +22,7 @@ Ext.define('Spelled.controller.Components', {
 
         var config = []
 
-        Ext.iterate( component.get('configuration'), function( key, value ) {
+        Ext.iterate( component.get('config'), function( key, value ) {
             config[key] = value
         })
 

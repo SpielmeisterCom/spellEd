@@ -3,7 +3,7 @@ Ext.define('Spelled.model.config.Component', {
 
     fields: [
         'blueprintId',
-        'configuration'
+        'config'
     ],
 
     idgen: 'uuid',

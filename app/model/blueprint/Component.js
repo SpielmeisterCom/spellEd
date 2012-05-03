@@ -2,6 +2,7 @@ Ext.define('Spelled.model.blueprint.Component', {
     extend: 'Ext.data.Model',
 
     fields: [
+        "id",
         "type",
         "namespace",
         "name"

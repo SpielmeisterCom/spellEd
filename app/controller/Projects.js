@@ -17,6 +17,7 @@ Ext.define('Spelled.controller.Projects', {
         Project.load( 1, {
             success: function( project ) {
                 me.getZonesList( project )
+                me.application.setActiveProject( project )
             }
         })
 

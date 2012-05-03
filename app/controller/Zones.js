@@ -40,10 +40,32 @@ Ext.define('Spelled.controller.Zones', {
 
                 var zone = Ext.getStore('config.Zones').getById( cmp.zoneId )
 
+                var entities = []
+                var components = []
+
+
+                Ext.getStore('blueprint.Entities').each(
+                    function( record ) {
+                        entities.push( record.data )
+                    }
+                )
+
+                Ext.getStore('blueprint.Components').each(
+                    function( record ) {
+                        components.push( record.data )
+                    }
+                )
+
+                var result = {
+                    zone: zone.getJSONConfig(),
+                    entityBlueprints: entities,
+                    componentBlueprints: components
+                }
+
                 cmp.el.dom.contentWindow.postMessage( {
                     id: cmp.id,
                     type: "setConfiguration",
-                    data: zone.getJSONConfig()
+                    data: result
                 }, location.href )
 
             }
@@ -134,6 +156,8 @@ Ext.define('Spelled.controller.Zones', {
         if( !record.data.leaf ) return
 
         var zone = this.getConfigZonesStore().getById( record.internalId )
+
+        this.application.setActiveZone( zone )
 
         var entitiesController = this.application.getController('Spelled.controller.Entities')
         entitiesController.showEntitylist( zone.getEntities() )

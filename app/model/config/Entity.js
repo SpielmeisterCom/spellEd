@@ -6,19 +6,6 @@ Ext.define('Spelled.model.config.Entity', {
         'name'
     ],
 
-    validations: [
-        {
-            type: 'presence',
-            field: 'blueprintId',
-            message: 'A Entity Blueprint is required.'
-        },
-        {
-            type: 'length',
-            field: 'name', min: 2,
-            message: 'Name is required.'
-        }
-    ],
-
     idgen: 'uuid',
 
     belongsTo: 'Spelled.model.config.Zone',

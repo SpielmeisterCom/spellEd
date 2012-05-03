@@ -7,41 +7,22 @@
     "zones": [
         {
             "id": "Zone1",
-            "entityInstanceConfigurations": [
+            "entities": [
                 {
-                    "name" : "player1",
-                    "blueprintId": "spelljs/core/player",
-                    "components": [
-                        {
-                            "blueprintId": "spelljs/core/position",
-                            "configuration": {
-                                "x" : 50,
-                                "y" : 50
-                            }
+                    "name" : "spacecraft1",
+                    "blueprintId": "projectName/entities/spacecraft",
+                    "components": {
+                        "blueprintId": "spell/core/position",
+                        "config": {
+                            "value" : [ 10, 0, 0 ]
                         }
-                    ]
-                },
-                {
-                    "name" : "player2",
-                    "blueprintId": "spelljs/core/player",
-                    "components": [
-                        {
-                            "blueprintId": "spelljs/core/position",
-                            "configuration": {
-                                "x" : 10,
-                                "y" : 20
-                            }
-                        },
-                        {
-                            "blueprintId": "spelljs/core/name",
-                            "configuration": {
-                                "firstname": "Max",
-                                "surname"  : "Mustermann"
-                            }
-                        }
-                    ]
+                    }
                 }
             ]
         }
     ]
 }
+
+
+
+

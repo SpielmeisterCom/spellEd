@@ -9,6 +9,6 @@ Ext.define('Spelled.view.ui.SpelledIframe', {
     },
 
     afterRender: function() {
-        this.el.dom.src = '/iframe.html?id='+this.id
+        this.el.dom.src = 'http://localhost:8080/spellEdShim.html?id='+this.id
     }
 });
