@@ -28,10 +28,13 @@ Ext.define('Spelled.controller.Zones', {
     init: function() {
 
         var dispatchPostMessages = function( event ) {
+				var buildServerOrigin = 'http://localhost:8080'
 
-            if ( event.origin !== location.href ){
-                console.log( "WRONG produced origin!")
-                //return;
+            if ( event.origin !== buildServerOrigin ){
+					console.log( 'event.origin: ' + event.origin )
+                console.log( 'Error: origin does not match.' )
+
+                return
             }
 
             if( event.data.action === 'getConfiguration' ) {
@@ -70,11 +73,14 @@ Ext.define('Spelled.controller.Zones', {
                     componentBlueprints: components
                 }
 
-                cmp.el.dom.contentWindow.postMessage( {
+                cmp.el.dom.contentWindow.postMessage(
+						{
                     id: cmp.id,
                     type: "setConfiguration",
                     data: result
-                }, location.href )
+                	},
+						buildServerOrigin
+						)
 
             }
         }
