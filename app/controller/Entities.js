@@ -80,18 +80,18 @@ Ext.define('Spelled.controller.Entities', {
         var entityBlueprint = Ext.getStore('blueprint.Entities').getById( values.blueprintId )
 
         Ext.each( entityBlueprint.get('components'), function( config ) {
-
             var component = Ext.create( 'Spelled.model.config.Component', {
                 blueprintId: config.id,
                 config: config.config
             } )
-
             component.setBlueprintConfig( component.get('blueprintId') )
 
             record.getComponents().add( component )
         } )
 
         record.set( values )
+
+        record.set('blueprintId', entityBlueprint.getFullName() )
         entities.add( record )
 
         this.showEntitylist( entities )

@@ -7,5 +7,9 @@ Ext.define('Spelled.model.blueprint.Entity', {
         "namespace",
         "name",
         'components'
-    ]
+    ],
+
+    getFullName: function() {
+        return this.get('namespace') +"/"+ this.get('name')
+    }
 });

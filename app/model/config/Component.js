@@ -25,6 +25,7 @@ Ext.define('Spelled.model.config.Component', {
 
         var blueprintComponent = store.getAt( index )
 
+//TODO: config wird falschrum überschrieben
         var blueprintConfig =  this.get('config')
         Ext.each( blueprintComponent.getAttributes().data.items, function( attribute ) {
             blueprintConfig[ attribute.get('name') ] = attribute.get('default')
