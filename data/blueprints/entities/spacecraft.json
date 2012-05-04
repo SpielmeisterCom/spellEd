@@ -6,13 +6,13 @@
         {
             "id" : "spell/core/position",
             "config" : {
-                "value" : [ 1, 2, 3 ]
+                "value" : [ 0, 0, 0 ]
             }
         },
         {
             "id" : "spell/core/graphics/appearance",
             "config" : {
-                "textureId" : "output/assets/textures/4.2.04_256.png"
+                "textureId" : "output/assets/textures/ship_player4.png"
             }
         },
         {
