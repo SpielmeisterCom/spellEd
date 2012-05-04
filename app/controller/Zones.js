@@ -52,7 +52,15 @@ Ext.define('Spelled.controller.Zones', {
 
                 Ext.getStore('blueprint.Components').each(
                     function( record ) {
-                        components.push( record.data )
+                        var result = record.data
+                        var attributes = []
+
+                        Ext.each( record.getAttributes().data.items, function( attribute ) {
+                            attributes.push( attribute.data )
+                        } )
+
+                        result.attributes = attributes
+                        components.push( result )
                     }
                 )
 
