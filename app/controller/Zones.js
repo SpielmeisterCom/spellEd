@@ -31,7 +31,7 @@ Ext.define('Spelled.controller.Zones', {
 				var buildServerOrigin = 'http://localhost:8080'
 
             if ( event.origin !== buildServerOrigin ){
-					console.log( 'event.origin: ' + event.origin )
+                console.log( 'event.origin: ' + event.origin )
                 console.log( 'Error: origin does not match.' )
 
                 return

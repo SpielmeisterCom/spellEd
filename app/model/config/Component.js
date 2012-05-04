@@ -25,13 +25,16 @@ Ext.define('Spelled.model.config.Component', {
 
         var blueprintComponent = store.getAt( index )
 
-//TODO: config wird falschrum überschrieben
-        var blueprintConfig =  this.get('config')
+        //TODO: config wird falschrum überschrieben
+        var blueprintConfig =  {}
         Ext.each( blueprintComponent.getAttributes().data.items, function( attribute ) {
             blueprintConfig[ attribute.get('name') ] = attribute.get('default')
         })
 
-        this.set( 'config', blueprintConfig )
+        var tmp = Ext.Object.merge( blueprintConfig, this.get('config') )
+        //TODO: Warum ist trim in der config durch den merge
+        delete tmp.trim
+        this.set( 'config', tmp )
     },
 
     getJSONConfig: function() {

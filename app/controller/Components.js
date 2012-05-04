@@ -23,7 +23,12 @@ Ext.define('Spelled.controller.Components', {
         var config = {}
 
         Ext.iterate( component.get('config'), function( key, value ) {
-            config[ key ] =  value.toString()
+            if( Ext.isArray( value ) === true ) {
+                config[ key ] = "[" + value.toString() + "]"
+
+            } else {
+                config[ key ] = value.toString()
+            }
         })
 
         var propertyGrid = Ext.getCmp('ComponentProperty')
