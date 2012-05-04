@@ -20,10 +20,10 @@ Ext.define('Spelled.controller.Components', {
     showConfig: function( component ) {
         //TODO: getting Configuration from SpellJS
 
-        var config = []
+        var config = {}
 
         Ext.iterate( component.get('config'), function( key, value ) {
-            config[key] = value
+            config[ key ] =  value.toString()
         })
 
         var propertyGrid = Ext.getCmp('ComponentProperty')

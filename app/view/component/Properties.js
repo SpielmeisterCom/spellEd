@@ -19,10 +19,10 @@ Ext.define('Spelled.view.component.Properties', {
 
             var record = e.record.data
 
-            var config = component.get( 'configuration' )
+            var config = component.get( 'config' )
             config[ record.name ] = record.value
 
-            component.set( 'configuration', config)
+            component.set( 'config', config)
         })
     }
 });

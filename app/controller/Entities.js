@@ -73,19 +73,28 @@ Ext.define('Spelled.controller.Entities', {
             form   = window.down('form'),
             record = form.getRecord(),
             values = form.getValues(),
-            zone   = this.application.getActiveZone()
+            zone   = this.application.getActiveZone(),
+            entities = zone.getEntities()
 
+        //TODO: Get converted format from Spell!
+        var entityBlueprint = Ext.getStore('blueprint.Entities').getById( values.blueprintId )
 
+        Ext.each( entityBlueprint.get('components'), function( config ) {
 
+            var component = Ext.create( 'Spelled.model.config.Component', {
+                blueprintId: config.id,
+                config: config.config
+            } )
 
-        record.getComponents().add( component )
+            component.setBlueprintConfig( component.get('blueprintId') )
 
-        record.set('blueprintId')
+            record.getComponents().add( component )
+        } )
 
         record.set( values )
-        zone.getEntities().add( record )
+        entities.add( record )
 
-        this.showEntitylist( zone.getEntities() )
+        this.showEntitylist( entities )
         window.close()
     },
 

@@ -4,7 +4,18 @@ Ext.require([
 ]);
 
 Ext.onReady(function() {
-    Ext.direct.Manager.addProvider( Ext.app.REMOTING_API );
+    Ext.direct.Manager.addProvider( Ext.app.REMOTING_API )
+
+    Ext.override( Ext.data.Store, {
+        loadDataViaReader : function(data, append) {
+            var me      = this,
+                result  = me.proxy.reader.read(data),
+                records = result.records;
+
+            me.loadRecords(records, { addRecords: append })
+            me.fireEvent('load', me, result.records, true)
+        }
+    })
 })
 
 Ext.application({
@@ -49,11 +60,11 @@ Ext.application({
     launch: function() {
 
         Spelled.EntityBlueprintActions.getAll( "1", function( provider, response ) {
-            Ext.getStore('blueprint.Entities').loadData( response.result )
+            Ext.getStore('blueprint.Entities').loadDataViaReader( response.result )
         })
 
         Spelled.ComponentBlueprintActions.getAll( "1", function( provider, response ) {
-            Ext.getStore('blueprint.Components').loadData( response.result )
+            Ext.getStore('blueprint.Components').loadDataViaReader( response.result )
         })
 
         Ext.create('Spelled.view.ui.SpelledViewport')

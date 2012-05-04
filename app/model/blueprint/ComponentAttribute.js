@@ -9,7 +9,10 @@ Ext.define('Spelled.model.blueprint.ComponentAttribute', {
 
     idgen: 'uuid',
 
-    belongsTo: 'Spelled.model.blueprint.Component',
+    associations: [{
+        model:"Spelled.model.blueprint.Component",
+        type:"belongsTo"
+    }],
 
     constructor: function() {
         this.callParent(arguments)
