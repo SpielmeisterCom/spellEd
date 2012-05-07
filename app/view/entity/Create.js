@@ -24,6 +24,7 @@ Ext.define('Spelled.view.entity.Create' ,{
                     valueField: 'id',
                     displayField:'name',
                     queryMode: 'local',
+                    forceSelection: true,
 
                     typeAhead: true,
                     name: 'blueprintId',

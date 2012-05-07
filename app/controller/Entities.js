@@ -30,8 +30,32 @@ Ext.define('Spelled.controller.Entities', {
             },
             'createentity button[action="createEntity"]' : {
                 click: this.createEntity
+            },
+            'entiteslist': {
+                itemcontextmenu: this.showListContextMenu
             }
         })
+    },
+
+    showListContextMenu: function( view, record, item, index, e, options ) {
+
+        if( !record.data.leaf ) {
+            var entity = Ext.getStore('config.Entities').getById( record.internalId )
+
+            if( entity ) {
+                var menuController = this.application.getController('Spelled.controller.Menu')
+                menuController.showEntitiesListContextMenu( entity, e )
+            }
+
+        } else {
+            var component = Ext.getStore('config.Components').getById( record.internalId )
+
+            if( component ) {
+                var menuController = this.application.getController('Spelled.controller.Menu')
+                menuController.showComponentContextMenu( component, e )
+            }
+        }
+
     },
 
     showCreateEntity: function( ) {
@@ -79,28 +103,34 @@ Ext.define('Spelled.controller.Entities', {
         //TODO: Get converted format from Spell!
         var entityBlueprint = Ext.getStore('blueprint.Entities').getById( values.blueprintId )
 
-        Ext.each( entityBlueprint.get('components'), function( config ) {
-            var component = Ext.create( 'Spelled.model.config.Component', {
-                blueprintId: config.id,
-                config: config.config
+        if( entityBlueprint ) {
+            Ext.each( entityBlueprint.get('components'), function( config ) {
+                var component = Ext.create( 'Spelled.model.config.Component', {
+                    blueprintId: config.id,
+                    config: config.config
+                } )
+                component.setBlueprintConfig( component.get('blueprintId') )
+
+                record.getComponents().add( component )
             } )
-            component.setBlueprintConfig( component.get('blueprintId') )
 
-            record.getComponents().add( component )
-        } )
+            record.set( values )
 
-        record.set( values )
+            record.set('blueprintId', entityBlueprint.getFullName() )
+            entities.add( record )
 
-        record.set('blueprintId', entityBlueprint.getFullName() )
-        entities.add( record )
-
-        this.showEntitylist( entities )
-        window.close()
+            this.showEntitylist( entities )
+            window.close()
+        }
     },
 
     deleteEntity: function ( entity ) {
-        console.log( "deleteEntity"  )
-        console.log( entity )
+        var zone   = this.application.getActiveZone(),
+            entities = zone.getEntities()
+
+        entities.remove( entity )
+
+        this.showEntitylist( entities )
     },
 
     editEntity: function ( entity ) {

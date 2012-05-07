@@ -13,11 +13,11 @@ Ext.define('Spelled.view.menu.Menu', {
                         items: [{
                             text   : 'Create',
                             tooltip: 'Creates a new Spell-Project',
-                            itemId: 'createProject'
+                            action: 'createProject'
                         },{
                             text   : 'Load',
                             tooltip: 'Load a existing Spell-Project',
-                            itemId: 'loadProject'
+                            action: 'loadProject'
                         }]
                     }
                 }
