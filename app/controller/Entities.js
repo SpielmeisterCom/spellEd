@@ -20,7 +20,7 @@ Ext.define('Spelled.controller.Entities', {
     init: function() {
         this.control({
             '#EntityList': {
-                itemclick : this.handleEntityClick
+                select : this.handleEntityClick
             },
             '#EntityList actioncolumn': {
                 click: this.handleActionColumnClick
@@ -68,30 +68,6 @@ Ext.define('Spelled.controller.Entities', {
         createView.show()
     },
 
-    handleActionColumnClick: function( view, cell, rowIndex, colIndex, e ) {
-        var m = e.getTarget().className.match(/\bact-(\w+)\b/)
-        if (m === null || m === undefined) {
-            return
-        }
-
-        var entity = view.store.data.items[ rowIndex ]
-       if( entity.data.leaf === true ) return
-
-        var action = m[1];
-        switch ( action ) {
-            case 'create':
-                this.createEntity( entity )
-                break;
-            case 'delete':
-                this.deleteEntity( entity )
-                break;
-            case 'edit':
-                this.editEntity( entity )
-                break;
-        }
-
-    },
-
     createEntity: function ( button, event, record ) {
         var window = button.up('window'),
             form   = window.down('form'),
@@ -125,7 +101,7 @@ Ext.define('Spelled.controller.Entities', {
     },
 
     deleteEntity: function ( entity ) {
-        var zone   = this.application.getActiveZone(),
+        var zone     = this.application.getActiveZone(),
             entities = zone.getEntities()
 
         entities.remove( entity )

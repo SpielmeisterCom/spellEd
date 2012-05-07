@@ -6,7 +6,7 @@
 
     "zones": [
         {
-            "id": "Zone1",
+            "name": "Zone1",
             "entities": [
                 {
                     "name" : "spacecraft1",

@@ -2,8 +2,10 @@ Ext.define('Spelled.model.config.Zone', {
     extend: 'Ext.data.Model',
 
     fields: [
-        'id'
+        'name'
     ],
+
+    idProperty: 'name',
 
     belongsTo: 'Spelled.model.Project',
     hasMany: {

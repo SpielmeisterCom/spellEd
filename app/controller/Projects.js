@@ -14,14 +14,13 @@ Ext.define('Spelled.controller.Projects', {
 
         var Project = this.getProjectModel()
 
+        //TODO: remove dummy project
         Project.load( 1, {
             success: function( project ) {
                 me.getZonesList( project )
                 me.application.setActiveProject( project )
             }
         })
-
-        console.log( "load project" )
     },
 
     getZonesList: function( project ) {

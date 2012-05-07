@@ -21,6 +21,7 @@ Ext.define('Spelled.controller.Zones', {
         'zone.TreeList',
         'zone.Navigator',
         'zone.Edit',
+        'zone.Create',
         'zone.Editor',
         'ui.SpelledRendered'
     ],
@@ -90,8 +91,8 @@ Ext.define('Spelled.controller.Zones', {
 
         this.control({
             '#ZonesTree': {
-                itemclick   : this.getEntityList,
-                itemdblclick: this.renderZone
+                select      : this.getEntityList,
+                itemdblclick: this.renderZoneHelper
             },
             'renderedzone > toolbar button[action="saveZone"]': {
                 click: this.saveZone
@@ -102,8 +103,17 @@ Ext.define('Spelled.controller.Zones', {
             'renderedzone > toolbar button[action="toggleState"]': {
                 click: this.toggleState
             },
-            'zonetreelist actioncolumn': {
-                click: this.handleActionColumnClick
+            'zonetreelist': {
+                itemcontextmenu: this.showListContextMenu
+            },
+            'zonetreelist button[action="showCreateZone"]': {
+                click: this.showCreateZone
+            },
+            'createzone button[action="createZone"]' : {
+                click: this.createZone
+            },
+            'createzone button[action="createZone"]' : {
+                click: this.createZone
             },
             'zonesnavigator': {
                 activate: function() {
@@ -119,36 +129,47 @@ Ext.define('Spelled.controller.Zones', {
         })
     },
 
-    handleActionColumnClick: function( view, cell, rowIndex, colIndex, e ) {
-        var m = e.getTarget().className.match(/\bact-(\w+)\b/)
-        if (m === null || m === undefined) {
-            return
-        }
+    showCreateZone: function( ) {
+        var View  = this.getZoneCreateView(),
+            Model = this.getConfigZoneModel()
 
-        var zone = view.store.data.items[ rowIndex ]
-        if( zone.data.leaf === false ) return
+        var view = new View()
+        view.down('form').loadRecord( new Model() )
 
-        var action = m[1]
-        switch ( action ) {
-            case 'newZone':
-                this.createNewZone( zone )
-                break;
-            case 'deleteZone':
-                this.deleteZone( zone )
-                break;
-            case 'editZone':
-                this.editZone( zone )
-                break;
-        }
-
+        view.show()
     },
 
-    createNewZone: function( zone ) {
-        console.log( "Creating new Zone")
+    createZone: function ( button ) {
+        var window = button.up('window'),
+            form   = window.down('form'),
+            record = form.getRecord(),
+            values = form.getValues(),
+            project= this.application.getActiveProject(),
+            zones  = project.getZones()
+
+        record.set( values )
+        zones.add( record )
+
+        this.showZoneslist( zones )
+        window.close()
+    },
+
+    showListContextMenu: function( view, record, item, index, e, options ) {
+        e.stopEvent()
+
+        if( record.data.leaf ) {
+            var menuController = this.application.getController('Spelled.controller.Menu')
+            menuController.showZonesListContextMenu( e )
+        }
     },
 
     deleteZone: function( zone ) {
-        console.log( "deleting zone" )
+        var project = this.application.getActiveProject(),
+            zones   = project.getZones()
+
+        zones.remove( zone )
+
+        this.showZoneslist( zones )
     },
 
     reloadZone: function( button ) {
@@ -179,11 +200,7 @@ Ext.define('Spelled.controller.Zones', {
     },
 
     editZone: function( zone ) {
-        if( !zone.data.leaf ) return
-
         var zoneEditor = Ext.getCmp('ZoneEditor')
-
-        var zone = this.getConfigZonesStore().getById( zone.internalId )
 
         var panels = zoneEditor.items.items
 
@@ -207,12 +224,18 @@ Ext.define('Spelled.controller.Zones', {
 
     },
 
-    renderZone: function( treePanel, record ) {
+    renderZoneHelper: function( treePanel, record ) {
         if( !record.data.leaf ) return
 
+        var zone = this.getConfigZonesStore().getById( record.internalId )
+
+        this.renderZone( zone )
+    },
+
+    renderZone: function( zone ) {
         var zoneEditor = Ext.getCmp( "ZoneEditor" )
 
-        var title = "Rendered: " + record.internalId
+        var title = "Rendered: " + zone.internalId
 
         var panels = zoneEditor.items.items
 
@@ -230,7 +253,7 @@ Ext.define('Spelled.controller.Zones', {
 
         var iframe = Ext.create( 'Spelled.view.ui.SpelledIframe')
 
-        iframe.zoneId = record.internalId
+        iframe.zoneId = zone.internalId
 
         spellTab.add(
             iframe
@@ -260,7 +283,7 @@ Ext.define('Spelled.controller.Zones', {
             text: "Zones",
             expanded: true,
             children: children
-        };
+        }
 
         var zonesPanel = Ext.ComponentManager.get( "ZonesTree" )
         zonesPanel.getStore().setRootNode( rootNode )

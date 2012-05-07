@@ -40,7 +40,7 @@ Ext.define('Spelled.controller.Blueprints', {
                 itemdblclick: this.openEntityBlueprint
             },
             'componentblueprintattributeslist': {
-                itemclick: this.showAttributeConfig
+                select: this.showAttributeConfig
             },
             '#ComponentsBlueprintTree': {
                 itemdblclick: this.openComponentBlueprint
