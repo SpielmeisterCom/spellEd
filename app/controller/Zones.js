@@ -235,7 +235,7 @@ Ext.define('Spelled.controller.Zones', {
     renderZone: function( zone ) {
         var zoneEditor = Ext.getCmp( "ZoneEditor" )
 
-        var title = "Rendered: " + zone.internalId
+        var title = "Rendered: " + zone.getId()
 
         var panels = zoneEditor.items.items
 
@@ -253,7 +253,7 @@ Ext.define('Spelled.controller.Zones', {
 
         var iframe = Ext.create( 'Spelled.view.ui.SpelledIframe')
 
-        iframe.zoneId = zone.internalId
+        iframe.zoneId = zone.getId()
 
         spellTab.add(
             iframe
