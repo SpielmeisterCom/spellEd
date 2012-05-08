@@ -59,11 +59,11 @@ Ext.application({
 
     launch: function() {
 
-        Spelled.EntityBlueprintActions.getAll( "1", function( provider, response ) {
+        Spelled.EntityBlueprintActions.getAll( function( provider, response ) {
             Ext.getStore('blueprint.Entities').loadDataViaReader( response.result )
         })
 
-        Spelled.ComponentBlueprintActions.getAll( "1", function( provider, response ) {
+        Spelled.ComponentBlueprintActions.getAll( function( provider, response ) {
             Ext.getStore('blueprint.Components').loadDataViaReader( response.result )
         })
 

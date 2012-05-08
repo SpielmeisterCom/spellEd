@@ -1,6 +1,6 @@
 {
     "type" : "componentBlueprint",
-    "namespace" : "spelljs/core",
+    "namespace" : "spell/component/core",
     "name" : "name",
 
     "attributes" : [

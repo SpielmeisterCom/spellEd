@@ -11,14 +11,9 @@ Ext.define('Spelled.view.blueprint.Navigator', {
 
     items:[
         {
-            id: "EntitiesBlueprintTree",
+            id: "BlueprintsTree",
             flex: 1,
-            xtype: 'entitiesblueprinttreelist'
-        },
-        {
-            id: "ComponentsBlueprintTree",
-            flex: 1,
-            xtype: 'componentsblueprinttreelist'
+            xtype: 'blueprintstreelist'
         }
     ]
 

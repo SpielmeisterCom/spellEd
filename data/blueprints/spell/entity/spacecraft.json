@@ -1,22 +1,22 @@
 {
     "type" : "entityBlueprint",
-    "namespace" : "projectName/entities",
+    "namespace" : "spell/entity",
     "name" : "spacecraft",
     "components" : [
         {
-            "id" : "spell/core/position",
+            "blueprintId" : "spell/component/core/position",
             "config" : {
                 "value" : [ 0, 0, 0 ]
             }
         },
         {
-            "id" : "spell/core/graphics/appearance",
+            "blueprintId" : "spell/component/core/graphics/appearance",
             "config" : {
                 "textureId" : "output/assets/textures/ship_player4.png"
             }
         },
         {
-            "id" : "spell/core/graphics/renderData"
+            "blueprintId" : "spell/component/core/graphics/renderData"
         }
     ]
 }

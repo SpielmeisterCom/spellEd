@@ -3,7 +3,7 @@ Ext.define('Spelled.view.blueprint.component.Property', {
     alias : 'widget.componentblueprintproperty',
 
     bodyPadding: 10,
-    title: 'Properties',
+    title: 'Property',
     flex: 1,
     items: [
         {

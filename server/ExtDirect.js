@@ -3,6 +3,13 @@
 (function() {
 
     var root = '../data/'
+    var blueprintsPath = '../data/blueprints/'
+
+    /**
+     *
+     * Main functions
+     *
+     */
 
     var getPath = function( requestedPath ) {
         var path = require('path')
@@ -22,7 +29,22 @@
             return path
     }
 
-    var listing = function ( rootPath, req, res, payload, next ) {
+    var readFile = function( path ) {
+        var fs = require('fs')
+
+        var path = getPath( path )
+
+        if ( !path ) return {}
+
+        var stat = fs.statSync( path )
+        if ( stat.isDirectory() ) return {}
+
+        var fileContent = fs.readFileSync( path, 'utf8' )
+
+        return JSON.parse(fileContent)
+    }
+
+    var listing = function ( rootPath, withFileType, req, res, payload, next ) {
 
         var fs = require('fs')
         , path = require('path')
@@ -39,7 +61,7 @@
 
         // fetch files
         var files = fs.readdirSync(path)
-        files.sort();
+        files.sort()
 
         var result = []
 
@@ -58,47 +80,24 @@
                 fileInfo.cls = "folder"
 
             }else {
-                fileInfo.cls = "file"
+                if( withFileType === true ) {
+                    var fileContent = fs.readFileSync( filePath, 'utf8' )
+                    var object = JSON.parse(fileContent)
+
+                    fileInfo.cls  = object.type
+                    fileInfo.text = object.name
+
+                } else {
+                    fileInfo.cls = "file"
+                }
+
                 fileInfo.leaf = true
             }
 
             result.push( fileInfo )
         }
 
-        return result;
-    }
-
-    var listComponentBlueprints = function( req, res, payload, next ) {
-        var rootPath = "/blueprints/components/"
-        return listing( rootPath, req, res, payload, next )
-    }
-
-    var getAllEntityBlueprints = function( req, res, payload, next ) {
-        var fs = require('fs')
-
-        var path = getPath( root + "blueprints/entities/" )
-        if ( !path ) return next()
-
-        // check if we have a directory
-        var stat = fs.statSync( path )
-
-        if (!stat.isDirectory()) return next()
-
-        return getDirFilesAsObjects( path )
-    }
-
-    var getAllComponentBlueprints = function( req, res, payload, next ) {
-        var fs = require('fs')
-
-        var path = getPath( root + "blueprints/components/" )
-        if ( !path ) return next()
-
-        // check if we have a directory
-        var stat = fs.statSync( path )
-
-        if (!stat.isDirectory()) return next()
-
-        return getDirFilesAsObjects( path )
+        return result
     }
 
     var getDirFilesAsObjects = function( readPath ) {
@@ -131,24 +130,55 @@
         return result;
     }
 
-    var listEntityBlueprints = function( req, res, payload, next ) {
-        var rootPath = "/blueprints/entities/"
-        return listing( rootPath, req, res, payload, next )
+    /**
+     *
+     * ExtDirectFunctions
+     *
+     */
+
+    var listBlueprints = function( req, res, payload, next ) {
+        var rootPath = blueprintsPath
+        return listing( rootPath, true, req, res, payload, next )
+    }
+
+    var getAllEntityBlueprints = function( req, res, payload, next ) {
+        var fs = require('fs')
+
+        var path = getPath( root + "blueprints/spell/entity/" )
+        if ( !path ) return next()
+
+        // check if we have a directory
+        var stat = fs.statSync( path )
+
+        if (!stat.isDirectory()) return next()
+
+        return getDirFilesAsObjects( path )
+    }
+
+    var getAllComponentBlueprints = function( req, res, payload, next ) {
+        var fs = require('fs')
+
+        var path = getPath( root + "blueprints/spell/component/" )
+        if ( !path ) return next()
+
+        // check if we have a directory
+        var stat = fs.statSync( path )
+
+        if (!stat.isDirectory()) return next()
+
+        return getDirFilesAsObjects( path )
     }
 
     var readComponentBlueprint = function( req, res, payload, next ) {
-        var fs = require('fs')
-
         var path = getPath(  payload[0].id )
 
-        if ( !path ) return {}
+        return readFile( path )
+    }
 
-        var stat = fs.statSync( path )
-        if ( stat.isDirectory() ) return {}
+    var readEntityBlueprint = function( req, res, payload, next ) {
+        var path = getPath(  payload[0].id )
 
-        var fileContent = fs.readFileSync( path, 'utf8' )
-
-        return JSON.parse(fileContent)
+        return readFile( path )
     }
 
     var createProject = function( req, res, payload, next ) {
@@ -168,18 +198,9 @@
     }
 
     var readProject = function( req, res, payload, next ) {
-        var fs = require('fs')
-
         var path = getPath(  root + payload[0].id + "/config.json" )
 
-        if ( !path ) return {}
-
-        var stat = fs.statSync( path )
-        if ( stat.isDirectory() ) return {}
-
-        var fileContent = fs.readFileSync( path, 'utf8' )
-
-        return JSON.parse(fileContent)
+        return readFile( path )
     }
 
     var updateProject = function( req, res, payload, next ) {
@@ -215,20 +236,15 @@
         ],
         ComponentBlueprintActions: [
             {
-                name: "getTree",
-                len: 1,
-                func: listComponentBlueprints
-            },
-            {
                 name: "getAll",
-                len: 1,
+                len: 0,
                 func: getAllComponentBlueprints
             },
             {
                 name: "read",
                 len: 1,
                 func: readComponentBlueprint
-            },
+            }
 //            {
 //                name: "create",
 //                len: 1,
@@ -245,27 +261,29 @@
 //                func: deleteComponentBlueprint
 //            }
         ],
-        EntityBlueprintActions: [
+        BlueprintsActions: [
             {
                 name: "getTree",
                 len: 1,
-                func: listEntityBlueprints
-            },
+                func: listBlueprints
+            }
+        ],
+        EntityBlueprintActions: [
             {
                 name: "getAll",
-                len: 1,
+                len: 0,
                 func: getAllEntityBlueprints
+            },
+            {
+                name: "read",
+                len: 1,
+                func: readEntityBlueprint
             }
 //            ,
 //            {
 //                name: "create",
 //                len: 1,
 //                func: createEntityBlueprint
-//            },
-//            {
-//                name: "read",
-//                len: 1,
-//                func: readEntityBlueprint
 //            },
 //            {
 //                name: "update",

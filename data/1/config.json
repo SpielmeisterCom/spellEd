@@ -10,9 +10,9 @@
             "entities": [
                 {
                     "name" : "spacecraft1",
-                    "blueprintId": "projectName/entities/spacecraft",
+                    "blueprintId": "spell/entity/spacecraft",
                     "components": {
-                        "blueprintId": "spell/core/position",
+                        "blueprintId": "spell/component/core/position",
                         "config": {
                             "value" : [ 10, 0, 0 ]
                         }

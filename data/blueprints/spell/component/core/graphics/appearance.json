@@ -1,6 +1,6 @@
 {
     "type" : "componentBlueprint",
-    "namespace" : "spell/core/graphics",
+    "namespace" : "spell/component/core/graphics",
     "name" : "appearance",
     "attributes" : [
         {

@@ -1,4 +1,4 @@
-Ext.define('Spelled.store.EntitiesBlueprintTree', {
+Ext.define('Spelled.store.BlueprintsTree', {
     extend: 'Ext.data.TreeStore',
 
     root: {
@@ -6,7 +6,7 @@ Ext.define('Spelled.store.EntitiesBlueprintTree', {
     },
     proxy: {
         type: 'direct',
-        directFn: Spelled.EntityBlueprintActions.getTree,
+        directFn: Spelled.BlueprintsActions.getTree,
         paramOrder: ['node']
     }
 });

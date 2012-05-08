@@ -13,7 +13,8 @@ Ext.define('Spelled.model.Project', {
     fields: [
         'id',
         'name',
-        'configFilePath'
+        'configFilePath',
+        'startZone'
     ],
 
     hasMany: {
