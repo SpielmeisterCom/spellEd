@@ -1,6 +1,7 @@
 'use strict';
 
 (function() {
+    var _ = require('underscore')
 
     var root = '../data/'
     var blueprintsPath = '../data/blueprints/'
@@ -41,7 +42,11 @@
 
         var fileContent = fs.readFileSync( path, 'utf8' )
 
-        return JSON.parse(fileContent)
+        var object = JSON.parse(fileContent)
+
+        object.id = path
+
+        return object
     }
 
     var listing = function ( rootPath, withFileType, req, res, payload, next ) {
@@ -65,37 +70,40 @@
 
         var result = []
 
-        for( var key in files) {
-            var filePath = normalize(join( path, files[key]))
+        _.each(
+            files,
+            function( file ) {
+                var filePath = normalize(join( path, file))
 
-            var fileStat = fs.statSync( filePath )
+                var fileStat = fs.statSync( filePath )
 
-            var fileInfo = {
-                text: files[key],
-                id: filePath
+                var fileInfo = {
+                    text: file,
+                    id: filePath
 
-            }
-
-            if( fileStat.isDirectory() ) {
-                fileInfo.cls = "folder"
-
-            }else {
-                if( withFileType === true ) {
-                    var fileContent = fs.readFileSync( filePath, 'utf8' )
-                    var object = JSON.parse(fileContent)
-
-                    fileInfo.cls  = object.type
-                    fileInfo.text = object.name
-
-                } else {
-                    fileInfo.cls = "file"
                 }
 
-                fileInfo.leaf = true
-            }
+                if( fileStat.isDirectory() ) {
+                    fileInfo.cls = "folder"
 
-            result.push( fileInfo )
-        }
+                }else {
+                    if( withFileType === true ) {
+                        var fileContent = fs.readFileSync( filePath, 'utf8' )
+                        var object = JSON.parse(fileContent)
+
+                        fileInfo.cls  = object.type
+                        fileInfo.text = object.name
+
+                    } else {
+                        fileInfo.cls = "file"
+                    }
+
+                    fileInfo.leaf = true
+                }
+
+                result.push( fileInfo )
+            }
+        )
 
         return result
     }
@@ -111,8 +119,10 @@
 
         var result = []
 
-        for( var key in files) {
-            var filePath = normalize(join( readPath, files[key]))
+        _.each(
+            files,
+            function( file ) {
+            var filePath = normalize(join( readPath, file ))
 
             var fileStat = fs.statSync( filePath )
 
@@ -125,9 +135,26 @@
             } else {
                 result = result.concat( getDirFilesAsObjects( filePath ) )
             }
-        }
+        })
 
         return result;
+    }
+
+    var writeFile = function ( path, data ) {
+        var fs = require('fs')
+
+        path = getPath( path )
+
+        if( path ) {
+            try{
+                fs.writeFileSync(
+                    path,
+                    data
+                )
+            }catch (e) {
+                console.log( e )
+            }
+        }
     }
 
     /**
@@ -169,17 +196,91 @@
         return getDirFilesAsObjects( path )
     }
 
+    /**
+     *  Component Blueprints Actions
+     */
+
     var readComponentBlueprint = function( req, res, payload, next ) {
         var path = getPath(  payload[0].id )
 
         return readFile( path )
     }
 
+    var updateComponentBlueprint = function( req, res, payload, next ) {
+        var component = payload[ 0 ],
+            path      = component.id
+
+        var result = _.pick( component, 'name', 'namespace', 'type')
+
+        var attributes = []
+        _.each(
+            component.getAttributes,
+            function( attribute ) {
+                attributes.push(
+                    _.pick( attribute, 'name', 'type', 'default' )
+                )
+            }
+        )
+
+        result.attributes = attributes
+
+        writeFile( path, JSON.stringify( result, null, "\t" ) )
+
+        return result
+    }
+
+    var deleteComponentBlueprint = function( req, res, payload, next ) {
+        return "errol"
+    }
+
+    var createComponentBlueprint = function( req, res, payload, next ) {
+        return "errol"
+    }
+
+    /**
+     *  Entity Blueprints Actions
+     */
+
     var readEntityBlueprint = function( req, res, payload, next ) {
         var path = getPath(  payload[0].id )
 
         return readFile( path )
     }
+
+    var updateEntityBlueprint = function( req, res, payload, next ) {
+        var entity = payload[ 0 ],
+            path      = entity.id
+
+        var result = _.pick( entity, 'name', 'namespace', 'type')
+
+        var components = []
+        _.each(
+            entity.getComponents,
+            function( component ) {
+                components.push(
+                    _.pick( component, 'blueprintId', 'config' )
+                )
+            }
+        )
+
+        result.components = components
+
+        writeFile( path, JSON.stringify( result, null, "\t" ) )
+
+        return result
+    }
+
+    var deleteEntityBlueprint = function( req, res, payload, next ) {
+        return "errol"
+    }
+
+    var createEntityBlueprint = function( req, res, payload, next ) {
+        return "errol"
+    }
+
+    /**
+     *  Project Actions
+     */
 
     var createProject = function( req, res, payload, next ) {
         var fs = require('fs')
@@ -244,22 +345,22 @@
                 name: "read",
                 len: 1,
                 func: readComponentBlueprint
+            },
+            {
+                name: "create",
+                len: 1,
+                func: createComponentBlueprint
+            },
+            {
+                name: "update",
+                len: 1,
+                func: updateComponentBlueprint
+            },
+            {
+                name: "delete",
+                len: 1,
+                func: deleteComponentBlueprint
             }
-//            {
-//                name: "create",
-//                len: 1,
-//                func: createComponentBlueprint
-//            },
-//            {
-//                name: "update",
-//                len: 1,
-//                func: updateComponentBlueprint
-//            },
-//            {
-//                name: "delete",
-//                len: 1,
-//                func: deleteComponentBlueprint
-//            }
         ],
         BlueprintsActions: [
             {
@@ -278,23 +379,22 @@
                 name: "read",
                 len: 1,
                 func: readEntityBlueprint
+            },
+            {
+                name: "create",
+                len: 1,
+                func: createEntityBlueprint
+            },
+            {
+                name: "update",
+                len: 1,
+                func: updateEntityBlueprint
+            },
+            {
+                name: "delete",
+                len: 1,
+                func: deleteEntityBlueprint
             }
-//            ,
-//            {
-//                name: "create",
-//                len: 1,
-//                func: createEntityBlueprint
-//            },
-//            {
-//                name: "update",
-//                len: 1,
-//                func: updateEntityBlueprint
-//            },
-//            {
-//                name: "delete",
-//                len: 1,
-//                func: deleteEntityBlueprint
-//            }
        ]
     }
 })();

@@ -8,11 +8,13 @@ Ext.define('Spelled.view.blueprint.component.Property', {
     buttons: [
         {
             text: "Save",
-            action: "save"
+            action: "save",
+            formBind:true
         },
         {
             text: "Reset",
-            action: "reset"
+            action: "reset",
+            formBind:true
         }
     ],
     items: [
@@ -20,17 +22,20 @@ Ext.define('Spelled.view.blueprint.component.Property', {
             xtype: 'textfield',
             name: 'name',
             fieldLabel: 'Name',
+            allowBlank:false,
             anchor: '100%'
         },
         {
             xtype: 'combobox',
             name: 'type',
             fieldLabel: 'Type',
+            allowBlank:false,
             anchor: '100%'
         },
         {
             xtype: 'textareafield',
             name: 'default',
+            allowBlank:false,
             fieldLabel: 'Default value',
             anchor: '100%'
         }

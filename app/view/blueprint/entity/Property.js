@@ -8,30 +8,39 @@ Ext.define('Spelled.view.blueprint.entity.Property', {
     buttons: [
         {
             text: "Save",
-            action: "save"
+            action: "save",
+            formBind:true
         },
         {
             text: "Reset",
-            action: "reset"
+            action: "reset",
+            formBind:true
         }
     ],
     items: [
         {
-            xtype: 'displayfield',
+            xtype: 'textfield',
+            readOnlyCls: 'readOnlyField',
+            readOnly: true,
             name: 'name',
             fieldLabel: 'Name',
+            allowBlank:false,
             anchor: '100%'
         },
         {
-            xtype: 'displayfield',
+            xtype: 'textfield',
+            readOnlyCls: 'readOnlyField',
+            readOnly: true,
             name: 'type',
             fieldLabel: 'Type',
+            allowBlank:false,
             anchor: '100%'
         },
         {
             xtype: 'textareafield',
             name: 'default',
             fieldLabel: 'Default value',
+            allowBlank:false,
             anchor: '100%'
         }
     ]

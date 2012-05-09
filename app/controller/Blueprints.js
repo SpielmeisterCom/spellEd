@@ -39,7 +39,7 @@ Ext.define('Spelled.controller.Blueprints', {
                 activate: this.showBlueprintEditor
             },
             'componentblueprintproperty button[action="save"]' : {
-                click: this.saveBlueprint
+                click: this.saveComponentBlueprint
             },
             'componentblueprintproperty button[action="reset"]' : {
                 click: this.resetBlueprint
@@ -50,7 +50,7 @@ Ext.define('Spelled.controller.Blueprints', {
                 }
             },
             'entityblueprintproperty button[action="save"]' : {
-                click: this.saveBlueprint
+                click: this.saveEntityBlueprint
             },
             'entityblueprintproperty button[action="reset"]' : {
                 click: this.resetBlueprint
@@ -72,13 +72,56 @@ Ext.define('Spelled.controller.Blueprints', {
         })
     },
 
-    saveBlueprint: function( button, event, record ) {
+    saveEntityBlueprint: function( button, event, record ) {
         var form = button.up('form'),
             record = form.getRecord(),
             values = form.getValues()
 
-        console.log( "Save Blueprint" )
-        console.log( record )
+        var ownerModel = Ext.getCmp("BlueprintEditor").getActiveTab().blueprint
+
+        var componentBlueprint = Ext.getStore( 'blueprint.Components').getById( record.get('spelled.model.blueprint.component_id') )
+
+        var componentConfig = {
+            blueprintId: componentBlueprint.getFullName(),
+            config: {}
+        }
+
+        //Overwrite only the submitted attribute
+        Ext.each(
+            componentBlueprint.getAttributes().data.items,
+            function( attribute ) {
+                componentConfig.config[ attribute.get('name') ] = ( attribute.get('name') === values.name ) ? values.default : attribute.get('default')
+            }
+        )
+
+        //Set the new configuration on the specified component
+        Ext.each(
+            ownerModel.getComponents().data.items,
+            function( component ) {
+                if( component.get('blueprintId') === componentConfig.blueprintId ) {
+                    component.set('config', componentConfig.config )
+                }
+            }
+        )
+
+        if( !!ownerModel ) {
+            ownerModel.save( )
+        }
+
+    },
+
+    saveComponentBlueprint: function( button, event, record ) {
+        var form = button.up('form'),
+            record = form.getRecord(),
+            values = form.getValues()
+
+        var ownerModel = Ext.getCmp("BlueprintEditor").getActiveTab().blueprint
+
+        record.set( values )
+
+        if( !!ownerModel ) {
+            ownerModel.save( )
+        }
     },
 
     resetBlueprint: function( button, event, record ) {
@@ -87,7 +130,6 @@ Ext.define('Spelled.controller.Blueprints', {
             values = form.getValues()
 
         console.log( "Reset Blueprint" )
-        console.log( record )
     },
 
     openBlueprint: function( treePanel, record ) {
@@ -151,8 +193,7 @@ Ext.define('Spelled.controller.Blueprints', {
 
         Ext.each( entityBlueprint.getComponents().data.items, function( component ) {
 
-            var store = Ext.getStore( 'blueprint.Components' )
-            var componentBlueprint = store.getByBlueprintId( component.get('blueprintId') )
+            var componentBlueprint = Ext.getStore( 'blueprint.Components' ).getByBlueprintId( component.get('blueprintId') )
 
             //TODO: merge config of entitycomponents with blueprints components
             var attributes = []
@@ -182,7 +223,8 @@ Ext.define('Spelled.controller.Blueprints', {
 
         components.getStore().setRootNode( rootNode )
 
-        var newPanel = this.application.createTab( blueprintEditor, editView )
+        var tab = this.application.createTab( blueprintEditor, editView )
+        tab.blueprint = entityBlueprint
     },
 
     openComponentBlueprint: function( componentBlueprint ) {
@@ -227,7 +269,8 @@ Ext.define('Spelled.controller.Blueprints', {
 
         attributes.getStore().setRootNode( rootNode )
 
-        var newPanel = this.application.createTab( blueprintEditor, editView )
+        var tab = this.application.createTab( blueprintEditor, editView )
+        tab.blueprint = componentBlueprint
     },
 
     showBlueprintEditor : function( ) {

@@ -18,6 +18,8 @@ Ext.define('Spelled.model.blueprint.Entity', {
         return this.get('namespace') +"/"+ this.get('name')
     },
 
+    requires: ['Spelled.writer.JsonWriter'],
+
     proxy: {
         type: 'direct',
         api: {
@@ -25,6 +27,9 @@ Ext.define('Spelled.model.blueprint.Entity', {
             read:    Spelled.EntityBlueprintActions.read,
             update:  Spelled.EntityBlueprintActions.update,
             destroy: Spelled.EntityBlueprintActions.destroy
+        },
+        writer: {
+            type: 'json'
         }
     }
 });
