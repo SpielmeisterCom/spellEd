@@ -1,6 +1,6 @@
-Ext.define('Spelled.view.blueprint.component.Property', {
+Ext.define('Spelled.view.blueprint.entity.Property', {
     extend: 'Ext.form.Panel',
-    alias : 'widget.componentblueprintproperty',
+    alias : 'widget.entityblueprintproperty',
 
     bodyPadding: 10,
     title: 'Property',
@@ -17,13 +17,13 @@ Ext.define('Spelled.view.blueprint.component.Property', {
     ],
     items: [
         {
-            xtype: 'textfield',
-            name: 'name',
+            xtype: 'displayfield',
+            fieldLabel: 'Name',
             fieldLabel: 'Name',
             anchor: '100%'
         },
         {
-            xtype: 'combobox',
+            xtype: 'displayfield',
             name: 'type',
             fieldLabel: 'Type',
             anchor: '100%'

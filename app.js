@@ -41,6 +41,30 @@ Ext.application({
     project: undefined,
     zone: undefined,
 
+    createTab: function( tabPanel, view ) {
+
+        var newPanel  = tabPanel.add(
+            view
+        )
+
+        tabPanel.setActiveTab( newPanel )
+
+        return newPanel
+    },
+
+    findActiveTabByTitle: function( tabPanel, title ) {
+        var panels = tabPanel.items.items
+
+        //looking for hidden tabs. returning if we found one
+        for( var key in panels  ) {
+            if( panels[ key ].title === title ) {
+                return panels[ key ]
+            }
+        }
+
+        return undefined
+    },
+
     getActiveProject: function() {
         return this.project
     },

@@ -11,7 +11,8 @@ Ext.define('Spelled.controller.Blueprints', {
         'blueprint.component.Property',
         'blueprint.entity.Edit',
         'blueprint.entity.Details',
-        'blueprint.entity.Components'
+        'blueprint.entity.Components',
+        'blueprint.entity.Property'
     ],
 
     models: [
@@ -32,10 +33,35 @@ Ext.define('Spelled.controller.Blueprints', {
         }
     ],
 
+    isEntityBlueprintTab: function() {
+      var blueprintEditor = Ext.getCmp("BlueprintEditor"),
+          activeTab       = blueprintEditor.getActiveTab()
+
+      return ( activeTab.blueprintType === "entityBlueprint" )
+    },
+
+    isComponentBlueprintTab: function() {
+        var blueprintEditor = Ext.getCmp("BlueprintEditor"),
+            activeTab       = blueprintEditor.getActiveTab()
+
+        return ( activeTab.blueprintType === "componentBlueprint" )
+    },
+
     init: function() {
         this.control({
             'blueprintsnavigator': {
                 activate: this.showBlueprintEditor
+            },
+            'componentblueprintproperty button[action="save"]' : {
+                click: this.saveBlueprint
+            },
+            'componentblueprintproperty button[action="reset"]' : {
+                click: this.resetBlueprint
+            },
+            'componentblueprintproperty > field' : {
+                change: function() {
+                    console.log("change!")
+                }
             },
             'componentblueprintattributeslist': {
                 select: this.showAttributeConfig
@@ -47,6 +73,24 @@ Ext.define('Spelled.controller.Blueprints', {
                 itemdblclick: this.openBlueprint
             }
         })
+    },
+
+    saveBlueprint: function( button, event, record ) {
+        var form = button.up('form'),
+            record = form.getRecord(),
+            values = form.getValues()
+
+        console.log( "Save Blueprint" )
+        console.log( record )
+    },
+
+    resetBlueprint: function( button, event, record ) {
+        var form = button.up('form'),
+            record = form.getRecord(),
+            values = form.getValues()
+
+        console.log( "Reset Blueprint" )
+        console.log( record )
     },
 
     openBlueprint: function( treePanel, record ) {
@@ -77,26 +121,25 @@ Ext.define('Spelled.controller.Blueprints', {
     showAttributeConfig: function( treePanel, record ) {
         if( !record.data.leaf ) return
 
-        var component = Ext.getStore('blueprint.ComponentAttributes').getById( record.internalId )
+        var attribute = Ext.getStore('blueprint.ComponentAttributes').getById( record.internalId )
 
-        if( component ) {
+        if( attribute ) {
+            var propertyView = ( this.isComponentBlueprintTab() )
+                ? Ext.getCmp("BlueprintEditor").getActiveTab().down( 'componentblueprintproperty' )
+                : Ext.getCmp("BlueprintEditor").getActiveTab().down( 'entityblueprintproperty' )
 
-            var propertyView = Ext.getCmp("BlueprintEditor").getActiveTab().down( 'componentblueprintproperty' )
-            propertyView.getForm().loadRecord( component )
+            propertyView.getForm().loadRecord( attribute )
         }
     },
 
     openEntityBlueprint: function( entityBlueprint ) {
         var blueprintEditor = Ext.getCmp("BlueprintEditor"),
-            panels          = blueprintEditor.items.items,
             title           = entityBlueprint.getFullName()
 
-        //looking for hidden tabs. returning if we found one
-        for( var key in panels  ) {
-            if( panels[ key ].title === title ) {
-                return blueprintEditor.setActiveTab( panels[ key ] )
-            }
-        }
+        var foundTab = this.application.findActiveTabByTitle( blueprintEditor, title )
+
+        if( foundTab )
+            return blueprintEditor.setActiveTab( foundTab )
 
         var editView = Ext.create( 'Spelled.view.blueprint.entity.Edit',  {
                 title: title
@@ -119,6 +162,7 @@ Ext.define('Spelled.controller.Blueprints', {
             var store = Ext.getStore( 'blueprint.Components' )
             var componentBlueprint = store.getByBlueprintId( component.get('blueprintId') )
 
+            //TODO: merge config of entitycomponents with blueprints components
             var attributes = []
             Ext.each( componentBlueprint.getAttributes().data.items, function( attribute ) {
                 attributes.push( {
@@ -146,24 +190,19 @@ Ext.define('Spelled.controller.Blueprints', {
 
         components.getStore().setRootNode( rootNode )
 
-
-        var editBlueprint  = blueprintEditor.add(
-            editView
-        )
-        blueprintEditor.setActiveTab( editBlueprint )
+        var newPanel = this.application.createTab( blueprintEditor, editView )
+        newPanel.blueprintType = entityBlueprint.get('type')
     },
 
     openComponentBlueprint: function( componentBlueprint ) {
         var blueprintEditor = Ext.getCmp("BlueprintEditor"),
-            panels          = blueprintEditor.items.items,
             title           = componentBlueprint.getFullName()
 
-        //looking for hidden tabs. returning if we found one
-        for( var key in panels  ) {
-            if( panels[ key ].title === title ) {
-                return blueprintEditor.setActiveTab( panels[ key ] )
-            }
-        }
+
+        var foundTab = this.application.findActiveTabByTitle( blueprintEditor, title )
+
+        if( foundTab )
+            return blueprintEditor.setActiveTab( foundTab )
 
         var editView = Ext.create( 'Spelled.view.blueprint.component.Edit',  {
                 title: title
@@ -197,12 +236,8 @@ Ext.define('Spelled.controller.Blueprints', {
 
         attributes.getStore().setRootNode( rootNode )
 
-
-        var editBlueprint  = blueprintEditor.add(
-            editView
-        )
-        blueprintEditor.setActiveTab( editBlueprint )
-
+        var newPanel = this.application.createTab( blueprintEditor, editView )
+        newPanel.blueprintType = componentBlueprint.get('type')
     },
 
     showBlueprintEditor : function( ) {

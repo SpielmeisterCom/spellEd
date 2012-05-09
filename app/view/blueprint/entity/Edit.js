@@ -31,7 +31,7 @@ Ext.define('Spelled.view.blueprint.entity.Edit', {
                             xtype: 'entityblueprintcomponentslist'
                         },
                         {
-                            xtype: 'componentblueprintproperty'
+                            xtype: 'entityblueprintproperty'
                         }
                     ]
                 },

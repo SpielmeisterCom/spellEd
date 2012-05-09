@@ -200,28 +200,21 @@ Ext.define('Spelled.controller.Zones', {
     },
 
     editZone: function( zone ) {
-        var zoneEditor = Ext.getCmp('ZoneEditor')
+        var zoneEditor = Ext.getCmp('ZoneEditor'),
+            title = "Source: " + zone.getId()
 
-        var panels = zoneEditor.items.items
+        var foundTab = this.application.findActiveTabByTitle( zoneEditor, title )
 
-        var title = "Source: " + zone.getId()
+        if( foundTab )
+            return zoneEditor.setActiveTab( foundTab )
 
-        //looking for hidden tabs. returning if we found one
-        for( var key in panels  ) {
-            if( panels[ key ].title === title ) {
-                return zoneEditor.setActiveTab( panels[ key ] )
+        var view = Ext.create( 'Spelled.view.zone.Edit',  {
+                title: title,
+                html:  JSON.stringify( zone.getJSONConfig(), null, '\t' )
             }
-        }
-
-        var editZone  = zoneEditor.add(
-            Ext.create( 'Spelled.view.zone.Edit',  {
-                    title: title,
-                    html:  JSON.stringify( zone.getJSONConfig(), null, '\t' )
-                }
-            )
         )
-        zoneEditor.setActiveTab( editZone )
 
+        this.application.createTab( zoneEditor, view )
     },
 
     renderZoneHelper: function( treePanel, record ) {
@@ -233,18 +226,13 @@ Ext.define('Spelled.controller.Zones', {
     },
 
     renderZone: function( zone ) {
-        var zoneEditor = Ext.getCmp( "ZoneEditor" )
+        var zoneEditor = Ext.getCmp( "ZoneEditor"),
+            title = "Rendered: " + zone.getId()
 
-        var title = "Rendered: " + zone.getId()
+        var foundTab = this.application.findActiveTabByTitle( zoneEditor, title )
 
-        var panels = zoneEditor.items.items
-
-        //looking for hidden tabs. returning if we found one
-        for( var key in panels  ) {
-            if( panels[ key ].title === title ) {
-                return zoneEditor.setActiveTab( panels[ key ] )
-            }
-        }
+        if( foundTab )
+            return zoneEditor.setActiveTab( foundTab )
 
         var spellTab = Ext.create( 'Spelled.view.ui.SpelledRendered', {
                 title: title
@@ -259,13 +247,7 @@ Ext.define('Spelled.controller.Zones', {
             iframe
         )
 
-        var editZone  = zoneEditor.add(
-            spellTab
-        )
-
-
-        zoneEditor.setActiveTab( editZone )
-
+        this.application.createTab( zoneEditor, spellTab )
     },
 
     showZoneslist: function( zones ) {
