@@ -4,7 +4,7 @@ Ext.define('Spelled.view.blueprint.component.Property', {
 
     bodyPadding: 10,
     title: 'Property',
-    flex: 1,
+
     buttons: [
         {
             text: "Save",

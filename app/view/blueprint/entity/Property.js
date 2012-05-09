@@ -4,7 +4,7 @@ Ext.define('Spelled.view.blueprint.entity.Property', {
 
     bodyPadding: 10,
     title: 'Property',
-    flex: 1,
+
     buttons: [
         {
             text: "Save",
@@ -18,7 +18,7 @@ Ext.define('Spelled.view.blueprint.entity.Property', {
     items: [
         {
             xtype: 'displayfield',
-            fieldLabel: 'Name',
+            name: 'name',
             fieldLabel: 'Name',
             anchor: '100%'
         },

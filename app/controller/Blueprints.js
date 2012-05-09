@@ -33,20 +33,6 @@ Ext.define('Spelled.controller.Blueprints', {
         }
     ],
 
-    isEntityBlueprintTab: function() {
-      var blueprintEditor = Ext.getCmp("BlueprintEditor"),
-          activeTab       = blueprintEditor.getActiveTab()
-
-      return ( activeTab.blueprintType === "entityBlueprint" )
-    },
-
-    isComponentBlueprintTab: function() {
-        var blueprintEditor = Ext.getCmp("BlueprintEditor"),
-            activeTab       = blueprintEditor.getActiveTab()
-
-        return ( activeTab.blueprintType === "componentBlueprint" )
-    },
-
     init: function() {
         this.control({
             'blueprintsnavigator': {
@@ -59,6 +45,17 @@ Ext.define('Spelled.controller.Blueprints', {
                 click: this.resetBlueprint
             },
             'componentblueprintproperty > field' : {
+                change: function() {
+                    console.log("change!")
+                }
+            },
+            'entityblueprintproperty button[action="save"]' : {
+                click: this.saveBlueprint
+            },
+            'entityblueprintproperty button[action="reset"]' : {
+                click: this.resetBlueprint
+            },
+            'entityblueprintproperty > field' : {
                 change: function() {
                     console.log("change!")
                 }
@@ -123,13 +120,8 @@ Ext.define('Spelled.controller.Blueprints', {
 
         var attribute = Ext.getStore('blueprint.ComponentAttributes').getById( record.internalId )
 
-        if( attribute ) {
-            var propertyView = ( this.isComponentBlueprintTab() )
-                ? Ext.getCmp("BlueprintEditor").getActiveTab().down( 'componentblueprintproperty' )
-                : Ext.getCmp("BlueprintEditor").getActiveTab().down( 'entityblueprintproperty' )
-
-            propertyView.getForm().loadRecord( attribute )
-        }
+        var propertyView = Ext.getCmp("BlueprintEditor").getActiveTab().down( 'form' )
+        propertyView.getForm().loadRecord( attribute )
     },
 
     openEntityBlueprint: function( entityBlueprint ) {
@@ -191,7 +183,6 @@ Ext.define('Spelled.controller.Blueprints', {
         components.getStore().setRootNode( rootNode )
 
         var newPanel = this.application.createTab( blueprintEditor, editView )
-        newPanel.blueprintType = entityBlueprint.get('type')
     },
 
     openComponentBlueprint: function( componentBlueprint ) {
@@ -237,7 +228,6 @@ Ext.define('Spelled.controller.Blueprints', {
         attributes.getStore().setRootNode( rootNode )
 
         var newPanel = this.application.createTab( blueprintEditor, editView )
-        newPanel.blueprintType = componentBlueprint.get('type')
     },
 
     showBlueprintEditor : function( ) {
