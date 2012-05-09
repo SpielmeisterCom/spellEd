@@ -90,7 +90,10 @@ Ext.define('Spelled.controller.Blueprints', {
         Ext.each(
             componentBlueprint.getAttributes().data.items,
             function( attribute ) {
-                componentConfig.config[ attribute.get('name') ] = ( attribute.get('name') === values.name ) ? values.default : attribute.get('default')
+                //TODO: Converting types and only insert keys and changes
+                if( values.default != attribute.get('default') ) {
+                    componentConfig.config[ attribute.get('name') ] = ( attribute.get('name') === values.name ) ? values.default : attribute.get('default')
+                }
             }
         )
 
