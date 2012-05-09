@@ -82,6 +82,7 @@ Ext.define('Spelled.controller.Entities', {
         if( entityBlueprint ) {
             Ext.each( entityBlueprint.getComponents().data.items, function( component ) {
                 component.setBlueprintConfig( component.get('blueprintId') )
+                record.getComponents().add( component )
             } )
 
             record.set( values )
