@@ -163,10 +163,12 @@ Ext.define('Spelled.controller.Blueprints', {
     showAttributeConfig: function( treePanel, record ) {
         if( !record.data.leaf ) return
 
-        var attribute = Ext.getStore('blueprint.ComponentAttributes').getById( record.internalId )
+        var attribute = Ext.getStore('blueprint.ComponentAttributes').getById( record.getId() )
 
-        var propertyView = Ext.getCmp("BlueprintEditor").getActiveTab().down( 'form' )
-        propertyView.getForm().loadRecord( attribute )
+        if( attribute ) {
+            var propertyView = Ext.getCmp("BlueprintEditor").getActiveTab().down( 'form' )
+            propertyView.getForm().loadRecord( attribute )
+        }
     },
 
     openEntityBlueprint: function( entityBlueprint ) {
@@ -192,39 +194,43 @@ Ext.define('Spelled.controller.Blueprints', {
 
         var components = editView.down( 'entityblueprintcomponentslist' )
 
-        var children = []
+        var rootNode = components.getStore().setRootNode( {
+                text: entityBlueprint.getFullName(),
+                expanded: true
+            }
+        )
 
         Ext.each( entityBlueprint.getComponents().data.items, function( component ) {
 
-            var componentBlueprint = Ext.getStore( 'blueprint.Components' ).getByBlueprintId( component.get('blueprintId') )
-
-            //TODO: merge config of entitycomponents with blueprints components
-            var attributes = []
-            Ext.each( componentBlueprint.getAttributes().data.items, function( attribute ) {
-                attributes.push( {
-                    text      : attribute.get('name'),
-                    id        : attribute.getId(),
-                    expanded  : true,
-                    leaf      : true
-                } )
-            })
-
-            children.push( {
+            var node = rootNode.createNode ( {
                 text      : component.get('blueprintId'),
-                children  : attributes,
                 id        : component.getId(),
                 expanded  : true,
                 leaf      : false
             } )
+
+            var componentBlueprint = Ext.getStore( 'blueprint.Components' ).getByBlueprintId( component.get('blueprintId') )
+
+            //TODO: merge config of entitycomponents with blueprints components
+            Ext.each( componentBlueprint.getAttributes().data.items, function( attribute ) {
+
+                node.appendChild(
+                    node.createNode( {
+                            text      : attribute.get('name'),
+                            id        : attribute.getId(),
+                            expanded  : true,
+                            leaf      : true
+                        }
+                    )
+                )
+
+            })
+
+            rootNode.appendChild(
+                node
+            )
+
         })
-
-        var rootNode = {
-            text: entityBlueprint.getFullName(),
-            expanded: true,
-            children: children
-        }
-
-        components.getStore().setRootNode( rootNode )
 
         var tab = this.application.createTab( blueprintEditor, editView )
         tab.blueprint = entityBlueprint
@@ -254,23 +260,22 @@ Ext.define('Spelled.controller.Blueprints', {
 
         var attributes = editView.down( 'componentblueprintattributeslist' )
 
-        var children = []
+        var rootNode = attributes.getStore().setRootNode( {
+                text: componentBlueprint.getFullName(),
+                expanded: true
+            }
+        )
+
         Ext.each( componentBlueprint.getAttributes().data.items, function( attribute ) {
-            children.push( {
-                text      : attribute.get('name'),
-                id        : attribute.getId(),
-                expanded  : true,
-                leaf      : true
-            } )
+            rootNode.appendChild(
+                rootNode.createNode ( {
+                    text      : attribute.get('name'),
+                    id        : attribute.getId(),
+                    expanded  : true,
+                    leaf      : true
+                } )
+            )
         })
-
-        var rootNode = {
-            text: componentBlueprint.getFullName(),
-            expanded: true,
-            children: children
-        }
-
-        attributes.getStore().setRootNode( rootNode )
 
         var tab = this.application.createTab( blueprintEditor, editView )
         tab.blueprint = componentBlueprint
