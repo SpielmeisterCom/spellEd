@@ -81,7 +81,7 @@ Ext.define('Spelled.controller.Entities', {
 
         if( entityBlueprint ) {
             Ext.each( entityBlueprint.getComponents().data.items, function( component ) {
-                component.setBlueprintConfig( )
+                component.mergeWithBlueprintConfig( )
                 record.getComponents().add( component )
             } )
 
@@ -147,8 +147,9 @@ Ext.define('Spelled.controller.Entities', {
                 leaf      : false
             } )
 
-            var configuration = entity.getComponents()
-            Ext.each( configuration.data.items, function( component ) {
+            entity.mergeWithBlueprintConfig()
+
+            Ext.each( entity.getComponents().data.items, function( component ) {
 
                 node.appendChild(
                     node.createNode( {

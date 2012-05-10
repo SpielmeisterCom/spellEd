@@ -15,7 +15,7 @@ Ext.define('Spelled.model.config.Component', {
         Ext.getStore( 'config.Components' ).add( this )
     },
 
-    setBlueprintConfig: function( ) {
+    mergeWithBlueprintConfig: function( ) {
         var blueprintComponent = Ext.getStore( 'blueprint.Components').getByBlueprintId( this.get('blueprintId') )
 
         //TODO: config wird falschrum überschrieben
