@@ -15,11 +15,8 @@ Ext.define('Spelled.model.config.Component', {
         Ext.getStore( 'config.Components' ).add( this )
     },
 
-    setBlueprintConfig: function( blueprintId ) {
-        var store = Ext.getStore( 'blueprint.Components')
-
-        //TODO: mapping von id zu jsonid der blueprint fixen
-        var blueprintComponent = store.getByBlueprintId( blueprintId )
+    setBlueprintConfig: function( ) {
+        var blueprintComponent = Ext.getStore( 'blueprint.Components').getByBlueprintId( this.get('blueprintId') )
 
         //TODO: config wird falschrum überschrieben
         var blueprintConfig =  {}

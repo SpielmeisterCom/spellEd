@@ -64,7 +64,7 @@ Ext.define('Spelled.controller.Blueprints', {
                 select: this.showAttributeConfig
             },
             'entityblueprintcomponentslist': {
-                select: this.showAttributeConfig
+                select: this.showEntityAttributeConfig
             },
             'blueprintstreelist': {
                 itemdblclick: this.openBlueprint
@@ -166,9 +166,31 @@ Ext.define('Spelled.controller.Blueprints', {
         var attribute = Ext.getStore('blueprint.ComponentAttributes').getById( record.getId() )
 
         if( attribute ) {
-            var propertyView = Ext.getCmp("BlueprintEditor").getActiveTab().down( 'form' )
-            propertyView.getForm().loadRecord( attribute )
+            this.fillAttributeConfigView( attribute )
         }
+    },
+
+    showEntityAttributeConfig: function( treePanel, record ) {
+        if( !record.data.leaf ) return
+
+        var attribute = Ext.getStore('blueprint.ComponentAttributes').getById( record.getId() )
+
+        if( attribute ) {
+
+            var component = Ext.getStore('config.Components').getById( record.parentNode.getId() )
+
+            var config = component.get('config')
+            if( config[ attribute.get('name') ] ) {
+                attribute.set('default', config[ attribute.get('name') ])
+            }
+
+            this.fillAttributeConfigView( attribute )
+        }
+    },
+
+    fillAttributeConfigView: function( attribute ) {
+        var propertyView = Ext.getCmp("BlueprintEditor").getActiveTab().down( 'form' )
+        propertyView.getForm().loadRecord( attribute )
     },
 
     openEntityBlueprint: function( entityBlueprint ) {

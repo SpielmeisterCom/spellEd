@@ -34,10 +34,7 @@ Ext.onReady(function() {
                 url: api,
                 disableCaching : false,
                 success: function( response ){
-                    var text = response.responseText
-
-                    Ext.direct.Manager.addProvider( JSON.parse( text ) )
-
+                    Ext.direct.Manager.addProvider( JSON.parse( response.responseText ) )
                     lock()
                 }
             })
