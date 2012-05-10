@@ -1,12 +1,41 @@
 Ext.define('Spelled.controller.Projects', {
     extend: 'Ext.app.Controller',
 
+    views: [
+        'project.Create'
+    ],
+
     models: [
         'Project'
     ],
 
-    createProject: function() {
-        console.log( "create project" )
+    init: function() {
+        this.control({
+            'createproject button[action="createProject"]': {
+                click: this.createProject
+            }
+        })
+    },
+
+    showCreateProject: function() {
+        var View = this.getProjectCreateView()
+
+        var view = new View()
+        view.show()
+    },
+
+    createProject: function ( button, event, record ) {
+        var window = button.up('window'),
+            form   = window.down('form'),
+            record = form.getRecord(),
+            values = form.getValues()
+
+        SpellBuild.ProjectActions.initDirectory( '/tmp/', '/tmp/config.json', function( provider, response ) {
+            console.log( response )
+
+            window.close()
+        })
+
     },
 
     loadProject: function() {
