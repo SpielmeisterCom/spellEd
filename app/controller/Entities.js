@@ -40,7 +40,7 @@ Ext.define('Spelled.controller.Entities', {
     showListContextMenu: function( view, record, item, index, e, options ) {
 
         if( !record.data.leaf ) {
-            var entity = Ext.getStore('config.Entities').getById( record.internalId )
+            var entity = Ext.getStore('config.Entities').getById( record.getId() )
 
             if( entity ) {
                 var menuController = this.application.getController('Spelled.controller.Menu')
@@ -48,7 +48,7 @@ Ext.define('Spelled.controller.Entities', {
             }
 
         } else {
-            var component = Ext.getStore('config.Components').getById( record.internalId )
+            var component = Ext.getStore('config.Components').getById( record.getId() )
 
             if( component ) {
                 var menuController = this.application.getController('Spelled.controller.Menu')
@@ -126,7 +126,7 @@ Ext.define('Spelled.controller.Entities', {
     getComponentConfig: function( record ) {
         if( !record.data.leaf ) return
 
-        var component = Ext.getStore('config.Components').getById( record.internalId )
+        var component = Ext.getStore('config.Components').getById( record.getId() )
 
         if( component ) {
             var componentsController = this.application.getController('Spelled.controller.Components')
@@ -135,38 +135,33 @@ Ext.define('Spelled.controller.Entities', {
     },
 
     showEntitylist: function( entities ) {
+        var rootNode = Ext.ComponentManager.get( "EntityList").getStore().getRootNode()
+        rootNode.removeAll()
 
-        var children = []
         Ext.each( entities.data.items, function( entity ) {
-            var componentsAsChildren = []
+
+            var node = rootNode.createNode( {
+                text      : entity.get('name'),
+                id        : entity.getId(),
+                expanded  : true,
+                leaf      : false
+            } )
 
             var configuration = entity.getComponents()
             Ext.each( configuration.data.items, function( component ) {
 
-                componentsAsChildren.push( {
-                        text         : component.get('blueprintId'),
-                        leaf         : true,
-                        id           : component.getId()
-                    }
+                node.appendChild(
+                    node.createNode( {
+                            text         : component.get('blueprintId'),
+                            leaf         : true,
+                            id           : component.getId()
+                        }
+                    )
                 )
             })
 
-            children.push( {
-                text      : entity.get('name'),
-                id        : entity.getId(),
-                expanded: true,
-                leaf      : ( entities.data.items.length === 0 ) ? true : false,
-                children  : componentsAsChildren
-            } )
+            rootNode.appendChild( node )
         })
 
-        var rootNode = {
-            text: "Entities",
-            expanded: true,
-            children: children
-        };
-
-        var entitiesPanel = Ext.ComponentManager.get( "EntityList" )
-        entitiesPanel.getStore().setRootNode( rootNode )
-    }
+     }
 });

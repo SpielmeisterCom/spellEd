@@ -190,13 +190,14 @@ Ext.define('Spelled.controller.Zones', {
     getEntityList: function( treePanel, record ) {
         if( !record.data.leaf ) return
 
-        var zone = this.getConfigZonesStore().getById( record.internalId )
+        var zone = this.getConfigZonesStore().getById( record.getId() )
 
-        this.application.setActiveZone( zone )
+        if( zone ) {
+            this.application.setActiveZone( zone )
 
-        var entitiesController = this.application.getController('Spelled.controller.Entities')
-        entitiesController.showEntitylist( zone.getEntities() )
-
+            var entitiesController = this.application.getController('Spelled.controller.Entities')
+            entitiesController.showEntitylist( zone.getEntities() )
+        }
     },
 
     editZone: function( zone ) {
@@ -220,7 +221,7 @@ Ext.define('Spelled.controller.Zones', {
     renderZoneHelper: function( treePanel, record ) {
         if( !record.data.leaf ) return
 
-        var zone = this.getConfigZonesStore().getById( record.internalId )
+        var zone = this.getConfigZonesStore().getById( record.getId() )
 
         this.renderZone( zone )
     },
@@ -251,23 +252,18 @@ Ext.define('Spelled.controller.Zones', {
     },
 
     showZoneslist: function( zones ) {
+        var rootNode = Ext.ComponentManager.get( "ZonesTree" ).getStore().getRootNode()
+        rootNode.removeAll()
 
-        var children = []
         Ext.each( zones.data.items, function( zone ) {
-            children.push( {
-                text      : zone.getId(),
-                id        : zone.getId(),
-                leaf      : true
-            } )
+            rootNode.appendChild(
+                rootNode.createNode( {
+                        text      : zone.getId(),
+                        id        : zone.getId(),
+                        leaf      : true
+                    }
+                )
+            )
         })
-
-        var rootNode = {
-            text: "Zones",
-            expanded: true,
-            children: children
-        }
-
-        var zonesPanel = Ext.ComponentManager.get( "ZonesTree" )
-        zonesPanel.getStore().setRootNode( rootNode )
     }
 });

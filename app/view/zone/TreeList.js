@@ -7,6 +7,8 @@ Ext.define('Spelled.view.zone.TreeList' ,{
     title : 'All Zones',
     store : 'ZonesTree',
 
+    rootVisible: false,
+
     tbar: [
         {
             text: "Create",
