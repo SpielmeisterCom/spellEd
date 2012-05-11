@@ -5,7 +5,7 @@ Ext.require([
 
 var apis = [
     '/api',
-    //'http://localhost:8080/api'
+    'http://localhost:8080/api'
 ]
 
 var after = function(times, func) {
