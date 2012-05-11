@@ -27,26 +27,37 @@ Ext.define('Spelled.controller.Projects', {
     createProject: function ( button, event, record ) {
         var window = button.up('window'),
             form   = window.down('form'),
-            record = form.getRecord(),
-            values = form.getValues()
-
-        SpellBuild.ProjectActions.initDirectory( '/tmp/', '/tmp/config.json', function( provider, response ) {
-            console.log( response )
+            values = form.getValues(),
+            me     = this
 
 
+        Spelled.ProjectActions.create( values.name , function( provider, response ) {
 
-            window.close()
+            if( response.result !== false ) {
+                var projectDirectory = response.result,
+                    configFilePath   = projectDirectory + '/config.json'
+
+
+//TODO: replace with ext-direct from spelljs
+//                SpellBuild.ProjectActions.initDirectory( projectDirectory, configFilePath, function( provider, response ) {
+//                    console.log( response )
+//
+                    me.loadProject( configFilePath )
+                    window.close()
+//                })
+
+            } else {
+
+            }
         })
-
     },
 
-    loadProject: function() {
+    loadProject: function( id ) {
         var me = this
 
         var Project = this.getProjectModel()
 
-        //TODO: remove dummy project
-        Project.load( 1, {
+        Project.load( id, {
             success: function( project ) {
                 me.getZonesList( project )
                 me.application.setActiveProject( project )

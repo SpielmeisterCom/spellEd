@@ -22,28 +22,28 @@ define(
     ) {
         'use strict'
 
-        var root = 'data/'
         var blueprintsPath = 'data/blueprints/'
 
+        return function( projectsRoot ) {
 
-        var util = createUtil( root )
+            var util = createUtil( projectsRoot )
 
-        /**
-         *
-         * ExtDirectFunctions
-         *
-         */
+            /**
+             *
+             * ExtDirectFunctions
+             *
+             */
 
-        var listBlueprints = function( req, res, payload, next ) {
-            var rootPath = blueprintsPath
-            return util.listing( rootPath, true, req, res, payload, next )
-        }
+            var listBlueprints = function( req, res, payload, next ) {
+                var rootPath = blueprintsPath
+                return util.listing( rootPath, true, req, res, payload, next )
+            }
 
-        return function(){
+
             return {
-                ProjectActions            : createProjectApi( root ) ,
-                ComponentBlueprintActions : createComponentApi( root ),
-                EntityBlueprintActions    : createEntityApi( root ),
+                ProjectActions            : createProjectApi( projectsRoot ) ,
+                ComponentBlueprintActions : createComponentApi( projectsRoot ),
+                EntityBlueprintActions    : createEntityApi( projectsRoot ),
                 BlueprintsActions : [
                     {
                         name: "getTree",

@@ -15,6 +15,8 @@ require(
     ) {
         "use strict"
 
+        var projectsRoot = 'data/'
+
         var app = connect()
             .use( connect.favicon() )
             .use( connect.logger('dev') )
@@ -22,7 +24,7 @@ require(
                 extDirect(
                     'router/',
                     'Spelled',
-                    createExtDirectApi()
+                    createExtDirectApi( projectsRoot )
                 )
             )
             .use( connect.static('public') )

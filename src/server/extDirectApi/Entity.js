@@ -16,66 +16,63 @@ define(
         _
     ) {
         'use strict'
-
-        var util = undefined
-
-        var getAllEntityBlueprints = function( req, res, payload, next ) {
-            var tmpPath = util.getPath( "blueprints/spell/entity/" )
-            if ( !tmpPath ) return next()
-
-            // check if we have a directory
-            var stat = fs.statSync( tmpPath )
-
-            if (!stat.isDirectory()) return next()
-
-            return util.getDirFilesAsObjects( tmpPath )
-        }
-
-        /**
-         *  Entity Blueprints Actions
-         */
-
-        var readEntityBlueprint = function( req, res, payload, next ) {
-            var tmpPath = util.getPath(  payload[0].id )
-
-            return util.readFile( tmpPath )
-        }
-
-        var updateEntityBlueprint = function( req, res, payload, next ) {
-            var entity = payload[ 0 ],
-                tmpPath      = entity.id
-
-            var result = _.pick( entity, 'name', 'namespace', 'type')
-
-            var components = []
-            _.each(
-                entity.getComponents,
-                function( component ) {
-                    components.push(
-                        _.pick( component, 'blueprintId', 'config' )
-                    )
-                }
-            )
-
-            result.components = components
-
-            util.writeFile( path, JSON.stringify( result, null, "\t" ) )
-
-            return result
-        }
-
-        var deleteEntityBlueprint = function( req, res, payload, next ) {
-            return "errol"
-        }
-
-        var createEntityBlueprint = function( req, res, payload, next ) {
-            return "errol"
-        }
-
-
         return function( root ) {
 
-            util = createUtil( root )
+            var util = createUtil( root )
+
+            var getAllEntityBlueprints = function( req, res, payload, next ) {
+                var tmpPath = util.getPath( "blueprints/spell/entity/" )
+                if ( !tmpPath ) return next()
+
+                // check if we have a directory
+                var stat = fs.statSync( tmpPath )
+
+                if (!stat.isDirectory()) return next()
+
+                return util.getDirFilesAsObjects( tmpPath )
+            }
+
+            /**
+             *  Entity Blueprints Actions
+             */
+
+            var readEntityBlueprint = function( req, res, payload, next ) {
+                var tmpPath = util.getPath(  payload[0].id )
+
+                return util.readFile( tmpPath )
+            }
+
+            var updateEntityBlueprint = function( req, res, payload, next ) {
+                var entity = payload[ 0 ],
+                    tmpPath      = entity.id
+
+                var result = _.pick( entity, 'name', 'namespace', 'type')
+
+                var components = []
+                _.each(
+                    entity.getComponents,
+                    function( component ) {
+                        components.push(
+                            _.pick( component, 'blueprintId', 'config' )
+                        )
+                    }
+                )
+
+                result.components = components
+
+                util.writeFile( path, JSON.stringify( result, null, "\t" ) )
+
+                return result
+            }
+
+            var deleteEntityBlueprint = function( req, res, payload, next ) {
+                return "errol"
+            }
+
+            var createEntityBlueprint = function( req, res, payload, next ) {
+                return "errol"
+            }
+
 
             return [
                 {

@@ -22,10 +22,11 @@ define(
          *
          */
 
-        var getPath = function( requestedPath ) {
+        var getPath = function( requestedPath, checkIfExists ) {
             var normalize = path.normalize,
                 join = path.join,
-                pathExistsSync = path.existsSync
+                pathExistsSync = path.existsSync,
+                checkIfExists = ( checkIfExists !== undefined ) ? checkIfExists : true
 
             var dir = decodeURIComponent( requestedPath),
                 filePath  = normalize(
@@ -33,7 +34,7 @@ define(
                 )
 
             // null byte(s), bad request
-            if (~filePath.indexOf('\0') || 0 != filePath.indexOf(root) || !pathExistsSync( filePath ))
+            if (~filePath.indexOf('\0') || 0 != filePath.indexOf(root) || ( checkIfExists && !pathExistsSync( filePath ) ) )
                 return false
             else
                 return filePath
