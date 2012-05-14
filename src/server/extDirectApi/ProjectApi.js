@@ -1,5 +1,5 @@
 define(
-    'server/extDirectApi/Project',
+    'server/extDirectApi/ProjectApi',
     [
         'path',
         'fs',

@@ -1,5 +1,5 @@
 define(
-    'server/extDirectApi/Component',
+    'server/extDirectApi/blueprints/createComponentApi',
     [
         'path',
         'fs',
@@ -16,21 +16,9 @@ define(
         _
     ) {
         'use strict'
-        return function( root ) {
+        return function( root, spellBlueprintsRootPath ) {
 
             var util = createUtil( root )
-
-            var getAllComponentBlueprints = function( req, res, payload, next ) {
-                var tmpPath = util.getPath( "blueprints/spell/component/" )
-                if ( !path ) return next()
-
-                // check if we have a directory
-                var stat = fs.statSync( tmpPath )
-
-                if (!stat.isDirectory()) return next()
-
-                return util.getDirFilesAsObjects( tmpPath )
-            }
 
             /**
              *  Component Blueprints Actions
@@ -74,11 +62,6 @@ define(
             }
 
             return [
-                {
-                    name: "getAll",
-                    len: 0,
-                    func: getAllComponentBlueprints
-                },
                 {
                     name: "read",
                     len: 1,

@@ -15,7 +15,8 @@ require(
     ) {
         "use strict"
 
-        var projectsRoot = 'data/'
+        var projectsRoot = 'projects/'
+        var spellBlueprintsPath = 'blueprints/'
 
         var app = connect()
             .use( connect.favicon() )
@@ -24,11 +25,10 @@ require(
                 extDirect(
                     'router/',
                     'Spelled',
-                    createExtDirectApi( projectsRoot )
+                    createExtDirectApi( projectsRoot, spellBlueprintsPath )
                 )
             )
             .use( connect.static('public') )
-            .use( connect.static('data') )
 
         http.Server(app).listen(3000);
         console.log('Server started on port 3000');

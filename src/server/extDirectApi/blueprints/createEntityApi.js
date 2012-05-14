@@ -1,5 +1,5 @@
 define(
-    'server/extDirectApi/Entity',
+    'server/extDirectApi/blueprints/createEntityApi',
     [
         'path',
         'fs',
@@ -16,21 +16,10 @@ define(
         _
     ) {
         'use strict'
-        return function( root ) {
+        return function( root, spellBlueprintsRootPath ) {
 
-            var util = createUtil( root )
-
-            var getAllEntityBlueprints = function( req, res, payload, next ) {
-                var tmpPath = util.getPath( "blueprints/spell/entity/" )
-                if ( !tmpPath ) return next()
-
-                // check if we have a directory
-                var stat = fs.statSync( tmpPath )
-
-                if (!stat.isDirectory()) return next()
-
-                return util.getDirFilesAsObjects( tmpPath )
-            }
+            //TODO: spellSDK only read access, merge with project blueprints etc.
+            var util      = createUtil( root )
 
             /**
              *  Entity Blueprints Actions
@@ -43,8 +32,7 @@ define(
             }
 
             var updateEntityBlueprint = function( req, res, payload, next ) {
-                var entity = payload[ 0 ],
-                    tmpPath      = entity.id
+                var entity = payload[ 0 ]
 
                 var result = _.pick( entity, 'name', 'namespace', 'type')
 
@@ -75,11 +63,6 @@ define(
 
 
             return [
-                {
-                    name: "getAll",
-                    len: 0,
-                    func: getAllEntityBlueprints
-                },
                 {
                     name: "read",
                     len: 1,

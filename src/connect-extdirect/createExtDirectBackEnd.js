@@ -240,7 +240,7 @@ define(
 
 							} catch(e) {
                                 console.log( e )
-								return next( )
+                                return next()
 							}
 						}
 					};

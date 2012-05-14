@@ -110,11 +110,11 @@ var startEditor = function() {
 
         launch: function() {
 
-            Spelled.EntityBlueprintActions.getAll( function( provider, response ) {
+            Spelled.BlueprintsActions.getAllEntitiesBlueprints( function( provider, response ) {
                 Ext.getStore('blueprint.Entities').loadDataViaReader( response.result )
             })
 
-            Spelled.ComponentBlueprintActions.getAll( function( provider, response ) {
+            Spelled.BlueprintsActions.getAllComponentsBlueprints( function( provider, response ) {
                 Ext.getStore('blueprint.Components').loadDataViaReader( response.result )
             })
 
