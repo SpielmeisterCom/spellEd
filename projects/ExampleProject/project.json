@@ -1,9 +1,9 @@
 {
-    "name" : "ExampleProject",
-    "startZone": "Zone1",
-    "zones": [
-        {
-            "name": "Zone1",
+	"name": "ExampleProject",
+	"startZone": "Zone1",
+	"zones": [
+		{
+			"name": "Zone1",
             "entities": [
                 {
                     "name" : "spacecraft1",
@@ -16,10 +16,6 @@
                     }
                 }
             ]
-        }
-    ]
+		}
+	]
 }
-
-
-
-
