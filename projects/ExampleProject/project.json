@@ -4,18 +4,106 @@
 	"zones": [
 		{
 			"name": "Zone1",
-            "entities": [
-                {
-                    "name" : "spacecraft1",
-                    "blueprintId": "spell/entity/spacecraft",
-                    "components": {
-                        "blueprintId": "spell/component/core/position",
-                        "config": {
-                            "value" : [ 10, 0, 0 ]
-                        }
-                    }
-                }
-            ]
+			"entities": [
+				{
+					"blueprintId": "spell/entity/spacecraft",
+					"name": "spacecraft1",
+					"components": [
+						{
+							"blueprintId": "spell/component/core/position",
+							"config": {
+								"value": [
+									10,
+									0,
+									0
+								]
+							}
+						},
+						{
+							"blueprintId": "spell/component/core/graphics/appearance",
+							"config": {
+								"textureId": "output/assets/textures/ship_player4.png",
+								"rotation": 0,
+								"scale": [
+									1,
+									1
+								],
+								"translation": [
+									0,
+									0,
+									0
+								]
+							}
+						},
+						{
+							"blueprintId": "spell/component/core/graphics/renderData",
+							"config": {
+								"position": [
+									0,
+									0,
+									0
+								],
+								"orientation": 0,
+								"scale": [
+									0,
+									0
+								],
+								"pass": 1,
+								"opacity": 1
+							}
+						}
+					]
+				},
+				{
+					"blueprintId": "spell/entity/spacecraft",
+					"name": "Ship2",
+					"components": [
+						{
+							"blueprintId": "spell/component/core/position",
+							"config": {
+								"value": [
+									0,
+									0,
+									0
+								]
+							}
+						},
+						{
+							"blueprintId": "spell/component/core/graphics/appearance",
+							"config": {
+								"textureId": "output/assets/textures/ship_player4.png",
+								"rotation": 0,
+								"scale": [
+									1,
+									1
+								],
+								"translation": [
+									0,
+									0,
+									0
+								]
+							}
+						},
+						{
+							"blueprintId": "spell/component/core/graphics/renderData",
+							"config": {
+								"position": [
+									0,
+									0,
+									0
+								],
+								"orientation": 0,
+								"scale": [
+									0,
+									0
+								],
+								"pass": 1,
+								"opacity": 1
+							}
+						}
+					]
+				}
+			]
 		}
 	]
 }

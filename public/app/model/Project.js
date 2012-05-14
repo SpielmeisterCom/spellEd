@@ -12,7 +12,6 @@ Ext.define('Spelled.model.Project', {
 
     fields: [
         'name',
-        'configFilePath',
         'startZone'
     ],
 

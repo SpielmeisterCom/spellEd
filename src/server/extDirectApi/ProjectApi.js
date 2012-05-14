@@ -72,8 +72,45 @@ define(
                 return util.readFile( getConfigFilePath(tmpPath) )
             }
 
+            //TODO: don't write blueprintcomponentvalues, maybe the spelljs ext should do this?
             var updateProject = function( req, res, payload, next ) {
-                return "errol"
+                var project = payload[ 0 ]
+
+                var result = _.pick( project, 'name', 'startZone', 'zones')
+                result.zones = []
+
+                _.each(
+                    project.getZones,
+                    function( zone ) {
+                        var zoneResult = _.pick( zone, 'name', 'entities' )
+                        zoneResult.entities = []
+
+                        _.each(
+                            zone.getEntities,
+                            function( entity ) {
+                                var entityResult = _.pick( entity, 'blueprintId', 'name', 'components' )
+                                entityResult.components = []
+
+                                _.each(
+                                    entity.getComponents,
+                                    function( component ) {
+                                        var resultComponent = _.pick( component, 'blueprintId', 'name', 'config' )
+                                        entityResult.components.push( resultComponent )
+                                    }
+                                )
+
+                                zoneResult.entities.push( entityResult )
+                            }
+                        )
+
+                        result.zones.push( zoneResult )
+                    }
+                )
+                var projectFilePath = util.getPath( project.name )
+
+                util.writeFile( getConfigFilePath( projectFilePath ) , JSON.stringify( result, null, "\t" ) )
+
+                return result
             }
 
             var deleteProject = function( req, res, payload, next ) {

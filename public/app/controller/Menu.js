@@ -16,6 +16,9 @@ Ext.define('Spelled.controller.Menu', {
             'spelledmenu [action="showloadProject"]': {
                 click: this.showLoadProject
             },
+            'spelledmenu [action="saveProject"]': {
+                click: this.saveProject
+            },
 
 
             'entitieslistcontextmenu [action="remove"]': {
@@ -105,5 +108,11 @@ Ext.define('Spelled.controller.Menu', {
     showLoadProject: function() {
         var projectController = this.application.getController('Spelled.controller.Projects')
         projectController.showLoadProject()
+    },
+
+    saveProject: function() {
+        var projectController = this.application.getController('Spelled.controller.Projects')
+
+        projectController.saveActiveProject()
     }
 });

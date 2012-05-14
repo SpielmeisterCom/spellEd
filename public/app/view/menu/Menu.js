@@ -19,7 +19,12 @@ Ext.define('Spelled.view.menu.Menu', {
                             tooltip: 'Load a existing Spell-Project',
                             action: 'showloadProject'
                         }]
+
                     }
+                },
+                {
+                    text: "Save",
+                    action: "saveProject"
                 }
             ]
         }

@@ -63,6 +63,12 @@ Ext.define('Spelled.controller.Projects', {
         view.show()
     },
 
+    saveActiveProject: function( ) {
+        var project = this.application.getActiveProject()
+
+        project.save()
+    },
+
     loadProjectAction: function ( button, event, record ) {
         var window = button.up('window'),
             form   = window.down('form'),
