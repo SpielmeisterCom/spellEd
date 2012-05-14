@@ -267,6 +267,8 @@ Ext.define('Spelled.controller.Zones', {
             )
         })
 
-        tree.getSelectionModel().select( rootNode.firstChild  )
+        if( rootNode.hasChildNodes( ) ) {
+            tree.getSelectionModel().select( rootNode.firstChild  )
+        }
     }
 });

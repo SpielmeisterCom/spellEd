@@ -135,7 +135,8 @@ Ext.define('Spelled.controller.Entities', {
     },
 
     showEntitylist: function( entities ) {
-        var rootNode = Ext.ComponentManager.get( "EntityList").getStore().getRootNode()
+        var tree     = Ext.ComponentManager.get( "EntityList"),
+            rootNode = tree.getStore().getRootNode()
         rootNode.removeAll()
 
         Ext.each( entities.data.items, function( entity ) {
@@ -164,5 +165,8 @@ Ext.define('Spelled.controller.Entities', {
             rootNode.appendChild( node )
         })
 
+        if( rootNode.hasChildNodes( ) && rootNode.firstChild.hasChildNodes( ) ) {
+            tree.getSelectionModel().select( rootNode.firstChild.firstChild )
+        }
      }
 });
