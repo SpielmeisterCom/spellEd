@@ -14,13 +14,13 @@ Ext.define('Spelled.view.project.Load' ,{
                     xtype: 'combobox',
                     store: 'Projects',
 
-                    valueField: 'id',
+                    valueField: 'name',
                     displayField:'name',
                     queryMode: 'proxy',
                     forceSelection: true,
 
                     typeAhead: true,
-                    name: 'id',
+                    name: 'name',
                     fieldLabel: 'Select a Project',
                     anchor: '100%',
                     allowBlank:false

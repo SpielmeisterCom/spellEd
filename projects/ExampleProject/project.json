@@ -1,9 +1,6 @@
 {
-    "id": "projects/ExampleProject",
     "name" : "ExampleProject",
-    "configFilePath" : "projects/ExampleProject/config.json",
     "startZone": "Zone1",
-
     "zones": [
         {
             "name": "Zone1",

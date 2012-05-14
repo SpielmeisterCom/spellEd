@@ -20,7 +20,7 @@ define(
         return function( root ) {
 
             var getConfigFilePath = function ( projectsDir ) {
-                return projectsDir + "/config.json"
+                return projectsDir + "/project.json"
             }
 
             var util = createUtil( root )
@@ -33,26 +33,6 @@ define(
                 if( path.existsSync( projectDir ) === false ) {
                     fs.mkdirSync( projectDir, "0755" )
 
-                    //TODO: remove after with spelljs-extdirect
-                    var configFilePath = getConfigFilePath( projectDir )
-                    var project = {
-                        "id": projectDir,
-                        "name" : projectName,
-                        "configFilePath" : configFilePath,
-                        "startZone": "Zone1",
-                        "zones": [
-                            {
-                                "name": "Zone1",
-                                "entities": []
-                            }
-                        ]
-                    }
-
-                    fs.writeFileSync(
-                        configFilePath,
-                        JSON.stringify( project, null, '\t' )
-                    )
-                    //
                     return projectDir
                 } else {
                     return false
@@ -78,7 +58,7 @@ define(
                             var fileContent = fs.readFileSync( getConfigFilePath( projectFilePath ) , 'utf8' )
                             var object = JSON.parse( fileContent )
 
-                            object.id = projectFilePath
+                            object.name = projectDir
                             result.push( object )
                         }
                     }

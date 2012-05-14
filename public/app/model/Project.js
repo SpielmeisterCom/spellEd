@@ -11,11 +11,12 @@ Ext.define('Spelled.model.Project', {
     },
 
     fields: [
-        'id',
         'name',
         'configFilePath',
         'startZone'
     ],
+
+    idProperty: 'name',
 
     hasMany: {
         model: 'Spelled.model.config.Zone',

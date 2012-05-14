@@ -43,16 +43,12 @@ Ext.define('Spelled.controller.Projects', {
 
             if( response.result !== false ) {
                 var projectDirectory = response.result,
-                    configFilePath   = projectDirectory + '/config.json'
+                    configFilePath   = values.name + '/project.json'
 
-
-//TODO: replace with ext-direct from spelljs
-//                SpellBuild.ProjectActions.initDirectory( projectDirectory, configFilePath, function( provider, response ) {
-//                    console.log( response )
-//
+                SpellBuild.ProjectActions.initDirectory( values.name, configFilePath, function( provider, response ) {
                     me.loadProject( projectDirectory )
                     window.close()
-//                })
+                })
 
             } else {
 
@@ -71,21 +67,21 @@ Ext.define('Spelled.controller.Projects', {
         var window = button.up('window'),
             form   = window.down('form'),
             values = form.getValues(),
-            id = values.id || false
+            projectName = values.name || false
 
-        if( !!id ){
-            this.loadProject( id )
+        if( !!projectName ){
+            this.loadProject( projectName )
             window.close()
         }
 
     },
 
-    loadProject: function( id ) {
+    loadProject: function( projectName ) {
         var me = this
 
         var Project = this.getProjectModel()
 
-        Project.load( id, {
+        Project.load( projectName, {
             success: function( project ) {
                 me.getZonesList( project )
                 me.application.setActiveProject( project )
