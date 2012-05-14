@@ -163,7 +163,8 @@ define(
                         } else {
                             result = result.concat( getDirFilesAsObjects( filePath ) )
                         }
-                    })
+                    }
+                )
 
                 return result;
             }

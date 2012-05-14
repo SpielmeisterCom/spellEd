@@ -13,8 +13,8 @@ Ext.define('Spelled.controller.Menu', {
             'spelledmenu [action="showCreateProject"]': {
                 click: this.showCreateProject
             },
-            'spelledmenu [action="loadProject"]': {
-                click: this.loadProject
+            'spelledmenu [action="showloadProject"]': {
+                click: this.showLoadProject
             },
 
 
@@ -102,8 +102,8 @@ Ext.define('Spelled.controller.Menu', {
         projectController.showCreateProject()
     },
 
-    loadProject: function() {
+    showLoadProject: function() {
         var projectController = this.application.getController('Spelled.controller.Projects')
-        projectController.loadProject()
+        projectController.showLoadProject()
     }
 });

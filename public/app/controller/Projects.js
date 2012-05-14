@@ -2,7 +2,12 @@ Ext.define('Spelled.controller.Projects', {
     extend: 'Ext.app.Controller',
 
     views: [
-        'project.Create'
+        'project.Create',
+        'project.Load'
+    ],
+
+    stores: [
+        'Projects'
     ],
 
     models: [
@@ -13,6 +18,9 @@ Ext.define('Spelled.controller.Projects', {
         this.control({
             'createproject button[action="createProject"]': {
                 click: this.createProject
+            },
+            'loadproject button[action="loadProject"]': {
+                click: this.loadProjectAction
             }
         })
     },
@@ -42,7 +50,7 @@ Ext.define('Spelled.controller.Projects', {
 //                SpellBuild.ProjectActions.initDirectory( projectDirectory, configFilePath, function( provider, response ) {
 //                    console.log( response )
 //
-                    me.loadProject( configFilePath )
+                    me.loadProject( projectDirectory )
                     window.close()
 //                })
 
@@ -50,6 +58,26 @@ Ext.define('Spelled.controller.Projects', {
 
             }
         })
+    },
+
+    showLoadProject: function( ) {
+        var View = this.getProjectLoadView()
+
+        var view = new View()
+        view.show()
+    },
+
+    loadProjectAction: function ( button, event, record ) {
+        var window = button.up('window'),
+            form   = window.down('form'),
+            values = form.getValues(),
+            id = values.id || false
+
+        if( !!id ){
+            this.loadProject( id )
+            window.close()
+        }
+
     },
 
     loadProject: function( id ) {

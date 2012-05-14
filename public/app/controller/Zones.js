@@ -252,7 +252,8 @@ Ext.define('Spelled.controller.Zones', {
     },
 
     showZoneslist: function( zones ) {
-        var rootNode = Ext.ComponentManager.get( "ZonesTree" ).getStore().getRootNode()
+        var tree     = Ext.ComponentManager.get( "ZonesTree"),
+            rootNode = tree.getStore().getRootNode()
         rootNode.removeAll()
 
         Ext.each( zones.data.items, function( zone ) {
@@ -265,5 +266,7 @@ Ext.define('Spelled.controller.Zones', {
                 )
             )
         })
+
+        tree.getSelectionModel().select( rootNode.firstChild  )
     }
 });

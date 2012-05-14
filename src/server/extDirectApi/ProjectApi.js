@@ -19,6 +19,10 @@ define(
 
         return function( root ) {
 
+            var getConfigFilePath = function ( projectsDir ) {
+                return projectsDir + "/config.json"
+            }
+
             var util = createUtil( root )
 
             var createProject = function( req, res, payload, next ) {
@@ -30,11 +34,11 @@ define(
                     fs.mkdirSync( projectDir, "0755" )
 
                     //TODO: remove after with spelljs-extdirect
-                    var configFilePath = projectDir + "/config.json"
+                    var configFilePath = getConfigFilePath( projectDir )
                     var project = {
                         "id": projectDir,
                         "name" : projectName,
-                        "configFilePath" : projectDir + "/config.json",
+                        "configFilePath" : configFilePath,
                         "startZone": "Zone1",
                         "zones": [
                             {
@@ -55,10 +59,37 @@ define(
                 }
             }
 
+            var getAll = function( req, res, payload, next ) {
+
+                var files = fs.readdirSync( root )
+                files.sort()
+
+                var result = []
+
+                _.each(
+                    files,
+                    function( projectDir ) {
+                        var projectFilePath = util.getPath( projectDir )
+
+                        var fileStat = fs.statSync( projectFilePath )
+
+                        if( fileStat.isDirectory() ) {
+
+                            var fileContent = fs.readFileSync( getConfigFilePath( projectFilePath ) , 'utf8' )
+                            var object = JSON.parse( fileContent )
+
+                            object.id = projectFilePath
+                            result.push( object )
+                        }
+                    }
+                )
+
+                return result
+            }
+
             var readProject = function( req, res, payload, next ) {
                 var tmpPath = util.getPath( payload[0].id )
-
-                return util.readFile( tmpPath )
+                return util.readFile( getConfigFilePath(tmpPath) )
             }
 
             var updateProject = function( req, res, payload, next ) {
@@ -89,6 +120,11 @@ define(
                     name: "delete",
                     len: 1,
                     func: deleteProject
+                },
+                {
+                    name: 'getAll',
+                    len: 0,
+                    func: getAll
                 }
             ]
         }

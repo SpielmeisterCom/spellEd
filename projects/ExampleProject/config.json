@@ -1,7 +1,7 @@
 {
-    "id": "projects/gvddsfsdfsd",
-    "name" : "Project1",
-    "configFilePath" : "/projects/config.json",
+    "id": "projects/ExampleProject",
+    "name" : "ExampleProject",
+    "configFilePath" : "projects/ExampleProject/config.json",
     "startZone": "Zone1",
 
     "zones": [

@@ -17,7 +17,7 @@ Ext.define('Spelled.view.menu.Menu', {
                         },{
                             text   : 'Load',
                             tooltip: 'Load a existing Spell-Project',
-                            action: 'loadProject'
+                            action: 'showloadProject'
                         }]
                     }
                 }
