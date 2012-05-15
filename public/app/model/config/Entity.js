@@ -43,7 +43,6 @@ Ext.define('Spelled.model.config.Entity', {
                 if( !!component ) {
                     component.mergeWithBlueprintConfig()
                 } else {
-                    console.log( blueprintComponent )
                     blueprintComponent.mergeWithBlueprintConfig()
                     components.add( blueprintComponent )
                 }
