@@ -17,19 +17,31 @@ Ext.define('Spelled.controller.Components', {
 
     },
 
-    showConfig: function( component ) {
-        //TODO: getting Configuration from SpellJS
-
-        var config = {}
-
-        Ext.iterate( component.get('config'), function( key, value ) {
-            if( Ext.isArray( value ) === true ) {
-                config[ key ] = "[" + value.toString() + "]"
-
-            } else {
-                config[ key ] = value.toString()
+    convertValueForGrid: function( value ) {
+        if( Ext.isArray( value ) === true ) {
+            return "[" + value.toString() + "]"
+        } else {
+            try{
+                return eval(value)
+            } catch( e ) {
+                return value
             }
-        })
+        }
+    },
+
+    showConfig: function( component ) {
+        var config = {}
+        Ext.iterate(
+            component.get('config'),
+            function( key, value ) {
+                if( Ext.isObject( value ) && value.isModel ) {
+                    config[ key ] = this.convertValueForGrid( value.get('default') )
+                } else {
+                    config[ key ] = this.convertValueForGrid( value )
+                }
+            },
+            this
+        )
 
         var propertyGrid = Ext.getCmp('ComponentProperty')
 
