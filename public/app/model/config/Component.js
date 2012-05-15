@@ -3,7 +3,8 @@ Ext.define('Spelled.model.config.Component', {
 
     fields: [
         'blueprintId',
-        'config'
+        'config',
+        { name: 'changed', type: 'boolean', defaultValue: false }
     ],
 
     idgen: 'uuid',
@@ -20,9 +21,12 @@ Ext.define('Spelled.model.config.Component', {
 
         //TODO: config wird falschrum überschrieben
         var blueprintConfig =  {}
-        Ext.each( blueprintComponent.getAttributes().data.items, function( attribute ) {
-            blueprintConfig[ attribute.get('name') ] = attribute.get('default')
-        })
+        Ext.each(
+            blueprintComponent.getAttributes().data.items,
+            function( attribute ) {
+                blueprintConfig[ attribute.get('name') ] = attribute
+            }
+        )
 
         var tmp = Ext.Object.merge( blueprintConfig, this.get('config') )
         //TODO: Warum ist trim in der config durch den merge

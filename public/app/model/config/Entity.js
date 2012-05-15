@@ -17,33 +17,39 @@ Ext.define('Spelled.model.config.Entity', {
 
     getComponentByBlueprintId: function( blueprintId ) {
         var result = undefined
-        Ext.each( this.getComponents().data.items, function( component ) {
-            if( component.get('blueprintId') === blueprintId ) {
-                result = component
-                return false
+        Ext.each(
+            this.getComponents().data.items,
+            function( component ) {
+                if( component.get('blueprintId') === blueprintId ) {
+                    result = component
+                    return false
+                }
             }
-        })
+        )
 
         return result
     },
 
     mergeWithBlueprintConfig: function() {
-        var me = this
-
         var entityBlueprint = Ext.getStore( 'blueprint.Entities' ).getByBlueprintId( this.get('blueprintId') )
         var blueprintComponents = entityBlueprint.getComponents()
         var components = this.getComponents()
 
-        Ext.each( blueprintComponents.data.items, function( blueprintComponent ) {
+        Ext.each(
+            blueprintComponents.data.items,
+            function( blueprintComponent ) {
+                var component = this.getComponentByBlueprintId( blueprintComponent.get('blueprintId') )
 
-            var component = me.getComponentByBlueprintId( blueprintComponent.get('blueprintId') )
-
-            if( !!component ) {
-                component.mergeWithBlueprintConfig()
-            } else {
-                components.add( blueprintComponent )
-            }
-        } )
+                if( !!component ) {
+                    component.mergeWithBlueprintConfig()
+                } else {
+                    console.log( blueprintComponent )
+                    blueprintComponent.mergeWithBlueprintConfig()
+                    components.add( blueprintComponent )
+                }
+            },
+            this
+        )
     },
 
     constructor: function() {
