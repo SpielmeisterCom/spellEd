@@ -110,6 +110,11 @@ var startEditor = function() {
 
         launch: function() {
 
+            Ext.get('loading').remove()
+            Ext.get('loading-mask').fadeOut( {
+                remove: true
+            } )
+
             Spelled.BlueprintsActions.getAllEntitiesBlueprints( function( provider, response ) {
                 Ext.getStore('blueprint.Entities').loadDataViaReader( response.result )
             })
@@ -119,6 +124,8 @@ var startEditor = function() {
             })
 
             Ext.create('Spelled.view.ui.SpelledViewport')
+
+            Ext.create( 'Spelled.view.ui.StartScreen').show()
         }
     })
 }

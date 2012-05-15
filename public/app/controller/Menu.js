@@ -5,7 +5,8 @@ Ext.define('Spelled.controller.Menu', {
         'menu.Menu',
         'menu.contextmenu.ZonesList',
         'menu.contextmenu.EntitiesList',
-        'ui.SpelledConsole'
+        'ui.SpelledConsole',
+        'ui.StartScreen'
     ],
 
     init: function() {
@@ -18,6 +19,20 @@ Ext.define('Spelled.controller.Menu', {
             },
             'spelledmenu [action="saveProject"]': {
                 click: this.saveProject
+            },
+
+
+            'startscreen button[action="showCreateProject"]': {
+                click: function( button ) {
+                    button.up('window').close()
+                    this.showCreateProject()
+                }
+            },
+            'startscreen button[action="showLoadProject"]': {
+                click: function( button ) {
+                    button.up('window').close()
+                    this.showLoadProject()
+                }
             },
 
 
