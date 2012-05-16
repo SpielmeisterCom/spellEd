@@ -3,8 +3,18 @@ Ext.define('Spelled.view.asset.Navigator', {
     alias : 'widget.assetsnavigator',
 
     title: "Assets",
-    items:[
 
+    layout: {
+        align: 'stretch',
+        type: 'vbox'
+    },
+
+    items:[
+        {
+            id: "AssetsTree",
+            flex: 1,
+            xtype: 'assetstreelist'
+        }
     ]
 
 });

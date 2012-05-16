@@ -33,6 +33,8 @@ Ext.define('Spelled.controller.Blueprints', {
         }
     ],
 
+    //TODO: Blueprint components get overwritten from entityconfig. strange problem! need to fix ASAP
+
     init: function() {
         this.control({
             'blueprintsnavigator': {

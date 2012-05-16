@@ -116,7 +116,7 @@ define(
                         if( fileStat.isDirectory() ) {
                             fileInfo.cls = "folder"
 
-                        }else {
+                        } else {
                             if( withFileType === true ) {
                                 var fileContent = fs.readFileSync( filePath, 'utf8' )
                                 var object = JSON.parse(fileContent)

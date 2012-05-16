@@ -17,6 +17,8 @@ define(
     ) {
         'use strict'
         return function( root, spellBlueprintsRootPath ) {
+            //TODO: muss raus und mit dem blueprints des projectes funktioniren
+            root = spellBlueprintsRootPath
 
             var util = createUtil( root )
 
@@ -32,7 +34,7 @@ define(
 
             var updateComponentBlueprint = function( req, res, payload, next ) {
                 var component = payload[ 0 ],
-                    tmpPath      = component.id
+                    tmpPath   = component.id
 
                 var result = _.pick( component, 'name', 'namespace', 'type')
 

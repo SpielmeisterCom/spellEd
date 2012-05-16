@@ -19,6 +19,7 @@ define(
         return function( root, spellBlueprintsRootPath ) {
 
             //TODO: spellSDK only read access, merge with project blueprints etc.
+            root = spellBlueprintsRootPath
             var util      = createUtil( root )
 
             /**

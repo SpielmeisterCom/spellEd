@@ -31,9 +31,9 @@ Ext.define('Spelled.model.config.Entity', {
     },
 
     mergeWithBlueprintConfig: function() {
-        var entityBlueprint = Ext.getStore( 'blueprint.Entities' ).getByBlueprintId( this.get('blueprintId') )
-        var blueprintComponents = entityBlueprint.getComponents()
-        var components = this.getComponents()
+        var entityBlueprint     = Ext.getStore( 'blueprint.Entities' ).getByBlueprintId( this.get('blueprintId')),
+            blueprintComponents = entityBlueprint.getComponents(),
+            components          = this.getComponents()
 
         Ext.each(
             blueprintComponents.data.items,

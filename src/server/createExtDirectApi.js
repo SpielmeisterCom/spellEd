@@ -6,6 +6,7 @@ define(
         'server/extDirectApi/createUtil',
         'server/extDirectApi/blueprints/createComponentApi',
         'server/extDirectApi/blueprints/createEntityApi',
+        'server/extDirectApi/createAssetsApi',
         'server/extDirectApi/ProjectApi',
 
         'underscore'
@@ -16,6 +17,7 @@ define(
         createUtil,
         createComponentApi,
         createEntityApi,
+        createAssetsApi,
         createProjectApi,
 
         _
@@ -58,8 +60,9 @@ define(
 
             return {
                 ProjectActions            : createProjectApi( projectsRoot ) ,
-                ComponentBlueprintActions : createComponentApi( projectsRoot = spellBlueprintsRootPath, spellBlueprintsRootPath ),
-                EntityBlueprintActions    : createEntityApi( projectsRoot = spellBlueprintsRootPath, spellBlueprintsRootPath ),
+                ComponentBlueprintActions : createComponentApi( projectsRoot, spellBlueprintsRootPath ),
+                EntityBlueprintActions    : createEntityApi( projectsRoot, spellBlueprintsRootPath ),
+                AssetsActions             : createAssetsApi( projectsRoot ),
                 BlueprintsActions : [
                     {
                         name: "getTree",
