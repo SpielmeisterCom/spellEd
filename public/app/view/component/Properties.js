@@ -21,14 +21,14 @@ Ext.define('Spelled.view.component.Properties', {
 
             var config = component.get( 'config' )
 
-            //TODO: EVAL IS EVIL
-            if( Ext.isString( record.value ) && record.value.match( /\[.*\]/ ) ) {
+            try {
                 config[ record.name ] = eval( record.value )
-            } else {
+            } catch( e ) {
                 config[ record.name ] = record.value
             }
-
             component.set( 'config', config)
+
+            component.setChanged()
         })
     }
 });

@@ -81,8 +81,13 @@ Ext.define('Spelled.controller.Entities', {
 
         if( entityBlueprint ) {
             Ext.each( entityBlueprint.getComponents().data.items, function( component ) {
-                component.mergeWithBlueprintConfig( )
-                record.getComponents().add( component )
+
+                var newComponent = Ext.create( 'Spelled.model.config.Component', {
+                    blueprintId: component.get('blueprintId'),
+                    config: component.get('config')
+                } )
+
+                record.getComponents().add( newComponent )
             } )
 
             record.set( values )

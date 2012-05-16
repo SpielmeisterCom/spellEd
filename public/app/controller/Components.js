@@ -32,9 +32,9 @@ Ext.define('Spelled.controller.Components', {
     showConfig: function( component ) {
         var config = {}
         Ext.iterate(
-            component.get('config'),
+            component.getConfigMergedWithBlueprintConfig(),
             function( key, value ) {
-                if( Ext.isObject( value ) && value.isModel ) {
+                if( Ext.isObject( value ) && !!value.isModel ) {
                     config[ key ] = this.convertValueForGrid( value.get('default') )
                 } else {
                     config[ key ] = this.convertValueForGrid( value )

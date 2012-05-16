@@ -38,13 +38,18 @@ Ext.define('Spelled.model.config.Entity', {
         Ext.each(
             blueprintComponents.data.items,
             function( blueprintComponent ) {
-                blueprintComponent.mergeWithBlueprintConfig()
                 var component = this.getComponentByBlueprintId( blueprintComponent.get('blueprintId') )
 
-                if( !!component ) {
-                    component.mergeWithBlueprintConfig()
-                } else {
-                    components.add( blueprintComponent )
+                if( !component ) {
+
+                    var newComponent = Ext.create( 'Spelled.model.config.Component', {
+                        blueprintId: blueprintComponent.get('blueprintId'),
+                        config: blueprintComponent.get('config')
+                    })
+
+                    components.add(
+                        newComponent
+                    )
                 }
             },
             this

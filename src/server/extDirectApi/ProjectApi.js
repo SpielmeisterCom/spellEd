@@ -88,16 +88,24 @@ define(
                         _.each(
                             zone.getEntities,
                             function( entity ) {
+
                                 var entityResult = _.pick( entity, 'blueprintId', 'name', 'components' )
                                 entityResult.components = []
-
                                 _.each(
                                     entity.getComponents,
                                     function( component ) {
-                                        var resultComponent = _.pick( component, 'blueprintId', 'name', 'config' )
-                                        entityResult.components.push( resultComponent )
+
+                                        if( component.changed === true ) {
+
+                                            var resultComponent = _.pick( component, 'blueprintId', 'name', 'config' )
+                                            entityResult.components.push( resultComponent )
+                                        }
+
                                     }
+
                                 )
+
+                                if( entityResult.components.length === 0 ) delete entityResult.components
 
                                 zoneResult.entities.push( entityResult )
                             }
