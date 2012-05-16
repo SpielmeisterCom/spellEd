@@ -48,7 +48,7 @@ define(
 
                 result.components = components
 
-                util.writeFile( path, JSON.stringify( result, null, "\t" ) )
+                util.writeFile( entity.id, JSON.stringify( result, null, "\t" ) )
 
                 return result
             }
