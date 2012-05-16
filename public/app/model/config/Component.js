@@ -32,6 +32,9 @@ Ext.define('Spelled.model.config.Component', {
             }
         )
 
+        //TODO: the config from entities get overwritten if we do not mark them
+        if( !Ext.isEmpty( this.get('config') ) ) this.setChanged()
+
         var tmp = Ext.Object.merge( blueprintConfig, this.get('config') )
         //TODO: Warum ist trim in der config durch den merge
         delete tmp.trim
