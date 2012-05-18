@@ -91,6 +91,7 @@ Ext.define('Spelled.controller.Projects', {
             success: function( project ) {
                 me.getZonesList( project )
                 me.application.setActiveProject( project )
+                me.application.getController('Spelled.controller.Assets').setProjectNameOfAssetProxy( project.get('name') )
             }
         })
     },

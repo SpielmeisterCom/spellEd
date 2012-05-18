@@ -2,11 +2,13 @@ define(
 	'connect-extdirect/createExtDirectBackEnd',
 	[
 		'mongodb',
-		'querystring'
+		'querystring',
+        'formidable'
 	],
 	function(
 		mongodb,
-		querystring
+		querystring,
+        formidable
 	) {
 		'use strict'
 
@@ -14,74 +16,29 @@ define(
 		/**
 		 * private
 		 */
+		function parseMultipart( request, callback ) {
 
-		function parseMultipart(request, callback) {
-			var parser = multipart.parser(),
-				filesCount = 0,
-				partsCount = 0,
-				data = {};
+			var form  = new formidable.IncomingForm(),
+                data  = {},
+                files = []
 
-			request.setEncoding('binary');
-	//        var iconv = new Iconv('UTF-8', 'ISO-8859-1');
+            form
+                .on('field', function( field, value ) {
+                    data[ field ] = value
+                })
+                .on('file', function( field, file ) {
+                    files.push( {
+                            name: field,
+                            file: file
+                        }
+                    );
+                })
+                .on('end', function() {
+                    data.files = files
+                    callback.call( null, data );
+                })
 
-			parser.headers = request.headers;
-
-			request.addListener("data", function(chunk) {
-				parser.write(chunk);
-			});
-
-			request.addListener("end", function() {
-				parser.close();
-			});
-
-			parser.onPartBegin = function(part) {
-				request.pause();
-				partsCount++;
-				if (part.filename) {
-					filesCount++;
-					var gridStore = new mongodb.GridStore(GEN_DB, part.filename, "w");
-						gridStore.open(function(err, gridStore) {
-							if (err) {
-								sys.puts(err);
-							}
-							request.resume();
-						});
-					data[part.name] = {
-						filename: part.filename,
-						stream: gridStore
-					};
-				} else {
-					data[part.name] = '';
-				}
-			};
-
-			parser.onData = function(chunk) {
-				var part = parser.part;
-				if (part.filename) {
-					request.pause();
-					data[part.name].stream.write(chunk, function(err, stream){
-						request.resume();
-					});
-	//            } else {
-	//                data[part.name] += iconv.convert(chunk).toString('utf8');
-				}
-			};
-
-			parser.onEnd = function() {
-				var i = 0;
-				for (var n in data) {
-					i++;
-					if (data[n].filename) {
-						data[n].stream.close(function(err) {
-							if (err) sys.puts(err);
-						});
-					} else {
-					}
-					if (partsCount == i) {
-						callback.call(null, data);
-					}
-				}
-			};
+            form.parse( request )
 		}
 
 		function parseJson(request, callback) {

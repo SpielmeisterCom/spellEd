@@ -33,8 +33,54 @@ Ext.define('Spelled.controller.Assets', {
             },
             'asseteditor [action="showCreateAsset"]' : {
                 click: this.showCreateAsset
+            },
+            'createasset button[action="createAsset"]' : {
+                click: this.createAsset
             }
         })
+    },
+
+    setProjectNameOfAssetProxy: function( projectName ) {
+        var store    = this.getAssetsTreeStore()
+
+        store.setProxy(
+            {
+                type: 'direct',
+                directFn: Spelled.AssetsActions.getTree,
+                paramOrder: ['node', 'projectName'],
+                extraParams: {
+                    projectName: projectName
+                }
+            }
+        )
+
+        this.refreshList()
+    },
+
+    createAsset: function( button ) {
+        var form    = button.up('form').getForm(),
+            window  = button.up( 'window' ),
+            project = this.application.getActiveProject(),
+            me      = this
+
+        if( form.isValid() ){
+
+            form.submit(
+                {
+                    params: {
+                        projectName: project.get('name')
+                    },
+                    waitMsg: 'Uploading your asset...',
+                    success: function( fp, o ) {
+                        Ext.Msg.alert('Success', 'Your asset "' + o.result.data.name + '" has been uploaded.')
+
+                        me.refreshList()
+
+                        window.close()
+                    }
+                }
+            )
+        }
     },
 
     dropAsset: function() {
@@ -78,6 +124,12 @@ Ext.define('Spelled.controller.Assets', {
         } )
 
         this.application.createTab( assetEditor, view )
+    },
+
+    refreshList: function() {
+        var store    = this.getAssetsTreeStore()
+
+        store.load()
     },
 
     showAssets : function( ) {

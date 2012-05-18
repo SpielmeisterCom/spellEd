@@ -3,12 +3,14 @@ define(
     [
         'path',
         'fs',
+        'mime',
 
         'underscore'
     ],
     function(
         path,
         fs,
+        mime,
 
         _
     ) {
@@ -117,7 +119,7 @@ define(
                             fileInfo.cls = "folder"
 
                         } else {
-                            if( withFileType === true ) {
+                            if( withFileType === true && path.extname( filePath ) === ".json" ) {
                                 var fileContent = fs.readFileSync( filePath, 'utf8' )
                                 var object = JSON.parse(fileContent)
 
@@ -169,8 +171,8 @@ define(
                 return result;
             }
 
-            var writeFile = function ( path, data ) {
-                var tmpPath = getPath( path )
+            var writeFile = function ( path, data, checkIfExists ) {
+                var tmpPath = getPath( path, checkIfExists )
 
                 if( tmpPath ) {
                     try{

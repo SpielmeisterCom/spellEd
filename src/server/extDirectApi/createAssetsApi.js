@@ -4,6 +4,7 @@ define(
         'path',
         'fs',
         'server/extDirectApi/createUtil',
+        'mime',
 
         'underscore'
 
@@ -12,6 +13,7 @@ define(
         path,
         fs,
         createUtil,
+        mime,
 
         _
     ) {
@@ -23,8 +25,33 @@ define(
             var util = createUtil( root )
 
             var createAsset = function( req, res, payload, next ) {
-                var assetName = payload[0]
 
+                var assetName   = payload.name,
+                    projectName = payload.projectName,
+                    files       = payload.files
+
+
+                var Asset = _.first( files )
+
+                var newFileNameWithoutExtension = root + projectName + assetPathPart + "/" + assetName,
+                    filePath                    = newFileNameWithoutExtension +"." + mime.extension( Asset.file.type )
+
+
+                fs.renameSync( Asset.file.path, filePath )
+
+
+                var result = {
+                    name: assetName,
+                    type: Asset.file.type,
+                    path: filePath
+                }
+
+                util.writeFile( newFileNameWithoutExtension + ".json", JSON.stringify( result, null, "\t" ), false )
+
+                return {
+                    success: true,
+                    data: result
+                }
             }
 
             var getAll = function( req, res, payload, next ) {
@@ -49,14 +76,18 @@ define(
 
                 var tmpPath = root + payload[1] +  assetPathPart
 
-                return util.listing( tmpPath, false, req, res, payload, next )
+
+                var result = util.listing( tmpPath, true, req, res, payload, next )
+
+                return result
             }
 
             return [
                 {
                     name: "create",
-                    len: 1,
-                    func: createAsset
+                    len: 0,
+                    func: createAsset,
+                    form_handler: true
                 },
                 {
                     name: "read",
