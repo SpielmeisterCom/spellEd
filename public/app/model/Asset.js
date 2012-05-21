@@ -13,6 +13,7 @@ Ext.define('Spelled.model.Asset', {
     fields: [
         'name',
         'type',
+        'mimeType',
         "path"
     ],
 

@@ -28,7 +28,8 @@ define(
 
                 var assetName   = payload.name,
                     projectName = payload.projectName,
-                    files       = payload.files
+                    files       = payload.files,
+                    type        = payload.type
 
 
                 var Asset = _.first( files )
@@ -42,8 +43,9 @@ define(
 
                 var result = {
                     name: assetName,
-                    type: Asset.file.type,
-                    path: filePath
+                    mimeType: Asset.file.type,
+                    path: filePath,
+                    type: type
                 }
 
                 util.writeFile( newFileNameWithoutExtension + ".json", JSON.stringify( result, null, "\t" ), false )

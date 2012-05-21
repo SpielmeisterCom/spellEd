@@ -10,7 +10,8 @@ Ext.define('Spelled.view.asset.Upload', {
     items: [
         {
             defaults: {
-                anchor: '100%'
+                anchor: '100%',
+                allowBlank: false
             },
             xtype: "form",
             bodyPadding: 10,
@@ -21,9 +22,26 @@ Ext.define('Spelled.view.asset.Upload', {
 
             items: [
                 {
+                    xtype: "combo",
+                    name: 'type',
+                    forceSelection: true,
+                    store: 'asset.Types',
+                    queryMode: 'local',
+                    fieldLabel: "Type",
+                    displayField: 'name',
+                    valueField: 'type'
+                },
+                {
                     xtype: "textfield",
                     name: 'name',
                     fieldLabel: 'Name'
+                },
+                {
+                    xtype: "assetfolderpicker",
+                    name: 'folder',
+                    fieldLabel: 'Import into',
+                    displayField: 'text',
+                    valueField: 'id'
                 },
                 {
                     xtype: 'filefield',
@@ -31,7 +49,6 @@ Ext.define('Spelled.view.asset.Upload', {
                     fieldLabel: 'Asset',
                     labelWidth: 50,
                     msgTarget: 'side',
-                    allowBlank: false,
                     buttonText: 'Select a File...'
                 }
             ],

@@ -6,11 +6,14 @@ Ext.define('Spelled.controller.Assets', {
         'asset.Editor',
         'asset.TreeList',
         'asset.Iframe',
-        'asset.Upload'
+        'asset.Upload',
+        'asset.FolderPicker'
     ],
 
     stores: [
-        'AssetsTree'
+        'asset.Tree',
+        'asset.Types',
+        'asset.FoldersTree'
     ],
 
     models: [
@@ -45,17 +48,22 @@ Ext.define('Spelled.controller.Assets', {
     },
 
     setProjectNameOfAssetProxy: function( projectName ) {
-        var store    = this.getAssetsTreeStore()
 
-        store.setProxy(
-            {
-                type: 'direct',
-                directFn: Spelled.AssetsActions.getTree,
-                paramOrder: ['node', 'projectName'],
-                extraParams: {
-                    projectName: projectName
-                }
+        var proxyConfig = {
+            type: 'direct',
+            directFn: Spelled.AssetsActions.getTree,
+            paramOrder: ['node', 'projectName'],
+            extraParams: {
+                projectName: projectName
             }
+        }
+
+        this.getStore("asset.Tree").setProxy(
+            proxyConfig
+        )
+
+        this.getStore("asset.FoldersTree").setProxy(
+            proxyConfig
         )
 
         this.refreshList()
@@ -140,9 +148,8 @@ Ext.define('Spelled.controller.Assets', {
     },
 
     refreshList: function() {
-        var store    = this.getAssetsTreeStore()
-
-        store.load()
+        this.getStore("asset.Tree").load()
+        this.getStore("asset.FoldersTree").load()
     },
 
     showAssets : function( ) {
