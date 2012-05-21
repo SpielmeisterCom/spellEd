@@ -27,9 +27,7 @@ define(
              */
 
             var readComponentBlueprint = function( req, res, payload, next ) {
-                var tmpPath = util.getPath(  payload[0].id )
-
-                return util.readFile( tmpPath )
+                return util.readFile( payload[0].id )
             }
 
             var updateComponentBlueprint = function( req, res, payload, next ) {

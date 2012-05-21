@@ -54,22 +54,16 @@ define(
                 }
             }
 
-            var getAll = function( req, res, payload, next ) {
-
-            }
-
             var readAsset = function( req, res, payload, next ) {
-                var tmpPath = util.getPath( payload[0].id )
-                return util.readFile( tmpPath )
+                return util.readFile( payload[0].id )
             }
 
             var updateAsset = function( req, res, payload, next ) {
-                var project = payload[ 0 ]
 
             }
 
             var deleteAsset = function( req, res, payload, next ) {
-                return "errol"
+                return util.deleteFile( payload[0].id )
             }
 
             var getTree = function( req, res, payload, next ) {

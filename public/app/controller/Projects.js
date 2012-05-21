@@ -83,15 +83,14 @@ Ext.define('Spelled.controller.Projects', {
     },
 
     loadProject: function( projectName ) {
-        var me = this
-
         var Project = this.getProjectModel()
 
         Project.load( projectName, {
+            scope: this,
             success: function( project ) {
-                me.getZonesList( project )
-                me.application.setActiveProject( project )
-                me.application.getController('Spelled.controller.Assets').setProjectNameOfAssetProxy( project.get('name') )
+                this.getZonesList( project )
+                this.application.setActiveProject( project )
+                this.application.getController('Spelled.controller.Assets').setProjectNameOfAssetProxy( project.get('name') )
             }
         })
     },

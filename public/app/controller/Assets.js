@@ -13,6 +13,10 @@ Ext.define('Spelled.controller.Assets', {
         'AssetsTree'
     ],
 
+    models: [
+        'Asset'
+    ],
+
     refs: [
         {
             ref : 'MainPanel',
@@ -101,29 +105,38 @@ Ext.define('Spelled.controller.Assets', {
         if( !record.data.leaf ) return
 
         var assetEditor = Ext.getCmp('AssetEditor'),
-            assetPath = record.internalId,
             title     = record.internalId
 
-        //TODO: remove after we know how the project files get accessed
-        assetPath = assetPath.substring(
-            assetPath.indexOf( this.application.getActiveProject().get('name') )
-        )
+        var Asset = this.getAssetModel()
 
         var foundTab = this.application.findActiveTabByTitle( assetEditor, title )
 
         if( foundTab )
             return assetEditor.setActiveTab( foundTab )
 
-        var View = this.getAssetIframeView()
-        var view = new View( {
-            title: title,
-            autoEl: {
-                tag : 'iframe',
-                src: assetPath
-            }
-        } )
+        Asset.load( record.internalId , {
+            scope: this,
+            success: function( asset ) {
 
-        this.application.createTab( assetEditor, view )
+                var assetPath = asset.get('path')
+
+                //TODO: remove after we know how the project files get accessed
+                assetPath = assetPath.substring(
+                    assetPath.indexOf( this.application.getActiveProject().get('name') )
+                )
+
+                var View = this.getAssetIframeView()
+                var view = new View( {
+                    title: title,
+                    autoEl: {
+                        tag : 'iframe',
+                        src: assetPath
+                    }
+                } )
+
+                this.application.createTab( assetEditor, view )
+            }
+        })
     },
 
     refreshList: function() {

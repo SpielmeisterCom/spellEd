@@ -126,6 +126,9 @@ define(
                                 fileInfo.cls  = object.type
                                 fileInfo.text = object.name
 
+                            } else if( withFileType === true ) {
+                                // We read only json files or directories
+                                return
                             } else {
                                 fileInfo.cls = "file"
                             }
@@ -186,13 +189,25 @@ define(
                 }
             }
 
+            var deleteFile = function( filePath ) {
+                var filePath = getPath( filePath )
+
+                if ( !filePath ) return
+
+                var stat = fs.statSync( filePath )
+                if ( stat.isDirectory() ) return
+
+                return fs.unlinkSync( filePath )
+            }
+
 
             return {
                 getPath   : getPath,
                 readFile  : readFile,
                 writeFile : writeFile,
                 getDirFilesAsObjects : getDirFilesAsObjects,
-                listing : listing
+                listing : listing,
+                deleteFile: deleteFile
             }
         }
     }
