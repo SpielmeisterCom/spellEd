@@ -27,7 +27,7 @@ define(
             var createAsset = function( req, res, payload, next ) {
 
                 var assetName   = payload.name,
-                    folder      = payload.folder,
+                    folder      = ( payload.folder === "root" ) ? root + payload.projectName + assetPathPart : payload.folder,
                     files       = payload.files,
                     type        = payload.type
 
