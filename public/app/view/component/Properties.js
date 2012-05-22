@@ -5,12 +5,26 @@ Ext.define('Spelled.view.component.Properties', {
 
     title: 'Component Configuration',
 
+    customEditors: {
+        textureId: Ext.create(
+            'Ext.form.ComboBox', {
+                forceSelection: true,
+                displayField: 'name',
+                emptyText    :'-- Select a texture --',
+                valueField: 'path'
+            }
+        )
+    },
+
     source: {
 
     },
 
     constructor: function() {
         this.callParent(arguments)
+
+        //TODO: find a way to set this directly in the custumEditors...
+        this.customEditors.textureId.store = Ext.getStore( "asset.Textures" )
 
         this.on('edit', function( editor, e ) {
             var componentConfigId = e.grid.componentConfigId

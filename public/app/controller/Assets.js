@@ -13,7 +13,9 @@ Ext.define('Spelled.controller.Assets', {
     stores: [
         'asset.Tree',
         'asset.Types',
-        'asset.FoldersTree'
+        'asset.FoldersTree',
+        'asset.Textures',
+        'asset.Sounds'
     ],
 
     models: [

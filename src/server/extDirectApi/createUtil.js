@@ -159,13 +159,13 @@ define(
 
                         var fileStat = fs.statSync( filePath )
 
-                        if( !fileStat.isDirectory() ) {
+                        if( path.extname( filePath ) === ".json" ) {
                             var fileContent = fs.readFileSync( filePath, 'utf8' )
                             var object = JSON.parse(fileContent)
 
                             object.id = filePath
                             result.push( object )
-                        } else {
+                        } else if( fileStat.isDirectory() ) {
                             result = result.concat( getDirFilesAsObjects( filePath ) )
                         }
                     }

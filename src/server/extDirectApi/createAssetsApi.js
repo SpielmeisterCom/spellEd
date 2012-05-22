@@ -57,7 +57,11 @@ define(
             }
 
             var readAsset = function( req, res, payload, next ) {
-                return util.readFile( payload[0].id )
+                if( !! payload[0].id ) {
+                    return util.readFile( payload[0].id )
+                } else {
+                    return getAll()
+                }
             }
 
             var updateAsset = function( req, res, payload, next ) {
@@ -76,6 +80,12 @@ define(
                 var result = util.listing( tmpPath, true, req, res, payload, next )
 
                 return result
+            }
+
+            var getAll = function( req, res, payload, next ) {
+
+                //TODO: find a way to only get ressources assigned to the project
+                return util.getDirFilesAsObjects( root )
             }
 
             return [
