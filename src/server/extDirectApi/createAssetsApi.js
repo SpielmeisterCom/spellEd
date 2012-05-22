@@ -27,14 +27,14 @@ define(
             var createAsset = function( req, res, payload, next ) {
 
                 var assetName   = payload.name,
-                    projectName = payload.projectName,
+                    folder      = payload.folder,
                     files       = payload.files,
                     type        = payload.type
 
 
                 var Asset = _.first( files )
 
-                var newFileNameWithoutExtension = root + projectName + assetPathPart + "/" + assetName,
+                var newFileNameWithoutExtension = folder + "/" + assetName,
                     filePath                    = newFileNameWithoutExtension +"." + mime.extension( Asset.file.type )
 
 

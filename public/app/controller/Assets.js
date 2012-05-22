@@ -72,16 +72,12 @@ Ext.define('Spelled.controller.Assets', {
     createAsset: function( button ) {
         var form    = button.up('form').getForm(),
             window  = button.up( 'window' ),
-            project = this.application.getActiveProject(),
             me      = this
 
         if( form.isValid() ){
 
             form.submit(
                 {
-                    params: {
-                        projectName: project.get('name')
-                    },
                     waitMsg: 'Uploading your asset...',
                     success: function( fp, o ) {
                         Ext.Msg.alert('Success', 'Your asset "' + o.result.data.name + '" has been uploaded.')

@@ -56,21 +56,30 @@ Ext.define('Spelled.controller.Menu', {
         })
     },
 
-    showEntitiesListContextMenu: function( entity, e ) {
-        e.stopEvent()
+    createAndShowView: function( View, event ) {
+        event.stopEvent()
 
-        var View = this.getMenuContextmenuEntitiesListView()
         var view = new View()
-        view.showAt( e.getXY() )
+        view.showAt( event.getXY() )
+
+        return view
+    },
+
+    showEntitiesListContextMenu: function( entity, e ) {
+
+        var view = this.createAndShowView(
+            this.getMenuContextmenuEntitiesListView(),
+            e
+        )
+
         view.setEntity( entity )
     },
 
     showZonesListContextMenu: function( e ) {
-        e.stopEvent()
-
-        var View = this.getMenuContextmenuZonesListView()
-        var view = new View()
-        view.showAt( e.getXY() )
+        this.createAndShowView(
+            this.getMenuContextmenuZonesListView(),
+            e
+        )
     },
 
     showComponentContextMenu: function( component, e ) {
