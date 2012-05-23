@@ -76,7 +76,6 @@ Ext.define('Spelled.controller.Entities', {
             zone   = this.application.getActiveZone(),
             entities = zone.getEntities()
 
-        //TODO: Get converted format from Spell!
         var entityBlueprint = Ext.getStore('blueprint.Entities').getById( values.blueprintId )
 
         if( entityBlueprint ) {

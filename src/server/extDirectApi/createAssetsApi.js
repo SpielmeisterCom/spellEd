@@ -18,7 +18,6 @@ define(
         _
     ) {
         'use strict'
-        //TODO: return error messaged for extdirect and read them in SpellEd
 
         return function( root ) {
             var assetPathPart = "/library/assets"
@@ -95,7 +94,6 @@ define(
 
             var getAll = function( req, res, payload, next ) {
 
-                //TODO: find a way to only get ressources assigned to the project
                 return util.getDirFilesAsObjects( root )
             }
 
