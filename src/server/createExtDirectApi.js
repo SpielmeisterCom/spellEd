@@ -60,7 +60,12 @@ define(
 
                 var blueprints = getAllBlueprints( projectName )
 
-                return blueprints
+                return _.filter(
+                    blueprints,
+                    function( blueprint ) {
+                        return ( blueprint.type === 'entityBlueprint' )
+                    }
+                )
             }
 
             var getAllComponentBlueprints = function( req, res, payload, next ) {
@@ -68,7 +73,12 @@ define(
 
                 var blueprints = getAllBlueprints( projectName )
 
-                return blueprints
+                return _.filter(
+                    blueprints,
+                    function( blueprint ) {
+                        return ( blueprint.type === 'componentBlueprint' )
+                    }
+                )
             }
 
             return {
