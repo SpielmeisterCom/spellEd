@@ -175,6 +175,8 @@ Ext.define('Spelled.controller.Assets', {
     refreshList: function() {
         this.getStore("asset.Tree").load()
         this.getStore("asset.FoldersTree").load()
+        this.getStore("asset.Textures").load()
+        this.getStore("asset.Sounds").load()
     },
 
     showAssets : function( ) {
