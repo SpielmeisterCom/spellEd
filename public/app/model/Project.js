@@ -21,5 +21,9 @@ Ext.define('Spelled.model.Project', {
         model: 'Spelled.model.config.Zone',
         name : 'getZones',
         associationKey: 'zones'
+    },
+
+    getConfigName: function() {
+        return this.get('name') + '/project.json'
     }
 });

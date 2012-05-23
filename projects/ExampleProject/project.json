@@ -18,6 +18,12 @@
 									0
 								]
 							}
+						},
+						{
+							"blueprintId": "spell/component/core/graphics2d/appearance",
+							"config": {
+								"textureId": "projects/ExampleProject/library/assets/textures/Test.gif"
+							}
 						}
 					]
 				}

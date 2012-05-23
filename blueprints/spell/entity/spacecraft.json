@@ -10,13 +10,13 @@
             }
         },
         {
-            "blueprintId" : "spell/component/core/graphics/appearance",
+            "blueprintId" : "spell/component/core/graphics2d/appearance",
             "config" : {
                 "textureId" : "output/assets/textures/ship_player4.png"
             }
         },
         {
-            "blueprintId" : "spell/component/core/graphics/renderData"
+            "blueprintId" : "spell/component/core/graphics2d/renderData"
         }
     ]
 }

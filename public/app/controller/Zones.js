@@ -240,15 +240,22 @@ Ext.define('Spelled.controller.Zones', {
             }
         )
 
-        var iframe = Ext.create( 'Spelled.view.ui.SpelledIframe')
+        var project = this.application.getActiveProject()
 
-        iframe.zoneId = zone.getId()
+        SpellBuild.ProjectActions.executeCreateDebugBuild( "html5", project.get('name'), project.getConfigName() , function( provider, response ) {
 
-        spellTab.add(
-            iframe
-        )
+            var iframe = Ext.create( 'Spelled.view.ui.SpelledIframe')
 
-        this.application.createTab( zoneEditor, spellTab )
+            iframe.zoneId = zone.getId()
+
+            spellTab.add(
+                iframe
+            )
+
+            this.application.createTab( zoneEditor, spellTab )
+
+        })
+
     },
 
     showZoneslist: function( zones ) {

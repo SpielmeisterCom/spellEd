@@ -5,6 +5,7 @@ Ext.define('Spelled.controller.Menu', {
         'menu.Menu',
         'menu.contextmenu.ZonesList',
         'menu.contextmenu.EntitiesList',
+        'menu.contextmenu.AssetsList',
         'ui.SpelledConsole',
         'ui.StartScreen'
     ],
@@ -33,6 +34,14 @@ Ext.define('Spelled.controller.Menu', {
                     button.up('window').close()
                     this.showLoadProject()
                 }
+            },
+
+
+            'assetslistcontextmenu [action="create"]': {
+                click: this.showCreateAsset
+            },
+            'assetslistcontextmenu [action="remove"]': {
+                click: this.removeAsset
             },
 
 
@@ -82,8 +91,30 @@ Ext.define('Spelled.controller.Menu', {
         )
     },
 
+    showAssetsListContextMenu: function( e ) {
+        this.createAndShowView(
+            this.getMenuContextmenuAssetsListView(),
+            e
+        )
+    },
+
     showComponentContextMenu: function( component, e ) {
         e.stopEvent()
+    },
+
+    showCreateAsset: function( ) {
+        var assetsController = this.application.getController( 'Spelled.controller.Assets' )
+        assetsController.showCreateAsset( )
+    },
+
+    removeAsset: function( ) {
+        var tree = Ext.getCmp( 'AssetsTree'),
+            node = tree.getSelectionModel().getLastSelected()
+
+        if( node && node.isLeaf() ) {
+            var assetsController = this.application.getController( 'Spelled.controller.Assets' )
+            assetsController.removeAsset( node.get('id') )
+        }
     },
 
     removeEntity: function( item ) {

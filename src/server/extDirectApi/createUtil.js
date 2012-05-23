@@ -43,13 +43,15 @@ define(
                     pathExistsSync = path.existsSync,
                     checkIfExists = ( checkIfExists !== undefined ) ? checkIfExists : true
 
+                if( !requestedPath) return false
+
                 var dir = decodeURIComponent( requestedPath),
                     filePath  = normalize(
                         ( 0 != requestedPath.indexOf(root) ? join(root, dir) : dir )
                     )
 
                 // null byte(s), bad request
-                if (~filePath.indexOf('\0') || 0 != filePath.indexOf(root) || ( checkIfExists && !pathExistsSync( filePath ) ) )
+                if ( ~filePath.indexOf('\0') || 0 != filePath.indexOf(root) || ( checkIfExists && !pathExistsSync( filePath ) ) )
                     return false
                 else
                     return filePath

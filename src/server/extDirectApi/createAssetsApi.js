@@ -69,7 +69,17 @@ define(
             }
 
             var deleteAsset = function( req, res, payload, next ) {
-                return util.deleteFile( payload[0].id )
+                var filePath     = payload[0].path,
+                    extension    = path.extname( filePath ),
+                    tmpJsonPath      = path.dirname( filePath ) + "/" + path.basename(
+                        filePath , extension
+                    ),
+                    jsonFilePath = tmpJsonPath + ".json"
+
+                util.deleteFile( jsonFilePath )
+                util.deleteFile( filePath )
+
+                return true
             }
 
             var getTree = function( req, res, payload, next ) {
@@ -106,7 +116,7 @@ define(
                     func: updateAsset
                 },
                 {
-                    name: "delete",
+                    name: "destroy",
                     len: 1,
                     func: deleteAsset
                 },

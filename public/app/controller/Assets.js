@@ -35,7 +35,8 @@ Ext.define('Spelled.controller.Assets', {
                 activate: this.showAssets
             },
             'assetstreelist': {
-                itemdblclick: this.openAsset
+                itemdblclick: this.openAsset,
+                itemcontextmenu: this.showListContextMenu
             },
             'AssetEditor': {
                 dragover: this.dropAsset
@@ -47,6 +48,13 @@ Ext.define('Spelled.controller.Assets', {
                 click: this.createAsset
             }
         })
+    },
+
+    showListContextMenu: function( view, record, item, index, e, options ) {
+        e.stopEvent()
+
+        var menuController = this.application.getController('Spelled.controller.Menu')
+        menuController.showAssetsListContextMenu( e )
     },
 
     setProjectNameOfAssetProxy: function( projectName ) {
@@ -103,6 +111,21 @@ Ext.define('Spelled.controller.Assets', {
 
         e.stopPropagation()
         e.preventDefault()
+    },
+
+    removeAsset: function( assetId ) {
+        var Asset = this.getModel('Asset')
+
+        Asset.load(
+            assetId,
+            {
+                scope: this,
+                success: function( asset ) {
+                    asset.destroy()
+                    this.refreshList()
+                }
+            }
+        )
     },
 
     showCreateAsset: function() {
