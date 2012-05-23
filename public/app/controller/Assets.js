@@ -83,7 +83,6 @@ Ext.define('Spelled.controller.Assets', {
         var form    = button.up('form').getForm(),
             window  = button.up( 'window' ),
             project = this.application.getActiveProject()
-            me      = this
 
         if( form.isValid() ){
 
@@ -93,13 +92,17 @@ Ext.define('Spelled.controller.Assets', {
                         projectName: project.get('name')
                     },
                     waitMsg: 'Uploading your asset...',
-                    success: function( fp, o ) {
-                        Ext.Msg.alert('Success', 'Your asset "' + o.result.data.name + '" has been uploaded.')
+                    success:
+                        Ext.bind(
+                            function( fp, o ) {
+                                Ext.Msg.alert('Success', 'Your asset "' + o.result.data.name + '" has been uploaded.')
 
-                        me.refreshList()
+                                this.refreshList()
 
-                        window.close()
-                    }
+                                window.close()
+                            },
+                            this
+                        )
                 }
             )
         }

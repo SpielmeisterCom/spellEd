@@ -141,9 +141,18 @@ Ext.define('Spelled.controller.Zones', {
 
     reloadZone: function( button ) {
         var panel  = button.up('panel'),
+            project = this.application.getActiveProject(),
             iframe = panel.down( 'spellediframe' )
 
-        iframe.el.dom.src = iframe.el.dom.src
+        SpellBuild.ProjectActions.executeCreateDebugBuild(
+            "html5",
+            project.get('name'),
+            project.getConfigName(),
+            function() {
+                iframe.el.dom.src = iframe.el.dom.src
+            }
+        )
+
     },
 
     toggleState: function( button ) {
