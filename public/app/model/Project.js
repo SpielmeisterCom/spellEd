@@ -24,6 +24,6 @@ Ext.define('Spelled.model.Project', {
     },
 
     getConfigName: function() {
-        return this.get('name') + '/project.json'
+        return 'project.json'
     }
 });

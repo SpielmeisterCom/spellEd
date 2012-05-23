@@ -29,7 +29,7 @@ Ext.define('Spelled.controller.Zones', {
     init: function() {
 
         var dispatchPostMessages = function( event ) {
-				var buildServerOrigin = 'http://localhost:8080'
+            var buildServerOrigin = 'http://localhost:8080'
 
             if ( event.origin !== buildServerOrigin ){
                 console.log( 'event.origin: ' + event.origin )
@@ -38,50 +38,17 @@ Ext.define('Spelled.controller.Zones', {
                 return
             }
 
-            if( event.data.action === 'getConfiguration' ) {
+            if( event.data.action === 'initialized' ) {
 
                 var cmp = Ext.getCmp( event.data.extId )
 
-                var zone = Ext.getStore('config.Zones').getById( cmp.zoneId )
-
-                var entities = []
-                var components = []
-
-
-                Ext.getStore('blueprint.Entities').each(
-                    function( record ) {
-                        entities.push( record.data )
-                    }
-                )
-
-                Ext.getStore('blueprint.Components').each(
-                    function( record ) {
-                        var result = record.data
-                        var attributes = []
-
-                        Ext.each( record.getAttributes().data.items, function( attribute ) {
-                            attributes.push( attribute.data )
-                        } )
-
-                        result.attributes = attributes
-                        components.push( result )
-                    }
-                )
-
-                var result = {
-                    zone: zone.getJSONConfig(),
-                    entityBlueprints: entities,
-                    componentBlueprints: components
-                }
-
                 cmp.el.dom.contentWindow.postMessage(
-						{
-                    id: cmp.id,
-                    type: "setConfiguration",
-                    data: result
-                	},
-						buildServerOrigin
-						)
+                    {
+                        id: cmp.id,
+                        type: "run"
+                    },
+                    buildServerOrigin
+                )
 
             }
         }
@@ -242,19 +209,26 @@ Ext.define('Spelled.controller.Zones', {
 
         var project = this.application.getActiveProject()
 
-        SpellBuild.ProjectActions.executeCreateDebugBuild( "html5", project.get('name'), project.getConfigName() , function( provider, response ) {
+        var createTab = function( provider, response ) {
 
-            var iframe = Ext.create( 'Spelled.view.ui.SpelledIframe')
+            var iframe = Ext.create( 'Spelled.view.ui.SpelledIframe', {
+                projectName: project.get('name')
+            })
 
             iframe.zoneId = zone.getId()
 
-            spellTab.add(
-                iframe
-            )
+            spellTab.add( iframe )
 
             this.application.createTab( zoneEditor, spellTab )
 
-        })
+        }
+
+        SpellBuild.ProjectActions.executeCreateDebugBuild(
+            "html5",
+            project.get('name'),
+            project.getConfigName(),
+            Ext.bind( createTab, this )
+        )
 
     },
 
