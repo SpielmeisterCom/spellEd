@@ -110,11 +110,6 @@ var startEditor = function() {
             'Blueprints'
         ],
 
-        stores: [
-            'blueprint.Components',
-            'blueprint.Entities'
-        ],
-
         project: undefined,
         zone: undefined,
 

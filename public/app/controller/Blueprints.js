@@ -23,7 +23,9 @@ Ext.define('Spelled.controller.Blueprints', {
 
     stores: [
         'BlueprintsTree',
-        'blueprint.ComponentAttributes'
+        'blueprint.ComponentAttributes',
+        'blueprint.Components',
+        'blueprint.Entities'
     ],
 
     refs: [
@@ -74,6 +76,26 @@ Ext.define('Spelled.controller.Blueprints', {
         })
     },
 
+    refreshBlueprintStores: function() {
+      var projectName = this.application.getActiveProject().get('name')
+
+      this.loadBlueprintStores( projectName )
+    },
+
+    loadBlueprintStores: function( projectName ) {
+        Spelled.BlueprintsActions.getAllEntitiesBlueprints( projectName, function( provider, response ) {
+            var store = Ext.getStore('blueprint.Entities')
+            store.removeAll()
+            store.loadDataViaReader( response.result )
+        })
+
+        Spelled.BlueprintsActions.getAllComponentsBlueprints( projectName, function( provider, response ) {
+            var store = Ext.getStore('blueprint.Components')
+            store.removeAll()
+            store.loadDataViaReader( response.result )
+        })
+    },
+
     saveEntityBlueprint: function( button, event, record ) {
         var form = button.up('form'),
             record = form.getRecord(),
@@ -111,6 +133,7 @@ Ext.define('Spelled.controller.Blueprints', {
 
         if( !!ownerModel ) {
             ownerModel.save( )
+            this.refreshBlueprintStores()
         }
 
     },
@@ -126,6 +149,7 @@ Ext.define('Spelled.controller.Blueprints', {
 
         if( !!ownerModel ) {
             ownerModel.save( )
+            this.refreshBlueprintStores()
         }
     },
 
