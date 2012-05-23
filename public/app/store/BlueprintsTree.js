@@ -7,6 +7,6 @@ Ext.define('Spelled.store.BlueprintsTree', {
     proxy: {
         type: 'direct',
         directFn: Spelled.BlueprintsActions.getTree,
-        paramOrder: ['node']
+        paramOrder: [ 'node', 'projectName' ]
     }
 });

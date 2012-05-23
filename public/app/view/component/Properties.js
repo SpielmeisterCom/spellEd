@@ -6,6 +6,7 @@ Ext.define('Spelled.view.component.Properties', {
     title: 'Component Configuration',
 
     customEditors: {
+        //TODO: when a assigned asset gets removed, the field will disappear
         textureId: Ext.create(
             'Ext.form.ComboBox', {
                 forceSelection: true,

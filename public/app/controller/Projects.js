@@ -85,6 +85,14 @@ Ext.define('Spelled.controller.Projects', {
     loadProject: function( projectName ) {
         var Project = this.getProjectModel()
 
+        Spelled.BlueprintsActions.getAllEntitiesBlueprints( projectName, function( provider, response ) {
+            Ext.getStore('blueprint.Entities').loadDataViaReader( response.result )
+        })
+
+        Spelled.BlueprintsActions.getAllComponentsBlueprints( projectName, function( provider, response ) {
+            Ext.getStore('blueprint.Components').loadDataViaReader( response.result )
+        })
+
         Project.load( projectName, {
             scope: this,
             success: function( project ) {

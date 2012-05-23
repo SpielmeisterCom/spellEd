@@ -1,6 +1,6 @@
 {
 	"name": "Test",
-	"mimeType": "image/gif",
-	"path": "projects/ExampleProject/library/assets/textures/Test.gif",
+	"mimeType": "image/jpg",
+	"path": "projects/ExampleProject/library/assets/textures/Test.jpg",
 	"type": "texture"
 }

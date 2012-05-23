@@ -16,9 +16,7 @@ define(
         _
     ) {
         'use strict'
-        return function( root, spellBlueprintsRootPath ) {
-            //TODO: muss raus und mit dem blueprints des projectes funktioniren
-            root = spellBlueprintsRootPath
+        return function( root ) {
 
             var util = createUtil( root )
 

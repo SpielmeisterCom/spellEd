@@ -165,14 +165,6 @@ var startEditor = function() {
                 remove: true
             } )
 
-            Spelled.BlueprintsActions.getAllEntitiesBlueprints( function( provider, response ) {
-                Ext.getStore('blueprint.Entities').loadDataViaReader( response.result )
-            })
-
-            Spelled.BlueprintsActions.getAllComponentsBlueprints( function( provider, response ) {
-                Ext.getStore('blueprint.Components').loadDataViaReader( response.result )
-            })
-
             Ext.create('Spelled.view.ui.SpelledViewport')
 
             Ext.create( 'Spelled.view.ui.StartScreen').show()

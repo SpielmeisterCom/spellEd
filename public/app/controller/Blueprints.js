@@ -312,6 +312,13 @@ Ext.define('Spelled.controller.Blueprints', {
             panel.hide()
         })
 
+        this.getBlueprintsTreeStore().load( {
+            params: {
+                projectName: this.application.getActiveProject().get('name')
+            }
+        } )
+
         Ext.getCmp('BlueprintEditor').show()
+
     }
 });

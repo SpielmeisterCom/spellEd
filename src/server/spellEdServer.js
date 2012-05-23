@@ -16,7 +16,6 @@ require(
         "use strict"
 
         var projectsRoot = 'projects/'
-        var spellBlueprintsPath = 'blueprints/'
 
         var app = connect()
             .use( connect.favicon() )
@@ -25,7 +24,7 @@ require(
                 extDirect(
                     'router/',
                     'Spelled',
-                    createExtDirectApi( projectsRoot, spellBlueprintsPath )
+                    createExtDirectApi( projectsRoot )
                 )
             )
             .use( connect.static('public'))

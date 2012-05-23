@@ -16,10 +16,8 @@ define(
         _
     ) {
         'use strict'
-        return function( root, spellBlueprintsRootPath ) {
+        return function( root ) {
 
-            //TODO: spellSDK only read access, merge with project blueprints etc.
-            root = spellBlueprintsRootPath
             var util      = createUtil( root )
 
             /**

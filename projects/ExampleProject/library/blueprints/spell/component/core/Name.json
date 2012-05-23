@@ -6,7 +6,7 @@
 		{
 			"name": "firstname",
 			"type": "string",
-			"default": "MAx"
+			"default": "Firstname"
 		},
 		{
 			"name": "lastname",

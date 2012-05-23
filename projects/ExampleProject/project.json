@@ -6,14 +6,14 @@
 			"name": "Zone1",
 			"entities": [
 				{
-					"blueprintId": "spell/entity/spacecraft",
+					"blueprintId": "ExampleProject/entity/spacecraft",
 					"name": "spacecraft1",
 					"components": [
 						{
 							"blueprintId": "spell/component/core/position",
 							"config": {
 								"value": [
-									100,
+									200,
 									0,
 									0
 								]
@@ -22,7 +22,7 @@
 						{
 							"blueprintId": "spell/component/core/graphics2d/appearance",
 							"config": {
-								"textureId": "projects/ExampleProject/library/assets/textures/Test.gif"
+								"textureId": "textures/Test.jpg"
 							}
 						}
 					]

@@ -24,59 +24,72 @@ define(
     ) {
         'use strict'
 
-        return function( projectsRoot, spellBlueprintsRootPath ) {
+        return function( projectsRoot ) {
 
-            var util = createUtil( spellBlueprintsRootPath )
+            var projectBlueprintLibraryPath = "/library/blueprints/"
+            var util = createUtil( projectsRoot )
+
 
             var listBlueprints = function( req, res, payload, next ) {
+                var requestedNode = ( payload[ 0 ] !== 'root' ) ? payload[ 0 ] :  projectsRoot + payload[1] + projectBlueprintLibraryPath
 
-                return util.listing( spellBlueprintsRootPath, true, req, res, payload, next )
+                var tmpPath = util.getPath( requestedNode )
+
+                if ( !tmpPath ) return {}
+
+                return util.listing( tmpPath, true, req, res, payload, next )
+            }
+
+            var getAllBlueprints = function( projectName ) {
+                var blueprintsPath =  projectsRoot + projectName + projectBlueprintLibraryPath,
+                    tmpPath = util.getPath( blueprintsPath )
+
+
+                if ( !tmpPath ) return {}
+
+                // check if we have a directory
+                var stat = fs.statSync( tmpPath )
+
+                if (!stat.isDirectory()) return {}
+
+                return util.getDirFilesAsObjects( tmpPath )
             }
 
             var getAllEntityBlueprints = function( req, res, payload, next ) {
-                var tmpPath = util.getPath( spellBlueprintsRootPath + "/spell/entity/" )
+                var projectName =  payload[0]
 
-                if ( !tmpPath ) return next()
+                var blueprints = getAllBlueprints( projectName )
 
-                // check if we have a directory
-                var stat = fs.statSync( tmpPath )
-
-                if (!stat.isDirectory()) return next()
-
-                return util.getDirFilesAsObjects( tmpPath )
+                return blueprints
             }
 
             var getAllComponentBlueprints = function( req, res, payload, next ) {
-                var tmpPath = util.getPath( spellBlueprintsRootPath + "/spell/component/" )
-                if ( !path ) return next()
+                var projectName = payload[0]
 
-                // check if we have a directory
-                var stat = fs.statSync( tmpPath )
+                var blueprints = getAllBlueprints( projectName )
 
-                if (!stat.isDirectory()) return next()
-
-                return util.getDirFilesAsObjects( tmpPath )
+                return blueprints
             }
 
             return {
                 ProjectActions            : createProjectApi( projectsRoot ) ,
-                ComponentBlueprintActions : createComponentApi( projectsRoot, spellBlueprintsRootPath ),
-                EntityBlueprintActions    : createEntityApi( projectsRoot, spellBlueprintsRootPath ),
+                ComponentBlueprintActions : createComponentApi( projectsRoot ),
+                EntityBlueprintActions    : createEntityApi( projectsRoot ),
                 AssetsActions             : createAssetsApi( projectsRoot ),
                 BlueprintsActions : [
                     {
                         name: "getTree",
-                        len: 1,
+                        len: 2,
                         func: listBlueprints
                     },
                     {
                         name: "getAllEntitiesBlueprints",
-                        len: 0,
+                        len: 1,
                         func: getAllEntityBlueprints
                     },
                     {
                         name: "getAllComponentsBlueprints",
-                        len: 0,
+                        len: 1,
                         func: getAllComponentBlueprints
                     }
                 ]

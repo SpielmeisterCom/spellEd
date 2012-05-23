@@ -43,7 +43,7 @@ define(
                     pathExistsSync = path.existsSync,
                     checkIfExists = ( checkIfExists !== undefined ) ? checkIfExists : true
 
-                if( !requestedPath) return false
+                if( !requestedPath ) return false
 
                 var dir = decodeURIComponent( requestedPath),
                     filePath  = normalize(
@@ -91,12 +91,12 @@ define(
                         )
                 )
 
-                if ( !tmpPath ) return next()
+                if ( !tmpPath ) return {}
 
                 // check if we have a directory
                 var stat = fs.statSync( tmpPath )
 
-                if (!stat.isDirectory()) return next()
+                if (!stat.isDirectory()) return {}
 
                 // fetch files
                 var files = fs.readdirSync(tmpPath)
