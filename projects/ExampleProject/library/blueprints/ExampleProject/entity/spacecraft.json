@@ -14,6 +14,9 @@
             "config" : {
                 "textureId" : "textures/Test.jpg"
             }
+        },
+        {
+            "blueprintId" : "spell/component/core/graphics2d/renderData"
         }
     ]
 }
