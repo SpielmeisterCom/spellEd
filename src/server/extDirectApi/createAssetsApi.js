@@ -18,6 +18,7 @@ define(
         _
     ) {
         'use strict'
+        //TODO: return error messaged for extdirect and read them in SpellEd
 
         return function( root ) {
             var assetPathPart = "/library/assets"

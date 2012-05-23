@@ -115,7 +115,7 @@ Ext.define('Spelled.controller.Assets', {
 
     removeAsset: function( assetId ) {
         var Asset = this.getModel('Asset')
-
+        //TODO: should check for opened Assets and close them. In general on deleting and creating models, we should always check for tabs, fields etc. which uses these stores
         Asset.load(
             assetId,
             {
