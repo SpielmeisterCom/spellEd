@@ -84,16 +84,20 @@ Ext.define('Spelled.controller.Zones', {
             },
             'zonesnavigator': {
                 activate: function() {
-                    var mainPanel = this.getMainPanel()
-
-                    Ext.each( mainPanel.items.items, function( panel ) {
-                        panel.hide()
-                    })
-
-                    Ext.getCmp('ZoneEditor').show()
+                    this.showZonesEditor()
                 }
             }
         })
+    },
+
+    showZonesEditor: function() {
+        var mainPanel = this.getMainPanel()
+
+        Ext.each( mainPanel.items.items, function( panel ) {
+            panel.hide()
+        })
+
+        Ext.getCmp('ZoneEditor').show()
     },
 
     showCreateZone: function( ) {
@@ -125,7 +129,7 @@ Ext.define('Spelled.controller.Zones', {
         e.stopEvent()
 
         if( record.data.leaf ) {
-            var menuController = this.application.getController('Spelled.controller.Menu')
+            var menuController = this.application.getController('Menu')
             menuController.showZonesListContextMenu( e )
         }
     },
@@ -171,7 +175,7 @@ Ext.define('Spelled.controller.Zones', {
         if( zone ) {
             this.application.setActiveZone( zone )
 
-            var entitiesController = this.application.getController('Spelled.controller.Entities')
+            var entitiesController = this.application.getController('Entities')
             entitiesController.showEntitylist( zone.getEntities() )
         }
     },

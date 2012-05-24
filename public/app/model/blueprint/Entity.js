@@ -1,6 +1,8 @@
 Ext.define('Spelled.model.blueprint.Entity', {
     extend: 'Ext.data.Model',
 
+    BLUEPRINT_TYPE: 'entityBlueprint',
+
     fields: [
         "type",
         "namespace",

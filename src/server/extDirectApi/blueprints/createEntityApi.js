@@ -17,6 +17,7 @@ define(
     ) {
         'use strict'
         return function( root ) {
+            var blueprintPathPart = "/library/blueprints"
 
             var util      = createUtil( root )
 
@@ -51,11 +52,36 @@ define(
             }
 
             var deleteEntityBlueprint = function( req, res, payload, next ) {
-                return "errol"
+                var jsonFilePath = payload[0].id
+
+                util.deleteFile( jsonFilePath )
+
+                return true
             }
 
             var createEntityBlueprint = function( req, res, payload, next ) {
-                return "errol"
+                var name        = payload.name,
+                    extension   = ".json",
+                    folder      = ( payload.namespace === "root" ) ? root + payload.projectName + blueprintPathPart : payload.namespace,
+                    filePath    = folder + "/"+ name + extension,
+                    type        = payload.type
+
+                var namespace = util.extractNamespaceFromPath( folder, blueprintPathPart )
+
+                var entity = {
+                    type : type,
+                    namespace : namespace,
+                    name : name,
+                    components : [
+                    ]
+                }
+
+                util.writeFile( filePath , JSON.stringify( component, null, "\t" ), false )
+
+                return {
+                    success: true,
+                    data: entity
+                }
             }
 
 

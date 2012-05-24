@@ -81,12 +81,33 @@ define(
                 )
             }
 
+            var createBlueprint = function( req, res, payload, next ) {
+                var api = ( payload.type === "componentBlueprint" ) ? createComponentApi( projectsRoot ) :  createEntityApi( projectsRoot )
+
+                var apiFunction = _.find(
+                    api,
+                    function( item ) {
+                        return ( item.name === 'create')
+                    }
+                )
+
+                if( apiFunction ) {
+                    apiFunction.func( req, res, payload, next )
+                }
+            }
+
             return {
                 ProjectActions            : createProjectApi( projectsRoot ) ,
                 ComponentBlueprintActions : createComponentApi( projectsRoot ),
                 EntityBlueprintActions    : createEntityApi( projectsRoot ),
                 AssetsActions             : createAssetsApi( projectsRoot ),
                 BlueprintsActions : [
+                    {
+                        name: "createBlueprint",
+                        len: 0,
+                        func: createBlueprint,
+                        form_handler: true
+                    },
                     {
                         name: "getTree",
                         len: 2,

@@ -32,6 +32,12 @@ define(
                 return payload
             }
 
+            var extractNamespaceFromPath = function( filePath, prefix ) {
+               return filePath.substring(
+                    filePath.indexOf( prefix ) + prefix.length + 1
+                )
+            }
+
             /**
              *
              * Main functions
@@ -205,6 +211,7 @@ define(
 
             return {
                 getPath   : getPath,
+                extractNamespaceFromPath: extractNamespaceFromPath,
                 readFile  : readFile,
                 writeFile : writeFile,
                 getDirFilesAsObjects : getDirFilesAsObjects,

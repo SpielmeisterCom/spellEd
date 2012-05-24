@@ -85,7 +85,7 @@ Ext.define('Spelled.controller.Projects', {
     loadProject: function( projectName ) {
         var Project = this.getProjectModel()
 
-        var blueprintsController = this.application.getController( 'Spelled.controller.Blueprints' )
+        var blueprintsController = this.application.getController( 'Blueprints' )
         blueprintsController.loadBlueprintStores( projectName )
 
         Project.load( projectName, {
@@ -93,14 +93,14 @@ Ext.define('Spelled.controller.Projects', {
             success: function( project ) {
                 this.getZonesList( project )
                 this.application.setActiveProject( project )
-                this.application.getController('Spelled.controller.Assets').setProjectNameOfAssetProxy( project.get('name') )
             }
         })
+
     },
 
     getZonesList: function( project ) {
 
-        var zonesController = this.application.getController('Spelled.controller.Zones')
+        var zonesController = this.application.getController('Zones')
 
         zonesController.showZoneslist( project.getZones() )
     }

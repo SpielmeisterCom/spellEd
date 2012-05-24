@@ -4,8 +4,14 @@ Ext.define('Spelled.view.blueprint.Editor', {
 
     title: 'Blueprint Editor',
     titleCollapse: false,
-    activeTab: 0
-
+    activeTab: 0,
+    bbar: [
+        {
+            xtype: 'button',
+            action: 'showCreateBlueprint',
+            text: 'Create a new Blueprint'
+        }
+    ]
 //    ,items: [
 //        {
 //            xtype: 'panel',

@@ -43,7 +43,7 @@ Ext.define('Spelled.controller.Entities', {
             var entity = Ext.getStore('config.Entities').getById( record.getId() )
 
             if( entity ) {
-                var menuController = this.application.getController('Spelled.controller.Menu')
+                var menuController = this.application.getController('Menu')
                 menuController.showEntitiesListContextMenu( entity, e )
             }
 
@@ -51,7 +51,7 @@ Ext.define('Spelled.controller.Entities', {
             var component = Ext.getStore('config.Components').getById( record.getId() )
 
             if( component ) {
-                var menuController = this.application.getController('Spelled.controller.Menu')
+                var menuController = this.application.getController('Menu')
                 menuController.showComponentContextMenu( component, e )
             }
         }
@@ -133,7 +133,7 @@ Ext.define('Spelled.controller.Entities', {
         var component = Ext.getStore('config.Components').getById( record.getId() )
 
         if( component ) {
-            var componentsController = this.application.getController('Spelled.controller.Components')
+            var componentsController = this.application.getController('Components')
             componentsController.showConfig( component )
         }
     },

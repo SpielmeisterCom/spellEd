@@ -5,6 +5,8 @@ Ext.define('Spelled.controller.Blueprints', {
         'blueprint.Editor',
         'blueprint.Navigator',
         'blueprint.TreeList',
+        'blueprint.Create',
+        'blueprint.FolderPicker',
         'blueprint.component.Edit',
         'blueprint.component.Details',
         'blueprint.component.Attributes',
@@ -25,7 +27,9 @@ Ext.define('Spelled.controller.Blueprints', {
         'BlueprintsTree',
         'blueprint.ComponentAttributes',
         'blueprint.Components',
-        'blueprint.Entities'
+        'blueprint.Entities',
+        'blueprint.Types',
+        'blueprint.FoldersTree'
     ],
 
     refs: [
@@ -72,8 +76,64 @@ Ext.define('Spelled.controller.Blueprints', {
             },
             'blueprintstreelist': {
                 itemdblclick: this.openBlueprint
+            },
+            'blueprinteditor [action="showCreateBlueprint"]' : {
+                click: this.showCreateBlueprint
+            },
+            'createblueprint button[action="createBlueprint"]' : {
+                click: this.createBlueprint
+            },
+            'createblueprint > form > combobox[name="type"]' : {
+                select: this.changeBlueprintCreationType
             }
         })
+    },
+
+    changeBlueprintCreationType: function( combo, records ) {
+//        var selectedRecord = records[0]
+//        console.log( arguments )
+//        console.log( "type changed to:" + selectedRecord.get('type') )
+//
+//        if(  selectedRecord.get('type') === Spelled.model.blueprint.Component.BLUEPRINT_TYPE ) {
+//
+//        } else {
+//
+//        }
+    },
+
+    showCreateBlueprint: function() {
+        var View = this.getBlueprintCreateView()
+        var view = new View( )
+        view.show()
+    },
+
+    createBlueprint: function( button ) {
+        var form    = button.up('form').getForm(),
+            window  = button.up( 'window' ),
+            project = this.application.getActiveProject()
+
+        if( form.isValid() ){
+
+            form.submit(
+                {
+                    params: {
+                        projectName: project.get('name')
+                    },
+                    waitMsg: 'Creating a new Blueprint',
+                    success:
+                        Ext.bind(
+                            function( fp, o ) {
+                                Ext.Msg.alert('Success', 'Your blueprint "' + o.result.data.name + '" has been created.')
+
+                                this.refreshStores()
+
+                                window.close()
+                            },
+                            this
+                        )
+                }
+            )
+        }
     },
 
     refreshBlueprintStores: function() {
@@ -107,19 +167,8 @@ Ext.define('Spelled.controller.Blueprints', {
 
         var componentConfig = {
             blueprintId: componentBlueprint.getFullName(),
-            config: {}
+            config: componentBlueprint.mergeComponentConfig( values )
         }
-
-        //Overwrite only the submitted attribute
-        Ext.each(
-            componentBlueprint.getAttributes().data.items,
-            function( attribute ) {
-                //TODO: Converting types and only insert keys and changes
-                if( values.default != attribute.get('default') ) {
-                    componentConfig.config[ attribute.get('name') ] = ( attribute.get('name') === values.name ) ? values.default : attribute.get('default')
-                }
-            }
-        )
 
         //Set the new configuration on the specified component
         Ext.each(
@@ -166,7 +215,7 @@ Ext.define('Spelled.controller.Blueprints', {
 
         var me = this
 
-        if( record.get('cls') === "componentBlueprint" ) {
+        if( record.get('cls') === Spelled.model.blueprint.Component.BLUEPRINT_TYPE ) {
             var ComponentBlueprint = this.getBlueprintComponentModel()
 
             ComponentBlueprint.load( record.getId(), {
@@ -329,6 +378,29 @@ Ext.define('Spelled.controller.Blueprints', {
         tab.blueprint = componentBlueprint
     },
 
+    loadTrees: function() {
+        var projectName = this.application.getActiveProject().get('name')
+
+        this.getBlueprintsTreeStore().load( {
+            params: {
+                projectName: projectName
+            }
+        } )
+
+        this.getBlueprintFoldersTreeStore().load( {
+            params: {
+                projectName: projectName
+            }
+        } )
+    },
+
+    refreshStores: function() {
+        this.loadTrees()
+
+        this.getBlueprintComponentsStore.load()
+        this.getBlueprintEntitiesStore.load()
+    },
+
     showBlueprintEditor : function( ) {
         var mainPanel = this.getMainPanel()
 
@@ -336,11 +408,7 @@ Ext.define('Spelled.controller.Blueprints', {
             panel.hide()
         })
 
-        this.getBlueprintsTreeStore().load( {
-            params: {
-                projectName: this.application.getActiveProject().get('name')
-            }
-        } )
+        this.loadTrees()
 
         Ext.getCmp('BlueprintEditor').show()
 

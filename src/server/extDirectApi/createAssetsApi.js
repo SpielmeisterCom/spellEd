@@ -42,10 +42,7 @@ define(
 
                 fs.renameSync( Asset.file.path, filePath )
 
-
-                var namespace = folder.substring(
-                    folder.indexOf( assetPathPart ) + assetPathPart.length + 1
-                )
+                var namespace = util.extractNamespaceFromPath( folder, assetPathPart )
 
                 var assetId = ( namespace.length > 0 ) ? namespace + "/" + baseName : baseName
 

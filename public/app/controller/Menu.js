@@ -103,7 +103,7 @@ Ext.define('Spelled.controller.Menu', {
     },
 
     showCreateAsset: function( ) {
-        var assetsController = this.application.getController( 'Spelled.controller.Assets' )
+        var assetsController = this.application.getController( 'Assets' )
         assetsController.showCreateAsset( )
     },
 
@@ -112,7 +112,7 @@ Ext.define('Spelled.controller.Menu', {
             node = tree.getSelectionModel().getLastSelected()
 
         if( node && node.isLeaf() ) {
-            var assetsController = this.application.getController( 'Spelled.controller.Assets' )
+            var assetsController = this.application.getController( 'Assets' )
             assetsController.removeAsset( node.get('id') )
         }
     },
@@ -123,7 +123,7 @@ Ext.define('Spelled.controller.Menu', {
         var entity = view.getEntity()
 
         if( entity ) {
-            var entitiesController = this.application.getController( 'Spelled.controller.Entities' )
+            var entitiesController = this.application.getController( 'Entities' )
             entitiesController.deleteEntity( entity )
         }
     },
@@ -132,7 +132,7 @@ Ext.define('Spelled.controller.Menu', {
         var zone = this.application.getActiveZone()
 
         if( zone ) {
-            var zonesController = this.application.getController( 'Spelled.controller.Zones' )
+            var zonesController = this.application.getController( 'Zones' )
             zonesController.deleteZone( zone )
         }
     },
@@ -141,7 +141,7 @@ Ext.define('Spelled.controller.Menu', {
         var zone = this.application.getActiveZone()
 
         if( zone ) {
-            var zonesController = this.application.getController( 'Spelled.controller.Zones' )
+            var zonesController = this.application.getController( 'Zones' )
             zonesController.editZone( zone )
         }
     },
@@ -150,23 +150,23 @@ Ext.define('Spelled.controller.Menu', {
         var zone = this.application.getActiveZone()
 
         if( zone ) {
-            var zonesController = this.application.getController( 'Spelled.controller.Zones' )
+            var zonesController = this.application.getController( 'Zones' )
             zonesController.renderZone( zone )
         }
     },
 
     showCreateProject: function() {
-        var projectController = this.application.getController('Spelled.controller.Projects')
+        var projectController = this.application.getController('Projects')
         projectController.showCreateProject()
     },
 
     showLoadProject: function() {
-        var projectController = this.application.getController('Spelled.controller.Projects')
+        var projectController = this.application.getController('Projects')
         projectController.showLoadProject()
     },
 
     saveProject: function() {
-        var projectController = this.application.getController('Spelled.controller.Projects')
+        var projectController = this.application.getController('Projects')
 
         projectController.saveActiveProject()
     }

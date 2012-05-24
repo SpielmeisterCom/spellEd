@@ -1,5 +1,11 @@
-Ext.define('Spelled.store.asset.FoldersTree', {
-    extend: 'Spelled.store.asset.Tree',
+Ext.define('Spelled.store.blueprint.FoldersTree', {
+    extend: 'Spelled.store.BlueprintsTree',
+
+
+    root: {
+        text: 'Blueprints',
+        expanded: true
+    },
 
     listeners: {
       load: function() {
@@ -11,10 +17,5 @@ Ext.define('Spelled.store.asset.FoldersTree', {
               })
           )
       }
-    },
-
-    root: {
-        text: "Assets",
-        expanded: true
     }
 });

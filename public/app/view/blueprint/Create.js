@@ -1,8 +1,8 @@
-Ext.define('Spelled.view.asset.Upload', {
+Ext.define('Spelled.view.blueprint.Create', {
     extend: 'Ext.Window',
-    alias: 'widget.createasset',
+    alias: 'widget.createblueprint',
 
-    title : 'Add a new Asset to the Project',
+    title : 'Create a new Blueprint',
     modal : true,
 
     closable: true,
@@ -17,7 +17,7 @@ Ext.define('Spelled.view.asset.Upload', {
             bodyPadding: 10,
 
             api: {
-                submit: Spelled.AssetsActions.create
+                submit: Spelled.BlueprintsActions.createBlueprint
             },
 
             items: [
@@ -25,39 +25,31 @@ Ext.define('Spelled.view.asset.Upload', {
                     xtype: "combo",
                     name: 'type',
                     forceSelection: true,
-                    store: 'asset.Types',
+                    store: 'blueprint.Types',
                     queryMode: 'local',
-                    fieldLabel: "Type",
+                    fieldLabel: "Blueprint Type",
                     displayField: 'name',
                     valueField: 'type'
                 },
                 {
-                    xtype: "textfield",
-                    name: 'name',
-                    fieldLabel: 'Name'
-                },
-                {
-                    xtype: "assetfolderpicker",
-                    name: 'folder',
+                    xtype: "blueprintfolderpicker",
+                    name: 'namespace',
                     fieldLabel: 'Import into',
                     displayField: 'text',
                     valueField: 'id'
                 },
                 {
-                    xtype: 'filefield',
-                    name: 'asset',
-                    fieldLabel: 'Asset',
-                    labelWidth: 50,
-                    msgTarget: 'side',
-                    buttonText: 'Select a File...'
+                    xtype: "textfield",
+                    name: 'name',
+                    fieldLabel: 'Name'
                 }
             ],
 
             buttons: [
                 {
                     formBind: true,
-                    text: 'Upload',
-                    action: 'createAsset'
+                    text: 'Create',
+                    action: 'createBlueprint'
                 }
             ]
         }

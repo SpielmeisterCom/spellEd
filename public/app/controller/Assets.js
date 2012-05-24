@@ -53,30 +53,8 @@ Ext.define('Spelled.controller.Assets', {
     showListContextMenu: function( view, record, item, index, e, options ) {
         e.stopEvent()
 
-        var menuController = this.application.getController('Spelled.controller.Menu')
+        var menuController = this.application.getController('Menu')
         menuController.showAssetsListContextMenu( e )
-    },
-
-    setProjectNameOfAssetProxy: function( projectName ) {
-
-        var proxyConfig = {
-            type: 'direct',
-            directFn: Spelled.AssetsActions.getTree,
-            paramOrder: ['node', 'projectName'],
-            extraParams: {
-                projectName: projectName
-            }
-        }
-
-        this.getStore("asset.Tree").setProxy(
-            proxyConfig
-        )
-
-        this.getStore("asset.FoldersTree").setProxy(
-            proxyConfig
-        )
-
-        this.refreshList()
     },
 
     createAsset: function( button ) {
@@ -97,7 +75,7 @@ Ext.define('Spelled.controller.Assets', {
                             function( fp, o ) {
                                 Ext.Msg.alert('Success', 'Your asset "' + o.result.data.name + '" has been uploaded.')
 
-                                this.refreshList()
+                                this.refreshStores()
 
                                 window.close()
                             },
@@ -125,7 +103,7 @@ Ext.define('Spelled.controller.Assets', {
                 scope: this,
                 success: function( asset ) {
                     asset.destroy()
-                    this.refreshList()
+                    this.refreshStores()
                 }
             }
         )
@@ -168,11 +146,27 @@ Ext.define('Spelled.controller.Assets', {
         })
     },
 
-    refreshList: function() {
-        this.getStore("asset.Tree").load()
-        this.getStore("asset.FoldersTree").load()
-        this.getStore("asset.Textures").load()
-        this.getStore("asset.Sounds").load()
+    loadTrees: function() {
+        var projectName = this.application.getActiveProject().get('name')
+
+        this.getAssetTreeStore().load( {
+            params: {
+                projectName: projectName
+            }
+        } )
+
+        this.getAssetFoldersTreeStore().load( {
+            params: {
+                projectName: projectName
+            }
+        } )
+    },
+
+    refreshStores: function() {
+        this.loadTrees()
+
+        this.getAssetTexturesStore().load()
+        this.getAssetSoundsStore().load()
     },
 
     showAssets : function( ) {
@@ -181,6 +175,8 @@ Ext.define('Spelled.controller.Assets', {
         Ext.each( mainPanel.items.items, function( panel ) {
             panel.hide()
         })
+
+        this.loadTrees()
 
         Ext.getCmp('AssetEditor').show()
     }
