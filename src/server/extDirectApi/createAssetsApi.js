@@ -79,12 +79,12 @@ define(
             }
 
             var deleteAsset = function( req, res, payload, next ) {
-                var filePath     = payload[0].path,
-                    extension    = path.extname( filePath ),
-                    tmpJsonPath      = path.dirname( filePath ) + "/" + path.basename(
-                        filePath , extension
+                var jsonFilePath = payload[0].id,
+                    extension    = path.extname( jsonFilePath ),
+                    tmpFilePath  = path.dirname( jsonFilePath ) + "/" + path.basename(
+                        jsonFilePath , extension
                     ),
-                    jsonFilePath = tmpJsonPath + ".json"
+                    filePath = tmpFilePath + "." + payload[0].extension
 
                 util.deleteFile( jsonFilePath )
                 util.deleteFile( filePath )
