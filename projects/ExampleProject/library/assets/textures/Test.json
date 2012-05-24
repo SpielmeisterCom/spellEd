@@ -1,6 +1,8 @@
 {
+    "assetId"  : "textures/Test.jpg",
 	"name": "Test",
 	"mimeType": "image/jpg",
-	"path": "projects/ExampleProject/library/assets/textures/Test.jpg",
+	"namespace": "textures",
+    "extension": "jpg",
 	"type": "texture"
 }

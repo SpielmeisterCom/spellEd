@@ -11,11 +11,15 @@ Ext.define('Spelled.model.Asset', {
     },
 
     fields: [
+        'assetId',
         'name',
         'type',
         'mimeType',
-        "path"
+        'namespace',
+        'extension'
     ],
 
-    idProperty: 'path'
+    getFilePath: function( projectName ) {
+        return projectName + "/library/assets/" + this.get('assetId')
+    }
 });

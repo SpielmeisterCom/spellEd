@@ -154,18 +154,12 @@ Ext.define('Spelled.controller.Assets', {
             scope: this,
             success: function( asset ) {
 
-                var assetPath = asset.get('path')
-
-                assetPath = assetPath.substring(
-                    assetPath.indexOf( this.application.getActiveProject().get('name') )
-                )
-
                 var View = this.getAssetIframeView()
                 var view = new View( {
                     title: title,
                     autoEl: {
                         tag : 'iframe',
-                        src: assetPath
+                        src: asset.getFilePath( this.application.getActiveProject().get('name') )
                     }
                 } )
 

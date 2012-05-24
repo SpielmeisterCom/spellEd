@@ -32,19 +32,29 @@ define(
                     type        = payload.type
 
 
-                var Asset = _.first( files )
+                var Asset     = _.first( files )
+                var extension = mime.extension( Asset.file.type )
 
                 var newFileNameWithoutExtension = folder + "/" + assetName,
-                    filePath                    = newFileNameWithoutExtension +"." + mime.extension( Asset.file.type )
+                    baseName                    = assetName +"." + extension,
+                    filePath                    = newFileNameWithoutExtension + "." + extension
 
 
                 fs.renameSync( Asset.file.path, filePath )
 
 
+                var namespace = folder.substring(
+                    folder.indexOf( assetPathPart ) + assetPathPart.length + 1
+                )
+
+                var assetId = ( namespace.length > 0 ) ? namespace + "/" + baseName : baseName
+
                 var result = {
+                    assetId: assetId,
                     name: assetName,
                     mimeType: Asset.file.type,
-                    path: filePath,
+                    namespace: namespace,
+                    extension: extension,
                     type: type
                 }
 
