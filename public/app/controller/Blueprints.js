@@ -1,6 +1,9 @@
 Ext.define('Spelled.controller.Blueprints', {
     extend: 'Ext.app.Controller',
 
+    BLUEPRINT_TYPE_COMPONENT: 'componentBlueprint',
+    BLUEPRINT_TYPE_ENTITY: 'entityBlueprint',
+
     views: [
         'blueprint.Editor',
         'blueprint.Navigator',
@@ -208,14 +211,13 @@ Ext.define('Spelled.controller.Blueprints', {
     openBlueprint: function( treePanel, record ) {
         if( !record.data.leaf ) return
 
-        var me = this
-
-        if( record.get('cls') === Spelled.model.blueprint.Component.BLUEPRINT_TYPE ) {
+        if( record.get('cls') === this.BLUEPRINT_TYPE_COMPONENT ) {
             var ComponentBlueprint = this.getBlueprintComponentModel()
 
             ComponentBlueprint.load( record.getId(), {
+                scope: this,
                 success: function( componentBlueprint ) {
-                    me.openComponentBlueprint( componentBlueprint )
+                    this.openComponentBlueprint( componentBlueprint )
                 }
             })
 
@@ -223,8 +225,9 @@ Ext.define('Spelled.controller.Blueprints', {
             var EntityBlueprint = this.getBlueprintEntityModel()
 
             EntityBlueprint.load( record.getId(), {
+                scope: this,
                 success: function( entityBlueprint ) {
-                    me.openEntityBlueprint( entityBlueprint )
+                    this.openEntityBlueprint( entityBlueprint )
                 }
             })
         }

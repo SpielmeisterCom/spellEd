@@ -1,8 +1,6 @@
 Ext.define('Spelled.model.blueprint.Component', {
     extend: 'Ext.data.Model',
 
-    BLUEPRINT_TYPE: 'componentBlueprint',
-
     fields: [
         "type",
         "namespace",
