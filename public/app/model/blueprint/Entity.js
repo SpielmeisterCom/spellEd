@@ -16,7 +16,8 @@ Ext.define('Spelled.model.blueprint.Entity', {
     },
 
     getFullName: function() {
-        return this.get('namespace') +"/"+ this.get('name')
+        var namespace = this.get('namespace')
+        return ( namespace.length > 0 ) ? namespace +"/"+ this.get('name') : this.get('name')
     },
 
     requires: ['Spelled.writer.JsonWriter'],

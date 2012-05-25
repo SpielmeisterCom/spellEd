@@ -92,7 +92,7 @@ define(
                 )
 
                 if( apiFunction ) {
-                    apiFunction.func( req, res, payload, next )
+                    return apiFunction.func( req, res, payload, next )
                 }
             }
 

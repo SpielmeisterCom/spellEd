@@ -90,15 +90,7 @@ Ext.define('Spelled.controller.Blueprints', {
     },
 
     changeBlueprintCreationType: function( combo, records ) {
-//        var selectedRecord = records[0]
-//        console.log( arguments )
-//        console.log( "type changed to:" + selectedRecord.get('type') )
-//
-//        if(  selectedRecord.get('type') === Spelled.model.blueprint.Component.BLUEPRINT_TYPE ) {
-//
-//        } else {
-//
-//        }
+
     },
 
     showCreateBlueprint: function() {
@@ -122,15 +114,18 @@ Ext.define('Spelled.controller.Blueprints', {
                     waitMsg: 'Creating a new Blueprint',
                     success:
                         Ext.bind(
-                            function( fp, o ) {
-                                Ext.Msg.alert('Success', 'Your blueprint "' + o.result.data.name + '" has been created.')
+                            function( form, action ) {
+                                Ext.Msg.alert('Success', 'Your blueprint "' + action.result.data.name + '" has been created.')
 
                                 this.refreshStores()
 
                                 window.close()
                             },
                             this
-                        )
+                        ),
+                    failure: function( form, action ) {
+                        Ext.Msg.alert('Failed', action.result)
+                    }
                 }
             )
         }
@@ -397,8 +392,8 @@ Ext.define('Spelled.controller.Blueprints', {
     refreshStores: function() {
         this.loadTrees()
 
-        this.getBlueprintComponentsStore.load()
-        this.getBlueprintEntitiesStore.load()
+        Ext.getStore( 'blueprint.Components' ).load()
+        Ext.getStore( 'blueprint.Entities' ).load()
     },
 
     showBlueprintEditor : function( ) {

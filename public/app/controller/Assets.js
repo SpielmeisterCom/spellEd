@@ -80,7 +80,10 @@ Ext.define('Spelled.controller.Assets', {
                                 window.close()
                             },
                             this
-                        )
+                        ),
+                    failure: function( form, action ) {
+                        Ext.Msg.alert('Failed', action.result)
+                    }
                 }
             )
         }

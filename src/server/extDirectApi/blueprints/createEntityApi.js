@@ -76,7 +76,7 @@ define(
                     ]
                 }
 
-                util.writeFile( filePath , JSON.stringify( component, null, "\t" ), false )
+                util.writeFile( filePath , JSON.stringify( entity, null, "\t" ), false )
 
                 return {
                     success: true,
