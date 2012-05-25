@@ -79,15 +79,17 @@ Ext.define('Spelled.controller.Entities', {
         var entityBlueprint = Ext.getStore('blueprint.Entities').getById( values.blueprintId )
 
         if( entityBlueprint ) {
-            Ext.each( entityBlueprint.getComponents().data.items, function( component ) {
+            entityBlueprint.getComponents().each(
+                function( component ) {
 
-                var newComponent = Ext.create( 'Spelled.model.config.Component', {
-                    blueprintId: component.get('blueprintId'),
-                    config: component.get('config')
-                } )
+                    var newComponent = Ext.create( 'Spelled.model.config.Component', {
+                        blueprintId: component.get('blueprintId'),
+                        config: component.get('config')
+                    } )
 
-                record.getComponents().add( newComponent )
-            } )
+                    record.getComponents().add( newComponent )
+                }
+            )
 
             record.set( values )
 
@@ -143,7 +145,7 @@ Ext.define('Spelled.controller.Entities', {
             rootNode = tree.getStore().getRootNode()
         rootNode.removeAll()
 
-        Ext.each( entities.data.items, function( entity ) {
+        entities.each( function( entity ) {
 
             var node = rootNode.createNode( {
                 text      : entity.get('name'),
@@ -154,7 +156,7 @@ Ext.define('Spelled.controller.Entities', {
 
             entity.mergeWithBlueprintConfig()
 
-            Ext.each( entity.getComponents().data.items, function( component ) {
+            entity.getComponents().each( function( component ) {
 
                 node.appendChild(
                     node.createNode( {

@@ -34,12 +34,27 @@ Ext.define('Spelled.model.blueprint.Component', {
         }
     },
 
+    appendOnTreeNode: function( node ) {
+
+        this.getAttributes().each( function( attribute ) {
+            node.appendChild(
+                node.createNode ( {
+                    text      : attribute.get('name'),
+                    id        : attribute.getId(),
+                    expanded  : true,
+                    leaf      : true
+                } )
+            )
+        })
+
+        return node
+    },
+
     mergeComponentConfig: function( values ) {
         var componentConfig = {}
 
         //Overwrite only the submitted attribute
-        Ext.each(
-            this.getAttributes().data.items,
+        this.getAttributes().each(
             function( attribute ) {
                 //TODO: Converting types and only insert keys and changes
                 if( values.default != attribute.get('default') ) {

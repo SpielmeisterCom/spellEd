@@ -17,8 +17,7 @@ Ext.define('Spelled.model.config.Entity', {
 
     getComponentByBlueprintId: function( blueprintId ) {
         var result = undefined
-        Ext.each(
-            this.getComponents().data.items,
+        this.getComponents().each(
             function( component ) {
                 if( component.get('blueprintId') === blueprintId ) {
                     result = component
@@ -35,8 +34,7 @@ Ext.define('Spelled.model.config.Entity', {
             blueprintComponents = entityBlueprint.getComponents(),
             components          = this.getComponents()
 
-        Ext.each(
-            blueprintComponents.data.items,
+        blueprintComponents.each(
             function( blueprintComponent ) {
                 var component = this.getComponentByBlueprintId( blueprintComponent.get('blueprintId') )
 
@@ -67,7 +65,7 @@ Ext.define('Spelled.model.config.Entity', {
         var components = this.getComponents()
 
         result.components = []
-        Ext.each( components.data.items, function( component ){
+        components.each( function( component ){
             result.components.push( component.getJSONConfig() )
         })
 

@@ -4,5 +4,12 @@ Ext.define('Spelled.view.blueprint.entity.Components' ,{
 
     title: 'Components',
     rootVisible: true,
-    flex: 1
+    flex: 1,
+
+    bbar: [
+        {
+            text: "Add Component",
+            action: "showAddComponent"
+        }
+    ]
 });

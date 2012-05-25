@@ -250,7 +250,7 @@ Ext.define('Spelled.controller.Zones', {
             rootNode = tree.getStore().getRootNode()
         rootNode.removeAll()
 
-        Ext.each( zones.data.items, function( zone ) {
+        zones.each( function( zone ) {
             rootNode.appendChild(
                 rootNode.createNode( {
                         text      : zone.getId(),

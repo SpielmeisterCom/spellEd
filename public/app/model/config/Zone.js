@@ -25,7 +25,7 @@ Ext.define('Spelled.model.config.Zone', {
         var entities = this.getEntities()
 
         result.entities = []
-        Ext.each( entities.data.items, function( entity ) {
+        entities.each( function( entity ) {
             result.entities.push( entity.getJSONConfig() )
         })
 
