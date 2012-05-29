@@ -142,6 +142,7 @@ var startEditor = function() {
         },
 
         setActiveProject: function( project ) {
+            Ext.state.Manager.set( 'projectName', project.get('name') )
             this.project = project
         },
 
@@ -162,7 +163,22 @@ var startEditor = function() {
 
             Ext.create('Spelled.view.ui.SpelledViewport')
 
-            Ext.create( 'Spelled.view.ui.StartScreen').show()
+            var stateProvider = undefined
+            try {
+                stateProvider = Ext.create( 'Ext.state.LocalStorageProvider' )
+            } catch( e ) {
+                console.log( "Browser does not support local storage. Fallback to Cookie storage" )
+                stateProvider = Ext.create( 'Ext.state.CookieProvider')
+            }
+
+            Ext.state.Manager.setProvider( stateProvider )
+
+            var projectName = Ext.state.Manager.get( 'projectName' )
+            if( projectName ) {
+                this.getController('Projects').loadProject( projectName )
+            } else {
+                Ext.create( 'Spelled.view.ui.StartScreen').show()
+            }
         }
     })
 }
