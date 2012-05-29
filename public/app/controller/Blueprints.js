@@ -279,10 +279,11 @@ Ext.define('Spelled.controller.Blueprints', {
         var foundTab = this.application.findActiveTabByTitle( blueprintEditor, title )
 
         if( foundTab )
-            return blueprintEditor.setActiveTab( foundTab )
+            return foundTab
 
         var editView = Ext.create( 'Spelled.view.blueprint.entity.Edit',  {
-                title: title
+                title: title,
+                blueprint : entityBlueprint
             }
         )
 
@@ -292,34 +293,56 @@ Ext.define('Spelled.controller.Blueprints', {
         header.items.items[0].setValue( entityBlueprint.get('type') )
         header.items.items[1].setValue( entityBlueprint.getFullName() )
 
+        var tab = this.application.createTab( blueprintEditor, editView )
 
-        var hasComponentsView = editView.down( 'entityblueprintcomponentslist' )
+        this.refreshEntityBlueprintComponentsList( tab )
+    },
 
-        var rootNode = hasComponentsView.getStore().setRootNode( {
+    refreshEntityBlueprintComponentsList: function( tab ) {
+        var entityBlueprint = tab.blueprint,
+            componentsView  = tab.down( 'entityblueprintcomponentslist' )
+
+        var rootNode = componentsView.getStore().setRootNode( {
                 text: entityBlueprint.getFullName(),
                 expanded: true
             }
         )
 
         this.appendComponentsAttributesOnTreeNode( rootNode, entityBlueprint.getComponents() )
-
-        var tab = this.application.createTab( blueprintEditor, editView )
-        tab.blueprint = entityBlueprint
     },
 
     addComponent: function( button ) {
-        var window = button.up('window'),
-            tree   = window.down('treepanel'),
-            records = tree.getView().getChecked()
+        var window    = button.up('window'),
+            tree      = window.down('treepanel'),
+            records   = tree.getView().getChecked(),
+            tab       = Ext.getCmp("BlueprintEditor").getActiveTab(),
+            componentBlueprintStore = Ext.getStore('blueprint.Components'),
+            entityBlueprint         = tab.blueprint
 
-        console.log( records )
+        Ext.each(
+            records,
+            function( record ) {
 
-        console.log( "ADD this component" )
+                var componentBlueprint = componentBlueprintStore.getById( record.get('id') )
+
+                if( componentBlueprint ) {
+                    var configComponent = Ext.create( 'Spelled.model.config.Component', {
+                        blueprintId : componentBlueprint.getFullName()
+                    })
+
+                    entityBlueprint.getComponents().add( configComponent )
+                }
+            }
+        )
+
+        this.refreshEntityBlueprintComponentsList( tab )
+        window.close()
     },
 
     showAddComponent: function( ) {
         var View = this.getBlueprintEntityComponentsAddView(),
             view = new View(),
+            entityBlueprint          = Ext.getCmp("BlueprintEditor").getActiveTab().blueprint,
             availableComponentsView  = view.down( 'treepanel' ),
             blueprintComponentsStore = Ext.getStore( 'blueprint.Components' )
 
@@ -334,7 +357,7 @@ Ext.define('Spelled.controller.Blueprints', {
 
         blueprintComponentsStore.each(
             function( record ) {
-                var found = -1//entityBlueprint.getComponents().find( 'blueprintId', record.getFullName() )
+                var found = entityBlueprint.getComponents().find( 'blueprintId', record.getFullName() )
 
                 if( found === -1 ) {
                     notAssignedComponents.add( record )
@@ -385,10 +408,11 @@ Ext.define('Spelled.controller.Blueprints', {
         var foundTab = this.application.findActiveTabByTitle( blueprintEditor, title )
 
         if( foundTab )
-            return blueprintEditor.setActiveTab( foundTab )
+            return foundTab
 
         var editView = Ext.create( 'Spelled.view.blueprint.component.Edit',  {
-                title: title
+                title: title,
+                blueprint : componentBlueprint
             }
         )
 

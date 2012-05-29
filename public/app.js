@@ -125,16 +125,20 @@ var startEditor = function() {
         },
 
         findActiveTabByTitle: function( tabPanel, title ) {
-            var panels = tabPanel.items.items
+            var foundPanel = undefined
 
             //looking for hidden tabs. returning if we found one
-            for( var key in panels  ) {
-                if( panels[ key ].title === title ) {
-                    return panels[ key ]
+            tabPanel.items.each(
+                function( panel ) {
+                    if( panel.title === title ) {
+                        foundPanel = panel
+                        tabPanel.setActiveTab( foundPanel )
+                        return foundPanel
+                    }
                 }
-            }
+            )
 
-            return undefined
+            return foundPanel
         },
 
         getActiveProject: function() {

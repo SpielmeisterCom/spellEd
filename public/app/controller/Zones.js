@@ -187,7 +187,7 @@ Ext.define('Spelled.controller.Zones', {
         var foundTab = this.application.findActiveTabByTitle( zoneEditor, title )
 
         if( foundTab )
-            return zoneEditor.setActiveTab( foundTab )
+            return foundTab
 
         var view = Ext.create( 'Spelled.view.zone.Edit',  {
                 title: title,
@@ -213,7 +213,7 @@ Ext.define('Spelled.controller.Zones', {
         var foundTab = this.application.findActiveTabByTitle( zoneEditor, title )
 
         if( foundTab )
-            return zoneEditor.setActiveTab( foundTab )
+            return foundTab
 
         var spellTab = Ext.create( 'Spelled.view.ui.SpelledRendered', {
                 title: title

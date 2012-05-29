@@ -129,7 +129,7 @@ Ext.define('Spelled.controller.Assets', {
         var foundTab = this.application.findActiveTabByTitle( assetEditor, title )
 
         if( foundTab )
-            return assetEditor.setActiveTab( foundTab )
+            return foundTab
 
         Asset.load( record.internalId , {
             scope: this,
