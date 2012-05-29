@@ -3,7 +3,6 @@ Ext.define('Spelled.view.blueprint.entity.Components' ,{
     alias : 'widget.entityblueprintcomponentslist',
 
     title: 'Components',
-    rootVisible: false,
     flex: 1,
 
     bbar: [

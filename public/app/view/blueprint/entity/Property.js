@@ -9,8 +9,7 @@ Ext.define('Spelled.view.blueprint.entity.Property', {
     buttons: [
         {
             text: "Save",
-            action: "save",
-            formBind:true
+            action: "save"
         },
         {
             text: "Reset",

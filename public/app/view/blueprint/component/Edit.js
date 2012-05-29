@@ -25,13 +25,16 @@ Ext.define('Spelled.view.blueprint.component.Edit', {
                     title: 'Configuration',
                     items: [
                         {
-                            xtype: "componentblueprintdetails"
+                            xtype: "componentblueprintdetails",
+                            flex: 1
                         },
                         {
-                            xtype: 'componentblueprintattributeslist'
+                            xtype: 'componentblueprintattributeslist',
+                            flex: 2
                         },
                         {
-                            xtype: 'componentblueprintproperty'
+                            xtype: 'componentblueprintproperty',
+                            flex: 2
                         }
                     ]
                 },

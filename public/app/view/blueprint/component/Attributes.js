@@ -4,5 +4,12 @@ Ext.define('Spelled.view.blueprint.component.Attributes' ,{
 
     title: 'Attributes',
     rootVisible: true,
-    flex: 1
+    flex: 1,
+
+    bbar: [
+        {
+            text: "Add Attribute",
+            action: "addAttribute"
+        }
+    ]
 });

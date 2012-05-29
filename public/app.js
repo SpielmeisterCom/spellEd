@@ -178,11 +178,15 @@ var startEditor = function() {
             Ext.state.Manager.setProvider( stateProvider )
 
             var projectName = Ext.state.Manager.get( 'projectName' )
-            if( projectName ) {
+
+            //TODO: what if the project is deleted?
+            try {
                 this.getController('Projects').loadProject( projectName )
-            } else {
+            } catch( e ) {
+                Ext.state.Manager.clear( 'projectName' )
                 Ext.create( 'Spelled.view.ui.StartScreen').show()
             }
+
         }
     })
 }

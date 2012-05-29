@@ -72,6 +72,9 @@ Ext.define('Spelled.controller.Blueprints', {
                     console.log("change!")
                 }
             },
+            'componentblueprintattributeslist [action="addAttribute"]' : {
+                click: this.addAttribute
+            },
             'componentblueprintattributeslist': {
                 select: this.showAttributeConfig
             },
@@ -97,6 +100,24 @@ Ext.define('Spelled.controller.Blueprints', {
                 click: this.addComponent
             }
         })
+    },
+
+    addAttribute: function() {
+        var tab        = Ext.getCmp("BlueprintEditor").getActiveTab(),
+            ownerModel = tab.blueprint
+
+        var newAttribute = Ext.create(
+            'Spelled.model.blueprint.ComponentAttribute',
+            {
+                type: "string",
+                name: "newAttribute",
+                default: "defaultValue"
+            }
+        )
+
+        ownerModel.getAttributes().add( newAttribute )
+
+        this.refreshComponentBlueprintAttributesList( tab )
     },
 
     changeBlueprintCreationType: function( combo, records ) {
@@ -164,25 +185,27 @@ Ext.define('Spelled.controller.Blueprints', {
     saveEntityBlueprint: function( button, event, record ) {
         var form = button.up('form'),
             record = form.getRecord(),
-            values = form.getValues()
+            values = form.getValues(),
+            ownerModel = Ext.getCmp("BlueprintEditor").getActiveTab().blueprint
 
-        var ownerModel = Ext.getCmp("BlueprintEditor").getActiveTab().blueprint
+        if( record ) {
+            var componentBlueprint = Ext.getStore( 'blueprint.Components').getById( record.get('spelled.model.blueprint.component_id') )
 
-        var componentBlueprint = Ext.getStore( 'blueprint.Components').getById( record.get('spelled.model.blueprint.component_id') )
-
-        var componentConfig = {
-            blueprintId: componentBlueprint.getFullName(),
-            config: componentBlueprint.mergeComponentConfig( values )
-        }
-
-        //Set the new configuration on the specified component
-        ownerModel.getComponents().each(
-            function( component ) {
-                if( component.get('blueprintId') === componentConfig.blueprintId ) {
-                    component.set('config', componentConfig.config )
-                }
+            var componentConfig = {
+                blueprintId: componentBlueprint.getFullName(),
+                config: componentBlueprint.mergeComponentConfig( values )
             }
-        )
+
+            //Set the new configuration on the specified component
+            ownerModel.getComponents().each(
+                function( component ) {
+                    if( component.get('blueprintId') === componentConfig.blueprintId ) {
+                        component.set('config', componentConfig.config )
+                    }
+                }
+            )
+
+        }
 
         if( !!ownerModel ) {
             ownerModel.save( )
@@ -384,16 +407,18 @@ Ext.define('Spelled.controller.Blueprints', {
                     component :
                     Ext.getStore( 'blueprint.Components' ).getByBlueprintId( component.get('blueprintId') )
 
-                var newNode = node.createNode ( {
-                    text      : componentBlueprint.getFullName(),
-                    id        : component.getId(),
-                    expanded  : true,
-                    leaf      : false
-                } )
+                if( componentBlueprint ) {
+                    var newNode = node.createNode ( {
+                        text      : componentBlueprint.getFullName(),
+                        id        : component.getId(),
+                        expanded  : true,
+                        leaf      : false
+                    } )
 
-                componentBlueprint.appendOnTreeNode( newNode )
+                    componentBlueprint.appendOnTreeNode( newNode )
 
-                node.appendChild( newNode )
+                    node.appendChild( newNode )
+                }
             }
         )
 
@@ -423,18 +448,21 @@ Ext.define('Spelled.controller.Blueprints', {
         header.items.items[1].setValue( componentBlueprint.getFullName() )
 
 
-        var attributes = editView.down( 'componentblueprintattributeslist' )
+        var tab = this.application.createTab( blueprintEditor, editView )
+        this.refreshComponentBlueprintAttributesList( tab )
+    },
 
-        var rootNode = attributes.getStore().setRootNode( {
+    refreshComponentBlueprintAttributesList: function( tab ) {
+        var componentBlueprint = tab.blueprint,
+            attributesView  = tab.down( 'componentblueprintattributeslist' )
+
+        var rootNode = attributesView.getStore().setRootNode( {
                 text: componentBlueprint.getFullName(),
                 expanded: true
             }
         )
 
         componentBlueprint.appendOnTreeNode( rootNode )
-
-        var tab = this.application.createTab( blueprintEditor, editView )
-        tab.blueprint = componentBlueprint
     },
 
     loadTrees: function() {
