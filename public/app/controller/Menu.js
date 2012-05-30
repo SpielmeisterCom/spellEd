@@ -6,6 +6,7 @@ Ext.define('Spelled.controller.Menu', {
         'menu.contextmenu.ZonesList',
         'menu.contextmenu.EntitiesList',
         'menu.contextmenu.AssetsList',
+        'menu.contextmenu.ComponentBlueprintAttributesList',
         'ui.SpelledConsole',
         'ui.StartScreen'
     ],
@@ -50,6 +51,11 @@ Ext.define('Spelled.controller.Menu', {
             },
 
 
+            'componentblueprintattributescontextmenu [action="remove"]': {
+                click: this.removeComponentAttribute
+            },
+
+
             'zoneslistcontextmenu [action="remove"]': {
                 click: this.removeZone
             },
@@ -72,6 +78,13 @@ Ext.define('Spelled.controller.Menu', {
         view.showAt( event.getXY() )
 
         return view
+    },
+
+    showComponentAttributesListContextMenu: function( e ) {
+        this.createAndShowView(
+            this.getMenuContextmenuComponentBlueprintAttributesListView(),
+            e
+        )
     },
 
     showEntitiesListContextMenu: function( entity, e ) {
@@ -114,6 +127,16 @@ Ext.define('Spelled.controller.Menu', {
         if( node && node.isLeaf() ) {
             var assetsController = this.application.getController( 'Assets' )
             assetsController.removeAsset( node.get('id') )
+        }
+    },
+
+    removeComponentAttribute: function( ) {
+        var tree = Ext.getCmp( 'ComponentBlueprintAttributesTree' ),
+            node = tree.getSelectionModel().getLastSelected()
+
+        if( node && node.isLeaf() ) {
+            var blueprintsController = this.application.getController( 'Blueprints' )
+            blueprintsController.removeComponentAttribute( node.get('id') )
         }
     },
 

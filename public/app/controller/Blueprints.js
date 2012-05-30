@@ -76,7 +76,8 @@ Ext.define('Spelled.controller.Blueprints', {
                 click: this.addAttribute
             },
             'componentblueprintattributeslist': {
-                select: this.showAttributeConfig
+                select: this.showAttributeConfig,
+                itemcontextmenu: this.showAttributesListContextMenu
             },
             'entityblueprintcomponentslist': {
                 select: this.showEntityAttributeConfig
@@ -100,6 +101,11 @@ Ext.define('Spelled.controller.Blueprints', {
                 click: this.addComponent
             }
         })
+    },
+
+    showAttributesListContextMenu: function( view, record, item, index, e, options ) {
+        var menuController = this.application.getController('Menu')
+        menuController.showComponentAttributesListContextMenu( e )
     },
 
     addAttribute: function() {
@@ -237,6 +243,18 @@ Ext.define('Spelled.controller.Blueprints', {
             values = form.getValues()
 
         console.log( "Reset Blueprint" )
+    },
+
+    removeComponentAttribute: function( id ) {
+        var tab                = Ext.getCmp("BlueprintEditor").getActiveTab(),
+            componentBlueprint = tab.blueprint,
+            store              = Ext.getStore( 'blueprint.ComponentAttributes' ),
+            attribute          = store.getById( id )
+
+        componentBlueprint.getAttributes().remove( attribute )
+        store.remove( attribute )
+
+        this.refreshComponentBlueprintAttributesList( tab )
     },
 
     openBlueprint: function( treePanel, record ) {

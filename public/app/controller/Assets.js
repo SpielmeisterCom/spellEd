@@ -51,8 +51,6 @@ Ext.define('Spelled.controller.Assets', {
     },
 
     showListContextMenu: function( view, record, item, index, e, options ) {
-        e.stopEvent()
-
         var menuController = this.application.getController('Menu')
         menuController.showAssetsListContextMenu( e )
     },
