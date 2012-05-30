@@ -80,7 +80,8 @@ Ext.define('Spelled.controller.Blueprints', {
                 itemcontextmenu: this.showAttributesListContextMenu
             },
             'entityblueprintcomponentslist': {
-                select: this.showEntityAttributeConfig
+                select: this.showEntityAttributeConfig,
+                itemcontextmenu: this.showComponentsListContextMenu
             },
             'blueprintstreelist': {
                 itemdblclick: this.openBlueprint
@@ -101,6 +102,11 @@ Ext.define('Spelled.controller.Blueprints', {
                 click: this.addComponent
             }
         })
+    },
+
+    showComponentsListContextMenu: function( view, record, item, index, e, options ) {
+        var menuController = this.application.getController('Menu')
+        menuController.showEntityBlueprintComponentsListContextMenu( e )
     },
 
     showAttributesListContextMenu: function( view, record, item, index, e, options ) {
@@ -255,6 +261,18 @@ Ext.define('Spelled.controller.Blueprints', {
         store.remove( attribute )
 
         this.refreshComponentBlueprintAttributesList( tab )
+    },
+
+    removeEntityComponent: function( id ) {
+        var tab                = Ext.getCmp("BlueprintEditor").getActiveTab(),
+            entityBlueprint    = tab.blueprint,
+            store              = Ext.getStore( 'config.Components' ),
+            component          = store.getById( id )
+
+        entityBlueprint.getComponents().remove( component )
+        store.remove( component )
+
+        this.refreshEntityBlueprintComponentsList( tab )
     },
 
     openBlueprint: function( treePanel, record ) {

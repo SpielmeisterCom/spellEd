@@ -7,6 +7,7 @@ Ext.define('Spelled.controller.Menu', {
         'menu.contextmenu.EntitiesList',
         'menu.contextmenu.AssetsList',
         'menu.contextmenu.ComponentBlueprintAttributesList',
+        'menu.contextmenu.EntityBlueprintComponentsList',
         'ui.SpelledConsole',
         'ui.StartScreen'
     ],
@@ -56,6 +57,11 @@ Ext.define('Spelled.controller.Menu', {
             },
 
 
+            'entityblueprintcomponentscontextmenu [action="remove"]': {
+                click: this.removeComponent
+            },
+
+
             'zoneslistcontextmenu [action="remove"]': {
                 click: this.removeZone
             },
@@ -83,6 +89,13 @@ Ext.define('Spelled.controller.Menu', {
     showComponentAttributesListContextMenu: function( e ) {
         this.createAndShowView(
             this.getMenuContextmenuComponentBlueprintAttributesListView(),
+            e
+        )
+    },
+
+    showEntityBlueprintComponentsListContextMenu: function( e ) {
+        this.createAndShowView(
+            this.getMenuContextmenuEntityBlueprintComponentsListView(),
             e
         )
     },
@@ -137,6 +150,16 @@ Ext.define('Spelled.controller.Menu', {
         if( node && node.isLeaf() ) {
             var blueprintsController = this.application.getController( 'Blueprints' )
             blueprintsController.removeComponentAttribute( node.get('id') )
+        }
+    },
+
+    removeComponent: function( ) {
+        var tree = Ext.getCmp( 'EntityBlueprintComponentsTree' ),
+            node = tree.getSelectionModel().getLastSelected()
+
+        if( node && !node.isLeaf() && !node.isRoot() ) {
+            var blueprintsController = this.application.getController( 'Blueprints' )
+            blueprintsController.removeEntityComponent( node.get('id') )
         }
     },
 

@@ -29,6 +29,7 @@ Ext.define('Spelled.view.blueprint.entity.Edit', {
                             flex: 1
                         },
                         {
+                            id: 'EntityBlueprintComponentsTree',
                             xtype: 'entityblueprintcomponentslist',
                             flex: 2
                         },
