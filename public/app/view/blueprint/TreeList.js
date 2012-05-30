@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.blueprint.TreeList' ,{
-    extend: 'Ext.tree.Panel',
+    extend: 'Spelled.abstract.view.TreeList',
     alias : 'widget.blueprintstreelist',
 
     animate: false,

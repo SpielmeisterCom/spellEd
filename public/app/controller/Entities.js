@@ -20,10 +20,10 @@ Ext.define('Spelled.controller.Entities', {
     init: function() {
         this.control({
             '#EntityList': {
-                select : this.handleEntityClick
-            },
-            '#EntityList actioncolumn': {
-                click: this.handleActionColumnClick
+                select :         this.handleEntityClick,
+                deleteclick:     this.deleteEntityActionIconClick,
+                itemmouseenter:  this.application.showActionsOnFolder,
+                itemmouseleave:  this.application.hideActions
             },
             'entiteslist button[action="showCreateEntity"]': {
                 click: this.showCreateEntity
@@ -35,6 +35,18 @@ Ext.define('Spelled.controller.Entities', {
                 itemcontextmenu: this.showListContextMenu
             }
         })
+    },
+
+    deleteEntityActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
+        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
+
+        if( !node ) return
+
+        var entity = Ext.getStore('config.Entities').getById( node.get('id') )
+
+        if( !entity ) return
+
+        this.deleteEntity( entity )
     },
 
     showListContextMenu: function( view, record, item, index, e, options ) {

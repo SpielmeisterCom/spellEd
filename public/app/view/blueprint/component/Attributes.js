@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.blueprint.component.Attributes' ,{
-    extend: 'Ext.tree.Panel',
+    extend: 'Spelled.abstract.view.TreeList',
     alias : 'widget.componentblueprintattributeslist',
 
     title: 'Attributes',

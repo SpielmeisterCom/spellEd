@@ -36,7 +36,10 @@ Ext.define('Spelled.controller.Assets', {
             },
             'assetstreelist': {
                 itemdblclick: this.openAsset,
-                itemcontextmenu: this.showListContextMenu
+                itemcontextmenu: this.showListContextMenu,
+                deleteclick:     this.deleteAssetActionIconClick,
+                itemmouseenter:  this.application.showActionsOnLeaf,
+                itemmouseleave:  this.application.hideActions
             },
             'AssetEditor': {
                 dragover: this.dropAsset
@@ -48,6 +51,14 @@ Ext.define('Spelled.controller.Assets', {
                 click: this.createAsset
             }
         })
+    },
+
+    deleteAssetActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
+        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
+
+        if( !node ) return
+
+        this.removeAsset( node.get( 'id' ) )
     },
 
     showListContextMenu: function( view, record, item, index, e, options ) {

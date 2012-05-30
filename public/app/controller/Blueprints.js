@@ -76,16 +76,25 @@ Ext.define('Spelled.controller.Blueprints', {
                 click: this.addAttribute
             },
             'componentblueprintattributeslist': {
-                select: this.showAttributeConfig,
-                itemcontextmenu: this.showAttributesListContextMenu
+                select:          this.showAttributeConfig,
+                deleteclick:     this.deleteAttributeActionIconClick,
+                itemcontextmenu: this.showAttributesListContextMenu,
+                itemmouseenter:  this.application.showActionsOnLeaf,
+                itemmouseleave:  this.application.hideActions
             },
             'entityblueprintcomponentslist': {
-                select: this.showEntityAttributeConfig,
-                itemcontextmenu: this.showComponentsListContextMenu
+                select:          this.showEntityAttributeConfig,
+                deleteclick:     this.deleteEntityComponentActionIconClick,
+                itemcontextmenu: this.showComponentsListContextMenu,
+                itemmouseenter:  this.application.showActionsOnFolder,
+                itemmouseleave:  this.application.hideActions
             },
             'blueprintstreelist': {
+                deleteclick:     this.deleteBlueprintActionIconClick,
                 itemcontextmenu: this.showBlueprintsContextMenu,
-                itemdblclick: this.openBlueprint
+                itemdblclick:    this.openBlueprint,
+                itemmouseenter:  this.application.showActionsOnLeaf,
+                itemmouseleave:  this.application.hideActions
             },
             'blueprinteditor [action="showCreateBlueprint"]' : {
                 click: this.showCreateBlueprint
@@ -103,6 +112,35 @@ Ext.define('Spelled.controller.Blueprints', {
                 click: this.addComponent
             }
         })
+    },
+
+    deleteEntityComponentActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
+        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
+
+        if( !node ) return
+
+        this.removeEntityComponent( node.get('id') )
+    },
+
+    deleteAttributeActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
+        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
+
+        if( !node ) return
+
+        this.removeComponentAttribute( node.get('id') )
+    },
+
+
+    deleteBlueprintActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
+        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
+
+        if( !node ) return
+
+        if( node.get('cls') === this.BLUEPRINT_TYPE_COMPONENT ) {
+            this.removeComponentBlueprint( node.get('id') )
+        } else {
+            this.removeEntityBlueprint( node.get('id') )
+        }
     },
 
     showBlueprintsContextMenu: function( view, record, item, index, e, options ) {

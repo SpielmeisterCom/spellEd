@@ -71,7 +71,10 @@ Ext.define('Spelled.controller.Zones', {
                 click: this.toggleState
             },
             'zonetreelist': {
-                itemcontextmenu: this.showListContextMenu
+                itemcontextmenu: this.showListContextMenu,
+                deleteclick:     this.deleteZoneActionIconClick,
+                itemmouseenter:  this.application.showActionsOnLeaf,
+                itemmouseleave:  this.application.hideActions
             },
             'zonetreelist button[action="showCreateZone"]': {
                 click: this.showCreateZone
@@ -88,6 +91,18 @@ Ext.define('Spelled.controller.Zones', {
                 }
             }
         })
+    },
+
+    deleteZoneActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
+        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
+
+        if( !node ) return
+
+        var zone = Ext.getStore('config.Zones').getById( node.get('id') )
+
+        if( !zone ) return
+
+        this.deleteZone( zone )
     },
 
     showZonesEditor: function() {

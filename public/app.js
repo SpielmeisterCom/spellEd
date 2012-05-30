@@ -141,6 +141,36 @@ var startEditor = function() {
             return foundPanel
         },
 
+        hideActions: function( view, list, node, rowIndex, e ) {
+            var icons = Ext.DomQuery.select('.x-action-col-icon', node)
+            Ext.each( icons, function( icon ){
+                Ext.get( icon ).addCls( 'x-hidden' )
+            })
+        },
+
+        showActionsOnLeaf: function( view, list, node, rowIndex, e ) {
+            this.application.showActions( true, view, list, node, rowIndex, e )
+        },
+
+        showActionsOnFolder: function( view, list, node, rowIndex, e ) {
+            this.application.showActions( false, view, list, node, rowIndex, e )
+        },
+
+        showActions: function( showOnLeaf, view, list, node, rowIndex, e ) {
+            var icons = Ext.DomQuery.select('.x-action-col-icon', node),
+                node  = view.getRecord( node )
+
+            if( node.isLeaf() === showOnLeaf && !node.isRoot() ) {
+                Ext.each(
+                    icons,
+                    function(icon){
+                        Ext.get(icon).removeCls('x-hidden')
+                        Ext.get(icon).addCls('delete-blueprint-action')
+                    }
+                )
+            }
+        },
+
         getActiveProject: function() {
             return this.project
         },

@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.asset.TreeList' ,{
-    extend: 'Ext.tree.Panel',
+    extend: 'Spelled.abstract.view.TreeList',
     alias : 'widget.assetstreelist',
 
     animate: false,
