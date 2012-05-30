@@ -217,15 +217,17 @@ Ext.define('Spelled.controller.Blueprints', {
     saveComponentBlueprint: function( button, event, record ) {
         var form = button.up('form'),
             record = form.getRecord(),
-            values = form.getValues()
+            values = form.getValues(),
+            tab    = Ext.getCmp("BlueprintEditor").getActiveTab()
 
-        var ownerModel = Ext.getCmp("BlueprintEditor").getActiveTab().blueprint
+        var ownerModel = tab.blueprint
 
         record.set( values )
 
         if( !!ownerModel ) {
             ownerModel.save( )
             this.refreshBlueprintStores()
+            this.refreshComponentBlueprintAttributesList( tab )
         }
     },
 
