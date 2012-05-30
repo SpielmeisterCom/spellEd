@@ -6,6 +6,7 @@ Ext.define('Spelled.controller.Menu', {
         'menu.contextmenu.ZonesList',
         'menu.contextmenu.EntitiesList',
         'menu.contextmenu.AssetsList',
+        'menu.contextmenu.BlueprintsList',
         'menu.contextmenu.ComponentBlueprintAttributesList',
         'menu.contextmenu.EntityBlueprintComponentsList',
         'ui.SpelledConsole',
@@ -47,6 +48,14 @@ Ext.define('Spelled.controller.Menu', {
             },
 
 
+            'blueprintslistcontextmenu [action="create"]': {
+                click: this.showCreateBlueprint
+            },
+            'blueprintslistcontextmenu [action="remove"]': {
+                click: this.removeBlueprint
+            },
+
+
             'entitieslistcontextmenu [action="remove"]': {
                 click: this.removeEntity
             },
@@ -84,6 +93,13 @@ Ext.define('Spelled.controller.Menu', {
         view.showAt( event.getXY() )
 
         return view
+    },
+
+    showBlueprintsListContextMenu: function( e ) {
+        this.createAndShowView(
+            this.getMenuContextmenuBlueprintsListView(),
+            e
+        )
     },
 
     showComponentAttributesListContextMenu: function( e ) {
@@ -128,9 +144,27 @@ Ext.define('Spelled.controller.Menu', {
         e.stopEvent()
     },
 
+    showCreateBlueprint: function( ) {
+        this.application.getController( 'Blueprints').showCreateBlueprint()
+    },
+
+    removeBlueprint: function( ) {
+        var tree = Ext.getCmp( 'BlueprintsTree'),
+            blueprintsController = this.application.getController('Blueprints'),
+            node = tree.getSelectionModel().getLastSelected()
+
+        if( node && node.isLeaf() ) {
+
+            if( node.get('cls') === blueprintsController.BLUEPRINT_TYPE_COMPONENT ) {
+                blueprintsController.removeComponentBlueprint( node.get('id') )
+            } else {
+                blueprintsController.removeEntityBlueprint( node.get('id') )
+            }
+        }
+    },
+
     showCreateAsset: function( ) {
-        var assetsController = this.application.getController( 'Assets' )
-        assetsController.showCreateAsset( )
+        this.application.getController( 'Assets').showCreateAsset( )
     },
 
     removeAsset: function( ) {
@@ -138,28 +172,27 @@ Ext.define('Spelled.controller.Menu', {
             node = tree.getSelectionModel().getLastSelected()
 
         if( node && node.isLeaf() ) {
-            var assetsController = this.application.getController( 'Assets' )
-            assetsController.removeAsset( node.get('id') )
+            this.application.getController( 'Assets' ).removeAsset( node.get('id') )
         }
     },
 
     removeComponentAttribute: function( ) {
-        var tree = Ext.getCmp( 'ComponentBlueprintAttributesTree' ),
+        var tab = Ext.getCmp("BlueprintEditor").getActiveTab(),
+            tree = tab.down( 'componentblueprintattributeslist' ),
             node = tree.getSelectionModel().getLastSelected()
 
         if( node && node.isLeaf() ) {
-            var blueprintsController = this.application.getController( 'Blueprints' )
-            blueprintsController.removeComponentAttribute( node.get('id') )
+            this.application.getController( 'Blueprints' ).removeComponentAttribute( node.get('id') )
         }
     },
 
     removeComponent: function( ) {
-        var tree = Ext.getCmp( 'EntityBlueprintComponentsTree' ),
+        var tab = Ext.getCmp("BlueprintEditor").getActiveTab(),
+            tree = tab.down( 'entityblueprintcomponentslist' ),
             node = tree.getSelectionModel().getLastSelected()
 
         if( node && !node.isLeaf() && !node.isRoot() ) {
-            var blueprintsController = this.application.getController( 'Blueprints' )
-            blueprintsController.removeEntityComponent( node.get('id') )
+            this.application.getController( 'Blueprints' ).removeEntityComponent( node.get('id') )
         }
     },
 
@@ -169,8 +202,7 @@ Ext.define('Spelled.controller.Menu', {
         var entity = view.getEntity()
 
         if( entity ) {
-            var entitiesController = this.application.getController( 'Entities' )
-            entitiesController.deleteEntity( entity )
+            this.application.getController( 'Entities' ).deleteEntity( entity )
         }
     },
 
@@ -178,8 +210,7 @@ Ext.define('Spelled.controller.Menu', {
         var zone = this.application.getActiveZone()
 
         if( zone ) {
-            var zonesController = this.application.getController( 'Zones' )
-            zonesController.deleteZone( zone )
+            this.application.getController( 'Zones').deleteZone( zone )
         }
     },
 
@@ -187,8 +218,7 @@ Ext.define('Spelled.controller.Menu', {
         var zone = this.application.getActiveZone()
 
         if( zone ) {
-            var zonesController = this.application.getController( 'Zones' )
-            zonesController.editZone( zone )
+            this.application.getController( 'Zones' ).editZone( zone )
         }
     },
 
@@ -196,24 +226,19 @@ Ext.define('Spelled.controller.Menu', {
         var zone = this.application.getActiveZone()
 
         if( zone ) {
-            var zonesController = this.application.getController( 'Zones' )
-            zonesController.renderZone( zone )
+            this.application.getController( 'Zones' ).renderZone( zone )
         }
     },
 
     showCreateProject: function() {
-        var projectController = this.application.getController('Projects')
-        projectController.showCreateProject()
+        this.application.getController('Projects').showCreateProject()
     },
 
     showLoadProject: function() {
-        var projectController = this.application.getController('Projects')
-        projectController.showLoadProject()
+        this.application.getController('Projects').showLoadProject()
     },
 
     saveProject: function() {
-        var projectController = this.application.getController('Projects')
-
-        projectController.saveActiveProject()
+        this.application.getController('Projects').saveActiveProject()
     }
 });

@@ -102,7 +102,7 @@ define(
                     func: updateEntityBlueprint
                 },
                 {
-                    name: "delete",
+                    name: "destroy",
                     len: 1,
                     func: deleteEntityBlueprint
                 }

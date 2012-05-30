@@ -102,7 +102,7 @@ define(
                     func: updateComponentBlueprint
                 },
                 {
-                    name: "delete",
+                    name: "destroy",
                     len: 1,
                     func: deleteComponentBlueprint
                 }

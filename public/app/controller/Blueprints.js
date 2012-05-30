@@ -84,6 +84,7 @@ Ext.define('Spelled.controller.Blueprints', {
                 itemcontextmenu: this.showComponentsListContextMenu
             },
             'blueprintstreelist': {
+                itemcontextmenu: this.showBlueprintsContextMenu,
                 itemdblclick: this.openBlueprint
             },
             'blueprinteditor [action="showCreateBlueprint"]' : {
@@ -102,6 +103,11 @@ Ext.define('Spelled.controller.Blueprints', {
                 click: this.addComponent
             }
         })
+    },
+
+    showBlueprintsContextMenu: function( view, record, item, index, e, options ) {
+        var menuController = this.application.getController('Menu')
+        menuController.showBlueprintsListContextMenu( e )
     },
 
     showComponentsListContextMenu: function( view, record, item, index, e, options ) {
@@ -140,6 +146,64 @@ Ext.define('Spelled.controller.Blueprints', {
         var View = this.getBlueprintCreateView()
         var view = new View( )
         view.show()
+    },
+
+    openBlueprint: function( treePanel, record ) {
+        if( !record.data.leaf ) return
+
+        if( record.get('cls') === this.BLUEPRINT_TYPE_COMPONENT ) {
+            var ComponentBlueprint = this.getBlueprintComponentModel()
+
+            ComponentBlueprint.load( record.getId(), {
+                scope: this,
+                success: function( componentBlueprint ) {
+                    this.openComponentBlueprint( componentBlueprint )
+                }
+            })
+
+        } else {
+            var EntityBlueprint = this.getBlueprintEntityModel()
+
+            EntityBlueprint.load( record.getId(), {
+                scope: this,
+                success: function( entityBlueprint ) {
+                    this.openEntityBlueprint( entityBlueprint )
+                }
+            })
+        }
+    },
+
+    removeComponentBlueprint: function( id ) {
+        var ComponentBlueprint = this.getBlueprintComponentModel()
+
+        ComponentBlueprint.load( id, {
+            scope: this,
+            success: function( componentBlueprint ) {
+                componentBlueprint.destroy()
+                this.refreshStores()
+            }
+        })
+    },
+
+    checkForReferences: function( blueprint ) {
+
+        if( blueprint.get('type') === this.BLUEPRINT_TYPE_COMPONENT ) {
+
+        } else {
+
+        }
+    },
+
+    removeEntityBlueprint: function( id ) {
+        var EntityBlueprint = this.getBlueprintEntityModel()
+
+        EntityBlueprint.load( id, {
+            scope: this,
+            success: function( entityBlueprint ) {
+                entityBlueprint.destroy()
+                this.refreshStores()
+            }
+        })
     },
 
     createBlueprint: function( button ) {
@@ -273,31 +337,6 @@ Ext.define('Spelled.controller.Blueprints', {
         store.remove( component )
 
         this.refreshEntityBlueprintComponentsList( tab )
-    },
-
-    openBlueprint: function( treePanel, record ) {
-        if( !record.data.leaf ) return
-
-        if( record.get('cls') === this.BLUEPRINT_TYPE_COMPONENT ) {
-            var ComponentBlueprint = this.getBlueprintComponentModel()
-
-            ComponentBlueprint.load( record.getId(), {
-                scope: this,
-                success: function( componentBlueprint ) {
-                    this.openComponentBlueprint( componentBlueprint )
-                }
-            })
-
-        } else {
-            var EntityBlueprint = this.getBlueprintEntityModel()
-
-            EntityBlueprint.load( record.getId(), {
-                scope: this,
-                success: function( entityBlueprint ) {
-                    this.openEntityBlueprint( entityBlueprint )
-                }
-            })
-        }
     },
 
     showAttributeConfig: function( treePanel, record ) {
@@ -520,10 +559,9 @@ Ext.define('Spelled.controller.Blueprints', {
     },
 
     refreshStores: function() {
-        this.loadTrees()
+        this.refreshBlueprintStores()
 
-        Ext.getStore( 'blueprint.Components' ).load()
-        Ext.getStore( 'blueprint.Entities' ).load()
+        this.loadTrees()
     },
 
     showBlueprintEditor : function( ) {

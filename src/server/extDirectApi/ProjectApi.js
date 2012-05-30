@@ -142,7 +142,7 @@ define(
                     func: updateProject
                 },
                 {
-                    name: "delete",
+                    name: "destroy",
                     len: 1,
                     func: deleteProject
                 },
