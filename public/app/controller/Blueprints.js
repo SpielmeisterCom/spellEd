@@ -173,25 +173,22 @@ Ext.define('Spelled.controller.Blueprints', {
         }
     },
 
+    removeBlueprintCallback: function( blueprint ) {
+        if( !this.checkForReferences( blueprint ) ) {
+            this.removeBlueprint( blueprint )
+        } else {
+            Ext.Msg.alert( 'Error', 'The Blueprint "' + blueprint.getFullName() + '" is used in this Project and can not be deleted.' +
+                '<br>Remove all references to this Blueprint first!')
+        }
+    },
+
     removeComponentBlueprint: function( id ) {
         var ComponentBlueprint = this.getBlueprintComponentModel()
 
         ComponentBlueprint.load( id, {
             scope: this,
-            success: function( componentBlueprint ) {
-                componentBlueprint.destroy()
-                this.refreshStores()
-            }
+            success: this.removeBlueprintCallback
         })
-    },
-
-    checkForReferences: function( blueprint ) {
-
-        if( blueprint.get('type') === this.BLUEPRINT_TYPE_COMPONENT ) {
-
-        } else {
-
-        }
     },
 
     removeEntityBlueprint: function( id ) {
@@ -199,11 +196,47 @@ Ext.define('Spelled.controller.Blueprints', {
 
         EntityBlueprint.load( id, {
             scope: this,
-            success: function( entityBlueprint ) {
-                entityBlueprint.destroy()
-                this.refreshStores()
-            }
+            success: this.removeBlueprintCallback
         })
+    },
+
+    removeBlueprint: function( blueprint ) {
+        this.closeOpenedTabs( blueprint )
+
+        blueprint.destroy()
+        this.refreshStores()
+    },
+
+    closeOpenedTabs: function( blueprint ) {
+        var editorTab = Ext.getCmp("BlueprintEditor")
+
+        editorTab.items.each(
+            function( tab ) {
+                if( blueprint.get('id') === tab.blueprint.get('id') ) {
+                    tab.destroy()
+                }
+            }
+        )
+    },
+
+    checkForReferences: function( blueprint ) {
+        var entitiesStore   = Ext.getStore( 'config.Entities'),
+            componentsStore = Ext.getStore( 'config.Components'),
+            found = false
+
+
+        var checkFunc = function( item ) {
+            if( item.get('blueprintId') === blueprint.getFullName() ) {
+                found = true
+                return false
+            }
+        }
+
+        entitiesStore.each( checkFunc )
+        if( found === true ) return found
+
+        componentsStore.each( checkFunc )
+        return found
     },
 
     createBlueprint: function( button ) {
@@ -565,11 +598,11 @@ Ext.define('Spelled.controller.Blueprints', {
     },
 
     showBlueprintEditor : function( ) {
-        var mainPanel = this.getMainPanel()
-
-        Ext.each( mainPanel.items.items, function( panel ) {
-            panel.hide()
-        })
+        this.getMainPanel().items.each(
+            function( panel ) {
+                panel.hide()
+            }
+        )
 
         this.loadTrees()
 
