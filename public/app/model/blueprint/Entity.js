@@ -1,5 +1,5 @@
 Ext.define('Spelled.model.blueprint.Entity', {
-    extend: 'Ext.data.Model',
+    extend: 'Spelled.abstract.model.Blueprint',
 
     fields: [
         "type",
@@ -12,13 +12,6 @@ Ext.define('Spelled.model.blueprint.Entity', {
         associationKey: 'components',
         name :  'getComponents'
     },
-
-    getFullName: function() {
-        var namespace = this.get('namespace')
-        return ( namespace.length > 0 ) ? namespace +"/"+ this.get('name') : this.get('name')
-    },
-
-    requires: ['Spelled.writer.JsonWriter'],
 
     proxy: {
         type: 'direct',

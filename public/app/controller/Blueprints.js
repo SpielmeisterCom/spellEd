@@ -3,6 +3,7 @@ Ext.define('Spelled.controller.Blueprints', {
 
     BLUEPRINT_TYPE_COMPONENT: 'componentBlueprint',
     BLUEPRINT_TYPE_ENTITY: 'entityBlueprint',
+    BLUEPRINT_TYPE_SYSTEM: 'systemBlueprint',
 
     views: [
         'blueprint.Editor',
@@ -18,13 +19,17 @@ Ext.define('Spelled.controller.Blueprints', {
         'blueprint.entity.Details',
         'blueprint.entity.Components',
         'blueprint.entity.Property',
-        'blueprint.entity.components.Add'
+        'blueprint.entity.components.Add',
+        'blueprint.system.Edit',
+        'blueprint.system.Details',
+        'blueprint.system.Input'
     ],
 
     models: [
         'blueprint.Component',
         'blueprint.ComponentAttribute',
-        'blueprint.Entity'
+        'blueprint.Entity',
+        'blueprint.System'
     ],
 
     stores: [
@@ -32,6 +37,8 @@ Ext.define('Spelled.controller.Blueprints', {
         'blueprint.ComponentAttributes',
         'blueprint.Components',
         'blueprint.Entities',
+        'blueprint.Systems',
+        'blueprint.SystemInputDefinitions',
         'blueprint.Types',
         'blueprint.FoldersTree'
     ],
@@ -110,6 +117,16 @@ Ext.define('Spelled.controller.Blueprints', {
             },
             'addcomponenttoblueprint button[action="addComponent"]' : {
                 click: this.addComponent
+            },
+
+            'systemblueprintinputlist': {
+                deleteclick:     this.deleteInputActionIconClick,
+                itemcontextmenu: this.showAttributesListContextMenu,
+                itemmouseenter:  this.application.showActionsOnFolder,
+                itemmouseleave:  this.application.hideActions
+            },
+            'systemblueprintinputlist [action="addInput"]' : {
+                click: this.showAddInput
             }
         })
     },
@@ -189,25 +206,39 @@ Ext.define('Spelled.controller.Blueprints', {
     openBlueprint: function( treePanel, record ) {
         if( !record.data.leaf ) return
 
-        if( record.get('cls') === this.BLUEPRINT_TYPE_COMPONENT ) {
-            var ComponentBlueprint = this.getBlueprintComponentModel()
+        switch( record.get('cls') ) {
+            case this.BLUEPRINT_TYPE_COMPONENT:
+                var ComponentBlueprint = this.getBlueprintComponentModel()
 
-            ComponentBlueprint.load( record.getId(), {
-                scope: this,
-                success: function( componentBlueprint ) {
-                    this.openComponentBlueprint( componentBlueprint )
-                }
-            })
+                ComponentBlueprint.load( record.getId(), {
+                    scope: this,
+                    success: function( componentBlueprint ) {
+                        this.openComponentBlueprint( componentBlueprint )
+                    }
+                })
+                break
+            case this.BLUEPRINT_TYPE_ENTITY:
+                var EntityBlueprint = this.getBlueprintEntityModel()
 
-        } else {
-            var EntityBlueprint = this.getBlueprintEntityModel()
+                EntityBlueprint.load( record.getId(), {
+                    scope: this,
+                    success: function( entityBlueprint ) {
+                        this.openEntityBlueprint( entityBlueprint )
+                    }
+                })
+                break
+            case this.BLUEPRINT_TYPE_SYSTEM:
+                var SystemBlueprint = this.getBlueprintSystemModel()
 
-            EntityBlueprint.load( record.getId(), {
-                scope: this,
-                success: function( entityBlueprint ) {
-                    this.openEntityBlueprint( entityBlueprint )
-                }
-            })
+                SystemBlueprint.load( record.getId(), {
+                    scope: this,
+                    success: function( systemBlueprint ) {
+                        this.openSystemBlueprint( systemBlueprint )
+                    }
+                })
+                break
+            default:
+                return
         }
     },
 
@@ -611,6 +642,46 @@ Ext.define('Spelled.controller.Blueprints', {
         )
 
         componentBlueprint.appendOnTreeNode( rootNode )
+    },
+
+    openSystemBlueprint: function( systemBlueprint ) {
+        var blueprintEditor = Ext.getCmp("BlueprintEditor"),
+            title           = systemBlueprint.getFullName()
+
+        var foundTab = this.application.findActiveTabByTitle( blueprintEditor, title )
+
+        if( foundTab )
+            return foundTab
+
+        var editView = Ext.create( 'Spelled.view.blueprint.system.Edit',  {
+                title: title,
+                blueprint : systemBlueprint
+            }
+        )
+
+        var header = editView.down( 'systemblueprintdetails' )
+
+        //TODO: find a better solution for setting the details
+        header.items.items[0].setValue( systemBlueprint.get('type') )
+        header.items.items[1].setValue( systemBlueprint.getFullName() )
+        header.items.items[2].setValue( systemBlueprint.get('scriptId') )
+
+        var tab = this.application.createTab( blueprintEditor, editView )
+
+        this.refreshSystemBlueprintInputList( tab )
+    },
+
+    refreshSystemBlueprintInputList: function( tab ) {
+        var systemBlueprint = tab.blueprint,
+            inputView       = tab.down( 'systemblueprintinputlist' )
+
+        var rootNode = inputView.getStore().setRootNode( {
+                text: systemBlueprint.getFullName(),
+                expanded: true
+            }
+        )
+
+        systemBlueprint.appendOnTreeNode( rootNode )
     },
 
     loadTrees: function() {

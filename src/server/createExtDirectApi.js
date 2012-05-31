@@ -6,6 +6,7 @@ define(
         'server/extDirectApi/createUtil',
         'server/extDirectApi/blueprints/createComponentApi',
         'server/extDirectApi/blueprints/createEntityApi',
+        'server/extDirectApi/blueprints/createSystemApi',
         'server/extDirectApi/createAssetsApi',
         'server/extDirectApi/ProjectApi',
 
@@ -17,6 +18,7 @@ define(
         createUtil,
         createComponentApi,
         createEntityApi,
+        createSystemApi,
         createAssetsApi,
         createProjectApi,
 
@@ -101,6 +103,7 @@ define(
                 ComponentBlueprintActions : createComponentApi( projectsRoot ),
                 EntityBlueprintActions    : createEntityApi( projectsRoot ),
                 AssetsActions             : createAssetsApi( projectsRoot ),
+                SystemBlueprintActions    : createSystemApi( projectsRoot ),
                 BlueprintsActions : [
                     {
                         name: "createBlueprint",
