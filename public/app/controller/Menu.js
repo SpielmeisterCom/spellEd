@@ -156,9 +156,9 @@ Ext.define('Spelled.controller.Menu', {
         if( node && node.isLeaf() ) {
 
             if( node.get('cls') === blueprintsController.BLUEPRINT_TYPE_COMPONENT ) {
-                blueprintsController.removeComponentBlueprint( node.get('id') )
+                this.application.getController('blueprints.Components').removeComponentBlueprint( node.get('id') )
             } else {
-                blueprintsController.removeEntityBlueprint( node.get('id') )
+                this.application.getController('blueprints.Entities').removeEntityBlueprint( node.get('id') )
             }
         }
     },
@@ -182,7 +182,7 @@ Ext.define('Spelled.controller.Menu', {
             node = tree.getSelectionModel().getLastSelected()
 
         if( node && node.isLeaf() ) {
-            this.application.getController( 'Blueprints' ).removeComponentAttribute( node.get('id') )
+            this.application.getController( 'blueprints.Components' ).removeComponentAttribute( node.get('id') )
         }
     },
 
@@ -192,7 +192,7 @@ Ext.define('Spelled.controller.Menu', {
             node = tree.getSelectionModel().getLastSelected()
 
         if( node && !node.isLeaf() && !node.isRoot() ) {
-            this.application.getController( 'Blueprints' ).removeEntityComponent( node.get('id') )
+            this.application.getController('blueprints.Entities').removeEntityComponent( node.get('id') )
         }
     },
 

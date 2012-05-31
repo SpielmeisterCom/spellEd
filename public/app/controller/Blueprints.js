@@ -10,37 +10,22 @@ Ext.define('Spelled.controller.Blueprints', {
         'blueprint.Navigator',
         'blueprint.TreeList',
         'blueprint.Create',
-        'blueprint.FolderPicker',
-        'blueprint.component.Edit',
-        'blueprint.component.Details',
-        'blueprint.component.Attributes',
-        'blueprint.component.Property',
-        'blueprint.entity.Edit',
-        'blueprint.entity.Details',
-        'blueprint.entity.Components',
-        'blueprint.entity.Property',
-        'blueprint.entity.components.Add',
-        'blueprint.system.Edit',
-        'blueprint.system.Details',
-        'blueprint.system.Input'
+        'blueprint.FolderPicker'
     ],
 
     models: [
         'blueprint.Component',
-        'blueprint.ComponentAttribute',
         'blueprint.Entity',
         'blueprint.System'
     ],
 
     stores: [
         'BlueprintsTree',
-        'blueprint.ComponentAttributes',
+        'blueprint.Types',
+        'blueprint.FoldersTree',
         'blueprint.Components',
         'blueprint.Entities',
-        'blueprint.Systems',
-        'blueprint.SystemInputDefinitions',
-        'blueprint.Types',
-        'blueprint.FoldersTree'
+        'blueprint.Systems'
     ],
 
     refs: [
@@ -57,45 +42,6 @@ Ext.define('Spelled.controller.Blueprints', {
             'blueprintsnavigator': {
                 activate: this.showBlueprintEditor
             },
-            'componentblueprintproperty button[action="save"]' : {
-                click: this.saveComponentBlueprint
-            },
-            'componentblueprintproperty button[action="reset"]' : {
-                click: this.resetBlueprint
-            },
-            'componentblueprintproperty > field' : {
-                change: function() {
-                    console.log("change!")
-                }
-            },
-            'entityblueprintproperty button[action="save"]' : {
-                click: this.saveEntityBlueprint
-            },
-            'entityblueprintproperty button[action="reset"]' : {
-                click: this.resetBlueprint
-            },
-            'entityblueprintproperty > field' : {
-                change: function() {
-                    console.log("change!")
-                }
-            },
-            'componentblueprintattributeslist [action="addAttribute"]' : {
-                click: this.addAttribute
-            },
-            'componentblueprintattributeslist': {
-                select:          this.showAttributeConfig,
-                deleteclick:     this.deleteAttributeActionIconClick,
-                itemcontextmenu: this.showAttributesListContextMenu,
-                itemmouseenter:  this.application.showActionsOnLeaf,
-                itemmouseleave:  this.application.hideActions
-            },
-            'entityblueprintcomponentslist': {
-                select:          this.showEntityAttributeConfig,
-                deleteclick:     this.deleteEntityComponentActionIconClick,
-                itemcontextmenu: this.showComponentsListContextMenu,
-                itemmouseenter:  this.application.showActionsOnFolder,
-                itemmouseleave:  this.application.hideActions
-            },
             'blueprintstreelist': {
                 deleteclick:     this.deleteBlueprintActionIconClick,
                 itemcontextmenu: this.showBlueprintsContextMenu,
@@ -111,42 +57,9 @@ Ext.define('Spelled.controller.Blueprints', {
             },
             'createblueprint > form > combobox[name="type"]' : {
                 select: this.changeBlueprintCreationType
-            },
-            'entityblueprintcomponentslist [action="showAddComponent"]' : {
-                click: this.showAddComponent
-            },
-            'addcomponenttoblueprint button[action="addComponent"]' : {
-                click: this.addComponent
-            },
-
-            'systemblueprintinputlist': {
-                deleteclick:     this.deleteInputActionIconClick,
-                itemcontextmenu: this.showAttributesListContextMenu,
-                itemmouseenter:  this.application.showActionsOnFolder,
-                itemmouseleave:  this.application.hideActions
-            },
-            'systemblueprintinputlist [action="addInput"]' : {
-                click: this.showAddInput
             }
         })
     },
-
-    deleteEntityComponentActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
-        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
-
-        if( !node ) return
-
-        this.removeEntityComponent( node.get('id') )
-    },
-
-    deleteAttributeActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
-        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
-
-        if( !node ) return
-
-        this.removeComponentAttribute( node.get('id') )
-    },
-
 
     deleteBlueprintActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
         var node = gridView.getRecord( gridView.findTargetByEvent(e) )
@@ -154,43 +67,15 @@ Ext.define('Spelled.controller.Blueprints', {
         if( !node ) return
 
         if( node.get('cls') === this.BLUEPRINT_TYPE_COMPONENT ) {
-            this.removeComponentBlueprint( node.get('id') )
+            this.application.getController('blueprints.Components').removeComponentBlueprint( node.get('id') )
         } else {
-            this.removeEntityBlueprint( node.get('id') )
+            this.application.getController('blueprints.Entities').removeEntityBlueprint( node.get('id') )
         }
     },
 
     showBlueprintsContextMenu: function( view, record, item, index, e, options ) {
         var menuController = this.application.getController('Menu')
         menuController.showBlueprintsListContextMenu( e )
-    },
-
-    showComponentsListContextMenu: function( view, record, item, index, e, options ) {
-        var menuController = this.application.getController('Menu')
-        menuController.showEntityBlueprintComponentsListContextMenu( e )
-    },
-
-    showAttributesListContextMenu: function( view, record, item, index, e, options ) {
-        var menuController = this.application.getController('Menu')
-        menuController.showComponentAttributesListContextMenu( e )
-    },
-
-    addAttribute: function() {
-        var tab        = Ext.getCmp("BlueprintEditor").getActiveTab(),
-            ownerModel = tab.blueprint
-
-        var newAttribute = Ext.create(
-            'Spelled.model.blueprint.ComponentAttribute',
-            {
-                type: "string",
-                name: "newAttribute",
-                default: "defaultValue"
-            }
-        )
-
-        ownerModel.getAttributes().add( newAttribute )
-
-        this.refreshComponentBlueprintAttributesList( tab )
     },
 
     changeBlueprintCreationType: function( combo, records ) {
@@ -213,7 +98,7 @@ Ext.define('Spelled.controller.Blueprints', {
                 ComponentBlueprint.load( record.getId(), {
                     scope: this,
                     success: function( componentBlueprint ) {
-                        this.openComponentBlueprint( componentBlueprint )
+                        this.application.getController('blueprints.Components').openComponentBlueprint( componentBlueprint )
                     }
                 })
                 break
@@ -223,7 +108,7 @@ Ext.define('Spelled.controller.Blueprints', {
                 EntityBlueprint.load( record.getId(), {
                     scope: this,
                     success: function( entityBlueprint ) {
-                        this.openEntityBlueprint( entityBlueprint )
+                        this.application.getController('blueprints.Entities').openEntityBlueprint( entityBlueprint )
                     }
                 })
                 break
@@ -233,7 +118,7 @@ Ext.define('Spelled.controller.Blueprints', {
                 SystemBlueprint.load( record.getId(), {
                     scope: this,
                     success: function( systemBlueprint ) {
-                        this.openSystemBlueprint( systemBlueprint )
+                        this.application.getController('blueprints.Systems').openSystemBlueprint( systemBlueprint )
                     }
                 })
                 break
@@ -243,30 +128,13 @@ Ext.define('Spelled.controller.Blueprints', {
     },
 
     removeBlueprintCallback: function( blueprint ) {
-        if( !this.checkForReferences( blueprint ) ) {
-            this.removeBlueprint( blueprint )
+
+        if( !this.application.getController('Blueprints').checkForReferences( blueprint ) ) {
+            this.application.getController('Blueprints').removeBlueprint( blueprint )
         } else {
             Ext.Msg.alert( 'Error', 'The Blueprint "' + blueprint.getFullName() + '" is used in this Project and can not be deleted.' +
                 '<br>Remove all references to this Blueprint first!')
         }
-    },
-
-    removeComponentBlueprint: function( id ) {
-        var ComponentBlueprint = this.getBlueprintComponentModel()
-
-        ComponentBlueprint.load( id, {
-            scope: this,
-            success: this.removeBlueprintCallback
-        })
-    },
-
-    removeEntityBlueprint: function( id ) {
-        var EntityBlueprint = this.getBlueprintEntityModel()
-
-        EntityBlueprint.load( id, {
-            scope: this,
-            success: this.removeBlueprintCallback
-        })
     },
 
     removeBlueprint: function( blueprint ) {
@@ -358,330 +226,6 @@ Ext.define('Spelled.controller.Blueprints', {
             store.removeAll()
             store.loadDataViaReader( response.result )
         })
-    },
-
-    saveEntityBlueprint: function( button, event, record ) {
-        var form = button.up('form'),
-            record = form.getRecord(),
-            values = form.getValues(),
-            ownerModel = Ext.getCmp("BlueprintEditor").getActiveTab().blueprint
-
-        if( record ) {
-            var componentBlueprint = Ext.getStore( 'blueprint.Components').getById( record.get('spelled.model.blueprint.component_id') )
-
-            var componentConfig = {
-                blueprintId: componentBlueprint.getFullName(),
-                config: componentBlueprint.mergeComponentConfig( values )
-            }
-
-            //Set the new configuration on the specified component
-            ownerModel.getComponents().each(
-                function( component ) {
-                    if( component.get('blueprintId') === componentConfig.blueprintId ) {
-                        component.set('config', componentConfig.config )
-                    }
-                }
-            )
-
-        }
-
-        if( !!ownerModel ) {
-            ownerModel.save( )
-            this.refreshBlueprintStores()
-        }
-
-    },
-
-    saveComponentBlueprint: function( button, event, record ) {
-        var form = button.up('form'),
-            record = form.getRecord(),
-            values = form.getValues(),
-            tab    = Ext.getCmp("BlueprintEditor").getActiveTab()
-
-        var ownerModel = tab.blueprint
-
-        record.set( values )
-
-        if( !!ownerModel ) {
-            ownerModel.save( )
-            this.refreshBlueprintStores()
-            this.refreshComponentBlueprintAttributesList( tab )
-        }
-    },
-
-    resetBlueprint: function( button, event, record ) {
-        var form = button.up('form'),
-            record = form.getRecord(),
-            values = form.getValues()
-
-        console.log( "Reset Blueprint" )
-    },
-
-    removeComponentAttribute: function( id ) {
-        var tab                = Ext.getCmp("BlueprintEditor").getActiveTab(),
-            componentBlueprint = tab.blueprint,
-            store              = Ext.getStore( 'blueprint.ComponentAttributes' ),
-            attribute          = store.getById( id )
-
-        componentBlueprint.getAttributes().remove( attribute )
-        store.remove( attribute )
-
-        this.refreshComponentBlueprintAttributesList( tab )
-    },
-
-    removeEntityComponent: function( id ) {
-        var tab                = Ext.getCmp("BlueprintEditor").getActiveTab(),
-            entityBlueprint    = tab.blueprint,
-            store              = Ext.getStore( 'config.Components' ),
-            component          = store.getById( id )
-
-        entityBlueprint.getComponents().remove( component )
-        store.remove( component )
-
-        this.refreshEntityBlueprintComponentsList( tab )
-    },
-
-    showAttributeConfig: function( treePanel, record ) {
-        if( !record.data.leaf ) return
-
-        var attribute = Ext.getStore('blueprint.ComponentAttributes').getById( record.getId() )
-
-        if( attribute ) {
-            this.fillAttributeConfigView( attribute )
-        }
-    },
-
-    showEntityAttributeConfig: function( treePanel, record ) {
-        if( !record.data.leaf ) return
-
-        var attribute = Ext.getStore('blueprint.ComponentAttributes').getById( record.getId() )
-
-        if( attribute ) {
-
-            var component = Ext.getStore('config.Components').getById( record.parentNode.getId() )
-
-            var config = component.get('config')
-            if( config[ attribute.get('name') ] ) {
-                attribute.set('default', config[ attribute.get('name') ])
-            }
-
-            this.fillAttributeConfigView( attribute )
-        }
-    },
-
-    fillAttributeConfigView: function( attribute ) {
-        var propertyView = Ext.getCmp("BlueprintEditor").getActiveTab().down( 'form' )
-        propertyView.getForm().loadRecord( attribute )
-    },
-
-    openEntityBlueprint: function( entityBlueprint ) {
-        var blueprintEditor = Ext.getCmp("BlueprintEditor"),
-            title           = entityBlueprint.getFullName()
-
-        var foundTab = this.application.findActiveTabByTitle( blueprintEditor, title )
-
-        if( foundTab )
-            return foundTab
-
-        var editView = Ext.create( 'Spelled.view.blueprint.entity.Edit',  {
-                title: title,
-                blueprint : entityBlueprint
-            }
-        )
-
-        var header = editView.down( 'entityblueprintdetails' )
-
-        //TODO: find a better solution for setting the details
-        header.items.items[0].setValue( entityBlueprint.get('type') )
-        header.items.items[1].setValue( entityBlueprint.getFullName() )
-
-        var tab = this.application.createTab( blueprintEditor, editView )
-
-        this.refreshEntityBlueprintComponentsList( tab )
-    },
-
-    refreshEntityBlueprintComponentsList: function( tab ) {
-        var entityBlueprint = tab.blueprint,
-            componentsView  = tab.down( 'entityblueprintcomponentslist' )
-
-        var rootNode = componentsView.getStore().setRootNode( {
-                text: entityBlueprint.getFullName(),
-                expanded: true
-            }
-        )
-
-        this.appendComponentsAttributesOnTreeNode( rootNode, entityBlueprint.getComponents() )
-    },
-
-    addComponent: function( button ) {
-        var window    = button.up('window'),
-            tree      = window.down('treepanel'),
-            records   = tree.getView().getChecked(),
-            tab       = Ext.getCmp("BlueprintEditor").getActiveTab(),
-            componentBlueprintStore = Ext.getStore('blueprint.Components'),
-            entityBlueprint         = tab.blueprint
-
-        Ext.each(
-            records,
-            function( record ) {
-
-                var componentBlueprint = componentBlueprintStore.getById( record.get('id') )
-
-                if( componentBlueprint ) {
-                    var configComponent = Ext.create( 'Spelled.model.config.Component', {
-                        blueprintId : componentBlueprint.getFullName()
-                    })
-
-                    entityBlueprint.getComponents().add( configComponent )
-                }
-            }
-        )
-
-        this.refreshEntityBlueprintComponentsList( tab )
-        window.close()
-    },
-
-    showAddComponent: function( ) {
-        var View = this.getBlueprintEntityComponentsAddView(),
-            view = new View(),
-            entityBlueprint          = Ext.getCmp("BlueprintEditor").getActiveTab().blueprint,
-            availableComponentsView  = view.down( 'treepanel' ),
-            blueprintComponentsStore = Ext.getStore( 'blueprint.Components' )
-
-
-        var rootNode = availableComponentsView.getStore().setRootNode( {
-                text: 'Components',
-                expanded: true
-            }
-        )
-
-        var notAssignedComponents = Ext.create( 'Ext.util.MixedCollection' )
-
-        blueprintComponentsStore.each(
-            function( record ) {
-                var found = entityBlueprint.getComponents().find( 'blueprintId', record.getFullName() )
-
-                if( found === -1 ) {
-                    notAssignedComponents.add( record )
-                }
-            }
-        )
-
-        this.appendComponentsAttributesOnTreeNode( rootNode, notAssignedComponents )
-
-        rootNode.eachChild(
-            function( node ) {
-                node.set('checked', false)
-            }
-        )
-        view.show()
-    },
-
-    appendComponentsAttributesOnTreeNode: function( node, components ) {
-
-        components.each(
-            function( component ) {
-
-                var componentBlueprint = ( !component.get('blueprintId') ) ?
-                    component :
-                    Ext.getStore( 'blueprint.Components' ).getByBlueprintId( component.get('blueprintId') )
-
-                if( componentBlueprint ) {
-                    var newNode = node.createNode ( {
-                        text      : componentBlueprint.getFullName(),
-                        id        : component.getId(),
-                        expanded  : true,
-                        leaf      : false
-                    } )
-
-                    componentBlueprint.appendOnTreeNode( newNode )
-
-                    node.appendChild( newNode )
-                }
-            }
-        )
-
-        return node
-    },
-
-    openComponentBlueprint: function( componentBlueprint ) {
-        var blueprintEditor = Ext.getCmp("BlueprintEditor"),
-            title           = componentBlueprint.getFullName()
-
-
-        var foundTab = this.application.findActiveTabByTitle( blueprintEditor, title )
-
-        if( foundTab )
-            return foundTab
-
-        var editView = Ext.create( 'Spelled.view.blueprint.component.Edit',  {
-                title: title,
-                blueprint : componentBlueprint
-            }
-        )
-
-        var header = editView.down( 'componentblueprintdetails' )
-
-        //TODO: find a better solution for setting the details
-        header.items.items[0].setValue( componentBlueprint.get('type') )
-        header.items.items[1].setValue( componentBlueprint.getFullName() )
-
-
-        var tab = this.application.createTab( blueprintEditor, editView )
-        this.refreshComponentBlueprintAttributesList( tab )
-    },
-
-    refreshComponentBlueprintAttributesList: function( tab ) {
-        var componentBlueprint = tab.blueprint,
-            attributesView  = tab.down( 'componentblueprintattributeslist' )
-
-        var rootNode = attributesView.getStore().setRootNode( {
-                text: componentBlueprint.getFullName(),
-                expanded: true
-            }
-        )
-
-        componentBlueprint.appendOnTreeNode( rootNode )
-    },
-
-    openSystemBlueprint: function( systemBlueprint ) {
-        var blueprintEditor = Ext.getCmp("BlueprintEditor"),
-            title           = systemBlueprint.getFullName()
-
-        var foundTab = this.application.findActiveTabByTitle( blueprintEditor, title )
-
-        if( foundTab )
-            return foundTab
-
-        var editView = Ext.create( 'Spelled.view.blueprint.system.Edit',  {
-                title: title,
-                blueprint : systemBlueprint
-            }
-        )
-
-        var header = editView.down( 'systemblueprintdetails' )
-
-        //TODO: find a better solution for setting the details
-        header.items.items[0].setValue( systemBlueprint.get('type') )
-        header.items.items[1].setValue( systemBlueprint.getFullName() )
-        header.items.items[2].setValue( systemBlueprint.get('scriptId') )
-
-        var tab = this.application.createTab( blueprintEditor, editView )
-
-        this.refreshSystemBlueprintInputList( tab )
-    },
-
-    refreshSystemBlueprintInputList: function( tab ) {
-        var systemBlueprint = tab.blueprint,
-            inputView       = tab.down( 'systemblueprintinputlist' )
-
-        var rootNode = inputView.getStore().setRootNode( {
-                text: systemBlueprint.getFullName(),
-                expanded: true
-            }
-        )
-
-        systemBlueprint.appendOnTreeNode( rootNode )
     },
 
     loadTrees: function() {

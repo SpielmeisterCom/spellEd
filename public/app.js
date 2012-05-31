@@ -107,7 +107,10 @@ var startEditor = function() {
             'Projects',
             'Components',
             'Assets',
-            'Blueprints'
+            'Blueprints',
+            'blueprints.Components',
+            'blueprints.Entities',
+            'blueprints.Systems'
         ],
 
         project: undefined,
