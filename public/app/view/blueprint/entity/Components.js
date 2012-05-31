@@ -7,7 +7,7 @@ Ext.define('Spelled.view.blueprint.entity.Components' ,{
 
     bbar: [
         {
-            text: "Add Component",
+            text: "Add",
             action: "showAddComponent"
         }
     ]

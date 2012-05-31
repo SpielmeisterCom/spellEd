@@ -1,8 +1,0 @@
-{
-    "assetId"  : "textures/Test.jpg",
-	"name": "Test",
-	"mimeType": "image/jpg",
-	"namespace": "textures",
-    "extension": "jpg",
-	"type": "texture"
-}

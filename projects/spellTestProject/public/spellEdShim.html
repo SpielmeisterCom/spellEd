@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>SpellEd</title>
+		<link rel="stylesheet" href="main.css" type="text/css" />
+		<script type="text/javascript" src="spell.js"></script>
+	</head>
+
+	<body>
+		<div id="spell"></div>
+		<script type="text/javascript">
+			var editorOrigin = 'http://localhost:3000'
+
+			function getParam( name ) {
+				name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+				var regexS = '[\\?&]'+name+'=([^&#]*)';
+				var regex = new RegExp( regexS );
+				var results = regex.exec( window.location.href );
+				if( results == null )
+					return '';
+				else
+					return results[1];
+			}
+
+			function receiveMessage( event ) {
+				if( event.origin !== editorOrigin ) {
+					console.log( 'event.origin: ' + event.origin )
+					console.log( 'Error: origin does not match.' )
+
+					return
+				}
+
+				if( event.data.type === 'run' ) {
+					var config = {
+						platform : 'html5'
+					}
+
+					spell.start( config )
+				}
+			}
+
+			window.addEventListener( 'message', receiveMessage, false )
+
+			parent.window.postMessage(
+				{
+					action: 'initialized',
+					iframeId: getParam( 'iframeId' )
+				},
+				editorOrigin
+			)
+		</script>
+	</body>
+</html>

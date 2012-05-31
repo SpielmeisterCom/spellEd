@@ -40,11 +40,11 @@ Ext.define('Spelled.controller.Zones', {
 
             if( event.data.action === 'initialized' ) {
 
-                var cmp = Ext.getCmp( event.data.extId )
+                var cmp = Ext.getCmp( event.data.iframeId )
 
                 cmp.el.dom.contentWindow.postMessage(
                     {
-                        id: cmp.id,
+                        iframeId: cmp.id,
                         type: "run"
                     },
                     buildServerOrigin

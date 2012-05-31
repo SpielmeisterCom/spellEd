@@ -165,7 +165,6 @@ var startEditor = function() {
                     icons,
                     function(icon){
                         Ext.get(icon).removeCls('x-hidden')
-                        Ext.get(icon).addCls('delete-blueprint-action')
                     }
                 )
             }
