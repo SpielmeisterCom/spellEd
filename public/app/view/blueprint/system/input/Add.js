@@ -12,17 +12,34 @@ Ext.define('Spelled.view.blueprint.system.input.Add' ,{
 
     items: [
         {
-            xtype: 'treepanel',
-            title: 'Available Components',
-            rootVisible: true
-        }
-    ],
+            xtype: "form",
+            bodyPadding: 10,
 
-    buttons: [
-        {
-            formBind: true,
-            text: 'Add',
-            action: 'addInput'
+            defaults: {
+                anchor: '100%',
+                allowBlank: false
+            },
+
+            items: [
+                {
+                    xtype: 'textfield',
+                    name: "name",
+                    fieldLabel: 'Name'
+                },
+                {
+                    xtype: 'treepanel',
+                    title: 'Available Components',
+                    rootVisible: true
+                }
+
+            ],
+            buttons: [
+                {
+                    formBind: true,
+                    text: 'Add',
+                    action: 'addInput'
+                }
+            ]
         }
     ]
 

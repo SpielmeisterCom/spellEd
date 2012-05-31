@@ -4,11 +4,13 @@ Ext.define('Spelled.controller.blueprints.Systems', {
     views: [
         'blueprint.system.Edit',
         'blueprint.system.Details',
-        'blueprint.system.Input'
+        'blueprint.system.Input',
+        'blueprint.system.input.Add'
     ],
 
     models: [
-        'blueprint.System'
+        'blueprint.System',
+        'blueprint.SystemInputDefinition'
     ],
 
     stores: [
@@ -31,10 +33,69 @@ Ext.define('Spelled.controller.blueprints.Systems', {
                 itemmouseenter:  this.application.showActionsOnFolder,
                 itemmouseleave:  this.application.hideActions
             },
-            'systemblueprintinputlist [action="addInput"]' : {
+            'systemblueprintinputlist [action="showAddInput"]' : {
                 click: this.showAddInput
+            },
+            'addinputtoblueprint button[action="addInput"]' : {
+                click: this.addInput
             }
         })
+    },
+
+    addInput: function( button ) {
+        var window    = button.up('window'),
+            form      = window.down('form'),
+            record    = form.getRecord(),
+            values    = form.getValues(),
+            tree      = window.down('treepanel'),
+            components   = tree.getView().getChecked(),
+            tab       = Ext.getCmp("BlueprintEditor").getActiveTab(),
+            componentBlueprintStore = Ext.getStore('blueprint.Components'),
+            systemBlueprint         = tab.blueprint
+
+        var inputDefinition = Ext.create(
+            'Spelled.model.blueprint.SystemInputDefinition',
+            {
+                name: values.name
+            }
+        )
+
+        Ext.each(
+            components,
+            function( component ) {
+
+                var componentBlueprint = componentBlueprintStore.getById( component.get('id') )
+
+                if( componentBlueprint ) {
+                    inputDefinition.get('components').push( componentBlueprint.getFullName() )
+                }
+            }
+        )
+
+        systemBlueprint.getInput().add( inputDefinition )
+
+        this.refreshSystemBlueprintInputList( tab )
+        window.close()
+    },
+
+    deleteInputActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
+        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
+
+        if( !node ) return
+
+        this.SystemInputDefinition( node.get('id') )
+    },
+
+    removeSystemInputDefinition: function( id ) {
+        var tab                = Ext.getCmp("BlueprintEditor").getActiveTab(),
+            systemBlueprint    = tab.blueprint,
+            store              = Ext.getStore( 'blueprint.SystemInputDefinitions' ),
+            input              = store.getById( id )
+
+        systemBlueprint.getInput().remove( input )
+        store.remove( input )
+
+        this.refreshSystemBlueprintInputList( tab )
     },
 
     openSystemBlueprint: function( systemBlueprint ) {
@@ -75,5 +136,28 @@ Ext.define('Spelled.controller.blueprints.Systems', {
         )
 
         systemBlueprint.appendOnTreeNode( rootNode )
+    },
+
+    showAddInput: function( ) {
+        var View = this.getBlueprintSystemInputAddView(),
+            view = new View(),
+            availableComponentsView  = view.down( 'treepanel' ),
+            blueprintComponentsStore = Ext.getStore( 'blueprint.Components' )
+
+
+        var rootNode = availableComponentsView.getStore().setRootNode( {
+                text: 'Components',
+                expanded: true
+            }
+        )
+
+        this.application.getController('blueprints.Entities').appendComponentsAttributesOnTreeNode( rootNode, blueprintComponentsStore )
+
+        rootNode.eachChild(
+            function( node ) {
+                node.set('checked', false)
+            }
+        )
+        view.show()
     }
 });

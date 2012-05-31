@@ -3,7 +3,9 @@ Ext.define('Spelled.model.blueprint.SystemInputDefinition', {
 
     fields: [
         "name",
-        "components"
+        {
+            name: "components", type: 'array', defaultValue: []
+        }
     ],
 
     idgen: 'uuid',
