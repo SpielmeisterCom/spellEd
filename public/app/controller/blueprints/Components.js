@@ -148,7 +148,7 @@ Ext.define('Spelled.controller.blueprints.Components', {
         propertyView.getForm().loadRecord( attribute )
     },
 
-    openComponentBlueprint: function( componentBlueprint ) {
+    openBlueprint: function( componentBlueprint ) {
         var blueprintEditor = Ext.getCmp("BlueprintEditor"),
             title           = componentBlueprint.getFullName()
 

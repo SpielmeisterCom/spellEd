@@ -66,10 +66,18 @@ Ext.define('Spelled.controller.Blueprints', {
 
         if( !node ) return
 
-        if( node.get('cls') === this.BLUEPRINT_TYPE_COMPONENT ) {
-            this.application.getController('blueprints.Components').removeComponentBlueprint( node.get('id') )
-        } else {
-            this.application.getController('blueprints.Entities').removeEntityBlueprint( node.get('id') )
+        switch( node.get('cls') ) {
+            case this.BLUEPRINT_TYPE_COMPONENT:
+                this.application.getController('blueprints.Components').removeComponentBlueprint( node.get('id') )
+                break
+            case this.BLUEPRINT_TYPE_ENTITY:
+                this.application.getController('blueprints.Entities').removeEntityBlueprint( node.get('id') )
+                break
+            case this.BLUEPRINT_TYPE_SYSTEM:
+                this.application.getController('blueprints.Systems').removeSystemBlueprint( node.get('id') )
+                break
+            default:
+                return
         }
     },
 
@@ -91,40 +99,33 @@ Ext.define('Spelled.controller.Blueprints', {
     openBlueprint: function( treePanel, record ) {
         if( !record.data.leaf ) return
 
+        var Model      = undefined,
+            Controller = undefined
+
+
         switch( record.get('cls') ) {
             case this.BLUEPRINT_TYPE_COMPONENT:
-                var ComponentBlueprint = this.getBlueprintComponentModel()
-
-                ComponentBlueprint.load( record.getId(), {
-                    scope: this,
-                    success: function( componentBlueprint ) {
-                        this.application.getController('blueprints.Components').openComponentBlueprint( componentBlueprint )
-                    }
-                })
+                Model = this.getBlueprintComponentModel()
+                Controller = this.application.getController('blueprints.Components')
                 break
             case this.BLUEPRINT_TYPE_ENTITY:
-                var EntityBlueprint = this.getBlueprintEntityModel()
-
-                EntityBlueprint.load( record.getId(), {
-                    scope: this,
-                    success: function( entityBlueprint ) {
-                        this.application.getController('blueprints.Entities').openEntityBlueprint( entityBlueprint )
-                    }
-                })
+                Model = this.getBlueprintEntityModel()
+                Controller = this.application.getController('blueprints.Entities')
                 break
             case this.BLUEPRINT_TYPE_SYSTEM:
-                var SystemBlueprint = this.getBlueprintSystemModel()
-
-                SystemBlueprint.load( record.getId(), {
-                    scope: this,
-                    success: function( systemBlueprint ) {
-                        this.application.getController('blueprints.Systems').openSystemBlueprint( systemBlueprint )
-                    }
-                })
+                Model = this.getBlueprintSystemModel()
+                Controller = this.application.getController('blueprints.Systems')
                 break
             default:
                 return
         }
+
+        Model.load( record.getId(), {
+            scope: this,
+            success: function( blueprint ) {
+                Controller.openBlueprint( blueprint )
+            }
+        })
     },
 
     removeBlueprintCallback: function( blueprint ) {

@@ -145,7 +145,7 @@ Ext.define('Spelled.controller.blueprints.Entities', {
         }
     },
 
-    openEntityBlueprint: function( entityBlueprint ) {
+    openBlueprint: function( entityBlueprint ) {
         var blueprintEditor = Ext.getCmp("BlueprintEditor"),
             title           = entityBlueprint.getFullName()
 

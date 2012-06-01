@@ -29,7 +29,7 @@ Ext.define('Spelled.controller.blueprints.Systems', {
         this.control({
             'systemblueprintinputlist': {
                 deleteclick:     this.deleteInputActionIconClick,
-                itemcontextmenu: this.showAttributesListContextMenu,
+                itemcontextmenu: this.showInputListContextMenu,
                 itemmouseenter:  this.application.showActionsOnFolder,
                 itemmouseleave:  this.application.hideActions
             },
@@ -42,14 +42,17 @@ Ext.define('Spelled.controller.blueprints.Systems', {
         })
     },
 
+    showInputListContextMenu: function( view, record, item, index, e, options ) {
+        this.application.getController('Menu').showSystemBlueprintInputListContextMenu( e )
+    },
+
     addInput: function( button ) {
-        var window    = button.up('window'),
-            form      = window.down('form'),
-            record    = form.getRecord(),
-            values    = form.getValues(),
-            tree      = window.down('treepanel'),
-            components   = tree.getView().getChecked(),
-            tab       = Ext.getCmp("BlueprintEditor").getActiveTab(),
+        var window     = button.up('window'),
+            form       = window.down('form'),
+            values     = form.getValues(),
+            tree       = window.down('treepanel'),
+            components = tree.getView().getChecked(),
+            tab        = Ext.getCmp("BlueprintEditor").getActiveTab(),
             componentBlueprintStore = Ext.getStore('blueprint.Components'),
             systemBlueprint         = tab.blueprint
 
@@ -83,7 +86,7 @@ Ext.define('Spelled.controller.blueprints.Systems', {
 
         if( !node ) return
 
-        this.SystemInputDefinition( node.get('id') )
+        this.removeSystemInputDefinition( node.get('id') )
     },
 
     removeSystemInputDefinition: function( id ) {
@@ -98,7 +101,16 @@ Ext.define('Spelled.controller.blueprints.Systems', {
         this.refreshSystemBlueprintInputList( tab )
     },
 
-    openSystemBlueprint: function( systemBlueprint ) {
+    removeSystemBlueprint: function( id ) {
+        var SystemBlueprint = this.getBlueprintSystemModel()
+
+        SystemBlueprint.load( id, {
+            scope: this,
+            success: this.application.getController('Blueprints').removeBlueprintCallback
+        })
+    },
+
+    openBlueprint: function( systemBlueprint ) {
         var blueprintEditor = Ext.getCmp("BlueprintEditor"),
             title           = systemBlueprint.getFullName()
 

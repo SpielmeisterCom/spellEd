@@ -11,6 +11,10 @@ Ext.define('Spelled.store.blueprint.Types', {
         {
             "type":"entityBlueprint",
             "name":"Entity"
+        },
+        {
+            "type":"systemBlueprint",
+            "name":"System"
         }
     ]
 });

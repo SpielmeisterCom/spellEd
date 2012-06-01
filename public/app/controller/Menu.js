@@ -9,6 +9,7 @@ Ext.define('Spelled.controller.Menu', {
         'menu.contextmenu.BlueprintsList',
         'menu.contextmenu.ComponentBlueprintAttributesList',
         'menu.contextmenu.EntityBlueprintComponentsList',
+        'menu.contextmenu.SystemBlueprintInputList',
         'ui.SpelledConsole',
         'ui.StartScreen'
     ],
@@ -37,6 +38,11 @@ Ext.define('Spelled.controller.Menu', {
                     button.up('window').close()
                     this.showLoadProject()
                 }
+            },
+
+
+            'systemblueprintinputcontextmenu [action="remove"]': {
+                click: this.removeSystemInput
             },
 
 
@@ -93,6 +99,13 @@ Ext.define('Spelled.controller.Menu', {
         view.showAt( event.getXY() )
 
         return view
+    },
+
+    showSystemBlueprintInputListContextMenu: function( e ) {
+        this.createAndShowView(
+            this.getMenuContextmenuSystemBlueprintInputListView(),
+            e
+        )
     },
 
     showBlueprintsListContextMenu: function( e ) {
@@ -173,6 +186,16 @@ Ext.define('Spelled.controller.Menu', {
 
         if( node && node.isLeaf() ) {
             this.application.getController( 'Assets' ).removeAsset( node.get('id') )
+        }
+    },
+
+    removeSystemInput: function( ) {
+        var tab = Ext.getCmp("BlueprintEditor").getActiveTab(),
+            tree = tab.down( 'systemblueprintinputlist' ),
+            node = tree.getSelectionModel().getLastSelected()
+
+        if( node && !node.isLeaf() && !node.isRoot() ) {
+            this.application.getController( 'blueprints.Systems' ).removeSystemInputDefinition( node.get('id') )
         }
     },
 
