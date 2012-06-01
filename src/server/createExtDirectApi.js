@@ -8,6 +8,7 @@ define(
         'server/extDirectApi/blueprints/createEntityApi',
         'server/extDirectApi/blueprints/createSystemApi',
         'server/extDirectApi/createAssetsApi',
+        'server/extDirectApi/createScriptsApi',
         'server/extDirectApi/ProjectApi',
 
         'underscore'
@@ -20,6 +21,7 @@ define(
         createEntityApi,
         createSystemApi,
         createAssetsApi,
+        createScriptsApi,
         createProjectApi,
 
         _
@@ -104,6 +106,7 @@ define(
                 EntityBlueprintActions    : createEntityApi( projectsRoot ),
                 AssetsActions             : createAssetsApi( projectsRoot ),
                 SystemBlueprintActions    : createSystemApi( projectsRoot ),
+                ScriptsActions            : createScriptsApi( projectsRoot ),
                 BlueprintsActions : [
                     {
                         name: "createBlueprint",

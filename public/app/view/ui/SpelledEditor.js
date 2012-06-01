@@ -5,13 +5,17 @@ Ext.define('Spelled.view.ui.SpelledEditor', {
 
     closable: true,
 
+    setContent : function( content ) {
+        this.html = content
+    },
+
     onRender: function(  ) {
         this.callParent(arguments); // call the superclass onRender method
         this.aceEditor = ace.edit( this.id )
 
         var JavaScriptMode = require("ace/mode/javascript").Mode;
         this.aceEditor.getSession().setMode( new JavaScriptMode() );
-        this.aceEditor.getSession().setValue( this.html );
+        this.aceEditor.getSession().setValue(  this.body.dom.textContent );
 
         this.aceEditor.commands.addCommand({
             name: 'saveCommand',

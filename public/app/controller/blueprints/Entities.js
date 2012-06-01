@@ -160,11 +160,9 @@ Ext.define('Spelled.controller.blueprints.Entities', {
             }
         )
 
-        var header = editView.down( 'entityblueprintdetails' )
-
-        //TODO: find a better solution for setting the details
-        header.items.items[0].setValue( entityBlueprint.get('type') )
-        header.items.items[1].setValue( entityBlueprint.getFullName() )
+        var form = editView.down( 'entityblueprintdetails' )
+        form.loadRecord( entityBlueprint )
+        form.getForm().setValues( { tmpName: entityBlueprint.getFullName() } )
 
         var tab = this.application.createTab( blueprintEditor, editView )
 

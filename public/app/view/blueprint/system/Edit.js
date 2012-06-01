@@ -17,6 +17,7 @@ Ext.define('Spelled.view.blueprint.system.Edit', {
             items: [
                 {
                     xtype: 'panel',
+
                     layout: {
                         align: 'stretch',
                         padding: 5,
@@ -32,10 +33,21 @@ Ext.define('Spelled.view.blueprint.system.Edit', {
                             xtype: 'systemblueprintinputlist',
                             flex: 2
                         }
+                    ],
+                    buttons: [
+                        {
+                            text: 'Save',
+                            action: 'saveBlueprint'
+                        },
+                        {
+                            text: 'Cancel',
+                            action: 'resetBlueprint'
+                        }
                     ]
                 },
                 {
-                    xtype: 'panel',
+                    xtype: 'aceeditor',
+                    closable: false,
                     title: 'Script'
                 }
             ]

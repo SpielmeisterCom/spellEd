@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.blueprint.entity.Details', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.form.Panel',
     alias : 'widget.entityblueprintdetails',
 
     bodyPadding: 10,
@@ -12,12 +12,14 @@ Ext.define('Spelled.view.blueprint.entity.Details', {
         {
             xtype: 'displayfield',
             fieldLabel: 'Type',
+            name: 'type',
             anchor: '100%'
         },
         {
             xtype: 'displayfield',
             fieldLabel: 'Name',
+            name: 'tmpName',
             anchor: '100%'
-        }
+        },
     ]
 });

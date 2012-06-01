@@ -34,17 +34,17 @@ define(
 
                 var result = _.pick( entity, 'name', 'namespace', 'type', 'scriptId')
 
-                var components = []
+                var inputDefinitions = []
                 _.each(
                     entity.getInput,
                     function( input ) {
-                        components.push(
+                        inputDefinitions.push(
                             _.pick( input, 'name', 'components' )
                         )
                     }
                 )
 
-                result.components = components
+                result.input = inputDefinitions
 
                 util.writeFile( entity.id, JSON.stringify( result, null, "\t" ) )
 

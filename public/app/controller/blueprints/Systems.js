@@ -5,7 +5,8 @@ Ext.define('Spelled.controller.blueprints.Systems', {
         'blueprint.system.Edit',
         'blueprint.system.Details',
         'blueprint.system.Input',
-        'blueprint.system.input.Add'
+        'blueprint.system.input.Add',
+        'ui.SpelledEditor'
     ],
 
     models: [
@@ -33,11 +34,15 @@ Ext.define('Spelled.controller.blueprints.Systems', {
                 itemmouseenter:  this.application.showActionsOnFolder,
                 itemmouseleave:  this.application.hideActions
             },
+
             'systemblueprintinputlist [action="showAddInput"]' : {
                 click: this.showAddInput
             },
             'addinputtoblueprint button[action="addInput"]' : {
                 click: this.addInput
+            },
+            'systemblueprintedit > panel button[action="saveBlueprint"]' : {
+                click: this.saveSystemBlueprint
             }
         })
     },
@@ -63,6 +68,7 @@ Ext.define('Spelled.controller.blueprints.Systems', {
             }
         )
 
+        var componentNames = []
         Ext.each(
             components,
             function( component ) {
@@ -70,10 +76,12 @@ Ext.define('Spelled.controller.blueprints.Systems', {
                 var componentBlueprint = componentBlueprintStore.getById( component.get('id') )
 
                 if( componentBlueprint ) {
-                    inputDefinition.get('components').push( componentBlueprint.getFullName() )
+                    componentNames.push( componentBlueprint.getFullName() )
                 }
             }
         )
+
+        inputDefinition.set('components', componentNames)
 
         systemBlueprint.getInput().add( inputDefinition )
 
@@ -125,14 +133,27 @@ Ext.define('Spelled.controller.blueprints.Systems', {
             }
         )
 
-        var header = editView.down( 'systemblueprintdetails' )
-
-        //TODO: find a better solution for setting the details
-        header.items.items[0].setValue( systemBlueprint.get('type') )
-        header.items.items[1].setValue( systemBlueprint.getFullName() )
-        header.items.items[2].setValue( systemBlueprint.get('scriptId') )
+        var form = editView.down( 'systemblueprintdetails' )
+        form.loadRecord( systemBlueprint )
+        form.getForm().setValues( { tmpName: systemBlueprint.getFullName() } )
 
         var tab = this.application.createTab( blueprintEditor, editView )
+
+        if( systemBlueprint.get('scriptId') ) {
+            var editor = tab.down('aceeditor')
+
+            var Script = Ext.create( 'Spelled.model.Script' )
+
+            Script.load(
+                systemBlueprint.get('scriptId'), {
+                    scope: this,
+                    success: function( script ) {
+                        editor.setContent( "asdadsadasdasd" )
+                    }
+                }
+            )
+            editor.setContent( "asdadsadasdasd" )
+        }
 
         this.refreshSystemBlueprintInputList( tab )
     },
@@ -171,5 +192,21 @@ Ext.define('Spelled.controller.blueprints.Systems', {
             }
         )
         view.show()
+    },
+
+    saveSystemBlueprint: function( button, event, record ) {
+        var panel  = button.up('panel'),
+            form   = panel.down('form'),
+            record = form.getRecord(),
+            values = form.getValues(),
+            ownerModel = Ext.getCmp("BlueprintEditor").getActiveTab().blueprint
+
+        ownerModel.set( values )
+
+        if( !!ownerModel ) {
+            ownerModel.save( )
+            this.application.getController('Blueprints').refreshBlueprintStores()
+        }
+
     }
 });

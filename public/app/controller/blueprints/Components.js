@@ -164,12 +164,9 @@ Ext.define('Spelled.controller.blueprints.Components', {
             }
         )
 
-        var header = editView.down( 'componentblueprintdetails' )
-
-        //TODO: find a better solution for setting the details
-        header.items.items[0].setValue( componentBlueprint.get('type') )
-        header.items.items[1].setValue( componentBlueprint.getFullName() )
-
+        var form = editView.down( 'componentblueprintdetails' )
+        form.loadRecord( componentBlueprint )
+        form.getForm().setValues( { tmpName: componentBlueprint.getFullName() } )
 
         var tab = this.application.createTab( blueprintEditor, editView )
         this.refreshComponentBlueprintAttributesList( tab )

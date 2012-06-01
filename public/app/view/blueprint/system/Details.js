@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.blueprint.system.Details', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.form.Panel',
     alias : 'widget.systemblueprintdetails',
 
     bodyPadding: 10,
@@ -12,17 +12,19 @@ Ext.define('Spelled.view.blueprint.system.Details', {
         {
             xtype: 'displayfield',
             fieldLabel: 'Type',
+            name: 'type',
             anchor: '100%'
         },
         {
             xtype: 'displayfield',
             fieldLabel: 'Name',
+            name: 'tmpName',
             anchor: '100%'
         },
         {
-            xtype: 'displayfield',
+            xtype: 'combobox',
             fieldLabel: 'Script',
-            anchor: '100%'
+            name: 'scriptId'
         }
     ]
 });

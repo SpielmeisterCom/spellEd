@@ -82,8 +82,7 @@ Ext.define('Spelled.controller.Blueprints', {
     },
 
     showBlueprintsContextMenu: function( view, record, item, index, e, options ) {
-        var menuController = this.application.getController('Menu')
-        menuController.showBlueprintsListContextMenu( e )
+        this.application.getController('Menu').showBlueprintsListContextMenu( e )
     },
 
     changeBlueprintCreationType: function( combo, records ) {
