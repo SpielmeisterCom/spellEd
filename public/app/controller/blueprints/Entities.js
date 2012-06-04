@@ -141,7 +141,8 @@ Ext.define('Spelled.controller.blueprints.Entities', {
                 attribute.set('default', config[ attribute.get('name') ])
             }
 
-            this.application.getController('blueprints.Components').fillAttributeConfigView( attribute )
+            var view = Ext.getCmp("BlueprintEditor").getActiveTab().down( 'entityblueprintproperty' )
+            this.application.getController('blueprints.Components').fillAttributeConfigView( view, attribute )
         }
     },
 

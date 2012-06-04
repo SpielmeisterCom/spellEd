@@ -139,12 +139,11 @@ Ext.define('Spelled.controller.blueprints.Components', {
         var attribute = Ext.getStore('blueprint.ComponentAttributes').getById( record.getId() )
 
         if( attribute ) {
-            this.fillAttributeConfigView( attribute )
+            this.fillAttributeConfigView( Ext.getCmp("BlueprintEditor").getActiveTab().down( 'componentblueprintproperty' ), attribute )
         }
     },
 
-    fillAttributeConfigView: function( attribute ) {
-        var propertyView = Ext.getCmp("BlueprintEditor").getActiveTab().down( 'form' )
+    fillAttributeConfigView: function( propertyView, attribute ) {
         propertyView.getForm().loadRecord( attribute )
     },
 
