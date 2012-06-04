@@ -27,7 +27,6 @@ Ext.define('Spelled.view.script.Editor', {
                 mac: 'Command-S'
             },
             exec: function( editor ) {
-                console.log( editor.getSession().getValue() )
                 me.model.set( 'content', editor.getSession().getValue() )
                 me.model.save()
             }
