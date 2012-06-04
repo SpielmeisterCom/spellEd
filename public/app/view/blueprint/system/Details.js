@@ -24,6 +24,9 @@ Ext.define('Spelled.view.blueprint.system.Details', {
         {
             xtype: 'combobox',
             fieldLabel: 'Script',
+            displayField : 'name',
+            valueField: 'name',
+            store: 'Scripts',
             name: 'scriptId'
         }
     ]

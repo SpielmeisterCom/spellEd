@@ -49,38 +49,54 @@ define(
             }
 
             var read = function( req, res, payload ) {
-
                 if( !! payload[0].id ) {
-                    return util.readFile( payload[0].id )
+                    var id = payload[0].id
+                    var response = amdHelper.loadModules( root + "/**/" + scriptPathPart )
+                    if( !_.has( response, id ) ) return {}
+
+                    return {
+                        name: id,
+                        content: response[ id ].source
+                    }
+
                 } else {
-                    return getAll()
+                    return getAll( req, res, payload )
                 }
             }
 
-            var update = function(  ) {
-
+            var update = function( req, res, payload ) {
+                console.log( "UPDATE" )
+                return false
             }
 
             var destroy = function( req, res, payload ) {
-                var filePath = payload[0].id
-
-                util.deleteFile( filePath )
-
-                return true
+                return false
             }
 
             var getTree = function( req, res, payload, next ) {
-
-                var tmpPath = root + payload[1] +  scriptPathPart
-
+                var tmpPath = root + payload[1] + scriptPathPart
 
                 return util.listing(tmpPath, true, req, res, payload, next)
             }
 
-            var getAll = function( ) {
-                var result = amdHelper.loadModules( root + scriptPathPart )
+            var getAll = function( req, res, payload ) {
+                //TODO: projectname muss noch rein
+                var response = amdHelper.loadModules( root + "/**/" + scriptPathPart )
 
-console.log( result )
+                var keys = _.keys( response )
+
+                var result = []
+                _.each(
+                    keys,
+                    function( key ) {
+                        result.push({
+                            name: key,
+                            content: response[ key ].source
+                        })
+                    }
+                )
+
+                return result
             }
 
             return [
@@ -109,6 +125,11 @@ console.log( result )
                     name: 'getTree',
                     len: 2,
                     func: getTree
+                },
+                {
+                    name: getAll,
+                    len: 1,
+                    func: getAll
                 }
             ]
         }

@@ -44,7 +44,7 @@ define(
                 return util.listing( tmpPath, true, req, res, payload, next )
             }
 
-            var getAllBlueprints = function( projectName ) {
+            var getAllBlueprints = function( projectName, type ) {
                 var blueprintsPath =  projectsRoot + projectName + projectBlueprintLibraryPath,
                     tmpPath = util.getPath( blueprintsPath )
 
@@ -56,33 +56,22 @@ define(
 
                 if (!stat.isDirectory()) return {}
 
-                return util.getDirFilesAsObjects( tmpPath )
+                return _.filter(
+                    util.getDirFilesAsObjects( tmpPath ),
+                    function( blueprint ) {
+                        return ( blueprint.type === type )
+                    }
+                )
             }
 
             var getAllEntityBlueprints = function( req, res, payload, next ) {
                 var projectName =  payload[0]
-
-                var blueprints = getAllBlueprints( projectName )
-
-                return _.filter(
-                    blueprints,
-                    function( blueprint ) {
-                        return ( blueprint.type === 'entityBlueprint' )
-                    }
-                )
+                return getAllBlueprints( projectName, 'entityBlueprint' )
             }
 
             var getAllComponentBlueprints = function( req, res, payload, next ) {
                 var projectName = payload[0]
-
-                var blueprints = getAllBlueprints( projectName )
-
-                return _.filter(
-                    blueprints,
-                    function( blueprint ) {
-                        return ( blueprint.type === 'componentBlueprint' )
-                    }
-                )
+                return getAllBlueprints( projectName, 'componentBlueprint' )
             }
 
             var createBlueprint = function( req, res, payload, next ) {

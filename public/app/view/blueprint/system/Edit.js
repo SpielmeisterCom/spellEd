@@ -46,7 +46,7 @@ Ext.define('Spelled.view.blueprint.system.Edit', {
                     ]
                 },
                 {
-                    xtype: 'aceeditor',
+                    xtype: 'scripteditor',
                     closable: false,
                     title: 'Script'
                 }

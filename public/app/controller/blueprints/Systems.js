@@ -6,17 +6,19 @@ Ext.define('Spelled.controller.blueprints.Systems', {
         'blueprint.system.Details',
         'blueprint.system.Input',
         'blueprint.system.input.Add',
-        'ui.SpelledEditor'
+        'script.Editor'
     ],
 
     models: [
         'blueprint.System',
-        'blueprint.SystemInputDefinition'
+        'blueprint.SystemInputDefinition',
+        'Script'
     ],
 
     stores: [
         'blueprint.Systems',
-        'blueprint.SystemInputDefinitions'
+        'blueprint.SystemInputDefinitions',
+        'Scripts'
     ],
 
     refs: [
@@ -140,19 +142,18 @@ Ext.define('Spelled.controller.blueprints.Systems', {
         var tab = this.application.createTab( blueprintEditor, editView )
 
         if( systemBlueprint.get('scriptId') ) {
-            var editor = tab.down('aceeditor')
+            var editor = tab.down('scripteditor')
 
-            var Script = Ext.create( 'Spelled.model.Script' )
+            var Script = this.getScriptModel()
 
             Script.load(
                 systemBlueprint.get('scriptId'), {
                     scope: this,
                     success: function( script ) {
-                        editor.setContent( "asdadsadasdasd" )
+                        editor.setModel( script )
                     }
                 }
             )
-            editor.setContent( "asdadsadasdasd" )
         }
 
         this.refreshSystemBlueprintInputList( tab )
@@ -194,10 +195,9 @@ Ext.define('Spelled.controller.blueprints.Systems', {
         view.show()
     },
 
-    saveSystemBlueprint: function( button, event, record ) {
+    saveSystemBlueprint: function( button ) {
         var panel  = button.up('panel'),
             form   = panel.down('form'),
-            record = form.getRecord(),
             values = form.getValues(),
             ownerModel = Ext.getCmp("BlueprintEditor").getActiveTab().blueprint
 
