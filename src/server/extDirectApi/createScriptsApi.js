@@ -43,7 +43,8 @@ define(
                     success: true,
                     data: {
                         name: name,
-                        content : ""
+                        content : "",
+                        path: baseName
                     }
                 }
             }
@@ -56,7 +57,8 @@ define(
 
                     return {
                         name: id,
-                        content: response[ id ].source
+                        content: response[ id ].source,
+                        path: response[ id ].path
                     }
 
                 } else {
@@ -65,8 +67,14 @@ define(
             }
 
             var update = function( req, res, payload ) {
-                console.log( "UPDATE" )
-                return false
+                _.each(
+                    payload,
+                    function( record ) {
+                        if( _.has( record, 'path' ) && _.has( record, 'content') ) {
+                            util.writeFile( record.path , record.content )
+                        }
+                    }
+                )
             }
 
             var destroy = function( req, res, payload ) {
@@ -91,7 +99,8 @@ define(
                     function( key ) {
                         result.push({
                             name: key,
-                            content: response[ key ].source
+                            content: response[ key ].source,
+                            path: response[ key ].path
                         })
                     }
                 )

@@ -12,6 +12,7 @@ Ext.define('Spelled.model.Script', {
 
     fields: [
         'name',
-        'content'
+        'content',
+        'path'
     ]
 });
