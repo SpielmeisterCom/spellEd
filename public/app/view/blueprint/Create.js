@@ -24,7 +24,7 @@ Ext.define('Spelled.view.blueprint.Create', {
                 {
                     xtype: "combo",
                     name: 'type',
-                    forceSelection: true,
+                    editable: false,
                     store: 'blueprint.Types',
                     queryMode: 'local',
                     fieldLabel: "Blueprint Type",

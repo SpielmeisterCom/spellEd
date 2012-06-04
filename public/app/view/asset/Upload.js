@@ -24,7 +24,7 @@ Ext.define('Spelled.view.asset.Upload', {
                 {
                     xtype: "combo",
                     name: 'type',
-                    forceSelection: true,
+                    editable: false,
                     store: 'asset.Types',
                     queryMode: 'local',
                     fieldLabel: "Type",

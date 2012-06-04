@@ -9,7 +9,7 @@ Ext.define('Spelled.view.component.Properties', {
         //TODO: when a assigned asset gets removed, the field will disappear
         textureId: Ext.create(
             'Ext.form.ComboBox', {
-                forceSelection : true,
+                editable: false,
                 displayField   : 'name',
                 emptyText      :'-- Select a texture --',
                 valueField     : 'assetId'

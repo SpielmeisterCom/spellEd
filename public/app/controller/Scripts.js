@@ -2,7 +2,9 @@ Ext.define('Spelled.controller.Scripts', {
     extend: 'Ext.app.Controller',
 
     views: [
-        'script.Editor'
+        'script.Editor',
+//        'script.TreeList',
+        'script.Manager'
     ],
 
     stores: [
@@ -24,15 +26,7 @@ Ext.define('Spelled.controller.Scripts', {
         this.control({
 
         })
-    },
-
-    refreshStores: function() {
-        var projectName = this.application.getActiveProject().get('name')
-
-        this.getScriptsStore().load( {
-            params: {
-                projectName: projectName
-            }
-        } )
     }
+
+
 });

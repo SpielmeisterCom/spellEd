@@ -1,7 +1,7 @@
 Ext.define('Spelled.abstract.model.Blueprint', {
     extend: 'Ext.data.Model',
 
-    requires: ['Spelled.writer.JsonWriter'],
+    requires: ['Spelled.abstract.writer.JsonWriter'],
 
     getFullName: function() {
         var namespace = this.get('namespace')

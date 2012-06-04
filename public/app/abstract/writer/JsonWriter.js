@@ -1,4 +1,4 @@
-Ext.define('Spelled.writer.JsonWriter', {
+Ext.define('Spelled.abstract.writer.JsonWriter', {
     override: 'Ext.data.writer.Json',
 
     getRecordData: function( record ) {
