@@ -1,5 +1,5 @@
 Ext.define('Spelled.store.asset.Tree', {
-    extend: 'Ext.data.TreeStore',
+    extend: 'Spelled.abstract.store.TreeStore',
 
     root: {
         expanded: true

@@ -16,67 +16,6 @@ var after = function(times, func) {
 };
 
 Ext.onReady(function() {
-    // Ext overrides. Needed because some functionality isn't implemented yet by Sencha
-    Ext.override( Ext.data.Store, {
-        loadDataViaReader : function(data, append) {
-            var me      = this,
-                result  = me.proxy.reader.read(data),
-                records = result.records;
-
-            me.loadRecords(records, { addRecords: append })
-            me.fireEvent('load', me, result.records, true)
-        }
-    })
-
-    Ext.override(Ext.data.TreeStore, {
-
-        hasFilter: false,
-
-        filter: function(filters, value) {
-
-            if (Ext.isString(filters)) {
-                filters = {
-                    property: filters,
-                    value: value
-                };
-            }
-
-            var me = this,
-                decoded = me.decodeFilters(filters),
-                i = 0,
-                length = decoded.length;
-
-            for (; i < length; i++) {
-                me.filters.replace(decoded[i]);
-            }
-
-            Ext.Array.each(me.filters.items, function(filter) {
-                Ext.Object.each(me.tree.nodeHash, function(key, node) {
-                    if (filter.filterFn) {
-                        if (!filter.filterFn(node)) node.remove();
-                    } else {
-                        if (node.data[filter.property] != filter.value) node.remove();
-                    }
-                });
-            });
-            me.hasFilter = true;
-        },
-
-        clearFilter: function() {
-            var me = this;
-            me.filters.clear();
-            me.hasFilter = false;
-            me.load();
-        },
-
-        isFiltered: function() {
-            return this.hasFilter;
-        }
-
-    });
-
-    //Overrides finished
-
     var lock = after( apis.length, startEditor )
 
     Ext.each( apis, function( api ) {
