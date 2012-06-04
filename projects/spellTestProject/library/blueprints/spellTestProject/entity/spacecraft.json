@@ -1,22 +1,22 @@
 {
 	"type" : "entityBlueprint",
-	"namespace" : "spellTestProject/entity",
+	"namespace" : "spellTestProject.entity",
 	"name" : "spacecraft",
 	"components" : [
 		{
-			"blueprintId" : "spell/component/core/position",
+			"blueprintId" : "spell.component.core.position",
 			"config" : {
 				"value" : [ 1, 2, 3 ]
 			}
 		},
 		{
-			"blueprintId" : "spell/component/core/graphics2d/appearance",
+			"blueprintId" : "spell.component.core.graphics2d.appearance",
 			"config" : {
 				"textureId" : "textures/spell/4.2.04_256.png"
 			}
 		},
 		{
-			"blueprintId" : "spell/component/core/graphics2d/renderData"
+			"blueprintId" : "spell.component.core.graphics2d.renderData"
 		}
 	]
 }

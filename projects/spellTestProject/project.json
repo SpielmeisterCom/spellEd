@@ -10,10 +10,10 @@
             "entities": [
                 {
                     "name" : "spacecraft1",
-                    "blueprintId": "spellTestProject/entity/spacecraft",
+                    "blueprintId": "spellTestProject.entity.spacecraft",
                     "components": [
 						{
-							"blueprintId" : "spell/component/core/position",
+							"blueprintId" : "spell.component.core.position",
 							"config": {
 								"value" : [ 128, 128 ]
 							}
@@ -22,16 +22,16 @@
                 },
 				{
 					"name" : "spacecraft2",
-					"blueprintId": "spellTestProject/entity/spacecraft",
+					"blueprintId": "spellTestProject.entity.spacecraft",
 					"components": [
 						{
-							"blueprintId" : "spell/component/core/position",
+							"blueprintId" : "spell.component.core.position",
 							"config": {
 								"value" : [ 400, 250 ]
 							}
 						},
 						{
-							"blueprintId" : "spell/component/core/graphics2d/appearance",
+							"blueprintId" : "spell.component.core.graphics2d.appearance",
 							"config": {
 								"rotation" : 0.1,
 								"scale" : [ 0.66, 0.66 ]
@@ -44,7 +44,7 @@
 				"update": [
 				],
 				"render": [
-					"spell/system/render"
+					"spell.system.render"
 				]
 			}
         }

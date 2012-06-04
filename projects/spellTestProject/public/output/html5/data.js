@@ -1,7 +1,7 @@
 define(
 	'spell/client/runtimeModule',
 	function() {
-		return {"name":"spellTestProject","startZone":"Zone1","zones":[{"name":"Zone1","entities":[{"name":"spacecraft1","blueprintId":"spellTestProject/entity/spacecraft","config":{"spell/component/core/position":[128,128]}},{"name":"spacecraft2","blueprintId":"spellTestProject/entity/spacecraft","config":{"spell/component/core/position":[400,250],"spell/component/core/graphics2d/appearance":{"rotation":0.1,"scale":[0.66,0.66]}}}],"systems":{"update":[],"render":["spell/system/render"]},"resources":["textures/spell/4.2.04_256.png"]}],"componentBlueprints":[{"type":"componentBlueprint","namespace":"spell/component/core","name":"position","attributes":[{"name":"value","type":"vec3","default":[0,0,0]}]},{"type":"componentBlueprint","namespace":"spell/component/core/graphics2d","name":"appearance","attributes":[{"name":"rotation","type":"number","default":0},{"name":"scale","type":"vec2","default":[1,1]},{"name":"translation","type":"vec2","default":[0,0]},{"name":"textureId","type":"assetTextureId","default":"spell/textures/not_defined"},{"name":"opacity","type":"number","default":1}]},{"type":"componentBlueprint","namespace":"spell/component/core/graphics2d","name":"renderData","attributes":[{"name":"rotation","type":"number","default":0},{"name":"scale","type":"vec2","default":[1,1]},{"name":"translation","type":"vec2","default":[0,0]},{"name":"pass","type":"integer","default":1},{"name":"opacity","type":"number","default":1}]}],"entityBlueprints":[{"type":"entityBlueprint","namespace":"spellTestProject/entity","name":"spacecraft","components":[{"blueprintId":"spell/component/core/position","config":{"value":[1,2,3]}},{"blueprintId":"spell/component/core/graphics2d/appearance","config":{"textureId":"textures/spell/4.2.04_256.png"}},{"blueprintId":"spell/component/core/graphics2d/renderData"}]}],"systemBlueprints":[{"type":"systemBlueprint","namespace":"spell/system","name":"render","input":[{"name":"entities","components":["spell/component/core/position","spell/component/core/graphics2d/appearance","spell/component/core/graphics2d/renderData"]}],"scriptId":"spell/system/render"}]}
+		return {"name":"spellTestProject","startZone":"Zone1","zones":[{"name":"Zone1","entities":[{"name":"spacecraft1","blueprintId":"spellTestProject.entity.spacecraft","config":{"spell.component.core.position":[128,128]}},{"name":"spacecraft2","blueprintId":"spellTestProject.entity.spacecraft","config":{"spell.component.core.position":[400,250],"spell.component.core.graphics2d.appearance":{"rotation":0.1,"scale":[0.66,0.66]}}}],"systems":{"update":[],"render":["spell.system.render"]},"resources":["textures/spell/4.2.04_256.png"]}],"componentBlueprints":[{"type":"componentBlueprint","namespace":"spell.component.core","name":"position","attributes":[{"name":"value","type":"vec3","default":[0,0,0]}]},{"type":"componentBlueprint","namespace":"spell.component.core.graphics2d","name":"appearance","attributes":[{"name":"rotation","type":"number","default":0},{"name":"scale","type":"vec2","default":[1,1]},{"name":"translation","type":"vec2","default":[0,0]},{"name":"textureId","type":"assetTextureId","default":"spell/textures/not_defined"},{"name":"opacity","type":"number","default":1}]},{"type":"componentBlueprint","namespace":"spell.component.core.graphics2d","name":"renderData","attributes":[{"name":"rotation","type":"number","default":0},{"name":"scale","type":"vec2","default":[1,1]},{"name":"translation","type":"vec2","default":[0,0]},{"name":"pass","type":"integer","default":1},{"name":"opacity","type":"number","default":1}]}],"entityBlueprints":[{"type":"entityBlueprint","namespace":"spellTestProject.entity","name":"spacecraft","components":[{"blueprintId":"spell.component.core.position","config":{"value":[1,2,3]}},{"blueprintId":"spell.component.core.graphics2d.appearance","config":{"textureId":"textures/spell/4.2.04_256.png"}},{"blueprintId":"spell.component.core.graphics2d.renderData"}]}],"systemBlueprints":[{"type":"systemBlueprint","namespace":"spell.system","name":"render","input":[{"name":"entities","components":["spell.component.core.position","spell.component.core.graphics2d.appearance","spell.component.core.graphics2d.renderData"]}],"scriptId":"spell/system/render"}]}
 	}
 )
 
@@ -36,9 +36,9 @@ define(
 			translation = vec3.create(),
 			opacity     = 1.0
 
-		var appearanceComponentId = 'spell/component/core/graphics2d/appearance',
-			renderDataComponentId = 'spell/component/core/graphics2d/renderData',
-			positionComponentId   = 'spell/component/core/position'
+		var appearanceComponentId = 'spell.component.core.graphics2d.appearance',
+			renderDataComponentId = 'spell.component.core.graphics2d.renderData',
+			positionComponentId   = 'spell.component.core.position'
 
 
 		var createEntitiesSortedByPath = function( entitiesByPass ) {
@@ -185,5 +185,101 @@ define(
 		}
 
 		return Renderer
+	}
+)
+
+define(
+	'glmatrix/vec2',
+	[
+		'spell/shared/util/platform/Types'
+	],
+	function(
+		Types
+	) {
+		'use strict'
+
+
+		var vec2 = {}
+
+		/**
+		 * Creates a new instance of a vec2 using the default array type
+		 * Any javascript array-like objects containing at least 2 numeric elements can serve as a vec2
+		 *
+		 * @param {vec2} [vec] vec2 containing values to initialize with
+		 *
+		 * @returns {vec2} New vec2
+		 */
+		vec2.create = function( vec ) {
+			var dest = Types.createNativeFloatArray( 2 )
+
+			if( vec ) {
+				dest[ 0 ] = vec[ 0 ]
+				dest[ 1 ] = vec[ 1 ]
+
+			} else {
+				dest[ 0 ] = dest[ 1 ] = 0
+			}
+
+			return dest
+		}
+
+		/**
+		 * Performs a vector multiplication
+		 *
+		 * @param {vec2} vec First operand
+		 * @param {vec2} vec2 Second operand
+		 * @param {vec2} [dest] vec2 receiving operation result. If not specified result is written to vec
+		 *
+		 * @returns {vec2} dest if specified, vec otherwise
+		 */
+		vec2.multiply = function( vec, vec2, dest ) {
+			if( !dest || vec === dest ) {
+				vec[0] *= vec2[0]
+				vec[1] *= vec2[1]
+				return vec
+			}
+
+			dest[ 0 ] = vec[ 0 ] * vec2[ 0 ]
+			dest[ 1 ] = vec[ 1 ] * vec2[ 1 ]
+			return dest
+		}
+
+		/**
+		 * Performs a vector addition
+		 *
+		 * @param {vec2} vec First operand
+		 * @param {vec2} vec2 Second operand
+		 * @param {vec2} [dest] vec2 receiving operation result. If not specified result is written to vec
+		 *
+		 * @returns {vec2} dest if specified, vec otherwise
+		 */
+		vec2.add = function( vec, vec2, dest ) {
+			if( !dest || vec === dest ) {
+				vec[ 0 ] += vec2 [0 ]
+				vec[ 1 ] += vec2[ 1 ]
+				return vec
+			}
+
+			dest[ 0 ] = vec[ 0 ] + vec2[ 0 ]
+			dest[ 1 ] = vec[ 1 ] + vec2[ 1 ]
+			return dest
+		}
+
+		/**
+		 * Copies the values of one vec3 to another
+		 *
+		 * @param {vec2} vec vec2/vec3 containing values to copy
+		 * @param {vec2} dest vec2 receiving copied values
+		 *
+		 * @returns {vec2} dest
+		 */
+		vec2.set = function( vec, dest ) {
+			dest[ 0 ] = vec[ 0 ]
+			dest[ 1 ] = vec[ 1 ]
+
+			return dest
+		}
+
+		return vec2
 	}
 )

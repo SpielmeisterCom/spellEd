@@ -80,102 +80,6 @@ enterMain = function( moduleName, args ) {
 }
 
 define(
-	'glmatrix/vec2',
-	[
-		'spell/shared/util/platform/Types'
-	],
-	function(
-		Types
-	) {
-		'use strict'
-
-
-		var vec2 = {}
-
-		/**
-		 * Creates a new instance of a vec2 using the default array type
-		 * Any javascript array-like objects containing at least 2 numeric elements can serve as a vec2
-		 *
-		 * @param {vec2} [vec] vec2 containing values to initialize with
-		 *
-		 * @returns {vec2} New vec2
-		 */
-		vec2.create = function( vec ) {
-			var dest = Types.createNativeFloatArray( 2 )
-
-			if( vec ) {
-				dest[ 0 ] = vec[ 0 ]
-				dest[ 1 ] = vec[ 1 ]
-
-			} else {
-				dest[ 0 ] = dest[ 1 ] = 0
-			}
-
-			return dest
-		}
-
-		/**
-		 * Performs a vector multiplication
-		 *
-		 * @param {vec2} vec First operand
-		 * @param {vec2} vec2 Second operand
-		 * @param {vec2} [dest] vec2 receiving operation result. If not specified result is written to vec
-		 *
-		 * @returns {vec2} dest if specified, vec otherwise
-		 */
-		vec2.multiply = function( vec, vec2, dest ) {
-			if( !dest || vec === dest ) {
-				vec[0] *= vec2[0]
-				vec[1] *= vec2[1]
-				return vec
-			}
-
-			dest[ 0 ] = vec[ 0 ] * vec2[ 0 ]
-			dest[ 1 ] = vec[ 1 ] * vec2[ 1 ]
-			return dest
-		}
-
-		/**
-		 * Performs a vector addition
-		 *
-		 * @param {vec2} vec First operand
-		 * @param {vec2} vec2 Second operand
-		 * @param {vec2} [dest] vec2 receiving operation result. If not specified result is written to vec
-		 *
-		 * @returns {vec2} dest if specified, vec otherwise
-		 */
-		vec2.add = function( vec, vec2, dest ) {
-			if( !dest || vec === dest ) {
-				vec[ 0 ] += vec2 [0 ]
-				vec[ 1 ] += vec2[ 1 ]
-				return vec
-			}
-
-			dest[ 0 ] = vec[ 0 ] + vec2[ 0 ]
-			dest[ 1 ] = vec[ 1 ] + vec2[ 1 ]
-			return dest
-		}
-
-		/**
-		 * Copies the values of one vec3 to another
-		 *
-		 * @param {vec2} vec vec2/vec3 containing values to copy
-		 * @param {vec2} dest vec2 receiving copied values
-		 *
-		 * @returns {vec2} dest
-		 */
-		vec2.set = function( vec, dest ) {
-			dest[ 0 ] = vec[ 0 ]
-			dest[ 1 ] = vec[ 1 ]
-
-			return dest
-		}
-
-		return vec2
-	}
-)
-
-define(
 	"spell/shared/util/StatisticsManager",
 	[
 		'spell/shared/util/platform/underscore'
@@ -263,6 +167,25 @@ define(
 		}
 
 		return StatisticsManager
+	}
+)
+
+define(
+	'spell/shared/util/platform/log',
+	function() {
+		'use strict'
+
+
+		var log = function( message ) {
+			if( console === undefined ) return
+
+
+			var now = new Date()
+
+			console.log( '[' + now.toDateString() + ' ' + now.toLocaleTimeString() + '] ' +  message )
+		}
+
+		return log
 	}
 )
 
@@ -599,32 +522,6 @@ define(
 		}
 
 		return ResourceLoader
-	}
-)
-
-define(
-	"spell/shared/util/math",
-	function(
-	) {
-		"use strict"
-
-
-		var clamp = function( value, lowerBound, upperBound ) {
-			if ( value < lowerBound) return lowerBound;
-			if ( value > upperBound) return upperBound;
-
-			return value;
-		}
-
-		var isInInterval = function( value, lowerBound, upperBound ) {
-			return ( value >= lowerBound && value <= upperBound )
-		}
-
-
-		return {
-			clamp : clamp,
-			isInInterval : isInInterval
-		}
 	}
 )
 
@@ -1473,7 +1370,7 @@ define(
 		}
 
 		var addBlueprint = function( blueprints, entityTemplates, definition ) {
-			var blueprintId = definition.namespace + '/' + definition.name
+			var blueprintId = definition.namespace + '.' + definition.name
 
 			if( _.has( blueprints, blueprintId ) ) throw 'Error: Blueprint definition \'' + blueprintId + '\' already exists.'
 
@@ -1886,6 +1783,129 @@ define(
 
 
 		return EntityManager
+	}
+)
+
+define(
+	"spell/shared/util/math",
+	function(
+	) {
+		"use strict"
+
+
+		var clamp = function( value, lowerBound, upperBound ) {
+			if ( value < lowerBound) return lowerBound;
+			if ( value > upperBound) return upperBound;
+
+			return value;
+		}
+
+		var isInInterval = function( value, lowerBound, upperBound ) {
+			return ( value >= lowerBound && value <= upperBound )
+		}
+
+
+		return {
+			clamp : clamp,
+			isInInterval : isInInterval
+		}
+	}
+)
+
+define(
+	'spell/shared/util/platform/PlatformKit',
+	[
+		'spell/shared/util/platform/private/callNextFrame',
+		'spell/shared/util/platform/private/createSocket',
+		'spell/shared/util/platform/private/graphics/RenderingFactory',
+		'spell/shared/util/platform/private/registerTimer',
+		'spell/shared/util/platform/private/loader/ImageLoader',
+		'spell/shared/util/platform/private/loader/SoundLoader',
+		'spell/shared/util/platform/private/loader/TextLoader',
+		'spell/shared/util/platform/private/createLoader',
+		'spell/shared/util/platform/private/Input',
+		'spell/shared/util/platform/private/configurationOptions',
+		'spell/shared/util/platform/private/system/features',
+        'spell/shared/util/platform/private/graphics/Viewporter',
+		'spell/shared/util/platform/private/sound/SoundManager',
+		'spell/shared/util/math',
+
+		'spell/shared/util/platform/underscore'
+	],
+	function(
+		callNextFrame,
+		createSocket,
+		RenderingFactory,
+		registerTimer,
+		ImageLoader,
+		SoundLoader,
+		TextLoader,
+		createLoader,
+		Input,
+		configurationOptions,
+		features,
+        Viewporter,
+		SoundManager,
+		math,
+
+		_
+	) {
+		'use strict'
+
+
+		var getHost = function() {
+			return document.location.host
+		}
+
+		var getPlatformInfo = function() {
+			return 'html5'
+		}
+
+		var getJson = function() {
+			return {
+				encode : _.bind( JSON.stringify, JSON ),
+				decode : _.bind( JSON.parse, JSON )
+			}
+		}
+
+		var createInput = function( eventManager, Events ) {
+			return new Input( eventManager, Events )
+		}
+
+        var registerOnScreenResize = function( callback ) {
+            Viewporter.renderViewport( callback )
+        }
+
+		var createSoundManager = function() {
+			return new SoundManager()
+		}
+
+		return {
+			callNextFrame          : callNextFrame,
+			registerTimer          : registerTimer,
+			createSocket           : createSocket,
+			createSoundManager     : createSoundManager,
+			RenderingFactory       : RenderingFactory,
+			getHost                : getHost,
+			configurationOptions   : configurationOptions,
+			getPlatformInfo        : getPlatformInfo,
+			getJsonCoder           : getJson,
+			createInput            : createInput,
+			features               : features,
+			registerOnScreenResize : registerOnScreenResize,
+
+			createImageLoader : function( eventManager, host, resourceBundleName, resourceUri, loadingCompletedcallback, timedOutCallback, renderingContext ) {
+				return createLoader( ImageLoader, eventManager, host, resourceBundleName, resourceUri, loadingCompletedcallback, timedOutCallback, renderingContext )
+			},
+
+			createSoundLoader : function( eventManager, host, resourceBundleName, resourceUri, loadingCompletedcallback, timedOutCallback, soundManager ) {
+				return createLoader( SoundLoader, eventManager, host, resourceBundleName, resourceUri, loadingCompletedcallback, timedOutCallback, soundManager )
+			},
+
+			createTextLoader : function( eventManager, host, resourceBundleName, resourceUri, loadingCompletedcallback, timedOutCallback ) {
+				return createLoader( TextLoader, eventManager, host, resourceBundleName, resourceUri, loadingCompletedcallback, timedOutCallback )
+			}
+		}
 	}
 )
 
@@ -4974,6 +4994,25 @@ define(
 )
 
 define(
+	"spell/shared/util/platform/Types",
+	[
+		"spell/shared/util/platform/private/createNativeFloatArray",
+		"spell/shared/util/platform/private/Time"
+	],
+	function(
+		createNativeFloatArray,
+		Time
+	) {
+		"use strict"
+
+		return {
+			createNativeFloatArray : createNativeFloatArray,
+			Time                   : Time
+		}
+	}
+)
+
+define(
 	"glmatrix/glmatrix",
 	[
 		"spell/shared/util/platform/Types"
@@ -7302,2634 +7341,6 @@ define(
 )
 
 define(
-	"funkysnakes/client/systems/updateRenderData",
-	[
-		'spell/shared/util/platform/underscore'
-	],
-	function(
-		_
-	) {
-		"use strict"
-
-
-		return function(
-			entities
-		) {
-			_.each( entities, function( entity ) {
-				entity.renderData.position = _.clone( entity.position )
-				if ( entity.orientation ) {
-					entity.renderData.orientation = entity.orientation.angle
-				}
-				else {
-					entity.renderData.orientation = 0
-				}
-			} )
-		}
-	}
-)
-
-define(
-	'funkysnakes/client/zones/base',
-	[
-		"funkysnakes/client/systems/updateRenderData",
-		'funkysnakes/client/systems/Renderer',
-
-		'spell/shared/util/entities/Entities',
-		'spell/shared/util/entities/datastructures/passIdMultiMap',
-		'spell/shared/util/zones/ZoneEntityManager',
-		'spell/shared/util/Events',
-
-		'spell/shared/util/platform/underscore'
-	],
-	function(
-		updateRenderData,
-		Renderer,
-
-		Entities,
-		passIdMultiMap,
-		ZoneEntityManager,
-		Events,
-
-		_
-	) {
-		'use strict'
-
-
-		/**
-		 * private
-		 */
-
-		function update(
-			globals,
-			timeInMs,
-			dtInS
-		) {
-		}
-
-		function render(
-			globals,
-			timeInMs,
-			deltaTimeInMs
-		) {
-			var entities = this.entities,
-				queryIds = this.queryIds
-
-			updateRenderData(
-				entities.executeQuery( queryIds[ "updateRenderData" ][ 0 ] ).elements
-			)
-
-			this.renderer.process(
-				timeInMs,
-				deltaTimeInMs,
-				entities.executeQuery( queryIds[ "render" ][ 0 ] ).multiMap,
-				[]
-			)
-		}
-
-		return {
-			onCreate: function( globals, zoneConfig ) {
-				var eventManager         = globals.eventManager,
-					configurationManager = globals.configurationManager,
-					statisticsManager    = globals.statisticsManager,
-					resourceLoader       = globals.resourceLoader,
-					zoneManager          = globals.zoneManager
-
-				var entities  = new Entities()
-				this.entities = entities
-
-				var entityManager  = new ZoneEntityManager( globals.entityManager, this.entities )
-				this.entityManager = entityManager
-
-				this.renderer = new Renderer( eventManager, globals.resources, globals.renderingContext )
-
-
-				this.queryIds = {
-					render: [
-						entities.prepareQuery( [ "position", "appearance", "renderData" ], passIdMultiMap )
-					],
-					updateRenderData: [
-						entities.prepareQuery( [ "position", "renderData" ] )
-					]
-				}
-
-
-				this.renderCallback = _.bind( render, this, globals )
-				this.updateCallback = _.bind( update, this, globals )
-
-				eventManager.subscribe( Events.RENDER_UPDATE, this.renderCallback )
-				eventManager.subscribe( [ Events.LOGIC_UPDATE, '20' ], this.updateCallback )
-
-
-				if( _.size( zoneConfig.resources ) === 0 ) return
-
-
-				eventManager.subscribe(
-					[ Events.RESOURCE_LOADING_COMPLETED, 'zoneResources' ],
-					function() {
-						// create default entities from zone config
-						_.each(
-							zoneConfig.entities,
-							function( entityConfig ) {
-								entityManager.createEntity( entityConfig.blueprintId, entityConfig.config )
-							}
-						)
-					}
-				)
-
-				// trigger loading of zone resources
-				resourceLoader.addResourceBundle( 'zoneResources', zoneConfig.resources )
-				resourceLoader.start()
-			},
-
-			onDestroy: function( globals ) {
-				var eventManager = globals.eventManager
-
-				eventManager.unsubscribe( Events.RENDER_UPDATE, this.renderCallback )
-				eventManager.unsubscribe( [ Events.LOGIC_UPDATE, '20' ], this.updateCallback )
-			}
-		}
-	}
-)
-
-define(
-	'spell/client/main',
-	[
-		'funkysnakes/client/zones/base',
-
-		'spell/client/runtimeModule',
-		'spell/shared/util/createMainLoop',
-		'spell/shared/util/entities/EntityManager',
-		'spell/shared/util/zones/ZoneManager',
-		'spell/shared/util/blueprints/BlueprintManager',
-		'spell/shared/util/ConfigurationManager',
-		'spell/shared/util/EventManager',
-		'spell/shared/util/InputManager',
-		'spell/shared/util/ResourceLoader',
-		'spell/shared/util/StatisticsManager',
-		'spell/shared/util/Events',
-		'spell/shared/util/Logger',
-		'spell/shared/util/platform/PlatformKit',
-
-		'glmatrix/vec2',
-
-		'spell/shared/util/platform/underscore'
-	],
-	function(
-		baseZone,
-
-		runtimeModule,
-		createMainLoop,
-		EntityManager,
-		ZoneManager,
-		BlueprintManager,
-		ConfigurationManager,
-		EventManager,
-		InputManager,
-		ResourceLoader,
-		StatisticsManager,
-		Events,
-		Logger,
-		PlatformKit,
-
-		// WORKAROUND: forcing include of vec2
-		vec2,
-
-		_,
-
-		// configuration parameters passed in from stage zero loader
-		parameters
-	) {
-		'use strict'
-
-
-		var loadBlueprints = function( blueprintManager, runtimeModule ) {
-			_.each(
-				runtimeModule.componentBlueprints,
-				function( componentBlueprint ) {
-					blueprintManager.add( componentBlueprint )
-				}
-			)
-
-			_.each(
-				runtimeModule.entityBlueprints,
-				function( entityBlueprint ) {
-					blueprintManager.add( entityBlueprint )
-				}
-			)
-
-			_.each(
-				runtimeModule.systemBlueprints,
-				function( systemBlueprint ) {
-					blueprintManager.add( systemBlueprint )
-				}
-			)
-		}
-
-
-		if( parameters.verbose ) {
-			Logger.setLogLevel( Logger.LOG_LEVEL_DEBUG )
-		}
-
-		Logger.debug( 'client started' )
-
-
-		var globals              = {},
-			eventManager         = new EventManager(),
-			configurationManager = new ConfigurationManager( eventManager, parameters ),
-			renderingContext     = PlatformKit.RenderingFactory.createContext2d(
-				eventManager,
-				configurationManager.id,
-				1024,
-				768,
-				configurationManager.renderingBackEnd
-			),
-			soundManager         = PlatformKit.createSoundManager(),
-			inputManager         = new InputManager( configurationManager ),
-			resourceLoader       = new ResourceLoader( runtimeModule.name, soundManager, renderingContext, eventManager, configurationManager.resourceServer ),
-			statisticsManager    = new StatisticsManager(),
-			blueprintManager     = new BlueprintManager(),
-			mainLoop             = createMainLoop( eventManager, statisticsManager ),
-			zoneManager          = new ZoneManager( globals, eventManager, blueprintManager, mainLoop )
-
-		statisticsManager.init()
-
-		_.extend(
-			globals,
-			{
-				configurationManager : configurationManager,
-				eventManager         : eventManager,
-				entityManager        : new EntityManager( blueprintManager ),
-				inputManager         : inputManager,
-				inputEvents          : inputManager.getInputEvents(),
-				renderingContext     : renderingContext,
-				resourceLoader       : resourceLoader,
-				resources            : resourceLoader.getResources(),
-				statisticsManager    : statisticsManager,
-				soundManager         : soundManager,
-				zoneManager          : zoneManager
-			}
-		)
-
-//		PlatformKit.registerOnScreenResize( _.bind( onScreenResized, onScreenResized, eventManager ) )
-
-		var renderingContextConfig = renderingContext.getConfiguration()
-		Logger.debug( 'created rendering context: type=' + renderingContextConfig.type + '; size=' + renderingContextConfig.width + 'x' + renderingContextConfig.height )
-
-
-		loadBlueprints( blueprintManager, runtimeModule )
-
-
-		var zoneConfig = _.find(
-			runtimeModule.zones,
-			function( iter ) {
-				return iter.name === runtimeModule.startZone
-			}
-		)
-
-		zoneManager.startZone( zoneConfig )
-
-		mainLoop.run()
-	}
-)
-
-
-define(
-	"spell/shared/util/platform/private/isBrowser",
-	function() {
-		"use strict"
-
-
-		return !!( typeof window !== "undefined" && navigator && document )
-	}
-)
-
-define(
-	"spell/shared/util/platform/private/graphics/flash/Flash2dRenderingFactory",
-	function() {
-
-		var createCanvasContext = function() {
-			throw "Creating a 2d flash renderer is not valid in this context"
-		}
-
-		var renderingFactory = {
-			createContext2d : createCanvasContext
-		}
-
-
-		return renderingFactory
-	}
-)
-
-define(
-	'spell/shared/util/platform/log',
-	function() {
-		'use strict'
-
-
-		var log = function( message ) {
-			if( console === undefined ) return
-
-
-			var now = new Date()
-
-			console.log( '[' + now.toDateString() + ' ' + now.toLocaleTimeString() + '] ' +  message )
-		}
-
-		return log
-	}
-)
-
-define(
-	"spell/shared/util/platform/private/sound/SoundManager",
-	[
-		"spell/shared/components/sound/soundEmitter",
-
-		'spell/shared/util/platform/underscore'
-	],
-	function(
-		soundEmitterConstructor,
-
-		_
-		) {
-		"use strict"
-
-		var maxAvailableChannels = 8
-        var context              = undefined
-        var muted                = false
-
-		var checkMaxAvailableChannels = function() {
-			if( (/iPhone|iPod|iPad/i).test( navigator.userAgent ) ) {
-				maxAvailableChannels = 1
-
-			} else {
-				maxAvailableChannels = 8
-			}
-
-			return maxAvailableChannels
-		}
-
-		var basePath = "sounds"
-
-		var channels = {}
-
-		var getFreeChannel = function( resource, isBackground ) {
-			var channel = _.find(
-				channels,
-				function( channel ) {
-					if( channel.resource === resource &&
-						!channel.playing &&
-						!channel.selected )  {
-
-						if( maxAvailableChannels === 1 ) {
-							if(	isBackground ) return true
-						} else {
-							return true
-						}
-					}
-
-					return false
-				}
-			)
-
-			if( !!channel ) {
-				channel.selected = true
-				channel.playing = false
-			}
-
-			return channel
-		}
-
-		var remove = function( soundObject ) {
-			soundObject.stop     = -1
-			soundObject.start    = -1
-			soundObject.selected = false
-            soundObject.playing  = false
-		}
-
-		var audioFormats = {
-			ogg: {
-				mimeTypes: ['audio/ogg; codecs=vorbis']
-			},
-			mp3: {
-				mimeTypes: ['audio/mpeg; codecs="mp3"', 'audio/mpeg', 'audio/mp3', 'audio/MPA', 'audio/mpa-robust']
-			},
-			wav: {
-				mimeTypes: ['audio/wav; codecs="1"', 'audio/wav', 'audio/wave', 'audio/x-wav']
-			}
-		}
-
-		var detectExtension = function() {
-
-			var probe = new Audio();
-
-			return _.reduce(
-				audioFormats,
-				function( memo, format, key ) {
-					if( !!memo ) return memo
-
-					var supportedMime = _.find(
-						format.mimeTypes,
-						function( mimeType ) {
-							return probe.canPlayType( mimeType )
-						}
-					)
-
-					return ( !!supportedMime ) ? key : null
-				},
-				null
-			)
-		}
-
-		var createHTML5Audio = function ( config ) {
-			var html5Audio = new Audio()
-
-			if( !!config.onloadeddata ) {
-
-				html5Audio.addEventListener(
-					"canplaythrough", config.onloadeddata,
-					false
-				)
-			}
-
-			html5Audio.addEventListener( "error", function() {
-				throw "Error: Could not load sound resource '"+html5Audio.src+"'"
-			}, false )
-
-			html5Audio.id       = config.id
-			html5Audio.resource = config.resource
-			html5Audio.playing  = false
-			html5Audio.selected = false
-			html5Audio.src      = basePath + "/" + config.resource + "."+ detectExtension()
-
-			// old WebKit
-			html5Audio.autobuffer = "auto"
-
-			// new WebKit
-			html5Audio.preload = "auto"
-			html5Audio.load()
-
-			return html5Audio
-		}
-
-		var cloneHTML5Audio = function( ObjectToClone ) {
-			var html5Audioclone = ObjectToClone.cloneNode(true)
-
-			html5Audioclone.resource = ObjectToClone.resource
-			html5Audioclone.playing  = false
-			html5Audioclone.selected = false
-
-			return html5Audioclone
-		}
-
-        var createWebkitHTML5Audio = function ( config ) {
-            var request = new XMLHttpRequest();
-            request.open('GET', basePath + "/" + config.resource + "."+ detectExtension(), true);
-            request.responseType = 'arraybuffer';
-
-            if( !!config.onloadeddata ) {
-
-                // Decode asynchronously
-                request.onload = function() {
-                  context.decodeAudioData( request.response,
-                      function( buffer ) {
-
-                          buffer.id       = config.id
-                          buffer.resource = config.resource
-                          buffer.playing  = false
-                          buffer.selected = false
-
-                          config.onloadeddata( buffer )
-                      }
-
-                  );
-                }
-            }
-
-            request.onError = function() {
-                throw "Error: Could not load sound resource '"+ config.resource +"'"
-            }
-
-            request.send()
-
-            return request
-        }
-
-        var hasWebAudioSupport = function() {
-            try{
-                context = new webkitAudioContext()
-                return true
-            }catch( e ) {
-                return false
-            }
-        }
-
-        var toggleMuteSounds = function( muted ) {
-            _.each(
-                _.keys( channels ),
-                function( key) {
-
-                    if( hasWebAudioSupport() ) {
-                        channels[key].gain  = ( muted === true ) ? 0 : 1
-
-                    } else {
-                        channels[key].muted = muted
-
-                        if( maxAvailableChannels === 1 ) {
-                            if( muted === true)
-                                channels[ key ].pause()
-                            else
-                                channels[ key ].play()
-                        }
-                    }
-                }
-            )
-        }
-
-        var setMuted = function( value ) {
-            muted = !!value
-            toggleMuteSounds( muted )
-        }
-
-        var isMuted = function() {
-            return muted
-        }
-
-        var SoundManager = function() {
-
-            if( !hasWebAudioSupport() ) {
-                this.createAudio = createHTML5Audio
-                this.cloneAudio  = cloneHTML5Audio
-
-            }else {
-                this.createAudio = createWebkitHTML5Audio
-                this.context          = context
-            }
-
-        }
-
-        SoundManager.prototype = {
-            soundSpriteConfig         : undefined,
-            audioFormats              : audioFormats,
-            channels                  : channels,
-            getFreeChannel            : getFreeChannel,
-            checkMaxAvailableChannels : checkMaxAvailableChannels,
-            maxAvailableChannels      : maxAvailableChannels,
-            remove                    : remove,
-            setMuted                  : setMuted,
-            isMuted                   : isMuted
-        }
-
-        return SoundManager
-	}
-)
-
-define(
-	"spell/shared/util/platform/private/graphics/Viewporter",
-	function () {
-        "use strict"
-
-		var viewporter   = {}
-
-		viewporter.renderViewport = function ( onScreenResized ) {
-			var createViewportMetaTag = function( initialScale ) {
-				var meta = document.createElement( 'meta' )
-				meta.name    = 'viewport'
-				meta.content = 'width=device-width; initial-scale=' + initialScale + '; maximum-scale=' + initialScale + '; user-scalable=0;'
-
-				return meta
-			}
-
-			var getOffset = function( element ) {
-				var box = element.getBoundingClientRect()
-
-				var body    = document.body
-				var docElem = document.documentElement
-
-				var scrollTop  = window.pageYOffset || docElem.scrollTop || body.scrollTop
-				var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft
-
-				var clientTop  = docElem.clientTop || body.clientTop || 0
-				var clientLeft = docElem.clientLeft || body.clientLeft || 0
-
-				var top  = box.top + scrollTop - clientTop
-				var left = box.left + scrollLeft - clientLeft
-
-				return [ Math.round( left ), Math.round( top ) ]
-			}
-
-			var publishScreenResizedEvent = function() {
-				var offset = getOffset( document.getElementById( 'spell-canvas' ) )
-				var width  = window.innerWidth - offset[ 0 ]
-				var height = window.innerHeight - offset[ 1 ]
-
-				onScreenResized( width, height )
-			}
-
-
-			if( navigator.userAgent.match( /iPhone/i ) ||
-				navigator.userAgent.match( /iPod/i ) ) {
-
-				document.getElementsByTagName( 'head' )[ 0 ].appendChild( createViewportMetaTag( '0.5' ) )
-
-			} else if( navigator.userAgent.match( /iPad/i ) ) {
-
-				document.getElementsByTagName( 'head' )[ 0 ].appendChild( createViewportMetaTag( '1.0' ) )
-			}
-
-
-			// initialize viewporter object
-			viewporter = {
-
-				// options
-				forceDetection: false,
-
-				// constants
-				ACTIVE: (('ontouchstart' in window) || (/webos/i).test(navigator.userAgent)),
-				READY: false,
-
-				// methods
-				isLandscape: function() {
-					return window.orientation === 90 || window.orientation === -90
-				},
-
-				ready: function(callback) {
-					window.addEventListener('viewportready', callback, false)
-				}
-
-			}
-
-			// if we are on Desktop, no need to go further
-			if (!viewporter.ACTIVE) {
-				window.onresize = publishScreenResizedEvent
-				publishScreenResizedEvent()
-
-				return
-			}
-
-			// create private constructor with prototype..just looks cooler
-			var _Viewporter = function() {
-
-                var that = this
-
-				this.IS_ANDROID = /Android/.test(navigator.userAgent)
-
-				var _onReady = function() {
-
-					// scroll the shit away and fix the viewport!
-					that.prepareVisualViewport()
-
-					// listen for orientation change
-					var cachedOrientation = window.orientation;
-					window.addEventListener('orientationchange', function() {
-						if(window.orientation != cachedOrientation) {
-							that.prepareVisualViewport()
-							cachedOrientation = window.orientation
-						}
-					}, false)
-
-				}
-
-
-				// listen for document ready if not already loaded
-				// then try to prepare the visual viewport and start firing custom events
-				_onReady()
-
-			}
-
-			_Viewporter.prototype = {
-
-				getProfile: function() {
-
-					if(viewporter.forceDetection) {
-						return null
-					}
-
-					for(var searchTerm in viewporter.profiles) {
-						if(new RegExp(searchTerm).test(navigator.userAgent)) {
-							return viewporter.profiles[searchTerm]
-						}
-					}
-					return null
-				},
-
-				postProcess: function(  ) {
-					// let everyone know we're finally ready
-					viewporter.READY = true
-
-					this.triggerWindowEvent(!this._firstUpdateExecuted ? 'viewportready' : 'viewportchange')
-					this._firstUpdateExecuted = true
-
-                    publishScreenResizedEvent()
-				},
-
-				prepareVisualViewport: function( ) {
-
-					var that = this
-
-					// if we're running in webapp mode (iOS), there's nothing to scroll away
-					if(navigator.standalone) {
-						return this.postProcess()
-					}
-
-					// maximize the document element's height to be able to scroll away the url bar
-					document.documentElement.style.minHeight = '5000px'
-
-					var startHeight = window.innerHeight
-					var deviceProfile = this.getProfile()
-					var orientation = viewporter.isLandscape() ? 'landscape' : 'portrait'
-
-					// try scrolling immediately
-					window.scrollTo(0, that.IS_ANDROID ? 1 : 0) // Android needs to scroll by at least 1px
-
-					// start the checker loop
-					var iterations = this.IS_ANDROID && !deviceProfile ? 20 : 5 // if we're on Android and don't know the device, brute force hard
-					var check = window.setInterval(function() {
-
-						// retry scrolling
-						window.scrollTo(0, that.IS_ANDROID ? 1 : 0) // Android needs to scroll by at least 1px
-
-						if(
-							that.IS_ANDROID
-								? (deviceProfile ? window.innerHeight === deviceProfile[orientation] : --iterations < 0) // Android: either match against a device profile, or brute force
-								: (window.innerHeight > startHeight || --iterations < 0) // iOS is comparably easy!
-						) {
-                            clearInterval(check)
-
-							// set minimum height of content to new window height
-							document.documentElement.style.minHeight = window.innerHeight + 'px'
-
-                            if( !document.getElementById('spell') ) throw "Viewport element Missing"
-
-                            // set the right height for the body wrapper to allow bottom positioned elements
-                            document.getElementById('spell').style.position = 'relative'
-                            document.getElementById('spell').style.height = window.innerHeight + 'px'
-
-							// fire events, get ready
-							that.postProcess( )
-
-						}
-
-					}, 10)
-
-				},
-
-				triggerWindowEvent: function(name) {
-					var event = document.createEvent("Event")
-					event.initEvent(name, false, false)
-					window.dispatchEvent(event)
-				}
-
-			};
-
-			// initialize
-			new _Viewporter()
-
-		}
-
-		viewporter.profiles = {
-
-			// Motorola Xoom
-			'MZ601': {
-				portrait: 696,
-				landscape: 1176
-			},
-
-			// Samsung Galaxy S, S2 and Nexus S
-			'GT-I9000|GT-I9100|Nexus S': {
-				portrait: 508,
-				landscape: 295
-			},
-
-			// Samsung Galaxy Pad
-			'GT-P1000': {
-				portrait: 657,
-				landscape: 400
-			},
-
-			// HTC Desire & HTC Desire HD
-			'Desire_A8181|DesireHD_A9191': {
-				portrait: 533,
-				landscape: 320
-			}
-
-		}
-
-		return viewporter
-	}
-)
-
-define(
-	"modernizr",
-	function() {
-		var isBrowser = !!( typeof window !== "undefined" && navigator && document )
-
-		if( !isBrowser ) return {}
-
-
- 		/* Modernizr 2.5.3 (Custom Build) | MIT & BSD
-		 * Build: http://www.modernizr.com/download/#-canvas-audio-websockets-touch-webgl-teststyles-prefixes-domprefixes
-		 */
-		;window.Modernizr=function(a,b,c){function y(a){i.cssText=a}function z(a,b){return y(l.join(a+";")+(b||""))}function A(a,b){return typeof a===b}function B(a,b){return!!~(""+a).indexOf(b)}function C(a,b,d){for(var e in a){var f=b[a[e]];if(f!==c)return d===!1?a[e]:A(f,"function")?f.bind(d||b):f}return!1}var d="2.5.3",e={},f=b.documentElement,g="modernizr",h=b.createElement(g),i=h.style,j,k={}.toString,l=" -webkit- -moz- -o- -ms- ".split(" "),m="Webkit Moz O ms",n=m.split(" "),o=m.toLowerCase().split(" "),p={},q={},r={},s=[],t=s.slice,u,v=function(a,c,d,e){var h,i,j,k=b.createElement("div"),l=b.body,m=l?l:b.createElement("body");if(parseInt(d,10))while(d--)j=b.createElement("div"),j.id=e?e[d]:g+(d+1),k.appendChild(j);return h=["&#173;","<style>",a,"</style>"].join(""),k.id=g,m.innerHTML+=h,m.appendChild(k),l||(m.style.background="",f.appendChild(m)),i=c(k,a),l?k.parentNode.removeChild(k):m.parentNode.removeChild(m),!!i},w={}.hasOwnProperty,x;!A(w,"undefined")&&!A(w.call,"undefined")?x=function(a,b){return w.call(a,b)}:x=function(a,b){return b in a&&A(a.constructor.prototype[b],"undefined")},Function.prototype.bind||(Function.prototype.bind=function(b){var c=this;if(typeof c!="function")throw new TypeError;var d=t.call(arguments,1),e=function(){if(this instanceof e){var a=function(){};a.prototype=c.prototype;var f=new a,g=c.apply(f,d.concat(t.call(arguments)));return Object(g)===g?g:f}return c.apply(b,d.concat(t.call(arguments)))};return e});var D=function(c,d){var f=c.join(""),g=d.length;v(f,function(c,d){var f=b.styleSheets[b.styleSheets.length-1],h=f?f.cssRules&&f.cssRules[0]?f.cssRules[0].cssText:f.cssText||"":"",i=c.childNodes,j={};while(g--)j[i[g].id]=i[g];e.touch="ontouchstart"in a||a.DocumentTouch&&b instanceof DocumentTouch||(j.touch&&j.touch.offsetTop)===9},g,d)}([,["@media (",l.join("touch-enabled),("),g,")","{#touch{top:9px;position:absolute}}"].join("")],[,"touch"]);p.canvas=function(){var a=b.createElement("canvas");return!!a.getContext&&!!a.getContext("2d")},p.webgl=function(){try{var d=b.createElement("canvas"),e;e=!(!a.WebGLRenderingContext||!d.getContext("experimental-webgl")&&!d.getContext("webgl")),d=c}catch(f){e=!1}return e},p.touch=function(){return e.touch},p.websockets=function(){for(var b=-1,c=n.length;++b<c;)if(a[n[b]+"WebSocket"])return!0;return"WebSocket"in a},p.audio=function(){var a=b.createElement("audio"),c=!1;try{if(c=!!a.canPlayType)c=new Boolean(c),c.ogg=a.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,""),c.mp3=a.canPlayType("audio/mpeg;").replace(/^no$/,""),c.wav=a.canPlayType('audio/wav; codecs="1"').replace(/^no$/,""),c.m4a=(a.canPlayType("audio/x-m4a;")||a.canPlayType("audio/aac;")).replace(/^no$/,"")}catch(d){}return c};for(var E in p)x(p,E)&&(u=E.toLowerCase(),e[u]=p[E](),s.push((e[u]?"":"no-")+u));return y(""),h=j=null,e._version=d,e._prefixes=l,e._domPrefixes=o,e._cssomPrefixes=n,e.testStyles=v,e}(this,this.document);
-
-		var modernizr = window.Modernizr
-
-		return modernizr
-	}
-)
-
-
-
-define(
-	"spell/shared/util/platform/private/system/features",
-	[
-		"modernizr"
-	],
-	function(
-		modernizr
-	) {
-		"use strict";
-
-
-		return {
-			touch : !!modernizr.touch
-		}
-	}
-)
-
-define(
-	"spell/shared/util/platform/private/configurationOptions",
-	[
-		"spell/shared/util/platform/private/graphics/RenderingFactory"
-	],
-	function(
-		RenderingFactory
-	) {
-		"use strict"
-
-
-		var extractRenderingBackEnd = function( validValues, value ) {
-			if( value === 'webgl' ) {
-				return RenderingFactory.BACK_END_WEBGL
-
-			} else if( value === 'canvas-2d' ) {
-				return RenderingFactory.BACK_END_CANVAS
-			}
-
-			return false
-		}
-
-		/**
-		 * These are the platform specific options.
-		 */
-		var validOptions = {
-			renderingBackEnd : {
-				validValues  : [ 'webgl', 'canvas-2d' ],
-				configurable : true,
-				extractor    : extractRenderingBackEnd
-			}
-		}
-
-		/**
-		 * These options are used when they are not overridden by the environment configuration set up by the stage-0-loader.
-		 */
-		var defaultOptions = {
-			renderingBackEnd : 'canvas-2d'
-		}
-
-		return {
-			defaultOptions : defaultOptions,
-			validOptions   : validOptions
-		}
-	}
-)
-
-define(
-	"spell/shared/util/input/keyCodes",
-	function() {
-		return {
-			"backspace": 8,
-			"tab"      : 9,
-			"enter"    : 13,
-			"shift"    : 16,
-			"ctrl"     : 17,
-			"alt"      : 18,
-			"pause"    : 19,
-			"caps lock": 20,
-			"escape"   : 27,
-			"space"    : 32,
-			"page up"  : 33,
-			"page down": 34,
-			"end"      : 35,
-			"home"     : 36,
-			"left arrow": 37,
-			"up arrow"  : 38,
-			"right arrow": 39,
-			"down arrow" : 40,
-			"insert"     : 45,
-			"delete"     : 46,
-			"0"          : 48,
-			"1"          : 49,
-			"2"          : 50,
-			"3"          : 51,
-			"4"          : 52,
-			"5"          : 53,
-			"6"          : 54,
-			"7"          : 55,
-			"8"          : 56,
-			"9"          : 57,
-			"a"          : 65,
-			"b"          : 66,
-			"c"          : 67,
-			"d"          : 68,
-			"e"          : 69,
-			"f"          : 70,
-			"g"          : 71,
-			"h"          : 72,
-			"i"          : 73,
-			"j"          : 74,
-			"k"          : 75,
-			"l"          : 76,
-			"m"          : 77,
-			"n"          : 78,
-			"o"          : 79,
-			"p"          : 80,
-			"q"          : 81,
-			"r"          : 82,
-			"s"          : 83,
-			"t"          : 84,
-			"u"          : 85,
-			"v"          : 86,
-			"w"          : 87,
-			"x"          : 88,
-			"y"          : 89,
-			"z"          : 90,
-			"left window key": 91,
-			"right window key": 92,
-			"select key"      : 93,
-			"numpad 0"        : 96,
-			"numpad 1"        : 97,
-			"numpad 2"        : 98,
-			"numpad 3"        : 99,
-			"numpad 4"        : 100,
-			"numpad 5"        : 101,
-			"numpad 6"        : 102,
-			"numpad 7"        : 103,
-			"numpad 8"        : 104,
-			"numpad 9"        : 105,
-			"multiply"        : 106,
-			"add"             : 107,
-			"subtract"        : 109,
-			"decimal point"   : 110,
-			"divide"          : 111,
-			"f1"              : 112,
-			"f2"              : 113,
-			"f3"              : 114,
-			"f4"              : 115,
-			"f5"              : 116,
-			"f6"              : 117,
-			"f7"              : 118,
-			"f8"              : 119,
-			"f9"              : 120,
-			"f10"             : 121,
-			"f11"             : 122,
-			"f12"             : 123,
-			"num lock"        : 144,
-			"scroll lock"     : 145,
-			"semi-colon"      : 186,
-			"equal sign"      : 187,
-			"comma"           : 188,
-			"dash"            : 189,
-			"period"          : 190,
-			"forward slash"   : 191,
-			"grave accent"    : 192,
-			"open bracket"    : 219,
-			"back slash"      : 220,
-			"close bracket"   : 221,
-			"single quote"    : 222
-		}
-	}
-)
-
-define(
-	"spell/shared/util/platform/private/Input",
-	[
-		"spell/shared/util/input/keyCodes",
-		"spell/shared/util/math",
-
-		'spell/shared/util/platform/underscore'
-	],
-	function(
-		keyCodes,
-		math,
-
-		_
-	) {
-		"use strict"
-
-
-		/**
-		 * private
-		 */
-		var isEventSupported = function( eventName ) {
-			return _.has( nativeEventMap, eventName )
-		}
-
-		function getScreenOffset() {
-			return getOffset( document.getElementById( 'spell-canvas' ) )
-		}
-
-		function getOffset( element ) {
-			var box = element.getBoundingClientRect()
-
-			var body    = document.body
-			var docElem = document.documentElement
-
-			var scrollTop  = window.pageYOffset || docElem.scrollTop || body.scrollTop
-			var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft
-
-			var clientTop  = docElem.clientTop || body.clientTop || 0
-			var clientLeft = docElem.clientLeft || body.clientLeft || 0
-
-			var top  = box.top + scrollTop - clientTop
-			var left = box.left + scrollLeft - clientLeft
-
-			return [ Math.round( left ), Math.round( top ) ]
-		}
-
-		var nativeTouchHandler = function( callback, event ) {
-			event.stopPropagation()
-			event.preventDefault()
-
-			var touch = event.changedTouches[ 0 ]
-			var offset = getScreenOffset()
-			var screenSize = this.configurationManager.screenSize
-
-			var position = [
-				( touch.pageX - offset[ 0 ] ) / screenSize.width,
-				( touch.pageY - offset[ 1 ] ) / screenSize.height
-			]
-
-			// if the event missed the display it gets ignored
-			if( !math.isInInterval( position[ 0 ], 0.0, 1.0 ) ||
-				!math.isInInterval( position[ 1 ], 0.0, 1.0 ) ) {
-
-				return
-			}
-
-			callback( {
-				type     : event.type,
-				position : position
-			} )
-		}
-
-		var nativeKeyHandler = function( callback, event ) {
-			if( event.keyCode === keyCodes[ 'space' ] ||
-				event.keyCode === keyCodes[ 'left arrow' ] ||
-				event.keyCode === keyCodes[ 'up arrow' ] ||
-				event.keyCode === keyCodes[ 'right arrow' ] ||
-				event.keyCode === keyCodes[ 'down arrow' ] ) {
-
-				event.preventDefault()
-			}
-
-			callback( event )
-		}
-
-        var nativeMouseHandler = function( callback, event ) {
-            event.preventDefault()
-
-			var offset = getScreenOffset()
-			var screenSize = this.configurationManager.screenSize
-
-			var position = [
-				( event.pageX - offset[ 0 ] ) / screenSize.width,
-				( event.pageY - offset[ 1 ] ) / screenSize.height
-			]
-
-            // if the event missed the display it gets ignored
-            if( !math.isInInterval( position[ 0 ], 0.0, 1.0 ) ||
-                !math.isInInterval( position[ 1 ], 0.0, 1.0 ) ) {
-
-                return
-            }
-
-            callback( {
-                type     : event.type,
-                position : position
-            } )
-        }
-
-		/**
-		 * maps the internal event name to to native event name and callback
-		 */
-		var nativeEventMap = {
-            touchstart : {
-                eventName : 'touchstart',
-                handler   : nativeTouchHandler
-            },
-            touchend : {
-                eventName : 'touchend',
-                handler   : nativeTouchHandler
-            },
-			mousedown : {
-				eventName : 'mousedown',
-				handler   : nativeMouseHandler
-			},
-			mouseup : {
-				eventName : 'mouseup',
-				handler   : nativeMouseHandler
-			},
-			keydown : {
-				eventName : 'keydown',
-				handler   : nativeKeyHandler
-			},
-			keyup : {
-				eventName : 'keyup',
-				handler   : nativeKeyHandler
-			}
-		}
-
-
-		/**
-		 * public
-		 */
-
-		var Input = function( configurationManager ) {
-			this.configurationManager = configurationManager
-		}
-
-		var setListener = function( eventName, callback ) {
-			if( !isEventSupported( eventName ) ) return
-
-			var nativeEvent = nativeEventMap[ eventName ]
-
-            document.body[ 'on' + nativeEvent.eventName ] = _.bind( nativeEvent.handler, this, callback )
-		}
-
-		var removeListener = function( eventName ) {
-			if( !isEventSupported( eventName ) ) return
-
-			var nativeEvent = nativeEventMap[ eventName ]
-
-            document.body[ 'on' + nativeEvent.eventName ] = null
-		}
-
-		Input.prototype = {
-			setInputEventListener    : setListener,
-			removeInputEventListener : removeListener
-		}
-
-		return Input
-	}
-)
-
-define(
-	"spell/shared/util/platform/private/createLoader",
-	[
-		'spell/shared/util/platform/underscore'
-	],
-	function(
-		_
-	) {
-		"use strict"
-
-		return function( constructor, eventManager, host, resourceBundleName, resourceUri, loadingCompletedCallback, timedOutCallback, soundManager ) {
-			if( constructor === undefined )              throw 'Argument 1 is missing.'
-			if( eventManager === undefined )             throw 'Argument 2 is missing.'
-			if( host === undefined )                     throw 'Argument 3 is missing.'
-			if( resourceBundleName === undefined )       throw 'Argument 4 is missing.'
-			if( resourceUri === undefined )              throw 'Argument 5 is missing.'
-			if( loadingCompletedCallback === undefined ) throw 'Argument 6 is missing.'
-			if( timedOutCallback === undefined )         throw 'Argument 7 is missing.'
-
-			return new constructor(
-				eventManager,
-				host,
-				resourceBundleName,
-				resourceUri,
-				loadingCompletedCallback,
-				timedOutCallback,
-                soundManager
-			)
-		}
-	}
-)
-
-define(
-	"spell/shared/components/sound/soundEmitter",
-	function() {
-		"use strict"
-
-		var soundEmitter = function( args ) {
-			this.soundId    = args.soundId
-			this.volume     = args.volume     || 1
-			this.muted      = args.muted      || false
-			this.onComplete = args.onComplete || ''
-			this.start      = args.start      || false
-			this.stop       = args.stop       || false
-			this.background = args.background || false
-		}
-
-		soundEmitter.ON_COMPLETE_LOOP               = 1
-		soundEmitter.ON_COMPLETE_REMOVE_COMPONENT   = 2
-		soundEmitter.ON_COMPLETE_STOP               = 3
-
-		return soundEmitter
-	}
-)
-
-define(
-	"spell/shared/util/platform/private/sound/createSound",
-	[
-		"spell/shared/components/sound/soundEmitter"
-	],
-	function(
-		soundEmitterConstructor
-	) {
-		"use strict";
-
-		var create = function( config, soundManager ) {
-
-			var pauseCallback = function () {
-				if ( parseFloat(this.currentTime) >= parseFloat( this.stop ) && this.paused === false) {
-					this.playing = false
-                    this.pause()
-				}
-			}
-
-			var playingCallback = function() {
-				if( this.playing === false ) {
-					this.playing = true
-					this.currentTime = this.start
-					this.addEventListener( 'timeupdate', pauseCallback, false )
-				}
-			}
-
-
-			var loopCallback = function() {
-                if( this.playing === false ) {
-                    this.removeEventListener( 'timeupdate', pauseCallback, false )
-                    this.play()
-                }
-			}
-
-			var removeCallback = function() {
-                this.removeEventListener( 'ended', removeCallback, false )
-                this.removeEventListener( 'timeupdate', pauseCallback, false )
-                this.removeEventListener( 'pause', removeCallback, false )
-                this.removeEventListener( 'playing', playingCallback, false )
-
-                soundManager.remove( this )
-			}
-
-			return {
-				onComplete: soundEmitterConstructor.ON_COMPLETE_STOP,
-				start: config.start || 0,
-				stop: config.start + config.length || config.length,
-				volume: 1,
-				background: false,
-				resource: config.resource,
-
-				play: function() {
-
-                    var freeAudioObject = soundManager.getFreeChannel(this.resource, this.isBackgroundSound() )
-
-                    if( freeAudioObject === undefined ) {
-                        return
-                    }
-
-                    freeAudioObject.stop = ( freeAudioObject.duration < parseFloat(this.stop) ) ? freeAudioObject.duration : parseFloat(this.stop)
-                    freeAudioObject.start = freeAudioObject.currentTime = parseFloat(this.start)
-                    freeAudioObject.volume = this.volume
-
-                    if( !soundManager.context ) {
-
-                        if( this.onComplete === soundEmitterConstructor.ON_COMPLETE_LOOP ) {
-                            freeAudioObject.addEventListener( 'pause', loopCallback, false )
-
-                        } else {
-
-                            if( this.onComplete === soundEmitterConstructor.ON_COMPLETE_REMOVE_COMPONENT ) {
-
-                            }
-
-                            freeAudioObject.addEventListener( 'pause', removeCallback, false )
-                        }
-
-                        //This should never happen, but if, then free object
-                        freeAudioObject.addEventListener( 'ended', removeCallback, false )
-                        freeAudioObject.addEventListener( 'play', playingCallback, false )
-
-                        freeAudioObject.play()
-
-                    } else {
-
-                        var gainNode = soundManager.context.createGainNode()
-                        var source    = soundManager.context.createBufferSource()
-                        source.buffer = freeAudioObject
-
-                        if( this.onComplete === soundEmitterConstructor.ON_COMPLETE_LOOP ) {
-                            source.loop = true
-                        } else {
-                            soundManager.remove( freeAudioObject )
-                        }
-
-                        source.connect(gainNode);
-                        gainNode.connect(soundManager.context.destination)
-
-                        gainNode.gain.value = this.volume
-                        source.noteGrainOn( 0, this.start, config.length )
-                    }
-
-
-                },
-
-				setVolume: function( volume ) {
-					this.volume = volume || 1
-				},
-
-				setLoop: function() {
-					this.onComplete = soundEmitterConstructor.ON_COMPLETE_LOOP
-				},
-
-				setOnCompleteRemove: function() {
-					this.onComplete = soundEmitterConstructor.ON_COMPLETE_REMOVE_COMPONENT
-				},
-
-			  	setStart: function( start ) {
-					this.start = start
-				},
-
-				setStop: function( stop ) {
-					this.stop = stop
-				},
-
-				setBackground: function( background ) {
-					this.background = ( background === false) ? false : true
-				},
-
-				isBackgroundSound: function( ) {
-					return this.background
-				}
-			}
-		}
-
-		return create
-	}
-)
-
-define(
-	"spell/shared/util/platform/private/sound/loadSounds",
-	[
-		"spell/shared/util/platform/private/sound/createSound",
-		"spell/shared/components/sound/soundEmitter",
-
-		'spell/shared/util/platform/underscore'
-	],
-	function (
-		createSound,
-		soundEmitterConstructor,
-
-		_
-		) {
-		"use strict"
-
-		var loadSounds = function ( soundManager, soundSpriteConfig, callback ) {
-			var sounds            = {}
-			var waitingFor        = 0
-			var waitingForClones  = 0
-			var maxChannels       = soundManager.checkMaxAvailableChannels()
-			var availableChannels = maxChannels
-
-			soundManager.soundSpriteConfig = soundSpriteConfig
-
-			var generateSounds = function( ) {
-
-				if( _.has( soundSpriteConfig.music, "index" ) === true) {
-					_.each (
-						_.keys( soundSpriteConfig.music.index ),
-						function( soundId ) {
-							sounds[ soundId ] = createSound(
-								_.extend( { resource: soundSpriteConfig.music.resource }, soundSpriteConfig.music.index[ soundId ] ),
-								soundManager
-							)
-						}
-					)
-				}
-
-				if( _.has( soundSpriteConfig.fx, "index" ) === true) {
-					_.each (
-						_.keys( soundSpriteConfig.fx.index ),
-						function( soundId ) {
-							sounds[ soundId ] = createSound(
-								_.extend( { resource: soundSpriteConfig.fx.resource }, soundSpriteConfig.fx.index[ soundId ] ),
-								soundManager
-							)
-						}
-					)
-
-				}
-
-				return sounds
-			}
-
-			var createFunctionWrapper = function( resource ) {
-
-				var cloneloadeddataCallback = function ( ) {
-
-					this.removeEventListener( 'canplaythrough', cloneloadeddataCallback, false)
-					waitingForClones -= 1
-
-					if ( waitingForClones === 0 ) {
-						return callback( generateSounds() )
-					}
-
-				}
-
-				var loadeddataCallback = function( html5AudioObject ) {
-
-                    if( !soundManager.context ) {
-                        this.removeEventListener( 'canplaythrough', loadeddataCallback, false)
-                        soundManager.channels[ resource ] = this
-                    } else {
-                        soundManager.channels[ resource ] = html5AudioObject
-                    }
-
-					waitingFor -= 1
-
-					if ( waitingFor === 0 ) {
-
-						// After loading the ressources, clone the FX sounds into the free Channels of the soundManager
-						if( _.has( soundSpriteConfig.fx, "resource" ) &&
-                            !soundManager.context ) {
-
-							var ObjectToClone = soundManager.channels[ soundSpriteConfig.fx.resource ]
-
-							for( var i = maxChannels; i > 0; i-- ) {
-								waitingForClones += 1
-
-								var html5Audioclone = soundManager.cloneAudio( ObjectToClone )
-								html5Audioclone.id = html5Audioclone.id +"_"+i
-
-								html5Audioclone.addEventListener(
-									"canplaythrough",
-									cloneloadeddataCallback,
-									false
-								)
-
-								soundManager.channels[ html5Audioclone.id ] = html5Audioclone
-							}
-						}
-
-						if( waitingForClones === 0 ) {
-							callback( generateSounds() )
-						}
-					}
-				}
-
-				waitingFor += 1
-				maxChannels -= 1
-
-				return soundManager.createAudio({
-					id: resource,
-					resource: resource,
-					onloadeddata: loadeddataCallback
-				})
-			}
-
-			if( _.has( soundSpriteConfig.music, "resource" ) ) {
-                var html5Audio = createFunctionWrapper( soundSpriteConfig.music.resource )
-
-                //iOS Hack
-				if( availableChannels === 1 ) {
-
-					var iosHack = function() {
-
-						if( _.has( soundSpriteConfig.music, "resource" ) ) {
-							waitingFor = 1
-							html5Audio.load()
-						}
-
-						document.getElementById('game').style.display = 'block'
-                        document.getElementById('viewport').removeChild( this )
-					}
-
-					document.getElementById('game').style.display = 'none'
-					var soundLoad = document.createElement( 'input')
-					soundLoad.type  = "submit"
-					soundLoad.onclick = iosHack
-					soundLoad.value = "On iPad/iPhone you have to click on this button to enable loading the sounds"
-                    document.getElementById('viewport').insertBefore( soundLoad, document.getElementById('game') )
-
-				}
-			}
-
-			if( _.has( soundSpriteConfig.fx, "resource" ) ) {
-				createFunctionWrapper( soundSpriteConfig.fx.resource )
-			}
-
-		}
-
-		return loadSounds
-	}
-)
-
-define(
-	"spell/shared/util/platform/private/loader/TextLoader",
-	[
-		"spell/shared/util/Events",
-
-		'spell/shared/util/platform/underscore'
-	],
-	function(
-		Events,
-
-		_
-	) {
-		"use strict"
-
-
-		/**
-		 * private
-		 */
-
-		var onLoad = function( request ) {
-			if( this.loaded === true ) return
-
-			this.loaded = true
-
-			if( request.status !== 200 ) {
-				onError.call( this, request.response )
-
-				return
-			}
-
-			this.onCompleteCallback(
-				request.response
-			)
-		}
-
-		var onError = function( event ) {
-			this.eventManager.publish(
-				[ Events.RESOURCE_ERROR, this.resourceBundleName ],
-				[ this.resourceBundleName, event ]
-			)
-		}
-
-		var onReadyStateChange = function( request ) {
-			/**
-			 * readyState === 4 means "DONE"; see https://developer.mozilla.org/en/DOM/XMLHttpRequest
-			 */
-			if( request.readyState !== 4 ) return
-
-			onLoad.call( this, request )
-		}
-
-
-		/**
-		 * public
-		 */
-
-		var TextLoader = function( eventManager, host, resourceBundleName, resourceUri, loadingCompletedCallback, timedOutCallback ) {
-			this.eventManager       = eventManager
-			this.host               = host
-			this.resourceBundleName = resourceBundleName
-			this.resourceUri        = resourceUri
-			this.onCompleteCallback = loadingCompletedCallback
-			this.loaded             = false
-		}
-
-		TextLoader.prototype = {
-			start: function() {
-				var url = this.host + "/" + this.resourceUri
-
-				var request = new XMLHttpRequest()
-				request.onload             = _.bind( onLoad, this, request )
-				request.onreadystatechange = _.bind( onReadyStateChange, this, request )
-				request.onerror            = _.bind( onError, this )
-				request.open( 'GET', url, true )
-				request.send( null )
-			}
-		}
-
-		return TextLoader
-	}
-)
-
-define(
-	"spell/shared/util/platform/private/loader/SoundLoader",
-	[
-		"spell/shared/util/platform/private/loader/TextLoader",
-		"spell/shared/util/Events",
-		"spell/shared/util/platform/private/sound/loadSounds",
-		"spell/shared/util/platform/private/registerTimer",
-
-		'spell/shared/util/platform/underscore'
-	],
-	function(
-		TextLoader,
-		Events,
-		loadSounds,
-		registerTimer,
-
-		_
-	) {
-		"use strict"
-
-
-		/**
-		 * private
-		 */
-
-		var processSoundSpriteConfig = function( soundSpriteConfig, onCompleteCallback ) {
-			if( !_.has( soundSpriteConfig, "type" ) ||
-				soundSpriteConfig.type !== 'spriteConfig' ||
-				!_.has( soundSpriteConfig, "music" ) ||
-				!_.has( soundSpriteConfig, "fx" ) ) {
-
-				throw 'Not a valid sound sprite configuration.'
-			}
-
-			var loadingCompleted = false
-			var timeOutLength = 5000
-
-			// if loadSounds does not return in under 5000 ms a failed load is assumed
-			registerTimer(
-				_.bind(
-					function() {
-						if( loadingCompleted ) return
-
-						this.onTimeOut( this.resourceBundleName, this.resourceUri )
-					},
-					this
-				),
-				timeOutLength
-			)
-
-			// creating the spell sound objects out of the sound sprite config
-			loadSounds(
-                this.soundManager,
-				soundSpriteConfig,
-				function( sounds ) {
-					if( loadingCompleted ) return
-
-					onCompleteCallback( sounds )
-					loadingCompleted = true
-				}
-			)
-		}
-
-		var loadJson = function( uri, onCompleteCallback ) {
-			var textLoader = new TextLoader(
-				this.eventManager,
-				this.host,
-				this.resourceBundleName,
-				uri,
-				function( jsonString ) {
-					var object = JSON.parse( jsonString )
-
-					if( object === undefined ) throw 'Parsing json string failed.'
-
-
-					onCompleteCallback( object )
-				}
-			)
-
-			textLoader.start()
-		}
-
-
-		/**
-		 * public
-		 */
-
-		var SoundLoader = function( eventManager, host, resourceBundleName, resourceUri, loadingCompletedCallback, timedOutCallback, soundManager ) {
-			this.eventManager       = eventManager
-            this.soundManager       = soundManager
-			this.host               = host
-			this.resourceBundleName = resourceBundleName
-			this.resourceUri        = resourceUri
-			this.onCompleteCallback = loadingCompletedCallback
-			this.onTimeOut          = timedOutCallback
-		}
-
-		SoundLoader.prototype = {
-			start: function() {
-				var fileName = _.last( this.resourceUri.split( '/' ) )
-				var extension = _.last( fileName.split( '.' ) )
-
-				if( extension === "json" ) {
-					/**
-					 * The html5 back-end uses sound sprites by default. Therefore loading of the sound set config can be skipped and the sound sprite config
-					 * can be loaded directly.
-					 */
-					var soundSpriteConfigUri = "sounds/output/" + fileName
-
-					loadJson.call(
-						this,
-						soundSpriteConfigUri,
-						_.bind(
-							function( soundSpriteConfig ) {
-								processSoundSpriteConfig.call( this, soundSpriteConfig, this.onCompleteCallback )
-							},
-							this
-						)
-					)
-
-				} else /*if( extension === "" )*/ {
-//					console.log( "Not yet implemented." )
-				}
-			}
-		}
-
-		return SoundLoader
-	}
-)
-
-define(
-	'spell/shared/util/createEnumesqueObject',
-	[
-		'spell/shared/util/platform/underscore'
-	],
-	function(
-		_
-	) {
-		'use strict'
-
-
-		/**
-		 * Creates an object with the properties defined by the array "keys". Each property has a unique Number.
-		 */
-		return function( keys ) {
-			return _.reduce(
-				keys,
-				function( memo, key ) {
-					memo.result[ key ] = memo.index++
-
-					return memo
-				},
-				{
-					index  : 0,
-					result : {}
-				}
-			).result
-		}
-	}
-)
-
-define(
-	'spell/shared/util/Events',
-	[
-		'spell/shared/util/createEnumesqueObject'
-	],
-	function(
-		createEnumesqueObject
-	) {
-		'use strict'
-
-
-		return createEnumesqueObject( [
-			// CONNECTION
-			'SERVER_CONNECTION_ESTABLISHED',
-			'MESSAGE_RECEIVED',
-
-			// clock synchronization
-			'CLOCK_SYNC_ESTABLISHED',
-
-			// EventManager
-			'SUBSCRIBE',
-			'UNSUBSCRIBE',
-
-			// ResourceLoader
-			'RESOURCE_PROGRESS',
-			'RESOURCE_LOADING_COMPLETED',
-			'RESOURCE_ERROR',
-
-			// MISC
-			'RENDER_UPDATE',
-			'LOGIC_UPDATE',
-			'CREATE_ZONE',
-			'DESTROY_ZONE',
-			'SCREEN_RESIZED'
-		] )
-	}
-)
-
-define(
-	"spell/shared/util/platform/private/loader/ImageLoader",
-	[
-		"spell/shared/util/Events",
-
-		'spell/shared/util/platform/underscore'
-	],
-	function(
-		Events,
-
-		_
-	) {
-		"use strict"
-
-
-		/**
-		 * private
-		 */
-
-		var onLoad = function( image ) {
-			if( this.loaded === true ) return
-
-			this.loaded = true
-
-			var resources = {}
-			resources[ this.resourceName ] = this.renderingContext.createTexture( image )
-
-			this.onCompleteCallback( resources )
-		}
-
-		var onError = function( event ) {
-			this.eventManager.publish(
-				[ Events.RESOURCE_ERROR, this.resourceBundleName ],
-				[ this.resourceBundleName, event ]
-			)
-		}
-
-		var onReadyStateChange = function( image ) {
-			if( image.readyState === "complete" ) {
-				image.onload( image )
-			}
-		}
-
-
-		/**
-		 * public
-		 */
-
-		var ImageLoader = function( eventManager, resourcePath, resourceBundleName, resourceName, loadingCompletedCallback, timedOutCallback, renderingContext ) {
-			this.eventManager       = eventManager
-			this.renderingContext   = renderingContext
-			this.resourceBundleName = resourceBundleName
-			this.resourcePath       = resourcePath
-			this.resourceName       = resourceName
-			this.onCompleteCallback = loadingCompletedCallback
-			this.loaded             = false
-		}
-
-		ImageLoader.prototype = {
-			start: function() {
-				var image = new Image()
-				image.onload             = _.bind( onLoad, this, image )
-				image.onreadystatechange = _.bind( onReadyStateChange, this, image )
-				image.onerror            = _.bind( onError, this )
-				image.src                = this.resourcePath + '/' + this.resourceName
-			}
-		}
-
-		return ImageLoader
-	}
-)
-
-define(
-	"spell/shared/util/platform/private/graphics/createCanvasNode",
-	function() {
-		return function( id, width, height ) {
-			var container = document.getElementById( id )
-
-			if( !container ) throw 'Could not find a container with the id "spell" in the DOM tree.'
-
-
-			var canvas = document.createElement( "canvas" )
-				canvas.id     = 'spell-canvas'
-				canvas.width  = width
-				canvas.height = height
-
-			container.appendChild( canvas )
-
-			return canvas
-		}
-	}
-)
-
-define(
-	"glmatrix/mat3",
-	[
-		"glmatrix/glmatrix"
-	],
-	function(
-		glmatrix
-	) {
-		return glmatrix.mat3
-	}
-)
-
-define(
-	"spell/shared/util/platform/private/graphics/webgl/shaders",
-	function() {
-		return {
-			vertex: [
-				"attribute vec3 aVertexPosition;",
-				"attribute vec2 aTextureCoord;",
-
-				"uniform mat4 uScreenSpaceShimMatrix;",
-				"uniform mat4 uModelViewMatrix;",
-				"uniform mat3 uTextureMatrix;",
-
-				"varying vec2 vTextureCoord;",
-
-
-				"void main( void ) {",
-					"vTextureCoord = ( uTextureMatrix * vec3( aTextureCoord, 1.0 ) ).st;",
-					"gl_Position = uScreenSpaceShimMatrix * uModelViewMatrix * vec4( aVertexPosition, 1.0 );",
-				"}"
-			].join( "\n" ),
-
-			fragment: [
-				"precision mediump float;",
-
-				"uniform sampler2D uTexture0;",
-				"uniform vec4 uGlobalColor;",
-				"uniform float uGlobalAlpha;",
-				"uniform bool uFillRect;",
-
-				"varying vec2 vTextureCoord;",
-
-
-				"void main( void ) {",
-					"if( !uFillRect ) {",
-					"	vec4 color = texture2D( uTexture0, vTextureCoord );",
-					"	gl_FragColor = color * uGlobalColor * vec4( 1.0, 1.0, 1.0, uGlobalAlpha );",
-
-					"} else {",
-					"	gl_FragColor = uGlobalColor * vec4( 1.0, 1.0, 1.0, uGlobalAlpha );",
-					"}",
-				"}"
-			].join( "\n" )
-		}
-	}
-)
-
-define(
-	"spell/shared/util/platform/private/graphics/webgl/createContext",
-	[
-		'spell/shared/util/platform/underscore'
-	],
-	function(
-		_
-	) {
-		"use strict"
-
-
-		var gl
-
-		/**
-		 * Returns a rendering context. Performs some probing to account for different runtime environments.
-		 *
-		 * @param canvas
-		 */
-		var createContext = function( canvas ) {
-			var gl = null
-			var contextNames = [ "webgl", "experimental-webgl", "webkit-3d", "moz-webgl" ]
-			var attributes = {
-				alpha: false
-			}
-
-			_.find(
-				contextNames,
-				function( it ) {
-					gl = canvas.getContext( it, attributes )
-
-					return ( gl !== null )
-				}
-			)
-
-			return gl
-		}
-
-		return createContext
-	}
-)
-
-define(
-	'spell/shared/util/platform/private/graphics/webgl/createWebGlContext',
-	[
-		'spell/shared/util/platform/private/graphics/StateStack',
-		'spell/shared/util/platform/private/graphics/webgl/createContext',
-		'spell/shared/util/platform/private/graphics/webgl/shaders',
-
-		'spell/shared/util/color',
-		'spell/shared/util/math',
-		'spell/shared/util/platform/private/createNativeFloatArray',
-
-		'glmatrix/vec3',
-		'glmatrix/mat3',
-		'glmatrix/mat4'
-	],
-	function(
-		StateStack,
-		createContext,
-		shaders,
-
-		color,
-		math,
-		createNativeFloatArray,
-
-		vec3,
-		mat3,
-		mat4
-	) {
-		'use strict'
-
-
-		/**
-		 * private
-		 */
-
-		var gl
-		var stateStack   = new StateStack( 32 )
-		var currentState = stateStack.getTop()
-
-		var screenSpaceShimMatrix = mat4.create()
-		var shaderProgram
-
-		// view space to screen space transformation matrix
-		var viewToScreen = mat4.create()
-		mat4.identity( viewToScreen )
-
-		// world space to view space transformation matrix
-		var worldToView = mat4.create()
-		mat4.identity( worldToView )
-
-		// accumulated transformation world space to screen space transformation matrix
-		var worldToScreen = mat4.create()
-		mat4.identity( worldToScreen )
-
-		var tmpMatrix     = mat4.create(),
-			textureMatrix = mat3.create()
-
-
-		/**
-		 * Creates a projection matrix that normalizes the transformation behaviour to that of the normalized canvas-2d (that is origin is in bottom left,
-		 * positive x-axis to the right, positive y-axis up, screen space coordinates as input. The matrix transforms from screen space to clip space.
-		 *
-		 * @param width
-		 * @param height
-		 * @param resultMatrix
-		 */
-		var createScreenSpaceShimMatrix = function( width, height, resultMatrix ) {
-			mat4.identity( resultMatrix )
-
-			mat4.ortho(
-				0,
-				width,
-				0,
-				height,
-				0,
-				1000,
-				resultMatrix
-			)
-		}
-
-		var createViewToScreenMatrix = function( width, height, resultMatrix ) {
-			mat4.identity( resultMatrix )
-
-			resultMatrix[ 0 ] = width * 0.5
-			resultMatrix[ 5 ] = height * 0.5
-			resultMatrix[ 12 ] = 0 + width * 0.5
-			resultMatrix[ 13 ] = 0 + height * 0.5
-
-			return resultMatrix
-		}
-
-		var initWrapperContext = function() {
-			viewport( 0, 0, gl.canvas.width, gl.canvas.height )
-
-			// gl initialization
-			gl.clearColor( 0.0, 0.0, 0.0, 1.0 )
-			gl.clear( gl.COLOR_BUFFER_BIT )
-
-			// setting up blending
-			gl.enable( gl.BLEND )
-			gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA )
-
-			gl.disable( gl.DEPTH_TEST )
-
-			gl.activeTexture( gl.TEXTURE0 )
-
-			setupShader()
-		}
-
-		/**
-		 * Creates a wrapper context for the backend context.
-		 */
-		var createWrapperContext = function() {
-			initWrapperContext()
-
-			return {
-				clear             : clear,
-				createTexture     : createWebGlTexture,
-				drawTexture       : drawTexture,
-				drawSubTexture    : drawSubTexture,
-				fillRect          : fillRect,
-				getConfiguration  : getConfiguration,
-				resizeColorBuffer : resizeColorBuffer,
-				restore           : restore,
-				rotate            : rotate,
-				save              : save,
-				scale             : scale,
-				setClearColor     : setClearColor,
-				setFillStyleColor : setFillStyleColor,
-				setGlobalAlpha    : setGlobalAlpha,
-				setTransform      : setTransform,
-				setViewMatrix     : setViewMatrix,
-				transform         : transform,
-				translate         : translate,
-				viewport          : viewport
-			}
-		}
-
-		/**
-		 * Returns a rendering context. Once a context has been created additional calls to this method return the same context instance.
-		 *
-		 * @param canvas - the canvas dom element
-		 */
-		var createWebGlContext = function( canvas ) {
-			if( canvas === undefined ) throw 'Missing first argument.'
-
-			if( gl !== undefined ) return gl
-
-
-			gl = createContext( canvas )
-
-			if( gl === null ) return null
-
-
-			return createWrapperContext()
-		}
-
-		var setupShader = function() {
-			shaderProgram = gl.createProgram()
-
-			var vertexShader = gl.createShader( gl.VERTEX_SHADER )
-			gl.shaderSource( vertexShader, shaders.vertex )
-			gl.compileShader (vertexShader )
-			gl.attachShader( shaderProgram, vertexShader )
-
-			var fragmentShader = gl.createShader( gl.FRAGMENT_SHADER )
-			gl.shaderSource( fragmentShader, shaders.fragment )
-			gl.compileShader( fragmentShader )
-			gl.attachShader( shaderProgram, fragmentShader )
-
-			gl.linkProgram( shaderProgram )
-			gl.useProgram( shaderProgram )
-
-
-			// setting up vertices
-			var vertices = createNativeFloatArray( 12 )
-			vertices[ 0 ]  = 0.0
-			vertices[ 1 ]  = 0.0
-			vertices[ 2 ]  = 0.0
-			vertices[ 3 ]  = 1.0
-			vertices[ 4 ]  = 0.0
-			vertices[ 5 ]  = 0.0
-			vertices[ 6 ]  = 0.0
-			vertices[ 7 ]  = 1.0
-			vertices[ 8 ]  = 0.0
-			vertices[ 9 ]  = 1.0
-			vertices[ 10 ] = 1.0
-			vertices[ 11 ] = 0.0
-
-
-			var vertexPositionBuffer = gl.createBuffer()
-			gl.bindBuffer( gl.ARRAY_BUFFER, vertexPositionBuffer )
-			gl.bufferData( gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW )
-
-
-			var attributeLocation = gl.getAttribLocation( shaderProgram, 'aVertexPosition' )
-			gl.vertexAttribPointer( attributeLocation, 3, gl.FLOAT, false, 0, 0 )
-			gl.enableVertexAttribArray( attributeLocation )
-
-
-			// setting up texture coordinates
-			var textureCoordinates = createNativeFloatArray( 8 )
-			textureCoordinates[ 0 ] = 0.0
-			textureCoordinates[ 1 ] = 0.0
-			textureCoordinates[ 2 ] = 1.0
-			textureCoordinates[ 3 ] = 0.0
-			textureCoordinates[ 4 ] = 0.0
-			textureCoordinates[ 5 ] = 1.0
-			textureCoordinates[ 6 ] = 1.0
-			textureCoordinates[ 7 ] = 1.0
-
-
-			var textureCoordinateBuffer = gl.createBuffer()
-			gl.bindBuffer( gl.ARRAY_BUFFER, textureCoordinateBuffer )
-			gl.bufferData( gl.ARRAY_BUFFER, textureCoordinates, gl.STATIC_DRAW )
-
-			attributeLocation = gl.getAttribLocation( shaderProgram, 'aTextureCoord' )
-			gl.vertexAttribPointer( attributeLocation, 2, gl.FLOAT, false, 0, 0 )
-			gl.enableVertexAttribArray( attributeLocation )
-
-
-			// setting up screen space shim matrix
-			var uniformLocation = gl.getUniformLocation( shaderProgram, 'uScreenSpaceShimMatrix' )
-			gl.uniformMatrix4fv( uniformLocation, false, screenSpaceShimMatrix )
-
-
-			// setting up texture matrix
-			resetTextureMatrix( textureMatrix )
-		}
-
-
-		var isTextureMatrixIdentity = false
-
-		var resetTextureMatrix = function( matrix ) {
-			if( isTextureMatrixIdentity ) return
-
-
-			matrix[ 0 ] = 1.0
-			matrix[ 4 ] = 1.0
-			matrix[ 6 ] = 0.0
-			matrix[ 7 ] = 0.0
-
-			gl.uniformMatrix3fv( gl.getUniformLocation( shaderProgram, 'uTextureMatrix' ), false, matrix )
-		}
-
-		var updateTextureMatrix = function( ss, st, tt, ts, matrix ) {
-			isTextureMatrixIdentity = false
-
-			matrix[ 0 ] = ss
-			matrix[ 4 ] = st
-			matrix[ 6 ] = tt
-			matrix[ 7 ] = ts
-
-			gl.uniformMatrix3fv( gl.getUniformLocation( shaderProgram, 'uTextureMatrix' ), false, matrix )
-		}
-
-
-		/**
-		 * public
-		 */
-
-		var save = function() {
-			stateStack.pushState()
-			currentState = stateStack.getTop()
-		}
-
-		var restore = function() {
-			stateStack.popState()
-			currentState = stateStack.getTop()
-		}
-
-		var setFillStyleColor = function( vec ) {
-			currentState.color = color.createRgba( vec )
-		}
-
-		var setGlobalAlpha = function( u ) {
-			currentState.opacity = u
-		}
-
-		var setClearColor = function( vec ) {
-			gl.clearColor( vec[ 0 ], vec[ 1 ], vec[ 2 ], 1.0 )
-		}
-
-		var scale = function( vec ) {
-			mat4.scale( currentState.matrix, vec )
-		}
-
-		var translate = function( vec ) {
-			mat4.translate( currentState.matrix, vec )
-		}
-
-		var rotate = function( u ) {
-			mat4.rotateZ( currentState.matrix, -u )
-		}
-
-		/**
-		 * Clears the color buffer with the clear color
-		 */
-		var clear = function() {
-			gl.clear( gl.COLOR_BUFFER_BIT )
-		}
-
-		var drawTexture = function( texture, dx, dy, dw, dh ) {
-			if( texture === undefined ) throw 'Texture is undefined'
-
-
-			if( !dw ) dw = 1.0
-			if( !dh ) dh = 1.0
-
-			// setting up fillRect mode
-			var uniformLocation = gl.getUniformLocation( shaderProgram, 'uFillRect' )
-			gl.uniform1i( uniformLocation, 0 )
-
-			// setting up global alpha
-			gl.uniform1f( gl.getUniformLocation( shaderProgram, 'uGlobalAlpha' ), currentState.opacity )
-
-			// setting up global color
-			gl.uniform4fv( gl.getUniformLocation( shaderProgram, 'uGlobalColor' ), currentState.color )
-
-			// setting up texture
-			gl.bindTexture( gl.TEXTURE_2D, texture.privateGlTextureResource )
-			uniformLocation = gl.getUniformLocation( shaderProgram, 'uTexture0' )
-			gl.uniform1i( uniformLocation, 0 )
-
-			// setting up transformation
-			mat4.multiply( worldToScreen, currentState.matrix, tmpMatrix )
-
-			// rotating the image so that it is not upside down
-			mat4.translate( tmpMatrix, [ dx, dy, 0 ] )
-			mat4.rotateZ( tmpMatrix, Math.PI )
-			mat4.scale( tmpMatrix, [ -dw, dh, 0 ] )
-			mat4.translate( tmpMatrix, [ 0, -1, 0 ] )
-
-			gl.uniformMatrix4fv( gl.getUniformLocation( shaderProgram, 'uModelViewMatrix' ), false, tmpMatrix )
-
-			// setting up the texture matrix
-			resetTextureMatrix( textureMatrix )
-
-			// drawing
-			gl.drawArrays( gl.TRIANGLE_STRIP, 0, 4 )
-		}
-
-		var drawSubTexture = function( texture, sx, sy, sw, sh, dx, dy, dw, dh ) {
-			if( texture === undefined ) throw 'Texture is undefined'
-
-
-			if( !dw ) dw = 1.0
-			if( !dh ) dh = 1.0
-
-			// setting up fillRect mode
-			var uniformLocation = gl.getUniformLocation( shaderProgram, 'uFillRect' )
-			gl.uniform1i( uniformLocation, 0 )
-
-			// setting up global alpha
-			gl.uniform1f( gl.getUniformLocation( shaderProgram, 'uGlobalAlpha' ), currentState.opacity )
-
-			// setting up global color
-			gl.uniform4fv( gl.getUniformLocation( shaderProgram, 'uGlobalColor' ), currentState.color )
-
-			// setting up texture
-			gl.bindTexture( gl.TEXTURE_2D, texture.privateGlTextureResource )
-			uniformLocation = gl.getUniformLocation( shaderProgram, 'uTexture0' )
-			gl.uniform1i( uniformLocation, 0 )
-
-			// setting up transformation
-			mat4.multiply( worldToScreen, currentState.matrix, tmpMatrix )
-
-			// rotating the image so that it is not upside down
-			mat4.translate( tmpMatrix, [ dx, dy, 0 ] )
-			mat4.rotateZ( tmpMatrix, Math.PI )
-			mat4.scale( tmpMatrix, [ -dw, dh, 0 ] )
-			mat4.translate( tmpMatrix, [ 0, -1, 0 ] )
-
-			gl.uniformMatrix4fv( gl.getUniformLocation( shaderProgram, 'uModelViewMatrix' ), false, tmpMatrix )
-
-			// setting up the texture matrix
-			var tw = texture.width,
-				th = texture.height
-
-			updateTextureMatrix(
-				sw / tw,
-				sh / th,
-				sx / tw,
-				sy / th,
-				textureMatrix
-			)
-
-			// drawing
-			gl.drawArrays( gl.TRIANGLE_STRIP, 0, 4 )
-		}
-
-		var fillRect = function( dx, dy, dw, dh ) {
-			// setting up fillRect mode
-			var uniformLocation = gl.getUniformLocation( shaderProgram, 'uFillRect' )
-			gl.uniform1i( uniformLocation, 1 )
-
-			// setting up global alpha
-			gl.uniform1f( gl.getUniformLocation( shaderProgram, 'uGlobalAlpha' ), currentState.opacity )
-
-			// setting up global color
-			gl.uniform4fv( gl.getUniformLocation( shaderProgram, 'uGlobalColor' ), currentState.color )
-
-			// setting up transformation
-			mat4.multiply( worldToScreen, currentState.matrix, tmpMatrix )
-
-			// correcting position
-			mat4.translate( tmpMatrix, [ dx, dy, 0 ] )
-			mat4.scale( tmpMatrix, [ dw, dh, 0 ] )
-
-			gl.uniformMatrix4fv( gl.getUniformLocation( shaderProgram, 'uModelViewMatrix' ), false, tmpMatrix )
-
-			// drawing
-			gl.drawArrays( gl.TRIANGLE_STRIP, 0, 4 )
-		}
-
-		var resizeColorBuffer = function( width, height ) {
-			gl.canvas.width  = width
-			gl.canvas.height = height
-
-			createViewToScreenMatrix( width, height, viewToScreen )
-			mat4.multiply( viewToScreen, worldToView, worldToScreen )
-		}
-
-		var transform = function( matrix ) {
-			mat4.multiply( currentState.matrix, matrix )
-		}
-
-		var setTransform = function( matrix ) {
-			mat4.set( matrix, currentState.matrix )
-		}
-
-		var setViewMatrix = function( matrix ) {
-			mat4.set( matrix, worldToView )
-			createViewToScreenMatrix( gl.canvas.width, gl.canvas.height, viewToScreen )
-			mat4.multiply( viewToScreen, worldToView, worldToScreen )
-		}
-
-		var viewport = function( x, y, width, height ) {
-			gl.viewport( x, y , width, height )
-
-			// reinitialize screen space shim matrix
-			createScreenSpaceShimMatrix( width, height, screenSpaceShimMatrix )
-
-			var uniformLocation = gl.getUniformLocation( shaderProgram, 'uScreenSpaceShimMatrix' )
-			gl.uniformMatrix4fv( uniformLocation, false, screenSpaceShimMatrix )
-		}
-
-		/**
-		 * Returns an object describing the current configuration of the rendering backend.
-		 */
-		var getConfiguration = function() {
-			return {
-				type   : 'webgl',
-				width  : gl.canvas.width,
-				height : gl.canvas.height
-			}
-		}
-
-		/**
-		 * Returns instance of texture class
-		 *
-		 * The public interface of the texture class consists of the two attributes width and height.
-		 *
-		 * @param image
-		 */
-		var createWebGlTexture = function( image ) {
-			var texture = gl.createTexture()
-			gl.bindTexture( gl.TEXTURE_2D, texture )
-			gl.texImage2D( gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image )
-			gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR )
-			gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE )
-			gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE )
-			gl.generateMipmap( gl.TEXTURE_2D )
-			gl.bindTexture( gl.TEXTURE_2D, null )
-
-
-			return {
-				/**
-				 * Public
-				 */
-				width  : image.width,
-				height : image.height,
-
-				/**
-				 * Private
-				 *
-				 * This is an implementation detail of the class. If you write code that depends on this you better know what you are doing.
-				 */
-				privateGlTextureResource : texture
-			}
-		}
-
-		return createWebGlContext
-	}
-)
-
-define(
-	"glmatrix/vec3",
-	[
-		"glmatrix/glmatrix"
-	],
-	function(
-		glmatrix
-	) {
-		return glmatrix.vec3
-	}
-)
-
-define(
-	"spell/shared/util/math",
-	function(
-	) {
-		"use strict"
-
-
-		var clamp = function( value, lowerBound, upperBound ) {
-			if ( value < lowerBound) return lowerBound;
-			if ( value > upperBound) return upperBound;
-
-			return value;
-		}
-
-		var isInInterval = function( value, lowerBound, upperBound ) {
-			return ( value >= lowerBound && value <= upperBound )
-		}
-
-
-		return {
-			clamp : clamp,
-			isInInterval : isInInterval
-		}
-	}
-)
-
-define(
-	"spell/shared/util/color",
-	[
-		"spell/shared/util/math",
-
-		"glmatrix/vec3",
-		'spell/shared/util/platform/underscore'
-	],
-	function(
-		MathHelper,
-
-		vec3,
-		_
-	) {
-		"use strict"
-
-
-		var toRange = function( value ) {
-			return Math.round( MathHelper.clamp( value, 0, 1 ) * 255 )
-		}
-
-
-		var createRgb = function( r, g, b ) {
-			return [ r, g, b ]
-		}
-
-
-		var createRgba = function( vec ) {
-			return ( vec.length === 4 ?
-				[ vec[ 0 ], vec[ 1 ], vec[ 2 ], vec[ 3 ] ] :
-				[ vec[ 0 ], vec[ 1 ], vec[ 2 ], 1.0 ] )
-		}
-
-
-		var createRandom = function() {
-			var primaryColorIndex = Math.round( Math.random() * 3 )
-			var colorVec = vec3.create( [ 0.8, 0.8, 0.8 ] )
-
-			for( var i = 0; i < colorVec.length; i++ ) {
-				if ( i === primaryColorIndex ) {
-					colorVec[ i ] = 0.95
-
-				} else {
-					colorVec[ i ] *= Math.random()
-				}
-			}
-
-			return colorVec
-		}
-
-
-		var formatCanvas = function( vec ) {
-			if( vec[ 3 ] === undefined ) {
-				return 'rgb('
-					+ toRange( vec[ 0 ] ) + ', '
-					+ toRange( vec[ 1 ] ) + ', '
-					+ toRange( vec[ 2 ] ) + ')'
-			}
-
-			return 'rgba('
-				+ toRange( vec[ 0 ] ) + ', '
-				+ toRange( vec[ 1 ] ) + ', '
-				+ toRange( vec[ 2 ] ) + ', '
-				+ toRange( vec[ 3 ] ) + ')'
-		}
-
-
-		var isVec3Color = function( vec ) {
-			return _.size( vec ) === 3
-		}
-
-
-		var isVec4Color = function( vec ) {
-			return _.size( vec ) === 4
-		}
-
-
-		return {
-			createRgb    : createRgb,
-			createRgba   : createRgba,
-			createRandom : createRandom,
-			formatCanvas : formatCanvas,
-			isVec3Color  : isVec3Color,
-			isVec4Color  : isVec4Color
-		}
-	}
-)
-
-define(
 	'spell/shared/util/platform/underscore',
 	function() {
 		//     Underscore.js 1.3.3
@@ -10993,1988 +8404,2200 @@ define(
 )
 
 define(
-	"spell/shared/util/platform/private/Time",
+	"funkysnakes/client/systems/updateRenderData",
+	[
+		'spell/shared/util/platform/underscore'
+	],
+	function(
+		_
+	) {
+		"use strict"
+
+
+		return function(
+			entities
+		) {
+			_.each( entities, function( entity ) {
+				entity.renderData.position = _.clone( entity.position )
+				if ( entity.orientation ) {
+					entity.renderData.orientation = entity.orientation.angle
+				}
+				else {
+					entity.renderData.orientation = 0
+				}
+			} )
+		}
+	}
+)
+
+define(
+	'funkysnakes/client/zones/base',
+	[
+		"funkysnakes/client/systems/updateRenderData",
+		'funkysnakes/client/systems/Renderer',
+
+		'spell/shared/util/entities/Entities',
+		'spell/shared/util/entities/datastructures/passIdMultiMap',
+		'spell/shared/util/zones/ZoneEntityManager',
+		'spell/shared/util/Events',
+
+		'spell/shared/util/platform/underscore'
+	],
+	function(
+		updateRenderData,
+		Renderer,
+
+		Entities,
+		passIdMultiMap,
+		ZoneEntityManager,
+		Events,
+
+		_
+	) {
+		'use strict'
+
+
+		/**
+		 * private
+		 */
+
+		function update(
+			globals,
+			timeInMs,
+			dtInS
+		) {
+		}
+
+		function render(
+			globals,
+			timeInMs,
+			deltaTimeInMs
+		) {
+			var entities = this.entities,
+				queryIds = this.queryIds
+
+			updateRenderData(
+				entities.executeQuery( queryIds[ "updateRenderData" ][ 0 ] ).elements
+			)
+
+			this.renderer.process(
+				timeInMs,
+				deltaTimeInMs,
+				entities.executeQuery( queryIds[ "render" ][ 0 ] ).multiMap,
+				[]
+			)
+		}
+
+		return {
+			onCreate: function( globals, zoneConfig ) {
+				var eventManager         = globals.eventManager,
+					configurationManager = globals.configurationManager,
+					statisticsManager    = globals.statisticsManager,
+					resourceLoader       = globals.resourceLoader,
+					zoneManager          = globals.zoneManager
+
+				var entities  = new Entities()
+				this.entities = entities
+
+				var entityManager  = new ZoneEntityManager( globals.entityManager, this.entities )
+				this.entityManager = entityManager
+
+				this.renderer = new Renderer( eventManager, globals.resources, globals.renderingContext )
+
+
+				this.queryIds = {
+					render: [
+						entities.prepareQuery( [ "position", "appearance", "renderData" ], passIdMultiMap )
+					],
+					updateRenderData: [
+						entities.prepareQuery( [ "position", "renderData" ] )
+					]
+				}
+
+
+				this.renderCallback = _.bind( render, this, globals )
+				this.updateCallback = _.bind( update, this, globals )
+
+				eventManager.subscribe( Events.RENDER_UPDATE, this.renderCallback )
+				eventManager.subscribe( [ Events.LOGIC_UPDATE, '20' ], this.updateCallback )
+
+
+				if( _.size( zoneConfig.resources ) === 0 ) return
+
+
+				eventManager.subscribe(
+					[ Events.RESOURCE_LOADING_COMPLETED, 'zoneResources' ],
+					function() {
+						// create default entities from zone config
+						_.each(
+							zoneConfig.entities,
+							function( entityConfig ) {
+								entityManager.createEntity( entityConfig.blueprintId, entityConfig.config )
+							}
+						)
+					}
+				)
+
+				// trigger loading of zone resources
+				resourceLoader.addResourceBundle( 'zoneResources', zoneConfig.resources )
+				resourceLoader.start()
+			},
+
+			onDestroy: function( globals ) {
+				var eventManager = globals.eventManager
+
+				eventManager.unsubscribe( Events.RENDER_UPDATE, this.renderCallback )
+				eventManager.unsubscribe( [ Events.LOGIC_UPDATE, '20' ], this.updateCallback )
+			}
+		}
+	}
+)
+
+define(
+	'spell/client/main',
+	[
+		'funkysnakes/client/zones/base',
+
+		'spell/client/runtimeModule',
+		'spell/shared/util/createMainLoop',
+		'spell/shared/util/entities/EntityManager',
+		'spell/shared/util/zones/ZoneManager',
+		'spell/shared/util/blueprints/BlueprintManager',
+		'spell/shared/util/ConfigurationManager',
+		'spell/shared/util/EventManager',
+		'spell/shared/util/InputManager',
+		'spell/shared/util/ResourceLoader',
+		'spell/shared/util/StatisticsManager',
+		'spell/shared/util/Events',
+		'spell/shared/util/Logger',
+		'spell/shared/util/platform/PlatformKit',
+
+		'spell/shared/util/platform/underscore'
+	],
+	function(
+		baseZone,
+
+		runtimeModule,
+		createMainLoop,
+		EntityManager,
+		ZoneManager,
+		BlueprintManager,
+		ConfigurationManager,
+		EventManager,
+		InputManager,
+		ResourceLoader,
+		StatisticsManager,
+		Events,
+		Logger,
+		PlatformKit,
+
+		_,
+
+		// configuration parameters passed in from stage zero loader
+		parameters
+	) {
+		'use strict'
+
+
+		var loadBlueprints = function( blueprintManager, runtimeModule ) {
+			_.each(
+				runtimeModule.componentBlueprints,
+				function( componentBlueprint ) {
+					blueprintManager.add( componentBlueprint )
+				}
+			)
+
+			_.each(
+				runtimeModule.entityBlueprints,
+				function( entityBlueprint ) {
+					blueprintManager.add( entityBlueprint )
+				}
+			)
+
+			_.each(
+				runtimeModule.systemBlueprints,
+				function( systemBlueprint ) {
+					blueprintManager.add( systemBlueprint )
+				}
+			)
+		}
+
+
+		if( parameters.verbose ) {
+			Logger.setLogLevel( Logger.LOG_LEVEL_DEBUG )
+		}
+
+		Logger.debug( 'client started' )
+
+
+		var globals              = {},
+			eventManager         = new EventManager(),
+			configurationManager = new ConfigurationManager( eventManager, parameters ),
+			renderingContext     = PlatformKit.RenderingFactory.createContext2d(
+				eventManager,
+				configurationManager.id,
+				1024,
+				768,
+				configurationManager.renderingBackEnd
+			),
+			soundManager         = PlatformKit.createSoundManager(),
+			inputManager         = new InputManager( configurationManager ),
+			resourceLoader       = new ResourceLoader( runtimeModule.name, soundManager, renderingContext, eventManager, configurationManager.resourceServer ),
+			statisticsManager    = new StatisticsManager(),
+			blueprintManager     = new BlueprintManager(),
+			mainLoop             = createMainLoop( eventManager, statisticsManager ),
+			zoneManager          = new ZoneManager( globals, eventManager, blueprintManager, mainLoop )
+
+		statisticsManager.init()
+
+		_.extend(
+			globals,
+			{
+				configurationManager : configurationManager,
+				eventManager         : eventManager,
+				entityManager        : new EntityManager( blueprintManager ),
+				inputManager         : inputManager,
+				inputEvents          : inputManager.getInputEvents(),
+				renderingContext     : renderingContext,
+				resourceLoader       : resourceLoader,
+				resources            : resourceLoader.getResources(),
+				statisticsManager    : statisticsManager,
+				soundManager         : soundManager,
+				zoneManager          : zoneManager
+			}
+		)
+
+//		PlatformKit.registerOnScreenResize( _.bind( onScreenResized, onScreenResized, eventManager ) )
+
+		var renderingContextConfig = renderingContext.getConfiguration()
+		Logger.debug( 'created rendering context: type=' + renderingContextConfig.type + '; size=' + renderingContextConfig.width + 'x' + renderingContextConfig.height )
+
+
+		loadBlueprints( blueprintManager, runtimeModule )
+
+
+		var zoneConfig = _.find(
+			runtimeModule.zones,
+			function( iter ) {
+				return iter.name === runtimeModule.startZone
+			}
+		)
+
+		zoneManager.startZone( zoneConfig )
+
+		mainLoop.run()
+	}
+)
+
+
+define(
+	"modernizr",
+	function() {
+		var isBrowser = !!( typeof window !== "undefined" && navigator && document )
+
+		if( !isBrowser ) return {}
+
+
+ 		/* Modernizr 2.5.3 (Custom Build) | MIT & BSD
+		 * Build: http://www.modernizr.com/download/#-canvas-audio-websockets-touch-webgl-teststyles-prefixes-domprefixes
+		 */
+		;window.Modernizr=function(a,b,c){function y(a){i.cssText=a}function z(a,b){return y(l.join(a+";")+(b||""))}function A(a,b){return typeof a===b}function B(a,b){return!!~(""+a).indexOf(b)}function C(a,b,d){for(var e in a){var f=b[a[e]];if(f!==c)return d===!1?a[e]:A(f,"function")?f.bind(d||b):f}return!1}var d="2.5.3",e={},f=b.documentElement,g="modernizr",h=b.createElement(g),i=h.style,j,k={}.toString,l=" -webkit- -moz- -o- -ms- ".split(" "),m="Webkit Moz O ms",n=m.split(" "),o=m.toLowerCase().split(" "),p={},q={},r={},s=[],t=s.slice,u,v=function(a,c,d,e){var h,i,j,k=b.createElement("div"),l=b.body,m=l?l:b.createElement("body");if(parseInt(d,10))while(d--)j=b.createElement("div"),j.id=e?e[d]:g+(d+1),k.appendChild(j);return h=["&#173;","<style>",a,"</style>"].join(""),k.id=g,m.innerHTML+=h,m.appendChild(k),l||(m.style.background="",f.appendChild(m)),i=c(k,a),l?k.parentNode.removeChild(k):m.parentNode.removeChild(m),!!i},w={}.hasOwnProperty,x;!A(w,"undefined")&&!A(w.call,"undefined")?x=function(a,b){return w.call(a,b)}:x=function(a,b){return b in a&&A(a.constructor.prototype[b],"undefined")},Function.prototype.bind||(Function.prototype.bind=function(b){var c=this;if(typeof c!="function")throw new TypeError;var d=t.call(arguments,1),e=function(){if(this instanceof e){var a=function(){};a.prototype=c.prototype;var f=new a,g=c.apply(f,d.concat(t.call(arguments)));return Object(g)===g?g:f}return c.apply(b,d.concat(t.call(arguments)))};return e});var D=function(c,d){var f=c.join(""),g=d.length;v(f,function(c,d){var f=b.styleSheets[b.styleSheets.length-1],h=f?f.cssRules&&f.cssRules[0]?f.cssRules[0].cssText:f.cssText||"":"",i=c.childNodes,j={};while(g--)j[i[g].id]=i[g];e.touch="ontouchstart"in a||a.DocumentTouch&&b instanceof DocumentTouch||(j.touch&&j.touch.offsetTop)===9},g,d)}([,["@media (",l.join("touch-enabled),("),g,")","{#touch{top:9px;position:absolute}}"].join("")],[,"touch"]);p.canvas=function(){var a=b.createElement("canvas");return!!a.getContext&&!!a.getContext("2d")},p.webgl=function(){try{var d=b.createElement("canvas"),e;e=!(!a.WebGLRenderingContext||!d.getContext("experimental-webgl")&&!d.getContext("webgl")),d=c}catch(f){e=!1}return e},p.touch=function(){return e.touch},p.websockets=function(){for(var b=-1,c=n.length;++b<c;)if(a[n[b]+"WebSocket"])return!0;return"WebSocket"in a},p.audio=function(){var a=b.createElement("audio"),c=!1;try{if(c=!!a.canPlayType)c=new Boolean(c),c.ogg=a.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,""),c.mp3=a.canPlayType("audio/mpeg;").replace(/^no$/,""),c.wav=a.canPlayType('audio/wav; codecs="1"').replace(/^no$/,""),c.m4a=(a.canPlayType("audio/x-m4a;")||a.canPlayType("audio/aac;")).replace(/^no$/,"")}catch(d){}return c};for(var E in p)x(p,E)&&(u=E.toLowerCase(),e[u]=p[E](),s.push((e[u]?"":"no-")+u));return y(""),h=j=null,e._version=d,e._prefixes=l,e._domPrefixes=o,e._cssomPrefixes=n,e.testStyles=v,e}(this,this.document);
+
+		var modernizr = window.Modernizr
+
+		return modernizr
+	}
+)
+
+
+
+define(
+	"spell/shared/util/platform/private/system/features",
+	[
+		"modernizr"
+	],
+	function(
+		modernizr
+	) {
+		"use strict";
+
+
+		return {
+			touch : !!modernizr.touch
+		}
+	}
+)
+
+define(
+	"spell/shared/util/platform/private/sound/SoundManager",
+	[
+		"spell/shared/components/sound/soundEmitter",
+
+		'spell/shared/util/platform/underscore'
+	],
+	function(
+		soundEmitterConstructor,
+
+		_
+		) {
+		"use strict"
+
+		var maxAvailableChannels = 8
+        var context              = undefined
+        var muted                = false
+
+		var checkMaxAvailableChannels = function() {
+			if( (/iPhone|iPod|iPad/i).test( navigator.userAgent ) ) {
+				maxAvailableChannels = 1
+
+			} else {
+				maxAvailableChannels = 8
+			}
+
+			return maxAvailableChannels
+		}
+
+		var basePath = "sounds"
+
+		var channels = {}
+
+		var getFreeChannel = function( resource, isBackground ) {
+			var channel = _.find(
+				channels,
+				function( channel ) {
+					if( channel.resource === resource &&
+						!channel.playing &&
+						!channel.selected )  {
+
+						if( maxAvailableChannels === 1 ) {
+							if(	isBackground ) return true
+						} else {
+							return true
+						}
+					}
+
+					return false
+				}
+			)
+
+			if( !!channel ) {
+				channel.selected = true
+				channel.playing = false
+			}
+
+			return channel
+		}
+
+		var remove = function( soundObject ) {
+			soundObject.stop     = -1
+			soundObject.start    = -1
+			soundObject.selected = false
+            soundObject.playing  = false
+		}
+
+		var audioFormats = {
+			ogg: {
+				mimeTypes: ['audio/ogg; codecs=vorbis']
+			},
+			mp3: {
+				mimeTypes: ['audio/mpeg; codecs="mp3"', 'audio/mpeg', 'audio/mp3', 'audio/MPA', 'audio/mpa-robust']
+			},
+			wav: {
+				mimeTypes: ['audio/wav; codecs="1"', 'audio/wav', 'audio/wave', 'audio/x-wav']
+			}
+		}
+
+		var detectExtension = function() {
+
+			var probe = new Audio();
+
+			return _.reduce(
+				audioFormats,
+				function( memo, format, key ) {
+					if( !!memo ) return memo
+
+					var supportedMime = _.find(
+						format.mimeTypes,
+						function( mimeType ) {
+							return probe.canPlayType( mimeType )
+						}
+					)
+
+					return ( !!supportedMime ) ? key : null
+				},
+				null
+			)
+		}
+
+		var createHTML5Audio = function ( config ) {
+			var html5Audio = new Audio()
+
+			if( !!config.onloadeddata ) {
+
+				html5Audio.addEventListener(
+					"canplaythrough", config.onloadeddata,
+					false
+				)
+			}
+
+			html5Audio.addEventListener( "error", function() {
+				throw "Error: Could not load sound resource '"+html5Audio.src+"'"
+			}, false )
+
+			html5Audio.id       = config.id
+			html5Audio.resource = config.resource
+			html5Audio.playing  = false
+			html5Audio.selected = false
+			html5Audio.src      = basePath + "/" + config.resource + "."+ detectExtension()
+
+			// old WebKit
+			html5Audio.autobuffer = "auto"
+
+			// new WebKit
+			html5Audio.preload = "auto"
+			html5Audio.load()
+
+			return html5Audio
+		}
+
+		var cloneHTML5Audio = function( ObjectToClone ) {
+			var html5Audioclone = ObjectToClone.cloneNode(true)
+
+			html5Audioclone.resource = ObjectToClone.resource
+			html5Audioclone.playing  = false
+			html5Audioclone.selected = false
+
+			return html5Audioclone
+		}
+
+        var createWebkitHTML5Audio = function ( config ) {
+            var request = new XMLHttpRequest();
+            request.open('GET', basePath + "/" + config.resource + "."+ detectExtension(), true);
+            request.responseType = 'arraybuffer';
+
+            if( !!config.onloadeddata ) {
+
+                // Decode asynchronously
+                request.onload = function() {
+                  context.decodeAudioData( request.response,
+                      function( buffer ) {
+
+                          buffer.id       = config.id
+                          buffer.resource = config.resource
+                          buffer.playing  = false
+                          buffer.selected = false
+
+                          config.onloadeddata( buffer )
+                      }
+
+                  );
+                }
+            }
+
+            request.onError = function() {
+                throw "Error: Could not load sound resource '"+ config.resource +"'"
+            }
+
+            request.send()
+
+            return request
+        }
+
+        var hasWebAudioSupport = function() {
+            try{
+                context = new webkitAudioContext()
+                return true
+            }catch( e ) {
+                return false
+            }
+        }
+
+        var toggleMuteSounds = function( muted ) {
+            _.each(
+                _.keys( channels ),
+                function( key) {
+
+                    if( hasWebAudioSupport() ) {
+                        channels[key].gain  = ( muted === true ) ? 0 : 1
+
+                    } else {
+                        channels[key].muted = muted
+
+                        if( maxAvailableChannels === 1 ) {
+                            if( muted === true)
+                                channels[ key ].pause()
+                            else
+                                channels[ key ].play()
+                        }
+                    }
+                }
+            )
+        }
+
+        var setMuted = function( value ) {
+            muted = !!value
+            toggleMuteSounds( muted )
+        }
+
+        var isMuted = function() {
+            return muted
+        }
+
+        var SoundManager = function() {
+
+            if( !hasWebAudioSupport() ) {
+                this.createAudio = createHTML5Audio
+                this.cloneAudio  = cloneHTML5Audio
+
+            }else {
+                this.createAudio = createWebkitHTML5Audio
+                this.context          = context
+            }
+
+        }
+
+        SoundManager.prototype = {
+            soundSpriteConfig         : undefined,
+            audioFormats              : audioFormats,
+            channels                  : channels,
+            getFreeChannel            : getFreeChannel,
+            checkMaxAvailableChannels : checkMaxAvailableChannels,
+            maxAvailableChannels      : maxAvailableChannels,
+            remove                    : remove,
+            setMuted                  : setMuted,
+            isMuted                   : isMuted
+        }
+
+        return SoundManager
+	}
+)
+
+define(
+	"spell/shared/components/sound/soundEmitter",
 	function() {
 		"use strict"
 
-		return {
-			/**
-			 * Returns the number of milliseconds since midnight January 1, 1970, UTC.
-			 */
-			getCurrentInMs: function() {
-				return Date.now()
-			}
+		var soundEmitter = function( args ) {
+			this.soundId    = args.soundId
+			this.volume     = args.volume     || 1
+			this.muted      = args.muted      || false
+			this.onComplete = args.onComplete || ''
+			this.start      = args.start      || false
+			this.stop       = args.stop       || false
+			this.background = args.background || false
 		}
+
+		soundEmitter.ON_COMPLETE_LOOP               = 1
+		soundEmitter.ON_COMPLETE_REMOVE_COMPONENT   = 2
+		soundEmitter.ON_COMPLETE_STOP               = 3
+
+		return soundEmitter
 	}
 )
 
 define(
-	"spell/shared/util/platform/Types",
+	"spell/shared/util/platform/private/sound/createSound",
 	[
-		"spell/shared/util/platform/private/createNativeFloatArray",
-		"spell/shared/util/platform/private/Time"
+		"spell/shared/components/sound/soundEmitter"
 	],
 	function(
-		createNativeFloatArray,
-		Time
+		soundEmitterConstructor
+	) {
+		"use strict";
+
+		var create = function( config, soundManager ) {
+
+			var pauseCallback = function () {
+				if ( parseFloat(this.currentTime) >= parseFloat( this.stop ) && this.paused === false) {
+					this.playing = false
+                    this.pause()
+				}
+			}
+
+			var playingCallback = function() {
+				if( this.playing === false ) {
+					this.playing = true
+					this.currentTime = this.start
+					this.addEventListener( 'timeupdate', pauseCallback, false )
+				}
+			}
+
+
+			var loopCallback = function() {
+                if( this.playing === false ) {
+                    this.removeEventListener( 'timeupdate', pauseCallback, false )
+                    this.play()
+                }
+			}
+
+			var removeCallback = function() {
+                this.removeEventListener( 'ended', removeCallback, false )
+                this.removeEventListener( 'timeupdate', pauseCallback, false )
+                this.removeEventListener( 'pause', removeCallback, false )
+                this.removeEventListener( 'playing', playingCallback, false )
+
+                soundManager.remove( this )
+			}
+
+			return {
+				onComplete: soundEmitterConstructor.ON_COMPLETE_STOP,
+				start: config.start || 0,
+				stop: config.start + config.length || config.length,
+				volume: 1,
+				background: false,
+				resource: config.resource,
+
+				play: function() {
+
+                    var freeAudioObject = soundManager.getFreeChannel(this.resource, this.isBackgroundSound() )
+
+                    if( freeAudioObject === undefined ) {
+                        return
+                    }
+
+                    freeAudioObject.stop = ( freeAudioObject.duration < parseFloat(this.stop) ) ? freeAudioObject.duration : parseFloat(this.stop)
+                    freeAudioObject.start = freeAudioObject.currentTime = parseFloat(this.start)
+                    freeAudioObject.volume = this.volume
+
+                    if( !soundManager.context ) {
+
+                        if( this.onComplete === soundEmitterConstructor.ON_COMPLETE_LOOP ) {
+                            freeAudioObject.addEventListener( 'pause', loopCallback, false )
+
+                        } else {
+
+                            if( this.onComplete === soundEmitterConstructor.ON_COMPLETE_REMOVE_COMPONENT ) {
+
+                            }
+
+                            freeAudioObject.addEventListener( 'pause', removeCallback, false )
+                        }
+
+                        //This should never happen, but if, then free object
+                        freeAudioObject.addEventListener( 'ended', removeCallback, false )
+                        freeAudioObject.addEventListener( 'play', playingCallback, false )
+
+                        freeAudioObject.play()
+
+                    } else {
+
+                        var gainNode = soundManager.context.createGainNode()
+                        var source    = soundManager.context.createBufferSource()
+                        source.buffer = freeAudioObject
+
+                        if( this.onComplete === soundEmitterConstructor.ON_COMPLETE_LOOP ) {
+                            source.loop = true
+                        } else {
+                            soundManager.remove( freeAudioObject )
+                        }
+
+                        source.connect(gainNode);
+                        gainNode.connect(soundManager.context.destination)
+
+                        gainNode.gain.value = this.volume
+                        source.noteGrainOn( 0, this.start, config.length )
+                    }
+
+
+                },
+
+				setVolume: function( volume ) {
+					this.volume = volume || 1
+				},
+
+				setLoop: function() {
+					this.onComplete = soundEmitterConstructor.ON_COMPLETE_LOOP
+				},
+
+				setOnCompleteRemove: function() {
+					this.onComplete = soundEmitterConstructor.ON_COMPLETE_REMOVE_COMPONENT
+				},
+
+			  	setStart: function( start ) {
+					this.start = start
+				},
+
+				setStop: function( stop ) {
+					this.stop = stop
+				},
+
+				setBackground: function( background ) {
+					this.background = ( background === false) ? false : true
+				},
+
+				isBackgroundSound: function( ) {
+					return this.background
+				}
+			}
+		}
+
+		return create
+	}
+)
+
+define(
+	"spell/shared/util/platform/private/sound/loadSounds",
+	[
+		"spell/shared/util/platform/private/sound/createSound",
+		"spell/shared/components/sound/soundEmitter",
+
+		'spell/shared/util/platform/underscore'
+	],
+	function (
+		createSound,
+		soundEmitterConstructor,
+
+		_
+		) {
+		"use strict"
+
+		var loadSounds = function ( soundManager, soundSpriteConfig, callback ) {
+			var sounds            = {}
+			var waitingFor        = 0
+			var waitingForClones  = 0
+			var maxChannels       = soundManager.checkMaxAvailableChannels()
+			var availableChannels = maxChannels
+
+			soundManager.soundSpriteConfig = soundSpriteConfig
+
+			var generateSounds = function( ) {
+
+				if( _.has( soundSpriteConfig.music, "index" ) === true) {
+					_.each (
+						_.keys( soundSpriteConfig.music.index ),
+						function( soundId ) {
+							sounds[ soundId ] = createSound(
+								_.extend( { resource: soundSpriteConfig.music.resource }, soundSpriteConfig.music.index[ soundId ] ),
+								soundManager
+							)
+						}
+					)
+				}
+
+				if( _.has( soundSpriteConfig.fx, "index" ) === true) {
+					_.each (
+						_.keys( soundSpriteConfig.fx.index ),
+						function( soundId ) {
+							sounds[ soundId ] = createSound(
+								_.extend( { resource: soundSpriteConfig.fx.resource }, soundSpriteConfig.fx.index[ soundId ] ),
+								soundManager
+							)
+						}
+					)
+
+				}
+
+				return sounds
+			}
+
+			var createFunctionWrapper = function( resource ) {
+
+				var cloneloadeddataCallback = function ( ) {
+
+					this.removeEventListener( 'canplaythrough', cloneloadeddataCallback, false)
+					waitingForClones -= 1
+
+					if ( waitingForClones === 0 ) {
+						return callback( generateSounds() )
+					}
+
+				}
+
+				var loadeddataCallback = function( html5AudioObject ) {
+
+                    if( !soundManager.context ) {
+                        this.removeEventListener( 'canplaythrough', loadeddataCallback, false)
+                        soundManager.channels[ resource ] = this
+                    } else {
+                        soundManager.channels[ resource ] = html5AudioObject
+                    }
+
+					waitingFor -= 1
+
+					if ( waitingFor === 0 ) {
+
+						// After loading the ressources, clone the FX sounds into the free Channels of the soundManager
+						if( _.has( soundSpriteConfig.fx, "resource" ) &&
+                            !soundManager.context ) {
+
+							var ObjectToClone = soundManager.channels[ soundSpriteConfig.fx.resource ]
+
+							for( var i = maxChannels; i > 0; i-- ) {
+								waitingForClones += 1
+
+								var html5Audioclone = soundManager.cloneAudio( ObjectToClone )
+								html5Audioclone.id = html5Audioclone.id +"_"+i
+
+								html5Audioclone.addEventListener(
+									"canplaythrough",
+									cloneloadeddataCallback,
+									false
+								)
+
+								soundManager.channels[ html5Audioclone.id ] = html5Audioclone
+							}
+						}
+
+						if( waitingForClones === 0 ) {
+							callback( generateSounds() )
+						}
+					}
+				}
+
+				waitingFor += 1
+				maxChannels -= 1
+
+				return soundManager.createAudio({
+					id: resource,
+					resource: resource,
+					onloadeddata: loadeddataCallback
+				})
+			}
+
+			if( _.has( soundSpriteConfig.music, "resource" ) ) {
+                var html5Audio = createFunctionWrapper( soundSpriteConfig.music.resource )
+
+                //iOS Hack
+				if( availableChannels === 1 ) {
+
+					var iosHack = function() {
+
+						if( _.has( soundSpriteConfig.music, "resource" ) ) {
+							waitingFor = 1
+							html5Audio.load()
+						}
+
+						document.getElementById('game').style.display = 'block'
+                        document.getElementById('viewport').removeChild( this )
+					}
+
+					document.getElementById('game').style.display = 'none'
+					var soundLoad = document.createElement( 'input')
+					soundLoad.type  = "submit"
+					soundLoad.onclick = iosHack
+					soundLoad.value = "On iPad/iPhone you have to click on this button to enable loading the sounds"
+                    document.getElementById('viewport').insertBefore( soundLoad, document.getElementById('game') )
+
+				}
+			}
+
+			if( _.has( soundSpriteConfig.fx, "resource" ) ) {
+				createFunctionWrapper( soundSpriteConfig.fx.resource )
+			}
+
+		}
+
+		return loadSounds
+	}
+)
+
+define(
+	"spell/shared/util/platform/private/loader/TextLoader",
+	[
+		"spell/shared/util/Events",
+
+		'spell/shared/util/platform/underscore'
+	],
+	function(
+		Events,
+
+		_
 	) {
 		"use strict"
 
-		return {
-			createNativeFloatArray : createNativeFloatArray,
-			Time                   : Time
+
+		/**
+		 * private
+		 */
+
+		var onLoad = function( request ) {
+			if( this.loaded === true ) return
+
+			this.loaded = true
+
+			if( request.status !== 200 ) {
+				onError.call( this, request.response )
+
+				return
+			}
+
+			this.onCompleteCallback(
+				request.response
+			)
 		}
+
+		var onError = function( event ) {
+			this.eventManager.publish(
+				[ Events.RESOURCE_ERROR, this.resourceBundleName ],
+				[ this.resourceBundleName, event ]
+			)
+		}
+
+		var onReadyStateChange = function( request ) {
+			/**
+			 * readyState === 4 means "DONE"; see https://developer.mozilla.org/en/DOM/XMLHttpRequest
+			 */
+			if( request.readyState !== 4 ) return
+
+			onLoad.call( this, request )
+		}
+
+
+		/**
+		 * public
+		 */
+
+		var TextLoader = function( eventManager, host, resourceBundleName, resourceUri, loadingCompletedCallback, timedOutCallback ) {
+			this.eventManager       = eventManager
+			this.host               = host
+			this.resourceBundleName = resourceBundleName
+			this.resourceUri        = resourceUri
+			this.onCompleteCallback = loadingCompletedCallback
+			this.loaded             = false
+		}
+
+		TextLoader.prototype = {
+			start: function() {
+				var url = this.host + "/" + this.resourceUri
+
+				var request = new XMLHttpRequest()
+				request.onload             = _.bind( onLoad, this, request )
+				request.onreadystatechange = _.bind( onReadyStateChange, this, request )
+				request.onerror            = _.bind( onError, this )
+				request.open( 'GET', url, true )
+				request.send( null )
+			}
+		}
+
+		return TextLoader
 	}
 )
 
 define(
-	"glmatrix/glmatrix",
+	"spell/shared/util/platform/private/loader/SoundLoader",
 	[
-		"spell/shared/util/platform/Types"
+		"spell/shared/util/platform/private/loader/TextLoader",
+		"spell/shared/util/Events",
+		"spell/shared/util/platform/private/sound/loadSounds",
+		"spell/shared/util/platform/private/registerTimer",
+
+		'spell/shared/util/platform/underscore'
 	],
 	function(
-		Types
+		TextLoader,
+		Events,
+		loadSounds,
+		registerTimer,
+
+		_
 	) {
-		/**
-		 * @fileOverview gl-matrix - High performance matrix and vector operations for WebGL
-		 * @author Brandon Jones
-		 * @version 1.2.3
-		 */
+		"use strict"
 
-		/*
-		 * Copyright (c) 2011 Brandon Jones
-		 *
-		 * This software is provided 'as-is', without any express or implied
-		 * warranty. In no event will the authors be held liable for any damages
-		 * arising from the use of this software.
-		 *
-		 * Permission is granted to anyone to use this software for any purpose,
-		 * including commercial applications, and to alter it and redistribute it
-		 * freely, subject to the following restrictions:
-		 *
-		 *    1. The origin of this software must not be misrepresented; you must not
-		 *    claim that you wrote the original software. If you use this software
-		 *    in a product, an acknowledgment in the product documentation would be
-		 *    appreciated but is not required.
-		 *
-		 *    2. Altered source versions must be plainly marked as such, and must not
-		 *    be misrepresented as being the original software.
-		 *
-		 *    3. This notice may not be removed or altered from any source
-		 *    distribution.
-		 */
-
-		"use strict";
-
-		// Type declarations
-		// account for CommonJS environments
 
 		/**
-		 * @class 3 Dimensional Vector
-		 * @name vec3
-		 */
-		var vec3 = {};
-
-		/**
-		 * @class 3x3 Matrix
-		 * @name mat3
-		 */
-		var mat3 = {};
-
-		/**
-		 * @class 4x4 Matrix
-		 * @name mat4
-		 */
-		var mat4 = {};
-
-		/**
-		 * @class Quaternion
-		 * @name quat4
-		 */
-		var quat4 = {};
-
-
-		var createArray = Types.createNativeFloatArray;
-
-
-		/*
-		 * vec3
+		 * private
 		 */
 
-		/**
-		 * Creates a new instance of a vec3 using the default array type
-		 * Any javascript array-like objects containing at least 3 numeric elements can serve as a vec3
-		 *
-		 * @param {vec3} [vec] vec3 containing values to initialize with
-		 *
-		 * @returns {vec3} New vec3
-		 */
-		vec3.create = function (vec) {
-			var dest = createArray(3);
+		var processSoundSpriteConfig = function( soundSpriteConfig, onCompleteCallback ) {
+			if( !_.has( soundSpriteConfig, "type" ) ||
+				soundSpriteConfig.type !== 'spriteConfig' ||
+				!_.has( soundSpriteConfig, "music" ) ||
+				!_.has( soundSpriteConfig, "fx" ) ) {
 
-			if (vec) {
-				dest[0] = vec[0];
-				dest[1] = vec[1];
-				dest[2] = vec[2];
-			} else {
-				dest[0] = dest[1] = dest[2] = 0;
+				throw 'Not a valid sound sprite configuration.'
 			}
 
-			return dest;
-		};
+			var loadingCompleted = false
+			var timeOutLength = 5000
 
-		/**
-		 * Copies the values of one vec3 to another
-		 *
-		 * @param {vec3} vec vec3 containing values to copy
-		 * @param {vec3} dest vec3 receiving copied values
-		 *
-		 * @returns {vec3} dest
-		 */
-		vec3.set = function (vec, dest) {
-			dest[0] = vec[0];
-			dest[1] = vec[1];
-			dest[2] = vec[2];
+			// if loadSounds does not return in under 5000 ms a failed load is assumed
+			registerTimer(
+				_.bind(
+					function() {
+						if( loadingCompleted ) return
 
-			return dest;
-		};
+						this.onTimeOut( this.resourceBundleName, this.resourceUri )
+					},
+					this
+				),
+				timeOutLength
+			)
 
-		/**
-		 * Performs a vector addition
-		 *
-		 * @param {vec3} vec First operand
-		 * @param {vec3} vec2 Second operand
-		 * @param {vec3} [dest] vec3 receiving operation result. If not specified result is written to vec
-		 *
-		 * @returns {vec3} dest if specified, vec otherwise
-		 */
-		vec3.add = function (vec, vec2, dest) {
-			if (!dest || vec === dest) {
-				vec[0] += vec2[0];
-				vec[1] += vec2[1];
-				vec[2] += vec2[2];
-				return vec;
-			}
+			// creating the spell sound objects out of the sound sprite config
+			loadSounds(
+                this.soundManager,
+				soundSpriteConfig,
+				function( sounds ) {
+					if( loadingCompleted ) return
 
-			dest[0] = vec[0] + vec2[0];
-			dest[1] = vec[1] + vec2[1];
-			dest[2] = vec[2] + vec2[2];
-			return dest;
-		};
-
-		/**
-		 * Performs a vector subtraction
-		 *
-		 * @param {vec3} vec First operand
-		 * @param {vec3} vec2 Second operand
-		 * @param {vec3} [dest] vec3 receiving operation result. If not specified result is written to vec
-		 *
-		 * @returns {vec3} dest if specified, vec otherwise
-		 */
-		vec3.subtract = function (vec, vec2, dest) {
-			if (!dest || vec === dest) {
-				vec[0] -= vec2[0];
-				vec[1] -= vec2[1];
-				vec[2] -= vec2[2];
-				return vec;
-			}
-
-			dest[0] = vec[0] - vec2[0];
-			dest[1] = vec[1] - vec2[1];
-			dest[2] = vec[2] - vec2[2];
-			return dest;
-		};
-
-		/**
-		 * Performs a vector multiplication
-		 *
-		 * @param {vec3} vec First operand
-		 * @param {vec3} vec2 Second operand
-		 * @param {vec3} [dest] vec3 receiving operation result. If not specified result is written to vec
-		 *
-		 * @returns {vec3} dest if specified, vec otherwise
-		 */
-		vec3.multiply = function (vec, vec2, dest) {
-			if (!dest || vec === dest) {
-				vec[0] *= vec2[0];
-				vec[1] *= vec2[1];
-				vec[2] *= vec2[2];
-				return vec;
-			}
-
-			dest[0] = vec[0] * vec2[0];
-			dest[1] = vec[1] * vec2[1];
-			dest[2] = vec[2] * vec2[2];
-			return dest;
-		};
-
-		/**
-		 * Negates the components of a vec3
-		 *
-		 * @param {vec3} vec vec3 to negate
-		 * @param {vec3} [dest] vec3 receiving operation result. If not specified result is written to vec
-		 *
-		 * @returns {vec3} dest if specified, vec otherwise
-		 */
-		vec3.negate = function (vec, dest) {
-			if (!dest) { dest = vec; }
-
-			dest[0] = -vec[0];
-			dest[1] = -vec[1];
-			dest[2] = -vec[2];
-			return dest;
-		};
-
-		/**
-		 * Multiplies the components of a vec3 by a scalar value
-		 *
-		 * @param {vec3} vec vec3 to scale
-		 * @param {number} val Value to scale by
-		 * @param {vec3} [dest] vec3 receiving operation result. If not specified result is written to vec
-		 *
-		 * @returns {vec3} dest if specified, vec otherwise
-		 */
-		vec3.scale = function (vec, val, dest) {
-			if (!dest || vec === dest) {
-				vec[0] *= val;
-				vec[1] *= val;
-				vec[2] *= val;
-				return vec;
-			}
-
-			dest[0] = vec[0] * val;
-			dest[1] = vec[1] * val;
-			dest[2] = vec[2] * val;
-			return dest;
-		};
-
-		/**
-		 * Generates a unit vector of the same direction as the provided vec3
-		 * If vector length is 0, returns [0, 0, 0]
-		 *
-		 * @param {vec3} vec vec3 to normalize
-		 * @param {vec3} [dest] vec3 receiving operation result. If not specified result is written to vec
-		 *
-		 * @returns {vec3} dest if specified, vec otherwise
-		 */
-		vec3.normalize = function (vec, dest) {
-			if (!dest) { dest = vec; }
-
-			var x = vec[0], y = vec[1], z = vec[2],
-				len = Math.sqrt(x * x + y * y + z * z);
-
-			if (!len) {
-				dest[0] = 0;
-				dest[1] = 0;
-				dest[2] = 0;
-				return dest;
-			} else if (len === 1) {
-				dest[0] = x;
-				dest[1] = y;
-				dest[2] = z;
-				return dest;
-			}
-
-			len = 1 / len;
-			dest[0] = x * len;
-			dest[1] = y * len;
-			dest[2] = z * len;
-			return dest;
-		};
-
-		/**
-		 * Generates the cross product of two vec3s
-		 *
-		 * @param {vec3} vec First operand
-		 * @param {vec3} vec2 Second operand
-		 * @param {vec3} [dest] vec3 receiving operation result. If not specified result is written to vec
-		 *
-		 * @returns {vec3} dest if specified, vec otherwise
-		 */
-		vec3.cross = function (vec, vec2, dest) {
-			if (!dest) { dest = vec; }
-
-			var x = vec[0], y = vec[1], z = vec[2],
-				x2 = vec2[0], y2 = vec2[1], z2 = vec2[2];
-
-			dest[0] = y * z2 - z * y2;
-			dest[1] = z * x2 - x * z2;
-			dest[2] = x * y2 - y * x2;
-			return dest;
-		};
-
-		/**
-		 * Caclulates the length of a vec3
-		 *
-		 * @param {vec3} vec vec3 to calculate length of
-		 *
-		 * @returns {number} Length of vec
-		 */
-		vec3.length = function (vec) {
-			var x = vec[0], y = vec[1], z = vec[2];
-			return Math.sqrt(x * x + y * y + z * z);
-		};
-
-		/**
-		 * Caclulates the dot product of two vec3s
-		 *
-		 * @param {vec3} vec First operand
-		 * @param {vec3} vec2 Second operand
-		 *
-		 * @returns {number} Dot product of vec and vec2
-		 */
-		vec3.dot = function (vec, vec2) {
-			return vec[0] * vec2[0] + vec[1] * vec2[1] + vec[2] * vec2[2];
-		};
-
-		/**
-		 * Generates a unit vector pointing from one vector to another
-		 *
-		 * @param {vec3} vec Origin vec3
-		 * @param {vec3} vec2 vec3 to point to
-		 * @param {vec3} [dest] vec3 receiving operation result. If not specified result is written to vec
-		 *
-		 * @returns {vec3} dest if specified, vec otherwise
-		 */
-		vec3.direction = function (vec, vec2, dest) {
-			if (!dest) { dest = vec; }
-
-			var x = vec[0] - vec2[0],
-				y = vec[1] - vec2[1],
-				z = vec[2] - vec2[2],
-				len = Math.sqrt(x * x + y * y + z * z);
-
-			if (!len) {
-				dest[0] = 0;
-				dest[1] = 0;
-				dest[2] = 0;
-				return dest;
-			}
-
-			len = 1 / len;
-			dest[0] = x * len;
-			dest[1] = y * len;
-			dest[2] = z * len;
-			return dest;
-		};
-
-		/**
-		 * Performs a linear interpolation between two vec3
-		 *
-		 * @param {vec3} vec First vector
-		 * @param {vec3} vec2 Second vector
-		 * @param {number} lerp Interpolation amount between the two inputs
-		 * @param {vec3} [dest] vec3 receiving operation result. If not specified result is written to vec
-		 *
-		 * @returns {vec3} dest if specified, vec otherwise
-		 */
-		vec3.lerp = function (vec, vec2, lerp, dest) {
-			if (!dest) { dest = vec; }
-
-			dest[0] = vec[0] + lerp * (vec2[0] - vec[0]);
-			dest[1] = vec[1] + lerp * (vec2[1] - vec[1]);
-			dest[2] = vec[2] + lerp * (vec2[2] - vec[2]);
-
-			return dest;
-		};
-
-		/**
-		 * Calculates the euclidian distance between two vec3
-		 *
-		 * Params:
-		 * @param {vec3} vec First vector
-		 * @param {vec3} vec2 Second vector
-		 *
-		 * @returns {number} Distance between vec and vec2
-		 */
-		vec3.dist = function (vec, vec2) {
-			var x = vec2[0] - vec[0],
-				y = vec2[1] - vec[1],
-				z = vec2[2] - vec[2];
-
-			return Math.sqrt(x*x + y*y + z*z);
-		};
-
-		/**
-		 * Projects the specified vec3 from screen space into object space
-		 * Based on the <a href="http://webcvs.freedesktop.org/mesa/Mesa/src/glu/mesa/project.c?revision=1.4&view=markup">Mesa gluUnProject implementation</a>
-		 *
-		 * @param {vec3} vec Screen-space vector to project
-		 * @param {mat4} view View matrix
-		 * @param {mat4} proj Projection matrix
-		 * @param {vec4} viewport Viewport as given to gl.viewport [x, y, width, height]
-		 * @param {vec3} [dest] vec3 receiving unprojected result. If not specified result is written to vec
-		 *
-		 * @returns {vec3} dest if specified, vec otherwise
-		 */
-		vec3.unproject = function (vec, view, proj, viewport, dest) {
-			if (!dest) { dest = vec; }
-
-			var m = mat4.create();
-			var v = createArray(4);
-
-			v[0] = (vec[0] - viewport[0]) * 2.0 / viewport[2] - 1.0;
-			v[1] = (vec[1] - viewport[1]) * 2.0 / viewport[3] - 1.0;
-			v[2] = 2.0 * vec[2] - 1.0;
-			v[3] = 1.0;
-
-			mat4.multiply(proj, view, m);
-			if(!mat4.inverse(m)) { return null; }
-
-			mat4.multiplyVec4(m, v);
-			if(v[3] === 0.0) { return null; }
-
-			dest[0] = v[0] / v[3];
-			dest[1] = v[1] / v[3];
-			dest[2] = v[2] / v[3];
-
-			return dest;
-		};
-
-		/**
-		 * Returns a string representation of a vector
-		 *
-		 * @param {vec3} vec Vector to represent as a string
-		 *
-		 * @returns {string} String representation of vec
-		 */
-		vec3.str = function (vec) {
-			return '[' + vec[0] + ', ' + vec[1] + ', ' + vec[2] + ']';
-		};
-
-		/*
-		 * vec3.reflect
-		 * Reflects a vector on a normal
-		 *
-		 * Params:
-		 * vec - vec3, vector to reflect
-		 * normal - vec3, the normal to reflect by
-		 *
-		 * Returns:
-		 * vec
-		 */
-		vec3.reflect = function(vec, normal) {
-			var tmp = vec3.create(normal);
-			vec3.normalize(tmp);
-			var normal_dot_vec = vec3.dot(tmp, vec);
-			vec3.scale(tmp, -2 * normal_dot_vec);
-			vec3.add(vec, tmp);
-
-			return vec;
-		};
-
-		vec3.reset = function(vec) {
-			vec[0] = vec[1] = vec[2] = 0
+					onCompleteCallback( sounds )
+					loadingCompleted = true
+				}
+			)
 		}
 
-		/*
-		 * mat3
-		 */
-
-		/**
-		 * Creates a new instance of a mat3 using the default array type
-		 * Any javascript array-like object containing at least 9 numeric elements can serve as a mat3
-		 *
-		 * @param {mat3} [mat] mat3 containing values to initialize with
-		 *
-		 * @returns {mat3} New mat3
-		 */
-		mat3.create = function (mat) {
-			var dest = createArray(9);
-
-			if (mat) {
-				dest[0] = mat[0];
-				dest[1] = mat[1];
-				dest[2] = mat[2];
-				dest[3] = mat[3];
-				dest[4] = mat[4];
-				dest[5] = mat[5];
-				dest[6] = mat[6];
-				dest[7] = mat[7];
-				dest[8] = mat[8];
-			}
-
-			return dest;
-		};
-
-		/**
-		 * Copies the values of one mat3 to another
-		 *
-		 * @param {mat3} mat mat3 containing values to copy
-		 * @param {mat3} dest mat3 receiving copied values
-		 *
-		 * @returns {mat3} dest
-		 */
-		mat3.set = function (mat, dest) {
-			dest[0] = mat[0];
-			dest[1] = mat[1];
-			dest[2] = mat[2];
-			dest[3] = mat[3];
-			dest[4] = mat[4];
-			dest[5] = mat[5];
-			dest[6] = mat[6];
-			dest[7] = mat[7];
-			dest[8] = mat[8];
-			return dest;
-		};
-
-		/**
-		 * Sets a mat3 to an identity matrix
-		 *
-		 * @param {mat3} dest mat3 to set
-		 *
-		 * @returns dest if specified, otherwise a new mat3
-		 */
-		mat3.identity = function (dest) {
-			if (!dest) { dest = mat3.create(); }
-			dest[0] = 1;
-			dest[1] = 0;
-			dest[2] = 0;
-			dest[3] = 0;
-			dest[4] = 1;
-			dest[5] = 0;
-			dest[6] = 0;
-			dest[7] = 0;
-			dest[8] = 1;
-			return dest;
-		};
-
-		/**
-		 * Transposes a mat3 (flips the values over the diagonal)
-		 *
-		 * Params:
-		 * @param {mat3} mat mat3 to transpose
-		 * @param {mat3} [dest] mat3 receiving transposed values. If not specified result is written to mat
-		 *
-		 * @returns {mat3} dest is specified, mat otherwise
-		 */
-		mat3.transpose = function (mat, dest) {
-			// If we are transposing ourselves we can skip a few steps but have to cache some values
-			if (!dest || mat === dest) {
-				var a01 = mat[1], a02 = mat[2],
-					a12 = mat[5];
-
-				mat[1] = mat[3];
-				mat[2] = mat[6];
-				mat[3] = a01;
-				mat[5] = mat[7];
-				mat[6] = a02;
-				mat[7] = a12;
-				return mat;
-			}
-
-			dest[0] = mat[0];
-			dest[1] = mat[3];
-			dest[2] = mat[6];
-			dest[3] = mat[1];
-			dest[4] = mat[4];
-			dest[5] = mat[7];
-			dest[6] = mat[2];
-			dest[7] = mat[5];
-			dest[8] = mat[8];
-			return dest;
-		};
-
-		/**
-		 * Copies the elements of a mat3 into the upper 3x3 elements of a mat4
-		 *
-		 * @param {mat3} mat mat3 containing values to copy
-		 * @param {mat4} [dest] mat4 receiving copied values
-		 *
-		 * @returns {mat4} dest if specified, a new mat4 otherwise
-		 */
-		mat3.toMat4 = function (mat, dest) {
-			if (!dest) { dest = mat4.create(); }
-
-			dest[15] = 1;
-			dest[14] = 0;
-			dest[13] = 0;
-			dest[12] = 0;
-
-			dest[11] = 0;
-			dest[10] = mat[8];
-			dest[9] = mat[7];
-			dest[8] = mat[6];
-
-			dest[7] = 0;
-			dest[6] = mat[5];
-			dest[5] = mat[4];
-			dest[4] = mat[3];
-
-			dest[3] = 0;
-			dest[2] = mat[2];
-			dest[1] = mat[1];
-			dest[0] = mat[0];
-
-			return dest;
-		};
-
-		/**
-		 * Returns a string representation of a mat3
-		 *
-		 * @param {mat3} mat mat3 to represent as a string
-		 *
-		 * @param {string} String representation of mat
-		 */
-		mat3.str = function (mat) {
-			return '[' + mat[0] + ', ' + mat[1] + ', ' + mat[2] +
-				', ' + mat[3] + ', ' + mat[4] + ', ' + mat[5] +
-				', ' + mat[6] + ', ' + mat[7] + ', ' + mat[8] + ']';
-		};
-
-		/*
-		 * mat4
-		 */
-
-		/**
-		 * Creates a new instance of a mat4 using the default array type
-		 * Any javascript array-like object containing at least 16 numeric elements can serve as a mat4
-		 *
-		 * @param {mat4} [mat] mat4 containing values to initialize with
-		 *
-		 * @returns {mat4} New mat4
-		 */
-		mat4.create = function (mat) {
-			var dest = createArray(16);
-
-			if (mat) {
-				dest[0] = mat[0];
-				dest[1] = mat[1];
-				dest[2] = mat[2];
-				dest[3] = mat[3];
-				dest[4] = mat[4];
-				dest[5] = mat[5];
-				dest[6] = mat[6];
-				dest[7] = mat[7];
-				dest[8] = mat[8];
-				dest[9] = mat[9];
-				dest[10] = mat[10];
-				dest[11] = mat[11];
-				dest[12] = mat[12];
-				dest[13] = mat[13];
-				dest[14] = mat[14];
-				dest[15] = mat[15];
-			}
-
-			return dest;
-		};
-
-		/**
-		 * Copies the values of one mat4 to another
-		 *
-		 * @param {mat4} mat mat4 containing values to copy
-		 * @param {mat4} dest mat4 receiving copied values
-		 *
-		 * @returns {mat4} dest
-		 */
-		mat4.set = function (mat, dest) {
-			dest[0] = mat[0];
-			dest[1] = mat[1];
-			dest[2] = mat[2];
-			dest[3] = mat[3];
-			dest[4] = mat[4];
-			dest[5] = mat[5];
-			dest[6] = mat[6];
-			dest[7] = mat[7];
-			dest[8] = mat[8];
-			dest[9] = mat[9];
-			dest[10] = mat[10];
-			dest[11] = mat[11];
-			dest[12] = mat[12];
-			dest[13] = mat[13];
-			dest[14] = mat[14];
-			dest[15] = mat[15];
-			return dest;
-		};
-
-		/**
-		 * Sets a mat4 to an identity matrix
-		 *
-		 * @param {mat4} dest mat4 to set
-		 *
-		 * @returns {mat4} dest
-		 */
-		mat4.identity = function (dest) {
-			if (!dest) { dest = mat4.create(); }
-			dest[0] = 1;
-			dest[1] = 0;
-			dest[2] = 0;
-			dest[3] = 0;
-			dest[4] = 0;
-			dest[5] = 1;
-			dest[6] = 0;
-			dest[7] = 0;
-			dest[8] = 0;
-			dest[9] = 0;
-			dest[10] = 1;
-			dest[11] = 0;
-			dest[12] = 0;
-			dest[13] = 0;
-			dest[14] = 0;
-			dest[15] = 1;
-			return dest;
-		};
-
-		/**
-		 * Transposes a mat4 (flips the values over the diagonal)
-		 *
-		 * @param {mat4} mat mat4 to transpose
-		 * @param {mat4} [dest] mat4 receiving transposed values. If not specified result is written to mat
-		 *
-		 * @param {mat4} dest is specified, mat otherwise
-		 */
-		mat4.transpose = function (mat, dest) {
-			// If we are transposing ourselves we can skip a few steps but have to cache some values
-			if (!dest || mat === dest) {
-				var a01 = mat[1], a02 = mat[2], a03 = mat[3],
-					a12 = mat[6], a13 = mat[7],
-					a23 = mat[11];
-
-				mat[1] = mat[4];
-				mat[2] = mat[8];
-				mat[3] = mat[12];
-				mat[4] = a01;
-				mat[6] = mat[9];
-				mat[7] = mat[13];
-				mat[8] = a02;
-				mat[9] = a12;
-				mat[11] = mat[14];
-				mat[12] = a03;
-				mat[13] = a13;
-				mat[14] = a23;
-				return mat;
-			}
-
-			dest[0] = mat[0];
-			dest[1] = mat[4];
-			dest[2] = mat[8];
-			dest[3] = mat[12];
-			dest[4] = mat[1];
-			dest[5] = mat[5];
-			dest[6] = mat[9];
-			dest[7] = mat[13];
-			dest[8] = mat[2];
-			dest[9] = mat[6];
-			dest[10] = mat[10];
-			dest[11] = mat[14];
-			dest[12] = mat[3];
-			dest[13] = mat[7];
-			dest[14] = mat[11];
-			dest[15] = mat[15];
-			return dest;
-		};
-
-		/**
-		 * Calculates the determinant of a mat4
-		 *
-		 * @param {mat4} mat mat4 to calculate determinant of
-		 *
-		 * @returns {number} determinant of mat
-		 */
-		mat4.determinant = function (mat) {
-			// Cache the matrix values (makes for huge speed increases!)
-			var a00 = mat[0], a01 = mat[1], a02 = mat[2], a03 = mat[3],
-				a10 = mat[4], a11 = mat[5], a12 = mat[6], a13 = mat[7],
-				a20 = mat[8], a21 = mat[9], a22 = mat[10], a23 = mat[11],
-				a30 = mat[12], a31 = mat[13], a32 = mat[14], a33 = mat[15];
-
-			return (a30 * a21 * a12 * a03 - a20 * a31 * a12 * a03 - a30 * a11 * a22 * a03 + a10 * a31 * a22 * a03 +
-					a20 * a11 * a32 * a03 - a10 * a21 * a32 * a03 - a30 * a21 * a02 * a13 + a20 * a31 * a02 * a13 +
-					a30 * a01 * a22 * a13 - a00 * a31 * a22 * a13 - a20 * a01 * a32 * a13 + a00 * a21 * a32 * a13 +
-					a30 * a11 * a02 * a23 - a10 * a31 * a02 * a23 - a30 * a01 * a12 * a23 + a00 * a31 * a12 * a23 +
-					a10 * a01 * a32 * a23 - a00 * a11 * a32 * a23 - a20 * a11 * a02 * a33 + a10 * a21 * a02 * a33 +
-					a20 * a01 * a12 * a33 - a00 * a21 * a12 * a33 - a10 * a01 * a22 * a33 + a00 * a11 * a22 * a33);
-		};
-
-		/**
-		 * Calculates the inverse matrix of a mat4
-		 *
-		 * @param {mat4} mat mat4 to calculate inverse of
-		 * @param {mat4} [dest] mat4 receiving inverse matrix. If not specified result is written to mat
-		 *
-		 * @param {mat4} dest is specified, mat otherwise, null if matrix cannot be inverted
-		 */
-		mat4.inverse = function (mat, dest) {
-			if (!dest) { dest = mat; }
-
-			// Cache the matrix values (makes for huge speed increases!)
-			var a00 = mat[0], a01 = mat[1], a02 = mat[2], a03 = mat[3],
-				a10 = mat[4], a11 = mat[5], a12 = mat[6], a13 = mat[7],
-				a20 = mat[8], a21 = mat[9], a22 = mat[10], a23 = mat[11],
-				a30 = mat[12], a31 = mat[13], a32 = mat[14], a33 = mat[15],
-
-				b00 = a00 * a11 - a01 * a10,
-				b01 = a00 * a12 - a02 * a10,
-				b02 = a00 * a13 - a03 * a10,
-				b03 = a01 * a12 - a02 * a11,
-				b04 = a01 * a13 - a03 * a11,
-				b05 = a02 * a13 - a03 * a12,
-				b06 = a20 * a31 - a21 * a30,
-				b07 = a20 * a32 - a22 * a30,
-				b08 = a20 * a33 - a23 * a30,
-				b09 = a21 * a32 - a22 * a31,
-				b10 = a21 * a33 - a23 * a31,
-				b11 = a22 * a33 - a23 * a32,
-
-				d = (b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06),
-				invDet;
-
-				// Calculate the determinant
-				if (!d) { return null; }
-				invDet = 1 / d;
-
-			dest[0] = (a11 * b11 - a12 * b10 + a13 * b09) * invDet;
-			dest[1] = (-a01 * b11 + a02 * b10 - a03 * b09) * invDet;
-			dest[2] = (a31 * b05 - a32 * b04 + a33 * b03) * invDet;
-			dest[3] = (-a21 * b05 + a22 * b04 - a23 * b03) * invDet;
-			dest[4] = (-a10 * b11 + a12 * b08 - a13 * b07) * invDet;
-			dest[5] = (a00 * b11 - a02 * b08 + a03 * b07) * invDet;
-			dest[6] = (-a30 * b05 + a32 * b02 - a33 * b01) * invDet;
-			dest[7] = (a20 * b05 - a22 * b02 + a23 * b01) * invDet;
-			dest[8] = (a10 * b10 - a11 * b08 + a13 * b06) * invDet;
-			dest[9] = (-a00 * b10 + a01 * b08 - a03 * b06) * invDet;
-			dest[10] = (a30 * b04 - a31 * b02 + a33 * b00) * invDet;
-			dest[11] = (-a20 * b04 + a21 * b02 - a23 * b00) * invDet;
-			dest[12] = (-a10 * b09 + a11 * b07 - a12 * b06) * invDet;
-			dest[13] = (a00 * b09 - a01 * b07 + a02 * b06) * invDet;
-			dest[14] = (-a30 * b03 + a31 * b01 - a32 * b00) * invDet;
-			dest[15] = (a20 * b03 - a21 * b01 + a22 * b00) * invDet;
-
-			return dest;
-		};
-
-		/**
-		 * Copies the upper 3x3 elements of a mat4 into another mat4
-		 *
-		 * @param {mat4} mat mat4 containing values to copy
-		 * @param {mat4} [dest] mat4 receiving copied values
-		 *
-		 * @returns {mat4} dest is specified, a new mat4 otherwise
-		 */
-		mat4.toRotationMat = function (mat, dest) {
-			if (!dest) { dest = mat4.create(); }
-
-			dest[0] = mat[0];
-			dest[1] = mat[1];
-			dest[2] = mat[2];
-			dest[3] = mat[3];
-			dest[4] = mat[4];
-			dest[5] = mat[5];
-			dest[6] = mat[6];
-			dest[7] = mat[7];
-			dest[8] = mat[8];
-			dest[9] = mat[9];
-			dest[10] = mat[10];
-			dest[11] = mat[11];
-			dest[12] = 0;
-			dest[13] = 0;
-			dest[14] = 0;
-			dest[15] = 1;
-
-			return dest;
-		};
-
-		/**
-		 * Copies the upper 3x3 elements of a mat4 into a mat3
-		 *
-		 * @param {mat4} mat mat4 containing values to copy
-		 * @param {mat3} [dest] mat3 receiving copied values
-		 *
-		 * @returns {mat3} dest is specified, a new mat3 otherwise
-		 */
-		mat4.toMat3 = function (mat, dest) {
-			if (!dest) { dest = mat3.create(); }
-
-			dest[0] = mat[0];
-			dest[1] = mat[1];
-			dest[2] = mat[2];
-			dest[3] = mat[4];
-			dest[4] = mat[5];
-			dest[5] = mat[6];
-			dest[6] = mat[8];
-			dest[7] = mat[9];
-			dest[8] = mat[10];
-
-			return dest;
-		};
-
-		/**
-		 * Calculates the inverse of the upper 3x3 elements of a mat4 and copies the result into a mat3
-		 * The resulting matrix is useful for calculating transformed normals
-		 *
-		 * Params:
-		 * @param {mat4} mat mat4 containing values to invert and copy
-		 * @param {mat3} [dest] mat3 receiving values
-		 *
-		 * @returns {mat3} dest is specified, a new mat3 otherwise, null if the matrix cannot be inverted
-		 */
-		mat4.toInverseMat3 = function (mat, dest) {
-			// Cache the matrix values (makes for huge speed increases!)
-			var a00 = mat[0], a01 = mat[1], a02 = mat[2],
-				a10 = mat[4], a11 = mat[5], a12 = mat[6],
-				a20 = mat[8], a21 = mat[9], a22 = mat[10],
-
-				b01 = a22 * a11 - a12 * a21,
-				b11 = -a22 * a10 + a12 * a20,
-				b21 = a21 * a10 - a11 * a20,
-
-				d = a00 * b01 + a01 * b11 + a02 * b21,
-				id;
-
-			if (!d) { return null; }
-			id = 1 / d;
-
-			if (!dest) { dest = mat3.create(); }
-
-			dest[0] = b01 * id;
-			dest[1] = (-a22 * a01 + a02 * a21) * id;
-			dest[2] = (a12 * a01 - a02 * a11) * id;
-			dest[3] = b11 * id;
-			dest[4] = (a22 * a00 - a02 * a20) * id;
-			dest[5] = (-a12 * a00 + a02 * a10) * id;
-			dest[6] = b21 * id;
-			dest[7] = (-a21 * a00 + a01 * a20) * id;
-			dest[8] = (a11 * a00 - a01 * a10) * id;
-
-			return dest;
-		};
-
-		/**
-		 * Performs a matrix multiplication
-		 *
-		 * @param {mat4} mat First operand
-		 * @param {mat4} mat2 Second operand
-		 * @param {mat4} [dest] mat4 receiving operation result. If not specified result is written to mat
-		 *
-		 * @returns {mat4} dest if specified, mat otherwise
-		 */
-		mat4.multiply = function (mat, mat2, dest) {
-			if (!dest) { dest = mat; }
-
-			// Cache the matrix values (makes for huge speed increases!)
-			var a00 = mat[0], a01 = mat[1], a02 = mat[2], a03 = mat[3],
-				a10 = mat[4], a11 = mat[5], a12 = mat[6], a13 = mat[7],
-				a20 = mat[8], a21 = mat[9], a22 = mat[10], a23 = mat[11],
-				a30 = mat[12], a31 = mat[13], a32 = mat[14], a33 = mat[15],
-
-				b00 = mat2[0], b01 = mat2[1], b02 = mat2[2], b03 = mat2[3],
-				b10 = mat2[4], b11 = mat2[5], b12 = mat2[6], b13 = mat2[7],
-				b20 = mat2[8], b21 = mat2[9], b22 = mat2[10], b23 = mat2[11],
-				b30 = mat2[12], b31 = mat2[13], b32 = mat2[14], b33 = mat2[15];
-
-			dest[0] = b00 * a00 + b01 * a10 + b02 * a20 + b03 * a30;
-			dest[1] = b00 * a01 + b01 * a11 + b02 * a21 + b03 * a31;
-			dest[2] = b00 * a02 + b01 * a12 + b02 * a22 + b03 * a32;
-			dest[3] = b00 * a03 + b01 * a13 + b02 * a23 + b03 * a33;
-			dest[4] = b10 * a00 + b11 * a10 + b12 * a20 + b13 * a30;
-			dest[5] = b10 * a01 + b11 * a11 + b12 * a21 + b13 * a31;
-			dest[6] = b10 * a02 + b11 * a12 + b12 * a22 + b13 * a32;
-			dest[7] = b10 * a03 + b11 * a13 + b12 * a23 + b13 * a33;
-			dest[8] = b20 * a00 + b21 * a10 + b22 * a20 + b23 * a30;
-			dest[9] = b20 * a01 + b21 * a11 + b22 * a21 + b23 * a31;
-			dest[10] = b20 * a02 + b21 * a12 + b22 * a22 + b23 * a32;
-			dest[11] = b20 * a03 + b21 * a13 + b22 * a23 + b23 * a33;
-			dest[12] = b30 * a00 + b31 * a10 + b32 * a20 + b33 * a30;
-			dest[13] = b30 * a01 + b31 * a11 + b32 * a21 + b33 * a31;
-			dest[14] = b30 * a02 + b31 * a12 + b32 * a22 + b33 * a32;
-			dest[15] = b30 * a03 + b31 * a13 + b32 * a23 + b33 * a33;
-
-			return dest;
-		};
-
-		/**
-		 * Transforms a vec3 with the given matrix
-		 * 4th vector component is implicitly '1'
-		 *
-		 * @param {mat4} mat mat4 to transform the vector with
-		 * @param {vec3} vec vec3 to transform
-		 * @paran {vec3} [dest] vec3 receiving operation result. If not specified result is written to vec
-		 *
-		 * @returns {vec3} dest if specified, vec otherwise
-		 */
-		mat4.multiplyVec3 = function (mat, vec, dest) {
-			if (!dest) { dest = vec; }
-
-			var x = vec[0], y = vec[1], z = vec[2];
-
-			dest[0] = mat[0] * x + mat[4] * y + mat[8] * z + mat[12];
-			dest[1] = mat[1] * x + mat[5] * y + mat[9] * z + mat[13];
-			dest[2] = mat[2] * x + mat[6] * y + mat[10] * z + mat[14];
-
-			return dest;
-		};
-
-		/**
-		 * Transforms a vec4 with the given matrix
-		 *
-		 * @param {mat4} mat mat4 to transform the vector with
-		 * @param {vec4} vec vec4 to transform
-		 * @param {vec4} [dest] vec4 receiving operation result. If not specified result is written to vec
-		 *
-		 * @returns {vec4} dest if specified, vec otherwise
-		 */
-		mat4.multiplyVec4 = function (mat, vec, dest) {
-			if (!dest) { dest = vec; }
-
-			var x = vec[0], y = vec[1], z = vec[2], w = vec[3];
-
-			dest[0] = mat[0] * x + mat[4] * y + mat[8] * z + mat[12] * w;
-			dest[1] = mat[1] * x + mat[5] * y + mat[9] * z + mat[13] * w;
-			dest[2] = mat[2] * x + mat[6] * y + mat[10] * z + mat[14] * w;
-			dest[3] = mat[3] * x + mat[7] * y + mat[11] * z + mat[15] * w;
-
-			return dest;
-		};
-
-		/**
-		 * Translates a matrix by the given vector
-		 *
-		 * @param {mat4} mat mat4 to translate
-		 * @param {vec3} vec vec3 specifying the translation
-		 * @param {mat4} [dest] mat4 receiving operation result. If not specified result is written to mat
-		 *
-		 * @returns {mat4} dest if specified, mat otherwise
-		 */
-		mat4.translate = function (mat, vec, dest) {
-			var x = vec[0], y = vec[1], z = vec[2],
-				a00, a01, a02, a03,
-				a10, a11, a12, a13,
-				a20, a21, a22, a23;
-
-			if (!dest || mat === dest) {
-				mat[12] = mat[0] * x + mat[4] * y + mat[8] * z + mat[12];
-				mat[13] = mat[1] * x + mat[5] * y + mat[9] * z + mat[13];
-				mat[14] = mat[2] * x + mat[6] * y + mat[10] * z + mat[14];
-				mat[15] = mat[3] * x + mat[7] * y + mat[11] * z + mat[15];
-				return mat;
-			}
-
-			a00 = mat[0]; a01 = mat[1]; a02 = mat[2]; a03 = mat[3];
-			a10 = mat[4]; a11 = mat[5]; a12 = mat[6]; a13 = mat[7];
-			a20 = mat[8]; a21 = mat[9]; a22 = mat[10]; a23 = mat[11];
-
-			dest[0] = a00; dest[1] = a01; dest[2] = a02; dest[3] = a03;
-			dest[4] = a10; dest[5] = a11; dest[6] = a12; dest[7] = a13;
-			dest[8] = a20; dest[9] = a21; dest[10] = a22; dest[11] = a23;
-
-			dest[12] = a00 * x + a10 * y + a20 * z + mat[12];
-			dest[13] = a01 * x + a11 * y + a21 * z + mat[13];
-			dest[14] = a02 * x + a12 * y + a22 * z + mat[14];
-			dest[15] = a03 * x + a13 * y + a23 * z + mat[15];
-			return dest;
-		};
-
-		/**
-		 * Scales a matrix by the given vector
-		 *
-		 * @param {mat4} mat mat4 to scale
-		 * @param {vec3} vec vec3 specifying the scale for each axis
-		 * @param {mat4} [dest] mat4 receiving operation result. If not specified result is written to mat
-		 *
-		 * @param {mat4} dest if specified, mat otherwise
-		 */
-		mat4.scale = function (mat, vec, dest) {
-			var x = vec[0], y = vec[1], z = vec[2];
-
-			if (!dest || mat === dest) {
-				mat[0] *= x;
-				mat[1] *= x;
-				mat[2] *= x;
-				mat[3] *= x;
-				mat[4] *= y;
-				mat[5] *= y;
-				mat[6] *= y;
-				mat[7] *= y;
-				mat[8] *= z;
-				mat[9] *= z;
-				mat[10] *= z;
-				mat[11] *= z;
-				return mat;
-			}
-
-			dest[0] = mat[0] * x;
-			dest[1] = mat[1] * x;
-			dest[2] = mat[2] * x;
-			dest[3] = mat[3] * x;
-			dest[4] = mat[4] * y;
-			dest[5] = mat[5] * y;
-			dest[6] = mat[6] * y;
-			dest[7] = mat[7] * y;
-			dest[8] = mat[8] * z;
-			dest[9] = mat[9] * z;
-			dest[10] = mat[10] * z;
-			dest[11] = mat[11] * z;
-			dest[12] = mat[12];
-			dest[13] = mat[13];
-			dest[14] = mat[14];
-			dest[15] = mat[15];
-			return dest;
-		};
-
-		/**
-		 * Rotates a matrix by the given angle around the specified axis
-		 * If rotating around a primary axis (X,Y,Z) one of the specialized rotation functions should be used instead for performance
-		 *
-		 * @param {mat4} mat mat4 to rotate
-		 * @param {number} angle Angle (in radians) to rotate
-		 * @param {vec3} axis vec3 representing the axis to rotate around
-		 * @param {mat4} [dest] mat4 receiving operation result. If not specified result is written to mat
-		 *
-		 * @returns {mat4} dest if specified, mat otherwise
-		 */
-		mat4.rotate = function (mat, angle, axis, dest) {
-			var x = axis[0], y = axis[1], z = axis[2],
-				len = Math.sqrt(x * x + y * y + z * z),
-				s, c, t,
-				a00, a01, a02, a03,
-				a10, a11, a12, a13,
-				a20, a21, a22, a23,
-				b00, b01, b02,
-				b10, b11, b12,
-				b20, b21, b22;
-
-			if (!len) { return null; }
-			if (len !== 1) {
-				len = 1 / len;
-				x *= len;
-				y *= len;
-				z *= len;
-			}
-
-			s = Math.sin(angle);
-			c = Math.cos(angle);
-			t = 1 - c;
-
-			a00 = mat[0]; a01 = mat[1]; a02 = mat[2]; a03 = mat[3];
-			a10 = mat[4]; a11 = mat[5]; a12 = mat[6]; a13 = mat[7];
-			a20 = mat[8]; a21 = mat[9]; a22 = mat[10]; a23 = mat[11];
-
-			// Construct the elements of the rotation matrix
-			b00 = x * x * t + c; b01 = y * x * t + z * s; b02 = z * x * t - y * s;
-			b10 = x * y * t - z * s; b11 = y * y * t + c; b12 = z * y * t + x * s;
-			b20 = x * z * t + y * s; b21 = y * z * t - x * s; b22 = z * z * t + c;
-
-			if (!dest) {
-				dest = mat;
-			} else if (mat !== dest) { // If the source and destination differ, copy the unchanged last row
-				dest[12] = mat[12];
-				dest[13] = mat[13];
-				dest[14] = mat[14];
-				dest[15] = mat[15];
-			}
-
-			// Perform rotation-specific matrix multiplication
-			dest[0] = a00 * b00 + a10 * b01 + a20 * b02;
-			dest[1] = a01 * b00 + a11 * b01 + a21 * b02;
-			dest[2] = a02 * b00 + a12 * b01 + a22 * b02;
-			dest[3] = a03 * b00 + a13 * b01 + a23 * b02;
-
-			dest[4] = a00 * b10 + a10 * b11 + a20 * b12;
-			dest[5] = a01 * b10 + a11 * b11 + a21 * b12;
-			dest[6] = a02 * b10 + a12 * b11 + a22 * b12;
-			dest[7] = a03 * b10 + a13 * b11 + a23 * b12;
-
-			dest[8] = a00 * b20 + a10 * b21 + a20 * b22;
-			dest[9] = a01 * b20 + a11 * b21 + a21 * b22;
-			dest[10] = a02 * b20 + a12 * b21 + a22 * b22;
-			dest[11] = a03 * b20 + a13 * b21 + a23 * b22;
-			return dest;
-		};
-
-		/**
-		 * Rotates a matrix by the given angle around the X axis
-		 *
-		 * @param {mat4} mat mat4 to rotate
-		 * @param {number} angle Angle (in radians) to rotate
-		 * @param {mat4} [dest] mat4 receiving operation result. If not specified result is written to mat
-		 *
-		 * @returns {mat4} dest if specified, mat otherwise
-		 */
-		mat4.rotateX = function (mat, angle, dest) {
-			var s = Math.sin(angle),
-				c = Math.cos(angle),
-				a10 = mat[4],
-				a11 = mat[5],
-				a12 = mat[6],
-				a13 = mat[7],
-				a20 = mat[8],
-				a21 = mat[9],
-				a22 = mat[10],
-				a23 = mat[11];
-
-			if (!dest) {
-				dest = mat;
-			} else if (mat !== dest) { // If the source and destination differ, copy the unchanged rows
-				dest[0] = mat[0];
-				dest[1] = mat[1];
-				dest[2] = mat[2];
-				dest[3] = mat[3];
-
-				dest[12] = mat[12];
-				dest[13] = mat[13];
-				dest[14] = mat[14];
-				dest[15] = mat[15];
-			}
-
-			// Perform axis-specific matrix multiplication
-			dest[4] = a10 * c + a20 * s;
-			dest[5] = a11 * c + a21 * s;
-			dest[6] = a12 * c + a22 * s;
-			dest[7] = a13 * c + a23 * s;
-
-			dest[8] = a10 * -s + a20 * c;
-			dest[9] = a11 * -s + a21 * c;
-			dest[10] = a12 * -s + a22 * c;
-			dest[11] = a13 * -s + a23 * c;
-			return dest;
-		};
-
-		/**
-		 * Rotates a matrix by the given angle around the Y axis
-		 *
-		 * @param {mat4} mat mat4 to rotate
-		 * @param {number} angle Angle (in radians) to rotate
-		 * @param {mat4} [dest] mat4 receiving operation result. If not specified result is written to mat
-		 *
-		 * @returns {mat4} dest if specified, mat otherwise
-		 */
-		mat4.rotateY = function (mat, angle, dest) {
-			var s = Math.sin(angle),
-				c = Math.cos(angle),
-				a00 = mat[0],
-				a01 = mat[1],
-				a02 = mat[2],
-				a03 = mat[3],
-				a20 = mat[8],
-				a21 = mat[9],
-				a22 = mat[10],
-				a23 = mat[11];
-
-			if (!dest) {
-				dest = mat;
-			} else if (mat !== dest) { // If the source and destination differ, copy the unchanged rows
-				dest[4] = mat[4];
-				dest[5] = mat[5];
-				dest[6] = mat[6];
-				dest[7] = mat[7];
-
-				dest[12] = mat[12];
-				dest[13] = mat[13];
-				dest[14] = mat[14];
-				dest[15] = mat[15];
-			}
-
-			// Perform axis-specific matrix multiplication
-			dest[0] = a00 * c + a20 * -s;
-			dest[1] = a01 * c + a21 * -s;
-			dest[2] = a02 * c + a22 * -s;
-			dest[3] = a03 * c + a23 * -s;
-
-			dest[8] = a00 * s + a20 * c;
-			dest[9] = a01 * s + a21 * c;
-			dest[10] = a02 * s + a22 * c;
-			dest[11] = a03 * s + a23 * c;
-			return dest;
-		};
-
-		/**
-		 * Rotates a matrix by the given angle around the Z axis
-		 *
-		 * @param {mat4} mat mat4 to rotate
-		 * @param {number} angle Angle (in radians) to rotate
-		 * @param {mat4} [dest] mat4 receiving operation result. If not specified result is written to mat
-		 *
-		 * @returns {mat4} dest if specified, mat otherwise
-		 */
-		mat4.rotateZ = function (mat, angle, dest) {
-			var s = Math.sin(angle),
-				c = Math.cos(angle),
-				a00 = mat[0],
-				a01 = mat[1],
-				a02 = mat[2],
-				a03 = mat[3],
-				a10 = mat[4],
-				a11 = mat[5],
-				a12 = mat[6],
-				a13 = mat[7];
-
-			if (!dest) {
-				dest = mat;
-			} else if (mat !== dest) { // If the source and destination differ, copy the unchanged last row
-				dest[8] = mat[8];
-				dest[9] = mat[9];
-				dest[10] = mat[10];
-				dest[11] = mat[11];
-
-				dest[12] = mat[12];
-				dest[13] = mat[13];
-				dest[14] = mat[14];
-				dest[15] = mat[15];
-			}
-
-			// Perform axis-specific matrix multiplication
-			dest[0] = a00 * c + a10 * s;
-			dest[1] = a01 * c + a11 * s;
-			dest[2] = a02 * c + a12 * s;
-			dest[3] = a03 * c + a13 * s;
-
-			dest[4] = a00 * -s + a10 * c;
-			dest[5] = a01 * -s + a11 * c;
-			dest[6] = a02 * -s + a12 * c;
-			dest[7] = a03 * -s + a13 * c;
-
-			return dest;
-		};
-
-		/**
-		 * Generates a frustum matrix with the given bounds
-		 *
-		 * @param {number} left Left bound of the frustum
-		 * @param {number} right Right bound of the frustum
-		 * @param {number} bottom Bottom bound of the frustum
-		 * @param {number} top Top bound of the frustum
-		 * @param {number} near Near bound of the frustum
-		 * @param {number} far Far bound of the frustum
-		 * @param {mat4} [dest] mat4 frustum matrix will be written into
-		 *
-		 * @returns {mat4} dest if specified, a new mat4 otherwise
-		 */
-		mat4.frustum = function (left, right, bottom, top, near, far, dest) {
-			if (!dest) { dest = mat4.create(); }
-			var rl = (right - left),
-				tb = (top - bottom),
-				fn = (far - near);
-			dest[0] = (near * 2) / rl;
-			dest[1] = 0;
-			dest[2] = 0;
-			dest[3] = 0;
-			dest[4] = 0;
-			dest[5] = (near * 2) / tb;
-			dest[6] = 0;
-			dest[7] = 0;
-			dest[8] = (right + left) / rl;
-			dest[9] = (top + bottom) / tb;
-			dest[10] = -(far + near) / fn;
-			dest[11] = -1;
-			dest[12] = 0;
-			dest[13] = 0;
-			dest[14] = -(far * near * 2) / fn;
-			dest[15] = 0;
-			return dest;
-		};
-
-		/**
-		 * Generates a perspective projection matrix with the given bounds
-		 *
-		 * @param {number} fovy Vertical field of view
-		 * @param {number} aspect Aspect ratio. typically viewport width/height
-		 * @param {number} near Near bound of the frustum
-		 * @param {number} far Far bound of the frustum
-		 * @param {mat4} [dest] mat4 frustum matrix will be written into
-		 *
-		 * @returns {mat4} dest if specified, a new mat4 otherwise
-		 */
-		mat4.perspective = function (fovy, aspect, near, far, dest) {
-			var top = near * Math.tan(fovy * Math.PI / 360.0),
-				right = top * aspect;
-			return mat4.frustum(-right, right, -top, top, near, far, dest);
-		};
-
-		/**
-		 * Generates a orthogonal projection matrix with the given bounds
-		 *
-		 * @param {number} left Left bound of the frustum
-		 * @param {number} right Right bound of the frustum
-		 * @param {number} bottom Bottom bound of the frustum
-		 * @param {number} top Top bound of the frustum
-		 * @param {number} near Near bound of the frustum
-		 * @param {number} far Far bound of the frustum
-		 * @param {mat4} [dest] mat4 frustum matrix will be written into
-		 *
-		 * @returns {mat4} dest if specified, a new mat4 otherwise
-		 */
-		mat4.ortho = function (left, right, bottom, top, near, far, dest) {
-			if (!dest) { dest = mat4.create(); }
-			var rl = (right - left),
-				tb = (top - bottom),
-				fn = (far - near);
-			dest[0] = 2 / rl;
-			dest[1] = 0;
-			dest[2] = 0;
-			dest[3] = 0;
-			dest[4] = 0;
-			dest[5] = 2 / tb;
-			dest[6] = 0;
-			dest[7] = 0;
-			dest[8] = 0;
-			dest[9] = 0;
-			dest[10] = -2 / fn;
-			dest[11] = 0;
-			dest[12] = -(left + right) / rl;
-			dest[13] = -(top + bottom) / tb;
-			dest[14] = -(far + near) / fn;
-			dest[15] = 1;
-			return dest;
-		};
-
-		/**
-		 * Generates a look-at matrix with the given eye position, focal point, and up axis
-		 *
-		 * @param {vec3} eye Position of the viewer
-		 * @param {vec3} center Point the viewer is looking at
-		 * @param {vec3} up vec3 pointing "up"
-		 * @param {mat4} [dest] mat4 frustum matrix will be written into
-		 *
-		 * @returns {mat4} dest if specified, a new mat4 otherwise
-		 */
-		mat4.lookAt = function (eye, center, up, dest) {
-			if (!dest) { dest = mat4.create(); }
-
-			var x0, x1, x2, y0, y1, y2, z0, z1, z2, len,
-				eyex = eye[0],
-				eyey = eye[1],
-				eyez = eye[2],
-				upx = up[0],
-				upy = up[1],
-				upz = up[2],
-				centerx = center[0],
-				centery = center[1],
-				centerz = center[2];
-
-			if (eyex === centerx && eyey === centery && eyez === centerz) {
-				return mat4.identity(dest);
-			}
-
-			//vec3.direction(eye, center, z);
-			z0 = eyex - centerx;
-			z1 = eyey - centery;
-			z2 = eyez - centerz;
-
-			// normalize (no check needed for 0 because of early return)
-			len = 1 / Math.sqrt(z0 * z0 + z1 * z1 + z2 * z2);
-			z0 *= len;
-			z1 *= len;
-			z2 *= len;
-
-			//vec3.normalize(vec3.cross(up, z, x));
-			x0 = upy * z2 - upz * z1;
-			x1 = upz * z0 - upx * z2;
-			x2 = upx * z1 - upy * z0;
-			len = Math.sqrt(x0 * x0 + x1 * x1 + x2 * x2);
-			if (!len) {
-				x0 = 0;
-				x1 = 0;
-				x2 = 0;
-			} else {
-				len = 1 / len;
-				x0 *= len;
-				x1 *= len;
-				x2 *= len;
-			}
-
-			//vec3.normalize(vec3.cross(z, x, y));
-			y0 = z1 * x2 - z2 * x1;
-			y1 = z2 * x0 - z0 * x2;
-			y2 = z0 * x1 - z1 * x0;
-
-			len = Math.sqrt(y0 * y0 + y1 * y1 + y2 * y2);
-			if (!len) {
-				y0 = 0;
-				y1 = 0;
-				y2 = 0;
-			} else {
-				len = 1 / len;
-				y0 *= len;
-				y1 *= len;
-				y2 *= len;
-			}
-
-			dest[0] = x0;
-			dest[1] = y0;
-			dest[2] = z0;
-			dest[3] = 0;
-			dest[4] = x1;
-			dest[5] = y1;
-			dest[6] = z1;
-			dest[7] = 0;
-			dest[8] = x2;
-			dest[9] = y2;
-			dest[10] = z2;
-			dest[11] = 0;
-			dest[12] = -(x0 * eyex + x1 * eyey + x2 * eyez);
-			dest[13] = -(y0 * eyex + y1 * eyey + y2 * eyez);
-			dest[14] = -(z0 * eyex + z1 * eyey + z2 * eyez);
-			dest[15] = 1;
-
-			return dest;
-		};
-
-		/**
-		 * Creates a matrix from a quaternion rotation and vector translation
-		 * This is equivalent to (but much faster than):
-		 *
-		 *     mat4.identity(dest);
-		 *     mat4.translate(dest, vec);
-		 *     var quatMat = mat4.create();
-		 *     quat4.toMat4(quat, quatMat);
-		 *     mat4.multiply(dest, quatMat);
-		 *
-		 * @param {quat4} quat Rotation quaternion
-		 * @param {vec3} vec Translation vector
-		 * @param {mat4} [dest] mat4 receiving operation result. If not specified result is written to a new mat4
-		 *
-		 * @returns {mat4} dest if specified, a new mat4 otherwise
-		 */
-		mat4.fromRotationTranslation = function (quat, vec, dest) {
-			if (!dest) { dest = mat4.create(); }
-
-			// Quaternion math
-			var x = quat[0], y = quat[1], z = quat[2], w = quat[3],
-				x2 = x + x,
-				y2 = y + y,
-				z2 = z + z,
-
-				xx = x * x2,
-				xy = x * y2,
-				xz = x * z2,
-				yy = y * y2,
-				yz = y * z2,
-				zz = z * z2,
-				wx = w * x2,
-				wy = w * y2,
-				wz = w * z2;
-
-			dest[0] = 1 - (yy + zz);
-			dest[1] = xy + wz;
-			dest[2] = xz - wy;
-			dest[3] = 0;
-			dest[4] = xy - wz;
-			dest[5] = 1 - (xx + zz);
-			dest[6] = yz + wx;
-			dest[7] = 0;
-			dest[8] = xz + wy;
-			dest[9] = yz - wx;
-			dest[10] = 1 - (xx + yy);
-			dest[11] = 0;
-			dest[12] = vec[0];
-			dest[13] = vec[1];
-			dest[14] = vec[2];
-			dest[15] = 1;
-
-			return dest;
-		};
-
-		/**
-		 * Returns a string representation of a mat4
-		 *
-		 * @param {mat4} mat mat4 to represent as a string
-		 *
-		 * @returns {string} String representation of mat
-		 */
-		mat4.str = function (mat) {
-			return '[' + mat[0] + ', ' + mat[1] + ', ' + mat[2] + ', ' + mat[3] +
-				', ' + mat[4] + ', ' + mat[5] + ', ' + mat[6] + ', ' + mat[7] +
-				', ' + mat[8] + ', ' + mat[9] + ', ' + mat[10] + ', ' + mat[11] +
-				', ' + mat[12] + ', ' + mat[13] + ', ' + mat[14] + ', ' + mat[15] + ']';
-		};
-
-		/*
-		 * quat4
-		 */
-
-		/**
-		 * Creates a new instance of a quat4 using the default array type
-		 * Any javascript array containing at least 4 numeric elements can serve as a quat4
-		 *
-		 * @param {quat4} [quat] quat4 containing values to initialize with
-		 *
-		 * @returns {quat4} New quat4
-		 */
-		quat4.create = function (quat) {
-			var dest = createArray(4);
-
-			if (quat) {
-				dest[0] = quat[0];
-				dest[1] = quat[1];
-				dest[2] = quat[2];
-				dest[3] = quat[3];
-			}
-
-			return dest;
-		};
-
-		/**
-		 * Copies the values of one quat4 to another
-		 *
-		 * @param {quat4} quat quat4 containing values to copy
-		 * @param {quat4} dest quat4 receiving copied values
-		 *
-		 * @returns {quat4} dest
-		 */
-		quat4.set = function (quat, dest) {
-			dest[0] = quat[0];
-			dest[1] = quat[1];
-			dest[2] = quat[2];
-			dest[3] = quat[3];
-
-			return dest;
-		};
-
-		/**
-		 * Calculates the W component of a quat4 from the X, Y, and Z components.
-		 * Assumes that quaternion is 1 unit in length.
-		 * Any existing W component will be ignored.
-		 *
-		 * @param {quat4} quat quat4 to calculate W component of
-		 * @param {quat4} [dest] quat4 receiving calculated values. If not specified result is written to quat
-		 *
-		 * @returns {quat4} dest if specified, quat otherwise
-		 */
-		quat4.calculateW = function (quat, dest) {
-			var x = quat[0], y = quat[1], z = quat[2];
-
-			if (!dest || quat === dest) {
-				quat[3] = -Math.sqrt(Math.abs(1.0 - x * x - y * y - z * z));
-				return quat;
-			}
-			dest[0] = x;
-			dest[1] = y;
-			dest[2] = z;
-			dest[3] = -Math.sqrt(Math.abs(1.0 - x * x - y * y - z * z));
-			return dest;
-		};
-
-		/**
-		 * Calculates the dot product of two quaternions
-		 *
-		 * @param {quat4} quat First operand
-		 * @param {quat4} quat2 Second operand
-		 *
-		 * @return {number} Dot product of quat and quat2
-		 */
-		quat4.dot = function(quat, quat2){
-			return quat[0]*quat2[0] + quat[1]*quat2[1] + quat[2]*quat2[2] + quat[3]*quat2[3];
-		};
-
-		/**
-		 * Calculates the inverse of a quat4
-		 *
-		 * @param {quat4} quat quat4 to calculate inverse of
-		 * @param {quat4} [dest] quat4 receiving inverse values. If not specified result is written to quat
-		 *
-		 * @returns {quat4} dest if specified, quat otherwise
-		 */
-		quat4.inverse = function(quat, dest) {
-			var q0 = quat[0], q1 = quat[1], q2 = quat[2], q3 = quat[3],
-				dot = q0*q0 + q1*q1 + q2*q2 + q3*q3,
-				invDot = dot ? 1.0/dot : 0;
-
-			// TODO: Would be faster to return [0,0,0,0] immediately if dot == 0
-
-			if(!dest || quat === dest) {
-				quat[0] *= -invDot;
-				quat[1] *= -invDot;
-				quat[2] *= -invDot;
-				quat[3] *= invDot;
-				return quat;
-			}
-			dest[0] = -quat[0]*invDot;
-			dest[1] = -quat[1]*invDot;
-			dest[2] = -quat[2]*invDot;
-			dest[3] = quat[3]*invDot;
-			return dest;
-		};
-
-
-		/**
-		 * Calculates the conjugate of a quat4
-		 * If the quaternion is normalized, this function is faster than quat4.inverse and produces the same result.
-		 *
-		 * @param {quat4} quat quat4 to calculate conjugate of
-		 * @param {quat4} [dest] quat4 receiving conjugate values. If not specified result is written to quat
-		 *
-		 * @returns {quat4} dest if specified, quat otherwise
-		 */
-		quat4.conjugate = function (quat, dest) {
-			if (!dest || quat === dest) {
-				quat[0] *= -1;
-				quat[1] *= -1;
-				quat[2] *= -1;
-				return quat;
-			}
-			dest[0] = -quat[0];
-			dest[1] = -quat[1];
-			dest[2] = -quat[2];
-			dest[3] = quat[3];
-			return dest;
-		};
-
-		/**
-		 * Calculates the length of a quat4
-		 *
-		 * Params:
-		 * @param {quat4} quat quat4 to calculate length of
-		 *
-		 * @returns Length of quat
-		 */
-		quat4.length = function (quat) {
-			var x = quat[0], y = quat[1], z = quat[2], w = quat[3];
-			return Math.sqrt(x * x + y * y + z * z + w * w);
-		};
-
-		/**
-		 * Generates a unit quaternion of the same direction as the provided quat4
-		 * If quaternion length is 0, returns [0, 0, 0, 0]
-		 *
-		 * @param {quat4} quat quat4 to normalize
-		 * @param {quat4} [dest] quat4 receiving operation result. If not specified result is written to quat
-		 *
-		 * @returns {quat4} dest if specified, quat otherwise
-		 */
-		quat4.normalize = function (quat, dest) {
-			if (!dest) { dest = quat; }
-
-			var x = quat[0], y = quat[1], z = quat[2], w = quat[3],
-				len = Math.sqrt(x * x + y * y + z * z + w * w);
-			if (len === 0) {
-				dest[0] = 0;
-				dest[1] = 0;
-				dest[2] = 0;
-				dest[3] = 0;
-				return dest;
-			}
-			len = 1 / len;
-			dest[0] = x * len;
-			dest[1] = y * len;
-			dest[2] = z * len;
-			dest[3] = w * len;
-
-			return dest;
-		};
-
-		/**
-		 * Performs a quaternion multiplication
-		 *
-		 * @param {quat4} quat First operand
-		 * @param {quat4} quat2 Second operand
-		 * @param {quat4} [dest] quat4 receiving operation result. If not specified result is written to quat
-		 *
-		 * @returns {quat4} dest if specified, quat otherwise
-		 */
-		quat4.multiply = function (quat, quat2, dest) {
-			if (!dest) { dest = quat; }
-
-			var qax = quat[0], qay = quat[1], qaz = quat[2], qaw = quat[3],
-				qbx = quat2[0], qby = quat2[1], qbz = quat2[2], qbw = quat2[3];
-
-			dest[0] = qax * qbw + qaw * qbx + qay * qbz - qaz * qby;
-			dest[1] = qay * qbw + qaw * qby + qaz * qbx - qax * qbz;
-			dest[2] = qaz * qbw + qaw * qbz + qax * qby - qay * qbx;
-			dest[3] = qaw * qbw - qax * qbx - qay * qby - qaz * qbz;
-
-			return dest;
-		};
-
-		/**
-		 * Transforms a vec3 with the given quaternion
-		 *
-		 * @param {quat4} quat quat4 to transform the vector with
-		 * @param {vec3} vec vec3 to transform
-		 * @param {vec3} [dest] vec3 receiving operation result. If not specified result is written to vec
-		 *
-		 * @returns dest if specified, vec otherwise
-		 */
-		quat4.multiplyVec3 = function (quat, vec, dest) {
-			if (!dest) { dest = vec; }
-
-			var x = vec[0], y = vec[1], z = vec[2],
-				qx = quat[0], qy = quat[1], qz = quat[2], qw = quat[3],
-
-				// calculate quat * vec
-				ix = qw * x + qy * z - qz * y,
-				iy = qw * y + qz * x - qx * z,
-				iz = qw * z + qx * y - qy * x,
-				iw = -qx * x - qy * y - qz * z;
-
-			// calculate result * inverse quat
-			dest[0] = ix * qw + iw * -qx + iy * -qz - iz * -qy;
-			dest[1] = iy * qw + iw * -qy + iz * -qx - ix * -qz;
-			dest[2] = iz * qw + iw * -qz + ix * -qy - iy * -qx;
-
-			return dest;
-		};
-
-		/**
-		 * Calculates a 3x3 matrix from the given quat4
-		 *
-		 * @param {quat4} quat quat4 to create matrix from
-		 * @param {mat3} [dest] mat3 receiving operation result
-		 *
-		 * @returns {mat3} dest if specified, a new mat3 otherwise
-		 */
-		quat4.toMat3 = function (quat, dest) {
-			if (!dest) { dest = mat3.create(); }
-
-			var x = quat[0], y = quat[1], z = quat[2], w = quat[3],
-				x2 = x + x,
-				y2 = y + y,
-				z2 = z + z,
-
-				xx = x * x2,
-				xy = x * y2,
-				xz = x * z2,
-				yy = y * y2,
-				yz = y * z2,
-				zz = z * z2,
-				wx = w * x2,
-				wy = w * y2,
-				wz = w * z2;
-
-			dest[0] = 1 - (yy + zz);
-			dest[1] = xy + wz;
-			dest[2] = xz - wy;
-
-			dest[3] = xy - wz;
-			dest[4] = 1 - (xx + zz);
-			dest[5] = yz + wx;
-
-			dest[6] = xz + wy;
-			dest[7] = yz - wx;
-			dest[8] = 1 - (xx + yy);
-
-			return dest;
-		};
-
-		/**
-		 * Calculates a 4x4 matrix from the given quat4
-		 *
-		 * @param {quat4} quat quat4 to create matrix from
-		 * @param {mat4} [dest] mat4 receiving operation result
-		 *
-		 * @returns {mat4} dest if specified, a new mat4 otherwise
-		 */
-		quat4.toMat4 = function (quat, dest) {
-			if (!dest) { dest = mat4.create(); }
-
-			var x = quat[0], y = quat[1], z = quat[2], w = quat[3],
-				x2 = x + x,
-				y2 = y + y,
-				z2 = z + z,
-
-				xx = x * x2,
-				xy = x * y2,
-				xz = x * z2,
-				yy = y * y2,
-				yz = y * z2,
-				zz = z * z2,
-				wx = w * x2,
-				wy = w * y2,
-				wz = w * z2;
-
-			dest[0] = 1 - (yy + zz);
-			dest[1] = xy + wz;
-			dest[2] = xz - wy;
-			dest[3] = 0;
-
-			dest[4] = xy - wz;
-			dest[5] = 1 - (xx + zz);
-			dest[6] = yz + wx;
-			dest[7] = 0;
-
-			dest[8] = xz + wy;
-			dest[9] = yz - wx;
-			dest[10] = 1 - (xx + yy);
-			dest[11] = 0;
-
-			dest[12] = 0;
-			dest[13] = 0;
-			dest[14] = 0;
-			dest[15] = 1;
-
-			return dest;
-		};
-
-		/**
-		 * Performs a spherical linear interpolation between two quat4
-		 *
-		 * @param {quat4} quat First quaternion
-		 * @param {quat4} quat2 Second quaternion
-		 * @param {number} slerp Interpolation amount between the two inputs
-		 * @param {quat4} [dest] quat4 receiving operation result. If not specified result is written to quat
-		 *
-		 * @returns {quat4} dest if specified, quat otherwise
-		 */
-		quat4.slerp = function (quat, quat2, slerp, dest) {
-			if (!dest) { dest = quat; }
-
-			var cosHalfTheta = quat[0] * quat2[0] + quat[1] * quat2[1] + quat[2] * quat2[2] + quat[3] * quat2[3],
-				halfTheta,
-				sinHalfTheta,
-				ratioA,
-				ratioB;
-
-			if (Math.abs(cosHalfTheta) >= 1.0) {
-				if (dest !== quat) {
-					dest[0] = quat[0];
-					dest[1] = quat[1];
-					dest[2] = quat[2];
-					dest[3] = quat[3];
+		var loadJson = function( uri, onCompleteCallback ) {
+			var textLoader = new TextLoader(
+				this.eventManager,
+				this.host,
+				this.resourceBundleName,
+				uri,
+				function( jsonString ) {
+					var object = JSON.parse( jsonString )
+
+					if( object === undefined ) throw 'Parsing json string failed.'
+
+
+					onCompleteCallback( object )
 				}
-				return dest;
-			}
+			)
 
-			halfTheta = Math.acos(cosHalfTheta);
-			sinHalfTheta = Math.sqrt(1.0 - cosHalfTheta * cosHalfTheta);
+			textLoader.start()
+		}
 
-			if (Math.abs(sinHalfTheta) < 0.001) {
-				dest[0] = (quat[0] * 0.5 + quat2[0] * 0.5);
-				dest[1] = (quat[1] * 0.5 + quat2[1] * 0.5);
-				dest[2] = (quat[2] * 0.5 + quat2[2] * 0.5);
-				dest[3] = (quat[3] * 0.5 + quat2[3] * 0.5);
-				return dest;
-			}
-
-			ratioA = Math.sin((1 - slerp) * halfTheta) / sinHalfTheta;
-			ratioB = Math.sin(slerp * halfTheta) / sinHalfTheta;
-
-			dest[0] = (quat[0] * ratioA + quat2[0] * ratioB);
-			dest[1] = (quat[1] * ratioA + quat2[1] * ratioB);
-			dest[2] = (quat[2] * ratioA + quat2[2] * ratioB);
-			dest[3] = (quat[3] * ratioA + quat2[3] * ratioB);
-
-			return dest;
-		};
 
 		/**
-		 * Returns a string representation of a quaternion
-		 *
-		 * @param {quat4} quat quat4 to represent as a string
-		 *
-		 * @returns {string} String representation of quat
+		 * public
 		 */
-		quat4.str = function (quat) {
-			return '[' + quat[0] + ', ' + quat[1] + ', ' + quat[2] + ', ' + quat[3] + ']';
-		};
+
+		var SoundLoader = function( eventManager, host, resourceBundleName, resourceUri, loadingCompletedCallback, timedOutCallback, soundManager ) {
+			this.eventManager       = eventManager
+            this.soundManager       = soundManager
+			this.host               = host
+			this.resourceBundleName = resourceBundleName
+			this.resourceUri        = resourceUri
+			this.onCompleteCallback = loadingCompletedCallback
+			this.onTimeOut          = timedOutCallback
+		}
+
+		SoundLoader.prototype = {
+			start: function() {
+				var fileName = _.last( this.resourceUri.split( '/' ) )
+				var extension = _.last( fileName.split( '.' ) )
+
+				if( extension === "json" ) {
+					/**
+					 * The html5 back-end uses sound sprites by default. Therefore loading of the sound set config can be skipped and the sound sprite config
+					 * can be loaded directly.
+					 */
+					var soundSpriteConfigUri = "sounds/output/" + fileName
+
+					loadJson.call(
+						this,
+						soundSpriteConfigUri,
+						_.bind(
+							function( soundSpriteConfig ) {
+								processSoundSpriteConfig.call( this, soundSpriteConfig, this.onCompleteCallback )
+							},
+							this
+						)
+					)
+
+				} else /*if( extension === "" )*/ {
+//					console.log( "Not yet implemented." )
+				}
+			}
+		}
+
+		return SoundLoader
+	}
+)
+
+define(
+	"spell/shared/util/platform/private/loader/ImageLoader",
+	[
+		"spell/shared/util/Events",
+
+		'spell/shared/util/platform/underscore'
+	],
+	function(
+		Events,
+
+		_
+	) {
+		"use strict"
 
 
-		return {
-			vec3: vec3,
-			mat3: mat3,
-			mat4: mat4,
-			quat4: quat4
+		/**
+		 * private
+		 */
+
+		var onLoad = function( image ) {
+			if( this.loaded === true ) return
+
+			this.loaded = true
+
+			var resources = {}
+			resources[ this.resourceName ] = this.renderingContext.createTexture( image )
+
+			this.onCompleteCallback( resources )
+		}
+
+		var onError = function( event ) {
+			this.eventManager.publish(
+				[ Events.RESOURCE_ERROR, this.resourceBundleName ],
+				[ this.resourceBundleName, event ]
+			)
+		}
+
+		var onReadyStateChange = function( image ) {
+			if( image.readyState === "complete" ) {
+				image.onload( image )
+			}
+		}
+
+
+		/**
+		 * public
+		 */
+
+		var ImageLoader = function( eventManager, resourcePath, resourceBundleName, resourceName, loadingCompletedCallback, timedOutCallback, renderingContext ) {
+			this.eventManager       = eventManager
+			this.renderingContext   = renderingContext
+			this.resourceBundleName = resourceBundleName
+			this.resourcePath       = resourcePath
+			this.resourceName       = resourceName
+			this.onCompleteCallback = loadingCompletedCallback
+			this.loaded             = false
+		}
+
+		ImageLoader.prototype = {
+			start: function() {
+				var image = new Image()
+				image.onload             = _.bind( onLoad, this, image )
+				image.onreadystatechange = _.bind( onReadyStateChange, this, image )
+				image.onerror            = _.bind( onError, this )
+				image.src                = this.resourcePath + '/' + this.resourceName
+			}
+		}
+
+		return ImageLoader
+	}
+)
+
+define(
+	"spell/shared/util/platform/private/isBrowser",
+	function() {
+		"use strict"
+
+
+		return !!( typeof window !== "undefined" && navigator && document )
+	}
+)
+
+define(
+	"spell/shared/util/platform/private/graphics/flash/Flash2dRenderingFactory",
+	function() {
+
+		var createCanvasContext = function() {
+			throw "Creating a 2d flash renderer is not valid in this context"
+		}
+
+		var renderingFactory = {
+			createContext2d : createCanvasContext
+		}
+
+
+		return renderingFactory
+	}
+)
+
+define(
+	"spell/shared/util/platform/private/graphics/Viewporter",
+	function () {
+        "use strict"
+
+		var viewporter   = {}
+
+		viewporter.renderViewport = function ( onScreenResized ) {
+			var createViewportMetaTag = function( initialScale ) {
+				var meta = document.createElement( 'meta' )
+				meta.name    = 'viewport'
+				meta.content = 'width=device-width; initial-scale=' + initialScale + '; maximum-scale=' + initialScale + '; user-scalable=0;'
+
+				return meta
+			}
+
+			var getOffset = function( element ) {
+				var box = element.getBoundingClientRect()
+
+				var body    = document.body
+				var docElem = document.documentElement
+
+				var scrollTop  = window.pageYOffset || docElem.scrollTop || body.scrollTop
+				var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft
+
+				var clientTop  = docElem.clientTop || body.clientTop || 0
+				var clientLeft = docElem.clientLeft || body.clientLeft || 0
+
+				var top  = box.top + scrollTop - clientTop
+				var left = box.left + scrollLeft - clientLeft
+
+				return [ Math.round( left ), Math.round( top ) ]
+			}
+
+			var publishScreenResizedEvent = function() {
+				var offset = getOffset( document.getElementById( 'spell-canvas' ) )
+				var width  = window.innerWidth - offset[ 0 ]
+				var height = window.innerHeight - offset[ 1 ]
+
+				onScreenResized( width, height )
+			}
+
+
+			if( navigator.userAgent.match( /iPhone/i ) ||
+				navigator.userAgent.match( /iPod/i ) ) {
+
+				document.getElementsByTagName( 'head' )[ 0 ].appendChild( createViewportMetaTag( '0.5' ) )
+
+			} else if( navigator.userAgent.match( /iPad/i ) ) {
+
+				document.getElementsByTagName( 'head' )[ 0 ].appendChild( createViewportMetaTag( '1.0' ) )
+			}
+
+
+			// initialize viewporter object
+			viewporter = {
+
+				// options
+				forceDetection: false,
+
+				// constants
+				ACTIVE: (('ontouchstart' in window) || (/webos/i).test(navigator.userAgent)),
+				READY: false,
+
+				// methods
+				isLandscape: function() {
+					return window.orientation === 90 || window.orientation === -90
+				},
+
+				ready: function(callback) {
+					window.addEventListener('viewportready', callback, false)
+				}
+
+			}
+
+			// if we are on Desktop, no need to go further
+			if (!viewporter.ACTIVE) {
+				window.onresize = publishScreenResizedEvent
+				publishScreenResizedEvent()
+
+				return
+			}
+
+			// create private constructor with prototype..just looks cooler
+			var _Viewporter = function() {
+
+                var that = this
+
+				this.IS_ANDROID = /Android/.test(navigator.userAgent)
+
+				var _onReady = function() {
+
+					// scroll the shit away and fix the viewport!
+					that.prepareVisualViewport()
+
+					// listen for orientation change
+					var cachedOrientation = window.orientation;
+					window.addEventListener('orientationchange', function() {
+						if(window.orientation != cachedOrientation) {
+							that.prepareVisualViewport()
+							cachedOrientation = window.orientation
+						}
+					}, false)
+
+				}
+
+
+				// listen for document ready if not already loaded
+				// then try to prepare the visual viewport and start firing custom events
+				_onReady()
+
+			}
+
+			_Viewporter.prototype = {
+
+				getProfile: function() {
+
+					if(viewporter.forceDetection) {
+						return null
+					}
+
+					for(var searchTerm in viewporter.profiles) {
+						if(new RegExp(searchTerm).test(navigator.userAgent)) {
+							return viewporter.profiles[searchTerm]
+						}
+					}
+					return null
+				},
+
+				postProcess: function(  ) {
+					// let everyone know we're finally ready
+					viewporter.READY = true
+
+					this.triggerWindowEvent(!this._firstUpdateExecuted ? 'viewportready' : 'viewportchange')
+					this._firstUpdateExecuted = true
+
+                    publishScreenResizedEvent()
+				},
+
+				prepareVisualViewport: function( ) {
+
+					var that = this
+
+					// if we're running in webapp mode (iOS), there's nothing to scroll away
+					if(navigator.standalone) {
+						return this.postProcess()
+					}
+
+					// maximize the document element's height to be able to scroll away the url bar
+					document.documentElement.style.minHeight = '5000px'
+
+					var startHeight = window.innerHeight
+					var deviceProfile = this.getProfile()
+					var orientation = viewporter.isLandscape() ? 'landscape' : 'portrait'
+
+					// try scrolling immediately
+					window.scrollTo(0, that.IS_ANDROID ? 1 : 0) // Android needs to scroll by at least 1px
+
+					// start the checker loop
+					var iterations = this.IS_ANDROID && !deviceProfile ? 20 : 5 // if we're on Android and don't know the device, brute force hard
+					var check = window.setInterval(function() {
+
+						// retry scrolling
+						window.scrollTo(0, that.IS_ANDROID ? 1 : 0) // Android needs to scroll by at least 1px
+
+						if(
+							that.IS_ANDROID
+								? (deviceProfile ? window.innerHeight === deviceProfile[orientation] : --iterations < 0) // Android: either match against a device profile, or brute force
+								: (window.innerHeight > startHeight || --iterations < 0) // iOS is comparably easy!
+						) {
+                            clearInterval(check)
+
+							// set minimum height of content to new window height
+							document.documentElement.style.minHeight = window.innerHeight + 'px'
+
+                            if( !document.getElementById('spell') ) throw "Viewport element Missing"
+
+                            // set the right height for the body wrapper to allow bottom positioned elements
+                            document.getElementById('spell').style.position = 'relative'
+                            document.getElementById('spell').style.height = window.innerHeight + 'px'
+
+							// fire events, get ready
+							that.postProcess( )
+
+						}
+
+					}, 10)
+
+				},
+
+				triggerWindowEvent: function(name) {
+					var event = document.createEvent("Event")
+					event.initEvent(name, false, false)
+					window.dispatchEvent(event)
+				}
+
+			};
+
+			// initialize
+			new _Viewporter()
+
+		}
+
+		viewporter.profiles = {
+
+			// Motorola Xoom
+			'MZ601': {
+				portrait: 696,
+				landscape: 1176
+			},
+
+			// Samsung Galaxy S, S2 and Nexus S
+			'GT-I9000|GT-I9100|Nexus S': {
+				portrait: 508,
+				landscape: 295
+			},
+
+			// Samsung Galaxy Pad
+			'GT-P1000': {
+				portrait: 657,
+				landscape: 400
+			},
+
+			// HTC Desire & HTC Desire HD
+			'Desire_A8181|DesireHD_A9191': {
+				portrait: 533,
+				landscape: 320
+			}
+
+		}
+
+		return viewporter
+	}
+)
+
+define(
+	"spell/shared/util/platform/private/createSocket",
+	function() {
+		"use strict"
+
+		return function( host ) {
+			var WebSocket = window.MozWebSocket || window.WebSocket
+			var socket = new WebSocket( "ws://" + host + "/", 'socketrocket-0.1');
+
+			return {
+				send: function( message ) {
+					socket.send( message )
+				},
+				setOnMessage: function( callback ) {
+					socket.onmessage = function( event ) {
+						callback( event.data )
+					}
+				},
+				setOnConnected: function( callback ) {
+					socket.onopen = function( event ) {
+						callback( event.data )
+					}
+				}
+			}
 		}
 	}
 )
 
 define(
-	"glmatrix/mat4",
+	"spell/shared/util/platform/private/createLoader",
+	[
+		'spell/shared/util/platform/underscore'
+	],
+	function(
+		_
+	) {
+		"use strict"
+
+		return function( constructor, eventManager, host, resourceBundleName, resourceUri, loadingCompletedCallback, timedOutCallback, soundManager ) {
+			if( constructor === undefined )              throw 'Argument 1 is missing.'
+			if( eventManager === undefined )             throw 'Argument 2 is missing.'
+			if( host === undefined )                     throw 'Argument 3 is missing.'
+			if( resourceBundleName === undefined )       throw 'Argument 4 is missing.'
+			if( resourceUri === undefined )              throw 'Argument 5 is missing.'
+			if( loadingCompletedCallback === undefined ) throw 'Argument 6 is missing.'
+			if( timedOutCallback === undefined )         throw 'Argument 7 is missing.'
+
+			return new constructor(
+				eventManager,
+				host,
+				resourceBundleName,
+				resourceUri,
+				loadingCompletedCallback,
+				timedOutCallback,
+                soundManager
+			)
+		}
+	}
+)
+
+define(
+	"spell/shared/util/platform/private/graphics/createCanvasNode",
+	function() {
+		return function( id, width, height ) {
+			var container = document.getElementById( id )
+
+			if( !container ) throw 'Could not find a container with the id "spell" in the DOM tree.'
+
+
+			var canvas = document.createElement( "canvas" )
+				canvas.id     = 'spell-canvas'
+				canvas.width  = width
+				canvas.height = height
+
+			container.appendChild( canvas )
+
+			return canvas
+		}
+	}
+)
+
+define(
+	"glmatrix/mat3",
 	[
 		"glmatrix/glmatrix"
 	],
 	function(
 		glmatrix
 	) {
-		return glmatrix.mat4
+		return glmatrix.mat3
+	}
+)
+
+define(
+	"spell/shared/util/platform/private/graphics/webgl/shaders",
+	function() {
+		return {
+			vertex: [
+				"attribute vec3 aVertexPosition;",
+				"attribute vec2 aTextureCoord;",
+
+				"uniform mat4 uScreenSpaceShimMatrix;",
+				"uniform mat4 uModelViewMatrix;",
+				"uniform mat3 uTextureMatrix;",
+
+				"varying vec2 vTextureCoord;",
+
+
+				"void main( void ) {",
+					"vTextureCoord = ( uTextureMatrix * vec3( aTextureCoord, 1.0 ) ).st;",
+					"gl_Position = uScreenSpaceShimMatrix * uModelViewMatrix * vec4( aVertexPosition, 1.0 );",
+				"}"
+			].join( "\n" ),
+
+			fragment: [
+				"precision mediump float;",
+
+				"uniform sampler2D uTexture0;",
+				"uniform vec4 uGlobalColor;",
+				"uniform float uGlobalAlpha;",
+				"uniform bool uFillRect;",
+
+				"varying vec2 vTextureCoord;",
+
+
+				"void main( void ) {",
+					"if( !uFillRect ) {",
+					"	vec4 color = texture2D( uTexture0, vTextureCoord );",
+					"	gl_FragColor = color * uGlobalColor * vec4( 1.0, 1.0, 1.0, uGlobalAlpha );",
+
+					"} else {",
+					"	gl_FragColor = uGlobalColor * vec4( 1.0, 1.0, 1.0, uGlobalAlpha );",
+					"}",
+				"}"
+			].join( "\n" )
+		}
+	}
+)
+
+define(
+	"spell/shared/util/platform/private/graphics/webgl/createContext",
+	[
+		'spell/shared/util/platform/underscore'
+	],
+	function(
+		_
+	) {
+		"use strict"
+
+
+		var gl
+
+		/**
+		 * Returns a rendering context. Performs some probing to account for different runtime environments.
+		 *
+		 * @param canvas
+		 */
+		var createContext = function( canvas ) {
+			var gl = null
+			var contextNames = [ "webgl", "experimental-webgl", "webkit-3d", "moz-webgl" ]
+			var attributes = {
+				alpha: false
+			}
+
+			_.find(
+				contextNames,
+				function( it ) {
+					gl = canvas.getContext( it, attributes )
+
+					return ( gl !== null )
+				}
+			)
+
+			return gl
+		}
+
+		return createContext
+	}
+)
+
+define(
+	'spell/shared/util/platform/private/graphics/webgl/createWebGlContext',
+	[
+		'spell/shared/util/platform/private/graphics/StateStack',
+		'spell/shared/util/platform/private/graphics/webgl/createContext',
+		'spell/shared/util/platform/private/graphics/webgl/shaders',
+
+		'spell/shared/util/color',
+		'spell/shared/util/math',
+		'spell/shared/util/platform/private/createNativeFloatArray',
+
+		'glmatrix/vec3',
+		'glmatrix/mat3',
+		'glmatrix/mat4'
+	],
+	function(
+		StateStack,
+		createContext,
+		shaders,
+
+		color,
+		math,
+		createNativeFloatArray,
+
+		vec3,
+		mat3,
+		mat4
+	) {
+		'use strict'
+
+
+		/**
+		 * private
+		 */
+
+		var gl
+		var stateStack   = new StateStack( 32 )
+		var currentState = stateStack.getTop()
+
+		var screenSpaceShimMatrix = mat4.create()
+		var shaderProgram
+
+		// view space to screen space transformation matrix
+		var viewToScreen = mat4.create()
+		mat4.identity( viewToScreen )
+
+		// world space to view space transformation matrix
+		var worldToView = mat4.create()
+		mat4.identity( worldToView )
+
+		// accumulated transformation world space to screen space transformation matrix
+		var worldToScreen = mat4.create()
+		mat4.identity( worldToScreen )
+
+		var tmpMatrix     = mat4.create(),
+			textureMatrix = mat3.create()
+
+
+		/**
+		 * Creates a projection matrix that normalizes the transformation behaviour to that of the normalized canvas-2d (that is origin is in bottom left,
+		 * positive x-axis to the right, positive y-axis up, screen space coordinates as input. The matrix transforms from screen space to clip space.
+		 *
+		 * @param width
+		 * @param height
+		 * @param resultMatrix
+		 */
+		var createScreenSpaceShimMatrix = function( width, height, resultMatrix ) {
+			mat4.identity( resultMatrix )
+
+			mat4.ortho(
+				0,
+				width,
+				0,
+				height,
+				0,
+				1000,
+				resultMatrix
+			)
+		}
+
+		var createViewToScreenMatrix = function( width, height, resultMatrix ) {
+			mat4.identity( resultMatrix )
+
+			resultMatrix[ 0 ] = width * 0.5
+			resultMatrix[ 5 ] = height * 0.5
+			resultMatrix[ 12 ] = 0 + width * 0.5
+			resultMatrix[ 13 ] = 0 + height * 0.5
+
+			return resultMatrix
+		}
+
+		var initWrapperContext = function() {
+			viewport( 0, 0, gl.canvas.width, gl.canvas.height )
+
+			// gl initialization
+			gl.clearColor( 0.0, 0.0, 0.0, 1.0 )
+			gl.clear( gl.COLOR_BUFFER_BIT )
+
+			// setting up blending
+			gl.enable( gl.BLEND )
+			gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA )
+
+			gl.disable( gl.DEPTH_TEST )
+
+			gl.activeTexture( gl.TEXTURE0 )
+
+			setupShader()
+		}
+
+		/**
+		 * Creates a wrapper context for the backend context.
+		 */
+		var createWrapperContext = function() {
+			initWrapperContext()
+
+			return {
+				clear             : clear,
+				createTexture     : createWebGlTexture,
+				drawTexture       : drawTexture,
+				drawSubTexture    : drawSubTexture,
+				fillRect          : fillRect,
+				getConfiguration  : getConfiguration,
+				resizeColorBuffer : resizeColorBuffer,
+				restore           : restore,
+				rotate            : rotate,
+				save              : save,
+				scale             : scale,
+				setClearColor     : setClearColor,
+				setFillStyleColor : setFillStyleColor,
+				setGlobalAlpha    : setGlobalAlpha,
+				setTransform      : setTransform,
+				setViewMatrix     : setViewMatrix,
+				transform         : transform,
+				translate         : translate,
+				viewport          : viewport
+			}
+		}
+
+		/**
+		 * Returns a rendering context. Once a context has been created additional calls to this method return the same context instance.
+		 *
+		 * @param canvas - the canvas dom element
+		 */
+		var createWebGlContext = function( canvas ) {
+			if( canvas === undefined ) throw 'Missing first argument.'
+
+			if( gl !== undefined ) return gl
+
+
+			gl = createContext( canvas )
+
+			if( gl === null ) return null
+
+
+			return createWrapperContext()
+		}
+
+		var setupShader = function() {
+			shaderProgram = gl.createProgram()
+
+			var vertexShader = gl.createShader( gl.VERTEX_SHADER )
+			gl.shaderSource( vertexShader, shaders.vertex )
+			gl.compileShader (vertexShader )
+			gl.attachShader( shaderProgram, vertexShader )
+
+			var fragmentShader = gl.createShader( gl.FRAGMENT_SHADER )
+			gl.shaderSource( fragmentShader, shaders.fragment )
+			gl.compileShader( fragmentShader )
+			gl.attachShader( shaderProgram, fragmentShader )
+
+			gl.linkProgram( shaderProgram )
+			gl.useProgram( shaderProgram )
+
+
+			// setting up vertices
+			var vertices = createNativeFloatArray( 12 )
+			vertices[ 0 ]  = 0.0
+			vertices[ 1 ]  = 0.0
+			vertices[ 2 ]  = 0.0
+			vertices[ 3 ]  = 1.0
+			vertices[ 4 ]  = 0.0
+			vertices[ 5 ]  = 0.0
+			vertices[ 6 ]  = 0.0
+			vertices[ 7 ]  = 1.0
+			vertices[ 8 ]  = 0.0
+			vertices[ 9 ]  = 1.0
+			vertices[ 10 ] = 1.0
+			vertices[ 11 ] = 0.0
+
+
+			var vertexPositionBuffer = gl.createBuffer()
+			gl.bindBuffer( gl.ARRAY_BUFFER, vertexPositionBuffer )
+			gl.bufferData( gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW )
+
+
+			var attributeLocation = gl.getAttribLocation( shaderProgram, 'aVertexPosition' )
+			gl.vertexAttribPointer( attributeLocation, 3, gl.FLOAT, false, 0, 0 )
+			gl.enableVertexAttribArray( attributeLocation )
+
+
+			// setting up texture coordinates
+			var textureCoordinates = createNativeFloatArray( 8 )
+			textureCoordinates[ 0 ] = 0.0
+			textureCoordinates[ 1 ] = 0.0
+			textureCoordinates[ 2 ] = 1.0
+			textureCoordinates[ 3 ] = 0.0
+			textureCoordinates[ 4 ] = 0.0
+			textureCoordinates[ 5 ] = 1.0
+			textureCoordinates[ 6 ] = 1.0
+			textureCoordinates[ 7 ] = 1.0
+
+
+			var textureCoordinateBuffer = gl.createBuffer()
+			gl.bindBuffer( gl.ARRAY_BUFFER, textureCoordinateBuffer )
+			gl.bufferData( gl.ARRAY_BUFFER, textureCoordinates, gl.STATIC_DRAW )
+
+			attributeLocation = gl.getAttribLocation( shaderProgram, 'aTextureCoord' )
+			gl.vertexAttribPointer( attributeLocation, 2, gl.FLOAT, false, 0, 0 )
+			gl.enableVertexAttribArray( attributeLocation )
+
+
+			// setting up screen space shim matrix
+			var uniformLocation = gl.getUniformLocation( shaderProgram, 'uScreenSpaceShimMatrix' )
+			gl.uniformMatrix4fv( uniformLocation, false, screenSpaceShimMatrix )
+
+
+			// setting up texture matrix
+			resetTextureMatrix( textureMatrix )
+		}
+
+
+		var isTextureMatrixIdentity = false
+
+		var resetTextureMatrix = function( matrix ) {
+			if( isTextureMatrixIdentity ) return
+
+
+			matrix[ 0 ] = 1.0
+			matrix[ 4 ] = 1.0
+			matrix[ 6 ] = 0.0
+			matrix[ 7 ] = 0.0
+
+			gl.uniformMatrix3fv( gl.getUniformLocation( shaderProgram, 'uTextureMatrix' ), false, matrix )
+		}
+
+		var updateTextureMatrix = function( ss, st, tt, ts, matrix ) {
+			isTextureMatrixIdentity = false
+
+			matrix[ 0 ] = ss
+			matrix[ 4 ] = st
+			matrix[ 6 ] = tt
+			matrix[ 7 ] = ts
+
+			gl.uniformMatrix3fv( gl.getUniformLocation( shaderProgram, 'uTextureMatrix' ), false, matrix )
+		}
+
+
+		/**
+		 * public
+		 */
+
+		var save = function() {
+			stateStack.pushState()
+			currentState = stateStack.getTop()
+		}
+
+		var restore = function() {
+			stateStack.popState()
+			currentState = stateStack.getTop()
+		}
+
+		var setFillStyleColor = function( vec ) {
+			currentState.color = color.createRgba( vec )
+		}
+
+		var setGlobalAlpha = function( u ) {
+			currentState.opacity = u
+		}
+
+		var setClearColor = function( vec ) {
+			gl.clearColor( vec[ 0 ], vec[ 1 ], vec[ 2 ], 1.0 )
+		}
+
+		var scale = function( vec ) {
+			mat4.scale( currentState.matrix, vec )
+		}
+
+		var translate = function( vec ) {
+			mat4.translate( currentState.matrix, vec )
+		}
+
+		var rotate = function( u ) {
+			mat4.rotateZ( currentState.matrix, -u )
+		}
+
+		/**
+		 * Clears the color buffer with the clear color
+		 */
+		var clear = function() {
+			gl.clear( gl.COLOR_BUFFER_BIT )
+		}
+
+		var drawTexture = function( texture, dx, dy, dw, dh ) {
+			if( texture === undefined ) throw 'Texture is undefined'
+
+
+			if( !dw ) dw = 1.0
+			if( !dh ) dh = 1.0
+
+			// setting up fillRect mode
+			var uniformLocation = gl.getUniformLocation( shaderProgram, 'uFillRect' )
+			gl.uniform1i( uniformLocation, 0 )
+
+			// setting up global alpha
+			gl.uniform1f( gl.getUniformLocation( shaderProgram, 'uGlobalAlpha' ), currentState.opacity )
+
+			// setting up global color
+			gl.uniform4fv( gl.getUniformLocation( shaderProgram, 'uGlobalColor' ), currentState.color )
+
+			// setting up texture
+			gl.bindTexture( gl.TEXTURE_2D, texture.privateGlTextureResource )
+			uniformLocation = gl.getUniformLocation( shaderProgram, 'uTexture0' )
+			gl.uniform1i( uniformLocation, 0 )
+
+			// setting up transformation
+			mat4.multiply( worldToScreen, currentState.matrix, tmpMatrix )
+
+			// rotating the image so that it is not upside down
+			mat4.translate( tmpMatrix, [ dx, dy, 0 ] )
+			mat4.rotateZ( tmpMatrix, Math.PI )
+			mat4.scale( tmpMatrix, [ -dw, dh, 0 ] )
+			mat4.translate( tmpMatrix, [ 0, -1, 0 ] )
+
+			gl.uniformMatrix4fv( gl.getUniformLocation( shaderProgram, 'uModelViewMatrix' ), false, tmpMatrix )
+
+			// setting up the texture matrix
+			resetTextureMatrix( textureMatrix )
+
+			// drawing
+			gl.drawArrays( gl.TRIANGLE_STRIP, 0, 4 )
+		}
+
+		var drawSubTexture = function( texture, sx, sy, sw, sh, dx, dy, dw, dh ) {
+			if( texture === undefined ) throw 'Texture is undefined'
+
+
+			if( !dw ) dw = 1.0
+			if( !dh ) dh = 1.0
+
+			// setting up fillRect mode
+			var uniformLocation = gl.getUniformLocation( shaderProgram, 'uFillRect' )
+			gl.uniform1i( uniformLocation, 0 )
+
+			// setting up global alpha
+			gl.uniform1f( gl.getUniformLocation( shaderProgram, 'uGlobalAlpha' ), currentState.opacity )
+
+			// setting up global color
+			gl.uniform4fv( gl.getUniformLocation( shaderProgram, 'uGlobalColor' ), currentState.color )
+
+			// setting up texture
+			gl.bindTexture( gl.TEXTURE_2D, texture.privateGlTextureResource )
+			uniformLocation = gl.getUniformLocation( shaderProgram, 'uTexture0' )
+			gl.uniform1i( uniformLocation, 0 )
+
+			// setting up transformation
+			mat4.multiply( worldToScreen, currentState.matrix, tmpMatrix )
+
+			// rotating the image so that it is not upside down
+			mat4.translate( tmpMatrix, [ dx, dy, 0 ] )
+			mat4.rotateZ( tmpMatrix, Math.PI )
+			mat4.scale( tmpMatrix, [ -dw, dh, 0 ] )
+			mat4.translate( tmpMatrix, [ 0, -1, 0 ] )
+
+			gl.uniformMatrix4fv( gl.getUniformLocation( shaderProgram, 'uModelViewMatrix' ), false, tmpMatrix )
+
+			// setting up the texture matrix
+			var tw = texture.width,
+				th = texture.height
+
+			updateTextureMatrix(
+				sw / tw,
+				sh / th,
+				sx / tw,
+				sy / th,
+				textureMatrix
+			)
+
+			// drawing
+			gl.drawArrays( gl.TRIANGLE_STRIP, 0, 4 )
+		}
+
+		var fillRect = function( dx, dy, dw, dh ) {
+			// setting up fillRect mode
+			var uniformLocation = gl.getUniformLocation( shaderProgram, 'uFillRect' )
+			gl.uniform1i( uniformLocation, 1 )
+
+			// setting up global alpha
+			gl.uniform1f( gl.getUniformLocation( shaderProgram, 'uGlobalAlpha' ), currentState.opacity )
+
+			// setting up global color
+			gl.uniform4fv( gl.getUniformLocation( shaderProgram, 'uGlobalColor' ), currentState.color )
+
+			// setting up transformation
+			mat4.multiply( worldToScreen, currentState.matrix, tmpMatrix )
+
+			// correcting position
+			mat4.translate( tmpMatrix, [ dx, dy, 0 ] )
+			mat4.scale( tmpMatrix, [ dw, dh, 0 ] )
+
+			gl.uniformMatrix4fv( gl.getUniformLocation( shaderProgram, 'uModelViewMatrix' ), false, tmpMatrix )
+
+			// drawing
+			gl.drawArrays( gl.TRIANGLE_STRIP, 0, 4 )
+		}
+
+		var resizeColorBuffer = function( width, height ) {
+			gl.canvas.width  = width
+			gl.canvas.height = height
+
+			createViewToScreenMatrix( width, height, viewToScreen )
+			mat4.multiply( viewToScreen, worldToView, worldToScreen )
+		}
+
+		var transform = function( matrix ) {
+			mat4.multiply( currentState.matrix, matrix )
+		}
+
+		var setTransform = function( matrix ) {
+			mat4.set( matrix, currentState.matrix )
+		}
+
+		var setViewMatrix = function( matrix ) {
+			mat4.set( matrix, worldToView )
+			createViewToScreenMatrix( gl.canvas.width, gl.canvas.height, viewToScreen )
+			mat4.multiply( viewToScreen, worldToView, worldToScreen )
+		}
+
+		var viewport = function( x, y, width, height ) {
+			gl.viewport( x, y , width, height )
+
+			// reinitialize screen space shim matrix
+			createScreenSpaceShimMatrix( width, height, screenSpaceShimMatrix )
+
+			var uniformLocation = gl.getUniformLocation( shaderProgram, 'uScreenSpaceShimMatrix' )
+			gl.uniformMatrix4fv( uniformLocation, false, screenSpaceShimMatrix )
+		}
+
+		/**
+		 * Returns an object describing the current configuration of the rendering backend.
+		 */
+		var getConfiguration = function() {
+			return {
+				type   : 'webgl',
+				width  : gl.canvas.width,
+				height : gl.canvas.height
+			}
+		}
+
+		/**
+		 * Returns instance of texture class
+		 *
+		 * The public interface of the texture class consists of the two attributes width and height.
+		 *
+		 * @param image
+		 */
+		var createWebGlTexture = function( image ) {
+			var texture = gl.createTexture()
+			gl.bindTexture( gl.TEXTURE_2D, texture )
+			gl.texImage2D( gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image )
+			gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR )
+			gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE )
+			gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE )
+			gl.generateMipmap( gl.TEXTURE_2D )
+			gl.bindTexture( gl.TEXTURE_2D, null )
+
+
+			return {
+				/**
+				 * Public
+				 */
+				width  : image.width,
+				height : image.height,
+
+				/**
+				 * Private
+				 *
+				 * This is an implementation detail of the class. If you write code that depends on this you better know what you are doing.
+				 */
+				privateGlTextureResource : texture
+			}
+		}
+
+		return createWebGlContext
+	}
+)
+
+define(
+	"spell/shared/util/color",
+	[
+		"spell/shared/util/math",
+
+		"glmatrix/vec3",
+		'spell/shared/util/platform/underscore'
+	],
+	function(
+		MathHelper,
+
+		vec3,
+		_
+	) {
+		"use strict"
+
+
+		var toRange = function( value ) {
+			return Math.round( MathHelper.clamp( value, 0, 1 ) * 255 )
+		}
+
+
+		var createRgb = function( r, g, b ) {
+			return [ r, g, b ]
+		}
+
+
+		var createRgba = function( vec ) {
+			return ( vec.length === 4 ?
+				[ vec[ 0 ], vec[ 1 ], vec[ 2 ], vec[ 3 ] ] :
+				[ vec[ 0 ], vec[ 1 ], vec[ 2 ], 1.0 ] )
+		}
+
+
+		var createRandom = function() {
+			var primaryColorIndex = Math.round( Math.random() * 3 )
+			var colorVec = vec3.create( [ 0.8, 0.8, 0.8 ] )
+
+			for( var i = 0; i < colorVec.length; i++ ) {
+				if ( i === primaryColorIndex ) {
+					colorVec[ i ] = 0.95
+
+				} else {
+					colorVec[ i ] *= Math.random()
+				}
+			}
+
+			return colorVec
+		}
+
+
+		var formatCanvas = function( vec ) {
+			if( vec[ 3 ] === undefined ) {
+				return 'rgb('
+					+ toRange( vec[ 0 ] ) + ', '
+					+ toRange( vec[ 1 ] ) + ', '
+					+ toRange( vec[ 2 ] ) + ')'
+			}
+
+			return 'rgba('
+				+ toRange( vec[ 0 ] ) + ', '
+				+ toRange( vec[ 1 ] ) + ', '
+				+ toRange( vec[ 2 ] ) + ', '
+				+ toRange( vec[ 3 ] ) + ')'
+		}
+
+
+		var isVec3Color = function( vec ) {
+			return _.size( vec ) === 3
+		}
+
+
+		var isVec4Color = function( vec ) {
+			return _.size( vec ) === 4
+		}
+
+
+		return {
+			createRgb    : createRgb,
+			createRgba   : createRgba,
+			createRandom : createRandom,
+			formatCanvas : formatCanvas,
+			isVec3Color  : isVec3Color,
+			isVec4Color  : isVec4Color
+		}
 	}
 )
 
@@ -13518,29 +11141,48 @@ define(
 )
 
 define(
-	"spell/shared/util/platform/private/createSocket",
-	function() {
+	"spell/shared/util/platform/private/configurationOptions",
+	[
+		"spell/shared/util/platform/private/graphics/RenderingFactory"
+	],
+	function(
+		RenderingFactory
+	) {
 		"use strict"
 
-		return function( host ) {
-			var WebSocket = window.MozWebSocket || window.WebSocket
-			var socket = new WebSocket( "ws://" + host + "/", 'socketrocket-0.1');
 
-			return {
-				send: function( message ) {
-					socket.send( message )
-				},
-				setOnMessage: function( callback ) {
-					socket.onmessage = function( event ) {
-						callback( event.data )
-					}
-				},
-				setOnConnected: function( callback ) {
-					socket.onopen = function( event ) {
-						callback( event.data )
-					}
-				}
+		var extractRenderingBackEnd = function( validValues, value ) {
+			if( value === 'webgl' ) {
+				return RenderingFactory.BACK_END_WEBGL
+
+			} else if( value === 'canvas-2d' ) {
+				return RenderingFactory.BACK_END_CANVAS
 			}
+
+			return false
+		}
+
+		/**
+		 * These are the platform specific options.
+		 */
+		var validOptions = {
+			renderingBackEnd : {
+				validValues  : [ 'webgl', 'canvas-2d' ],
+				configurable : true,
+				extractor    : extractRenderingBackEnd
+			}
+		}
+
+		/**
+		 * These options are used when they are not overridden by the environment configuration set up by the stage-0-loader.
+		 */
+		var defaultOptions = {
+			renderingBackEnd : 'canvas-2d'
+		}
+
+		return {
+			defaultOptions : defaultOptions,
+			validOptions   : validOptions
 		}
 	}
 )
@@ -13611,99 +11253,191 @@ define(
 )
 
 define(
-	'spell/shared/util/platform/PlatformKit',
+	"spell/shared/util/platform/private/Time",
+	function() {
+		"use strict"
+
+		return {
+			/**
+			 * Returns the number of milliseconds since midnight January 1, 1970, UTC.
+			 */
+			getCurrentInMs: function() {
+				return Date.now()
+			}
+		}
+	}
+)
+
+define(
+	"spell/shared/util/platform/private/Input",
 	[
-		'spell/shared/util/platform/private/callNextFrame',
-		'spell/shared/util/platform/private/createSocket',
-		'spell/shared/util/platform/private/graphics/RenderingFactory',
-		'spell/shared/util/platform/private/registerTimer',
-		'spell/shared/util/platform/private/loader/ImageLoader',
-		'spell/shared/util/platform/private/loader/SoundLoader',
-		'spell/shared/util/platform/private/loader/TextLoader',
-		'spell/shared/util/platform/private/createLoader',
-		'spell/shared/util/platform/private/Input',
-		'spell/shared/util/platform/private/configurationOptions',
-		'spell/shared/util/platform/private/system/features',
-        'spell/shared/util/platform/private/graphics/Viewporter',
-		'spell/shared/util/platform/private/sound/SoundManager',
-		'spell/shared/util/math',
+		"spell/shared/util/input/keyCodes",
+		"spell/shared/util/math",
 
 		'spell/shared/util/platform/underscore'
 	],
 	function(
-		callNextFrame,
-		createSocket,
-		RenderingFactory,
-		registerTimer,
-		ImageLoader,
-		SoundLoader,
-		TextLoader,
-		createLoader,
-		Input,
-		configurationOptions,
-		features,
-        Viewporter,
-		SoundManager,
+		keyCodes,
 		math,
 
 		_
 	) {
-		'use strict'
+		"use strict"
 
 
-		var getHost = function() {
-			return document.location.host
+		/**
+		 * private
+		 */
+		var isEventSupported = function( eventName ) {
+			return _.has( nativeEventMap, eventName )
 		}
 
-		var getPlatformInfo = function() {
-			return 'html5'
+		function getScreenOffset() {
+			return getOffset( document.getElementById( 'spell-canvas' ) )
 		}
 
-		var getJson = function() {
-			return {
-				encode : _.bind( JSON.stringify, JSON ),
-				decode : _.bind( JSON.parse, JSON )
+		function getOffset( element ) {
+			var box = element.getBoundingClientRect()
+
+			var body    = document.body
+			var docElem = document.documentElement
+
+			var scrollTop  = window.pageYOffset || docElem.scrollTop || body.scrollTop
+			var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft
+
+			var clientTop  = docElem.clientTop || body.clientTop || 0
+			var clientLeft = docElem.clientLeft || body.clientLeft || 0
+
+			var top  = box.top + scrollTop - clientTop
+			var left = box.left + scrollLeft - clientLeft
+
+			return [ Math.round( left ), Math.round( top ) ]
+		}
+
+		var nativeTouchHandler = function( callback, event ) {
+			event.stopPropagation()
+			event.preventDefault()
+
+			var touch = event.changedTouches[ 0 ]
+			var offset = getScreenOffset()
+			var screenSize = this.configurationManager.screenSize
+
+			var position = [
+				( touch.pageX - offset[ 0 ] ) / screenSize.width,
+				( touch.pageY - offset[ 1 ] ) / screenSize.height
+			]
+
+			// if the event missed the display it gets ignored
+			if( !math.isInInterval( position[ 0 ], 0.0, 1.0 ) ||
+				!math.isInInterval( position[ 1 ], 0.0, 1.0 ) ) {
+
+				return
 			}
+
+			callback( {
+				type     : event.type,
+				position : position
+			} )
 		}
 
-		var createInput = function( eventManager, Events ) {
-			return new Input( eventManager, Events )
+		var nativeKeyHandler = function( callback, event ) {
+			if( event.keyCode === keyCodes[ 'space' ] ||
+				event.keyCode === keyCodes[ 'left arrow' ] ||
+				event.keyCode === keyCodes[ 'up arrow' ] ||
+				event.keyCode === keyCodes[ 'right arrow' ] ||
+				event.keyCode === keyCodes[ 'down arrow' ] ) {
+
+				event.preventDefault()
+			}
+
+			callback( event )
 		}
 
-        var registerOnScreenResize = function( callback ) {
-            Viewporter.renderViewport( callback )
+        var nativeMouseHandler = function( callback, event ) {
+            event.preventDefault()
+
+			var offset = getScreenOffset()
+			var screenSize = this.configurationManager.screenSize
+
+			var position = [
+				( event.pageX - offset[ 0 ] ) / screenSize.width,
+				( event.pageY - offset[ 1 ] ) / screenSize.height
+			]
+
+            // if the event missed the display it gets ignored
+            if( !math.isInInterval( position[ 0 ], 0.0, 1.0 ) ||
+                !math.isInInterval( position[ 1 ], 0.0, 1.0 ) ) {
+
+                return
+            }
+
+            callback( {
+                type     : event.type,
+                position : position
+            } )
         }
 
-		var createSoundManager = function() {
-			return new SoundManager()
-		}
-
-		return {
-			callNextFrame          : callNextFrame,
-			registerTimer          : registerTimer,
-			createSocket           : createSocket,
-			createSoundManager     : createSoundManager,
-			RenderingFactory       : RenderingFactory,
-			getHost                : getHost,
-			configurationOptions   : configurationOptions,
-			getPlatformInfo        : getPlatformInfo,
-			getJsonCoder           : getJson,
-			createInput            : createInput,
-			features               : features,
-			registerOnScreenResize : registerOnScreenResize,
-
-			createImageLoader : function( eventManager, host, resourceBundleName, resourceUri, loadingCompletedcallback, timedOutCallback, renderingContext ) {
-				return createLoader( ImageLoader, eventManager, host, resourceBundleName, resourceUri, loadingCompletedcallback, timedOutCallback, renderingContext )
+		/**
+		 * maps the internal event name to to native event name and callback
+		 */
+		var nativeEventMap = {
+            touchstart : {
+                eventName : 'touchstart',
+                handler   : nativeTouchHandler
+            },
+            touchend : {
+                eventName : 'touchend',
+                handler   : nativeTouchHandler
+            },
+			mousedown : {
+				eventName : 'mousedown',
+				handler   : nativeMouseHandler
 			},
-
-			createSoundLoader : function( eventManager, host, resourceBundleName, resourceUri, loadingCompletedcallback, timedOutCallback, soundManager ) {
-				return createLoader( SoundLoader, eventManager, host, resourceBundleName, resourceUri, loadingCompletedcallback, timedOutCallback, soundManager )
+			mouseup : {
+				eventName : 'mouseup',
+				handler   : nativeMouseHandler
 			},
-
-			createTextLoader : function( eventManager, host, resourceBundleName, resourceUri, loadingCompletedcallback, timedOutCallback ) {
-				return createLoader( TextLoader, eventManager, host, resourceBundleName, resourceUri, loadingCompletedcallback, timedOutCallback )
+			keydown : {
+				eventName : 'keydown',
+				handler   : nativeKeyHandler
+			},
+			keyup : {
+				eventName : 'keyup',
+				handler   : nativeKeyHandler
 			}
 		}
+
+
+		/**
+		 * public
+		 */
+
+		var Input = function( configurationManager ) {
+			this.configurationManager = configurationManager
+		}
+
+		var setListener = function( eventName, callback ) {
+			if( !isEventSupported( eventName ) ) return
+
+			var nativeEvent = nativeEventMap[ eventName ]
+
+            document.body[ 'on' + nativeEvent.eventName ] = _.bind( nativeEvent.handler, this, callback )
+		}
+
+		var removeListener = function( eventName ) {
+			if( !isEventSupported( eventName ) ) return
+
+			var nativeEvent = nativeEventMap[ eventName ]
+
+            document.body[ 'on' + nativeEvent.eventName ] = null
+		}
+
+		Input.prototype = {
+			setInputEventListener    : setListener,
+			removeInputEventListener : removeListener
+		}
+
+		return Input
 	}
 )
 
