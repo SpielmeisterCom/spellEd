@@ -2,13 +2,18 @@ Ext.define('Spelled.controller.Scripts', {
     extend: 'Ext.app.Controller',
 
     views: [
+        'script.Create',
+        'script.FolderPicker',
         'script.Editor',
-//        'script.TreeList',
-        'script.Manager'
+        'script.TreeList',
+        'script.Manager',
+        'script.Navigator'
     ],
 
     stores: [
-        'Scripts'
+        'script.Scripts',
+        'script.Tree',
+        'script.FoldersTree'
     ],
 
     models: [
@@ -24,9 +29,150 @@ Ext.define('Spelled.controller.Scripts', {
 
     init: function() {
         this.control({
-
+            'scriptsnavigator': {
+                activate: this.showScripts
+            },
+            'scriptstreelist': {
+                itemdblclick:    this.openScript,
+                itemcontextmenu: this.showListContextMenu,
+                deleteclick:     this.deleteScriptActionIconClick,
+                itemmouseenter:  this.application.showActionsOnLeaf,
+                itemmouseleave:  this.application.hideActions
+            },
+            'scriptmanager [action="showCreateScript"]' : {
+                click: this.showCreateScript
+            },
+            'createscript button[action="createScript"]' : {
+                click: this.createScript
+            }
         })
+    },
+
+    deleteScriptActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
+        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
+
+        if( !node ) return
+
+        this.removeScript( node.get( 'id' ) )
+    },
+
+    removeScript: function( scriptId ) {
+        var editorTab = Ext.getCmp("ScriptEditor")
+
+        var Script = this.getScriptModel()
+
+        Script.load(
+            scriptId,
+            {
+                scope: this,
+                success: function( script ) {
+                    this.application.closeOpenedTabs( editorTab, script.get('name') )
+                    script.destroy()
+                    this.refreshStores()
+                }
+            }
+        )
+    },
+
+    openScript: function( treePanel, record ) {
+        if( !record.data.leaf ) return
+
+        var scriptEditor = Ext.getCmp('ScriptEditor'),
+            title        = record.internalId
+
+        var Script = this.getScriptModel()
+
+        var foundTab = this.application.findActiveTabByTitle( scriptEditor, title )
+
+        if( foundTab )
+            return foundTab
+
+        Script.load( record.internalId, {
+            scope: this,
+            success: function( script ) {
+
+                var View = this.getScriptEditorView()
+                var view = View.create( {
+                    title: script.get('name'),
+                    model: script
+                } )
+
+                this.application.createTab( scriptEditor, view )
+            }
+        })
+    },
+
+    showCreateScript: function() {
+        var View = this.getScriptCreateView()
+        var view = new View( )
+        view.show()
+    },
+
+    createScript: function( button ) {
+        var window = button.up( 'window' ),
+            form   = window.down('form').getForm(),
+            projectName = this.application.getActiveProject().get('name')
+
+        if( form.isValid() ){
+            form.submit(
+                {
+                    params: {
+                        projectName: projectName
+                    },
+                    waitMsg: 'Creating a new Script',
+                    success:
+                        Ext.bind(
+                            function( form, action ) {
+                                Ext.Msg.alert('Success', 'Your Script "' + action.result.data.name + '" has been created.')
+                                this.refreshStores()
+
+                                window.close()
+                            },
+                            this
+                        ),
+                    failure: function( form, action ) {
+                        Ext.Msg.alert('Failed', action.result)
+                    }
+                }
+            )
+        }
+    },
+
+    showListContextMenu: function( view, record, item, index, e, options ) {
+        this.application.getController('Menu').showScriptsListContextMenu( e )
+    },
+
+    loadTrees: function() {
+        var projectName = this.application.getActiveProject().get('name')
+
+        this.getScriptTreeStore().load( {
+            params: {
+                projectName: projectName
+            }
+        } )
+
+        this.getScriptFoldersTreeStore().load( {
+            params: {
+                projectName: projectName
+            }
+        } )
+    },
+
+    refreshStores: function() {
+        this.loadTrees()
+
+        this.getScriptScriptsStore().load()
+    },
+
+    showScripts : function( ) {
+        var mainPanel = this.getMainPanel()
+
+        Ext.each( mainPanel.items.items, function( panel ) {
+            panel.hide()
+        })
+
+        this.loadTrees()
+
+        Ext.getCmp('ScriptEditor').show()
     }
-
-
 });

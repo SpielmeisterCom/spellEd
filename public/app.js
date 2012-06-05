@@ -47,6 +47,7 @@ var startEditor = function() {
             'Components',
             'Assets',
             'Blueprints',
+            'Scripts',
             'blueprints.Components',
             'blueprints.Entities',
             'blueprints.Systems'
@@ -64,6 +65,16 @@ var startEditor = function() {
             tabPanel.setActiveTab( newPanel )
 
             return newPanel
+        },
+
+        closeOpenedTabs: function( tabPanel, title ) {
+            tabPanel.items.each(
+                function( tab ) {
+                    if( tab.title === title ) {
+                        tab.destroy()
+                    }
+                }
+            )
         },
 
         findActiveTabByTitle: function( tabPanel, title ) {

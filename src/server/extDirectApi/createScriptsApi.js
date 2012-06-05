@@ -25,26 +25,24 @@ define(
             var util = createUtil( root )
 
             var create = function( req, res, payload ) {
-
                 var scriptName = payload.name,
-                    folder     = ( payload.folder === "root" ) ? root + payload.projectName + scriptPathPart : payload.folder
-
-
-                var baseName = scriptName +".js"
-
+                    folder     = ( payload.folder === "root" ) ? root + payload.projectName + scriptPathPart : payload.folder,
+                    filePath   = folder + "/" + scriptName + ".js"
 
                 var namespace = util.extractNamespaceFromPath( folder, scriptPathPart )
 
-                var name = ( namespace.length > 0 ) ? namespace + "/" + baseName : baseName
+                var name = ( namespace.length > 0 ) ? namespace + "/" + scriptName : scriptName
+                var content = amdHelper.createModuleHeader( name )
 
-                util.writeFile( baseName, "", false )
+                util.writeFile( filePath, content, false )
 
                 return {
                     success: true,
                     data: {
+                        id: namespace,
                         name: name,
-                        content : "",
-                        path: baseName
+                        content : content,
+                        path: filePath
                     }
                 }
             }
@@ -52,7 +50,29 @@ define(
             var read = function( req, res, payload ) {
                 if( !! payload[0].id ) {
                     var id = payload[0].id
+
                     var response = amdHelper.loadModules( root + "/**/" + scriptPathPart )
+
+                    //A Treelist sends the path to the JS file not the moduleId
+                    if( path.extname( id ) === ".js" ) {
+
+                        var keys = _.keys( response )
+
+                        var result = {}
+                        _.each(
+                            keys,
+                            function( key ) {
+                                if( response[ key ].path === id ) {
+                                    result.name    = key
+                                    result.content = response[ key ].source
+                                    result.path    = id
+                                }
+                            }
+                        )
+
+                        return result
+                    }
+
                     if( !_.has( response, id ) ) return {}
 
                     return {
@@ -78,13 +98,17 @@ define(
             }
 
             var destroy = function( req, res, payload ) {
-                return false
+                var model = payload[0]
+
+                if( _.has( model, 'path' ) && _.has( model, 'content') ) {
+                    return util.deleteFile( model.path )
+                }
             }
 
             var getTree = function( req, res, payload, next ) {
                 var tmpPath = root + payload[1] + scriptPathPart
 
-                return util.listing(tmpPath, true, req, res, payload, next)
+                return util.listing(tmpPath, false, req, res, payload, next)
             }
 
             var getAll = function( req, res, payload ) {

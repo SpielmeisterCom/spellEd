@@ -36,6 +36,10 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                         {
                             id: "Blueprints",
                             xtype: "blueprintsnavigator"
+                        },
+                        {
+                            id: "Scripts",
+                            xtype: "scriptsnavigator"
                         }
                     ]
                 },
@@ -56,6 +60,10 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                         {
                             id: "BlueprintEditor",
                             xtype: "blueprinteditor"
+                        },
+                        {
+                            id: "ScriptEditor",
+                            xtype: "scriptmanager"
                         }
                     ]
                 },

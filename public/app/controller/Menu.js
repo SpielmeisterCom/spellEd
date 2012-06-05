@@ -6,6 +6,7 @@ Ext.define('Spelled.controller.Menu', {
         'menu.contextmenu.ZonesList',
         'menu.contextmenu.EntitiesList',
         'menu.contextmenu.AssetsList',
+        'menu.contextmenu.ScriptsList',
         'menu.contextmenu.BlueprintsList',
         'menu.contextmenu.ComponentBlueprintAttributesList',
         'menu.contextmenu.EntityBlueprintComponentsList',
@@ -43,6 +44,14 @@ Ext.define('Spelled.controller.Menu', {
 
             'systemblueprintinputcontextmenu [action="remove"]': {
                 click: this.removeSystemInput
+            },
+
+
+            'scriptslistcontextmenu [action="create"]': {
+                click: this.showCreateScript
+            },
+            'scriptslistcontextmenu [action="remove"]': {
+                click: this.removeScript
             },
 
 
@@ -99,6 +108,13 @@ Ext.define('Spelled.controller.Menu', {
         view.showAt( event.getXY() )
 
         return view
+    },
+
+    showScriptsListContextMenu: function( e ) {
+        this.createAndShowView(
+            this.getMenuContextmenuScriptsListView(),
+            e
+        )
     },
 
     showSystemBlueprintInputListContextMenu: function( e ) {
@@ -173,6 +189,19 @@ Ext.define('Spelled.controller.Menu', {
             } else {
                 this.application.getController('blueprints.Entities').removeEntityBlueprint( node.get('id') )
             }
+        }
+    },
+
+    showCreateScript: function( ) {
+        this.application.getController( 'Scripts').showCreateScript( )
+    },
+
+    removeScript: function( ) {
+        var tree = Ext.getCmp( 'ScriptsTree'),
+            node = tree.getSelectionModel().getLastSelected()
+
+        if( node && node.isLeaf() ) {
+            this.application.getController( 'Scripts' ).removeScript( node.get('id') )
         }
     },
 

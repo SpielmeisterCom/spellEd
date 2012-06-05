@@ -18,7 +18,7 @@ Ext.define('Spelled.controller.blueprints.Systems', {
     stores: [
         'blueprint.Systems',
         'blueprint.SystemInputDefinitions',
-        'Scripts'
+        'script.Scripts'
     ],
 
     refs: [
