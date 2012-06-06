@@ -1,53 +1,75 @@
 Ext.define('Spelled.controller.blueprints.Systems', {
-    extend: 'Ext.app.Controller',
+	extend: 'Ext.app.Controller',
 
-    views: [
-        'blueprint.system.Edit',
-        'blueprint.system.Details',
-        'blueprint.system.Input',
-        'blueprint.system.input.Add',
-        'script.Editor'
-    ],
+	views: [
+		'blueprint.system.Edit',
+		'blueprint.system.Details',
+		'blueprint.system.Input',
+		'blueprint.system.input.Add',
+		'script.Editor'
+	],
 
-    models: [
-        'blueprint.System',
-        'blueprint.SystemInputDefinition',
-        'Script'
-    ],
+	models: [
+		'blueprint.System',
+		'blueprint.SystemInputDefinition',
+		'Script'
+	],
 
-    stores: [
-        'blueprint.Systems',
-        'blueprint.SystemInputDefinitions',
-        'script.Scripts'
-    ],
+	stores: [
+		'blueprint.Systems',
+		'blueprint.SystemInputDefinitions',
+		'script.Scripts'
+	],
 
-    refs: [
-        {
-            ref : 'MainPanel',
-            selector: '#MainPanel'
-        }
-    ],
+	refs: [
+		{
+			ref : 'MainPanel',
+			selector: '#MainPanel'
+		}
+	],
 
-    init: function() {
-        this.control({
-            'systemblueprintinputlist': {
-                deleteclick:     this.deleteInputActionIconClick,
-                itemcontextmenu: this.showInputListContextMenu,
-                itemmouseenter:  this.application.showActionsOnFolder,
-                itemmouseleave:  this.application.hideActions
-            },
+	init: function() {
+		this.control({
+			'systemblueprintinputlist': {
+				deleteclick:     this.deleteInputActionIconClick,
+				itemcontextmenu: this.showInputListContextMenu,
+				itemmouseenter:  this.application.showActionsOnFolder,
+				itemmouseleave:  this.application.hideActions
+			},
 
-            'systemblueprintinputlist [action="showAddInput"]' : {
-                click: this.showAddInput
-            },
-            'addinputtoblueprint button[action="addInput"]' : {
-                click: this.addInput
-            },
-            'systemblueprintedit > panel button[action="saveBlueprint"]' : {
-                click: this.saveSystemBlueprint
-            }
-        })
-    },
+			'systemblueprintinputlist [action="showAddInput"]' : {
+				click: this.showAddInput
+			},
+			'addinputtoblueprint button[action="addInput"]' : {
+				click: this.addInput
+			},
+			'systemblueprintedit > panel button[action="saveBlueprint"]' : {
+				click: this.saveSystemBlueprint
+			},
+			'systemblueprintdetails > combobox[name="scriptId"]' : {
+				select: this.changeScript
+			}
+		})
+	},
+
+	changeScript: function( combo, records ) {
+		this.refreshScriptTab( combo.getValue() )
+	},
+
+	refreshScriptTab: function( scriptId ) {
+		var tab	   = Ext.getCmp("BlueprintEditor").getActiveTab(),
+			editor = tab.down('scripteditor'),
+			Script = this.getScriptModel()
+
+		Script.load(
+			scriptId, {
+				scope: this,
+				success: function( script ) {
+					editor.setModel( script )
+				}
+			}
+		)
+	},
 
     showInputListContextMenu: function( view, record, item, index, e, options ) {
         this.application.getController('Menu').showSystemBlueprintInputListContextMenu( e )
@@ -141,20 +163,9 @@ Ext.define('Spelled.controller.blueprints.Systems', {
 
         var tab = this.application.createTab( blueprintEditor, editView )
 
-        if( systemBlueprint.get('scriptId') ) {
-            var editor = tab.down('scripteditor')
-
-            var Script = this.getScriptModel()
-
-            Script.load(
-                systemBlueprint.get('scriptId'), {
-                    scope: this,
-                    success: function( script ) {
-                        editor.setModel( script )
-                    }
-                }
-            )
-        }
+		if( systemBlueprint.get('scriptId') ) {
+			this.refreshScriptTab( systemBlueprint.get('scriptId') )
+		}
 
         this.refreshSystemBlueprintInputList( tab )
     },
