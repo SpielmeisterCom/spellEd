@@ -27,7 +27,7 @@ Ext.define('Spelled.view.blueprint.system.Details', {
             fieldLabel: 'Script',
             displayField : 'name',
             valueField: 'name',
-            store: 'Scripts',
+            store: 'script.Scripts',
             name: 'scriptId'
         }
     ]
