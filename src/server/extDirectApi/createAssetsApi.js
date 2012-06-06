@@ -27,7 +27,7 @@ define(
             var createAsset = function( req, res, payload, next ) {
 
                 var assetName   = payload.name,
-                    folder      = ( payload.folder === "root" ) ? root + payload.projectName + assetPathPart : payload.folder,
+                    folder      = ( payload.folder === "root" ) ? path.join( root , payload.projectName , assetPathPart ) : payload.folder,
                     files       = payload.files,
                     type        = payload.type
 
@@ -67,7 +67,7 @@ define(
                 if( !! payload[0].id ) {
                     return util.readFile( payload[0].id )
                 } else {
-                    return getAll()
+                    return getAll( req, res, payload )
                 }
             }
 
@@ -91,7 +91,7 @@ define(
 
             var getTree = function( req, res, payload, next ) {
 
-                var tmpPath = root + payload[1] +  assetPathPart
+                var tmpPath = path.join( root , payload[1] , assetPathPart)
 
 
                 var result = util.listing( tmpPath, true, req, res, payload, next )
@@ -99,9 +99,10 @@ define(
                 return result
             }
 
-            var getAll = function( req, res, payload, next ) {
+            var getAll = function( req, res, payload ) {
+				var projectName = payload[0].projectName
 
-                return util.getDirFilesAsObjects( root )
+                return util.getDirFilesAsObjects( path.join( root , projectName , assetPathPart ) )
             }
 
             return [

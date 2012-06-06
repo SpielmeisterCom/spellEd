@@ -77,6 +77,7 @@ Ext.define('Spelled.controller.Projects', {
 
         if( !!projectName ){
             this.loadProject( projectName )
+
             window.close()
         }
 
@@ -93,6 +94,7 @@ Ext.define('Spelled.controller.Projects', {
             success: function( project ) {
                 this.getZonesList( project )
                 this.application.setActiveProject( project )
+				this.application.setExtraParamOnProxies( 'projectName', projectName )
             }
         })
 

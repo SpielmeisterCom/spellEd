@@ -229,19 +229,8 @@ Ext.define('Spelled.controller.Blueprints', {
     },
 
     loadTrees: function() {
-        var projectName = this.application.getActiveProject().get('name')
-
-        this.getBlueprintsTreeStore().load( {
-            params: {
-                projectName: projectName
-            }
-        } )
-
-        this.getBlueprintFoldersTreeStore().load( {
-            params: {
-                projectName: projectName
-            }
-        } )
+        this.getBlueprintsTreeStore().load( )
+        this.getBlueprintFoldersTreeStore().load( )
     },
 
     refreshStores: function() {

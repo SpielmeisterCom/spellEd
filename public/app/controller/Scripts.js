@@ -142,26 +142,15 @@ Ext.define('Spelled.controller.Scripts', {
         this.application.getController('Menu').showScriptsListContextMenu( e )
     },
 
-    loadTrees: function() {
-        var projectName = this.application.getActiveProject().get('name')
-
-        this.getScriptTreeStore().load( {
-            params: {
-                projectName: projectName
-            }
-        } )
-
-        this.getScriptFoldersTreeStore().load( {
-            params: {
-                projectName: projectName
-            }
-        } )
+	loadTrees: function() {
+		this.getScriptTreeStore().load( )
+		this.getScriptFoldersTreeStore().load( )
     },
 
     refreshStores: function() {
         this.loadTrees()
 
-        this.getScriptScriptsStore().load()
+		this.getScriptScriptsStore().load()
     },
 
     showScripts : function( ) {

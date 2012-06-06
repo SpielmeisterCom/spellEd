@@ -53,6 +53,18 @@ var startEditor = function() {
             'blueprints.Systems'
         ],
 
+		stores: [
+			'asset.Tree',
+			'asset.FoldersTree',
+			'asset.Textures',
+			'asset.Sounds',
+			'script.Scripts',
+			'script.Tree',
+			'script.FoldersTree',
+			'BlueprintsTree',
+			'blueprint.FoldersTree',
+		],
+
         project: undefined,
         zone: undefined,
 
@@ -139,6 +151,15 @@ var startEditor = function() {
         setActiveZone: function( zone ) {
             this.zone = zone
         },
+
+		setExtraParamOnProxies: function( name, value ) {
+			Ext.each(
+				this.stores,
+				function( storeId ) {
+					Ext.getStore( storeId ).getProxy().setExtraParam( name, value )
+				}
+			)
+		},
 
         launch: function() {
 

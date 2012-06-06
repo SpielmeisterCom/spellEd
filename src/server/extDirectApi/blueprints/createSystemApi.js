@@ -62,7 +62,7 @@ define(
             var createBlueprint = function( req, res, payload, next ) {
                 var name        = payload.name,
                     extension   = ".json",
-                    folder      = ( payload.namespace === "root" ) ? root + payload.projectName + blueprintPathPart : payload.namespace,
+                    folder      = ( payload.namespace === "root" ) ? path.join( root , payload.projectName , blueprintPathPart ) : payload.namespace,
                     filePath    = folder + "/"+ name + extension,
                     type        = payload.type,
                     scriptId    = payload.scriptId

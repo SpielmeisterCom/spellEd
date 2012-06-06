@@ -26,7 +26,7 @@ define(
 
             var create = function( req, res, payload ) {
                 var scriptName = payload.name,
-                    folder     = ( payload.folder === "root" ) ? root + payload.projectName + scriptPathPart : payload.folder,
+                    folder     = ( payload.folder === "root" ) ? path.join( root , payload.projectName , scriptPathPart) : payload.folder,
                     filePath   = folder + "/" + scriptName + ".js"
 
                 var namespace = util.extractNamespaceFromPath( folder, scriptPathPart )
@@ -51,7 +51,7 @@ define(
                 if( !! payload[0].id ) {
                     var id = payload[0].id
 
-                    var response = amdHelper.loadModules( root + "/**/" + scriptPathPart )
+                    var response = amdHelper.loadModules( path.join( root , "/**/" , scriptPathPart ) )
 
                     //A Treelist sends the path to the JS file not the moduleId
                     if( path.extname( id ) === ".js" ) {
@@ -106,14 +106,14 @@ define(
             }
 
             var getTree = function( req, res, payload, next ) {
-                var tmpPath = root + payload[1] + scriptPathPart
+                var tmpPath = path.join( root , payload[1] , scriptPathPart )
 
                 return util.listing(tmpPath, false, req, res, payload, next)
             }
 
             var getAll = function( req, res, payload ) {
-                //TODO: projectname muss noch rein
-                var response = amdHelper.loadModules( root + "/**/" + scriptPathPart )
+				var projectName = payload[0].projectName
+                var response = amdHelper.loadModules( path.join( root , projectName , scriptPathPart ) )
 
                 var keys = _.keys( response )
 
@@ -158,11 +158,6 @@ define(
                     name: 'getTree',
                     len: 2,
                     func: getTree
-                },
-                {
-                    name: getAll,
-                    len: 1,
-                    func: getAll
                 }
             ]
         }

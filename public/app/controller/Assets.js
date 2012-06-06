@@ -159,19 +159,8 @@ Ext.define('Spelled.controller.Assets', {
     },
 
     loadTrees: function() {
-        var projectName = this.application.getActiveProject().get('name')
-
-        this.getAssetTreeStore().load( {
-            params: {
-                projectName: projectName
-            }
-        } )
-
-        this.getAssetFoldersTreeStore().load( {
-            params: {
-                projectName: projectName
-            }
-        } )
+        this.getAssetTreeStore().load()
+        this.getAssetFoldersTreeStore().load()
     },
 
     refreshStores: function() {
