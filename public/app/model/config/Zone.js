@@ -14,6 +14,14 @@ Ext.define('Spelled.model.config.Zone', {
         name :  'getEntities'
     },
 
+	getRenderTabTitle: function() {
+		return "Rendered: " + this.getId()
+	},
+
+	getSourceTabTitle: function() {
+		return "Source: " + this.getId()
+	},
+
     constructor: function() {
         this.callParent(arguments)
         Ext.getStore( 'config.Zones' ).add( this )

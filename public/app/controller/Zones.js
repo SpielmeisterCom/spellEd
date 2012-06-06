@@ -147,9 +147,12 @@ Ext.define('Spelled.controller.Zones', {
 
     deleteZone: function( zone ) {
         var project = this.application.getActiveProject(),
-            zones   = project.getZones()
+            zones   = project.getZones(),
+			zoneEditor = Ext.getCmp('ZoneEditor')
 
         zones.remove( zone )
+		this.application.closeOpenedTabs( zoneEditor, zone.getRenderTabTitle() )
+		this.application.closeOpenedTabs( zoneEditor, zone.getSourceTabTitle() )
 
         this.showZoneslist( zones )
     },
@@ -193,7 +196,7 @@ Ext.define('Spelled.controller.Zones', {
 
     editZone: function( zone ) {
         var zoneEditor = Ext.getCmp('ZoneEditor'),
-            title = "Source: " + zone.getId()
+            title = zone.getSourceTabTitle()
 
         var foundTab = this.application.findActiveTabByTitle( zoneEditor, title )
 
@@ -219,7 +222,7 @@ Ext.define('Spelled.controller.Zones', {
 
     renderZone: function( zone ) {
         var zoneEditor = Ext.getCmp( "ZoneEditor"),
-            title = "Rendered: " + zone.getId()
+            title = zone.getRenderTabTitle()
 
         var foundTab = this.application.findActiveTabByTitle( zoneEditor, title )
 

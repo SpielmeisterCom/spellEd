@@ -107,13 +107,15 @@ Ext.define('Spelled.controller.Assets', {
     },
 
     removeAsset: function( assetId ) {
-        var Asset = this.getModel('Asset')
+        var Asset = this.getModel('Asset'),
+			assetEditor = Ext.getCmp('AssetEditor')
 
         Asset.load(
             assetId,
             {
                 scope: this,
                 success: function( asset ) {
+					this.application.closeOpenedTabs( assetEditor, assetId )
                     asset.destroy()
                     this.refreshStoresAndTreeStores()
 					this.loadTrees()
