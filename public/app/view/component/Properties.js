@@ -12,20 +12,16 @@ Ext.define('Spelled.view.component.Properties', {
                 editable: false,
                 displayField   : 'name',
                 emptyText      :'-- Select a texture --',
+				store          : 'asset.Textures',
                 valueField     : 'assetId'
             }
         )
     },
 
-    source: {
-
-    },
+    source: {},
 
     constructor: function() {
         this.callParent(arguments)
-
-        //TODO: find a way to set this directly in the custumEditors...
-        this.customEditors.textureId.store = Ext.getStore( "asset.Textures" )
 
         this.on('edit', function( editor, e ) {
             var componentConfigId = e.grid.componentConfigId

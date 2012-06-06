@@ -83,18 +83,25 @@ Ext.define('Spelled.controller.Projects', {
 
     },
 
+	prepareStores: function( projectName ) {
+		var app = this.application
+		app.setExtraParamOnProxies( 'projectName', projectName )
+
+		app.getController( 'Blueprints' ).loadBlueprintStores( projectName )
+		app.getController( 'Assets' ).refreshStores()
+		app.getController( 'Scripts' ).refreshStores()
+	},
+
     loadProject: function( projectName ) {
         var Project = this.getProjectModel()
 
-        var blueprintsController = this.application.getController( 'Blueprints' )
-        blueprintsController.loadBlueprintStores( projectName )
+		this.prepareStores( projectName )
 
-        Project.load( projectName, {
+		Project.load( projectName, {
             scope: this,
             success: function( project ) {
-                this.getZonesList( project )
+				this.getZonesList( project )
                 this.application.setActiveProject( project )
-				this.application.setExtraParamOnProxies( 'projectName', projectName )
             }
         })
 

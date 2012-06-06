@@ -141,7 +141,7 @@ Ext.define('Spelled.controller.Blueprints', {
         this.closeOpenedTabs( blueprint )
 
         blueprint.destroy()
-        this.refreshStores()
+        this.refreshStoresAndTreeStores()
     },
 
     closeOpenedTabs: function( blueprint ) {
@@ -194,7 +194,7 @@ Ext.define('Spelled.controller.Blueprints', {
                             function( form, action ) {
                                 Ext.Msg.alert('Success', 'Your blueprint "' + action.result.data.name + '" has been created.')
 
-                                this.refreshStores()
+                                this.refreshStoresAndTreeStores()
 
                                 window.close()
                             },
@@ -228,6 +228,12 @@ Ext.define('Spelled.controller.Blueprints', {
         })
     },
 
+	refreshStoresAndTreeStores: function() {
+		this.refreshBlueprintStores()
+
+		this.loadTrees()
+	},
+
     loadTrees: function() {
         this.getBlueprintsTreeStore().load( )
         this.getBlueprintFoldersTreeStore().load( )
@@ -235,17 +241,10 @@ Ext.define('Spelled.controller.Blueprints', {
 
     refreshStores: function() {
         this.refreshBlueprintStores()
-
-        this.loadTrees()
     },
 
     showBlueprintEditor : function( ) {
-        this.getMainPanel().items.each(
-            function( panel ) {
-                panel.hide()
-            }
-        )
-
+		this.application.hideMainPanels()
         this.loadTrees()
 
         Ext.getCmp('BlueprintEditor').show()

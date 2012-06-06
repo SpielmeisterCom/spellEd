@@ -68,7 +68,7 @@ Ext.define('Spelled.controller.Scripts', {
                 success: function( script ) {
                     this.application.closeOpenedTabs( editorTab, script.get('name') )
                     script.destroy()
-                    this.refreshStores()
+					this.refreshStoresAndTreeStores()
                 }
             }
         )
@@ -124,7 +124,7 @@ Ext.define('Spelled.controller.Scripts', {
                         Ext.bind(
                             function( form, action ) {
                                 Ext.Msg.alert('Success', 'Your Script "' + action.result.data.name + '" has been created.')
-                                this.refreshStores()
+                                this.refreshStoresAndTreeStores()
 
                                 window.close()
                             },
@@ -142,23 +142,23 @@ Ext.define('Spelled.controller.Scripts', {
         this.application.getController('Menu').showScriptsListContextMenu( e )
     },
 
+	refreshStoresAndTreeStores: function() {
+		this.loadTrees()
+
+		this.getScriptScriptsStore().load()
+	},
+
 	loadTrees: function() {
 		this.getScriptTreeStore().load( )
 		this.getScriptFoldersTreeStore().load( )
     },
 
     refreshStores: function() {
-        this.loadTrees()
-
 		this.getScriptScriptsStore().load()
     },
 
     showScripts : function( ) {
-        var mainPanel = this.getMainPanel()
-
-        Ext.each( mainPanel.items.items, function( panel ) {
-            panel.hide()
-        })
+		this.application.hideMainPanels()
 
         this.loadTrees()
 

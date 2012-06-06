@@ -65,6 +65,13 @@ var startEditor = function() {
 			'blueprint.FoldersTree',
 		],
 
+		refs: [
+			{
+				ref : 'MainPanel',
+				selector: '#MainPanel'
+			}
+		],
+
         project: undefined,
         zone: undefined,
 
@@ -105,6 +112,14 @@ var startEditor = function() {
 
             return foundPanel
         },
+
+		hideMainPanels: function() {
+			this.getMainPanel().items.each(
+				function( panel ) {
+					panel.hide()
+				}
+			)
+		},
 
         hideActions: function( view, list, node, rowIndex, e ) {
             var icons = Ext.DomQuery.select('.x-action-col-icon', node)

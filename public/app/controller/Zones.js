@@ -106,11 +106,7 @@ Ext.define('Spelled.controller.Zones', {
     },
 
     showZonesEditor: function() {
-        var mainPanel = this.getMainPanel()
-
-        Ext.each( mainPanel.items.items, function( panel ) {
-            panel.hide()
-        })
+		this.application.hideMainPanels()
 
         Ext.getCmp('ZoneEditor').show()
     },

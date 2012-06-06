@@ -84,7 +84,7 @@ Ext.define('Spelled.controller.Assets', {
                             function( fp, o ) {
                                 Ext.Msg.alert('Success', 'Your asset "' + o.result.data.name + '" has been uploaded.')
 
-                                this.refreshStores()
+                                this.refreshStoresAndTreeStores()
 
                                 window.close()
                             },
@@ -115,8 +115,9 @@ Ext.define('Spelled.controller.Assets', {
                 scope: this,
                 success: function( asset ) {
                     asset.destroy()
-                    this.refreshStores()
-                }
+                    this.refreshStoresAndTreeStores()
+					this.loadTrees()
+				}
             }
         )
     },
@@ -158,24 +159,23 @@ Ext.define('Spelled.controller.Assets', {
         })
     },
 
+	refreshStoresAndTreeStores: function() {
+		this.loadTrees()
+		this.refreshStores()
+	},
+
     loadTrees: function() {
         this.getAssetTreeStore().load()
         this.getAssetFoldersTreeStore().load()
     },
 
     refreshStores: function() {
-        this.loadTrees()
-
         this.getAssetTexturesStore().load()
         this.getAssetSoundsStore().load()
     },
 
     showAssets : function( ) {
-        var mainPanel = this.getMainPanel()
-
-        Ext.each( mainPanel.items.items, function( panel ) {
-            panel.hide()
-        })
+		this.application.hideMainPanels()
 
         this.loadTrees()
 
