@@ -1,0 +1,97 @@
+{
+    "name" : "spellReferenceProject",
+    "startZone" : "Game",
+
+    "zones" : [
+        {
+            "name" : "Game",
+            "entities" : [
+                {
+                    "name" : "spacecraft1",
+                    "blueprintId" : "spellReferenceProject.entity.spacecraft",
+                    "components" : [
+						{
+							"blueprintId" : "spell.component.core.position",
+							"config" : {
+								"value" : [ 128, 128 ]
+							}
+						},
+						{
+							"blueprintId" : "spell.component.core.graphics2d.appearance",
+							"config" : {
+								"textureId" : "textures/spellReferenceProject/pixelShip2.png"
+							}
+						},
+						{
+							"blueprintId" : "spell.component.core.actor",
+							"config" : {
+								"id" : "aiControlled"
+							}
+						},
+						{
+							"blueprintId" : "spellReferenceProject.component.spacecraft",
+							"config" : {
+								"mass" : 3,
+								"thrusterForce" : 250
+							}
+						}
+					]
+                },
+				{
+					"name" : "spacecraft2",
+					"blueprintId" : "spellReferenceProject.entity.spacecraft",
+					"components" : [
+						{
+							"blueprintId" : "spell.component.core.position",
+							"config" : {
+								"value" : [ 400, 250 ]
+							}
+						},
+						{
+							"blueprintId" : "spell.component.core.rotation",
+							"config" : {
+								"value" : 0.2
+							}
+						},
+						{
+							"blueprintId" : "spell.component.core.graphics2d.appearance"
+						},
+						{
+							"blueprintId" : "spell.component.core.inputDefinition",
+							"config" : {
+								"actorId" : "playerControlled",
+								"keyToAction" : {
+									"space" : "accelerate",
+									"left arrow" : "steerLeft",
+									"right arrow" : "steerRight"
+								}
+							}
+						},
+						{
+							"blueprintId" : "spell.component.core.actor",
+							"config" : {
+								"id" : "playerControlled"
+							}
+						},
+						{
+							"blueprintId" : "spellReferenceProject.component.spacecraft",
+							"config" : {
+								"mass" : 1,
+								"thrusterForce" : 110
+							}
+						}
+					]
+				}
+            ],
+			"systems" : {
+				"update" : [],
+				"render" : [
+					"spell.system.keyInput",
+					"spellReferenceProject.system.spacecraftIntegrator",
+					"spell.system.render"
+				]
+			},
+			"scriptId" : "spell/zone/default"
+        }
+    ]
+}

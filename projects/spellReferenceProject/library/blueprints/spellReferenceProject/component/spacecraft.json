@@ -1,0 +1,22 @@
+{
+	"type" : "componentBlueprint",
+	"namespace" : "spellReferenceProject.component",
+	"name" : "spacecraft",
+	"attributes" : [
+		{
+			"name" : "mass",
+			"type" : "Number",
+			"default" : 1
+		},
+		{
+			"name" : "thrusterForce",
+			"type" : "Number",
+			"default" : 0.5
+		},
+		{
+			"name" : "speed",
+			"type" : "vec2",
+			"default" : [ 0, 0 ]
+		}
+	]
+}

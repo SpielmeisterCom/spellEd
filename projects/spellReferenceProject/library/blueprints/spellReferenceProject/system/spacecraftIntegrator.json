@@ -1,0 +1,18 @@
+{
+	"type" : "systemBlueprint",
+	"namespace" : "spellReferenceProject.system",
+	"name" : "spacecraftIntegrator",
+
+	"input" : [
+		{
+			"name" : "spacecraftEntities",
+			"components" : [
+				"spell.component.core.position",
+				"spell.component.core.rotation",
+				"spell.component.core.actor",
+				"spellReferenceProject.component.spacecraft"
+			]
+		}
+	],
+	"scriptId" : "spellReferenceProject/system/spacecraftIntegrator"
+}
