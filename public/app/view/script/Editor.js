@@ -11,6 +11,7 @@ Ext.define('Spelled.view.script.Editor', {
         this.model = model
 		if( !!this.aceEditor ) {
 			this.aceEditor.getSession().setValue( this.model.get('content') )
+			this.aceEditor.scrollToRow( 0 )
 		}
     },
 

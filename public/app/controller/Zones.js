@@ -31,14 +31,15 @@ Ext.define('Spelled.controller.Zones', {
         var dispatchPostMessages = function( event ) {
             var buildServerOrigin = 'http://localhost:8080'
 
-            if ( event.origin !== buildServerOrigin ){
-                console.log( 'event.origin: ' + event.origin )
-                console.log( 'Error: origin does not match.' )
-
-                return
-            }
-
             if( event.data.action === 'initialized' ) {
+
+				if ( event.origin !== buildServerOrigin ){
+					console.log( 'event.origin: ' + event.origin )
+					console.log( 'Error: origin does not match.' )
+
+					return
+				}
+
 
                 var cmp = Ext.getCmp( event.data.iframeId )
 
