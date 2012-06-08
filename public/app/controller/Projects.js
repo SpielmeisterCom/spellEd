@@ -42,11 +42,10 @@ Ext.define('Spelled.controller.Projects', {
         Spelled.ProjectActions.create( values.name , function( provider, response ) {
 
             if( response.result !== false ) {
-                var projectDirectory = response.result,
-                    configFilePath   = values.name + '/project.json'
+                var configFilePath   = values.name + '/project.json'
 
                 SpellBuild.ProjectActions.initDirectory( values.name, configFilePath, function( provider, response ) {
-                    me.loadProject( projectDirectory )
+                    me.loadProject( values.name )
                     window.close()
                 })
 
