@@ -20,7 +20,6 @@ Ext.define('Spelled.controller.Zones', {
     views: [
         'zone.TreeList',
         'zone.Navigator',
-        'zone.Edit',
         'zone.Create',
         'zone.Editor',
         'ui.SpelledRendered'
@@ -193,24 +192,6 @@ Ext.define('Spelled.controller.Zones', {
             var entitiesController = this.application.getController('Entities')
             entitiesController.showEntitylist( zone.getEntities() )
         }
-    },
-
-    editZone: function( zone ) {
-        var zoneEditor = Ext.getCmp('ZoneEditor'),
-            title = zone.getSourceTabTitle()
-
-        var foundTab = this.application.findActiveTabByTitle( zoneEditor, title )
-
-        if( foundTab )
-            return foundTab
-
-        var view = Ext.create( 'Spelled.view.zone.Edit',  {
-                title: title,
-                html:  JSON.stringify( zone.getJSONConfig(), null, '\t' )
-            }
-        )
-
-        this.application.createTab( zoneEditor, view )
     },
 
     renderZoneHelper: function( treePanel, record ) {

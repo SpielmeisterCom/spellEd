@@ -92,9 +92,6 @@ Ext.define('Spelled.controller.Menu', {
             'zoneslistcontextmenu [action="default"]': {
 
             },
-            'zoneslistcontextmenu [action="edit"]': {
-                click: this.editZone
-            },
             'zoneslistcontextmenu [action="render"]': {
                 click: this.renderZone
             }
@@ -263,14 +260,6 @@ Ext.define('Spelled.controller.Menu', {
 
         if( zone ) {
             this.application.getController( 'Zones').deleteZone( zone )
-        }
-    },
-
-    editZone: function( ) {
-        var zone = this.application.getActiveZone()
-
-        if( zone ) {
-            this.application.getController( 'Zones' ).editZone( zone )
         }
     },
 

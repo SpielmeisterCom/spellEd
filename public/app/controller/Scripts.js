@@ -29,6 +29,10 @@ Ext.define('Spelled.controller.Scripts', {
 
     init: function() {
         this.control({
+			'scripteditor': {
+				activate: this.refreshAceEditorContent,
+				render:   this.addAceEditor
+			},
             'scriptsnavigator': {
                 activate: this.showScripts
             },
@@ -48,6 +52,35 @@ Ext.define('Spelled.controller.Scripts', {
         })
     },
 
+	addAceEditor: function( panel ) {
+
+		panel.aceEditor = ace.edit( panel.id )
+
+		var JavaScriptMode = require("ace/mode/javascript").Mode;
+		panel.aceEditor.getSession().setMode( new JavaScriptMode() );
+		panel.aceEditor.getSession().setValue( panel.model.get('content') );
+
+		panel.aceEditor.commands.addCommand({
+			name: 'saveCommand',
+			bindKey: {
+				win: 'Ctrl-S',
+				mac: 'Command-S'
+			},
+			exec: function( editor ) {
+				panel.model.set( 'content', editor.getSession().getValue() )
+				panel.model.save()
+			}
+		});
+
+		panel.refreshContent()
+	},
+
+	refreshAceEditorContent: function( panel ) {
+		console.log( panel )
+
+		panel.refreshContent()
+	},
+
     deleteScriptActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
         var node = gridView.getRecord( gridView.findTargetByEvent(e) )
 
@@ -57,9 +90,8 @@ Ext.define('Spelled.controller.Scripts', {
     },
 
     removeScript: function( scriptId ) {
-        var editorTab = Ext.getCmp("ScriptEditor")
-
-        var Script = this.getScriptModel()
+        var editorTab = Ext.getCmp("ScriptEditor"),
+			Script = this.getScriptModel()
 
         Script.load(
             scriptId,
@@ -78,9 +110,8 @@ Ext.define('Spelled.controller.Scripts', {
         if( !record.data.leaf ) return
 
         var scriptEditor = Ext.getCmp('ScriptEditor'),
-            title        = record.internalId
-
-        var Script = this.getScriptModel()
+            title        = record.internalId,
+			Script 		 = this.getScriptModel()
 
         var foundTab = this.application.findActiveTabByTitle( scriptEditor, title )
 
