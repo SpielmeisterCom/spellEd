@@ -12,10 +12,6 @@ Ext.define('Spelled.view.menu.contextmenu.ZonesList', {
             action: 'render'
         },
         {
-            text: 'Edit sourcecode',
-            action: 'edit'
-        },
-        {
             text: 'Remove',
             action: 'remove'
         }

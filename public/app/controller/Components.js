@@ -13,9 +13,37 @@ Ext.define('Spelled.controller.Components', {
        'config.Components'
     ],
 
+	init: function() {
+		this.control({
+			'componentproperties': {
+				edit: this.editProperty
+			}
+		})
+	},
+
     formatConfiguration: function( component ) {
 
     },
+
+	editProperty: function( editor, e ) {
+		var componentConfigId = e.grid.componentConfigId,
+			record = e.record.data,
+			component = this.getConfigComponentsStore().getById( componentConfigId )
+
+
+		var config = component.get( 'config' )
+
+		if( config[ record.name ] != record.value ) {
+			try {
+				config[ record.name ] = eval( record.value )
+			} catch( e ) {
+				config[ record.name ] = record.value
+			}
+			component.set( 'config', config)
+
+			component.setChanged()
+		}
+	},
 
     convertValueForGrid: function( value ) {
         if( Ext.isArray( value ) === true ) {
