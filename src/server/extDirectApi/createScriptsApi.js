@@ -49,9 +49,10 @@ define(
 
             var read = function( req, res, payload ) {
                 if( !! payload[0].id ) {
-                    var id = payload[0].id
+                    var id 			= payload[0].id,
+						projectName = payload[0].projectName
 
-                    var response = amdHelper.loadModules( path.join( root , "/**/" , scriptPathPart ) )
+                    var response = amdHelper.loadModules( path.join( root , projectName , scriptPathPart ) )
 
                     //A Treelist sends the path to the JS file not the moduleId
                     if( path.extname( id ) === ".js" ) {
