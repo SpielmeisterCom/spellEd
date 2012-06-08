@@ -95,16 +95,28 @@ Ext.define('Spelled.controller.Projects', {
         var Project = this.getProjectModel()
 
 		this.prepareStores( projectName )
+		this.closeAllTabsFromProject()
 
 		Project.load( projectName, {
             scope: this,
             success: function( project ) {
 				this.getZonesList( project )
+				Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Zones') )
+				this.application.getController('Zones').showZonesEditor()
                 this.application.setActiveProject( project )
             }
         })
 
     },
+
+	closeAllTabsFromProject: function() {
+		var app = this.application
+
+		app.closeAllTabs( Ext.getCmp('ScriptEditor') )
+		app.closeAllTabs( Ext.getCmp('AssetEditor') )
+		app.closeAllTabs( Ext.getCmp('ZoneEditor') )
+		app.closeAllTabs( Ext.getCmp('BlueprintEditor') )
+	},
 
     getZonesList: function( project ) {
 

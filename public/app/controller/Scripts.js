@@ -75,8 +75,6 @@ Ext.define('Spelled.controller.Scripts', {
 	},
 
 	refreshAceEditorContent: function( panel ) {
-		console.log( panel )
-
 		panel.refreshContent()
 	},
 

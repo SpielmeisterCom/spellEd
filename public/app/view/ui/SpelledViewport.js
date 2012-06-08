@@ -18,6 +18,7 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                     collapsible: false
                 },
                 {
+					id: "Navigator",
                     title: "Project - Navigator",
                     xtype: 'tabpanel',
                     tabPosition: 'bottom',

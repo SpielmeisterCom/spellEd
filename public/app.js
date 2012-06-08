@@ -86,7 +86,15 @@ var startEditor = function() {
             return newPanel
         },
 
-        closeOpenedTabs: function( tabPanel, title ) {
+		closeAllTabs: function( tabPanel ) {
+			tabPanel.items.each(
+				function( tab ) {
+					tab.destroy()
+				}
+			)
+		},
+
+		closeOpenedTabs: function( tabPanel, title ) {
             tabPanel.items.each(
                 function( tab ) {
                     if( tab.title === title ) {
