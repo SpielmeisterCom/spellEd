@@ -88,6 +88,10 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 			config.id = 'spell'
 		}
 
+		if( !config.debug ) {
+			config.debug = false
+		}
+
 		if( !config.platform ) {
 			if( isHtml5Capable() ) {
 				config.platform = 'html5'
@@ -124,7 +128,7 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 		return false
 	}
 
-	var process = function( config ) {
+	var process = function( config, spellObject, onInitialized ) {
 		if( !config.platform ) {
 			throw 'Error: Invalid config. Property \'platform\' is not defined.'
 		}
@@ -138,14 +142,14 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 		if( config.verbose ) console.log( 'stage-zero-loader: chose ' + config.platform + ' platform' )
 
 		if( config.platform === 'html5' ) {
-			loadHtml5Executable( config, config.verbose )
+			loadHtml5Executable( config, config.verbose, spellObject, onInitialized )
 
 		} else {
 			loadFlashExecutable( config, config.verbose )
 		}
 	}
 
-	var loadHtml5Executable = function( parameters, verbose ) {
+	var loadHtml5Executable = function( config, verbose, spellObject, onInitialized ) {
 		if( verbose ) printLoading()
 
 		head.js(
@@ -154,7 +158,13 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 			function() {
 				if( verbose ) printLaunching()
 
-				enterMain( 'spell/client/main', parameters )
+				var engineInstance = require( 'spell/client/main', config )
+
+				if( config.debug ) addDebugAPI( spellObject, engineInstance )
+
+				engineInstance.start()
+
+				if( onInitialized ) onInitialized()
 			}
 		)
 	}
@@ -176,6 +186,16 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 		)
 	}
 
+	var addDebugAPI = function( spellObject, engineInstance ) {
+		spellObject.setDebugCallback = function( fn ) {
+			engineInstance.setDebugCallback( fn )
+		}
+
+		spellObject.sendDebugMessage = function( message ) {
+			engineInstance.sendDebugMessage( message )
+		}
+	}
+
 	var printLoading = function() {
 		console.log( 'stage-zero-loader: loading executable' )
 	}
@@ -191,18 +211,23 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 			setUrlParameters( config )
 			setDefaults( config )
 
+			if( config.debug ) {
+				addDebugAPI( this )
+			}
+
 			if( !hasContainer( config.id ) ) {
 				console.log( 'Error: \'' + config.id + '\' is not a valid dom node id. Could not start engine.' )
 				return
 			}
 
 			if( isBrowserCapable( config ) ) {
-				process( config )
+				process( config, this, this.onInitialized )
 
 			} else {
 				var message = 'Your browser does not meet the minimum requirements in order to run SpellJS. :('
-				document.getElementById( config.id ).innerHTML = '<p>' + message + '</p>';
+				document.getElementById( config.id ).innerHTML = '<p>' + message + '</p>'
 			}
-		}
+		},
+		onInitialized : undefined
 	}
 } )( document )

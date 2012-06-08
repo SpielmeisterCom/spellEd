@@ -9,45 +9,94 @@
 	<body>
 		<div id="spell"></div>
 		<script type="text/javascript">
-			var editorOrigin = 'http://localhost:3000'
+			( function() {
+				var editorOrigin = 'http://localhost:3000'
 
-			function getParam( name ) {
-				name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-				var regexS = '[\\?&]'+name+'=([^&#]*)';
-				var regex = new RegExp( regexS );
-				var results = regex.exec( window.location.href );
-				if( results == null )
-					return '';
-				else
-					return results[1];
-			}
-
-			function receiveMessage( event ) {
-				if( event.origin !== editorOrigin ) {
-					console.log( 'event.origin: ' + event.origin )
-					console.log( 'Error: origin does not match.' )
-
-					return
+				/**
+				 * Thanks to John Resig. http://ejohn.org/blog/flexible-javascript-events/
+				 *
+				 * @param obj
+				 * @param type
+				 * @param fn
+				 */
+				var addEvent = function( obj, type, fn ) {
+				  if ( obj.attachEvent ) {
+				    obj['e'+type+fn] = fn;
+				    obj[type+fn] = function(){obj['e'+type+fn]( window.event );}
+				    obj.attachEvent( 'on'+type, obj[type+fn] );
+				  } else
+				    obj.addEventListener( type, fn, false );
 				}
 
-				if( event.data.type === 'run' ) {
-					var config = {
-						platform : 'html5'
+				var getParam = function( name ) {
+					name = name.replace( /[\[]/, "\\\[" ).replace( /[\]]/, "\\\]" )
+					var regexS = '[\\?&]' + name + '=([^&#]*)'
+					var regex = new RegExp( regexS )
+					var results = regex.exec( window.location.href )
+
+					return ( results == null ? '' : results[ 1 ] )
+				}
+
+				var sendMessageToEditor = function( action ) {
+					parent.window.postMessage(
+						{
+							action : 'spell.' + action,
+							iframeId : getParam( 'iframeId' )
+						},
+						editorOrigin
+					)
+				}
+
+				var init = function() {
+					sendMessageToEditor( 'initialized' )
+				}
+
+				var handleMessageFromEditor = function( event ) {
+					if( event.origin !== editorOrigin ) {
+						console.log( 'Error: origin \'' + event.origin + '\' does not match.' )
+
+						return
 					}
 
-					spell.start( config )
+					if( event.data.type === 'spelled.run' ) {
+						var config = {
+							debug : true,
+							platform : 'html5'
+						}
+
+						spell.onInitialized = init
+						spell.start( config )
+
+					} else if( event.data.type === 'spelled.debug' ) {
+						spell.sendDebugMessage( event.data )
+					}
 				}
-			}
 
-			window.addEventListener( 'message', receiveMessage, false )
+				var registerMouseFocusHandlers = function() {
+					addEvent(
+						document.body,
+						'focus',
+						function( event ) {
+							sendMessageToEditor( 'focus' )
+						}
+					)
 
-			parent.window.postMessage(
-				{
-					action: 'initialized',
-					iframeId: getParam( 'iframeId' )
-				},
-				editorOrigin
-			)
+					addEvent(
+						document.body,
+						'blur',
+						function( event ) {
+							sendMessageToEditor( 'blur' )
+						}
+					)
+				}
+
+				var registerMessageHandler = function() {
+					addEvent( window, 'message', handleMessageFromEditor )
+				}
+
+				registerMouseFocusHandlers()
+				registerMessageHandler()
+			} )()
 		</script>
 	</body>
 </html>
