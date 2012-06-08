@@ -49,8 +49,6 @@ define(
 				spacecraftEntity[ rotationComponentId ] += deltaTimeInMs / 1000 * rotationSpeed * rotationDirection
 			}
 
-			var deltaSpeed = vec2.create()
-
 			if( actions.accelerate.executing ) {
 				var rotation = spacecraftEntity[ rotationComponentId ]
 
