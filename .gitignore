@@ -2,3 +2,4 @@
 *.iml
 atlassian-ide-plugin.xml
 projects/spellReferenceProject/public/output
+projects/spellReferenceProject/build
