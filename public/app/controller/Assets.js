@@ -7,7 +7,8 @@ Ext.define('Spelled.controller.Assets', {
         'asset.TreeList',
         'asset.Iframe',
         'asset.Upload',
-        'asset.FolderPicker'
+        'asset.FolderPicker',
+		'asset.create.Texture'
     ],
 
     stores: [
@@ -31,6 +32,9 @@ Ext.define('Spelled.controller.Assets', {
 
     init: function() {
         this.control({
+			'createasset > form > combobox[name="type"]': {
+				select: this.showAdditionalConfiguration
+			},
             'assetsnavigator': {
                 activate: this.showAssets
             },
@@ -52,6 +56,10 @@ Ext.define('Spelled.controller.Assets', {
             }
         })
     },
+
+	showAdditionalConfiguration: function( combo, records ) {
+
+	},
 
     deleteAssetActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
         var node = gridView.getRecord( gridView.findTargetByEvent(e) )
