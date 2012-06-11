@@ -29,7 +29,7 @@ require(
             )
             .use( connect.static('public'))
             //TODO: remove this line
-            .use( connect.static('projects'))
+            .use( connect.static( projectsRoot ) )
 
         http.Server(app).listen(3000);
         console.log('Server started on port 3000');

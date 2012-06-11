@@ -25,73 +25,107 @@ Ext.define('Spelled.controller.Zones', {
         'ui.SpelledRendered'
     ],
 
+	BUILD_SERVER_ORIGIN : 'http://localhost:8080',
+
     init: function() {
+		var me = this
 
         var dispatchPostMessages = function( event ) {
-            var buildServerOrigin = 'http://localhost:8080'
 
-            if( event.data.action === 'initialized' ) {
-
-				if ( event.origin !== buildServerOrigin ){
-					console.log( 'event.origin: ' + event.origin )
-					console.log( 'Error: origin does not match.' )
-
+			switch ( event.data.action ) {
+				case 'spell.initialized' :
+					me.answerIframePostMessage( event, "run" )
 					return
-				}
-
-
-                var cmp = Ext.getCmp( event.data.iframeId )
-
-                cmp.el.dom.contentWindow.postMessage(
-                    {
-                        iframeId: cmp.id,
-                        type: "run"
-                    },
-                    buildServerOrigin
-                )
-
-            }
+			}
         }
 
         window.addEventListener("message", dispatchPostMessages, false);
 
-
         this.control({
             '#ZonesTree': {
-                select      : this.getEntityList,
-                itemdblclick: this.renderZoneHelper
+                select      : me.getEntityList,
+                itemdblclick: me.renderZoneHelper
             },
-            'renderedzone > toolbar button[action="saveZone"]': {
-                click: this.saveZone
+			'renderedzone': {
+				show: function( panel ) {
+					panel.down( 'spellediframe').focus()
+				}
+			},
+			'renderedzone > toolbar button[action="saveZone"]': {
+                click: me.saveZone
             },
             'renderedzone > toolbar button[action="reloadZone"]': {
-                click: this.reloadZone
+                click: me.reloadZone
             },
             'renderedzone > toolbar button[action="toggleState"]': {
-                click: this.toggleState
+                click: me.toggleState
             },
             'zonetreelist': {
-                itemcontextmenu: this.showListContextMenu,
-                deleteclick:     this.deleteZoneActionIconClick,
-                itemmouseenter:  this.application.showActionsOnLeaf,
-                itemmouseleave:  this.application.hideActions
+                itemcontextmenu: me.showListContextMenu,
+                deleteclick:     me.deleteZoneActionIconClick,
+                itemmouseenter:  me.application.showActionsOnLeaf,
+                itemmouseleave:  me.application.hideActions
             },
             'zonetreelist button[action="showCreateZone"]': {
-                click: this.showCreateZone
+                click: me.showCreateZone
             },
             'createzone button[action="createZone"]' : {
-                click: this.createZone
+                click: me.createZone
             },
             'createzone button[action="createZone"]' : {
-                click: this.createZone
+                click: me.createZone
             },
             'zonesnavigator': {
                 activate: function() {
-                    this.showZonesEditor()
+					me.showZonesEditor()
                 }
             }
         })
     },
+
+	checkOrigin: function( event ) {
+		if ( event.origin !== this.BUILD_SERVER_ORIGIN ){
+			console.log( 'event.origin: ' + event.origin )
+			console.log( 'Error: origin does not match.' )
+
+			return false
+		}
+
+		return true
+	},
+
+	sendKeyEventToIframe: function( event ) {
+		var data = {
+			type: "keyEvent",
+			payload: {
+				type: event.type,
+				keyCode: event.keyCode
+			}
+		}
+
+		this.sendIframePostMessage( this.activeIframeId, "debug", data )
+	},
+
+	answerIframePostMessage: function( event, type, options ) {
+		if( !this.checkOrigin( event ) ) return
+
+		this.sendIframePostMessage( event.data.iframeId, type, options )
+	},
+
+	sendIframePostMessage: function( iFrameId, type, options ) {
+		var cmp    = Ext.getCmp( iFrameId ),
+			config = ( Ext.isObject( options ) ) ? options : {}
+
+		if( !cmp ) return
+
+		config.type 	= "spelled." + type
+		config.iframeId = cmp.id
+
+		cmp.el.dom.contentWindow.postMessage(
+			config,
+			this.BUILD_SERVER_ORIGIN
+		)
+	},
 
     deleteZoneActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
         var node = gridView.getRecord( gridView.findTargetByEvent(e) )
@@ -158,9 +192,9 @@ Ext.define('Spelled.controller.Zones', {
     },
 
     reloadZone: function( button ) {
-        var panel  = button.up('panel'),
+        var panel   = button.up('panel'),
             project = this.application.getActiveProject(),
-            iframe = panel.down( 'spellediframe' )
+            iframe  = panel.down( 'spellediframe' )
 
         SpellBuild.ProjectActions.executeCreateDebugBuild(
             "html5",
@@ -168,7 +202,8 @@ Ext.define('Spelled.controller.Zones', {
             project.getConfigName(),
             function() {
                 iframe.el.dom.src = iframe.el.dom.src
-            }
+				iframe.focus()
+			}
         )
 
     },
@@ -221,16 +256,14 @@ Ext.define('Spelled.controller.Zones', {
         var createTab = function( provider, response ) {
 
             var iframe = Ext.create( 'Spelled.view.ui.SpelledIframe', {
-                projectName: project.get('name')
+                projectName: project.get('name'),
+				zoneId: zone.getId()
             })
-
-            iframe.zoneId = zone.getId()
 
             spellTab.add( iframe )
 
             this.application.createTab( zoneEditor, spellTab )
-
-        }
+		}
 
         SpellBuild.ProjectActions.executeCreateDebugBuild(
             "html5",
