@@ -20,6 +20,10 @@ Ext.define('Spelled.model.config.Component', {
         this.set( 'changed', true)
     },
 
+	markChanges: function() {
+		if( !Ext.isEmpty( this.get('config') ) ) this.setChanged()
+	},
+
     getConfigMergedWithBlueprintConfig: function( ) {
         var blueprintComponent = Ext.getStore( 'blueprint.Components').getByBlueprintId( this.get('blueprintId') )
 
@@ -32,7 +36,7 @@ Ext.define('Spelled.model.config.Component', {
         )
 
         //TODO: the config from entities get overwritten if we do not mark them
-        if( !Ext.isEmpty( this.get('config') ) ) this.setChanged()
+        this.markChanges()
 
         var tmp = Ext.Object.merge( blueprintConfig, this.get('config') )
         //TODO: Warum ist trim in der config durch den merge

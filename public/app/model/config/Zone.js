@@ -2,7 +2,9 @@ Ext.define('Spelled.model.config.Zone', {
     extend: 'Ext.data.Model',
 
     fields: [
-        'name'
+        'name',
+		'scriptId',
+		{ name: 'systems', type: 'object', defaultValue: { update: [], render: [] } }
     ],
 
     idProperty: 'name',

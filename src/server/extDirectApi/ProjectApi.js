@@ -82,7 +82,7 @@ define(
                 _.each(
                     project.getZones,
                     function( zone ) {
-                        var zoneResult = _.pick( zone, 'name', 'entities' )
+                        var zoneResult = _.pick( zone, 'name', 'entities', 'scriptId', 'systems' )
                         zoneResult.entities = []
 
                         _.each(

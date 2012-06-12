@@ -25,5 +25,21 @@ Ext.define('Spelled.model.Project', {
 
     getConfigName: function() {
         return 'project.json'
-    }
+    },
+
+	checkForComponentChanges: function() {
+		this.getZones().each(
+			function( zone ) {
+				zone.getEntities().each(
+					function( entity ) {
+						entity.getComponents().each(
+							function( component ) {
+								component.markChanges()
+							}
+						)
+					}
+				)
+			}
+		)
+	}
 });
