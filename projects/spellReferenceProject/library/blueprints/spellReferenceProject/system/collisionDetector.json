@@ -1,0 +1,17 @@
+{
+	"type" : "systemBlueprint",
+	"namespace" : "spellReferenceProject.system",
+	"name" : "collisionDetector",
+
+	"input" : [
+		{
+			"name" : "spacecraftEntities",
+			"components" : [
+				"spell.component.core.position",
+				"spellReferenceProject.component.spacecraft",
+				"spellReferenceProject.component.collisionSphere"
+			]
+		}
+	],
+	"scriptId" : "spellReferenceProject/system/collisionDetector"
+}

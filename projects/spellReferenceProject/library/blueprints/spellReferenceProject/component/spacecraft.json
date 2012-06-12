@@ -14,7 +14,7 @@
 			"default" : 0.5
 		},
 		{
-			"name" : "speed",
+			"name" : "velocity",
 			"type" : "vec2",
 			"default" : [ 0, 0 ]
 		}

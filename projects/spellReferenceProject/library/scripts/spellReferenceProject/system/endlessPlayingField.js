@@ -15,7 +15,7 @@ define(
 
 		var positionComponentId = 'spell.component.core.position',
 			playingFieldSize    = [ 1024, 768 ],
-			border              = 10,
+			border              = 25,
 			wrapOffset          = 75,
 			rightBorder         = playingFieldSize[ 0 ] + border,
 			leftBorder          = 0 - border,

@@ -1,0 +1,12 @@
+{
+	"type" : "componentBlueprint",
+	"namespace" : "spellReferenceProject.component",
+	"name" : "collisionSphere",
+	"attributes" : [
+		{
+			"name" : "radius",
+			"type" : "Number",
+			"default" : 1
+		}
+	]
+}

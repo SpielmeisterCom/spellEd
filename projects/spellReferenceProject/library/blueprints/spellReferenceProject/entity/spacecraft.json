@@ -40,6 +40,12 @@
 		},
 		{
 			"blueprintId" : "spellReferenceProject.component.spacecraft"
+		},
+		{
+			"blueprintId" : "spellReferenceProject.component.collisionSphere",
+			"config" : {
+				"radius" : 16
+			}
 		}
 	]
 }

@@ -66,11 +66,11 @@ define(
 
 				// dv, tmp := deltaSpeed
 				vec2.multiplyScalar( tmp, deltaTimeInS )
-				vec2.add( spacecraftComponent.speed, tmp )
+				vec2.add( spacecraftComponent.velocity, tmp )
 			}
 
 			// ds, tmp := deltaPosition
-			vec2.multiplyScalar( spacecraftComponent.speed, deltaTimeInS, tmp )
+			vec2.multiplyScalar( spacecraftComponent.velocity, deltaTimeInS, tmp )
 
 			vec2.add( positionComponent, tmp )
 		}
