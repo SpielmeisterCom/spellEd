@@ -1,0 +1,15 @@
+{
+	"type" : "systemBlueprint",
+	"namespace" : "spellReferenceProject.system",
+	"name" : "endlessPlayingField",
+
+	"input" : [
+		{
+			"name" : "spacecraftEntities",
+			"components" : [
+				"spell.component.core.position"
+			]
+		}
+	],
+	"scriptId" : "spellReferenceProject/system/endlessPlayingField"
+}
