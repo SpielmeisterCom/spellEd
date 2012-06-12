@@ -1,13 +1,9 @@
 define(
 	'spellReferenceProject/system/endlessPlayingField',
 	[
-		'glmatrix/vec2',
-
 		'spell/shared/util/platform/underscore'
 	],
 	function(
-		vec2,
-
 		_
 	) {
 		'use strict'
