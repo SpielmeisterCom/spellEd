@@ -82,7 +82,7 @@ define(
 			vec2.normalize( dn )
 
 			// tangential of the collision plane
-			var dt = vec2.create( [ dn[ 1 ], dn[ 0 ] * -1 ] )
+			var dt = vec2.create( [ dn[ 1 ], -dn[ 0 ] ] )
 
 			// masses
 			var m1 = spacecraftA.mass,
@@ -137,7 +137,7 @@ define(
 				( m2 - m1 ) / M * v2nlen + 2 * m1 / M * v1nlen,
 				tmpV
 			)
-			vec2.add( v2t, tmpV, spacecraftB.velocity )
+			vec2.subtract( v2t, tmpV, spacecraftB.velocity )
 		}
 
 		var resolveCollisions = function( collisionPairs ) {

@@ -31,8 +31,8 @@
 						{
 							"blueprintId" : "spellReferenceProject.component.spacecraft",
 							"config" : {
-								"mass" : 8,
-								"thrusterForce" : 400
+								"mass" : 2,
+								"thrusterForce" : 300
 							}
 						}
 					]
@@ -87,9 +87,10 @@
 				"update" : [],
 				"render" : [
 					"spell.system.keyInput",
-					"spellReferenceProject.system.endlessPlayingField",
+					"spellReferenceProject.system.aiControl",
 					"spellReferenceProject.system.spacecraftIntegrator",
 					"spellReferenceProject.system.collisionDetector",
+					"spellReferenceProject.system.endlessPlayingField",
 					"spell.system.render"
 				]
 			},
