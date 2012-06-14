@@ -43,6 +43,17 @@ Ext.define('Spelled.model.blueprint.Component', {
         return node
     },
 
+	getConfig: function() {
+		var blueprintConfig =  {}
+		this.getAttributes().each(
+			function( attribute ) {
+				blueprintConfig[ attribute.get('name') ] = attribute
+			}
+		)
+
+		return blueprintConfig
+	},
+
     mergeComponentConfig: function( values ) {
         var componentConfig = {}
 

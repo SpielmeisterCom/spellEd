@@ -29,15 +29,19 @@ Ext.define('Spelled.controller.Components', {
 		var componentConfigId = e.grid.componentConfigId,
 			record = e.record.data,
 			component = this.getConfigComponentsStore().getById( componentConfigId ),
-			defaultConfig = component.getConfigMergedWithBlueprintConfig()
+			defaultConfig = component.getConfigMergedWithBlueprintConfig(),
+			value = record.value
 
-		if( defaultConfig[ record.name ] != record.value ) {
+		try {
+			value = JSON.parse( value )
+		} catch ( e ) {}
+
+		if( defaultConfig[ record.name ] != value ) {
 			var config = component.get( 'config' )
-
 			try {
-				config[ record.name ] = eval( record.value )
+				config[ record.name ] = eval( value )
 			} catch( e ) {
-				config[ record.name ] = record.value
+				config[ record.name ] = value
 			}
 			component.set( 'config', config)
 
@@ -45,19 +49,24 @@ Ext.define('Spelled.controller.Components', {
 		}
 	},
 
-    convertValueForGrid: function( value ) {
-        if( Ext.isArray( value ) === true ) {
-            return "[" + value.toString() + "]"
-        } else {
-            try{
-                return eval(value)
-            } catch( e ) {
-                return value
-            }
-        }
-    },
+	convertValueForGrid: function( value ) {
+		if( Ext.isArray( value ) === true ) {
+			return "[" + value.toString() + "]"
+		} else if( Ext.isObject( value ) ) {
+			return Ext.encode( value )
+		} else {
+			try{
+				if( !eval(value) )
+					return value
+				else
+					return eval(value)
+			} catch( e ) {
+				return value
+			}
+		}
+	},
 
-    showConfig: function( component ) {
+	showConfig: function( component ) {
         var config = {}
         Ext.iterate(
             component.getConfigMergedWithBlueprintConfig(),

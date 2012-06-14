@@ -32,21 +32,22 @@ Ext.define('Spelled.model.config.Component', {
 	},
 
     getConfigMergedWithBlueprintConfig: function( ) {
-        var blueprintComponent       = Ext.getStore( 'blueprint.Components').getByBlueprintId( this.get('blueprintId')),
-			blueprintEntity          = Ext.getStore( 'blueprint.Entities').getByBlueprintId( this.getEntity().get('blueprintId' )),
-			blueprintEntityComponent = blueprintEntity.getComponents().findRecord( 'blueprintId', this.get('blueprintId') )
-
-        var blueprintConfig =  {}
-        blueprintComponent.getAttributes().each(
-            function( attribute ) {
-                blueprintConfig[ attribute.get('name') ] = attribute
-            }
-        )
+        var blueprintComponent = Ext.getStore( 'blueprint.Components').getByBlueprintId( this.get('blueprintId')),
+			blueprintConfig    = blueprintComponent.getConfig()
 
         //TODO: the config from entities get overwritten if we do not mark them
         this.markChanges()
 
-        var tmp = Ext.Object.merge( blueprintConfig, blueprintEntityComponent.get('config'), this.get('config') )
+		var tmp = {}
+		//Only merge with enityconfig, if it is really linked to a entity
+		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) ) {
+			var blueprintEntity          = Ext.getStore( 'blueprint.Entities').getByBlueprintId( this.getEntity().get('blueprintId' )),
+				blueprintEntityComponent = blueprintEntity.getComponents().findRecord( 'blueprintId', this.get('blueprintId') )
+
+			tmp = Ext.Object.merge( blueprintConfig, blueprintEntityComponent.get('config'), this.get('config') )
+		} else {
+			tmp = Ext.Object.merge( blueprintConfig, this.get('config') )
+		}
 
         //TODO: Warum ist trim in der config durch den merge
         delete tmp.trim
