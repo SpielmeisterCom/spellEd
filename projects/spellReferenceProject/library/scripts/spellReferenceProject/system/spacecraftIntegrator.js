@@ -31,10 +31,8 @@ define(
 
 		var cleanUp = function( globals ) {}
 
-		var updateSpacecraft = function( deltaTimeInMs ) {
+		var updateSpacecraft = function( deltaTimeInS ) {
 			var spacecraftEntity        = this,
-				deltaTimeInS            = deltaTimeInMs / 1000,
-				positionComponent       = spacecraftEntity[ positionComponentId ],
 				actions                 = spacecraftEntity[ actorComponentId ].actions,
 				spacecraftComponent     = spacecraftEntity[ spacecraftComponentId ],
 				inertialObjectComponent = spacecraftEntity[ inertialObjectComponentId ]
@@ -48,7 +46,7 @@ define(
 			)
 
 			if( rotationDirection ) {
-				spacecraftEntity[ rotationComponentId ] += deltaTimeInMs / 1000 * rotationSpeed * rotationDirection
+				spacecraftEntity[ rotationComponentId ] += deltaTimeInS * rotationSpeed * rotationDirection
 			}
 
 			if( actions.accelerate.executing ) {
@@ -70,6 +68,12 @@ define(
 				vec2.multiplyScalar( tmp, deltaTimeInS )
 				vec2.add( inertialObjectComponent.velocity, tmp )
 			}
+		}
+
+		var updateInertialObjects = function( deltaTimeInS ) {
+			var inertialObjectEntity    = this,
+				inertialObjectComponent = inertialObjectEntity[ inertialObjectComponentId ],
+				positionComponent       = inertialObjectEntity[ positionComponentId ]
 
 			// ds, tmp := deltaPosition
 			vec2.multiplyScalar( inertialObjectComponent.velocity, deltaTimeInS, tmp )
@@ -78,7 +82,10 @@ define(
 		}
 
 		var process = function( globals, timeInMs, deltaTimeInMs ) {
-			_.invoke( this.spacecraftEntities, updateSpacecraft, deltaTimeInMs )
+			var deltaTimeInS = deltaTimeInMs / 1000
+
+			_.invoke( this.spacecraftEntities, updateSpacecraft, deltaTimeInS )
+			_.invoke( this.inertialObjectEntities, updateInertialObjects, deltaTimeInS )
 		}
 
 
@@ -86,8 +93,9 @@ define(
 		 * public
 		 */
 
-		var SpacecraftIntegrator = function( globals, spacecraftEntities ) {
+		var SpacecraftIntegrator = function( globals, spacecraftEntities, inertialObjectEntities ) {
 			this.spacecraftEntities = spacecraftEntities
+			this.inertialObjectEntities = inertialObjectEntities
 		}
 
 		SpacecraftIntegrator.prototype = {

@@ -92,6 +92,87 @@
 							}
 						}
 					]
+				},
+				{
+					"name" : "asteroid1",
+					"blueprintId" : "spellReferenceProject.entity.asteroid",
+					"components" : [
+						{
+							"blueprintId" : "spell.component.core.position",
+							"config" : {
+								"value" : [ 600, 500 ]
+							}
+						},
+						{
+							"blueprintId" : "spellReferenceProject.component.inertialObject",
+							"config" : {
+								"mass" : 100,
+								"velocity" : [ -4, -2 ]
+							}
+						}
+					]
+				},
+				{
+					"name" : "asteroid2",
+					"blueprintId" : "spellReferenceProject.entity.asteroid",
+					"components" : [
+						{
+							"blueprintId" : "spell.component.core.position",
+							"config" : {
+								"value" : [ 725, 650 ]
+							}
+						},
+						{
+							"blueprintId" : "spell.component.core.graphics2d.appearance",
+							"config" : {
+								"textureId" : "textures/spellReferenceProject/asteroid2.png"
+							}
+						},
+						{
+							"blueprintId" : "spellReferenceProject.component.collisionSphere",
+							"config" : {
+								"radius" : 13
+							}
+						},
+						{
+							"blueprintId" : "spellReferenceProject.component.inertialObject",
+							"config" : {
+								"mass" : 12,
+								"velocity" : [ 6, 3 ]
+							}
+						}
+					]
+				},
+				{
+					"name" : "asteroid3",
+					"blueprintId" : "spellReferenceProject.entity.asteroid",
+					"components" : [
+						{
+							"blueprintId" : "spell.component.core.position",
+							"config" : {
+								"value" : [ 300, 700 ]
+							}
+						},
+						{
+							"blueprintId" : "spell.component.core.graphics2d.appearance",
+							"config" : {
+								"textureId" : "textures/spellReferenceProject/asteroid2.png"
+							}
+						},
+						{
+							"blueprintId" : "spellReferenceProject.component.collisionSphere",
+							"config" : {
+								"radius" : 13
+							}
+						},
+						{
+							"blueprintId" : "spellReferenceProject.component.inertialObject",
+							"config" : {
+								"mass" : 12,
+								"velocity" : [ 2, -8 ]
+							}
+						}
+					]
 				}
             ],
 			"systems" : {

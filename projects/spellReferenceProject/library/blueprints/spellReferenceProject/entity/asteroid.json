@@ -1,0 +1,32 @@
+{
+	"type" : "entityBlueprint",
+	"namespace" : "spellReferenceProject.entity",
+	"name" : "asteroid",
+	"components" : [
+		{
+			"blueprintId" : "spell.component.core.position"
+		},
+		{
+			"blueprintId" : "spell.component.core.rotation"
+		},
+		{
+			"blueprintId" : "spell.component.core.graphics2d.appearance",
+			"config" : {
+				"scale" : [ 4, 4 ],
+				"textureId" : "textures/spellReferenceProject/asteroid1.png"
+			}
+		},
+		{
+			"blueprintId" : "spell.component.core.graphics2d.renderData"
+		},
+		{
+			"blueprintId" : "spellReferenceProject.component.inertialObject"
+		},
+		{
+			"blueprintId" : "spellReferenceProject.component.collisionSphere",
+			"config" : {
+				"radius" : 30
+			}
+		}
+	]
+}

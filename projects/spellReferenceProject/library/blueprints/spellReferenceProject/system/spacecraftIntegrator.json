@@ -13,6 +13,13 @@
 				"spellReferenceProject.component.spacecraft",
 				"spellReferenceProject.component.inertialObject"
 			]
+		},
+		{
+			"name" : "inertialObjectEntities",
+			"components" : [
+				"spell.component.core.position",
+				"spellReferenceProject.component.inertialObject"
+			]
 		}
 	],
 	"scriptId" : "spellReferenceProject/system/spacecraftIntegrator"
