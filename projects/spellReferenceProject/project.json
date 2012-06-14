@@ -31,8 +31,13 @@
 						{
 							"blueprintId" : "spellReferenceProject.component.spacecraft",
 							"config" : {
-								"mass" : 2,
 								"thrusterForce" : 300
+							}
+						},
+						{
+							"blueprintId" : "spellReferenceProject.component.inertialObject",
+							"config" : {
+								"mass" : 3
 							}
 						}
 					]
@@ -76,8 +81,14 @@
 						{
 							"blueprintId" : "spellReferenceProject.component.spacecraft",
 							"config" : {
-								"mass" : 1,
 								"thrusterForce" : 175
+							}
+						},
+						{
+							"blueprintId" : "spellReferenceProject.component.inertialObject",
+							"config" : {
+								"mass" : 1,
+								"velocity" : [ 10, 2 ]
 							}
 						}
 					]

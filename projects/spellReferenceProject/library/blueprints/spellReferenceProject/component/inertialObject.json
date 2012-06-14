@@ -1,0 +1,17 @@
+{
+	"type" : "componentBlueprint",
+	"namespace" : "spellReferenceProject.component",
+	"name" : "inertialObject",
+	"attributes" : [
+		{
+			"name" : "mass",
+			"type" : "Number",
+			"default" : 1
+		},
+		{
+			"name" : "velocity",
+			"type" : "vec2",
+			"default" : [ 0, 0 ]
+		}
+	]
+}

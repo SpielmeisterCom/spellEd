@@ -17,12 +17,13 @@ define(
 		 * private
 		 */
 
-		var positionComponentId   = 'spell.component.core.position',
-			rotationComponentId   = 'spell.component.core.rotation',
-			actorComponentId      = 'spell.component.core.actor',
-			spacecraftComponentId = 'spellReferenceProject.component.spacecraft',
-			rotationSpeed         = 1.75,
-			tmp                   = vec2.create()
+		var positionComponentId       = 'spell.component.core.position',
+			rotationComponentId       = 'spell.component.core.rotation',
+			actorComponentId          = 'spell.component.core.actor',
+			spacecraftComponentId     = 'spellReferenceProject.component.spacecraft',
+			inertialObjectComponentId = 'spellReferenceProject.component.inertialObject',
+			rotationSpeed             = 1.75,
+			tmp                       = vec2.create()
 
 
 
@@ -31,11 +32,12 @@ define(
 		var cleanUp = function( globals ) {}
 
 		var updateSpacecraft = function( deltaTimeInMs ) {
-			var spacecraftEntity    = this,
-				deltaTimeInS        = deltaTimeInMs / 1000,
-				positionComponent   = spacecraftEntity[ positionComponentId ],
-				actions             = spacecraftEntity[ actorComponentId ].actions,
-				spacecraftComponent = spacecraftEntity[ spacecraftComponentId ]
+			var spacecraftEntity        = this,
+				deltaTimeInS            = deltaTimeInMs / 1000,
+				positionComponent       = spacecraftEntity[ positionComponentId ],
+				actions                 = spacecraftEntity[ actorComponentId ].actions,
+				spacecraftComponent     = spacecraftEntity[ spacecraftComponentId ],
+				inertialObjectComponent = spacecraftEntity[ inertialObjectComponentId ]
 
 
 			var rotationDirection = ( actions.steerLeft.executing ?
@@ -62,15 +64,15 @@ define(
 				)
 
 				// da, tmp := deltaAcceleration
-				vec2.multiplyScalar( tmp, 1 / spacecraftComponent.mass )
+				vec2.multiplyScalar( tmp, 1 / inertialObjectComponent.mass )
 
 				// dv, tmp := deltaSpeed
 				vec2.multiplyScalar( tmp, deltaTimeInS )
-				vec2.add( spacecraftComponent.velocity, tmp )
+				vec2.add( inertialObjectComponent.velocity, tmp )
 			}
 
 			// ds, tmp := deltaPosition
-			vec2.multiplyScalar( spacecraftComponent.velocity, deltaTimeInS, tmp )
+			vec2.multiplyScalar( inertialObjectComponent.velocity, deltaTimeInS, tmp )
 
 			vec2.add( positionComponent, tmp )
 		}

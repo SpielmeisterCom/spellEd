@@ -4,19 +4,9 @@
 	"name" : "spacecraft",
 	"attributes" : [
 		{
-			"name" : "mass",
-			"type" : "Number",
-			"default" : 1
-		},
-		{
 			"name" : "thrusterForce",
 			"type" : "Number",
-			"default" : 0.5
-		},
-		{
-			"name" : "velocity",
-			"type" : "vec2",
-			"default" : [ 0, 0 ]
+			"default" : 100
 		}
 	]
 }

@@ -18,7 +18,7 @@ define(
 		 */
 
 		var positionComponentId        = 'spell.component.core.position',
-			spacecraftComponentId      = 'spellReferenceProject.component.spacecraft',
+			inertialObjectComponentId  = 'spellReferenceProject.component.inertialObject',
 			collisionSphereComponentId = 'spellReferenceProject.component.collisionSphere',
 			distance                   = vec2.create(),
 			distanceSquared            = 0,
@@ -60,13 +60,13 @@ define(
 		}
 
 		var resolveCollision = function( collisionPair ) {
-			var entityA     = collisionPair[ 0 ],
-				entityB     = collisionPair[ 1 ],
-				positionA   = entityA[ positionComponentId ],
-				positionB   = entityB[ positionComponentId ],
-				spacecraftA = entityA[ spacecraftComponentId ],
-				spacecraftB = entityB[ spacecraftComponentId ],
-				tmpV        = vec2.create()
+			var entityA   = collisionPair[ 0 ],
+				entityB   = collisionPair[ 1 ],
+				positionA = entityA[ positionComponentId ],
+				positionB = entityB[ positionComponentId ],
+				inertialA = entityA[ inertialObjectComponentId ],
+				inertialB = entityB[ inertialObjectComponentId ],
+				tmpV      = vec2.create()
 
 			var dn = vec2.create()
 			vec2.subtract( positionA, positionB, dn )
@@ -85,8 +85,8 @@ define(
 			var dt = vec2.create( [ dn[ 1 ], -dn[ 0 ] ] )
 
 			// masses
-			var m1 = spacecraftA.mass,
-				m2 = spacecraftB.mass,
+			var m1 = inertialA.mass,
+				m2 = inertialB.mass,
 				M  = m1 + m2
 
 			// minimum translation distance required to separate objects
@@ -105,8 +105,8 @@ define(
 			vec2.subtract( positionB, tmpV )
 
 			// current velocities
-			var v1 = spacecraftA.velocity,
-				v2 = spacecraftB.velocity
+			var v1 = inertialA.velocity,
+				v2 = inertialB.velocity
 
 			// splitting the velocity of the object into normal and tangential component relative to the collision plane
 			var v1n = vec2.create(),
@@ -130,14 +130,14 @@ define(
 				( m1 - m2 ) / M * v1nlen + 2 * m2 / M * v2nlen,
 				tmpV
 			)
-			vec2.add( v1t, tmpV, spacecraftA.velocity )
+			vec2.add( v1t, tmpV, v1 )
 
 			vec2.multiplyScalar(
 				dn,
 				( m2 - m1 ) / M * v2nlen + 2 * m1 / M * v1nlen,
 				tmpV
 			)
-			vec2.subtract( v2t, tmpV, spacecraftB.velocity )
+			vec2.subtract( v2t, tmpV, v2 )
 		}
 
 		var resolveCollisions = function( collisionPairs ) {
