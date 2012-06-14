@@ -51,6 +51,20 @@ Ext.define('Spelled.view.zone.Navigator', {
 							xtype: 'systemlist'
 						}
 					]
+				},
+				{
+					layout: {
+						align: 'stretch',
+						type: 'vbox'
+					},
+					title: 'Zone Script',
+					items: [
+						{
+							id: "ZoneScript",
+							flex: 1,
+							xtype: 'zonescript'
+						}
+					]
 				}
 			]
 		}

@@ -22,6 +22,7 @@ Ext.define('Spelled.controller.Zones', {
         'zone.Navigator',
         'zone.Create',
         'zone.Editor',
+		'zone.Script',
         'ui.SpelledRendered'
     ],
 
@@ -77,9 +78,24 @@ Ext.define('Spelled.controller.Zones', {
             },
             'zonesnavigator': {
                 activate: me.showZonesEditor
-            }
+            },
+			'zonescript > combobox[name="scriptId"]' : {
+				select: this.setZoneScript
+			}
         })
     },
+
+	refreshZoneScriptCombobox: function( scriptId ) {
+		var combobox = Ext.getCmp('ZoneScript').down( 'combobox' )
+
+		combobox.select( scriptId )
+	},
+
+	setZoneScript: function( combo, records ) {
+		var zone = this.application.getActiveZone()
+
+		zone.set('scriptId', combo.getValue())
+	},
 
 	checkOrigin: function( event ) {
 		if ( event.origin !== this.BUILD_SERVER_ORIGIN ){
@@ -224,6 +240,7 @@ Ext.define('Spelled.controller.Zones', {
 
             this.application.getController('Entities').showEntitylist( zone.getEntities() )
 			this.application.getController('Systems').refreshZoneSystemList( zone )
+			this.refreshZoneScriptCombobox( zone.get('scriptId') )
         }
     },
 
