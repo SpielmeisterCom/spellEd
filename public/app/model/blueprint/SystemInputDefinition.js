@@ -12,7 +12,9 @@ Ext.define('Spelled.model.blueprint.SystemInputDefinition', {
 
     associations: [{
         model:"Spelled.model.blueprint.System",
-        type:"belongsTo"
+        type:"belongsTo",
+		getterName: 'getSystem',
+		setterName: 'setSystem'
     }],
 
     constructor: function() {

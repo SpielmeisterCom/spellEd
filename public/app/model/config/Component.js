@@ -9,7 +9,14 @@ Ext.define('Spelled.model.config.Component', {
 
     idgen: 'uuid',
 
-    belongsTo: 'Spelled.model.config.Entity',
+	associations: [
+		{
+			type: 'belongsTo',
+			model: 'Spelled.model.config.Entity',
+			getterName: 'getEntity',
+			setterName: 'setEntity'
+		}
+	],
 
     constructor: function() {
         this.callParent(arguments)
@@ -25,9 +32,10 @@ Ext.define('Spelled.model.config.Component', {
 	},
 
     getConfigMergedWithBlueprintConfig: function( ) {
-        var blueprintComponent = Ext.getStore( 'blueprint.Components').getByBlueprintId( this.get('blueprintId') )
+        var blueprintComponent       = Ext.getStore( 'blueprint.Components').getByBlueprintId( this.get('blueprintId')),
+			blueprintEntity          = Ext.getStore( 'blueprint.Entities').getByBlueprintId( this.getEntity().get('blueprintId' )),
+			blueprintEntityComponent = blueprintEntity.getComponents().findRecord( 'blueprintId', this.get('blueprintId') )
 
-        //TODO: config wird falschrum überschrieben
         var blueprintConfig =  {}
         blueprintComponent.getAttributes().each(
             function( attribute ) {
@@ -38,7 +46,8 @@ Ext.define('Spelled.model.config.Component', {
         //TODO: the config from entities get overwritten if we do not mark them
         this.markChanges()
 
-        var tmp = Ext.Object.merge( blueprintConfig, this.get('config') )
+        var tmp = Ext.Object.merge( blueprintConfig, blueprintEntityComponent.get('config'), this.get('config') )
+
         //TODO: Warum ist trim in der config durch den merge
         delete tmp.trim
 

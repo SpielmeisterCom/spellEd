@@ -11,7 +11,9 @@ Ext.define('Spelled.model.blueprint.ComponentAttribute', {
 
     associations: [{
         model:"Spelled.model.blueprint.Component",
-        type:"belongsTo"
+        type:"belongsTo",
+		getterName: 'getComponent',
+		setterName: 'setComponent'
     }],
 
     constructor: function() {

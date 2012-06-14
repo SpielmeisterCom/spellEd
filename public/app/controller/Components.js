@@ -28,12 +28,12 @@ Ext.define('Spelled.controller.Components', {
 	editProperty: function( editor, e ) {
 		var componentConfigId = e.grid.componentConfigId,
 			record = e.record.data,
-			component = this.getConfigComponentsStore().getById( componentConfigId )
+			component = this.getConfigComponentsStore().getById( componentConfigId ),
+			defaultConfig = component.getConfigMergedWithBlueprintConfig()
 
+		if( defaultConfig[ record.name ] != record.value ) {
+			var config = component.get( 'config' )
 
-		var config = component.get( 'config' )
-
-		if( config[ record.name ] != record.value ) {
 			try {
 				config[ record.name ] = eval( record.value )
 			} catch( e ) {

@@ -9,7 +9,13 @@ Ext.define('Spelled.model.config.Zone', {
 
     idProperty: 'name',
 
-    belongsTo: 'Spelled.model.Project',
+	associations: [{
+		model:"Spelled.model.Project",
+		type:"belongsTo",
+		getterName: 'getProject',
+		setterName: 'setProject'
+	}],
+
     hasMany: {
         model: 'Spelled.model.config.Entity',
         associationKey: 'entities',

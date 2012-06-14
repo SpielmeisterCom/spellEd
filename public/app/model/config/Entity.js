@@ -8,7 +8,13 @@ Ext.define('Spelled.model.config.Entity', {
 
     idgen: 'uuid',
 
-    belongsTo: 'Spelled.model.config.Zone',
+	associations: [{
+		model:"Spelled.model.config.Zone",
+		type:"belongsTo",
+		getterName: 'getZone',
+		setterName: 'setZone'
+	}],
+
     hasMany: {
         model: 'Spelled.model.config.Component',
         associationKey: 'components',
