@@ -10,19 +10,50 @@ Ext.define('Spelled.view.zone.Navigator', {
     items:[
         {
             id: "ZonesTree",
-            flex: 2,
+			flex: 1,
             xtype: 'zonetreelist'
         },
-        {
-            id: "EntityList",
-            flex: 2,
-            xtype: 'entiteslist'
-        },
-        {
-            id: "ComponentProperty",
-            flex: 1,
-            xtype: 'componentproperties'
-        }
+		{
+			flex: 2,
+			layout: {
+				type: 'accordion'
+			},
+			items: [
+				{
+					layout: {
+						align: 'stretch',
+						type: 'vbox'
+					},
+					title: 'Zone Default Entities',
+					items: [
+						{
+							id: "EntityList",
+							flex: 2,
+							xtype: 'entiteslist'
+						},
+						{
+							id: "ComponentProperty",
+							flex: 1,
+							xtype: 'componentproperties'
+						}
+					]
+				},
+				{
+					layout: {
+						align: 'stretch',
+						type: 'vbox'
+					},
+					title: 'Zone Systems',
+					items: [
+						{
+							id: "SystemList",
+							flex: 1,
+							xtype: 'systemlist'
+						}
+					]
+				}
+			]
+		}
     ]
 
 });

@@ -226,6 +226,12 @@ Ext.define('Spelled.controller.Blueprints', {
             store.removeAll()
             store.loadDataViaReader( response.result )
         })
+
+		Spelled.BlueprintsActions.getAllSystemsBlueprints( projectName, function( provider, response ) {
+			var store = Ext.getStore('blueprint.Systems')
+			store.removeAll()
+			store.loadDataViaReader( response.result )
+		})
     },
 
 	refreshStoresAndTreeStores: function() {

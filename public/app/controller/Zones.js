@@ -76,9 +76,7 @@ Ext.define('Spelled.controller.Zones', {
                 click: me.createZone
             },
             'zonesnavigator': {
-                activate: function() {
-					me.showZonesEditor()
-                }
+                activate: me.showZonesEditor
             }
         })
     },
@@ -224,8 +222,8 @@ Ext.define('Spelled.controller.Zones', {
         if( zone ) {
             this.application.setActiveZone( zone )
 
-            var entitiesController = this.application.getController('Entities')
-            entitiesController.showEntitylist( zone.getEntities() )
+            this.application.getController('Entities').showEntitylist( zone.getEntities() )
+			this.application.getController('Systems').refreshZoneSystemList( zone )
         }
     },
 

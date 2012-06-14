@@ -23,7 +23,7 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                     xtype: 'tabpanel',
                     tabPosition: 'bottom',
                     region:'west',
-                    width: 250,
+                    width: 300,
                     minSize: 100,
                     items: [
                         {

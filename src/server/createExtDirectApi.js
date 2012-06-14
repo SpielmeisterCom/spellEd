@@ -74,6 +74,11 @@ define(
                 return getAllBlueprints( projectName, 'componentBlueprint' )
             }
 
+			var getAllSystemsBlueprints = function( req, res, payload, next ) {
+				var projectName = payload[0]
+				return getAllBlueprints( projectName, 'systemBlueprint' )
+			}
+
             var createBlueprint = function( req, res, payload, next ) {
                 var api = ( payload.type === "componentBlueprint" ) ? createComponentApi( projectsRoot ) :  createEntityApi( projectsRoot )
 
@@ -117,7 +122,12 @@ define(
                         name: "getAllComponentsBlueprints",
                         len: 1,
                         func: getAllComponentBlueprints
-                    }
+                    },
+					{
+						name: "getAllSystemsBlueprints",
+						len: 1,
+						func: getAllSystemsBlueprints
+					}
                 ]
             }
         }

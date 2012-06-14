@@ -7,6 +7,7 @@ Ext.define('Spelled.view.entity.TreeList' ,{
     rootVisible: false,
 
     title: "Default Entities",
+	header: false,
     store: "EntitiesTree",
 
     tbar: [

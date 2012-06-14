@@ -102,9 +102,8 @@ Ext.define('Spelled.controller.Projects', {
             success: function( project ) {
 				project.checkForComponentChanges()
 				this.getZonesList( project )
+				this.application.setActiveProject( project )
 				Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Zones') )
-				this.application.getController('Zones').showZonesEditor()
-                this.application.setActiveProject( project )
             }
         })
 

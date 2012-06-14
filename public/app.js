@@ -1,6 +1,7 @@
 Ext.require([
     'Ext.direct.*',
-    'Ext.data.*'
+    'Ext.data.*',
+	'Ext.tree.ViewDragZone'
 ]);
 
 var apis = [
@@ -16,6 +17,13 @@ var after = function(times, func) {
 };
 
 Ext.onReady(function() {
+	//TODO: find out why i couldn't extend the ViewDragDrop plugin and refactor it
+	Ext.override(Ext.tree.ViewDragZone, {
+		isPreventDrag: function(e, record) {
+			return this.callOverridden(arguments) || !record.isLeaf();
+		}
+	});
+
     var lock = after( apis.length, startEditor )
 
     Ext.each( apis, function( api ) {
@@ -48,6 +56,7 @@ var startEditor = function() {
             'Assets',
             'Blueprints',
             'Scripts',
+			'Systems',
             'blueprints.Components',
             'blueprints.Entities',
             'blueprints.Systems'
@@ -62,7 +71,7 @@ var startEditor = function() {
 			'script.Tree',
 			'script.FoldersTree',
 			'BlueprintsTree',
-			'blueprint.FoldersTree',
+			'blueprint.FoldersTree'
 		],
 
 		refs: [
