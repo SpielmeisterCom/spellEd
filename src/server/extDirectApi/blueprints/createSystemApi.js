@@ -39,7 +39,7 @@ define(
                     entity.getInput,
                     function( input ) {
                         inputDefinitions.push(
-                            _.pick( input, 'name', 'components' )
+                            _.pick( input, 'name', 'blueprintId' )
                         )
                     }
                 )

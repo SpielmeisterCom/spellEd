@@ -43,19 +43,15 @@ Ext.define('Spelled.model.blueprint.System', {
                 leaf      : false
             } )
 
-            Ext.each(
-                input.get('components'),
-                function( componentName ) {
-                    children.appendChild(
-                        node.createNode ( {
-                            text      : componentName,
-                            id        : componentName,
-                            expanded  : true,
-                            leaf      : true
-                        } )
-                    )
-                }
-            )
+
+			children.appendChild(
+				node.createNode ( {
+					text      : input.get('blueprintId'),
+					id        : input.get('blueprintId'),
+					expanded  : true,
+					leaf      : true
+				} )
+			)
 
             node.appendChild( children )
         })

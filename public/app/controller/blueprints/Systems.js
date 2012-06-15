@@ -40,6 +40,9 @@ Ext.define('Spelled.controller.blueprints.Systems', {
 			'systemblueprintinputlist [action="showAddInput"]' : {
 				click: this.showAddInput
 			},
+			'addinputtoblueprint > form > treepanel': {
+				select: this.unSelectOtherComponents
+			},
 			'addinputtoblueprint button[action="addInput"]' : {
 				click: this.addInput
 			},
@@ -50,6 +53,19 @@ Ext.define('Spelled.controller.blueprints.Systems', {
 				select: this.changeScript
 			}
 		})
+	},
+
+	unSelectOtherComponents: function( grid, node ) {
+		if( node.data.checked === undefined ) return
+
+		var root = node.parentNode
+		root.eachChild(
+			function( child ) {
+				if( child.getId() !== node.getId() ) {
+					child.set('checked', false)
+				}
+			}
+		)
 	},
 
 	changeScript: function( combo, records ) {
@@ -92,7 +108,6 @@ Ext.define('Spelled.controller.blueprints.Systems', {
             }
         )
 
-        var componentNames = []
         Ext.each(
             components,
             function( component ) {
@@ -100,12 +115,10 @@ Ext.define('Spelled.controller.blueprints.Systems', {
                 var componentBlueprint = componentBlueprintStore.getById( component.get('id') )
 
                 if( componentBlueprint ) {
-                    componentNames.push( componentBlueprint.getFullName() )
+					inputDefinition.set( 'blueprintId', componentBlueprint.getFullName() )
                 }
             }
         )
-
-        inputDefinition.set('components', componentNames)
 
         systemBlueprint.getInput().add( inputDefinition )
 
