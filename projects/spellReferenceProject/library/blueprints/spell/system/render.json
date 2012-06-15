@@ -19,6 +19,10 @@
 		{
 			"name" : "renderDatas",
 			"blueprintId" : "spell.component.core.graphics2d.renderData"
+		},
+		{
+			"name" : "cameras",
+			"blueprintId" : "spell.component.core.graphics2d.camera"
 		}
 	],
 	"scriptId" : "spell/system/render"

@@ -173,6 +173,21 @@
 							}
 						}
 					]
+				},
+				{
+					"name" : "camera",
+					"blueprintId" : "spellReferenceProject.entity.camera",
+					"components" : [
+						{
+							"blueprintId" : "spell.component.core.graphics2d.camera",
+							"config" : {
+								"position" : [ 512, 384 ],
+								"width" : 1024,
+								"height" : 768,
+								"active" : false
+							}
+						}
+					]
 				}
             ],
 			"systems" : {
