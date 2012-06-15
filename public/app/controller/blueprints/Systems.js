@@ -56,7 +56,7 @@ Ext.define('Spelled.controller.blueprints.Systems', {
 	},
 
 	unSelectOtherComponents: function( grid, node ) {
-		if( node.data.checked === undefined || node.isLeaf() || node.isRoot() ) return
+		if( node.get('checked') === true || node.isLeaf() || node.isRoot() ) return
 
 		var root = node.parentNode
 		root.eachChild(
