@@ -176,7 +176,7 @@
 				},
 				{
 					"name" : "camera",
-					"blueprintId" : "spellReferenceProject.entity.camera",
+					"blueprintId" : "spell.entity.camera",
 					"components" : [
 						{
 							"blueprintId" : "spell.component.core.graphics2d.camera",

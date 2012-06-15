@@ -1,6 +1,6 @@
 {
 	"type" : "entityBlueprint",
-	"namespace" : "spellReferenceProject.entity",
+	"namespace" : "spell.entity",
 	"name" : "camera",
 	"components" : [
 		{
