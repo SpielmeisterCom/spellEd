@@ -5,21 +5,24 @@
 
 	"input" : [
 		{
-			"name" : "spacecraftEntities",
-			"components" : [
-				"spell.component.core.position",
-				"spell.component.core.rotation",
-				"spell.component.core.actor",
-				"spellReferenceProject.component.spacecraft",
-				"spellReferenceProject.component.inertialObject"
-			]
+			"name" : "actors",
+			"blueprintId" : "spell.component.core.actor"
 		},
 		{
-			"name" : "inertialObjectEntities",
-			"components" : [
-				"spell.component.core.position",
-				"spellReferenceProject.component.inertialObject"
-			]
+			"name" : "positions",
+			"blueprintId" : "spell.component.core.position"
+		},
+		{
+			"name" : "rotations",
+			"blueprintId" : "spell.component.core.rotation"
+		},
+		{
+			"name" : "spacecrafts",
+			"blueprintId" : "spellReferenceProject.component.spacecraft"
+		},
+		{
+			"name" : "inertialObjects",
+			"blueprintId" : "spellReferenceProject.component.inertialObject"
 		}
 	],
 	"scriptId" : "spellReferenceProject/system/spacecraftIntegrator"

@@ -17,57 +17,17 @@ define(
 		 * private
 		 */
 
-		var positionComponentId        = 'spell.component.core.position',
-			inertialObjectComponentId  = 'spellReferenceProject.component.inertialObject',
-			collisionSphereComponentId = 'spellReferenceProject.component.collisionSphere',
-			distance                   = vec2.create(),
-			distanceSquared            = 0,
-			minDistanceSquared         = 0
+		var distance           = vec2.create(),
+			distanceSquared    = 0,
+			minDistanceSquared = 0,
+			tmp                = vec2.create()
 
 
 		var init = function( globals ) { }
 
 		var cleanUp = function( globals ) {}
 
-		var isColliding = function( entityA, entityB ) {
-			vec2.subtract( entityA[ positionComponentId ], entityB[ positionComponentId ], distance )
-			distanceSquared = vec2.dot( distance, distance )
-
-			minDistanceSquared = entityA[ collisionSphereComponentId ].radius + entityB[ collisionSphereComponentId ].radius
-			minDistanceSquared *= minDistanceSquared
-
-			return distanceSquared <= minDistanceSquared
-		}
-
-		var createCollisionPairs = function( entities ) {
-			var entityIds    = _.keys( entities ),
-				numEntityIds = entityIds.length,
-				result       = []
-
-			for( var i = 0; i < numEntityIds; i++ ) {
-				var entityA = entities[ i ]
-
-				for( var j = i + 1; j < numEntityIds; j++ ) {
-					var entityB = entities[ j ]
-
-					if( isColliding( entityA, entityB ) ) {
-						result.push( [ entityA, entityB ] )
-					}
-				}
-			}
-
-			return result
-		}
-
-		var resolveCollision = function( collisionPair ) {
-			var entityA   = collisionPair[ 0 ],
-				entityB   = collisionPair[ 1 ],
-				positionA = entityA[ positionComponentId ],
-				positionB = entityB[ positionComponentId ],
-				inertialA = entityA[ inertialObjectComponentId ],
-				inertialB = entityB[ inertialObjectComponentId ],
-				tmpV      = vec2.create()
-
+		var resolveCollision = function( positionA, collisionSphereA, inertialObjectA, positionB, collisionSphereB, inertialObjectB ) {
 			var dn = vec2.create()
 			vec2.subtract( positionA, positionB, dn )
 
@@ -85,28 +45,28 @@ define(
 			var dt = vec2.create( [ dn[ 1 ], -dn[ 0 ] ] )
 
 			// masses
-			var m1 = inertialA.mass,
-				m2 = inertialB.mass,
+			var m1 = inertialObjectA.mass,
+				m2 = inertialObjectB.mass,
 				M  = m1 + m2
 
 			// minimum translation distance required to separate objects
 			var mt = vec2.create()
 			vec2.multiplyScalar(
 				dn,
-				entityA[ collisionSphereComponentId ].radius + entityB[ collisionSphereComponentId ].radius - delta,
+				collisionSphereA.radius + collisionSphereB.radius - delta,
 				mt
 			)
 
 			// pushing the objects apart relative to their mass
-			vec2.multiplyScalar( mt, m2 / M, tmpV )
-			vec2.add( positionA, tmpV )
+			vec2.multiplyScalar( mt, m2 / M, tmp )
+			vec2.add( positionA, tmp )
 
-			vec2.multiplyScalar( mt, m1 / M, tmpV )
-			vec2.subtract( positionB, tmpV )
+			vec2.multiplyScalar( mt, m1 / M, tmp )
+			vec2.subtract( positionB, tmp )
 
 			// current velocities
-			var v1 = inertialA.velocity,
-				v2 = inertialB.velocity
+			var v1 = inertialObjectA.velocity,
+				v2 = inertialObjectB.velocity
 
 			// splitting the velocity of the object into normal and tangential component relative to the collision plane
 			var v1n = vec2.create(),
@@ -128,26 +88,52 @@ define(
 			vec2.multiplyScalar(
 				dn,
 				( m1 - m2 ) / M * v1nlen + 2 * m2 / M * v2nlen,
-				tmpV
+				tmp
 			)
-			vec2.add( v1t, tmpV, v1 )
+			vec2.add( v1t, tmp, v1 )
 
 			vec2.multiplyScalar(
 				dn,
 				( m2 - m1 ) / M * v2nlen + 2 * m1 / M * v1nlen,
-				tmpV
+				tmp
 			)
-			vec2.subtract( v2t, tmpV, v2 )
+			vec2.subtract( v2t, tmp, v2 )
 		}
 
-		var resolveCollisions = function( collisionPairs ) {
-			_.each( collisionPairs, resolveCollision )
+		var isColliding = function( positionA, collisionSphereA, positionB, collisionSphereB ) {
+			vec2.subtract( positionA, positionB, distance )
+			distanceSquared = vec2.dot( distance, distance )
+
+			minDistanceSquared = collisionSphereA.radius + collisionSphereB.radius
+			minDistanceSquared *= minDistanceSquared
+
+			return distanceSquared <= minDistanceSquared
+		}
+
+		var resolveCollisions = function( positions, collisionSpheres, inertialObjects ) {
+			var entityIds    = _.keys( positions ),
+				numEntityIds = entityIds.length,
+				result       = []
+
+			for( var i = 0; i < numEntityIds; i++ ) {
+				var collisionSphereA = collisionSpheres[ i ],
+					positionA        = positions[ i ]
+
+				for( var j = i + 1; j < numEntityIds; j++ ) {
+					var collisionSphereB = collisionSpheres[ j ],
+						positionB        = positions[ j ]
+
+					if( isColliding( positionA, collisionSphereA, positionB, collisionSphereB ) ) {
+						resolveCollision( positionA, collisionSphereA, inertialObjects[ i ], positionB, collisionSphereB, inertialObjects[ j ] )
+					}
+				}
+			}
+
+			return result
 		}
 
 		var process = function( globals, timeInMs, deltaTimeInMs ) {
-			resolveCollisions(
-				createCollisionPairs( this.spacecraftEntities )
-			)
+			resolveCollisions( this.positions, this.collisionSpheres, this.inertialObjects )
 		}
 
 
@@ -155,8 +141,10 @@ define(
 		 * public
 		 */
 
-		var CollisionDetector = function( globals, spacecraftEntities ) {
-			this.spacecraftEntities = spacecraftEntities
+		var CollisionDetector = function( globals, positions, inertialObjects, collisionSpheres ) {
+			this.positions        = positions
+			this.inertialObjects  = inertialObjects
+			this.collisionSpheres = collisionSpheres
 		}
 
 		CollisionDetector.prototype = {

@@ -5,10 +5,8 @@
 
 	"input" : [
 		{
-			"name" : "spacecraftEntities",
-			"components" : [
-				"spell.component.core.position"
-			]
+			"name" : "positions",
+			"blueprintId" : "spell.component.core.position"
 		}
 	],
 	"scriptId" : "spellReferenceProject/system/endlessPlayingField"

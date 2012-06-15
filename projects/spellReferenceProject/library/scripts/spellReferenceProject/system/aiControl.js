@@ -1,14 +1,14 @@
 define(
 	'spellReferenceProject/system/aiControl',
 	[
-		'glmatrix/vec2',
+		'spell/shared/util/platform/underscore',
 
-		'spell/shared/util/platform/underscore'
+		'glmatrix/vec2'
 	],
 	function(
-		vec2,
+		_,
 
-		_
+		vec2
 	) {
 		'use strict'
 
@@ -17,11 +17,8 @@ define(
 		 * private
 		 */
 
-		var positionComponentId = 'spell.component.core.position',
-			rotationComponentId = 'spell.component.core.rotation',
-			actorComponentId    = 'spell.component.core.actor',
-			aimingAccuracy      = 0.025, // in radians
-			tmp                 = vec2.create()
+		var aimingAccuracy = 0.025, // in radians
+			tmp            = vec2.create()
 
 
 		var init = function( globals ) { }
@@ -29,68 +26,77 @@ define(
 		var cleanUp = function( globals ) {}
 
 
-		var isAIControlled = function( entity ) {
-			return entity[ actorComponentId ].id === 'aiControlled'
+		var isAIControlled = function( actor ) {
+			return actor.id === 'aiControlled'
 		}
 
-		var toRotation = function( s ) {
-			return s > 0 ? s : 2 * Math.PI + s
-		}
-
-		var getNextTarget = function( aiSpacecraft, playerSpacecrafts ) {
-			var position = aiSpacecraft[ positionComponentId ]
-
+		var getNextTargetId = function( aiPosition, playerPositions ) {
 			return _.reduce(
-				playerSpacecrafts,
-				function( memo, playerSpacecraft ) {
-					vec2.subtract( position, playerSpacecraft[ positionComponentId ], tmp )
+				playerPositions,
+				function( memo, playerPosition, entityId ) {
+					vec2.subtract( aiPosition, playerPosition, tmp )
 					var distanceSquared = vec2.dot( tmp, tmp )
 
 					if( distanceSquared < memo.distanceSquared ) {
-						memo.entity = playerSpacecraft
+						memo.id = entityId
 						memo.distanceSquared = distanceSquared
 					}
 
 					return memo
 				},
 				{
-					entity : undefined,
+					id : undefined,
 					distanceSquared : Number.POSITIVE_INFINITY
 				}
-			).entity
+			).id
 		}
 
-		var updateRotation = function( aiSpacecraft, targetSpacecraft ) {
-			vec2.subtract( targetSpacecraft[ positionComponentId ], aiSpacecraft[ positionComponentId ], tmp )
+		var updateActor = function( aiActor, aiPosition, aiRotation, targetPosition ) {
+			vec2.subtract( targetPosition, aiPosition, tmp )
 			vec2.normalize( tmp )
 
 			// TODO: find the bug that causes the ai spacecraft to occasionally steer in the wrong direction (rotates the bigger angle)
-			var deltaAngle = Math.atan2( tmp[ 0 ], tmp[ 1 ] ) - aiSpacecraft[ rotationComponentId ]
+			var deltaAngle = Math.atan2( tmp[ 0 ], tmp[ 1 ] ) - aiRotation
 			deltaAngle += ( deltaAngle > Math.PI ) ? -2 * Math.PI : ( deltaAngle < -Math.PI ) ? 2 * Math.PI : 0
 
-			var actions = aiSpacecraft[ actorComponentId ].actions
+			var actions = aiActor.actions
 			actions.steerLeft.executing  = deltaAngle < -aimingAccuracy
 			actions.steerRight.executing = deltaAngle > aimingAccuracy
 			actions.accelerate.executing = Math.abs( deltaAngle ) < aimingAccuracy
 		}
 
-		var updateRotations = function( aiSpacecrafts, playerSpacecrafts ) {
-			_.each(
-				aiSpacecrafts,
-				function( aiSpacecraft ) {
-					var targetSpacecraft = getNextTarget( aiSpacecraft, playerSpacecrafts )
+		var updateActors = function( globals, timeInMs, deltaTimeInMs ) {
+			var actors    = this.actors,
+				positions = this.positions,
+				rotations = this.rotations
 
-					if( targetSpacecraft ) {
-						updateRotation( aiSpacecraft, targetSpacecraft )
+			// NOTE: Distinguishing between ai and player controlled actors should be done by using separate component types in order to save some cycles here.
+			var aiControlledIds = [],
+				playerControlledIds = []
+
+			_.each(
+				actors,
+				function( actor, entityId ) {
+					if( isAIControlled( actor ) ) {
+						aiControlledIds.push( entityId )
+
+					} else {
+						playerControlledIds.push( entityId )
 					}
 				}
 			)
-		}
 
-		var process = function( globals, timeInMs, deltaTimeInMs ) {
-			updateRotations(
-				_.filter( this.spacecraftEntities, isAIControlled ),
-				_.reject( this.spacecraftEntities, isAIControlled )
+			var targetPositions = _.pick( positions, playerControlledIds )
+
+			_.each(
+				aiControlledIds,
+				function( aiControlledId ) {
+					var targetId = getNextTargetId( positions[ aiControlledId ], targetPositions )
+
+					if( targetId ) {
+						updateActor( actors[ aiControlledId ], positions[ aiControlledId ], rotations[ aiControlledId ], targetPositions[ targetId ] )
+					}
+				}
 			)
 		}
 
@@ -99,14 +105,16 @@ define(
 		 * public
 		 */
 
-		var AIControl = function( globals, spacecraftEntities ) {
-			this.spacecraftEntities = spacecraftEntities
+		var AIControl = function( globals, actors, positions, rotations ) {
+			this.actors    = actors
+			this.positions = positions
+			this.rotations = rotations
 		}
 
 		AIControl.prototype = {
 			cleanUp : cleanUp,
 			init : init,
-			process : process
+			process : updateActors
 		}
 
 		return AIControl

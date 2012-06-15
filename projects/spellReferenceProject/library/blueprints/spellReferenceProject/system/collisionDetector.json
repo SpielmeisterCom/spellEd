@@ -5,12 +5,16 @@
 
 	"input" : [
 		{
-			"name" : "spacecraftEntities",
-			"components" : [
-				"spell.component.core.position",
-				"spellReferenceProject.component.inertialObject",
-				"spellReferenceProject.component.collisionSphere"
-			]
+			"name" : "positions",
+			"blueprintId" : "spell.component.core.position"
+		},
+		{
+			"name" : "inertialObjects",
+			"blueprintId" : "spellReferenceProject.component.inertialObject"
+		},
+		{
+			"name" : "collisionSpheres",
+			"blueprintId" : "spellReferenceProject.component.collisionSphere"
 		}
 	],
 	"scriptId" : "spellReferenceProject/system/collisionDetector"

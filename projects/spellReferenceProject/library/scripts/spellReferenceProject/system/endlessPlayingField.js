@@ -13,8 +13,7 @@ define(
 		 * private
 		 */
 
-		var positionComponentId = 'spell.component.core.position',
-			playingFieldSize    = [ 1024, 768 ],
+		var playingFieldSize    = [ 1024, 768 ],
 			border              = 25,
 			wrapOffset          = 75,
 			rightBorder         = playingFieldSize[ 0 ] + border,
@@ -27,29 +26,27 @@ define(
 
 		var cleanUp = function( globals ) {}
 
-		var updatePosition = function( entity ) {
-			var positionComponent = entity[ positionComponentId ]
+		var updatePosition = function( position ) {
+			if( position[ 0 ] > rightBorder ) {
+				position[ 0 ] = leftBorder
+				position[ 1 ] += wrapOffset
 
-			if( positionComponent[ 0 ] > rightBorder ) {
-				positionComponent[ 0 ] = leftBorder
-				positionComponent[ 1 ] += wrapOffset
+			} else if( position[ 0 ] < leftBorder ) {
+				position[ 0 ] = rightBorder
+				position[ 1 ] -= wrapOffset
 
-			} else if( positionComponent[ 0 ] < leftBorder ) {
-				positionComponent[ 0 ] = rightBorder
-				positionComponent[ 1 ] -= wrapOffset
+			} else if( position[ 1 ] > topBorder ) {
+				position[ 0 ] += wrapOffset
+				position[ 1 ] = bottomBorder
 
-			} else if( positionComponent[ 1 ] > topBorder ) {
-				positionComponent[ 0 ] += wrapOffset
-				positionComponent[ 1 ] = bottomBorder
-
-			} else if( positionComponent[ 1 ] < bottomBorder ) {
-				positionComponent[ 0 ] -= wrapOffset
-				positionComponent[ 1 ] = topBorder
+			} else if( position[ 1 ] < bottomBorder ) {
+				position[ 0 ] -= wrapOffset
+				position[ 1 ] = topBorder
 			}
 		}
 
 		var process = function( globals, timeInMs, deltaTimeInMs ) {
-			_.each( this.spacecraftEntities, updatePosition )
+			_.each( this.positions, updatePosition )
 		}
 
 
@@ -57,8 +54,8 @@ define(
 		 * public
 		 */
 
-		var EndlessPlayingField = function( globals, spacecraftEntities ) {
-			this.spacecraftEntities = spacecraftEntities
+		var EndlessPlayingField = function( globals, positions ) {
+			this.positions = positions
 		}
 
 		EndlessPlayingField.prototype = {
