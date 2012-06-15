@@ -5,7 +5,7 @@
 	"attributes" : [
 		{
 			"name" : "mass",
-			"type" : "Number",
+			"type" : "number",
 			"default" : 1
 		},
 		{
