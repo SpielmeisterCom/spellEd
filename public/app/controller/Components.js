@@ -1,6 +1,9 @@
 Ext.define('Spelled.controller.Components', {
     extend: 'Ext.app.Controller',
 
+	//Needed for Combobox creation in the Property view
+	requires: [ 'Ext.form.ComboBox' ],
+
     views: [
         'component.Properties'
     ],
