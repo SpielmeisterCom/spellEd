@@ -20,9 +20,6 @@
 			"blueprintId" : "spell.component.core.graphics2d.renderData"
 		},
 		{
-			"blueprintId" : "spell.component.core.inputDefinition"
-		},
-		{
 			"blueprintId" : "spell.component.core.actor",
 			"config" : {
 				"actions" : {

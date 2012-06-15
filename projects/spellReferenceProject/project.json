@@ -62,17 +62,6 @@
 							"blueprintId" : "spell.component.core.graphics2d.appearance"
 						},
 						{
-							"blueprintId" : "spell.component.core.inputDefinition",
-							"config" : {
-								"actorId" : "playerControlled",
-								"keyToAction" : {
-									"space" : "accelerate",
-									"left arrow" : "steerLeft",
-									"right arrow" : "steerRight"
-								}
-							}
-						},
-						{
 							"blueprintId" : "spell.component.core.actor",
 							"config" : {
 								"id" : "playerControlled"
@@ -185,6 +174,23 @@
 								"width" : 1024,
 								"height" : 768,
 								"active" : false
+							}
+						}
+					]
+				},
+				{
+					"name" : "player key input to actor/action mapping",
+					"blueprintId" : "spell.entity.inputDefinition",
+					"components" : [
+						{
+							"blueprintId" : "spell.component.core.inputDefinition",
+							"config" : {
+								"actorId" : "playerControlled",
+								"keyToAction" : {
+									"space" : "accelerate",
+									"left arrow" : "steerLeft",
+									"right arrow" : "steerRight"
+								}
 							}
 						}
 					]
