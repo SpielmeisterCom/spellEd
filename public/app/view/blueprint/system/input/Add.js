@@ -15,6 +15,11 @@ Ext.define('Spelled.view.blueprint.system.input.Add' ,{
             xtype: "form",
             bodyPadding: 10,
 
+			layout: {
+				align: 'stretch',
+				type: 'vbox'
+			},
+
             defaults: {
                 anchor: '100%',
                 allowBlank: false
@@ -27,6 +32,7 @@ Ext.define('Spelled.view.blueprint.system.input.Add' ,{
                     fieldLabel: 'Name'
                 },
                 {
+					flex:1,
                     xtype: 'treepanel',
                     title: 'Available Components',
                     rootVisible: true

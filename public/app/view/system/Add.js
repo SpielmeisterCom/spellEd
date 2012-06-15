@@ -20,6 +20,11 @@ Ext.define('Spelled.view.system.Add' ,{
                 allowBlank: false
             },
 
+			layout: {
+				align: 'stretch',
+				type: 'vbox'
+			},
+
             items: [
                 {
 					xtype: 'combobox',
@@ -35,10 +40,7 @@ Ext.define('Spelled.view.system.Add' ,{
 					fieldLabel: 'Select the System Type'
                 },
                 {
-					layout: {
-						align: 'stretch',
-						type: 'vbox'
-					},
+					flex: 1,
                     xtype: 'treepanel',
                     title: 'Available Systems',
                     rootVisible: false

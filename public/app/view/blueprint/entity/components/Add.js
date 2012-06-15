@@ -20,7 +20,6 @@ Ext.define('Spelled.view.blueprint.entity.components.Add' ,{
 
     buttons: [
         {
-            formBind: true,
             text: 'Add',
             action: 'addComponent'
         }
