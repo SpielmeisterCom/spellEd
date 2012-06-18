@@ -17,9 +17,6 @@
 			}
 		},
 		{
-			"blueprintId" : "spell.component.core.graphics2d.renderData"
-		},
-		{
 			"blueprintId" : "spellReferenceProject.component.inertialObject"
 		},
 		{
