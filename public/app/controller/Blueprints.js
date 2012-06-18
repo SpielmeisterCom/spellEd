@@ -32,7 +32,15 @@ Ext.define('Spelled.controller.Blueprints', {
         {
             ref : 'MainPanel',
             selector: '#MainPanel'
-        }
+        },
+		{
+			ref : 'BlueprintEditor',
+			selector: '#BlueprintEditor'
+		},
+		{
+			ref: 'BlueprintsTree',
+			selector: '#BlueprintsTree'
+		}
     ],
 
     //TODO: Blueprint components get overwritten from entityconfig. strange problem! need to fix ASAP
@@ -49,6 +57,9 @@ Ext.define('Spelled.controller.Blueprints', {
                 itemmouseenter:  this.application.showActionsOnLeaf,
                 itemmouseleave:  this.application.hideActions
             },
+			'blueprinteditor' : {
+				tabchange: this.expandPathOnTabChange
+			},
             'blueprinteditor [action="showCreateBlueprint"]' : {
                 click: this.showCreateBlueprint
             },
@@ -60,6 +71,14 @@ Ext.define('Spelled.controller.Blueprints', {
             }
         })
     },
+
+	expandPathOnTabChange: function( tabpanel, tab ) {
+		var treePanel = this.getBlueprintsTree()
+		//works only if title == namespace of the blueprint
+		treePanel.selectPath( ".Root." + tab.title, 'text', '.' )
+		treePanel.expandPath( ".Root." + tab.title, 'text', '.' )
+
+	},
 
     deleteBlueprintActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
         var node = gridView.getRecord( gridView.findTargetByEvent(e) )
@@ -95,7 +114,7 @@ Ext.define('Spelled.controller.Blueprints', {
         view.show()
     },
 
-    openBlueprint: function( treePanel, record ) {
+    openBlueprint: function( treeGrid, record ) {
         if( !record.data.leaf ) return
 
         var Model      = undefined,
@@ -122,8 +141,11 @@ Ext.define('Spelled.controller.Blueprints', {
         Model.load( record.getId(), {
             scope: this,
             success: function( blueprint ) {
+				var foundTab = this.application.findActiveTabByTitle( this.getBlueprintEditor(), blueprint.getFullName() )
+				if( foundTab ) return foundTab
+
                 Controller.openBlueprint( blueprint )
-            }
+			}
         })
     },
 
@@ -145,7 +167,7 @@ Ext.define('Spelled.controller.Blueprints', {
     },
 
     closeOpenedTabs: function( blueprint ) {
-        var editorTab = Ext.getCmp("BlueprintEditor")
+        var editorTab = this.getBlueprintEditor()
 
         editorTab.items.each(
             function( tab ) {
@@ -156,25 +178,32 @@ Ext.define('Spelled.controller.Blueprints', {
         )
     },
 
-    checkForReferences: function( blueprint ) {
-        var entitiesStore   = Ext.getStore( 'config.Entities'),
-            componentsStore = Ext.getStore( 'config.Components'),
-            found = false
+	checkForReferences: function( blueprint ) {
+		var found = false
 
+		var checkFunc = function( storeId ) {
+			var store  = Ext.getStore( storeId )
 
-        var checkFunc = function( item ) {
-            if( item.get('blueprintId') === blueprint.getFullName() ) {
-                found = true
-                return false
-            }
-        }
+			store.each(
+				function( item ) {
+					if( item.get('blueprintId') === blueprint.getFullName() ) {
+						found = true
+						return false
+					}
+				}
+			)
+		}
 
-        entitiesStore.each( checkFunc )
-        if( found === true ) return found
+		Ext.each(
+			[
+				'config.Components',
+				'config.Entities'
+			],
+			checkFunc
+		)
 
-        componentsStore.each( checkFunc )
-        return found
-    },
+		return found
+	},
 
     createBlueprint: function( button ) {
         var form    = button.up('form').getForm(),
@@ -253,7 +282,7 @@ Ext.define('Spelled.controller.Blueprints', {
 		this.application.hideMainPanels()
         this.loadTrees()
 
-        Ext.getCmp('BlueprintEditor').show()
+		this.getBlueprintEditor().show()
 
     }
 });

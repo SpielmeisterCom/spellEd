@@ -21,7 +21,11 @@ Ext.define('Spelled.controller.blueprints.Entities', {
         {
             ref : 'MainPanel',
             selector: '#MainPanel'
-        }
+        },
+		{
+			ref : 'BlueprintEditor',
+			selector: '#BlueprintEditor'
+		}
     ],
 
     init: function() {
@@ -79,7 +83,7 @@ Ext.define('Spelled.controller.blueprints.Entities', {
         var form = button.up('form'),
             record = form.getRecord(),
             values = form.getValues(),
-            ownerModel = Ext.getCmp("BlueprintEditor").getActiveTab().blueprint
+            ownerModel = this.getBlueprintEditor().getActiveTab().blueprint
 
         if( record ) {
             var componentBlueprint = Ext.getStore( 'blueprint.Components').getById( record.get('spelled.model.blueprint.component_id') )
@@ -116,7 +120,7 @@ Ext.define('Spelled.controller.blueprints.Entities', {
     },
 
     removeEntityComponent: function( id ) {
-        var tab                = Ext.getCmp("BlueprintEditor").getActiveTab(),
+        var tab                = this.getBlueprintEditor().getActiveTab(),
             entityBlueprint    = tab.blueprint,
             store              = Ext.getStore( 'config.Components' ),
             component          = store.getById( id )
@@ -141,22 +145,16 @@ Ext.define('Spelled.controller.blueprints.Entities', {
                 attribute.set('default', config[ attribute.get('name') ])
             }
 
-            var view = Ext.getCmp("BlueprintEditor").getActiveTab().down( 'entityblueprintproperty' )
+            var view = this.getBlueprintEditor().getActiveTab().down( 'entityblueprintproperty' )
             this.application.getController('blueprints.Components').fillAttributeConfigView( view, attribute )
         }
     },
 
     openBlueprint: function( entityBlueprint ) {
-        var blueprintEditor = Ext.getCmp("BlueprintEditor"),
-            title           = entityBlueprint.getFullName()
-
-        var foundTab = this.application.findActiveTabByTitle( blueprintEditor, title )
-
-        if( foundTab )
-            return foundTab
+        var blueprintEditor = this.getBlueprintEditor()
 
         var editView = Ext.create( 'Spelled.view.blueprint.entity.Edit',  {
-                title: title,
+                title: entityBlueprint.getFullName(),
                 blueprint : entityBlueprint
             }
         )
@@ -187,7 +185,7 @@ Ext.define('Spelled.controller.blueprints.Entities', {
         var window    = button.up('window'),
             tree      = window.down('treepanel'),
             records   = tree.getView().getChecked(),
-            tab       = Ext.getCmp("BlueprintEditor").getActiveTab(),
+            tab       = this.getBlueprintEditor().getActiveTab(),
             componentBlueprintStore = Ext.getStore('blueprint.Components'),
             entityBlueprint         = tab.blueprint
 
@@ -214,7 +212,7 @@ Ext.define('Spelled.controller.blueprints.Entities', {
     showAddComponent: function( ) {
         var View = this.getBlueprintEntityComponentsAddView(),
             view = new View(),
-            entityBlueprint          = Ext.getCmp("BlueprintEditor").getActiveTab().blueprint,
+            entityBlueprint          = this.getBlueprintEditor().getActiveTab().blueprint,
             availableComponentsView  = view.down( 'treepanel' ),
             blueprintComponentsStore = Ext.getStore( 'blueprint.Components' )
 

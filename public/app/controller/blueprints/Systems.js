@@ -25,6 +25,10 @@ Ext.define('Spelled.controller.blueprints.Systems', {
 		{
 			ref : 'MainPanel',
 			selector: '#MainPanel'
+		},
+		{
+			ref : 'BlueprintEditor',
+			selector: '#BlueprintEditor'
 		}
 	],
 
@@ -73,7 +77,7 @@ Ext.define('Spelled.controller.blueprints.Systems', {
 	},
 
 	refreshScriptTab: function( scriptId ) {
-		var tab	   = Ext.getCmp("BlueprintEditor").getActiveTab(),
+		var tab	   = this.getBlueprintEditor().getActiveTab(),
 			editor = tab.down('scripteditor'),
 			Script = this.getScriptModel()
 
@@ -97,7 +101,7 @@ Ext.define('Spelled.controller.blueprints.Systems', {
             values     = form.getValues(),
             tree       = window.down('treepanel'),
             components = tree.getView().getChecked(),
-            tab        = Ext.getCmp("BlueprintEditor").getActiveTab(),
+            tab        = this.getBlueprintEditor().getActiveTab(),
             componentBlueprintStore = Ext.getStore('blueprint.Components'),
             systemBlueprint         = tab.blueprint
 
@@ -135,7 +139,7 @@ Ext.define('Spelled.controller.blueprints.Systems', {
     },
 
     removeSystemInputDefinition: function( id ) {
-        var tab                = Ext.getCmp("BlueprintEditor").getActiveTab(),
+        var tab                = this.getBlueprintEditor().getActiveTab(),
             systemBlueprint    = tab.blueprint,
             store              = Ext.getStore( 'blueprint.SystemInputDefinitions' ),
             input              = store.getById( id )
@@ -156,16 +160,10 @@ Ext.define('Spelled.controller.blueprints.Systems', {
     },
 
     openBlueprint: function( systemBlueprint ) {
-        var blueprintEditor = Ext.getCmp("BlueprintEditor"),
-            title           = systemBlueprint.getFullName()
-
-        var foundTab = this.application.findActiveTabByTitle( blueprintEditor, title )
-
-        if( foundTab )
-            return foundTab
+		var blueprintEditor = this.getBlueprintEditor()
 
         var editView = Ext.create( 'Spelled.view.blueprint.system.Edit',  {
-                title: title,
+                title: systemBlueprint.getFullName(),
                 blueprint : systemBlueprint
             }
         )
@@ -223,7 +221,7 @@ Ext.define('Spelled.controller.blueprints.Systems', {
         var panel  = button.up('panel'),
             form   = panel.down('form'),
             values = form.getValues(),
-            ownerModel = Ext.getCmp("BlueprintEditor").getActiveTab().blueprint
+            ownerModel = this.getBlueprintEditor().getActiveTab().blueprint
 
         ownerModel.set( values )
 
