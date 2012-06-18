@@ -27,8 +27,8 @@ define(
 
 		var updateInertialObject = function( deltaTimeInS, inertialObject, position ) {
 			// ds, tmp := deltaPosition
-			vec2.multiplyScalar( inertialObject.velocity, deltaTimeInS, tmp )
-			vec2.add( position, tmp )
+			vec2.scale( inertialObject.velocity, deltaTimeInS, tmp )
+			vec2.add( tmp, position )
 		}
 
 		var process = function( globals, timeInMs, deltaTimeInMs ) {
@@ -60,7 +60,7 @@ define(
 						var rotation      = rotations[ id ],
 							thrusterForce = spacecrafts[ id ].thrusterForce
 
-						// f, tmp := thrustVector
+						// f
 						vec2.set(
 							[
 								Math.sin( rotation ) * thrusterForce,
@@ -69,12 +69,11 @@ define(
 							tmp
 						)
 
-						// da, tmp := deltaAcceleration
-						vec2.multiplyScalar( tmp, 1 / inertialObject.mass )
-
-						// dv, tmp := deltaSpeed
-						vec2.multiplyScalar( tmp, deltaTimeInS )
-						vec2.add( inertialObject.velocity, tmp )
+						// v = v + dv; dv = da * dt; da = f / m
+						vec2.add(
+							vec2.scale( tmp, deltaTimeInS / inertialObject.mass ),
+							inertialObject.velocity
+						)
 					}
 				}
 			)

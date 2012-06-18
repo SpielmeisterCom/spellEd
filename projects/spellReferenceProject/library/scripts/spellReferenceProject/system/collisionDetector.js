@@ -17,8 +17,7 @@ define(
 		 * private
 		 */
 
-		var distance           = vec2.create(),
-			distanceSquared    = 0,
+		var distanceSquared    = 0,
 			minDistanceSquared = 0,
 			tmp                = vec2.create()
 
@@ -51,18 +50,23 @@ define(
 
 			// minimum translation distance required to separate objects
 			var mt = vec2.create()
-			vec2.multiplyScalar(
+			vec2.scale(
 				dn,
 				collisionSphereA.radius + collisionSphereB.radius - delta,
 				mt
 			)
 
 			// pushing the objects apart relative to their mass
-			vec2.multiplyScalar( mt, m2 / M, tmp )
-			vec2.add( positionA, tmp )
+			vec2.add(
+				vec2.scale( mt, m2 / M, tmp ),
+				positionA
+			)
 
-			vec2.multiplyScalar( mt, m1 / M, tmp )
-			vec2.subtract( positionB, tmp )
+			vec2.subtract(
+				positionB,
+				vec2.scale( mt, m1 / M, tmp ),
+				positionB
+			)
 
 			// current velocities
 			var v1 = inertialObjectA.velocity,
@@ -72,27 +76,27 @@ define(
 			var v1n = vec2.create(),
 				v1t = vec2.create()
 
-			vec2.multiplyScalar( dn, vec2.dot( v1, dn ), v1n )
-			vec2.multiplyScalar( dt, vec2.dot( v1, dt ), v1t )
+			vec2.scale( dn, vec2.dot( v1, dn ), v1n )
+			vec2.scale( dt, vec2.dot( v1, dt ), v1t )
 
 			var v2n = vec2.create(),
 				v2t = vec2.create()
 
-			vec2.multiplyScalar( dn, vec2.dot( v2, dn ), v2n )
-			vec2.multiplyScalar( dt, vec2.dot( v2, dt ), v2t )
+			vec2.scale( dn, vec2.dot( v2, dn ), v2n )
+			vec2.scale( dt, vec2.dot( v2, dt ), v2t )
 
 			// calculate new velocity, the tangential component stays the same, the normal component changes analog to the 1-dimensional case
 			var v1nlen = vec2.length( v1n ),
 				v2nlen = vec2.length( v2n )
 
-			vec2.multiplyScalar(
+			vec2.scale(
 				dn,
 				( m1 - m2 ) / M * v1nlen + 2 * m2 / M * v2nlen,
 				tmp
 			)
 			vec2.add( v1t, tmp, v1 )
 
-			vec2.multiplyScalar(
+			vec2.scale(
 				dn,
 				( m2 - m1 ) / M * v2nlen + 2 * m1 / M * v1nlen,
 				tmp
@@ -101,8 +105,7 @@ define(
 		}
 
 		var isColliding = function( positionA, collisionSphereA, positionB, collisionSphereB ) {
-			vec2.subtract( positionA, positionB, distance )
-			distanceSquared = vec2.dot( distance, distance )
+			distanceSquared = vec2.squaredLength( vec2.subtract( positionA, positionB, tmp ) )
 
 			minDistanceSquared = collisionSphereA.radius + collisionSphereB.radius
 			minDistanceSquared *= minDistanceSquared

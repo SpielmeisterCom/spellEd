@@ -173,7 +173,7 @@
 								"position" : [ 512, 384 ],
 								"width" : 1024,
 								"height" : 768,
-								"active" : false
+								"active" : true
 							}
 						}
 					]
