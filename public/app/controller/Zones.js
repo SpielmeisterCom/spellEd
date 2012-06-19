@@ -197,12 +197,15 @@ Ext.define('Spelled.controller.Zones', {
             record = form.getRecord(),
             values = form.getValues(),
             project= this.application.getActiveProject(),
-            zones  = project.getZones()
+            zones  = project.getZones(),
+			store  = this.getConfigZonesStore()
 
         record.set( values )
-        zones.add( record )
 
+		store.add( record )
+		zones.add( record )
         this.showZoneslist( zones )
+
         window.close()
     },
 

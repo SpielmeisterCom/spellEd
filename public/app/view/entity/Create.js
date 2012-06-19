@@ -17,6 +17,21 @@ Ext.define('Spelled.view.entity.Create' ,{
                     anchor: '100%',
                     allowBlank:false
                 },
+				{
+					xtype: 'combobox',
+					store: 'config.Zones',
+
+					valueField: 'name',
+					displayField:'name',
+					queryMode: 'local',
+					forceSelection: true,
+					editable: false,
+
+					name: 'zoneId',
+					fieldLabel: 'Select a Zone',
+					anchor: '100%',
+					allowBlank:false
+				},
                 {
                     xtype: 'combobox',
                     store: 'blueprint.Entities',

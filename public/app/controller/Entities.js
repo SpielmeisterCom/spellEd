@@ -20,7 +20,6 @@ Ext.define('Spelled.controller.Entities', {
     init: function() {
         this.control({
             '#EntityList': {
-                select :         this.handleEntityClick,
                 deleteclick:     this.deleteEntityActionIconClick,
                 itemmouseenter:  this.application.showActionsOnFolder,
                 itemmouseleave:  this.application.hideActions
@@ -85,12 +84,12 @@ Ext.define('Spelled.controller.Entities', {
             form   = window.down('form'),
             record = form.getRecord(),
             values = form.getValues(),
-            zone   = this.application.getActiveZone(),
-            entities = zone.getEntities()
+			store  = this.getConfigEntitiesStore()
 
         var entityBlueprint = Ext.getStore('blueprint.Entities').getById( values.blueprintId )
+		var zone = Ext.getStore('config.Zones').getById( values.zoneId )
 
-        if( entityBlueprint ) {
+        if( entityBlueprint && zone ) {
             entityBlueprint.getComponents().each(
                 function( component ) {
 
@@ -100,13 +99,16 @@ Ext.define('Spelled.controller.Entities', {
                     } )
 
                     record.getComponents().add( newComponent )
+					Ext.getStore('config.Components').add( newComponent )
                 }
             )
 
             record.set( values )
-
+			record.setZone( zone )
             record.set('blueprintId', entityBlueprint.getFullName() )
-            entities.add( record )
+
+			zone.getEntities().add( record )
+			store.add( record )
 
 			this.application.getController('Projects').getZonesList( zone.getProject() )
             window.close()
@@ -127,28 +129,11 @@ Ext.define('Spelled.controller.Entities', {
         console.log( entity )
     },
 
-    handleEntityClick: function( treePanel, record ) {
-        if( !record.data.leaf ) {
-            this.getConfig( treePanel, record )
-        } else {
-            this.getComponentConfig( record )
-        }
-    },
-
-    getConfig:  function( treePanel, record ) {
-        if( record.data.leaf ) return
-
-        console.log( "Maybe show a assets list?" )
-    },
-
 	showEntityInfo: function( id ) {
 		var entity = this.getConfigEntitiesStore().getById( id )
 
 		if( entity ) {
-			this.application.setActiveZone( entity.getZone() )
-
 			this.showComponentsList( entity )
-
 			return entity
 		}
 	},

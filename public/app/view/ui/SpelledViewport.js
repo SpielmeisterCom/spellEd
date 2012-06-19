@@ -70,7 +70,7 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                 },
 				{
 					id: "RightPanel",
-					title: "Entity - Navigator",
+					title: "Additional Information",
 					region:'east',
 					layout: 'fit',
 					width: 300,
