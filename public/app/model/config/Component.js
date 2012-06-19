@@ -20,7 +20,9 @@ Ext.define('Spelled.model.config.Component', {
 
     constructor: function() {
         this.callParent(arguments)
-        Ext.getStore( 'config.Components' ).add( this )
+
+		if( !!this.raw )
+        	Ext.getStore( 'config.Components' ).add( this )
     },
 
     setChanged: function() {

@@ -62,7 +62,9 @@ Ext.define('Spelled.model.config.Entity', {
 
     constructor: function() {
         this.callParent(arguments)
-        Ext.getStore( 'config.Entities' ).add( this )
+
+		if( !!this.raw )
+        	Ext.getStore( 'config.Entities' ).add( this )
     },
 
     getJSONConfig: function() {

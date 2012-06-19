@@ -32,7 +32,9 @@ Ext.define('Spelled.model.config.Zone', {
 
     constructor: function() {
         this.callParent(arguments)
-        Ext.getStore( 'config.Zones' ).add( this )
+
+		if( !!this.raw )
+        	Ext.getStore( 'config.Zones' ).add( this )
     },
 
     getJSONConfig: function() {
