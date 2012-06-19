@@ -68,6 +68,14 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                         }
                     ]
                 },
+				{
+					id: "RightPanel",
+					title: "Entity - Navigator",
+					region:'east',
+					layout: 'fit',
+					width: 300,
+					minSize: 100
+				},
                 {
                     xtype : 'console',
                     region: 'south'

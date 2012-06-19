@@ -44,7 +44,7 @@ Ext.define('Spelled.controller.Zones', {
 
         this.control({
             '#ZonesTree': {
-                select      : me.getEntityList,
+                select      : me.dispatchTreeClick,
                 itemdblclick: me.renderZoneHelper
             },
 			'renderedzone': {
@@ -84,6 +84,28 @@ Ext.define('Spelled.controller.Zones', {
 			}
         })
     },
+
+	dispatchTreeClick: function( treePanel, record ) {
+
+		switch( record.get('iconCls') ) {
+			case 'tree-zone-icon':
+				var zone = this.getConfigZonesStore().getById( record.getId() )
+
+				if( zone ) {
+					this.application.setActiveZone( zone )
+				}
+				break
+			case 'tree-zone-entity-icon':
+				this.application.getController('Entities').showEntityInfo( record.getId() )
+				break
+			case 'tree-zone-system-icon':
+				console.log( "Systemclick" )
+				break
+			case 'tree-zone-script-icon':
+				console.log( "SCriptclick" )
+				break
+		}
+	},
 
 	refreshZoneScriptCombobox: function( scriptId ) {
 		var combobox = Ext.getCmp('ZoneScript').down( 'combobox' )
@@ -230,20 +252,6 @@ Ext.define('Spelled.controller.Zones', {
         console.log( "Should save the content ")
     },
 
-    getEntityList: function( treePanel, record ) {
-        if( !record.data.leaf ) return
-
-        var zone = this.getConfigZonesStore().getById( record.getId() )
-
-        if( zone ) {
-            this.application.setActiveZone( zone )
-
-            this.application.getController('Entities').showEntitylist( zone.getEntities() )
-			this.application.getController('Systems').refreshZoneSystemList( zone )
-			this.refreshZoneScriptCombobox( zone.get('scriptId') )
-        }
-    },
-
     renderZoneHelper: function( treePanel, record ) {
         if( !record.data.leaf ) return
 
@@ -295,18 +303,7 @@ Ext.define('Spelled.controller.Zones', {
         rootNode.removeAll()
 
         zones.each( function( zone ) {
-            rootNode.appendChild(
-                rootNode.createNode( {
-                        text      : zone.getId(),
-                        id        : zone.getId(),
-                        leaf      : true
-                    }
-                )
-            )
+            zone.appendOnTreeNode( rootNode )
         })
-
-        if( rootNode.hasChildNodes( ) ) {
-            tree.getSelectionModel().select( rootNode.firstChild  )
-        }
     }
 });

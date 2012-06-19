@@ -11,12 +11,20 @@ Ext.define('Spelled.view.zone.TreeList' ,{
 
     tbar: [
         {
-            text: "Create",
+            text: "Create Zone",
             action: "showCreateZone",
             tooltip: {
                 text:'Create a new Zone',
                 title:'Create'
             }
-        }
-    ]
+        },
+		{
+			text: "Create Entity",
+			action: "showCreateEntity",
+			tooltip: {
+				text:'Create a new Entity',
+				title:'Create'
+			}
+		}
+	]
 });

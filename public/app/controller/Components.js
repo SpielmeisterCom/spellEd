@@ -69,7 +69,7 @@ Ext.define('Spelled.controller.Components', {
 		}
 	},
 
-	showConfig: function( component ) {
+	createConfigGridView: function( component ) {
         var config = {}
         Ext.iterate(
             component.getConfigMergedWithBlueprintConfig(),
@@ -83,9 +83,15 @@ Ext.define('Spelled.controller.Components', {
             this
         )
 
-        var propertyGrid = Ext.getCmp('ComponentProperty')
+		var configGrid = Ext.createWidget(
+			'componentproperties',
+			{
+				title: component.get('blueprintId'),
+				source: config,
+				componentConfigId: component.getId()
+			}
+		)
 
-        propertyGrid.setSource( config )
-        propertyGrid.componentConfigId = component.getId()
+		return configGrid
     }
 });

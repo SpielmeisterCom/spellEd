@@ -14,7 +14,6 @@ Ext.define('Spelled.model.Asset', {
         'assetId',
         'name',
         'type',
-        'mimeType',
         'namespace',
         'extension'
     ],

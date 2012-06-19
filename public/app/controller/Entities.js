@@ -13,8 +13,8 @@ Ext.define('Spelled.controller.Entities', {
     ],
 
     views: [
-        'entity.TreeList',
-        'entity.Create'
+        'entity.Create',
+		'entity.ComponentsList'
     ],
 
     init: function() {
@@ -25,7 +25,7 @@ Ext.define('Spelled.controller.Entities', {
                 itemmouseenter:  this.application.showActionsOnFolder,
                 itemmouseleave:  this.application.hideActions
             },
-            'entiteslist button[action="showCreateEntity"]': {
+            '#ZonesTree button[action="showCreateEntity"]': {
                 click: this.showCreateEntity
             },
             'createentity button[action="createEntity"]' : {
@@ -71,8 +71,8 @@ Ext.define('Spelled.controller.Entities', {
     },
 
     showCreateEntity: function( ) {
-        var CreateView = this.getEntityCreateView()
-        var createView = new CreateView()
+        var CreateView = this.getEntityCreateView(),
+        	createView = new CreateView()
 
         var EntityModel = this.getConfigEntityModel()
         createView.down('form').loadRecord( new EntityModel() )
@@ -108,7 +108,7 @@ Ext.define('Spelled.controller.Entities', {
             record.set('blueprintId', entityBlueprint.getFullName() )
             entities.add( record )
 
-            this.showEntitylist( entities )
+			this.application.getController('Projects').getZonesList( zone.getProject() )
             window.close()
         }
     },
@@ -141,50 +141,36 @@ Ext.define('Spelled.controller.Entities', {
         console.log( "Maybe show a assets list?" )
     },
 
-    getComponentConfig: function( record ) {
-        if( !record.data.leaf ) return
+	showEntityInfo: function( id ) {
+		var entity = this.getConfigEntitiesStore().getById( id )
 
-        var component = Ext.getStore('config.Components').getById( record.getId() )
+		if( entity ) {
+			this.application.setActiveZone( entity.getZone() )
 
-        if( component ) {
-            var componentsController = this.application.getController('Components')
-            componentsController.showConfig( component )
-        }
-    },
+			this.showComponentsList( entity )
 
-    showEntitylist: function( entities ) {
-        var tree     = Ext.ComponentManager.get( "EntityList"),
-            rootNode = tree.getStore().getRootNode()
-        rootNode.removeAll()
+			return entity
+		}
+	},
 
-        entities.each( function( entity ) {
+    showComponentsList: function( entity ) {
+        var contentPanel = Ext.ComponentManager.get( "RightPanel"),
+			View = this.getEntityComponentsListView()
 
-            var node = rootNode.createNode( {
-                text      : entity.get('name'),
-                id        : entity.getId(),
-                expanded  : true,
-                leaf      : false
-            } )
+		contentPanel.removeAll()
 
-            entity.mergeWithBlueprintConfig()
+		entity.mergeWithBlueprintConfig()
 
-            entity.getComponents().each( function( component ) {
+		contentPanel.setTitle( entity.get('name') + " - Components" )
 
-                node.appendChild(
-                    node.createNode( {
-                            text         : component.get('blueprintId'),
-                            leaf         : true,
-                            id           : component.getId()
-                        }
-                    )
-                )
-            })
+		var view = new View()
+		entity.getComponents().each(
+			function( component ) {
+				view.add( this.application.getController('Components').createConfigGridView( component ) )
+			},
+			this
+		)
 
-            rootNode.appendChild( node )
-        })
-
-        if( rootNode.hasChildNodes( ) && rootNode.firstChild.hasChildNodes( ) ) {
-            tree.getSelectionModel().select( rootNode.firstChild.firstChild )
-        }
+		contentPanel.add( view )
      }
 });

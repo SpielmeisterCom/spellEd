@@ -49,7 +49,6 @@ define(
                 var result = {
                     assetId: assetId,
                     name: assetName,
-                    mimeType: Asset.file.type,
                     namespace: namespace,
                     extension: extension,
                     type: type

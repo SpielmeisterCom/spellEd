@@ -5,6 +5,10 @@ Ext.define('Spelled.view.component.Properties', {
 
     title: 'Component Configuration',
 
+	margin: '0 0 5 0',
+	collapsible: true,
+	collapsed: true,
+
     customEditors: {
         //TODO: when a assigned asset gets removed, the field will disappear
         textureId: Ext.create(
@@ -16,7 +20,5 @@ Ext.define('Spelled.view.component.Properties', {
                 valueField     : 'assetId'
             }
         )
-    },
-
-    source: {}
+    }
 });
