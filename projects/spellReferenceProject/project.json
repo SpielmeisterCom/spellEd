@@ -17,7 +17,7 @@
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.graphics2d.render",
+							"blueprintId" : "spell.component.core.graphics2d.appearance",
 							"config" : {
 								"assetId" : "appearance:spellReferenceProject.pixelShip2"
 							}
@@ -54,9 +54,6 @@
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.graphics2d.render"
-						},
-						{
 							"blueprintId" : "spell.component.core.actor",
 							"config" : {
 								"id" : "playerControlled"
@@ -88,7 +85,10 @@
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.graphics2d.render"
+							"blueprintId" : "spellReferenceProject.component.inertialObject",
+							"config" : {
+								"velocity" : [ -10, 40 ]
+							}
 						}
 					]
 				},
@@ -122,7 +122,7 @@
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.graphics2d.render",
+							"blueprintId" : "spell.component.core.graphics2d.appearance",
 							"config" : {
 								"assetId" : "appearance:spellReferenceProject.asteroid2"
 							}
@@ -153,7 +153,7 @@
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.graphics2d.render",
+							"blueprintId" : "spell.component.core.graphics2d.appearance",
 							"config" : {
 								"assetId" : "appearance:spellReferenceProject.asteroid2"
 							}

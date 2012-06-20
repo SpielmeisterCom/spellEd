@@ -7,9 +7,11 @@
 			"blueprintId" : "spell.component.core.transform"
 		},
 		{
-			"blueprintId" : "spell.component.core.graphics2d.render",
+			"blueprintId" : "spell.component.core.graphics2d.render"
+		},
+		{
+			"blueprintId" : "spell.component.core.graphics2d.animatedAppearance",
 			"config" : {
-				"scale" : [ 1, 1 ],
 				"assetId" : "animatedAppearance:spellReferenceProject.threeRings",
 				"animationId" : "twirling"
 			}

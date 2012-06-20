@@ -1,0 +1,32 @@
+{
+	"type" : "componentBlueprint",
+	"namespace" : "spell.component.core.graphics2d",
+	"name" : "animatedAppearance",
+	"attributes" : [
+		{
+			"name" : "opacity",
+			"type" : "number",
+			"default" : 1.0
+		},
+		{
+			"name" : "assetId",
+			"type" : "assetId:animatedAppearance",
+			"default" : "animatedAppearance:spell/not_defined"
+		},
+		{
+			"name" : "animationId",
+			"type" : "string",
+			"default" : ""
+		},
+		{
+			"name" : "animationSpeedFactor",
+			"type" : "number",
+			"default" : 1.0
+		},
+		{
+			"name" : "animationOffset",
+			"type" : "number",
+			"default" : 0
+		}
+	]
+}

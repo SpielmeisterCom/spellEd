@@ -4,34 +4,9 @@
 	"name" : "render",
 	"attributes" : [
 		{
-			"name" : "opacity",
-			"type" : "number",
-			"default" : 1.0
-		},
-		{
 			"name" : "pass",
 			"type" : "integer",
 			"default" : 1
-		},
-		{
-			"name" : "assetId",
-			"type" : "assetId:appearance",
-			"default" : "appearance:spell/not_defined"
-		},
-		{
-			"name" : "animationId",
-			"type" : "string",
-			"default" : ""
-		},
-		{
-			"name" : "animationSpeedFactor",
-			"type" : "number",
-			"default" : 1.0
-		},
-		{
-			"name" : "animationOffset",
-			"type" : "number",
-			"default" : 0
 		}
 	]
 }

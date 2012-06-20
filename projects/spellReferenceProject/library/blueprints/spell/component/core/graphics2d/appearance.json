@@ -1,0 +1,17 @@
+{
+	"type" : "componentBlueprint",
+	"namespace" : "spell.component.core.graphics2d",
+	"name" : "appearance",
+	"attributes" : [
+		{
+			"name" : "opacity",
+			"type" : "number",
+			"default" : 1.0
+		},
+		{
+			"name" : "assetId",
+			"type" : "assetId:appearance",
+			"default" : "appearance:spell/not_defined"
+		}
+	]
+}

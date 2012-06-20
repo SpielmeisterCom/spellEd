@@ -4,12 +4,17 @@
 	"name" : "asteroid",
 	"components" : [
 		{
-			"blueprintId" : "spell.component.core.transform"
+			"blueprintId" : "spell.component.core.transform",
+			"config" : {
+				"scale" : [ 4, 4 ]
+			}
 		},
 		{
-			"blueprintId" : "spell.component.core.graphics2d.render",
+			"blueprintId" : "spell.component.core.graphics2d.render"
+		},
+		{
+			"blueprintId" : "spell.component.core.graphics2d.appearance",
 			"config" : {
-				"scale" : [ 4, 4 ],
 				"assetId" : "appearance:spellReferenceProject.asteroid1"
 			}
 		},

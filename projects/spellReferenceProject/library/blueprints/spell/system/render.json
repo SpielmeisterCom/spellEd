@@ -9,6 +9,14 @@
 			"blueprintId" : "spell.component.core.transform"
 		},
 		{
+			"name" : "appearances",
+			"blueprintId" : "spell.component.core.graphics2d.appearance"
+		},
+		{
+			"name" : "animatedAppearances",
+			"blueprintId" : "spell.component.core.graphics2d.animatedAppearance"
+		},
+		{
 			"name" : "renderComponents",
 			"blueprintId" : "spell.component.core.graphics2d.render"
 		},
