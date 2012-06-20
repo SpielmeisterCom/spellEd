@@ -7,7 +7,9 @@ Ext.define('Spelled.view.component.Properties', {
 
 	margin: '0 0 5 0',
 	collapsible: true,
-	collapsed: true,
+	collapsed: false,
+
+	hideHeaders: true,
 
     customEditors: {
         //TODO: when a assigned asset gets removed, the field will disappear
