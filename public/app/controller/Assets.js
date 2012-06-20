@@ -118,15 +118,15 @@ Ext.define('Spelled.controller.Assets', {
         var Asset = this.getModel('Asset'),
 			assetEditor = Ext.getCmp('AssetEditor')
 
+		this.application.closeOpenedTabs( assetEditor, assetId )
+
         Asset.load(
             assetId,
             {
                 scope: this,
                 success: function( asset ) {
-					this.application.closeOpenedTabs( assetEditor, assetId )
                     asset.destroy()
                     this.refreshStoresAndTreeStores()
-					this.loadTrees()
 				}
             }
         )
@@ -139,10 +139,10 @@ Ext.define('Spelled.controller.Assets', {
     },
 
     openAsset: function( treePanel, record ) {
-        if( !record.data.leaf ) return
+        if( !record.isLeaf() ) return
 
         var assetEditor = Ext.getCmp('AssetEditor'),
-            title     = record.internalId
+            title     = record.getId()
 
         var Asset = this.getAssetModel()
 
@@ -151,10 +151,9 @@ Ext.define('Spelled.controller.Assets', {
         if( foundTab )
             return foundTab
 
-        Asset.load( record.internalId , {
+        Asset.load( record.getId() , {
             scope: this,
             success: function( asset ) {
-
                 var View = this.getAssetIframeView()
                 var view = new View( {
                     title: title,

@@ -47,11 +47,10 @@ define(
                 var assetId = ( namespace.length > 0 ) ? namespace + "/" + baseName : baseName
 
                 var result = {
-                    assetId: assetId,
                     name: assetName,
                     namespace: namespace,
-                    extension: extension,
-                    type: type
+                    type: type,
+					file: assetId
                 }
 
                 util.writeFile( newFileNameWithoutExtension + ".json", JSON.stringify( result, null, "\t" ), false )
@@ -76,11 +75,8 @@ define(
 
             var deleteAsset = function( req, res, payload, next ) {
                 var jsonFilePath = payload[0].id,
-                    extension    = path.extname( jsonFilePath ),
-                    tmpFilePath  = path.dirname( jsonFilePath ) + "/" + path.basename(
-                        jsonFilePath , extension
-                    ),
-                    filePath = tmpFilePath + "." + payload[0].extension
+					file         = payload[0].file,
+					filePath     = path.dirname( jsonFilePath ) + "/" + path.basename( file )
 
                 util.deleteFile( jsonFilePath )
                 util.deleteFile( filePath )
