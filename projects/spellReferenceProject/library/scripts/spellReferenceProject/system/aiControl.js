@@ -30,11 +30,11 @@ define(
 			return actor.id === 'aiControlled'
 		}
 
-		var getNextTargetId = function( aiPosition, playerPositions ) {
+		var getNextTargetId = function( aiTransform, playerTransforms ) {
 			return _.reduce(
-				playerPositions,
-				function( memo, playerPosition, entityId ) {
-					vec2.subtract( aiPosition, playerPosition, tmp )
+				playerTransforms,
+				function( memo, playerTransform, entityId ) {
+					vec2.subtract( aiTransform.position, playerTransform.position, tmp )
 					var distanceSquared = vec2.dot( tmp, tmp )
 
 					if( distanceSquared < memo.distanceSquared ) {
@@ -51,12 +51,12 @@ define(
 			).id
 		}
 
-		var updateActor = function( aiActor, aiPosition, aiRotation, targetPosition ) {
-			vec2.subtract( targetPosition, aiPosition, tmp )
+		var updateActor = function( aiActor, aiTransform, targetTransform ) {
+			vec2.subtract( targetTransform.position, aiTransform.position, tmp )
 			vec2.normalize( tmp )
 
 			// TODO: find the bug that causes the ai spacecraft to occasionally steer in the wrong direction (rotates the bigger angle)
-			var deltaAngle = Math.atan2( tmp[ 0 ], tmp[ 1 ] ) - aiRotation
+			var deltaAngle = Math.atan2( tmp[ 0 ], tmp[ 1 ] ) - aiTransform.rotation
 			deltaAngle += ( deltaAngle > Math.PI ) ? -2 * Math.PI : ( deltaAngle < -Math.PI ) ? 2 * Math.PI : 0
 
 			var actions = aiActor.actions
@@ -66,9 +66,8 @@ define(
 		}
 
 		var updateActors = function( globals, timeInMs, deltaTimeInMs ) {
-			var actors    = this.actors,
-				positions = this.positions,
-				rotations = this.rotations
+			var actors     = this.actors,
+				transforms = this.transforms
 
 			// NOTE: Distinguishing between ai and player controlled actors should be done by using separate component types in order to save some cycles here.
 			var aiControlledIds = [],
@@ -86,15 +85,15 @@ define(
 				}
 			)
 
-			var targetPositions = _.pick( positions, playerControlledIds )
+			var targetTransforms = _.pick( transforms, playerControlledIds )
 
 			_.each(
 				aiControlledIds,
 				function( aiControlledId ) {
-					var targetId = getNextTargetId( positions[ aiControlledId ], targetPositions )
+					var targetId = getNextTargetId( transforms[ aiControlledId ], targetTransforms )
 
 					if( targetId ) {
-						updateActor( actors[ aiControlledId ], positions[ aiControlledId ], rotations[ aiControlledId ], targetPositions[ targetId ] )
+						updateActor( actors[ aiControlledId ], transforms[ aiControlledId ], targetTransforms[ targetId ] )
 					}
 				}
 			)
@@ -105,10 +104,9 @@ define(
 		 * public
 		 */
 
-		var AIControl = function( globals, actors, positions, rotations ) {
-			this.actors    = actors
-			this.positions = positions
-			this.rotations = rotations
+		var AIControl = function( globals, actors, transforms ) {
+			this.actors     = actors
+			this.transforms = transforms
 		}
 
 		AIControl.prototype = {

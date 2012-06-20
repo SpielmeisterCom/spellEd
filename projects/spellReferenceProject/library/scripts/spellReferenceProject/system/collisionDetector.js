@@ -113,18 +113,18 @@ define(
 			return distanceSquared <= minDistanceSquared
 		}
 
-		var resolveCollisions = function( positions, collisionSpheres, inertialObjects ) {
-			var entityIds    = _.keys( positions ),
+		var resolveCollisions = function( transforms, collisionSpheres, inertialObjects ) {
+			var entityIds    = _.keys( collisionSpheres ),
 				numEntityIds = entityIds.length,
 				result       = []
 
 			for( var i = 0; i < numEntityIds; i++ ) {
 				var collisionSphereA = collisionSpheres[ i ],
-					positionA        = positions[ i ]
+					positionA        = transforms[ i ].position
 
 				for( var j = i + 1; j < numEntityIds; j++ ) {
 					var collisionSphereB = collisionSpheres[ j ],
-						positionB        = positions[ j ]
+						positionB        = transforms[ j ].position
 
 					if( isColliding( positionA, collisionSphereA, positionB, collisionSphereB ) ) {
 						resolveCollision( positionA, collisionSphereA, inertialObjects[ i ], positionB, collisionSphereB, inertialObjects[ j ] )
@@ -136,7 +136,7 @@ define(
 		}
 
 		var process = function( globals, timeInMs, deltaTimeInMs ) {
-			resolveCollisions( this.positions, this.collisionSpheres, this.inertialObjects )
+			resolveCollisions( this.transforms, this.collisionSpheres, this.inertialObjects )
 		}
 
 
@@ -144,8 +144,8 @@ define(
 		 * public
 		 */
 
-		var CollisionDetector = function( globals, positions, inertialObjects, collisionSpheres ) {
-			this.positions        = positions
+		var CollisionDetector = function( globals, transforms, inertialObjects, collisionSpheres ) {
+			this.transforms       = transforms
 			this.inertialObjects  = inertialObjects
 			this.collisionSpheres = collisionSpheres
 		}

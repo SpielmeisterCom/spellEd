@@ -9,12 +9,8 @@
 			"blueprintId" : "spell.component.core.actor"
 		},
 		{
-			"name" : "positions",
-			"blueprintId" : "spell.component.core.position"
-		},
-		{
-			"name" : "rotations",
-			"blueprintId" : "spell.component.core.rotation"
+			"name" : "transforms",
+			"blueprintId" : "spell.component.core.transform"
 		}
 	],
 	"scriptId" : "spellReferenceProject/system/aiControl"

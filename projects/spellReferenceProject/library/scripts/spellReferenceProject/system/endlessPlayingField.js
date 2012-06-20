@@ -1,10 +1,10 @@
 define(
 	'spellReferenceProject/system/endlessPlayingField',
 	[
-		'spell/shared/util/platform/underscore'
+		'spell/shared/util/createEntityEach'
 	],
 	function(
-		_
+		createEntityEach
 	) {
 		'use strict'
 
@@ -26,7 +26,9 @@ define(
 
 		var cleanUp = function( globals ) {}
 
-		var updatePosition = function( position ) {
+		var updatePositionIter = function( transform ) {
+			var position = transform.position
+
 			if( position[ 0 ] > rightBorder ) {
 				position[ 0 ] = leftBorder
 				position[ 1 ] += wrapOffset
@@ -46,7 +48,7 @@ define(
 		}
 
 		var process = function( globals, timeInMs, deltaTimeInMs ) {
-			_.each( this.positions, updatePosition )
+			this.updatePosition()
 		}
 
 
@@ -54,8 +56,8 @@ define(
 		 * public
 		 */
 
-		var EndlessPlayingField = function( globals, positions ) {
-			this.positions = positions
+		var EndlessPlayingField = function( globals, transforms ) {
+			this.updatePosition = createEntityEach( transforms, [], updatePositionIter )
 		}
 
 		EndlessPlayingField.prototype = {

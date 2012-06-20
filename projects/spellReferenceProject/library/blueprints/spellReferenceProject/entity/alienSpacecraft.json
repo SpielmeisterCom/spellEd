@@ -4,10 +4,7 @@
 	"name" : "alienSpacecraft",
 	"components" : [
 		{
-			"blueprintId" : "spell.component.core.position"
-		},
-		{
-			"blueprintId" : "spell.component.core.rotation"
+			"blueprintId" : "spell.component.core.transform"
 		},
 		{
 			"blueprintId" : "spell.component.core.graphics2d.render",

@@ -5,8 +5,8 @@
 
 	"input" : [
 		{
-			"name" : "positions",
-			"blueprintId" : "spell.component.core.position"
+			"name" : "transforms",
+			"blueprintId" : "spell.component.core.transform"
 		}
 	],
 	"scriptId" : "spellReferenceProject/system/endlessPlayingField"

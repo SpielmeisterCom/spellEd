@@ -1,14 +1,14 @@
 define(
 	'spellReferenceProject/system/spacecraftIntegrator',
 	[
-		'glmatrix/vec2',
+		'spell/shared/util/createEntityEach',
 
-		'spell/shared/util/platform/underscore'
+		'glmatrix/vec2'
 	],
 	function(
-		vec2,
+		createEntityEach,
 
-		_
+		vec2
 	) {
 		'use strict'
 
@@ -25,65 +25,52 @@ define(
 
 		var cleanUp = function( globals ) {}
 
-		var updateInertialObject = function( deltaTimeInS, inertialObject, position ) {
+		var applyActionsToSpacecraftIter = function( deltaTimeInS, spacecraft, actor, inertialObject, transform ) {
+			var actions = actor.actions
+
+			var rotationDirection = ( actions.steerLeft.executing ?
+				-1 :
+				actions.steerRight.executing ?
+					1 :
+					0
+			)
+
+			if( rotationDirection ) {
+				transform.rotation += deltaTimeInS * spacecraftRotationSpeed * rotationDirection
+			}
+
+			if( actions.accelerate.executing ) {
+				var rotation      = transform.rotation,
+					thrusterForce = spacecraft.thrusterForce
+
+				// f
+				vec2.set(
+					[
+						Math.sin( rotation ) * thrusterForce,
+						Math.cos( rotation ) * thrusterForce
+					],
+					tmp
+				)
+
+				// v = v + dv; dv = da * dt; da = f / m
+				vec2.add(
+					vec2.scale( tmp, deltaTimeInS / inertialObject.mass ),
+					inertialObject.velocity
+				)
+			}
+		}
+
+		var updateInertialObjectIter = function( deltaTimeInS, inertialObject, transform ) {
 			// ds, tmp := deltaPosition
 			vec2.scale( inertialObject.velocity, deltaTimeInS, tmp )
-			vec2.add( tmp, position )
+			vec2.add( tmp, transform.position )
 		}
 
 		var process = function( globals, timeInMs, deltaTimeInMs ) {
-			var deltaTimeInS    = deltaTimeInMs / 1000,
-				actors          = this.actors,
-				positions       = this.positions,
-				rotations       = this.rotations,
-				spacecrafts     = this.spacecrafts,
-				inertialObjects = this.inertialObjects
+			var deltaTimeInS    = deltaTimeInMs / 1000
 
-			_.each(
-				_.keys( this.spacecrafts ),
-				function( id ) {
-					var actions        = actors[ id ].actions,
-						inertialObject = inertialObjects[ id ]
-
-					var rotationDirection = ( actions.steerLeft.executing ?
-						-1 :
-						actions.steerRight.executing ?
-							1 :
-							0
-					)
-
-					if( rotationDirection ) {
-						rotations[ id ] += deltaTimeInS * spacecraftRotationSpeed * rotationDirection
-					}
-
-					if( actions.accelerate.executing ) {
-						var rotation      = rotations[ id ],
-							thrusterForce = spacecrafts[ id ].thrusterForce
-
-						// f
-						vec2.set(
-							[
-								Math.sin( rotation ) * thrusterForce,
-								Math.cos( rotation ) * thrusterForce
-							],
-							tmp
-						)
-
-						// v = v + dv; dv = da * dt; da = f / m
-						vec2.add(
-							vec2.scale( tmp, deltaTimeInS / inertialObject.mass ),
-							inertialObject.velocity
-						)
-					}
-				}
-			)
-
-			_.each(
-				this.inertialObjects,
-				function( inertialObject, id ) {
-					updateInertialObject( deltaTimeInS, inertialObject, positions[ id ] )
-				}
-			)
+			this.updateSpacecrafts( deltaTimeInS )
+			this.updateInertialObjects( deltaTimeInS )
 		}
 
 
@@ -91,12 +78,9 @@ define(
 		 * public
 		 */
 
-		var SpacecraftIntegrator = function( globals, actors, positions, rotations, spacecrafts, inertialObjects ) {
-			this.actors          = actors
-			this.positions       = positions
-			this.rotations       = rotations
-			this.spacecrafts     = spacecrafts
-			this.inertialObjects = inertialObjects
+		var SpacecraftIntegrator = function( globals, actors, transforms, spacecrafts, inertialObjects ) {
+			this.updateSpacecrafts     = createEntityEach( spacecrafts, [ actors, inertialObjects, transforms ], applyActionsToSpacecraftIter )
+			this.updateInertialObjects = createEntityEach( inertialObjects, transforms, updateInertialObjectIter )
 		}
 
 		SpacecraftIntegrator.prototype = {

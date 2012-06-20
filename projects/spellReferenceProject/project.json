@@ -11,9 +11,9 @@
                     "blueprintId" : "spellReferenceProject.entity.spacecraft",
                     "components" : [
 						{
-							"blueprintId" : "spell.component.core.position",
+							"blueprintId" : "spell.component.core.transform",
 							"config" : {
-								"value" : [ 128, 128 ]
+								"position" : [ 128, 128 ]
 							}
 						},
 						{
@@ -47,15 +47,10 @@
 					"blueprintId" : "spellReferenceProject.entity.spacecraft",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.core.position",
+							"blueprintId" : "spell.component.core.transform",
 							"config" : {
-								"value" : [ 400, 250 ]
-							}
-						},
-						{
-							"blueprintId" : "spell.component.core.rotation",
-							"config" : {
-								"value" : 0.2
+								"position" : [ 400, 250 ],
+								"rotation" : 0.2
 							}
 						},
 						{
@@ -87,9 +82,9 @@
 					"blueprintId" : "spellReferenceProject.entity.alienSpacecraft",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.core.position",
+							"blueprintId" : "spell.component.core.transform",
 							"config" : {
-								"value" : [ 700, 100 ]
+								"position" : [ 700, 100 ]
 							}
 						},
 						{
@@ -102,9 +97,9 @@
 					"blueprintId" : "spellReferenceProject.entity.asteroid",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.core.position",
+							"blueprintId" : "spell.component.core.transform",
 							"config" : {
-								"value" : [ 600, 500 ]
+								"position" : [ 600, 500 ]
 							}
 						},
 						{
@@ -121,9 +116,9 @@
 					"blueprintId" : "spellReferenceProject.entity.asteroid",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.core.position",
+							"blueprintId" : "spell.component.core.transform",
 							"config" : {
-								"value" : [ 725, 650 ]
+								"position" : [ 725, 650 ]
 							}
 						},
 						{
@@ -152,9 +147,9 @@
 					"blueprintId" : "spellReferenceProject.entity.asteroid",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.core.position",
+							"blueprintId" : "spell.component.core.transform",
 							"config" : {
-								"value" : [ 300, 700 ]
+								"position" : [ 300, 700 ]
 							}
 						},
 						{
@@ -183,9 +178,14 @@
 					"blueprintId" : "spell.entity.camera",
 					"components" : [
 						{
+							"blueprintId" : "spell.component.core.transform",
+							"config" : {
+								"position" : [ 512, 384 ]
+							}
+						},
+						{
 							"blueprintId" : "spell.component.core.graphics2d.camera",
 							"config" : {
-								"position" : [ 512, 384 ],
 								"width" : 1024,
 								"height" : 768,
 								"active" : true

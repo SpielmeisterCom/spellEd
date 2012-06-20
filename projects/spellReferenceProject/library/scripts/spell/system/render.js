@@ -79,12 +79,13 @@ define(
 			return animationOffsetInMs / animationLengthInMs
 		}
 
-		var draw = function( context, deltaTimeInMs, assets, resources, positions, rotations, renderComponentSorted ) {
+		var draw = function( context, deltaTimeInMs, assets, resources, transforms, renderComponentSorted ) {
 			_.each(
 				renderComponentSorted,
 				function( renderComponent ) {
 					var id              = renderComponent.id,
-						renderComponent = renderComponent.value
+						renderComponent = renderComponent.value,
+						transform       = transforms[ id ]
 
 					context.save()
 					{
@@ -101,7 +102,7 @@ define(
 						// object to world space transformation go here
 //						context.rotate( renderData.rotation )
 
-						vec2.set( positions[ id ], tmp )
+						vec2.set( transform.position, tmp )
 						context.translate( tmp )
 
 //						vec2.set( renderData.scale, tmp ) // vec2 -> vec3
@@ -109,10 +110,10 @@ define(
 
 
 						// appearance transformations go here
-						context.rotate( renderComponent.rotation + rotations[ id ] )
+						context.rotate( transform.rotation )
 
-						vec2.set( renderComponent.translation, tmp ) // vec2 -> vec3
-						context.translate( tmp )
+//						vec2.set( renderComponent.translation, tmp ) // vec2 -> vec3
+//						context.translate( tmp )
 
 
 						if( asset.type === 'appearance' ) {
@@ -169,7 +170,7 @@ define(
 //			)
 		}
 
-		var setCamera = function( context, cameras, worldToView ) {
+		var setCamera = function( context, cameras, transforms, worldToView ) {
 			if( _.size( cameras ) === 0 ) return
 
 			// Gets the first active camera. More than one camera being active is an undefined state and the first found active is used.
@@ -199,7 +200,7 @@ define(
 			mat4.ortho( -halfWidth, halfWidth, -halfHeight, halfHeight, 0, 100, worldToView )
 
 			// translating with the inverse camera position
-			vec2.set( activeCamera.position, tmp )
+			vec2.set( transforms[ currentCameraId ].position, tmp )
 			mat4.translate( worldToView, vec2.negate( tmp ) )
 
 			context.setViewMatrix( worldToView )
@@ -211,10 +212,10 @@ define(
 			// clear color buffer
 			context.clear()
 
-			setCamera( context, this.cameras, this.worldToView )
+			setCamera( context, this.cameras, this.transforms, this.worldToView )
 
 			// TODO: renderData should be presorted on the component list level by a user defined index, not here on every rendering tick
-			draw( context, deltaTimeInMs, this.assets, this.resources, this.positions, this.rotations, createSortedByPass( this.renderComponents ) )
+			draw( context, deltaTimeInMs, this.assets, this.resources, this.transforms, createSortedByPass( this.renderComponents ) )
 		}
 
 		var init = function( globals ) {}
@@ -226,12 +227,11 @@ define(
 		 * public
 		 */
 
-		var Renderer = function( globals, positions, rotations, renderComponents, cameras ) {
+		var Renderer = function( globals, transforms, renderComponents, cameras ) {
 			this.assets           = globals.assets
 			this.resources        = globals.resources
 			this.context          = globals.renderingContext
-			this.positions        = positions
-			this.rotations        = rotations
+			this.transforms       = transforms
 			this.renderComponents = renderComponents
 			this.cameras          = cameras
 
