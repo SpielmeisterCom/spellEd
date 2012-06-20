@@ -15,13 +15,20 @@ Ext.define('Spelled.controller.Systems', {
 		'system.Types'
 	],
 
+	refs: [
+		{
+			ref : 'RightPanel',
+			selector: '#RightPanel'
+		}
+	],
+
 	init: function() {
 		this.control({
-			'#SystemList': {
-				itemdblclick: this.showSystemItem,
-				deleteclick:     this.deleteZoneSystemActionIconClick,
-				itemmouseenter:  this.application.showActionsOnLeaf,
-				itemmouseleave:  this.application.hideActions
+			'systemlist': {
+				itemdblclick  : this.showSystemItem,
+				deleteclick   : this.deleteZoneSystemActionIconClick,
+				itemmouseenter: this.application.showActionsOnLeaf,
+				itemmouseleave: this.application.hideActions
 			},
 			'systemlist > treeview': {
 				drop: this.updateZoneSystems
@@ -152,9 +159,13 @@ Ext.define('Spelled.controller.Systems', {
 	},
 
 	refreshZoneSystemList: function( zone ) {
-		var tree     = Ext.ComponentManager.get( "SystemList"),
+		var contentPanel = this.getRightPanel(),
+			View = this.getSystemListView(),
+			tree     = new View(),
 			rootNode = tree.getStore().getRootNode(),
 			me       = this
+
+		contentPanel.add( tree )
 		rootNode.removeAll()
 
 		var systems = zone.get('systems')

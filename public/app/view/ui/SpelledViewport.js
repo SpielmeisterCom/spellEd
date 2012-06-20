@@ -23,8 +23,8 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                     xtype: 'tabpanel',
                     tabPosition: 'bottom',
                     region:'west',
-                    width: 300,
-                    minSize: 100,
+                    width: 350,
+                    minSize: 200,
                     items: [
                         {
                             id: "Zones",
@@ -70,7 +70,7 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                 },
 				{
 					id: "RightPanel",
-					title: "Additional Information",
+					title: "Inspector",
 					region:'east',
 					layout: 'fit',
 					width: 300,

@@ -14,7 +14,11 @@ Ext.define('Spelled.controller.Zones', {
         {
             ref : 'MainPanel',
             selector: '#MainPanel'
-        }
+        },
+		{
+			ref : 'RightPanel',
+			selector: '#RightPanel'
+		}
     ],
 
     views: [
@@ -25,6 +29,11 @@ Ext.define('Spelled.controller.Zones', {
 		'zone.Script',
         'ui.SpelledRendered'
     ],
+
+	TREE_ITEM_TYPE_ZONE   : 1,
+	TREE_ITEM_TYPE_ENTITY : 2,
+	TREE_ITEM_TYPE_SYSTEM : 3,
+	TREE_ITEM_TYPE_SCRIPT : 4,
 
 	BUILD_SERVER_ORIGIN : 'http://localhost:8080',
 
@@ -43,10 +52,6 @@ Ext.define('Spelled.controller.Zones', {
         window.addEventListener("message", dispatchPostMessages, false);
 
         this.control({
-            '#ZonesTree': {
-                select      : me.dispatchTreeClick,
-                itemdblclick: me.renderZoneHelper
-            },
 			'renderedzone': {
 				show: function( panel ) {
 					panel.down( 'spellediframe').focus()
@@ -62,10 +67,12 @@ Ext.define('Spelled.controller.Zones', {
                 click: me.toggleState
             },
             'zonetreelist': {
-                itemcontextmenu: me.showListContextMenu,
-                deleteclick:     me.deleteZoneActionIconClick,
-                itemmouseenter:  me.application.showActionsOnLeaf,
-                itemmouseleave:  me.application.hideActions
+				select         : me.dispatchTreeClick,
+                itemcontextmenu: me.dispatchTreeListContextMenu,
+                deleteclick    : me.dispatchTreeDeleteClick,
+				renderclick    : me.dispatchTreeRenderClick,
+                itemmouseenter : me.dispatchMouseEnterTree,
+                itemmouseleave : me.application.hideActions
             },
             'zonetreelist button[action="showCreateZone"]': {
                 click: me.showCreateZone
@@ -85,32 +92,118 @@ Ext.define('Spelled.controller.Zones', {
         })
     },
 
-	dispatchTreeClick: function( treePanel, record ) {
+	getClickedTreeItemType: function( record ) {
+		var type = undefined
 
 		switch( record.get('iconCls') ) {
 			case 'tree-zone-icon':
-				var zone = this.getConfigZonesStore().getById( record.getId() )
-
-				if( zone ) {
-					this.application.setActiveZone( zone )
-				}
+	            type = this.TREE_ITEM_TYPE_ZONE
 				break
 			case 'tree-zone-entity-icon':
-				this.application.getController('Entities').showEntityInfo( record.getId() )
+				type = this.TREE_ITEM_TYPE_ENTITY
 				break
 			case 'tree-zone-system-icon':
-				console.log( "Systemclick" )
+				type = this.TREE_ITEM_TYPE_SYSTEM
 				break
 			case 'tree-zone-script-icon':
-				console.log( "SCriptclick" )
+				type =  this.TREE_ITEM_TYPE_SCRIPT
+				break
+		}
+
+		return type
+	},
+
+	dispatchTreeListContextMenu: function( view, list, node, rowIndex, e ) {
+		var record = view.getRecord( node )
+
+		switch( this.getClickedTreeItemType( record ) ) {
+			case this.TREE_ITEM_TYPE_ZONE:
+				this.showListContextMenu( view, list, node, rowIndex, e )
+				break
+			case this.TREE_ITEM_TYPE_ENTITY:
+				this.application.getController( 'Entities').showListContextMenu( view, list, node, rowIndex, e )
 				break
 		}
 	},
 
-	refreshZoneScriptCombobox: function( scriptId ) {
-		var combobox = Ext.getCmp('ZoneScript').down( 'combobox' )
+	dispatchMouseEnterTree: function( view, list, node, rowIndex, e  ) {
+		var icons  = undefined,
+			record = view.getRecord( node )
 
-		combobox.select( scriptId )
+		switch( this.getClickedTreeItemType( record ) ) {
+			case this.TREE_ITEM_TYPE_ENTITY:
+				icons = Ext.DomQuery.select( '.delete-action-icon', node)
+				break
+			case this.TREE_ITEM_TYPE_ZONE:
+				icons = Ext.DomQuery.select( '.delete-action-icon, .render-action-icon', node)
+				break
+		}
+
+		this.application.showActionColumnIcons( icons )
+	},
+
+	dispatchTreeRenderClick: function( gridView, rowIndex, colIndex, column, e ) {
+		var node = gridView.getRecord( gridView.findTargetByEvent(e) )
+
+		switch( this.getClickedTreeItemType( node ) ) {
+			case this.TREE_ITEM_TYPE_ZONE:
+				this.renderZoneHelper( gridView, node )
+				break
+		}
+	},
+
+	dispatchTreeDeleteClick: function( gridView, rowIndex, colIndex, column, e ) {
+		var node = gridView.getRecord( gridView.findTargetByEvent(e) )
+
+		switch( this.getClickedTreeItemType( node ) ) {
+			case this.TREE_ITEM_TYPE_ENTITY:
+				this.application.getController('Entities').deleteEntityActionIconClick( gridView, rowIndex, colIndex, column, e )
+				break
+			case this.TREE_ITEM_TYPE_ZONE:
+				this.deleteZoneActionIconClick( gridView, rowIndex, colIndex, column, e )
+				break
+		}
+	},
+
+	dispatchTreeClick: function( treePanel, record ) {
+		this.getRightPanel().removeAll()
+
+		switch( this.getClickedTreeItemType( record ) ) {
+			case this.TREE_ITEM_TYPE_ZONE:
+				var zone = this.getConfigZonesStore().getById( record.getId() )
+				if( zone ) {
+					this.application.setActiveZone( zone )
+				}
+				break
+			case this.TREE_ITEM_TYPE_ENTITY:
+				this.application.getController('Entities').showEntityInfo( record.getId() )
+				break
+			case this.TREE_ITEM_TYPE_SYSTEM:
+				var zone = this.getConfigZonesStore().getById( record.parentNode.getId() )
+				if( zone ) {
+					this.application.setActiveZone( zone )
+					this.application.getController('Systems').refreshZoneSystemList( zone )
+				}
+				break
+			case this.TREE_ITEM_TYPE_SCRIPT:
+				var zone = this.getConfigZonesStore().getById( record.parentNode.getId() )
+				if( zone ) {
+					this.application.setActiveZone( zone )
+					this.refreshZoneScriptCombobox( zone )
+				}
+				break
+		}
+	},
+
+	refreshZoneScriptCombobox: function( zone ) {
+		var contentPanel = this.getRightPanel(),
+			View = this.getZoneScriptView(),
+			view = new View(),
+			combobox = view.down( 'combobox' )
+
+		combobox.select( zone.get('scriptId') )
+
+		contentPanel.add( view )
 	},
 
 	setZoneScript: function( combo, records ) {
@@ -177,6 +270,7 @@ Ext.define('Spelled.controller.Zones', {
 
     showZonesEditor: function() {
 		this.application.hideMainPanels()
+		this.getRightPanel().show()
 
         Ext.getCmp('ZoneEditor').show()
     },
@@ -204,18 +298,14 @@ Ext.define('Spelled.controller.Zones', {
 
 		store.add( record )
 		zones.add( record )
-        this.showZoneslist( zones )
+        this.showZonesList( zones )
 
         window.close()
     },
 
     showListContextMenu: function( view, record, item, index, e, options ) {
-        e.stopEvent()
-
-        if( record.data.leaf ) {
-            var menuController = this.application.getController('Menu')
-            menuController.showZonesListContextMenu( e )
-        }
+		var menuController = this.application.getController('Menu')
+		menuController.showZonesListContextMenu( e )
     },
 
     deleteZone: function( zone ) {
@@ -227,7 +317,7 @@ Ext.define('Spelled.controller.Zones', {
 		this.application.closeOpenedTabs( zoneEditor, zone.getRenderTabTitle() )
 		this.application.closeOpenedTabs( zoneEditor, zone.getSourceTabTitle() )
 
-        this.showZoneslist( zones )
+        this.showZonesList( zones )
     },
 
     reloadZone: function( button ) {
@@ -256,11 +346,11 @@ Ext.define('Spelled.controller.Zones', {
     },
 
     renderZoneHelper: function( treePanel, record ) {
-        if( !record.data.leaf ) return
-
         var zone = this.getConfigZonesStore().getById( record.getId() )
 
-        this.renderZone( zone )
+		if( zone ) {
+        	this.renderZone( zone )
+		}
     },
 
     renderZone: function( zone ) {
@@ -300,7 +390,7 @@ Ext.define('Spelled.controller.Zones', {
 
     },
 
-    showZoneslist: function( zones ) {
+    showZonesList: function( zones ) {
         var tree     = Ext.ComponentManager.get( "ZonesTree"),
             rootNode = tree.getStore().getRootNode()
         rootNode.removeAll()

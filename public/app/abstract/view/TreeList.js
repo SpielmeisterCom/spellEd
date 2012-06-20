@@ -15,45 +15,67 @@ Ext.define('Spelled.abstract.view.TreeList' ,{
                 dataIndex: 'text',
                 flex: 1
             },
+			{
+				xtype: 'actioncolumn',
+				width: 24,
+				icon: 'images/icons/application_go.png',
+				iconCls: 'x-hidden render-action-icon',
+				tooltip: 'Render',
+				handler: Ext.bind(me.handleRenderClick, me)
+			},
             {
                 xtype: 'actioncolumn',
                 width: 24,
-                icon: 'images/icons/delete.png',
-                iconCls: 'x-hidden',
-                tooltip: 'Delete',
-                handler: Ext.bind(me.handleDeleteClick, me)
-            }
+                icon: 'images/icons/cog.png',
+                iconCls: 'x-hidden edit-action-icon',
+                tooltip: 'Edit',
+                handler: Ext.bind(me.handleEditClick, me)
+            },
+			{
+				xtype: 'actioncolumn',
+				width: 24,
+				icon: 'images/icons/add.png',
+				iconCls: 'x-hidden add-action-icon',
+				tooltip: 'Add',
+				handler: Ext.bind(me.handleAddClick, me)
+			},
+			{
+				xtype: 'actioncolumn',
+				width: 24,
+				icon: 'images/icons/delete.png',
+				iconCls: 'x-hidden delete-action-icon',
+				tooltip: 'Delete',
+				handler: Ext.bind(me.handleDeleteClick, me)
+			}
         ];
 
         me.addEvents(
-            /**
-             * @event deleteclick
-             * Fires when the delete icon is clicked
-             * @param {Ext.grid.View} gridView
-             * @param {Number} rowIndex
-             * @param {Number} colIndex
-             * @param {Ext.grid.column.Action} column
-             * @param {EventObject} e
-             */
-            'deleteclick'
+            'deleteclick',
+			'addclick',
+			'renderclick',
+			'editclick'
         )
 
         me.callParent(arguments);
     },
 
-    /**
-     * Handles a click on a delete icon
-     * @private
-     * @param {Ext.tree.View} treeView
-     * @param {Number} rowIndex
-     * @param {Number} colIndex
-     * @param {Ext.grid.column.Action} column
-     * @param {EventObject} e
-     */
-    handleDeleteClick: function(gridView, rowIndex, colIndex, column, e) {
-        // Fire a "deleteclick" event with all the same args as this handler
-        this.fireEvent('deleteclick', gridView, rowIndex, colIndex, column, e);
-    }
+	handleAddClick: function(gridView, rowIndex, colIndex, column, e) {
+		this.fireEvent('addclick', gridView, rowIndex, colIndex, column, e);
+	},
+
+
+	handleEditClick: function(gridView, rowIndex, colIndex, column, e) {
+        this.fireEvent('editclick', gridView, rowIndex, colIndex, column, e);
+    },
+
+	handleDeleteClick: function(gridView, rowIndex, colIndex, column, e) {
+		this.fireEvent('deleteclick', gridView, rowIndex, colIndex, column, e);
+	},
+
+	handleRenderClick: function(gridView, rowIndex, colIndex, column, e) {
+		this.fireEvent('renderclick', gridView, rowIndex, colIndex, column, e);
+	}
+
 });
 
 

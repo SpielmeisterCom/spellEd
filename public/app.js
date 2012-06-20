@@ -78,6 +78,10 @@ var startEditor = function() {
 			{
 				ref : 'MainPanel',
 				selector: '#MainPanel'
+			},
+			{
+				ref: 'RightPanel',
+				selector: '#RightPanel'
 			}
 		],
 
@@ -131,6 +135,8 @@ var startEditor = function() {
         },
 
 		hideMainPanels: function() {
+			this.getRightPanel().hide()
+
 			this.getMainPanel().items.each(
 				function( panel ) {
 					panel.hide()
@@ -158,14 +164,18 @@ var startEditor = function() {
                 node  = view.getRecord( node )
 
             if( node.isLeaf() === showOnLeaf && !node.isRoot() ) {
-                Ext.each(
-                    icons,
-                    function(icon){
-                        Ext.get(icon).removeCls('x-hidden')
-                    }
-                )
+                this.showActionColumnIcons( icons )
             }
         },
+
+		showActionColumnIcons: function( icons ) {
+			Ext.each(
+				icons,
+				function(icon){
+					Ext.get(icon).removeCls('x-hidden')
+				}
+			)
+		},
 
         getActiveProject: function() {
             return this.project

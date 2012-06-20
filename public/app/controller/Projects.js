@@ -119,6 +119,6 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
     getZonesList: function( project ) {
-        this.application.getController('Zones').showZoneslist( project.getZones() )
+        this.application.getController('Zones').showZonesList( project.getZones() )
     }
 });

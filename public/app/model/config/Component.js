@@ -13,10 +13,13 @@ Ext.define('Spelled.model.config.Component', {
 		{
 			type: 'belongsTo',
 			model: 'Spelled.model.config.Entity',
-			getterName: 'getEntity',
-			setterName: 'setEntity'
+			getterName: 'getEntity'
 		}
 	],
+
+	setEntity: function( entity ) {
+		this[ 'Spelled.model.config.EntityBelongsToInstance' ] = entity
+	},
 
     constructor: function() {
         this.callParent(arguments)

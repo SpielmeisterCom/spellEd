@@ -11,9 +11,12 @@ Ext.define('Spelled.model.config.Entity', {
 	associations: [{
 		model:"Spelled.model.config.Zone",
 		type:"belongsTo",
-		getterName: 'getZone',
-		setterName: 'setZone'
+		getterName: 'getZone'
 	}],
+
+	setZone: function( zone ) {
+		this[ 'Spelled.model.config.ZoneBelongsToInstance' ] = zone
+	},
 
     hasMany: {
         model: 'Spelled.model.config.Component',

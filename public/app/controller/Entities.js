@@ -17,13 +17,15 @@ Ext.define('Spelled.controller.Entities', {
 		'entity.ComponentsList'
     ],
 
+	refs: [
+		{
+			ref : 'RightPanel',
+			selector: '#RightPanel'
+		}
+	],
+
     init: function() {
         this.control({
-            '#EntityList': {
-                deleteclick:     this.deleteEntityActionIconClick,
-                itemmouseenter:  this.application.showActionsOnFolder,
-                itemmouseleave:  this.application.hideActions
-            },
             '#ZonesTree button[action="showCreateEntity"]': {
                 click: this.showCreateEntity
             },
@@ -49,24 +51,12 @@ Ext.define('Spelled.controller.Entities', {
     },
 
     showListContextMenu: function( view, record, item, index, e, options ) {
+		var entity = Ext.getStore('config.Entities').getById( record.getId() )
 
-        if( !record.data.leaf ) {
-            var entity = Ext.getStore('config.Entities').getById( record.getId() )
-
-            if( entity ) {
-                var menuController = this.application.getController('Menu')
-                menuController.showEntitiesListContextMenu( entity, e )
-            }
-
-        } else {
-            var component = Ext.getStore('config.Components').getById( record.getId() )
-
-            if( component ) {
-                var menuController = this.application.getController('Menu')
-                menuController.showComponentContextMenu( component, e )
-            }
-        }
-
+		if( entity ) {
+			var menuController = this.application.getController('Menu')
+			menuController.showEntitiesListContextMenu( entity, e )
+		}
     },
 
     showCreateEntity: function( ) {
@@ -88,6 +78,7 @@ Ext.define('Spelled.controller.Entities', {
 
         var entityBlueprint = Ext.getStore('blueprint.Entities').getById( values.blueprintId )
 		var zone = Ext.getStore('config.Zones').getById( values.zoneId )
+		delete values.zoneId
 
         if( entityBlueprint && zone ) {
             entityBlueprint.getComponents().each(
@@ -98,6 +89,7 @@ Ext.define('Spelled.controller.Entities', {
                         config: component.get('config')
                     } )
 
+					newComponent.setEntity( record )
                     record.getComponents().add( newComponent )
 					Ext.getStore('config.Components').add( newComponent )
                 }
@@ -110,23 +102,18 @@ Ext.define('Spelled.controller.Entities', {
 			zone.getEntities().add( record )
 			store.add( record )
 
-			this.application.getController('Projects').getZonesList( zone.getProject() )
+			this.application.getController('Projects').getZonesList( this.application.getActiveProject() )
             window.close()
         }
     },
 
     deleteEntity: function ( entity ) {
-        var zone     = this.application.getActiveZone(),
+        var zone     = entity.getZone(),
             entities = zone.getEntities()
 
         entities.remove( entity )
 
-        this.showEntitylist( entities )
-    },
-
-    editEntity: function ( entity ) {
-        console.log( "editEntity"  )
-        console.log( entity )
+		this.application.getController('Zones').showZonesList( this.application.getActiveProject().getZones() )
     },
 
 	showEntityInfo: function( id ) {
@@ -139,14 +126,10 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
     showComponentsList: function( entity ) {
-        var contentPanel = Ext.ComponentManager.get( "RightPanel"),
+        var contentPanel = this.getRightPanel(),
 			View = this.getEntityComponentsListView()
 
-		contentPanel.removeAll()
-
 		entity.mergeWithBlueprintConfig()
-
-		contentPanel.setTitle( entity.get('name') + " - Components" )
 
 		var view = new View()
 		entity.getComponents().each(
