@@ -1,7 +1,7 @@
 {
 	"type" : "entityBlueprint",
 	"namespace" : "spellReferenceProject.entity",
-	"name" : "asteroid",
+	"name" : "alienSpacecraft",
 	"components" : [
 		{
 			"blueprintId" : "spell.component.core.position"
@@ -12,12 +12,16 @@
 		{
 			"blueprintId" : "spell.component.core.graphics2d.render",
 			"config" : {
-				"scale" : [ 4, 4 ],
-				"assetId" : "appearance:spellReferenceProject.asteroid1"
+				"scale" : [ 1, 1 ],
+				"assetId" : "animatedAppearance:spellReferenceProject.threeRings",
+				"animationId" : "twirling"
 			}
 		},
 		{
-			"blueprintId" : "spellReferenceProject.component.inertialObject"
+			"blueprintId" : "spellReferenceProject.component.inertialObject",
+			"config" : {
+				"mass" : 150
+			}
 		},
 		{
 			"blueprintId" : "spellReferenceProject.component.collisionSphere",

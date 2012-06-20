@@ -13,8 +13,8 @@
 			"blueprintId" : "spell.component.core.rotation"
 		},
 		{
-			"name" : "appearances",
-			"blueprintId" : "spell.component.core.graphics2d.appearance"
+			"name" : "renderComponents",
+			"blueprintId" : "spell.component.core.graphics2d.render"
 		},
 		{
 			"name" : "cameras",

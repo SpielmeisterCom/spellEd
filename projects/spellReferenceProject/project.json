@@ -17,9 +17,9 @@
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.graphics2d.appearance",
+							"blueprintId" : "spell.component.core.graphics2d.render",
 							"config" : {
-								"textureId" : "textures/spellReferenceProject/pixelShip2.png"
+								"assetId" : "appearance:spellReferenceProject.pixelShip2"
 							}
 						},
 						{
@@ -59,7 +59,7 @@
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.graphics2d.appearance"
+							"blueprintId" : "spell.component.core.graphics2d.render"
 						},
 						{
 							"blueprintId" : "spell.component.core.actor",
@@ -79,6 +79,21 @@
 								"mass" : 1,
 								"velocity" : [ 10, 2 ]
 							}
+						}
+					]
+				},
+				{
+					"name" : "alienSpacecraft1",
+					"blueprintId" : "spellReferenceProject.entity.alienSpacecraft",
+					"components" : [
+						{
+							"blueprintId" : "spell.component.core.position",
+							"config" : {
+								"value" : [ 700, 100 ]
+							}
+						},
+						{
+							"blueprintId" : "spell.component.core.graphics2d.render"
 						}
 					]
 				},
@@ -112,9 +127,9 @@
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.graphics2d.appearance",
+							"blueprintId" : "spell.component.core.graphics2d.render",
 							"config" : {
-								"textureId" : "textures/spellReferenceProject/asteroid2.png"
+								"assetId" : "appearance:spellReferenceProject.asteroid2"
 							}
 						},
 						{
@@ -143,9 +158,9 @@
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.graphics2d.appearance",
+							"blueprintId" : "spell.component.core.graphics2d.render",
 							"config" : {
-								"textureId" : "textures/spellReferenceProject/asteroid2.png"
+								"assetId" : "appearance:spellReferenceProject.asteroid2"
 							}
 						},
 						{

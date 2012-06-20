@@ -10,10 +10,10 @@
 			"blueprintId" : "spell.component.core.rotation"
 		},
 		{
-			"blueprintId" : "spell.component.core.graphics2d.appearance",
+			"blueprintId" : "spell.component.core.graphics2d.render",
 			"config" : {
 				"scale" : [ 4, 4 ],
-				"textureId" : "textures/spellReferenceProject/pixelShip1.png"
+				"assetId" : "appearance:spellReferenceProject.pixelShip1"
 			}
 		},
 		{
