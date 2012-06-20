@@ -101,23 +101,11 @@ define(
 							context.setGlobalAlpha( appearanceOpacity )
 						}
 
-
 						// object to world space transformation go here
-//						context.rotate( transform.rotation )
-
 						vec2.set( transform.position, tmp )
 						context.translate( tmp )
 
-//						vec2.set( transform.scale, tmp ) // vec2 -> vec3
-//						context.scale( tmp )
-
-
-						// appearance transformations go here
 						context.rotate( transform.rotation )
-
-//						vec2.set( transform.position, tmp ) // vec2 -> vec3
-//						context.translate( tmp )
-
 
 						if( asset.type === 'appearance' ) {
 							vec2.multiply( transform.scale, [ texture.width, texture.height ], tmp )
