@@ -160,7 +160,7 @@ var startEditor = function() {
         },
 
         showActions: function( showOnLeaf, view, list, node, rowIndex, e ) {
-            var icons = Ext.DomQuery.select('.x-action-col-icon', node),
+            var icons = Ext.DomQuery.select('.delete-action-icon', node),
                 node  = view.getRecord( node )
 
             if( node.isLeaf() === showOnLeaf && !node.isRoot() ) {
