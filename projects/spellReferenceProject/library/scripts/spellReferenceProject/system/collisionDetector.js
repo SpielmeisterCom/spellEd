@@ -115,24 +115,23 @@ define(
 
 		var resolveCollisions = function( transforms, collisionSpheres, inertialObjects ) {
 			var entityIds    = _.keys( collisionSpheres ),
-				numEntityIds = entityIds.length,
-				result       = []
+				numEntityIds = entityIds.length
 
 			for( var i = 0; i < numEntityIds; i++ ) {
-				var collisionSphereA = collisionSpheres[ i ],
-					positionA        = transforms[ i ].position
+				var idA              = entityIds[ i ],
+					collisionSphereA = collisionSpheres[ idA ],
+					positionA        = transforms[ idA ].position
 
 				for( var j = i + 1; j < numEntityIds; j++ ) {
-					var collisionSphereB = collisionSpheres[ j ],
-						positionB        = transforms[ j ].position
+					var idB              = entityIds[ j ],
+						collisionSphereB = collisionSpheres[ idB ],
+						positionB        = transforms[ idB ].position
 
 					if( isColliding( positionA, collisionSphereA, positionB, collisionSphereB ) ) {
-						resolveCollision( positionA, collisionSphereA, inertialObjects[ i ], positionB, collisionSphereB, inertialObjects[ j ] )
+						resolveCollision( positionA, collisionSphereA, inertialObjects[ idA ], positionB, collisionSphereB, inertialObjects[ idB ] )
 					}
 				}
 			}
-
-			return result
 		}
 
 		var process = function( globals, timeInMs, deltaTimeInMs ) {

@@ -209,6 +209,30 @@
 							}
 						}
 					]
+				},
+				{
+					"name" : "look ma, anonymous entity config!",
+					"components" : [
+						{
+							"blueprintId" : "spell.component.core.transform",
+							"config" : {
+								"position" : [ 950, 25 ],
+								"scale" : [ 0.75, 0.75 ]
+							}
+						},
+						{
+							"blueprintId" : "spell.component.core.graphics2d.render",
+							"config" : {
+								"pass" : 2
+							}
+						},
+						{
+							"blueprintId" : "spell.component.core.graphics2d.appearance",
+							"config" : {
+								"assetId" : "appearance:spellReferenceProject.spelljsLogo"
+							}
+						}
+					]
 				}
             ],
 			"systems" : {
