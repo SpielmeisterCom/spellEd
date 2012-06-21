@@ -1,12 +1,12 @@
-Ext.define('Spelled.view.menu.contextmenu.ScriptsList', {
+Ext.define('Spelled.view.menu.contextmenu.ZoneSystemsList', {
     extend: 'Ext.menu.Menu',
-    alias : 'widget.scriptslistcontextmenu',
+    alias : 'widget.zonesystemslistcontextmenu',
 
     items: [
         {
 			icon: 'images/icons/add.png',
-            text: 'Create a new Script',
-            action: 'create'
+            text: 'Add a new Script',
+            action: 'add'
         },
         {
 			icon: 'images/icons/delete.png',

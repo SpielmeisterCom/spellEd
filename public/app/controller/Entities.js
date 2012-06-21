@@ -54,8 +54,7 @@ Ext.define('Spelled.controller.Entities', {
 		var entity = Ext.getStore('config.Entities').getById( record.getId() )
 
 		if( entity ) {
-			var menuController = this.application.getController('Menu')
-			menuController.showEntitiesListContextMenu( entity, e )
+			this.application.getController('Menu').showEntitiesListContextMenu( entity, e )
 		}
     },
 
@@ -112,8 +111,6 @@ Ext.define('Spelled.controller.Entities', {
             entities = zone.getEntities()
 
         entities.remove( entity )
-
-		this.application.getController('Zones').showZonesList( this.application.getActiveProject().getZones() )
     },
 
 	showEntityInfo: function( id ) {
@@ -141,6 +138,6 @@ Ext.define('Spelled.controller.Entities', {
 
 		contentPanel.add( view )
 
-		contentPanel.setTitle( contentPanel.defaultTitle + " - " + entity.get('name') )
+		contentPanel.setTitle( 'Components in entity "' + entity.get('name') +'"' )
 	}
 });

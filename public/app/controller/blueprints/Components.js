@@ -47,20 +47,12 @@ Ext.define('Spelled.controller.blueprints.Components', {
             },
             'componentblueprintattributeslist': {
                 select:          this.showAttributeConfig,
-                deleteclick:     this.deleteAttributeActionIconClick,
+                editclick:       this.showAttributesListContextMenu,
                 itemcontextmenu: this.showAttributesListContextMenu,
                 itemmouseenter:  this.application.showActionsOnLeaf,
                 itemmouseleave:  this.application.hideActions
             }
         })
-    },
-
-    deleteAttributeActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
-        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
-
-        if( !node ) return
-
-        this.removeComponentAttribute( node.get('id') )
     },
 
     showComponentsListContextMenu: function( view, record, item, index, e, options ) {

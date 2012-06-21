@@ -7,6 +7,7 @@ Ext.define('Spelled.controller.Menu', {
         'menu.contextmenu.EntitiesList',
         'menu.contextmenu.AssetsList',
         'menu.contextmenu.ScriptsList',
+		'menu.contextmenu.ZoneSystemsList',
         'menu.contextmenu.BlueprintsList',
         'menu.contextmenu.ComponentBlueprintAttributesList',
         'menu.contextmenu.EntityBlueprintComponentsList',
@@ -36,7 +37,15 @@ Ext.define('Spelled.controller.Menu', {
             },
 
 
-            'startscreen button[action="showCreateProject"]': {
+			'zonesystemslistcontextmenu [action="remove"]': {
+				click: this.removeSystemFromZone
+			},
+			'zonesystemslistcontextmenu [action="add"]': {
+				click: this.addSystemToZone
+			},
+
+
+			'startscreen button[action="showCreateProject"]': {
                 click: function( button ) {
                     button.up('window').close()
                     this.showCreateProject()
@@ -115,6 +124,13 @@ Ext.define('Spelled.controller.Menu', {
         return view
     },
 
+	showZoneSystemsListContextMenu: function( e) {
+		this.createAndShowView(
+			this.getMenuContextmenuZoneSystemsListView(),
+			e
+		)
+	},
+
     showScriptsListContextMenu: function( e ) {
         this.createAndShowView(
             this.getMenuContextmenuScriptsListView(),
@@ -174,10 +190,6 @@ Ext.define('Spelled.controller.Menu', {
         )
     },
 
-    showComponentContextMenu: function( component, e ) {
-        e.stopEvent()
-    },
-
     showCreateBlueprint: function( ) {
         this.application.getController( 'Blueprints').showCreateBlueprint()
     },
@@ -188,7 +200,7 @@ Ext.define('Spelled.controller.Menu', {
 
         if( node && node.isLeaf() ) {
 			this.application.getController('Blueprints').deleteBlueprintAction( node )
-        }
+		}
     },
 
     showCreateScript: function( ) {
@@ -201,7 +213,8 @@ Ext.define('Spelled.controller.Menu', {
 
         if( node && node.isLeaf() ) {
             this.application.getController( 'Scripts' ).removeScript( node.get('id') )
-        }
+			this.application.removeSelectedNode( tree )
+		}
     },
 
     showCreateAsset: function( ) {
@@ -214,8 +227,25 @@ Ext.define('Spelled.controller.Menu', {
 
         if( node && node.isLeaf() ) {
             this.application.getController( 'Assets' ).removeAsset( node.get('id') )
-        }
+			this.application.removeSelectedNode( tree )
+		}
     },
+
+	removeSystemFromZone: function() {
+		var panel = Ext.getCmp("RightPanel"),
+			tree  = panel.down( 'systemlist' ),
+			node  = tree.getSelectionModel().getLastSelected()
+
+		if( node && node.isLeaf() && !node.isRoot() ) {
+			this.application.getController( 'Systems' ).removeZoneSystem( node.get('text') )
+			this.application.removeSelectedNode( tree )
+		}
+
+	},
+
+	addSystemToZone: function() {
+		this.application.getController('Systems').showAddSystem()
+	},
 
     removeSystemInput: function( ) {
         var tab = Ext.getCmp("BlueprintEditor").getActiveTab(),
@@ -224,7 +254,8 @@ Ext.define('Spelled.controller.Menu', {
 
         if( node && !node.isLeaf() && !node.isRoot() ) {
             this.application.getController( 'blueprints.Systems' ).removeSystemInputDefinition( node.get('id') )
-        }
+			this.application.removeSelectedNode( tree )
+		}
     },
 
     removeComponentAttribute: function( ) {
@@ -234,6 +265,7 @@ Ext.define('Spelled.controller.Menu', {
 
         if( node && node.isLeaf() ) {
             this.application.getController( 'blueprints.Components' ).removeComponentAttribute( node.get('id') )
+			this.application.removeSelectedNode( tree )
         }
     },
 
@@ -244,6 +276,7 @@ Ext.define('Spelled.controller.Menu', {
 
         if( node && !node.isLeaf() && !node.isRoot() ) {
             this.application.getController('blueprints.Entities').removeEntityComponent( node.get('id') )
+			this.application.removeSelectedNode( tree )
         }
     },
 
@@ -254,6 +287,7 @@ Ext.define('Spelled.controller.Menu', {
 
         if( entity ) {
             this.application.getController( 'Entities' ).deleteEntity( entity )
+			this.application.removeSelectedNode( Ext.getCmp("ZonesTree") )
         }
     },
 
@@ -262,6 +296,7 @@ Ext.define('Spelled.controller.Menu', {
 
         if( zone ) {
             this.application.getController( 'Zones').deleteZone( zone )
+			this.application.removeSelectedNode( Ext.getCmp("ZonesTree") )
         }
     },
 

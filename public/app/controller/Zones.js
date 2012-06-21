@@ -277,8 +277,6 @@ Ext.define('Spelled.controller.Zones', {
         zones.remove( zone )
 		this.application.closeOpenedTabs( zoneEditor, zone.getRenderTabTitle() )
 		this.application.closeOpenedTabs( zoneEditor, zone.getSourceTabTitle() )
-
-        this.showZonesList( zones )
     },
 
     reloadZone: function( button ) {

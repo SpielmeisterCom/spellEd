@@ -26,7 +26,7 @@ Ext.define('Spelled.controller.Systems', {
 		this.control({
 			'systemlist': {
 				itemdblclick  : this.showSystemItem,
-				deleteclick   : this.deleteZoneSystemActionIconClick,
+				editclick   :   this.showZoneSystemsListContextMenu,
 				itemmouseenter: this.application.showActionsOnLeaf,
 				itemmouseleave: this.application.hideActions
 			},
@@ -42,12 +42,8 @@ Ext.define('Spelled.controller.Systems', {
 		})
 	},
 
-	deleteZoneSystemActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
-		var node = gridView.getRecord( gridView.findTargetByEvent(e) )
-
-		if( !node ) return
-
-		this.removeZoneSystem( node.get('text') )
+	showZoneSystemsListContextMenu: function( view, record, item, index, e, options ) {
+		this.application.getController('Menu').showZoneSystemsListContextMenu( e )
 	},
 
 	removeZoneSystem: function( systemId ) {
@@ -160,7 +156,7 @@ Ext.define('Spelled.controller.Systems', {
 
 	refreshZoneSystemList: function( zone ) {
 		var contentPanel = this.getRightPanel(),
-			View = this.getSystemListView(),
+			View     = this.getSystemListView(),
 			tree     = new View(),
 			rootNode = tree.getStore().getRootNode(),
 			me       = this

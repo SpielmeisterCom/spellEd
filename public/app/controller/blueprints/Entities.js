@@ -43,7 +43,7 @@ Ext.define('Spelled.controller.blueprints.Entities', {
             },
             'entityblueprintcomponentslist': {
                 select:          this.showEntityAttributeConfig,
-                deleteclick:     this.deleteEntityComponentActionIconClick,
+                editclick:       this.showComponentsListContextMenu,
                 itemcontextmenu: this.showComponentsListContextMenu,
                 itemmouseenter:  this.application.showActionsOnFolder,
                 itemmouseleave:  this.application.hideActions
@@ -55,14 +55,6 @@ Ext.define('Spelled.controller.blueprints.Entities', {
                 click: this.addComponent
             }
         })
-    },
-
-    deleteEntityComponentActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
-        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
-
-        if( !node ) return
-
-        this.removeEntityComponent( node.get('id') )
     },
 
     showComponentsListContextMenu: function( view, record, item, index, e, options ) {

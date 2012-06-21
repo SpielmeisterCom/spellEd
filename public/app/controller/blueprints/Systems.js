@@ -35,7 +35,7 @@ Ext.define('Spelled.controller.blueprints.Systems', {
 	init: function() {
 		this.control({
 			'systemblueprintinputlist': {
-				deleteclick:     this.deleteInputActionIconClick,
+				editclick:       this.showInputListContextMenu,
 				itemcontextmenu: this.showInputListContextMenu,
 				itemmouseenter:  this.application.showActionsOnFolder,
 				itemmouseleave:  this.application.hideActions
@@ -128,14 +128,6 @@ Ext.define('Spelled.controller.blueprints.Systems', {
 
         this.refreshSystemBlueprintInputList( tab )
         window.close()
-    },
-
-    deleteInputActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
-        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
-
-        if( !node ) return
-
-        this.removeSystemInputDefinition( node.get('id') )
     },
 
     removeSystemInputDefinition: function( id ) {

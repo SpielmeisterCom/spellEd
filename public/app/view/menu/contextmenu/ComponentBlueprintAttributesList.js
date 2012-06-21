@@ -4,6 +4,7 @@ Ext.define('Spelled.view.menu.contextmenu.ComponentBlueprintAttributesList', {
 
     items: [
         {
+			icon: 'images/icons/delete.png',
             text: 'Remove',
             action: 'remove'
         }

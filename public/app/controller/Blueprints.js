@@ -151,6 +151,7 @@ Ext.define('Spelled.controller.Blueprints', {
 
         if( !this.application.getController('Blueprints').checkForReferences( blueprint ) ) {
             this.application.getController('Blueprints').removeBlueprint( blueprint )
+			this.application.removeSelectedNode( Ext.getCmp( 'BlueprintsTree' ) )
         } else {
             Ext.Msg.alert( 'Error', 'The Blueprint "' + blueprint.getFullName() + '" is used in this Project and can not be deleted.' +
                 '<br>Remove all references to this Blueprint first!')
@@ -161,7 +162,7 @@ Ext.define('Spelled.controller.Blueprints', {
         this.closeOpenedTabs( blueprint )
 
         blueprint.destroy()
-        this.refreshStoresAndTreeStores()
+        this.refreshStores()
     },
 
     closeOpenedTabs: function( blueprint ) {

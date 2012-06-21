@@ -89,7 +89,7 @@ Ext.define('Spelled.controller.Scripts', {
                 success: function( script ) {
                     this.application.closeOpenedTabs( editorTab, script.get('name') )
                     script.destroy()
-					this.refreshStoresAndTreeStores()
+					this.refreshStores()
                 }
             }
         )
