@@ -90,19 +90,15 @@ define(
                             function( entity ) {
 
                                 var entityResult = _.pick( entity, 'blueprintId', 'name', 'components' )
-                                entityResult.components = []
-                                _.each(
+
+								entityResult.components = _.reduce(
                                     entity.getComponents,
-                                    function( component ) {
+                                    function( memo, component ) {
+                                        if( !component.changed || _.size( component.config ) === 0 ) return memo
 
-                                        if( component.changed === true ) {
-
-                                            var resultComponent = _.pick( component, 'blueprintId', 'name', 'config' )
-                                            entityResult.components.push( resultComponent )
-                                        }
-
-                                    }
-
+										return memo.concat( _.pick( component, 'blueprintId', 'name', 'config' ) )
+									},
+									[]
                                 )
 
                                 if( entityResult.components.length === 0 ) delete entityResult.components

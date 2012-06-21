@@ -35,13 +35,10 @@ define(
 
                 var result = _.pick( component, 'name', 'namespace', 'type')
 
-                var attributes = []
-                _.each(
+                var attributes = _.map(
                     component.getAttributes,
                     function( attribute ) {
-                        attributes.push(
-                            _.pick( attribute, 'name', 'type', 'default' )
-                        )
+                        return _.pick( attribute, 'name', 'type', 'default' )
                     }
                 )
 
