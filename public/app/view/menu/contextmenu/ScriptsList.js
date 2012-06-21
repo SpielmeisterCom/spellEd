@@ -8,6 +8,7 @@ Ext.define('Spelled.view.menu.contextmenu.ScriptsList', {
             action: 'create'
         },
         {
+			icon: 'images/icons/delete.png',
             text: 'Remove',
             action: 'remove'
         }
