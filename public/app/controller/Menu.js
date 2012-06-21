@@ -17,6 +17,11 @@ Ext.define('Spelled.controller.Menu', {
 
     init: function() {
         this.control({
+			'#RightPanel': {
+				remove: function( panel ) {
+					panel.setTitle( panel.defaultTitle )
+				}
+			},
             'spelledmenu [action="showCreateProject"]': {
                 click: this.showCreateProject
             },

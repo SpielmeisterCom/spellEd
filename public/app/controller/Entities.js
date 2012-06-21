@@ -140,5 +140,7 @@ Ext.define('Spelled.controller.Entities', {
 		)
 
 		contentPanel.add( view )
-     }
+
+		contentPanel.setTitle( contentPanel.defaultTitle + " - " + entity.get('name') )
+	}
 });
