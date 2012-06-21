@@ -69,8 +69,7 @@ Ext.define('Spelled.controller.Zones', {
             'zonetreelist': {
 				select         : me.dispatchTreeClick,
                 itemcontextmenu: me.dispatchTreeListContextMenu,
-                deleteclick    : me.dispatchTreeDeleteClick,
-				renderclick    : me.dispatchTreeRenderClick,
+				editclick    :   me.dispatchTreeListContextMenu,
                 itemmouseenter : me.dispatchMouseEnterTree,
                 itemmouseleave : me.application.hideActions
             },
@@ -113,15 +112,15 @@ Ext.define('Spelled.controller.Zones', {
 		return type
 	},
 
-	dispatchTreeListContextMenu: function( view, list, node, rowIndex, e ) {
-		var record = view.getRecord( node )
+	dispatchTreeListContextMenu: function( gridView, list, columnIndex, rowIndex, e ) {
+		var node = gridView.getRecord( gridView.findTargetByEvent(e) )
 
-		switch( this.getClickedTreeItemType( record ) ) {
+		switch( this.getClickedTreeItemType( node ) ) {
 			case this.TREE_ITEM_TYPE_ZONE:
-				this.showListContextMenu( view, list, node, rowIndex, e )
+				this.showListContextMenu( gridView, list, node, rowIndex, e )
 				break
 			case this.TREE_ITEM_TYPE_ENTITY:
-				this.application.getController( 'Entities').showListContextMenu( view, list, node, rowIndex, e )
+				this.application.getController( 'Entities').showListContextMenu( gridView, node, columnIndex, rowIndex, e )
 				break
 		}
 	},
@@ -132,37 +131,12 @@ Ext.define('Spelled.controller.Zones', {
 
 		switch( this.getClickedTreeItemType( record ) ) {
 			case this.TREE_ITEM_TYPE_ENTITY:
-				icons = Ext.DomQuery.select( '.delete-action-icon', node)
-				break
 			case this.TREE_ITEM_TYPE_ZONE:
-				icons = Ext.DomQuery.select( '.delete-action-icon, .render-action-icon', node)
+				icons = Ext.DomQuery.select( '.edit-action-icon', node)
 				break
 		}
 
 		this.application.showActionColumnIcons( icons )
-	},
-
-	dispatchTreeRenderClick: function( gridView, rowIndex, colIndex, column, e ) {
-		var node = gridView.getRecord( gridView.findTargetByEvent(e) )
-
-		switch( this.getClickedTreeItemType( node ) ) {
-			case this.TREE_ITEM_TYPE_ZONE:
-				this.renderZoneHelper( gridView, node )
-				break
-		}
-	},
-
-	dispatchTreeDeleteClick: function( gridView, rowIndex, colIndex, column, e ) {
-		var node = gridView.getRecord( gridView.findTargetByEvent(e) )
-
-		switch( this.getClickedTreeItemType( node ) ) {
-			case this.TREE_ITEM_TYPE_ENTITY:
-				this.application.getController('Entities').deleteEntityActionIconClick( gridView, rowIndex, colIndex, column, e )
-				break
-			case this.TREE_ITEM_TYPE_ZONE:
-				this.deleteZoneActionIconClick( gridView, rowIndex, colIndex, column, e )
-				break
-		}
 	},
 
 	dispatchTreeClick: function( treePanel, record ) {
@@ -256,18 +230,6 @@ Ext.define('Spelled.controller.Zones', {
 		)
 	},
 
-    deleteZoneActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
-        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
-
-        if( !node ) return
-
-        var zone = Ext.getStore('config.Zones').getById( node.get('id') )
-
-        if( !zone ) return
-
-        this.deleteZone( zone )
-    },
-
     showZonesEditor: function() {
 		this.application.hideMainPanels()
 		this.getRightPanel().show()
@@ -304,8 +266,7 @@ Ext.define('Spelled.controller.Zones', {
     },
 
     showListContextMenu: function( view, record, item, index, e, options ) {
-		var menuController = this.application.getController('Menu')
-		menuController.showZonesListContextMenu( e )
+		this.application.getController('Menu').showZonesListContextMenu( e )
     },
 
     deleteZone: function( zone ) {
@@ -343,14 +304,6 @@ Ext.define('Spelled.controller.Zones', {
 
     saveZone: function( button ) {
         console.log( "Should save the content ")
-    },
-
-    renderZoneHelper: function( treePanel, record ) {
-        var zone = this.getConfigZonesStore().getById( record.getId() )
-
-		if( zone ) {
-        	this.renderZone( zone )
-		}
     },
 
     renderZone: function( zone ) {

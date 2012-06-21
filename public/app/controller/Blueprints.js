@@ -51,7 +51,7 @@ Ext.define('Spelled.controller.Blueprints', {
                 activate: this.showBlueprintEditor
             },
             'blueprintstreelist': {
-                deleteclick:     this.deleteBlueprintActionIconClick,
+                editclick:       this.showBlueprintsContextMenu,
                 itemcontextmenu: this.showBlueprintsContextMenu,
                 itemdblclick:    this.openBlueprint,
                 itemmouseenter:  this.application.showActionsOnLeaf,
@@ -80,9 +80,7 @@ Ext.define('Spelled.controller.Blueprints', {
 
 	},
 
-    deleteBlueprintActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
-        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
-
+    deleteBlueprintAction: function( node ) {
         if( !node ) return
 
         switch( node.get('cls') ) {

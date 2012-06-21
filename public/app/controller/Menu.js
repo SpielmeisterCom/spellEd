@@ -20,6 +20,9 @@ Ext.define('Spelled.controller.Menu', {
 			'#RightPanel': {
 				remove: function( panel ) {
 					panel.setTitle( panel.defaultTitle )
+				},
+				hide: function( panel ) {
+					panel.removeAll()
 				}
 			},
             'spelledmenu [action="showCreateProject"]': {
@@ -181,16 +184,10 @@ Ext.define('Spelled.controller.Menu', {
 
     removeBlueprint: function( ) {
         var tree = Ext.getCmp( 'BlueprintsTree'),
-            blueprintsController = this.application.getController('Blueprints'),
             node = tree.getSelectionModel().getLastSelected()
 
         if( node && node.isLeaf() ) {
-
-            if( node.get('cls') === blueprintsController.BLUEPRINT_TYPE_COMPONENT ) {
-                this.application.getController('blueprints.Components').removeComponentBlueprint( node.get('id') )
-            } else {
-                this.application.getController('blueprints.Entities').removeEntityBlueprint( node.get('id') )
-            }
+			this.application.getController('Blueprints').deleteBlueprintAction( node )
         }
     },
 

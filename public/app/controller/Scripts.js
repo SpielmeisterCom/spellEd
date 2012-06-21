@@ -39,7 +39,7 @@ Ext.define('Spelled.controller.Scripts', {
             'scriptstreelist': {
                 itemdblclick:    this.openScript,
                 itemcontextmenu: this.showListContextMenu,
-                deleteclick:     this.deleteScriptActionIconClick,
+                editclick:       this.showListContextMenu,
                 itemmouseenter:  this.application.showActionsOnLeaf,
                 itemmouseleave:  this.application.hideActions
             },
@@ -77,14 +77,6 @@ Ext.define('Spelled.controller.Scripts', {
 	refreshAceEditorContent: function( panel ) {
 		panel.refreshContent()
 	},
-
-    deleteScriptActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
-        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
-
-        if( !node ) return
-
-        this.removeScript( node.get( 'id' ) )
-    },
 
     removeScript: function( scriptId ) {
         var editorTab = Ext.getCmp("ScriptEditor"),
