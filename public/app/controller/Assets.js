@@ -8,7 +8,8 @@ Ext.define('Spelled.controller.Assets', {
         'asset.Iframe',
         'asset.Upload',
         'asset.FolderPicker',
-		'asset.create.Texture'
+		'asset.create.Texture',
+		'asset.inspector.Config'
     ],
 
     stores: [
@@ -27,7 +28,11 @@ Ext.define('Spelled.controller.Assets', {
         {
             ref : 'MainPanel',
             selector: '#MainPanel'
-        }
+        },
+		{
+			ref : 'RightPanel',
+			selector: '#RightPanel'
+		}
     ],
 
     init: function() {
@@ -39,9 +44,10 @@ Ext.define('Spelled.controller.Assets', {
                 activate: this.showAssets
             },
             'assetstreelist': {
-                itemdblclick: this.openAsset,
+				select:          this.showConfigHelper,
+                itemdblclick:    this.openAsset,
                 itemcontextmenu: this.showListContextMenu,
-                deleteclick:     this.deleteAssetActionIconClick,
+				editclick:	     this.showListContextMenu,
                 itemmouseenter:  this.application.showActionsOnLeaf,
                 itemmouseleave:  this.application.hideActions
             },
@@ -57,21 +63,50 @@ Ext.define('Spelled.controller.Assets', {
         })
     },
 
-	showAdditionalConfiguration: function( combo, records ) {
+	showConfigHelper: function( tree, node ) {
+		var inspectorPanel = this.getRightPanel(),
+			Asset          = this.getModel('Asset')
 
+		inspectorPanel.removeAll()
+
+		if( !node.isLeaf() ) return
+
+		Asset.load(
+			node.getId(),
+			{
+				scope: this,
+				success: function( asset ) {
+					this.showConfig( asset )
+				}
+			}
+		)
 	},
 
-    deleteAssetActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
-        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
+	showConfig: function( asset ) {
+		var inspectorPanel = this.getRightPanel(),
+			View           = this.getAssetInspectorConfigView()
 
-        if( !node ) return
+		var view = new View()
+		view.loadRecord( asset )
 
-        this.removeAsset( node.get( 'id' ) )
-    },
+		inspectorPanel.setTitle( 'Asset information of "' + asset.get('name') +'"' )
+		inspectorPanel.add( view )
+	},
+
+	showAdditionalConfiguration: function( combo, records ) {
+		var form        = combo.up('form'),
+			assetsCombo = form.down('combobox[name="assetId"]')
+
+		if( combo.getValue() === "animatedAppearance" ) {
+			assetsCombo.show()
+		} else {
+			assetsCombo.clearValue()
+			assetsCombo.hide()
+		}
+	},
 
     showListContextMenu: function( view, record, item, index, e, options ) {
-        var menuController = this.application.getController('Menu')
-        menuController.showAssetsListContextMenu( e )
+        this.application.getController('Menu').showAssetsListContextMenu( e )
     },
 
     createAsset: function( button ) {
@@ -126,7 +161,7 @@ Ext.define('Spelled.controller.Assets', {
                 scope: this,
                 success: function( asset ) {
                     asset.destroy()
-                    this.refreshStoresAndTreeStores()
+                    this.refreshStores()
 				}
             }
         )
@@ -185,6 +220,7 @@ Ext.define('Spelled.controller.Assets', {
 
     showAssets : function( ) {
 		this.application.hideMainPanels()
+		this.getRightPanel().show()
 
         this.loadTrees()
 

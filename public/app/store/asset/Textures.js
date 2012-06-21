@@ -5,7 +5,7 @@ Ext.define('Spelled.store.asset.Textures', {
 
     filters: [
         function( item ) {
-            return item.get('type') === 'texture'
+            return item.get('type') === 'appearance'
         }
     ]
 });

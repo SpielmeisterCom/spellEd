@@ -17,6 +17,17 @@ Ext.define('Spelled.model.Asset', {
 		'name'
     ],
 
+	constructor: function() {
+		this.callParent( arguments )
+
+		var object    = arguments[2],
+			namespace = object.namespace,
+			name      = object.name,
+			assetId   = object.type + ":" + ( ( namespace.length > 0 ) ? namespace +"."+ name : name )
+
+		this.set( 'assetId', assetId)
+	},
+
     getFilePath: function( projectName ) {
         return projectName + "/library/assets/" + this.get('file')
     }

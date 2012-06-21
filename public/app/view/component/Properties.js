@@ -7,20 +7,22 @@ Ext.define('Spelled.view.component.Properties', {
 
 	margin: '0 0 5 0',
 	collapsible: true,
-	collapsed: false,
+	titleCollapse: true,
 
 	hideHeaders: true,
 
+	tools: [
+		{
+			type:'help',
+			tooltip: 'Get Help',
+			handler: function( event, toolEl, panel ){
+				Ext.Msg.alert( 'Status', 'Not Implemented');
+			}
+		}
+	],
+
     customEditors: {
         //TODO: when a assigned asset gets removed, the field will disappear
-        textureId: Ext.create(
-            'Ext.form.ComboBox', {
-                editable: false,
-                displayField   : 'name',
-                emptyText      :'-- Select a texture --',
-				store          : 'asset.Textures',
-                valueField     : 'assetId'
-            }
-        )
+        assetId: 'assetidproperty'
     }
 });

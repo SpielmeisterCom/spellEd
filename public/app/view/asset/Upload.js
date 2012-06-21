@@ -25,6 +25,7 @@ Ext.define('Spelled.view.asset.Upload', {
                     xtype: "combo",
                     name: 'type',
                     editable: false,
+					emptyText: '-- Select Type --',
                     store: 'asset.Types',
                     queryMode: 'local',
                     fieldLabel: "Type",
@@ -45,12 +46,45 @@ Ext.define('Spelled.view.asset.Upload', {
                 },
                 {
                     xtype: 'filefield',
+					allowBlank: true,
                     name: 'asset',
                     fieldLabel: 'Asset',
                     labelWidth: 50,
                     msgTarget: 'side',
-                    buttonText: 'Select a File...'
-                },{
+                    buttonText: 'Select a File...',
+					listeners: {
+						'change': function( cmp, value) {
+							if( value )
+								this.up('form').down('combobox[name="assetId"]').reset()
+						}
+					},
+					validator: function( value ) {
+						var file = this.up('form').down('combobox[name="assetId"]').getValue()
+						if( ( !file && !value ) )
+							return "You need to select a new File"
+						else
+							return true
+					}
+                },
+				{
+					xtype: "assetidproperty",
+					hidden: true,
+					allowBlank: true,
+					fieldLabel: "From existing Asset",
+					listeners: {
+						'change': function( cmp, value) {
+							if( value )
+								this.up('form').down('filefield').reset()
+						}
+					},
+					validator: function( value ) {
+						var file = this.up('form').down('filefield').getValue()
+						if( ( !file && !value ) )
+							return "You need to select a new File or a existing Asset"
+						else
+							return true
+					}
+				},{
 					xtype: 'menuseparator'
 				}
             ],

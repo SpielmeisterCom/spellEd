@@ -5,9 +5,13 @@ Ext.define('Spelled.store.asset.Types', {
 
     data : [
         {
-            "type":"texture",
-            "name":"Texture"
+            "type":"appearance",
+            "name":"Sprite"
         },
+		{
+			"type":"animatedAppearance",
+			"name":"Sprite Animation"
+		},
         {
             "type":"sounds",
             "name":"Sounds"
