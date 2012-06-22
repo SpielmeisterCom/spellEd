@@ -12,8 +12,7 @@
 		{
 			"blueprintId" : "spell.component.core.graphics2d.animatedAppearance",
 			"config" : {
-				"assetId" : "animatedAppearance:spellReferenceProject.threeRings",
-				"animationId" : "twirling"
+				"assetId" : "animation:spellReferenceProject.threeRings.twirling"
 			}
 		},
 		{

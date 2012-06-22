@@ -114,26 +114,28 @@ define(
 							context.drawTexture( texture, -0.5, -0.5, 1, 1 )
 
 						} else {
-							var animation   = asset.animations[ appearance.animationId ],
-								frameWidth  = asset.frameWidth,
-								frameHeight = asset.frameHeight
+							// asset.type === 'animation'
 
-							vec2.multiply( transform.scale, [ frameWidth, frameHeight ], tmp )
+							var assetFrameWidth  = asset.frameWidth,
+								assetFrameHeight = asset.frameHeight,
+								assetNumFrames   = asset.numFrames
+
+							vec2.multiply( transform.scale, [ assetFrameWidth, assetFrameHeight ], tmp )
 							context.scale( tmp )
 
 							appearance.animationOffset = createAnimationOffset(
 								deltaTimeInMs,
 								appearance.animationOffset,
 								appearance.animationSpeedFactor,
-								animation.numFrames,
-								animation.frameDuration,
-								animation.loop
+								assetNumFrames,
+								asset.frameDuration,
+								asset.looped
 							)
 
-							var frameId = Math.floor( appearance.animationOffset * ( animation.numFrames - 1 ) ),
-								sourceOffset = animation.offsets[ frameId ]
+							var frameId = Math.floor( appearance.animationOffset * ( assetNumFrames - 1 ) ),
+								frameOffset = asset.frameOffsets[ frameId ]
 
-							context.drawSubTexture( texture, sourceOffset[ 0 ], sourceOffset[ 1 ], frameWidth, frameHeight, -0.5, -0.5, 1, 1 )
+							context.drawSubTexture( texture, frameOffset[ 0 ], frameOffset[ 1 ], assetFrameWidth, assetFrameHeight, -0.5, -0.5, 1, 1 )
 						}
 					}
 					context.restore()
