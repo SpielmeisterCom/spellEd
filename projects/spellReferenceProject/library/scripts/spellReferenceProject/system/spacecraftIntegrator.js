@@ -78,9 +78,9 @@ define(
 		 * public
 		 */
 
-		var SpacecraftIntegrator = function( globals, actors, transforms, spacecrafts, inertialObjects ) {
-			this.updateSpacecrafts     = createEntityEach( spacecrafts, [ actors, inertialObjects, transforms ], applyActionsToSpacecraftIter )
-			this.updateInertialObjects = createEntityEach( inertialObjects, transforms, updateInertialObjectIter )
+		var SpacecraftIntegrator = function( globals ) {
+			this.updateSpacecrafts     = createEntityEach( this.spacecrafts, [ this.actors, this.inertialObjects, this.transforms ], applyActionsToSpacecraftIter )
+			this.updateInertialObjects = createEntityEach( this.inertialObjects, this.transforms, updateInertialObjectIter )
 		}
 
 		SpacecraftIntegrator.prototype = {

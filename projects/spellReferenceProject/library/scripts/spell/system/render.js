@@ -209,15 +209,10 @@ define(
 		 * public
 		 */
 
-		var Renderer = function( globals, transforms, appearances, animatedAppearances, visualObjects, cameras ) {
-			this.assets              = globals.assets
-			this.resources           = globals.resources
-			this.context             = globals.renderingContext
-			this.transforms          = transforms
-			this.appearances         = appearances
-			this.animatedAppearances = animatedAppearances
-			this.visualObjects       = visualObjects
-			this.cameras             = cameras
+		var Renderer = function( globals ) {
+			this.assets    = globals.assets
+			this.resources = globals.resources
+			this.context   = globals.renderingContext
 
 			var eventManager = globals.eventManager,
 				context = this.context

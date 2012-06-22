@@ -143,11 +143,7 @@ define(
 		 * public
 		 */
 
-		var CollisionDetector = function( globals, transforms, inertialObjects, collisionSpheres ) {
-			this.transforms       = transforms
-			this.inertialObjects  = inertialObjects
-			this.collisionSpheres = collisionSpheres
-		}
+		var CollisionDetector = function( globals ) {}
 
 		CollisionDetector.prototype = {
 			cleanUp : cleanUp,

@@ -104,10 +104,7 @@ define(
 		 * public
 		 */
 
-		var AIControl = function( globals, actors, transforms ) {
-			this.actors     = actors
-			this.transforms = transforms
-		}
+		var AIControl = function( globals ) {}
 
 		AIControl.prototype = {
 			cleanUp : cleanUp,

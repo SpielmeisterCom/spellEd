@@ -56,8 +56,8 @@ define(
 		 * public
 		 */
 
-		var EndlessPlayingField = function( globals, transforms ) {
-			this.updatePosition = createEntityEach( transforms, [], updatePositionIter )
+		var EndlessPlayingField = function( globals ) {
+			this.updatePosition = createEntityEach( this.transforms, [], updatePositionIter )
 		}
 
 		EndlessPlayingField.prototype = {
