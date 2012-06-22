@@ -48,18 +48,18 @@ var startEditor = function() {
         appFolder: 'app',
 
         controllers: [
-            'Zones',
+            'Scenes',
             'Entities',
             'Menu',
             'Projects',
             'Components',
             'Assets',
-            'Blueprints',
+            'Templates',
             'Scripts',
 			'Systems',
-            'blueprints.Components',
-            'blueprints.Entities',
-            'blueprints.Systems'
+            'templates.Components',
+            'templates.Entities',
+            'templates.Systems'
         ],
 
 		stores: [
@@ -70,8 +70,8 @@ var startEditor = function() {
 			'script.Scripts',
 			'script.Tree',
 			'script.FoldersTree',
-			'BlueprintsTree',
-			'blueprint.FoldersTree'
+			'TemplatesTree',
+			'template.FoldersTree'
 		],
 
 		refs: [
@@ -86,7 +86,7 @@ var startEditor = function() {
 		],
 
         project: undefined,
-        zone: undefined,
+        scene: undefined,
 
 		removeSelectedNode: function( treePanel ) {
 			treePanel.getSelectionModel().getLastSelected().remove()
@@ -190,12 +190,12 @@ var startEditor = function() {
             this.project = project
         },
 
-        getActiveZone: function() {
-            return this.zone
+        getActiveScene: function() {
+            return this.scene
         },
 
-        setActiveZone: function( zone ) {
-            this.zone = zone
+        setActiveScene: function( scene ) {
+            this.scene = scene
         },
 
 		setExtraParamOnProxies: function( name, value ) {

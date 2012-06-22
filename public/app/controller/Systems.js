@@ -7,11 +7,11 @@ Ext.define('Spelled.controller.Systems', {
 	],
 
 	models: [
-		'blueprint.System'
+		'template.System'
 	],
 
 	stores: [
-		'blueprint.Systems',
+		'template.Systems',
 		'system.Types'
 	],
 
@@ -26,12 +26,12 @@ Ext.define('Spelled.controller.Systems', {
 		this.control({
 			'systemlist': {
 				itemdblclick  : this.showSystemItem,
-				editclick   :   this.showZoneSystemsListContextMenu,
+				editclick   :   this.showSceneSystemsListContextMenu,
 				itemmouseenter: this.application.showActionsOnLeaf,
 				itemmouseleave: this.application.hideActions
 			},
 			'systemlist > treeview': {
-				drop: this.updateZoneSystems
+				drop: this.updateSceneSystems
 			},
 		    'systemlist [action="showAddSystem"]': {
 				click: this.showAddSystem
@@ -42,23 +42,23 @@ Ext.define('Spelled.controller.Systems', {
 		})
 	},
 
-	showZoneSystemsListContextMenu: function( view, record, item, index, e, options ) {
-		this.application.getController('Menu').showZoneSystemsListContextMenu( e )
+	showSceneSystemsListContextMenu: function( view, record, item, index, e, options ) {
+		this.application.getController('Menu').showSceneSystemsListContextMenu( e )
 	},
 
-	removeZoneSystem: function( systemId ) {
-		var zone    = this.application.getActiveZone()
+	removeSceneSystem: function( systemId ) {
+		var scene    = this.application.getActiveScene()
 
 		var result = {}
 		Ext.Object.each(
-			zone.get('systems'),
+			scene.get('systems'),
 			function( key, values ) {
 				result[ key ] = Ext.Array.remove( values, systemId )
 			}
 		)
 
-		zone.set( 'systems', result )
-		this.refreshZoneSystemList( zone )
+		scene.set( 'systems', result )
+		this.refreshSceneSystemList( scene )
 	},
 
 	addSystems: function( button ) {
@@ -66,8 +66,8 @@ Ext.define('Spelled.controller.Systems', {
 			values  = window.down('form').getForm().getValues(),
 			tree    = window.down('treepanel'),
 			records = tree.getView().getChecked(),
-			zone    = this.application.getActiveZone(),
-			systems = zone.get('systems')
+			scene    = this.application.getActiveScene(),
+			systems = scene.get('systems')
 
 		Ext.each(
 			records,
@@ -76,9 +76,9 @@ Ext.define('Spelled.controller.Systems', {
 			}
 		)
 
-		zone.set( 'systems', systems )
+		scene.set( 'systems', systems )
 
-		this.refreshZoneSystemList( zone )
+		this.refreshSceneSystemList( scene )
 
 		window.close()
 	},
@@ -87,12 +87,12 @@ Ext.define('Spelled.controller.Systems', {
 		var View = this.getSystemAddView(),
 			view = new View(),
 			availableSystemsView  = view.down( 'treepanel' ),
-			blueprintSystemsStore = Ext.getStore( 'blueprint.Systems' ),
-			zone    			  = this.application.getActiveZone()
+			templateSystemsStore = Ext.getStore( 'template.Systems' ),
+			scene    			  = this.application.getActiveScene()
 
 		var assignedSystems = []
 		Ext.Object.each(
-			zone.get('systems'),
+			scene.get('systems'),
 			function( key, value ) {
 				assignedSystems = Ext.Array.merge( assignedSystems, value )
 			}
@@ -104,13 +104,13 @@ Ext.define('Spelled.controller.Systems', {
 			}
 		)
 
-		blueprintSystemsStore.each(
-			function( blueprint ) {
-				if( !Ext.Array.contains( assignedSystems, blueprint.getFullName() ) ) {
+		templateSystemsStore.each(
+			function( template ) {
+				if( !Ext.Array.contains( assignedSystems, template.getFullName() ) ) {
 					rootNode.appendChild(
 						rootNode.createNode ( {
-							text      : blueprint.getFullName(),
-							id        : blueprint.getFullName(),
+							text      : template.getFullName(),
+							id        : template.getFullName(),
 							expanded  : true,
 							leaf      : true,
 							checked   : false
@@ -123,14 +123,14 @@ Ext.define('Spelled.controller.Systems', {
 		view.show()
 	},
 
-	updateZoneSystems: function( node, data, model ) {
+	updateSceneSystems: function( node, data, model ) {
 		var getRootNode = function( node ) {
 			if( node.isRoot() ) return node
 			else return getRootNode( node.parentNode )
 		}
 
 		var parent = getRootNode( model ) ,
-			zone   = this.application.getActiveZone()
+			scene   = this.application.getActiveScene()
 
 		var systems = {}
 		parent.eachChild(
@@ -144,17 +144,17 @@ Ext.define('Spelled.controller.Systems', {
 			}
 		)
 
-		zone.set('systems', systems)
+		scene.set('systems', systems)
 	},
 
 	showSystemItem: function( treePanel, record ) {
 		if( !record.data.leaf ) return
 
-		this.application.getController('Blueprints').openBlueprint( treePanel, record )
-		Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Blueprints') )
+		this.application.getController('Templates').openTemplate( treePanel, record )
+		Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Templates') )
 	},
 
-	refreshZoneSystemList: function( zone ) {
+	refreshSceneSystemList: function( scene ) {
 		var contentPanel = this.getRightPanel(),
 			View     = this.getSystemListView(),
 			tree     = new View(),
@@ -164,10 +164,10 @@ Ext.define('Spelled.controller.Systems', {
 		contentPanel.add( tree )
 		rootNode.removeAll()
 
-		var systems = zone.get('systems')
+		var systems = scene.get('systems')
 
 		Ext.Object.each(
-			zone.get('systems'),
+			scene.get('systems'),
 			function( key, value ) {
 				var node = rootNode.createNode( {
 					text      : key,
@@ -180,15 +180,15 @@ Ext.define('Spelled.controller.Systems', {
 					value,
 					function( systemId ) {
 
-						var systemBlueprint =  Ext.getStore('blueprint.Systems').getByBlueprintId( systemId )
+						var systemTemplate =  Ext.getStore('template.Systems').getByTemplateId( systemId )
 
-						if( systemBlueprint ) {
+						if( systemTemplate ) {
 							node.appendChild(
 								node.createNode( {
-										text         : systemBlueprint.getFullName(),
-										cls		     : me.application.getController('Blueprints').BLUEPRINT_TYPE_SYSTEM,
+										text         : systemTemplate.getFullName(),
+										cls		     : me.application.getController('Templates').BLUEPRINT_TYPE_SYSTEM,
 										leaf         : true,
-										id           : systemBlueprint.getId()
+										id           : systemTemplate.getId()
 									}
 								)
 							)

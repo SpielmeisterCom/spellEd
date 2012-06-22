@@ -27,16 +27,16 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                     minSize: 200,
                     items: [
                         {
-                            id: "Zones",
-                            xtype: "zonesnavigator"
+                            id: "Scenes",
+                            xtype: "scenesnavigator"
                         },
                         {
                             id: "Assets",
                             xtype: "assetsnavigator"
                         },
                         {
-                            id: "Blueprints",
-                            xtype: "blueprintsnavigator"
+                            id: "Templates",
+                            xtype: "templatesnavigator"
                         },
                         {
                             id: "Scripts",
@@ -51,16 +51,16 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                     layout: 'fit',
                     items:[
                         {
-                            id: "ZoneEditor",
-                            xtype: "zoneeditor"
+                            id: "SceneEditor",
+                            xtype: "sceneeditor"
                         },
                         {
                             id: "AssetEditor",
                             xtype: "asseteditor"
                         },
                         {
-                            id: "BlueprintEditor",
-                            xtype: "blueprinteditor"
+                            id: "TemplateEditor",
+                            xtype: "templateeditor"
                         },
                         {
                             id: "ScriptEditor",

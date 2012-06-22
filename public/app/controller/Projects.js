@@ -86,7 +86,7 @@ Ext.define('Spelled.controller.Projects', {
 		var app = this.application
 		app.setExtraParamOnProxies( 'projectName', projectName )
 
-		app.getController( 'Blueprints' ).loadBlueprintStores( projectName )
+		app.getController( 'Templates' ).loadTemplateStores( projectName )
 		app.getController( 'Assets' ).refreshStores()
 		app.getController( 'Scripts' ).refreshStores()
 	},
@@ -101,9 +101,9 @@ Ext.define('Spelled.controller.Projects', {
             scope: this,
             success: function( project ) {
 				project.checkForComponentChanges()
-				this.getZonesList( project )
+				this.getScenesList( project )
 				this.application.setActiveProject( project )
-				Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Zones') )
+				Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Scenes') )
             }
         })
 
@@ -114,11 +114,11 @@ Ext.define('Spelled.controller.Projects', {
 
 		app.closeAllTabs( Ext.getCmp('ScriptEditor') )
 		app.closeAllTabs( Ext.getCmp('AssetEditor') )
-		app.closeAllTabs( Ext.getCmp('ZoneEditor') )
-		app.closeAllTabs( Ext.getCmp('BlueprintEditor') )
+		app.closeAllTabs( Ext.getCmp('SceneEditor') )
+		app.closeAllTabs( Ext.getCmp('TemplateEditor') )
 	},
 
-    getZonesList: function( project ) {
-        this.application.getController('Zones').showZonesList( project.getZones() )
+    getScenesList: function( project ) {
+        this.application.getController('Scenes').showScenesList( project.getScenes() )
     }
 });

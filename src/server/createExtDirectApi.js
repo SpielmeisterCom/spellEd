@@ -4,9 +4,9 @@ define(
         'path',
         'fs',
         'server/extDirectApi/createUtil',
-        'server/extDirectApi/blueprints/createComponentApi',
-        'server/extDirectApi/blueprints/createEntityApi',
-        'server/extDirectApi/blueprints/createSystemApi',
+        'server/extDirectApi/templates/createComponentApi',
+        'server/extDirectApi/templates/createEntityApi',
+        'server/extDirectApi/templates/createSystemApi',
         'server/extDirectApi/createAssetsApi',
         'server/extDirectApi/createScriptsApi',
         'server/extDirectApi/ProjectApi',
@@ -30,12 +30,12 @@ define(
 
         return function( projectsRoot ) {
 
-            var projectBlueprintLibraryPath = "/library/blueprints/"
+            var projectTemplateLibraryPath = "/library/templates/"
             var util = createUtil( projectsRoot )
 
 
-            var listBlueprints = function( req, res, payload, next ) {
-                var requestedNode = ( payload[ 0 ] !== 'root' ) ? payload[ 0 ] :  projectsRoot + payload[1] + projectBlueprintLibraryPath
+            var listTemplates = function( req, res, payload, next ) {
+                var requestedNode = ( payload[ 0 ] !== 'root' ) ? payload[ 0 ] :  projectsRoot + payload[1] + projectTemplateLibraryPath
 
                 var tmpPath = util.getPath( requestedNode )
 
@@ -44,9 +44,9 @@ define(
                 return util.listing( tmpPath, true, req, res, payload, next )
             }
 
-            var getAllBlueprints = function( projectName, type ) {
-                var blueprintsPath =  projectsRoot + projectName + projectBlueprintLibraryPath,
-                    tmpPath = util.getPath( blueprintsPath )
+            var getAllTemplates = function( projectName, type ) {
+                var templatesPath =  projectsRoot + projectName + projectTemplateLibraryPath,
+                    tmpPath = util.getPath( templatesPath )
 
 
                 if ( !tmpPath ) return {}
@@ -58,29 +58,29 @@ define(
 
                 return _.filter(
                     util.getDirFilesAsObjects( tmpPath ),
-                    function( blueprint ) {
-                        return ( blueprint.type === type )
+                    function( template ) {
+                        return ( template.type === type )
                     }
                 )
             }
 
-            var getAllEntityBlueprints = function( req, res, payload, next ) {
+            var getAllentityTemplates = function( req, res, payload, next ) {
                 var projectName =  payload[0]
-                return getAllBlueprints( projectName, 'entityBlueprint' )
+                return getAllTemplates( projectName, 'entityTemplate' )
             }
 
-            var getAllComponentBlueprints = function( req, res, payload, next ) {
+            var getAllcomponentTemplates = function( req, res, payload, next ) {
                 var projectName = payload[0]
-                return getAllBlueprints( projectName, 'componentBlueprint' )
+                return getAllTemplates( projectName, 'componentTemplate' )
             }
 
-			var getAllSystemsBlueprints = function( req, res, payload, next ) {
+			var getAllSystemsTemplates = function( req, res, payload, next ) {
 				var projectName = payload[0]
-				return getAllBlueprints( projectName, 'systemBlueprint' )
+				return getAllTemplates( projectName, 'systemTemplate' )
 			}
 
-            var createBlueprint = function( req, res, payload, next ) {
-                var api = ( payload.type === "componentBlueprint" ) ? createComponentApi( projectsRoot ) :  createEntityApi( projectsRoot )
+            var createTemplate = function( req, res, payload, next ) {
+                var api = ( payload.type === "componentTemplate" ) ? createComponentApi( projectsRoot ) :  createEntityApi( projectsRoot )
 
                 var apiFunction = _.find(
                     api,
@@ -95,38 +95,38 @@ define(
             }
 
             return {
-                ProjectActions            : createProjectApi( projectsRoot ) ,
-                ComponentBlueprintActions : createComponentApi( projectsRoot ),
-                EntityBlueprintActions    : createEntityApi( projectsRoot ),
-                AssetsActions             : createAssetsApi( projectsRoot ),
-                SystemBlueprintActions    : createSystemApi( projectsRoot ),
-                ScriptsActions            : createScriptsApi( projectsRoot ),
-                BlueprintsActions : [
+                ProjectActions           : createProjectApi( projectsRoot ) ,
+                ComponentTemplateActions : createComponentApi( projectsRoot ),
+                EntityTemplateActions    : createEntityApi( projectsRoot ),
+                AssetsActions            : createAssetsApi( projectsRoot ),
+                SystemTemplateActions    : createSystemApi( projectsRoot ),
+                ScriptsActions           : createScriptsApi( projectsRoot ),
+                TemplatesActions         : [
                     {
-                        name: "createBlueprint",
+                        name: "createTemplate",
                         len: 0,
-                        func: createBlueprint,
+                        func: createTemplate,
                         form_handler: true
                     },
                     {
                         name: "getTree",
                         len: 2,
-                        func: listBlueprints
+                        func: listTemplates
                     },
                     {
-                        name: "getAllEntitiesBlueprints",
+                        name: "getAllEntitiesTemplates",
                         len: 1,
-                        func: getAllEntityBlueprints
+                        func: getAllentityTemplates
                     },
                     {
-                        name: "getAllComponentsBlueprints",
+                        name: "getAllComponentsTemplates",
                         len: 1,
-                        func: getAllComponentBlueprints
+                        func: getAllcomponentTemplates
                     },
 					{
-						name: "getAllSystemsBlueprints",
+						name: "getAllSystemsTemplates",
 						len: 1,
-						func: getAllSystemsBlueprints
+						func: getAllSystemsTemplates
 					}
                 ]
             }

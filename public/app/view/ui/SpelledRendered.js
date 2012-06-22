@@ -1,20 +1,20 @@
 Ext.define('Spelled.view.ui.SpelledRendered', {
     extend: 'Ext.panel.Panel',
-    alias : 'widget.renderedzone',
+    alias : 'widget.renderedscene',
     closable: true,
 
 	tbar: [
 		{
 			text: "Reload",
-			action: "reloadZone",
+			action: "reloadScene",
 			tooltip: {
-				text:'Reload and Render Zone',
+				text:'Reload and Render Scene',
 				title:'Reload'
 			}
 		}
 //		,{
 //			text: "Save",
-//			action: "saveZone",
+//			action: "saveScene",
 //			tooltip: {
 //				text:'Saves settings as default configuration',
 //				title:'Save'

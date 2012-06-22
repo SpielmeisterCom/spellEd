@@ -72,42 +72,48 @@ define(
                 return util.readFile( getConfigFilePath(tmpPath) )
             }
 
-            //TODO: don't write blueprintcomponentvalues, maybe the spelljs ext should do this?
+            //TODO: don't write templatecomponentvalues, maybe the spelljs ext should do this?
             var updateProject = function( req, res, payload, next ) {
                 var project = payload[ 0 ]
 
-                var result = _.pick( project, 'name', 'startZone', 'zones')
-                result.zones = []
+                var result = _.pick( project, 'name', 'startScene', 'scenes')
+                result.scenes = []
 
                 _.each(
-                    project.getZones,
-                    function( zone ) {
-                        var zoneResult = _.pick( zone, 'name', 'entities', 'scriptId', 'systems' )
-                        zoneResult.entities = []
+                    project.getScenes,
+                    function( scene ) {
+                        var sceneResult = _.pick( scene, 'name', 'entities', 'scriptId', 'systems' )
+                        sceneResult.entities = []
 
                         _.each(
-                            zone.getEntities,
+                            scene.getEntities,
                             function( entity ) {
 
-                                var entityResult = _.pick( entity, 'blueprintId', 'name', 'components' )
+                                var entityResult = _.pick( entity, 'name', 'components' )
+
+								if( _.has( entity, 'templateId' ) &&
+									!!entity.templateId ) {
+
+									entityResult.templateId = entity.templateId
+								}
 
 								entityResult.components = _.reduce(
                                     entity.getComponents,
                                     function( memo, component ) {
                                         if( !component.changed || _.size( component.config ) === 0 ) return memo
 
-										return memo.concat( _.pick( component, 'blueprintId', 'name', 'config' ) )
+										return memo.concat( _.pick( component, 'templateId', 'name', 'config' ) )
 									},
 									[]
                                 )
 
                                 if( entityResult.components.length === 0 ) delete entityResult.components
 
-                                zoneResult.entities.push( entityResult )
+                                sceneResult.entities.push( entityResult )
                             }
                         )
 
-                        result.zones.push( zoneResult )
+                        result.scenes.push( sceneResult )
                     }
                 )
                 var projectFilePath = util.getPath( project.name )

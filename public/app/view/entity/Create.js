@@ -2,7 +2,7 @@ Ext.define('Spelled.view.entity.Create' ,{
     extend: 'Ext.Window',
     alias: 'widget.createentity',
 
-    title : 'Add a new Entity to the Zone',
+    title : 'Add a new Entity to the Scene',
     modal : true,
 
     items: [
@@ -19,7 +19,7 @@ Ext.define('Spelled.view.entity.Create' ,{
                 },
 				{
 					xtype: 'combobox',
-					store: 'config.Zones',
+					store: 'config.Scenes',
 
 					valueField: 'name',
 					displayField:'name',
@@ -27,14 +27,14 @@ Ext.define('Spelled.view.entity.Create' ,{
 					forceSelection: true,
 					editable: false,
 
-					name: 'zoneId',
-					fieldLabel: 'Select a Zone',
+					name: 'sceneId',
+					fieldLabel: 'Select a Scene',
 					anchor: '100%',
 					allowBlank:false
 				},
                 {
                     xtype: 'combobox',
-                    store: 'blueprint.Entities',
+                    store: 'template.Entities',
 
                     valueField: 'id',
                     displayField:'name',
@@ -42,8 +42,8 @@ Ext.define('Spelled.view.entity.Create' ,{
                     forceSelection: true,
 
                     typeAhead: true,
-                    name: 'blueprintId',
-                    fieldLabel: 'Select a Blueprint',
+                    name: 'templateId',
+                    fieldLabel: 'Select a Template',
                     anchor: '100%',
                     allowBlank:false
                 }

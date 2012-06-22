@@ -12,15 +12,15 @@ Ext.define('Spelled.model.Project', {
 
     fields: [
         'name',
-        'startZone'
+        'startScene'
     ],
 
     idProperty: 'name',
 
     hasMany: {
-        model: 'Spelled.model.config.Zone',
-        name : 'getZones',
-        associationKey: 'zones'
+        model: 'Spelled.model.config.Scene',
+        name : 'getScenes',
+        associationKey: 'scenes'
     },
 
     getConfigName: function() {
@@ -28,9 +28,9 @@ Ext.define('Spelled.model.Project', {
     },
 
 	checkForComponentChanges: function() {
-		this.getZones().each(
-			function( zone ) {
-				zone.getEntities().each(
+		this.getScenes().each(
+			function( scene ) {
+				scene.getEntities().each(
 					function( entity ) {
 						entity.getComponents().each(
 							function( component ) {

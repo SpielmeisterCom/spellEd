@@ -17,7 +17,7 @@ Ext.define('Spelled.view.system.List' ,{
             text: "Add",
             action: "showAddSystem",
             tooltip: {
-                text:'Adds a new System to the Zone',
+                text:'Adds a new System to the Scene',
                 title:'Add'
             }
         }

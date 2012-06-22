@@ -2,7 +2,7 @@ Ext.define('Spelled.view.system.Add' ,{
     extend: 'Ext.window.Window',
     alias: 'widget.addsystem',
 
-    title: "Add a System to the Zone",
+    title: "Add a System to the Scene",
     modal: true,
     closable: true,
 

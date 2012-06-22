@@ -2,7 +2,7 @@ Ext.define('Spelled.model.config.Component', {
     extend: 'Ext.data.Model',
 
     fields: [
-        'blueprintId',
+        'templateId',
         { name: 'config', type: 'object', defaultValue: {} },
         { name: 'changed', type: 'boolean', defaultValue: false }
     ],
@@ -36,9 +36,9 @@ Ext.define('Spelled.model.config.Component', {
 		if( !Ext.isEmpty( this.get('config') ) ) this.setChanged()
 	},
 
-    getConfigMergedWithBlueprintConfig: function( ) {
-        var blueprintComponent = Ext.getStore( 'blueprint.Components').getByBlueprintId( this.get('blueprintId')),
-			blueprintConfig    = blueprintComponent.getConfig()
+    getConfigMergedWithTemplateConfig: function( ) {
+        var templateComponent = Ext.getStore( 'template.Components').getByTemplateId( this.get('templateId')),
+			templateConfig    = templateComponent.getConfig()
 
         //TODO: the config from entities get overwritten if we do not mark them
         this.markChanges()
@@ -46,12 +46,12 @@ Ext.define('Spelled.model.config.Component', {
 		var tmp = {}
 		//Only merge with enityconfig, if it is really linked to a entity
 		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) ) {
-			var blueprintEntity          = Ext.getStore( 'blueprint.Entities').getByBlueprintId( this.getEntity().get('blueprintId' )),
-				blueprintEntityComponent = blueprintEntity.getComponents().findRecord( 'blueprintId', this.get('blueprintId') )
+			var templateEntity          = Ext.getStore( 'template.Entities').getByTemplateId( this.getEntity().get('templateId' )),
+				templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', this.get('templateId') )
 
-			tmp = Ext.Object.merge( blueprintConfig, blueprintEntityComponent.get('config'), this.get('config') )
+			tmp = Ext.Object.merge( templateConfig, templateEntityComponent.get('config'), this.get('config') )
 		} else {
-			tmp = Ext.Object.merge( blueprintConfig, this.get('config') )
+			tmp = Ext.Object.merge( templateConfig, this.get('config') )
 		}
 
         //TODO: Warum ist trim in der config durch den merge

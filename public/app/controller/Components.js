@@ -30,7 +30,7 @@ Ext.define('Spelled.controller.Components', {
 		var componentConfigId = e.grid.componentConfigId,
 			record = e.record.data,
 			component = this.getConfigComponentsStore().getById( componentConfigId ),
-			defaultConfig = component.getConfigMergedWithBlueprintConfig(),
+			defaultConfig = component.getConfigMergedWithTemplateConfig(),
 			value = record.value
 
 		try {
@@ -70,7 +70,7 @@ Ext.define('Spelled.controller.Components', {
 	createConfigGridView: function( component ) {
         var config = {}
         Ext.iterate(
-            component.getConfigMergedWithBlueprintConfig(),
+            component.getConfigMergedWithTemplateConfig(),
             function( key, value ) {
                 if( Ext.isObject( value ) && !!value.isModel ) {
                     config[ key ] = this.convertValueForGrid( value.get('default') )
@@ -84,7 +84,7 @@ Ext.define('Spelled.controller.Components', {
 		var configGrid = Ext.createWidget(
 			'componentproperties',
 			{
-				title: component.get('blueprintId'),
+				title: component.get('templateId'),
 				source: config,
 				componentConfigId: component.getId()
 			}

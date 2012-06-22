@@ -3,15 +3,15 @@ Ext.define('Spelled.controller.Menu', {
 
     views: [
         'menu.Menu',
-        'menu.contextmenu.ZonesList',
+        'menu.contextmenu.ScenesList',
         'menu.contextmenu.EntitiesList',
         'menu.contextmenu.AssetsList',
         'menu.contextmenu.ScriptsList',
-		'menu.contextmenu.ZoneSystemsList',
-        'menu.contextmenu.BlueprintsList',
-        'menu.contextmenu.ComponentBlueprintAttributesList',
-        'menu.contextmenu.EntityBlueprintComponentsList',
-        'menu.contextmenu.SystemBlueprintInputList',
+		'menu.contextmenu.SceneSystemsList',
+        'menu.contextmenu.TemplatesList',
+        'menu.contextmenu.ComponentTemplateAttributesList',
+        'menu.contextmenu.EntityTemplateComponentsList',
+        'menu.contextmenu.SystemTemplateInputList',
         'ui.SpelledConsole',
         'ui.StartScreen'
     ],
@@ -37,11 +37,11 @@ Ext.define('Spelled.controller.Menu', {
             },
 
 
-			'zonesystemslistcontextmenu [action="remove"]': {
-				click: this.removeSystemFromZone
+			'scenesystemslistcontextmenu [action="remove"]': {
+				click: this.removeSystemFromScene
 			},
-			'zonesystemslistcontextmenu [action="add"]': {
-				click: this.addSystemToZone
+			'scenesystemslistcontextmenu [action="add"]': {
+				click: this.addSystemToScene
 			},
 
 
@@ -59,7 +59,7 @@ Ext.define('Spelled.controller.Menu', {
             },
 
 
-            'systemblueprintinputcontextmenu [action="remove"]': {
+            'systemtemplateinputcontextmenu [action="remove"]': {
                 click: this.removeSystemInput
             },
 
@@ -80,11 +80,11 @@ Ext.define('Spelled.controller.Menu', {
             },
 
 
-            'blueprintslistcontextmenu [action="create"]': {
-                click: this.showCreateBlueprint
+            'templateslistcontextmenu [action="create"]': {
+                click: this.showCreateTemplate
             },
-            'blueprintslistcontextmenu [action="remove"]': {
-                click: this.removeBlueprint
+            'templateslistcontextmenu [action="remove"]': {
+                click: this.removeTemplate
             },
 
 
@@ -93,24 +93,24 @@ Ext.define('Spelled.controller.Menu', {
             },
 
 
-            'componentblueprintattributescontextmenu [action="remove"]': {
+            'componenttemplateattributescontextmenu [action="remove"]': {
                 click: this.removeComponentAttribute
             },
 
 
-            'entityblueprintcomponentscontextmenu [action="remove"]': {
+            'entitytemplatecomponentscontextmenu [action="remove"]': {
                 click: this.removeComponent
             },
 
 
-            'zoneslistcontextmenu [action="remove"]': {
-                click: this.removeZone
+            'sceneslistcontextmenu [action="remove"]': {
+                click: this.removeScene
             },
-            'zoneslistcontextmenu [action="default"]': {
+            'sceneslistcontextmenu [action="default"]': {
 
             },
-            'zoneslistcontextmenu [action="render"]': {
-                click: this.renderZone
+            'sceneslistcontextmenu [action="render"]': {
+                click: this.renderScene
             }
         })
     },
@@ -124,9 +124,9 @@ Ext.define('Spelled.controller.Menu', {
         return view
     },
 
-	showZoneSystemsListContextMenu: function( e) {
+	showSceneSystemsListContextMenu: function( e) {
 		this.createAndShowView(
-			this.getMenuContextmenuZoneSystemsListView(),
+			this.getMenuContextmenuSceneSystemsListView(),
 			e
 		)
 	},
@@ -138,30 +138,30 @@ Ext.define('Spelled.controller.Menu', {
         )
     },
 
-    showSystemBlueprintInputListContextMenu: function( e ) {
+    showSystemTemplateInputListContextMenu: function( e ) {
         this.createAndShowView(
-            this.getMenuContextmenuSystemBlueprintInputListView(),
+            this.getMenuContextmenuSystemTemplateInputListView(),
             e
         )
     },
 
-    showBlueprintsListContextMenu: function( e ) {
+    showTemplatesListContextMenu: function( e ) {
         this.createAndShowView(
-            this.getMenuContextmenuBlueprintsListView(),
+            this.getMenuContextmenuTemplatesListView(),
             e
         )
     },
 
     showComponentAttributesListContextMenu: function( e ) {
         this.createAndShowView(
-            this.getMenuContextmenuComponentBlueprintAttributesListView(),
+            this.getMenuContextmenuComponentTemplateAttributesListView(),
             e
         )
     },
 
-    showEntityBlueprintComponentsListContextMenu: function( e ) {
+    showEntityTemplateComponentsListContextMenu: function( e ) {
         this.createAndShowView(
-            this.getMenuContextmenuEntityBlueprintComponentsListView(),
+            this.getMenuContextmenuEntityTemplateComponentsListView(),
             e
         )
     },
@@ -176,9 +176,9 @@ Ext.define('Spelled.controller.Menu', {
         view.setEntity( entity )
     },
 
-    showZonesListContextMenu: function( e ) {
+    showScenesListContextMenu: function( e ) {
         this.createAndShowView(
-            this.getMenuContextmenuZonesListView(),
+            this.getMenuContextmenuScenesListView(),
             e
         )
     },
@@ -190,16 +190,16 @@ Ext.define('Spelled.controller.Menu', {
         )
     },
 
-    showCreateBlueprint: function( ) {
-        this.application.getController( 'Blueprints').showCreateBlueprint()
+    showCreateTemplate: function( ) {
+        this.application.getController( 'Templates').showCreateTemplate()
     },
 
-    removeBlueprint: function( ) {
-        var tree = Ext.getCmp( 'BlueprintsTree'),
+    removeTemplate: function( ) {
+        var tree = Ext.getCmp( 'TemplatesTree'),
             node = tree.getSelectionModel().getLastSelected()
 
         if( node && node.isLeaf() ) {
-			this.application.getController('Blueprints').deleteBlueprintAction( node )
+			this.application.getController('Templates').deleteTemplateAction( node )
 		}
     },
 
@@ -231,51 +231,51 @@ Ext.define('Spelled.controller.Menu', {
 		}
     },
 
-	removeSystemFromZone: function() {
+	removeSystemFromScene: function() {
 		var panel = Ext.getCmp("RightPanel"),
 			tree  = panel.down( 'systemlist' ),
 			node  = tree.getSelectionModel().getLastSelected()
 
 		if( node && node.isLeaf() && !node.isRoot() ) {
-			this.application.getController( 'Systems' ).removeZoneSystem( node.get('text') )
+			this.application.getController( 'Systems' ).removeSceneSystem( node.get('text') )
 			this.application.removeSelectedNode( tree )
 		}
 
 	},
 
-	addSystemToZone: function() {
+	addSystemToScene: function() {
 		this.application.getController('Systems').showAddSystem()
 	},
 
     removeSystemInput: function( ) {
-        var tab = Ext.getCmp("BlueprintEditor").getActiveTab(),
-            tree = tab.down( 'systemblueprintinputlist' ),
+        var tab = Ext.getCmp("TemplateEditor").getActiveTab(),
+            tree = tab.down( 'systemtemplateinputlist' ),
             node = tree.getSelectionModel().getLastSelected()
 
         if( node && !node.isLeaf() && !node.isRoot() ) {
-            this.application.getController( 'blueprints.Systems' ).removeSystemInputDefinition( node.get('id') )
+            this.application.getController( 'templates.Systems' ).removeSystemInputDefinition( node.get('id') )
 			this.application.removeSelectedNode( tree )
 		}
     },
 
     removeComponentAttribute: function( ) {
-        var tab = Ext.getCmp("BlueprintEditor").getActiveTab(),
-            tree = tab.down( 'componentblueprintattributeslist' ),
+        var tab = Ext.getCmp("TemplateEditor").getActiveTab(),
+            tree = tab.down( 'componenttemplateattributeslist' ),
             node = tree.getSelectionModel().getLastSelected()
 
         if( node && node.isLeaf() ) {
-            this.application.getController( 'blueprints.Components' ).removeComponentAttribute( node.get('id') )
+            this.application.getController( 'templates.Components' ).removeComponentAttribute( node.get('id') )
 			this.application.removeSelectedNode( tree )
         }
     },
 
     removeComponent: function( ) {
-        var tab = Ext.getCmp("BlueprintEditor").getActiveTab(),
-            tree = tab.down( 'entityblueprintcomponentslist' ),
+        var tab = Ext.getCmp("TemplateEditor").getActiveTab(),
+            tree = tab.down( 'entitytemplatecomponentslist' ),
             node = tree.getSelectionModel().getLastSelected()
 
         if( node && !node.isLeaf() && !node.isRoot() ) {
-            this.application.getController('blueprints.Entities').removeEntityComponent( node.get('id') )
+            this.application.getController('templates.Entities').removeEntityComponent( node.get('id') )
 			this.application.removeSelectedNode( tree )
         }
     },
@@ -287,24 +287,24 @@ Ext.define('Spelled.controller.Menu', {
 
         if( entity ) {
             this.application.getController( 'Entities' ).deleteEntity( entity )
-			this.application.removeSelectedNode( Ext.getCmp("ZonesTree") )
+			this.application.removeSelectedNode( Ext.getCmp("ScenesTree") )
         }
     },
 
-    removeZone: function( ) {
-        var zone = this.application.getActiveZone()
+    removeScene: function( ) {
+        var scene = this.application.getActiveScene()
 
-        if( zone ) {
-            this.application.getController( 'Zones').deleteZone( zone )
-			this.application.removeSelectedNode( Ext.getCmp("ZonesTree") )
+        if( scene ) {
+            this.application.getController( 'Scenes').deleteScene( scene )
+			this.application.removeSelectedNode( Ext.getCmp("ScenesTree") )
         }
     },
 
-    renderZone: function( ) {
-        var zone = this.application.getActiveZone()
+    renderScene: function( ) {
+        var scene = this.application.getActiveScene()
 
-        if( zone ) {
-            this.application.getController( 'Zones' ).renderZone( zone )
+        if( scene ) {
+            this.application.getController( 'Scenes' ).renderScene( scene )
         }
     },
 

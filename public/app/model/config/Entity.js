@@ -2,20 +2,20 @@ Ext.define('Spelled.model.config.Entity', {
     extend: 'Ext.data.Model',
 
     fields: [
-        'blueprintId',
+        'templateId',
         'name'
     ],
 
     idgen: 'uuid',
 
 	associations: [{
-		model:"Spelled.model.config.Zone",
+		model:"Spelled.model.config.Scene",
 		type:"belongsTo",
-		getterName: 'getZone'
+		getterName: 'getScene'
 	}],
 
-	setZone: function( zone ) {
-		this[ 'Spelled.model.config.ZoneBelongsToInstance' ] = zone
+	setScene: function( scene ) {
+		this[ 'Spelled.model.config.SceneBelongsToInstance' ] = scene
 	},
 
     hasMany: {
@@ -24,11 +24,11 @@ Ext.define('Spelled.model.config.Entity', {
         name :  'getComponents'
     },
 
-    getComponentByBlueprintId: function( blueprintId ) {
+    getComponentByTemplateId: function( templateId ) {
         var result = undefined
         this.getComponents().each(
             function( component ) {
-                if( component.get('blueprintId') === blueprintId ) {
+                if( component.get('templateId') === templateId ) {
                     result = component
                     return false
                 }
@@ -38,20 +38,20 @@ Ext.define('Spelled.model.config.Entity', {
         return result
     },
 
-    mergeWithBlueprintConfig: function() {
-        var entityBlueprint     = Ext.getStore( 'blueprint.Entities' ).getByBlueprintId( this.get('blueprintId')),
-            blueprintComponents = entityBlueprint.getComponents(),
+    mergeWithTemplateConfig: function() {
+        var entityTemplate     = Ext.getStore( 'template.Entities' ).getByTemplateId( this.get('templateId')),
+            templateComponents = entityTemplate.getComponents(),
             components          = this.getComponents()
 
-        blueprintComponents.each(
-            function( blueprintComponent ) {
-                var component = this.getComponentByBlueprintId( blueprintComponent.get('blueprintId') )
+        templateComponents.each(
+            function( templateComponent ) {
+                var component = this.getComponentByTemplateId( templateComponent.get('templateId') )
 
                 if( !component ) {
 
                     var newComponent = Ext.create( 'Spelled.model.config.Component', {
-                        blueprintId: blueprintComponent.get('blueprintId'),
-                        config: blueprintComponent.get('config')
+                        templateId: templateComponent.get('templateId'),
+                        config: templateComponent.get('config')
                     })
 
                     components.add(

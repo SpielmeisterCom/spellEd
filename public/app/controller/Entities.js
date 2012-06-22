@@ -3,13 +3,13 @@ Ext.define('Spelled.controller.Entities', {
 
     models: [
         'config.Entity',
-        'blueprint.Entity'
+        'template.Entity'
     ],
 
     stores: [
        'EntitiesTree',
        'config.Entities',
-       'blueprint.Entities'
+       'template.Entities'
     ],
 
     views: [
@@ -26,7 +26,7 @@ Ext.define('Spelled.controller.Entities', {
 
     init: function() {
         this.control({
-            '#ZonesTree button[action="showCreateEntity"]': {
+            '#ScenesTree button[action="showCreateEntity"]': {
                 click: this.showCreateEntity
             },
             'createentity button[action="createEntity"]' : {
@@ -75,16 +75,16 @@ Ext.define('Spelled.controller.Entities', {
             values = form.getValues(),
 			store  = this.getConfigEntitiesStore()
 
-        var entityBlueprint = Ext.getStore('blueprint.Entities').getById( values.blueprintId )
-		var zone = Ext.getStore('config.Zones').getById( values.zoneId )
-		delete values.zoneId
+        var entityTemplate = Ext.getStore('template.Entities').getById( values.templateId )
+		var scene = Ext.getStore('config.Scenes').getById( values.sceneId )
+		delete values.sceneId
 
-        if( entityBlueprint && zone ) {
-            entityBlueprint.getComponents().each(
+        if( entityTemplate && scene ) {
+            entityTemplate.getComponents().each(
                 function( component ) {
 
                     var newComponent = Ext.create( 'Spelled.model.config.Component', {
-                        blueprintId: component.get('blueprintId'),
+                        templateId: component.get('templateId'),
                         config: component.get('config')
                     } )
 
@@ -95,20 +95,20 @@ Ext.define('Spelled.controller.Entities', {
             )
 
             record.set( values )
-			record.setZone( zone )
-            record.set('blueprintId', entityBlueprint.getFullName() )
+			record.setScene( scene )
+            record.set('templateId', entityTemplate.getFullName() )
 
-			zone.getEntities().add( record )
+			scene.getEntities().add( record )
 			store.add( record )
 
-			this.application.getController('Projects').getZonesList( this.application.getActiveProject() )
+			this.application.getController('Projects').getScenesList( this.application.getActiveProject() )
             window.close()
         }
     },
 
     deleteEntity: function ( entity ) {
-        var zone     = entity.getZone(),
-            entities = zone.getEntities()
+        var scene     = entity.getScene(),
+            entities = scene.getEntities()
 
         entities.remove( entity )
     },
@@ -126,7 +126,7 @@ Ext.define('Spelled.controller.Entities', {
         var contentPanel = this.getRightPanel(),
 			View = this.getEntityComponentsListView()
 
-		entity.mergeWithBlueprintConfig()
+		entity.mergeWithTemplateConfig()
 
 		var view = new View()
 		entity.getComponents().each(
