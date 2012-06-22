@@ -126,7 +126,8 @@ Ext.define('Spelled.controller.Entities', {
         var contentPanel = this.getRightPanel(),
 			View = this.getEntityComponentsListView()
 
-		entity.mergeWithTemplateConfig()
+		if( !Ext.isEmpty(entity.get('templateId')) )
+			entity.mergeWithTemplateConfig()
 
 		var view = new View()
 		entity.getComponents().each(

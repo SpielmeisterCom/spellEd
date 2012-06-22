@@ -98,18 +98,20 @@ define(
 								}
 
 								entityResult.components = _.reduce(
-                                    entity.getComponents,
-                                    function( memo, component ) {
-                                        if( !component.changed || _.size( component.config ) === 0 ) return memo
+									entity.getComponents,
+									function( memo, component ) {
+										if( !component.changed || _.size( component.config ) === 0 ) return memo
 
-										return memo.concat( _.pick( component, 'templateId', 'name', 'config' ) )
+										return memo.concat( _.pick( component, 'templateId', 'config' ) )
 									},
 									[]
-                                )
+								)
 
-                                if( entityResult.components.length === 0 ) delete entityResult.components
+								if( _.isEmpty(entityResult.components) ) delete entityResult.components
+								//delete blueprintId on anonymous entities
+								if( _.isEmpty(entityResult.blueprintId) ) delete entityResult.blueprintId
 
-                                sceneResult.entities.push( entityResult )
+								sceneResult.entities.push( entityResult )
                             }
                         )
 

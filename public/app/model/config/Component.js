@@ -45,7 +45,7 @@ Ext.define('Spelled.model.config.Component', {
 
 		var tmp = {}
 		//Only merge with enityconfig, if it is really linked to a entity
-		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) ) {
+		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && !Ext.isEmpty( this.getEntity().get('templateId' ) ) ) {
 			var templateEntity          = Ext.getStore( 'template.Entities').getByTemplateId( this.getEntity().get('templateId' )),
 				templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', this.get('templateId') )
 
