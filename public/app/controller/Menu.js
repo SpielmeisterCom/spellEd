@@ -249,12 +249,11 @@ Ext.define('Spelled.controller.Menu', {
 
     removeSystemInput: function( ) {
         var tab = Ext.getCmp("TemplateEditor").getActiveTab(),
-            tree = tab.down( 'systemtemplateinputlist' ),
-            node = tree.getSelectionModel().getLastSelected()
+			grid = tab.down( 'systemtemplateinputlist' ),
+            node = grid.getSelectionModel().getLastSelected()
 
-        if( node && !node.isLeaf() && !node.isRoot() ) {
-            this.application.getController( 'templates.Systems' ).removeSystemInputDefinition( node.get('id') )
-			this.application.removeSelectedNode( tree )
+        if( node ) {
+            this.application.getController( 'templates.Systems' ).removeSystemInputDefinition( node.getId() )
 		}
     },
 

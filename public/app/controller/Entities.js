@@ -38,18 +38,6 @@ Ext.define('Spelled.controller.Entities', {
         })
     },
 
-    deleteEntityActionIconClick: function( gridView, rowIndex, colIndex, column, e ) {
-        var node = gridView.getRecord( gridView.findTargetByEvent(e) )
-
-        if( !node ) return
-
-        var entity = Ext.getStore('config.Entities').getById( node.get('id') )
-
-        if( !entity ) return
-
-        this.deleteEntity( entity )
-    },
-
     showListContextMenu: function( view, record, item, index, e, options ) {
 		var entity = Ext.getStore('config.Entities').getById( record.getId() )
 

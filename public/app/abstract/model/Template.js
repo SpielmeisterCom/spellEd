@@ -3,8 +3,18 @@ Ext.define('Spelled.abstract.model.Template', {
 
     requires: ['Spelled.abstract.writer.JsonWriter'],
 
+	constructor: function() {
+		this.callParent( arguments )
+
+		var object    = arguments[2],
+			namespace = object.namespace,
+			name      = object.name,
+			blueprintId = ( namespace.length > 0 ) ? namespace +"."+ name : name
+
+		this.set( 'blueprintId', blueprintId)
+	},
+
     getFullName: function() {
-        var namespace = this.get('namespace')
-        return ( namespace.length > 0 ) ? namespace +"."+ this.get('name') : this.get('name')
+        return this.get('blueprintId')
     }
 });
