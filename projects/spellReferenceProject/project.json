@@ -1,8 +1,8 @@
 {
     "name" : "spellReferenceProject",
-    "startZone" : "Game",
+    "startScene" : "Game",
 
-    "zones" : [
+    "scenes" : [
         {
             "name" : "Game",
             "entities" : [
