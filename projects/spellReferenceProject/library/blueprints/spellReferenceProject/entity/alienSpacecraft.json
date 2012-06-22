@@ -4,25 +4,25 @@
 	"name" : "alienSpacecraft",
 	"components" : [
 		{
-			"blueprintId" : "spell.component.core.transform"
+			"blueprintId" : "spell.component.2d.transform"
 		},
 		{
-			"blueprintId" : "spell.component.core.graphics2d.render"
+			"blueprintId" : "spell.component.visualObject"
 		},
 		{
-			"blueprintId" : "spell.component.core.graphics2d.animatedAppearance",
+			"blueprintId" : "spell.component.2d.graphics.animatedAppearance",
 			"config" : {
 				"assetId" : "animation:spellReferenceProject.threeRings.twirling"
 			}
 		},
 		{
-			"blueprintId" : "spellReferenceProject.component.inertialObject",
+			"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject",
 			"config" : {
 				"mass" : 150
 			}
 		},
 		{
-			"blueprintId" : "spellReferenceProject.component.collisionSphere",
+			"blueprintId" : "spell.component.physics.collisionSphere",
 			"config" : {
 				"radius" : 30
 			}

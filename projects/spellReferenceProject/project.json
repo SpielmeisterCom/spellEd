@@ -11,19 +11,19 @@
                     "blueprintId" : "spellReferenceProject.entity.spacecraft",
                     "components" : [
 						{
-							"blueprintId" : "spell.component.core.transform",
+							"blueprintId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 128, 128 ]
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.graphics2d.appearance",
+							"blueprintId" : "spell.component.2d.graphics.appearance",
 							"config" : {
 								"assetId" : "appearance:spellReferenceProject.pixelShip2"
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.actor",
+							"blueprintId" : "spell.component.actor",
 							"config" : {
 								"id" : "aiControlled"
 							}
@@ -35,7 +35,7 @@
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.inertialObject",
+							"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject",
 							"config" : {
 								"mass" : 3
 							}
@@ -47,14 +47,14 @@
 					"blueprintId" : "spellReferenceProject.entity.spacecraft",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.core.transform",
+							"blueprintId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 400, 250 ],
 								"rotation" : 0.2
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.actor",
+							"blueprintId" : "spell.component.actor",
 							"config" : {
 								"id" : "playerControlled"
 							}
@@ -66,7 +66,7 @@
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.inertialObject",
+							"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject",
 							"config" : {
 								"mass" : 1,
 								"velocity" : [ 10, 2 ]
@@ -79,13 +79,13 @@
 					"blueprintId" : "spellReferenceProject.entity.alienSpacecraft",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.core.transform",
+							"blueprintId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 700, 100 ]
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.inertialObject",
+							"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject",
 							"config" : {
 								"velocity" : [ -10, 40 ]
 							}
@@ -97,13 +97,13 @@
 					"blueprintId" : "spellReferenceProject.entity.asteroid",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.core.transform",
+							"blueprintId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 600, 500 ]
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.inertialObject",
+							"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject",
 							"config" : {
 								"mass" : 100,
 								"velocity" : [ -4, -2 ]
@@ -116,25 +116,25 @@
 					"blueprintId" : "spellReferenceProject.entity.asteroid",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.core.transform",
+							"blueprintId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 725, 650 ]
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.graphics2d.appearance",
+							"blueprintId" : "spell.component.2d.graphics.appearance",
 							"config" : {
 								"assetId" : "appearance:spellReferenceProject.asteroid2"
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.collisionSphere",
+							"blueprintId" : "spell.component.physics.collisionSphere",
 							"config" : {
 								"radius" : 13
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.inertialObject",
+							"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject",
 							"config" : {
 								"mass" : 12,
 								"velocity" : [ 6, 3 ]
@@ -147,25 +147,25 @@
 					"blueprintId" : "spellReferenceProject.entity.asteroid",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.core.transform",
+							"blueprintId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 300, 700 ]
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.graphics2d.appearance",
+							"blueprintId" : "spell.component.2d.graphics.appearance",
 							"config" : {
 								"assetId" : "appearance:spellReferenceProject.asteroid2"
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.collisionSphere",
+							"blueprintId" : "spell.component.physics.collisionSphere",
 							"config" : {
 								"radius" : 13
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.inertialObject",
+							"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject",
 							"config" : {
 								"mass" : 12,
 								"velocity" : [ 2, -8 ]
@@ -178,13 +178,13 @@
 					"blueprintId" : "spell.entity.camera",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.core.transform",
+							"blueprintId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 512, 384 ]
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.graphics2d.camera",
+							"blueprintId" : "spell.component.2d.graphics.camera",
 							"config" : {
 								"width" : 1024,
 								"height" : 768,
@@ -198,7 +198,7 @@
 					"blueprintId" : "spell.entity.inputDefinition",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.core.inputDefinition",
+							"blueprintId" : "spell.component.inputDefinition",
 							"config" : {
 								"actorId" : "playerControlled",
 								"keyToAction" : {
@@ -214,20 +214,20 @@
 					"name" : "look ma, anonymous entity config!",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.core.transform",
+							"blueprintId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 950, 25 ],
 								"scale" : [ 0.75, 0.75 ]
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.graphics2d.render",
+							"blueprintId" : "spell.component.visualObject",
 							"config" : {
-								"pass" : 2
+								"layer" : 2
 							}
 						},
 						{
-							"blueprintId" : "spell.component.core.graphics2d.appearance",
+							"blueprintId" : "spell.component.2d.graphics.appearance",
 							"config" : {
 								"assetId" : "appearance:spellReferenceProject.spelljsLogo"
 							}

@@ -6,7 +6,7 @@
 	"input" : [
 		{
 			"name" : "transforms",
-			"blueprintId" : "spell.component.core.transform"
+			"blueprintId" : "spell.component.2d.transform"
 		}
 	],
 	"scriptId" : "spellReferenceProject/system/endlessPlayingField"

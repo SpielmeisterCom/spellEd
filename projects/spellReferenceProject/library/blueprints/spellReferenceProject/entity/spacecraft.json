@@ -4,22 +4,22 @@
 	"name" : "spacecraft",
 	"components" : [
 		{
-			"blueprintId" : "spell.component.core.transform",
+			"blueprintId" : "spell.component.2d.transform",
 			"config" : {
 				"scale" : [ 4, 4 ]
 			}
 		},
 		{
-			"blueprintId" : "spell.component.core.graphics2d.render"
+			"blueprintId" : "spell.component.visualObject"
 		},
 		{
-			"blueprintId" : "spell.component.core.graphics2d.appearance",
+			"blueprintId" : "spell.component.2d.graphics.appearance",
 			"config" : {
 				"assetId" : "appearance:spellReferenceProject.pixelShip1"
 			}
 		},
 		{
-			"blueprintId" : "spell.component.core.actor",
+			"blueprintId" : "spell.component.actor",
 			"config" : {
 				"actions" : {
 					"accelerate" : {
@@ -38,10 +38,10 @@
 			"blueprintId" : "spellReferenceProject.component.spacecraft"
 		},
 		{
-			"blueprintId" : "spellReferenceProject.component.inertialObject"
+			"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject"
 		},
 		{
-			"blueprintId" : "spellReferenceProject.component.collisionSphere",
+			"blueprintId" : "spell.component.physics.collisionSphere",
 			"config" : {
 				"radius" : 16
 			}

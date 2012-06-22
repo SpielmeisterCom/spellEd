@@ -46,7 +46,7 @@ define(
 			mat4.translate( matrix, [ 0, 0, 0 ] ) // camera is located at (0/0/0); WATCH OUT: apply inverse translation
 		}
 
-		var createSortedByPass = function( renderDatas ) {
+		var createSortedByLayer = function( renderDatas ) {
 			return _.reduce(
 				renderDatas,
 				function( memo, renderData, id ) {
@@ -58,10 +58,10 @@ define(
 				[]
 			).sort(
 				function( a, b ) {
-					var passA = a.value.pass
-					var passB = b.value.pass
+					var layerA = a.value.layer
+					var layerB = b.value.layer
 
-					return ( passA < passB ? -1 : ( passA > passB ? 1 : 0 ) )
+					return ( layerA < layerB ? -1 : ( layerA > layerB ? 1 : 0 ) )
 				}
 			)
 		}
@@ -79,26 +79,26 @@ define(
 			return animationOffsetInMs / animationLengthInMs
 		}
 
-		var draw = function( context, deltaTimeInMs, assets, resources, transforms, appearances, animatedAppearances, renderComponentSorted ) {
+		var draw = function( context, deltaTimeInMs, assets, resources, transforms, appearances, animatedAppearances, sortedVisualObjects ) {
 			_.each(
-				renderComponentSorted,
-				function( renderComponent ) {
-					var id              = renderComponent.id,
-						renderComponent = renderComponent.value,
-						transform       = transforms[ id ]
+				sortedVisualObjects,
+				function( visualObject ) {
+					var id           = visualObject.id,
+						visualObject = visualObject.value,
+						transform    = transforms[ id ]
 
 					context.save()
 					{
-						var appearance        = appearances[ id ] || animatedAppearances[ id ],
-							asset             = assets[ appearance.assetId ],
-							texture           = resources[ asset.resourceId ],
-							appearanceOpacity = appearance.opacity
+						var appearance          = appearances[ id ] || animatedAppearances[ id ],
+							asset               = assets[ appearance.assetId ],
+							texture             = resources[ asset.resourceId ],
+							visualObjectOpacity = visualObject.opacity
 
 						if( !texture ) throw 'The resource id \'' + asset.resourceId + '\' could not be resolved.'
 
 
-						if( appearanceOpacity !== 1.0 ) {
-							context.setGlobalAlpha( appearanceOpacity )
+						if( visualObjectOpacity !== 1.0 ) {
+							context.setGlobalAlpha( visualObjectOpacity )
 						}
 
 						// object to world space transformation go here
@@ -187,7 +187,7 @@ define(
 
 			setCamera( context, this.cameras, this.transforms, this.worldToView )
 
-			// TODO: renderComponents should be presorted on the component list level by a user defined index, not here on every rendering tick
+			// TODO: visualObjects should be presorted on the component list level by a user defined index, not here on every rendering tick
 			draw(
 				context,
 				deltaTimeInMs,
@@ -196,7 +196,7 @@ define(
 				this.transforms,
 				this.appearances,
 				this.animatedAppearances,
-				createSortedByPass( this.renderComponents )
+				createSortedByLayer( this.visualObjects )
 			)
 		}
 
@@ -209,14 +209,14 @@ define(
 		 * public
 		 */
 
-		var Renderer = function( globals, transforms, appearances, animatedAppearances, renderComponents, cameras ) {
+		var Renderer = function( globals, transforms, appearances, animatedAppearances, visualObjects, cameras ) {
 			this.assets              = globals.assets
 			this.resources           = globals.resources
 			this.context             = globals.renderingContext
 			this.transforms          = transforms
 			this.appearances         = appearances
 			this.animatedAppearances = animatedAppearances
-			this.renderComponents    = renderComponents
+			this.visualObjects       = visualObjects
 			this.cameras             = cameras
 
 			var eventManager = globals.eventManager,

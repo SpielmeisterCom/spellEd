@@ -6,15 +6,15 @@
 	"input" : [
 		{
 			"name" : "transforms",
-			"blueprintId" : "spell.component.core.transform"
+			"blueprintId" : "spell.component.2d.transform"
 		},
 		{
 			"name" : "inertialObjects",
-			"blueprintId" : "spellReferenceProject.component.inertialObject"
+			"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject"
 		},
 		{
 			"name" : "collisionSpheres",
-			"blueprintId" : "spellReferenceProject.component.collisionSphere"
+			"blueprintId" : "spell.component.physics.collisionSphere"
 		}
 	],
 	"scriptId" : "spellReferenceProject/system/collisionDetector"

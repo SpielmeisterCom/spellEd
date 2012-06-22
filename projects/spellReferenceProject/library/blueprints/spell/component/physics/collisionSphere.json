@@ -1,9 +1,9 @@
 {
 	"type" : "componentBlueprint",
-	"namespace" : "spellReferenceProject.component",
+	"namespace" : "spell.component.physics",
 	"name" : "collisionSphere",
-	"title" : "2D Collision Sphere",
-	"doc" : "Provides a collision sphere for two dimensional physics",
+	"title" : "Collision Sphere",
+	"doc" : "provides a collision sphere for 2d, 3d and higher dimensions",
 	"attributes" : [
 		{
 			"name" : "radius",

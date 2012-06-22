@@ -6,11 +6,11 @@
 	"input" : [
 		{
 			"name" : "actors",
-			"blueprintId" : "spell.component.core.actor"
+			"blueprintId" : "spell.component.actor"
 		},
 		{
 			"name" : "transforms",
-			"blueprintId" : "spell.component.core.transform"
+			"blueprintId" : "spell.component.2d.transform"
 		},
 		{
 			"name" : "spacecrafts",
@@ -18,7 +18,7 @@
 		},
 		{
 			"name" : "inertialObjects",
-			"blueprintId" : "spellReferenceProject.component.inertialObject"
+			"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject"
 		}
 	],
 	"scriptId" : "spellReferenceProject/system/spacecraftIntegrator"

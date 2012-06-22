@@ -6,11 +6,11 @@
 	"input" : [
 		{
 			"name" : "actors",
-			"blueprintId" : "spell.component.core.actor"
+			"blueprintId" : "spell.component.actor"
 		},
 		{
 			"name" : "transforms",
-			"blueprintId" : "spell.component.core.transform"
+			"blueprintId" : "spell.component.2d.transform"
 		}
 	],
 	"scriptId" : "spellReferenceProject/system/aiControl"
