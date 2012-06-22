@@ -2,9 +2,12 @@
 	"type" : "componentBlueprint",
 	"namespace" : "spellReferenceProject.component",
 	"name" : "collisionSphere",
+	"title" : "2D Collision Sphere",
+	"doc" : "Provides a collision sphere for two dimensional physics",
 	"attributes" : [
 		{
 			"name" : "radius",
+			"doc" : "the radius of the sphere",
 			"type" : "number",
 			"default" : 1
 		}
