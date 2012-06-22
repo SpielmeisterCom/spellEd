@@ -6,5 +6,15 @@ Ext.define('Spelled.view.entity.ComponentsList' ,{
 
 	border: false,
 
-	autoScroll: true
+	autoScroll: true,
+
+	buttonAlign:'left',
+
+	buttons: [
+		{
+			xtype: 'button',
+			text: 'Add new Component',
+			action: 'showAddComponent'
+		}
+	]
 });

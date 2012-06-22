@@ -34,7 +34,7 @@ Ext.define('Spelled.controller.Entities', {
             },
             'entiteslist': {
                 itemcontextmenu: this.showListContextMenu
-            }
+			}
         })
     },
 
@@ -93,6 +93,14 @@ Ext.define('Spelled.controller.Entities', {
             window.close()
         }
     },
+
+	getActiveEntity: function() {
+		var node = Ext.getCmp('ZonesTree').getSelectionModel().getLastSelected()
+
+		if( node ) {
+			return this.getConfigEntitiesStore().getById( node.getId() )
+		}
+	},
 
     deleteEntity: function ( entity ) {
         var scene     = entity.getScene(),

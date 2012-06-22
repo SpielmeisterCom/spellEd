@@ -3,7 +3,8 @@ Ext.define('Spelled.controller.Components', {
 
     views: [
         'component.Properties',
-		'component.property.AssetId'
+		'component.property.AssetId',
+		'component.Add'
     ],
 
     models: [
@@ -14,12 +15,52 @@ Ext.define('Spelled.controller.Components', {
        'config.Components'
     ],
 
+	refs: [
+		{
+			ref : 'RightPanel',
+			selector: '#RightPanel'
+		}
+	],
+
 	init: function() {
 		this.control({
 			'componentproperties': {
 				edit: this.editProperty
+			},
+			'entitycomponentslist button[action="showAddComponent"]': {
+				click: this.showAddComponent
+			},
+			'addcomponent button[action="addComponent"]': {
+				click : this.addComponent
 			}
+
 		})
+	},
+
+	showAddComponent: function( button ) {
+		var view = Ext.createWidget( 'addcomponent' )
+
+		view.show()
+	},
+
+	addComponent: function( button ) {
+		var window = button.up('window'),
+			form   = window.down('form'),
+			values = form.getValues(),
+			store  = this.getConfigComponentsStore(),
+			Model  = this.getConfigComponentModel(),
+			entity = this.application.getController('Entities').getActiveEntity()
+
+		this.getRightPanel().removeAll()
+
+		var record = new Model( values )
+		entity.getComponents().add( record )
+		record.setEntity( entity )
+
+		store.add( record )
+		this.application.getController('Entities').showComponentsList( entity )
+
+		window.close()
 	},
 
     formatConfiguration: function( component ) {
