@@ -1,0 +1,17 @@
+{
+	"type" : "componentTemplate",
+	"namespace" : "spell.component",
+	"name" : "actor",
+	"attributes" : [
+		{
+			"name" : "id",
+			"type" : "string"
+		},
+		{
+			"name" : "actions",
+			"type" : "object",
+			"default" : {}
+		}
+	]
+}
+

@@ -8,34 +8,34 @@
             "entities" : [
                 {
                     "name" : "spacecraft1",
-                    "blueprintId" : "spellReferenceProject.entity.spacecraft",
+                    "templateId" : "spellReferenceProject.entity.spacecraft",
                     "components" : [
 						{
-							"blueprintId" : "spell.component.2d.transform",
+							"templateId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 128, 128 ]
 							}
 						},
 						{
-							"blueprintId" : "spell.component.2d.graphics.appearance",
+							"templateId" : "spell.component.2d.graphics.appearance",
 							"config" : {
 								"assetId" : "appearance:spellReferenceProject.pixelShip2"
 							}
 						},
 						{
-							"blueprintId" : "spell.component.actor",
+							"templateId" : "spell.component.actor",
 							"config" : {
 								"id" : "aiControlled"
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.spacecraft",
+							"templateId" : "spellReferenceProject.component.spacecraft",
 							"config" : {
 								"thrusterForce" : 300
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject",
+							"templateId" : "spellReferenceProject.component.2d.physics.inertialObject",
 							"config" : {
 								"mass" : 3
 							}
@@ -44,29 +44,29 @@
                 },
 				{
 					"name" : "spacecraft2",
-					"blueprintId" : "spellReferenceProject.entity.spacecraft",
+					"templateId" : "spellReferenceProject.entity.spacecraft",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.2d.transform",
+							"templateId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 400, 250 ],
 								"rotation" : 0.2
 							}
 						},
 						{
-							"blueprintId" : "spell.component.actor",
+							"templateId" : "spell.component.actor",
 							"config" : {
 								"id" : "playerControlled"
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.spacecraft",
+							"templateId" : "spellReferenceProject.component.spacecraft",
 							"config" : {
 								"thrusterForce" : 175
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject",
+							"templateId" : "spellReferenceProject.component.2d.physics.inertialObject",
 							"config" : {
 								"mass" : 1,
 								"velocity" : [ 10, 2 ]
@@ -76,16 +76,16 @@
 				},
 				{
 					"name" : "alienSpacecraft1",
-					"blueprintId" : "spellReferenceProject.entity.alienSpacecraft",
+					"templateId" : "spellReferenceProject.entity.alienSpacecraft",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.2d.transform",
+							"templateId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 700, 100 ]
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject",
+							"templateId" : "spellReferenceProject.component.2d.physics.inertialObject",
 							"config" : {
 								"velocity" : [ -10, 40 ]
 							}
@@ -94,16 +94,16 @@
 				},
 				{
 					"name" : "asteroid1",
-					"blueprintId" : "spellReferenceProject.entity.asteroid",
+					"templateId" : "spellReferenceProject.entity.asteroid",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.2d.transform",
+							"templateId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 600, 500 ]
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject",
+							"templateId" : "spellReferenceProject.component.2d.physics.inertialObject",
 							"config" : {
 								"mass" : 100,
 								"velocity" : [ -4, -2 ]
@@ -113,28 +113,28 @@
 				},
 				{
 					"name" : "asteroid2",
-					"blueprintId" : "spellReferenceProject.entity.asteroid",
+					"templateId" : "spellReferenceProject.entity.asteroid",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.2d.transform",
+							"templateId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 725, 650 ]
 							}
 						},
 						{
-							"blueprintId" : "spell.component.2d.graphics.appearance",
+							"templateId" : "spell.component.2d.graphics.appearance",
 							"config" : {
 								"assetId" : "appearance:spellReferenceProject.asteroid2"
 							}
 						},
 						{
-							"blueprintId" : "spell.component.physics.collisionSphere",
+							"templateId" : "spell.component.physics.collisionSphere",
 							"config" : {
 								"radius" : 13
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject",
+							"templateId" : "spellReferenceProject.component.2d.physics.inertialObject",
 							"config" : {
 								"mass" : 12,
 								"velocity" : [ 6, 3 ]
@@ -144,28 +144,28 @@
 				},
 				{
 					"name" : "asteroid3",
-					"blueprintId" : "spellReferenceProject.entity.asteroid",
+					"templateId" : "spellReferenceProject.entity.asteroid",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.2d.transform",
+							"templateId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 300, 700 ]
 							}
 						},
 						{
-							"blueprintId" : "spell.component.2d.graphics.appearance",
+							"templateId" : "spell.component.2d.graphics.appearance",
 							"config" : {
 								"assetId" : "appearance:spellReferenceProject.asteroid2"
 							}
 						},
 						{
-							"blueprintId" : "spell.component.physics.collisionSphere",
+							"templateId" : "spell.component.physics.collisionSphere",
 							"config" : {
 								"radius" : 13
 							}
 						},
 						{
-							"blueprintId" : "spellReferenceProject.component.2d.physics.inertialObject",
+							"templateId" : "spellReferenceProject.component.2d.physics.inertialObject",
 							"config" : {
 								"mass" : 12,
 								"velocity" : [ 2, -8 ]
@@ -175,16 +175,16 @@
 				},
 				{
 					"name" : "camera",
-					"blueprintId" : "spell.entity.camera",
+					"templateId" : "spell.entity.camera",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.2d.transform",
+							"templateId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 512, 384 ]
 							}
 						},
 						{
-							"blueprintId" : "spell.component.2d.graphics.camera",
+							"templateId" : "spell.component.2d.graphics.camera",
 							"config" : {
 								"width" : 1024,
 								"height" : 768,
@@ -195,10 +195,10 @@
 				},
 				{
 					"name" : "player key input to actor/action mapping",
-					"blueprintId" : "spell.entity.inputDefinition",
+					"templateId" : "spell.entity.inputDefinition",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.inputDefinition",
+							"templateId" : "spell.component.inputDefinition",
 							"config" : {
 								"actorId" : "playerControlled",
 								"keyToAction" : {
@@ -214,20 +214,20 @@
 					"name" : "look ma, anonymous entity config!",
 					"components" : [
 						{
-							"blueprintId" : "spell.component.2d.transform",
+							"templateId" : "spell.component.2d.transform",
 							"config" : {
 								"position" : [ 950, 25 ],
 								"scale" : [ 0.75, 0.75 ]
 							}
 						},
 						{
-							"blueprintId" : "spell.component.visualObject",
+							"templateId" : "spell.component.visualObject",
 							"config" : {
 								"layer" : 2
 							}
 						},
 						{
-							"blueprintId" : "spell.component.2d.graphics.appearance",
+							"templateId" : "spell.component.2d.graphics.appearance",
 							"config" : {
 								"assetId" : "appearance:spellReferenceProject.spelljsLogo"
 							}

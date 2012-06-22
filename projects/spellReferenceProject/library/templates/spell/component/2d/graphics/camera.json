@@ -1,0 +1,22 @@
+{
+	"type" : "componentTemplate",
+	"namespace" : "spell.component.2d.graphics",
+	"name" : "camera",
+	"attributes" : [
+		{
+			"name" : "width",
+			"type" : "integer",
+			"default" : 320
+		},
+		{
+			"name" : "height",
+			"type" : "integer",
+			"default" : 240
+		},
+		{
+			"name" : "active",
+			"type" : "boolean",
+			"default" : false
+		}
+	]
+}

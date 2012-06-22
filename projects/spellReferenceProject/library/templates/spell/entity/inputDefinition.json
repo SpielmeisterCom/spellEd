@@ -1,0 +1,11 @@
+{
+	"type" : "entityTemplate",
+	"namespace" : "spell.entity",
+	"name" : "inputDefinition",
+	"components" : [
+		{
+			"templateId" : "spell.component.inputDefinition",
+			"config" : {}
+		}
+	]
+}

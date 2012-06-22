@@ -1,0 +1,12 @@
+{
+	"type" : "componentTemplate",
+	"namespace" : "spellReferenceProject.component",
+	"name" : "spacecraft",
+	"attributes" : [
+		{
+			"name" : "thrusterForce",
+			"type" : "number",
+			"default" : 100
+		}
+	]
+}
