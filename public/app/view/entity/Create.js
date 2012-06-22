@@ -4,6 +4,7 @@ Ext.define('Spelled.view.entity.Create' ,{
 
     title : 'Add a new Entity to the Scene',
     modal : true,
+	layout: 'fit',
 
     items: [
         {

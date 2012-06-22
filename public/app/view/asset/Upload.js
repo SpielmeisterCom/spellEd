@@ -5,6 +5,8 @@ Ext.define('Spelled.view.asset.Upload', {
     title : 'Add a new Asset to the Project',
     modal : true,
 
+	layout: 'fit',
+
     closable: true,
 
     items: [

@@ -5,6 +5,8 @@ Ext.define('Spelled.view.template.Create', {
     title : 'Create a new Template',
     modal : true,
 
+	layout: 'fit',
+
     closable: true,
 
     items: [

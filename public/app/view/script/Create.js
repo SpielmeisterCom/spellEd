@@ -5,6 +5,8 @@ Ext.define('Spelled.view.script.Create' ,{
     title : 'Create a new Script',
     modal : true,
 
+	layout: 'fit',
+
     closeable: true,
 
     items: [

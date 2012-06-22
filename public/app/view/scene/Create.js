@@ -2,6 +2,8 @@ Ext.define('Spelled.view.scene.Create' ,{
     extend: 'Ext.Window',
     alias: 'widget.createscene',
 
+	layout: 'fit',	
+
     title : 'Add a new Scene to the Project',
     modal : true,
 

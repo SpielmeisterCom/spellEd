@@ -5,6 +5,8 @@ Ext.define('Spelled.view.project.Create' ,{
     title : 'Create a new Project',
     modal : true,
 
+	layout: 'fit',
+
     items: [
         {
             bodyPadding: 10,

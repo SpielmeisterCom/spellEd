@@ -4,6 +4,8 @@ Ext.define('Spelled.view.ui.StartScreen' ,{
 
     alias: 'widget.startscreen',
 
+	layout: 'fit',
+
     modal : true,
     closable: false,
 

@@ -5,6 +5,8 @@ Ext.define('Spelled.view.project.Load' ,{
     title : 'Load an existing Project',
     modal : true,
 
+	layout: 'fit',
+
     items: [
         {
             bodyPadding: 10,
