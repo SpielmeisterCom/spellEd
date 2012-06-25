@@ -4,7 +4,7 @@
 	"scenes": [
 		{
 			"name": "Game",
-			"scriptId": "spell/zone/default",
+			"scriptId": "spell/scene/default",
 			"systems": {
 				"update": [],
 				"render": [
@@ -65,6 +65,30 @@
 							"config": {
 								"radius": 16
 							}
+						}
+					],
+					"children": [
+						{
+							"components": [
+								{
+									"templateId": "spell.component.2d.transform",
+									"config": {
+										"scale": [
+											0.75,
+											0.75
+										]
+									}
+								},
+								{
+									"templateId": "spell.component.visualObject"
+								},
+								{
+									"templateId": "spell.component.2d.graphics.appearance",
+									"config": {
+										"assetId": "appearance:spellReferenceProject.spelljsLogo"
+									}
+								}
+							]
 						}
 					]
 				},
