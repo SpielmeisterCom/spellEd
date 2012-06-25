@@ -9,12 +9,12 @@ Ext.define('Spelled.abstract.model.Template', {
 		var object    = arguments[2],
 			namespace = object.namespace,
 			name      = object.name,
-			blueprintId = ( namespace.length > 0 ) ? namespace +"."+ name : name
+			templateId = ( namespace.length > 0 ) ? namespace +"."+ name : name
 
-		this.set( 'blueprintId', blueprintId)
+		this.set( 'templateId', templateId)
 	},
 
     getFullName: function() {
-        return this.get('blueprintId')
+        return this.get('templateId')
     }
 });

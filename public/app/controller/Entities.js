@@ -95,7 +95,7 @@ Ext.define('Spelled.controller.Entities', {
     },
 
 	getActiveEntity: function() {
-		var node = Ext.getCmp('ZonesTree').getSelectionModel().getLastSelected()
+		var node = Ext.getCmp('ScenesTree').getSelectionModel().getLastSelected()
 
 		if( node ) {
 			return this.getConfigEntitiesStore().getById( node.getId() )

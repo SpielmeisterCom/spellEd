@@ -186,7 +186,7 @@ Ext.define('Spelled.controller.Systems', {
 							node.appendChild(
 								node.createNode( {
 										text         : systemTemplate.getFullName(),
-										cls		     : me.application.getController('Templates').BLUEPRINT_TYPE_SYSTEM,
+										cls		     : me.application.getController('Templates').TEMPLATE_TYPE_SYSTEM,
 										leaf         : true,
 										id           : systemTemplate.getId()
 									}

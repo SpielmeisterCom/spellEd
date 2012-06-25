@@ -19,10 +19,10 @@ Ext.define('Spelled.view.template.system.Input' ,{
 			},
 			{
 				header: 'Component',
-				dataIndex: 'blueprintId',
+				dataIndex: 'templateId',
 				flex:1,
 				editor: {
-					xtype: 'systemblueprintinputgridcombobox',
+					xtype: 'systemtemplateinputgridcombobox',
 					allowBlank: false
 				}
 			},

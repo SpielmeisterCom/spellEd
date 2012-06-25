@@ -14,15 +14,15 @@ Ext.define('Spelled.view.component.Add' ,{
             items: [
                 {
                     xtype: 'combobox',
-                    store: 'blueprint.Components',
+                    store: 'template.Components',
 
-                    valueField: 'blueprintId',
-                    displayField:'blueprintId',
+                    valueField: 'templateId',
+                    displayField:'templateId',
                     queryMode: 'local',
                     forceSelection: true,
 
                     typeAhead: true,
-                    name: 'blueprintId',
+                    name: 'templateId',
                     fieldLabel: 'Select a Component',
                     anchor: '100%',
                     allowBlank:false

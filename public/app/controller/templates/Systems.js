@@ -6,6 +6,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 		'template.system.Details',
 		'template.system.Input',
 		'template.system.input.Add',
+		'template.system.input.ComboBox',
 		'script.Editor'
 	],
 

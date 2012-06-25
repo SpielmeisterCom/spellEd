@@ -1,9 +1,9 @@
 Ext.define('Spelled.controller.Templates', {
     extend: 'Ext.app.Controller',
 
-    BLUEPRINT_TYPE_COMPONENT: 'componentTemplate',
-    BLUEPRINT_TYPE_ENTITY: 'entityTemplate',
-    BLUEPRINT_TYPE_SYSTEM: 'systemTemplate',
+    TEMPLATE_TYPE_COMPONENT: 'componentTemplate',
+	TEMPLATE_TYPE_ENTITY   : 'entityTemplate',
+	TEMPLATE_TYPE_SYSTEM   : 'systemTemplate',
 
     views: [
         'template.Editor',
@@ -84,13 +84,13 @@ Ext.define('Spelled.controller.Templates', {
         if( !node ) return
 
         switch( node.get('cls') ) {
-            case this.BLUEPRINT_TYPE_COMPONENT:
+            case this.TEMPLATE_TYPE_COMPONENT:
                 this.application.getController('templates.Components').removeComponentTemplate( node.get('id') )
                 break
-            case this.BLUEPRINT_TYPE_ENTITY:
+            case this.TEMPLATE_TYPE_ENTITY:
                 this.application.getController('templates.Entities').removeEntityTemplate( node.get('id') )
                 break
-            case this.BLUEPRINT_TYPE_SYSTEM:
+            case this.TEMPLATE_TYPE_SYSTEM:
                 this.application.getController('templates.Systems').removeSystemTemplate( node.get('id') )
                 break
             default:
@@ -120,15 +120,15 @@ Ext.define('Spelled.controller.Templates', {
 
 
         switch( record.get('cls') ) {
-            case this.BLUEPRINT_TYPE_COMPONENT:
+            case this.TEMPLATE_TYPE_COMPONENT:
                 Model = this.getTemplateComponentModel()
                 Controller = this.application.getController('templates.Components')
                 break
-            case this.BLUEPRINT_TYPE_ENTITY:
+            case this.TEMPLATE_TYPE_ENTITY:
                 Model = this.getTemplateEntityModel()
                 Controller = this.application.getController('templates.Entities')
                 break
-            case this.BLUEPRINT_TYPE_SYSTEM:
+            case this.TEMPLATE_TYPE_SYSTEM:
                 Model = this.getTemplateSystemModel()
                 Controller = this.application.getController('templates.Systems')
                 break
