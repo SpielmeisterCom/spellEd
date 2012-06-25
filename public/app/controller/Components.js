@@ -27,6 +27,9 @@ Ext.define('Spelled.controller.Components', {
 			'componentproperties': {
 				edit: this.editProperty
 			},
+			'componentproperties': {
+				beforeclose: this.confirmDelete
+			},
 			'entitycomponentslist button[action="showAddComponent"]': {
 				click: this.showAddComponent
 			},
@@ -35,6 +38,38 @@ Ext.define('Spelled.controller.Components', {
 			}
 
 		})
+	},
+
+	confirmDelete: function( panel ) {
+		var title = panel.title
+
+		if( !!panel.removeAllowed )
+			return true
+		else {
+			Ext.Msg.confirm(
+				'Remove '+ title,
+				'Should the Component: "' + title + '" be removed?',
+				function( button ) {
+					if ( button === 'yes' ) {
+						this.removeComponent( panel )
+						panel.removeAllowed = true
+						panel.close()
+					}
+				},
+				this
+			)
+
+			return false
+		}
+	},
+
+	removeComponent: function( panel ) {
+		var store     = this.getConfigComponentsStore(),
+			component = store.getById( panel.componentConfigId ),
+			entity    = component.getEntity()
+
+		entity.getComponents().remove( component )
+		store.remove( component )
 	},
 
 	showAddComponent: function( button ) {
@@ -54,10 +89,12 @@ Ext.define('Spelled.controller.Components', {
 		this.getRightPanel().removeAll()
 
 		var record = new Model( values )
-		entity.getComponents().add( record )
+		record.set('additional', true)
 		record.setEntity( entity )
 
+		entity.getComponents().add( record )
 		store.add( record )
+
 		this.application.getController('Entities').showComponentsList( entity )
 
 		window.close()
@@ -69,10 +106,10 @@ Ext.define('Spelled.controller.Components', {
 
 	editProperty: function( editor, e ) {
 		var componentConfigId = e.grid.componentConfigId,
-			record = e.record.data,
-			component = this.getConfigComponentsStore().getById( componentConfigId ),
-			defaultConfig = component.getConfigMergedWithTemplateConfig(),
-			value = record.value
+			record            = e.record.data,
+			component         = this.getConfigComponentsStore().getById( componentConfigId ),
+			defaultConfig     = component.getConfigMergedWithTemplateConfig(),
+			value             = record.value
 
 		try {
 			value = JSON.parse( value )
@@ -126,6 +163,7 @@ Ext.define('Spelled.controller.Components', {
 			'componentproperties',
 			{
 				title: component.get('templateId'),
+				isAdditional: component.get('additional'),
 				source: config,
 				componentConfigId: component.getId()
 			}

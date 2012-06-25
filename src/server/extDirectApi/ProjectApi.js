@@ -100,16 +100,16 @@ define(
 								entityResult.components = _.reduce(
 									entity.getComponents,
 									function( memo, component ) {
-										if( !component.changed || _.size( component.config ) === 0 ) return memo
-
+										if( !component.additional && ( !component.changed || _.size( component.config ) === 0 )) return memo
+										
 										return memo.concat( _.pick( component, 'templateId', 'config' ) )
 									},
 									[]
 								)
 
 								if( _.isEmpty(entityResult.components) ) delete entityResult.components
-								//delete blueprintId on anonymous entities
-								if( _.isEmpty(entityResult.blueprintId) ) delete entityResult.blueprintId
+								//delete templateId on anonymous entities
+								if( _.isEmpty(entityResult.templateId) ) delete entityResult.templateId
 
 								sceneResult.entities.push( entityResult )
                             }

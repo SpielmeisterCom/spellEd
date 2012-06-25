@@ -4,7 +4,8 @@ Ext.define('Spelled.model.config.Component', {
     fields: [
         'templateId',
         { name: 'config', type: 'object', defaultValue: {} },
-        { name: 'changed', type: 'boolean', defaultValue: false }
+        { name: 'changed', type: 'boolean', defaultValue: false },
+		{ name: 'additional', type: 'boolean', defaultValue: false }
     ],
 
     idgen: 'uuid',
@@ -22,10 +23,8 @@ Ext.define('Spelled.model.config.Component', {
 	},
 
     constructor: function() {
-        this.callParent(arguments)
-
-		//if( !!this.raw )
-        	Ext.getStore( 'config.Components' ).add( this )
+        this.callParent( arguments )
+       	Ext.getStore( 'config.Components' ).add( this )
     },
 
     setChanged: function() {
@@ -49,8 +48,15 @@ Ext.define('Spelled.model.config.Component', {
 			var templateEntity          = Ext.getStore( 'template.Entities').getByTemplateId( this.getEntity().get('templateId' )),
 				templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', this.get('templateId') )
 
-			tmp = Ext.Object.merge( templateConfig, templateEntityComponent.get('config'), this.get('config') )
+			if( !templateEntityComponent ) {
+				this.set('additional', true)
+				tmp = Ext.Object.merge( templateConfig, this.get('config') )
+			} else {
+				tmp = Ext.Object.merge( templateConfig, templateEntityComponent.get('config'), this.get('config') )
+			}
+
 		} else {
+			this.set('additional', true)
 			tmp = Ext.Object.merge( templateConfig, this.get('config') )
 		}
 

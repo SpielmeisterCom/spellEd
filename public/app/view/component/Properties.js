@@ -24,5 +24,11 @@ Ext.define('Spelled.view.component.Properties', {
     customEditors: {
         //TODO: when a assigned asset gets removed, the field will disappear
         assetId: 'assetidproperty'
-    }
+    },
+
+	initComponent: function() {
+		if( this.isAdditional === true ) this.closable = true
+
+		this.callParent( arguments )
+	}
 });

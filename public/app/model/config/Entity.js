@@ -53,10 +53,9 @@ Ext.define('Spelled.model.config.Entity', {
                         templateId: templateComponent.get('templateId'),
                         config: templateComponent.get('config')
                     })
+					newComponent.setEntity( this )
 
-                    components.add(
-                        newComponent
-                    )
+                    components.add( newComponent )
                 }
             },
             this
