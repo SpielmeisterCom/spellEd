@@ -5,8 +5,7 @@ Ext.define('Spelled.view.component.property.AssetId', {
 
 	editable       : false,
 	emptyText      : '-- Select a existing Asset --',
-	queryMode	   : 'local',
-	store          : 'asset.Textures',
+	store          : 'asset.Assets',
 	name           : 'assetId',
 	displayField   : 'name',
 	valueField     : 'assetId'

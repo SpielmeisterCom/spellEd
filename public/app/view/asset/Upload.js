@@ -7,6 +7,8 @@ Ext.define('Spelled.view.asset.Upload', {
 
 	layout: 'fit',
 
+	width : 450,
+
     closable: true,
 
     items: [
@@ -70,9 +72,10 @@ Ext.define('Spelled.view.asset.Upload', {
                 },
 				{
 					xtype: "assetidproperty",
+					store: 'asset.SpriteSheets',
 					hidden: true,
 					allowBlank: true,
-					fieldLabel: "From existing Asset",
+					fieldLabel: "From existing Sprite Sheet",
 					listeners: {
 						'change': function( cmp, value) {
 							if( value )
@@ -82,12 +85,18 @@ Ext.define('Spelled.view.asset.Upload', {
 					validator: function( value ) {
 						var file = this.up('form').down('filefield').getValue()
 						if( ( !file && !value ) )
-							return "You need to select a new File or a existing Asset"
+							return "You need to select a existing Asset"
 						else
 							return true
 					}
 				},{
 					xtype: 'menuseparator'
+				},{
+					xtype: 'spritesheetconfig',
+					hidden: true
+				},{
+					xtype: 'animationassetconfig',
+					hidden: true
 				}
             ],
 

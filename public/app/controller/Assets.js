@@ -9,6 +9,8 @@ Ext.define('Spelled.controller.Assets', {
         'asset.Upload',
         'asset.FolderPicker',
 		'asset.create.Texture',
+		'asset.create.SpriteSheet',
+		'asset.create.Animation',
 		'asset.inspector.Config'
     ],
 
@@ -17,7 +19,10 @@ Ext.define('Spelled.controller.Assets', {
         'asset.Types',
         'asset.FoldersTree',
         'asset.Textures',
-        'asset.Sounds'
+        'asset.Sounds',
+		'asset.SpriteSheets',
+		'asset.Animations',
+		'asset.Assets'
     ],
 
     models: [
@@ -95,14 +100,31 @@ Ext.define('Spelled.controller.Assets', {
 
 	showAdditionalConfiguration: function( combo, records ) {
 		var form        = combo.up('form'),
-			assetsCombo = form.down('combobox[name="assetId"]')
+			assetsCombo = form.down('combobox[name="assetId"]'),
+			fileUpload  = form.down('filefield[name="asset"]'),
+			spriteSheetConfig    = form.down('spritesheetconfig'),
+			animationassetconfig = form.down('animationassetconfig')
 
-		if( combo.getValue() === "animatedAppearance" ) {
-			assetsCombo.show()
-		} else {
-			assetsCombo.clearValue()
-			assetsCombo.hide()
+		//Resetting defaults
+		assetsCombo.hide()
+		spriteSheetConfig.hide()
+		animationassetconfig.hide()
+		fileUpload.hide()
+		fileUpload.reset()
+		assetsCombo.clearValue()
+
+
+		switch( combo.getValue() ) {
+			case "animation":
+				assetsCombo.show()
+				animationassetconfig.show()
+				break
+			case "spriteSheet":
+				spriteSheetConfig.show()
+			default:
+				fileUpload.show()
 		}
+
 	},
 
     showListContextMenu: function( view, record, item, index, e, options ) {
@@ -214,8 +236,7 @@ Ext.define('Spelled.controller.Assets', {
     },
 
     refreshStores: function() {
-        this.getAssetTexturesStore().load()
-        this.getAssetSoundsStore().load()
+		this.getAssetAssetsStore().load()
     },
 
     showAssets : function( ) {

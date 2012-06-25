@@ -29,32 +29,36 @@ define(
                 var assetName   = payload.name,
                     folder      = ( payload.folder === "root" ) ? path.join( root , payload.projectName , assetPathPart ) : payload.folder,
                     files       = payload.files,
-                    type        = payload.type
+                    type        = payload.type,
+					namespace   = util.extractNamespaceFromPath( folder, assetPathPart ),
+				    newFileNameWithoutExtension = folder + "/" + assetName,
+					Asset       = _.first( files )
 
+                var result = _.pick( payload, 'name', 'type', 'config', 'assetId')
+				result.namespace = namespace
+				result.doc       = ""
 
-                var Asset     = _.first( files )
-                var extension = mime.extension( Asset.file.type )
+				if( Asset.file.size > 0 ) {
+					var extension = mime.extension( Asset.file.type),
+						baseName  = assetName +"." + extension,
+						filePath  = newFileNameWithoutExtension + "." + extension,
+						assetId   = ( namespace.length > 0 ) ? namespace + "/" + baseName : baseName
 
-                var newFileNameWithoutExtension = folder + "/" + assetName,
-                    baseName                    = assetName +"." + extension,
-                    filePath                    = newFileNameWithoutExtension + "." + extension
+					fs.renameSync( Asset.file.path, filePath )
+					result.file = assetId
+				}
 
+				if( result.type === 'spriteSheet' ) {
+					result.config = _.pick( payload, 'textureWidth', 'textureHeight', 'frameWidth', 'frameHeight')
+				} else {
 
-                fs.renameSync( Asset.file.path, filePath )
-
-                var namespace = util.extractNamespaceFromPath( folder, assetPathPart )
-
-                var assetId = ( namespace.length > 0 ) ? namespace + "/" + baseName : baseName
-
-                var result = {
-                    name: assetName,
-                    namespace: namespace,
-                    type: type,
-					file: assetId
-                }
+					if( result.type === 'animation' ) {
+						result.config = _.pick( payload, 'duration', 'looped')
+					}
+				}
 
                 util.writeFile( newFileNameWithoutExtension + ".json", JSON.stringify( result, null, "\t" ), false )
-
+console.log( result )
                 return {
                     success: true,
                     data: result

@@ -1,7 +1,5 @@
 Ext.define('Spelled.store.asset.Sounds', {
-    extend: 'Ext.data.Store',
-
-    model: 'Spelled.model.Asset',
+    extend: 'Spelled.store.asset.Assets',
 
     filters: [
         function( item ) {
