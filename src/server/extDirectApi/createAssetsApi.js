@@ -53,12 +53,15 @@ define(
 				} else {
 
 					if( result.type === 'animation' ) {
-						result.config = _.pick( payload, 'duration', 'looped')
+						result.config          = _.pick( payload, 'duration' )
+						result.config.looped   = !!payload.looped
+						result.config.type     = payload.animationType
+						result.config.frameIds = payload.frameIds.split(",")
 					}
 				}
 
                 util.writeFile( newFileNameWithoutExtension + ".json", JSON.stringify( result, null, "\t" ), false )
-console.log( result )
+
                 return {
                     success: true,
                     data: result
@@ -82,8 +85,10 @@ console.log( result )
 					file         = payload[0].file,
 					filePath     = path.dirname( jsonFilePath ) + "/" + path.basename( file )
 
-                util.deleteFile( jsonFilePath )
-                util.deleteFile( filePath )
+				util.deleteFile( jsonFilePath )
+
+				if( !!file )
+                	util.deleteFile( filePath )
 
                 return true
             }

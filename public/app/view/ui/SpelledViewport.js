@@ -15,7 +15,8 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
             items: [
                 {
                     xtype: 'spelledmenu',
-                    collapsible: false
+                    collapsible: false,
+					region:'north'
                 },
                 {
 					id: "Navigator",

@@ -71,25 +71,6 @@ Ext.define('Spelled.view.asset.Upload', {
 					}
                 },
 				{
-					xtype: "assetidproperty",
-					store: 'asset.SpriteSheets',
-					hidden: true,
-					allowBlank: true,
-					fieldLabel: "From existing Sprite Sheet",
-					listeners: {
-						'change': function( cmp, value) {
-							if( value )
-								this.up('form').down('filefield').reset()
-						}
-					},
-					validator: function( value ) {
-						var file = this.up('form').down('filefield').getValue()
-						if( ( !file && !value ) )
-							return "You need to select a existing Asset"
-						else
-							return true
-					}
-				},{
 					xtype: 'menuseparator'
 				},{
 					xtype: 'spritesheetconfig',

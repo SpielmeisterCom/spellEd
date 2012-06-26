@@ -24,7 +24,6 @@ Ext.define('Spelled.view.asset.create.SpriteSheet', {
 		{
 			xtype: "numberfield",
 			name: 'frameHeight',
-			minValue: 0,
 			fieldLabel: 'Frame Height'
 		}
 	]
