@@ -8,5 +8,5 @@ Ext.define('Spelled.view.component.property.AssetId', {
 	store          : 'asset.Assets',
 	name           : 'assetId',
 	displayField   : 'name',
-	valueField     : 'assetId'
+	valueField     : 'internalAssetId'
 });

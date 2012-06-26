@@ -88,8 +88,12 @@ var startEditor = function() {
         project: undefined,
         scene: undefined,
 
-		removeSelectedNode: function( treePanel ) {
-			treePanel.getSelectionModel().getLastSelected().remove()
+		getLastSelectedNode: function( treePanel ) {
+			return treePanel.getSelectionModel().getLastSelected()
+		},
+
+		removeSelectedNode: function( treePanel, callback ) {
+			this.getLastSelectedNode( treePanel ).remove()
 		},
 
         createTab: function( tabPanel, view ) {

@@ -30,13 +30,13 @@ define(
             }
 
             var updateTemplate = function( req, res, payload, next ) {
-                var entity = payload[ 0 ]
+                var system = payload[ 0 ]
 
-                var result = _.pick( entity, 'name', 'namespace', 'type', 'scriptId')
+                var result = _.pick( system, 'name', 'namespace', 'type', 'scriptId')
 
                 var inputDefinitions = []
                 _.each(
-                    entity.getInput,
+					system.getInput,
                     function( input ) {
                         inputDefinitions.push(
                             _.pick( input, 'name', 'templateId' )
@@ -46,7 +46,7 @@ define(
 
                 result.input = inputDefinitions
 
-                util.writeFile( entity.id, JSON.stringify( result, null, "\t" ) )
+                util.writeFile( system.id, JSON.stringify( result, null, "\t" ) )
 
                 return result
             }

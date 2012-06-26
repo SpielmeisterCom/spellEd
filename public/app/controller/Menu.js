@@ -78,6 +78,9 @@ Ext.define('Spelled.controller.Menu', {
             'assetslistcontextmenu [action="remove"]': {
                 click: this.removeAsset
             },
+			'assetslistcontextmenu [action="edit"]': {
+				click: this.showEditAsset
+			},
 
 
             'templateslistcontextmenu [action="create"]': {
@@ -195,8 +198,7 @@ Ext.define('Spelled.controller.Menu', {
     },
 
     removeTemplate: function( ) {
-        var tree = Ext.getCmp( 'TemplatesTree'),
-            node = tree.getSelectionModel().getLastSelected()
+		var node = this.application.getLastSelectedNode( Ext.getCmp( 'TemplatesTree') )
 
         if( node && node.isLeaf() ) {
 			this.application.getController('Templates').deleteTemplateAction( node )
@@ -208,12 +210,11 @@ Ext.define('Spelled.controller.Menu', {
     },
 
     removeScript: function( ) {
-        var tree = Ext.getCmp( 'ScriptsTree'),
-            node = tree.getSelectionModel().getLastSelected()
+		var node = this.application.getLastSelectedNode( Ext.getCmp( 'ScriptsTree') )
 
         if( node && node.isLeaf() ) {
             this.application.getController( 'Scripts' ).removeScript( node.get('id') )
-			this.application.removeSelectedNode( tree )
+			node.remove()
 		}
     },
 
@@ -221,24 +222,30 @@ Ext.define('Spelled.controller.Menu', {
         this.application.getController( 'Assets').showCreateAsset( )
     },
 
-    removeAsset: function( ) {
-        var tree = Ext.getCmp( 'AssetsTree'),
-            node = tree.getSelectionModel().getLastSelected()
 
-        if( node && node.isLeaf() ) {
-            this.application.getController( 'Assets' ).removeAsset( node.get('id') )
-			this.application.removeSelectedNode( tree )
+	showEditAsset: function( ) {
+		var node = this.application.getLastSelectedNode( Ext.getCmp( 'AssetsTree') )
+
+		if( node && node.isLeaf() ) {
+			this.application.getController( 'Assets' ).showEditHelper( node.get('id') )
 		}
-    },
+	},
+
+	removeAsset: function( ) {
+		var node = this.application.getLastSelectedNode( Ext.getCmp( 'AssetsTree') )
+
+		if( node && node.isLeaf() ) {
+			this.application.getController( 'Assets' ).removeAsset( node.get('id') )
+			node.remove()
+		}
+	},
 
 	removeSystemFromScene: function() {
-		var panel = Ext.getCmp("RightPanel"),
-			tree  = panel.down( 'systemlist' ),
-			node  = tree.getSelectionModel().getLastSelected()
+		var node = this.application.getLastSelectedNode( Ext.getCmp("RightPanel").down( 'systemlist' ) )
 
 		if( node && node.isLeaf() && !node.isRoot() ) {
 			this.application.getController( 'Systems' ).removeSceneSystem( node.get('text') )
-			this.application.removeSelectedNode( tree )
+			node.remove()
 		}
 
 	},
@@ -248,9 +255,7 @@ Ext.define('Spelled.controller.Menu', {
 	},
 
     removeSystemInput: function( ) {
-        var tab = Ext.getCmp("TemplateEditor").getActiveTab(),
-			grid = tab.down( 'systemtemplateinputlist' ),
-            node = grid.getSelectionModel().getLastSelected()
+        var node = this.application.getLastSelectedNode( Ext.getCmp("TemplateEditor").getActiveTab().down( 'systemtemplateinputlist' ) )
 
         if( node ) {
             this.application.getController( 'templates.Systems' ).removeSystemInputDefinition( node.getId() )
@@ -258,24 +263,20 @@ Ext.define('Spelled.controller.Menu', {
     },
 
     removeComponentAttribute: function( ) {
-        var tab = Ext.getCmp("TemplateEditor").getActiveTab(),
-            tree = tab.down( 'componenttemplateattributeslist' ),
-            node = tree.getSelectionModel().getLastSelected()
+        var node = this.application.getLastSelectedNode( Ext.getCmp("TemplateEditor").getActiveTab().down( 'componenttemplateattributeslist' ) )
 
         if( node && node.isLeaf() ) {
             this.application.getController( 'templates.Components' ).removeComponentAttribute( node.get('id') )
-			this.application.removeSelectedNode( tree )
+			node.remove()
         }
     },
 
     removeComponent: function( ) {
-        var tab = Ext.getCmp("TemplateEditor").getActiveTab(),
-            tree = tab.down( 'entitytemplatecomponentslist' ),
-            node = tree.getSelectionModel().getLastSelected()
+        var node = this.application.getLastSelectedNode( Ext.getCmp("TemplateEditor").getActiveTab().down( 'entitytemplatecomponentslist' ) )
 
         if( node && !node.isLeaf() && !node.isRoot() ) {
             this.application.getController('templates.Entities').removeEntityComponent( node.get('id') )
-			this.application.removeSelectedNode( tree )
+			node.remove()
         }
     },
 

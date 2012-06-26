@@ -24,19 +24,44 @@ define(
 
             var util = createUtil( root )
 
+			var getAssetConfigFromPayload = function( payload ) {
+				var result = _.pick( payload, 'name', 'type' ),
+					folder      = getFolder( payload),
+					namespace   = ( _.has( payload, 'namespace') ) ? payload.namespace : util.extractNamespaceFromPath( folder, assetPathPart ),
+					configObject = ( _.has( payload, 'config' ) ) ? payload.config : payload
+
+				result.namespace = namespace
+				result.doc       = ""
+
+				if( result.type === 'spriteSheet' ) {
+					result.config = _.pick( configObject, 'textureWidth', 'textureHeight', 'frameWidth', 'frameHeight')
+				} else {
+					if(  result.type === 'animation' ) {
+						result.config          = _.pick( configObject, 'duration' )
+						result.config.looped   = !!configObject.looped
+						result.config.type     = configObject.animationType
+						result.config.frameIds = configObject.frameIds.split(",")
+						result.assetId         = configObject.assetId
+					}
+				}
+
+				return result
+			}
+
+			var getFolder = function( payload ) {
+				return ( payload.folder === "root" ) ? path.join( root , payload.projectName , assetPathPart ) : payload.folder
+			}
+
             var createAsset = function( req, res, payload, next ) {
 
                 var assetName   = payload.name,
-                    folder      = ( payload.folder === "root" ) ? path.join( root , payload.projectName , assetPathPart ) : payload.folder,
+                    folder      = getFolder( payload ),
                     files       = payload.files,
-                    type        = payload.type,
 					namespace   = util.extractNamespaceFromPath( folder, assetPathPart ),
 				    newFileNameWithoutExtension = folder + "/" + assetName,
 					Asset       = _.first( files )
 
-                var result = _.pick( payload, 'name', 'type', 'config', 'assetId')
-				result.namespace = namespace
-				result.doc       = ""
+                var result = getAssetConfigFromPayload( payload )
 
 				if( Asset.file.size > 0 ) {
 					var extension = mime.extension( Asset.file.type),
@@ -46,18 +71,6 @@ define(
 
 					fs.renameSync( Asset.file.path, filePath )
 					result.file = assetId
-				}
-
-				if( result.type === 'spriteSheet' ) {
-					result.config = _.pick( payload, 'textureWidth', 'textureHeight', 'frameWidth', 'frameHeight')
-				} else {
-
-					if( result.type === 'animation' ) {
-						result.config          = _.pick( payload, 'duration' )
-						result.config.looped   = !!payload.looped
-						result.config.type     = payload.animationType
-						result.config.frameIds = payload.frameIds.split(",")
-					}
 				}
 
                 util.writeFile( newFileNameWithoutExtension + ".json", JSON.stringify( result, null, "\t" ), false )
@@ -77,7 +90,16 @@ define(
             }
 
             var updateAsset = function( req, res, payload, next ) {
+				var asset     = payload[ 0 ]
 
+				var result = getAssetConfigFromPayload( asset )
+
+				if( !!asset.file )
+					result.file = asset.file
+
+				util.writeFile( asset.id, JSON.stringify( result, null, "\t" ) )
+
+				return result
             }
 
             var deleteAsset = function( req, res, payload, next ) {

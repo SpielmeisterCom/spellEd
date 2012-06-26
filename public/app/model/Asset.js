@@ -1,5 +1,6 @@
 Ext.define('Spelled.model.Asset', {
     extend: 'Ext.data.Model',
+
     proxy: {
         type: 'direct',
         api: {
@@ -14,7 +15,9 @@ Ext.define('Spelled.model.Asset', {
         'type',
 		'file',
         'namespace',
-		'name'
+		'config',
+		'name',
+		'assetId'
     ],
 
 	constructor: function() {
@@ -25,7 +28,7 @@ Ext.define('Spelled.model.Asset', {
 			name      = object.name,
 			assetId   = object.type + ":" + ( ( namespace.length > 0 ) ? namespace +"."+ name : name )
 
-		this.set( 'assetId', assetId)
+		this.set( 'internalAssetId', assetId)
 	},
 
     getFilePath: function( projectName ) {

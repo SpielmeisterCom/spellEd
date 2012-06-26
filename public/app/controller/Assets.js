@@ -6,11 +6,13 @@ Ext.define('Spelled.controller.Assets', {
         'asset.Editor',
         'asset.TreeList',
         'asset.Iframe',
-        'asset.Upload',
+        'asset.Form',
         'asset.FolderPicker',
+		'asset.create.Create',
 		'asset.create.Texture',
 		'asset.create.SpriteSheet',
 		'asset.create.Animation',
+		'asset.edit.Edit',
 		'asset.inspector.Config'
     ],
 
@@ -42,8 +44,11 @@ Ext.define('Spelled.controller.Assets', {
 
     init: function() {
         this.control({
-			'createasset > form > combobox[name="type"]': {
+			'createasset combobox[name="type"]': {
 				select: this.showAdditionalConfiguration
+			},
+			'editasset button[action="editAsset"]' : {
+				click: this.editAsset
 			},
             'assetsnavigator': {
                 activate: this.showAssets
@@ -67,6 +72,94 @@ Ext.define('Spelled.controller.Assets', {
             }
         })
     },
+
+	showEditHelper: function( id ) {
+		var Asset = this.getModel('Asset')
+
+		Asset.load(
+			id,
+			{
+				scope: this,
+				success: function( asset ) {
+					this.showEdit( asset )
+				}
+			}
+		)
+	},
+
+	fieldRenderHelper: function( type, form, asset ) {
+		var assetsCombo = form.down('combobox[name="assetId"]'),
+			fileUpload  = form.down('filefield[name="asset"]'),
+			spriteSheetConfig    = form.down('spritesheetconfig'),
+			animationassetconfig = form.down('animationassetconfig')
+
+		//Resetting defaults
+		assetsCombo.hide()
+		spriteSheetConfig.hide()
+		animationassetconfig.hide()
+		fileUpload.hide()
+		fileUpload.reset()
+		assetsCombo.clearValue()
+
+
+		switch( type ) {
+			case "animation":
+				if( !!asset ) {
+					form.getForm().setValues(
+						{
+							looped   : asset.get('config').looped,
+							duration : asset.get('config').duration,
+							frameIds : asset.get('config').frameIds
+						}
+					)
+				}
+
+				assetsCombo.show()
+				animationassetconfig.show()
+				break
+			case "spriteSheet":
+				if( !!asset ) {
+					form.getForm().setValues(
+						{
+							textureWidth  : asset.get('config').textureWidth,
+							textureHeight : asset.get('config').textureHeight,
+							frameWidth    : asset.get('config').frameWidth,
+							frameHeight   : asset.get('config').frameHeight
+						}
+					)
+				}
+
+				spriteSheetConfig.show()
+			default:
+				fileUpload.show()
+		}
+	},
+
+	showEdit: function( asset ) {
+		var view = Ext.createWidget( 'editasset' ),
+			form = view.down( 'form' )
+
+		this.fieldRenderHelper( asset.get('type'), form, asset )
+		form.loadRecord( asset )
+
+		//TODO: enable changing file
+		form.down('filefield').hide()
+
+		view.show()
+	},
+
+	editAsset: function( button ) {
+		var form    = button.up('form').getForm(),
+			window  = button.up( 'window' ),
+			record  = form.getRecord(),
+			values  = form.getValues()
+
+		record.set( 'config', values)
+
+		record.save()
+
+		window.close()
+	},
 
 	showConfigHelper: function( tree, node ) {
 		var inspectorPanel = this.getRightPanel(),
@@ -98,33 +191,10 @@ Ext.define('Spelled.controller.Assets', {
 		inspectorPanel.add( view )
 	},
 
-	showAdditionalConfiguration: function( combo, records ) {
-		var form        = combo.up('form'),
-			assetsCombo = form.down('combobox[name="assetId"]'),
-			fileUpload  = form.down('filefield[name="asset"]'),
-			spriteSheetConfig    = form.down('spritesheetconfig'),
-			animationassetconfig = form.down('animationassetconfig')
+	showAdditionalConfiguration: function( combo ) {
+		var form        = combo.up('form')
 
-		//Resetting defaults
-		assetsCombo.hide()
-		spriteSheetConfig.hide()
-		animationassetconfig.hide()
-		fileUpload.hide()
-		fileUpload.reset()
-		assetsCombo.clearValue()
-
-
-		switch( combo.getValue() ) {
-			case "animation":
-				assetsCombo.show()
-				animationassetconfig.show()
-				break
-			case "spriteSheet":
-				spriteSheetConfig.show()
-			default:
-				fileUpload.show()
-		}
-
+		this.fieldRenderHelper( combo.getValue(), form )
 	},
 
     showListContextMenu: function( view, record, item, index, e, options ) {
@@ -190,8 +260,7 @@ Ext.define('Spelled.controller.Assets', {
     },
 
     showCreateAsset: function() {
-        var View = this.getAssetUploadView()
-        var view = new View( )
+        var view = Ext.createWidget( 'createasset' )
         view.show()
     },
 

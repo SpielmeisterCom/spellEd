@@ -27,7 +27,7 @@ Ext.define('Spelled.view.asset.create.Animation', {
 			name: 'animationType',
 			value: 'sprite',
 			fieldLabel: 'Animation Type',
-			disabled: true
+			readOnly: true
 		},
 		{
 			xtype: "checkbox",
