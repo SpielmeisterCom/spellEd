@@ -124,20 +124,26 @@ Ext.define('Spelled.controller.Components', {
 		var componentConfigId = e.grid.componentConfigId,
 			record            = e.record.data,
 			component         = this.getConfigComponentsStore().getById( componentConfigId ),
-			defaultConfig     = component.getConfigMergedWithTemplateConfig(),
+			config            = component.get('config'),
+			defaultConfig     = component.getTemplateConfig(),
 			value             = record.value
 
 		try {
 			value = JSON.parse( value )
 		} catch ( e ) {}
 
-		if( defaultConfig[ record.name ] != value ) {
+		if( config[ record.name ] != value ) {
 			var config = component.get( 'config' )
 			try {
 				config[ record.name ] = eval( value )
 			} catch( e ) {
 				config[ record.name ] = value
 			}
+
+			if( config[ record.name ] == defaultConfig[ record.name ] ) {
+				delete config[ record.name ]
+			}
+
 			component.set( 'config', config)
 
 			component.setChanged()
@@ -169,11 +175,7 @@ Ext.define('Spelled.controller.Components', {
         Ext.iterate(
             component.getConfigMergedWithTemplateConfig(),
             function( key, value ) {
-                if( Ext.isObject( value ) && !!value.isModel ) {
-                    config[ key ] = this.convertValueForGrid( value.get('default') )
-                } else {
-                    config[ key ] = this.convertValueForGrid( value )
-                }
+				config[ key ] = this.convertValueForGrid( value )
             },
             this
         )

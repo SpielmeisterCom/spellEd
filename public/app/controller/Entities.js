@@ -78,7 +78,6 @@ Ext.define('Spelled.controller.Entities', {
 
 					newComponent.setEntity( record )
                     record.getComponents().add( newComponent )
-					Ext.getStore('config.Components').add( newComponent )
                 }
             )
 

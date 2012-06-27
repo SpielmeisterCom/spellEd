@@ -39,14 +39,34 @@ Ext.define('Spelled.model.config.Component', {
 		return Ext.getStore( 'template.Components').getByTemplateId( this.get('templateId') )
 	},
 
-    getConfigMergedWithTemplateConfig: function( ) {
-        var templateComponent = this.getTemplate(),
+	getTemplateConfig: function() {
+		var templateComponent = this.getTemplate(),
 			templateConfig    = templateComponent.getConfig()
 
+		var config = {}
+		Ext.Object.each(
+			templateConfig,
+			function( key, value ) {
+				config[ key ] = value.get('default')
+			}
+		)
+
+		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && !Ext.isEmpty( this.getEntity().get('templateId' ) ) ) {
+			var templateEntity          = Ext.getStore( 'template.Entities').getByTemplateId( this.getEntity().get('templateId' )),
+				templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', this.get('templateId') )
+
+			if( templateEntityComponent ) {
+				config = Ext.Object.merge( config, templateEntityComponent.get('config') )
+			}
+		}
+
+		return config
+	},
+
+    getConfigMergedWithTemplateConfig: function( ) {
         //TODO: the config from entities get overwritten if we do not mark them
         this.markChanges()
 
-		var tmp = {}
 		//Only merge with enityconfig, if it is really linked to a entity
 		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && !Ext.isEmpty( this.getEntity().get('templateId' ) ) ) {
 			var templateEntity          = Ext.getStore( 'template.Entities').getByTemplateId( this.getEntity().get('templateId' )),
@@ -54,17 +74,15 @@ Ext.define('Spelled.model.config.Component', {
 
 			if( !templateEntityComponent ) {
 				this.set('additional', true)
-				tmp = Ext.Object.merge( templateConfig, this.get('config') )
-			} else {
-				tmp = Ext.Object.merge( templateConfig, templateEntityComponent.get('config'), this.get('config') )
 			}
 
 		} else {
 			this.set('additional', true)
-			tmp = Ext.Object.merge( templateConfig, this.get('config') )
 		}
 
-        //TODO: Warum ist trim in der config durch den merge
+		var tmp = Ext.Object.merge( this.getTemplateConfig(), this.get('config') )
+
+		//TODO: Warum ist trim in der config durch den merge
         delete tmp.trim
 
         return tmp
