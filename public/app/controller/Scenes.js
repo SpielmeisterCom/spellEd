@@ -284,6 +284,8 @@ Ext.define('Spelled.controller.Scenes', {
             project = this.application.getActiveProject(),
             iframe  = panel.down( 'spellediframe' )
 
+		this.application.getController('Projects').saveActiveProject()
+
         SpellBuild.ProjectActions.executeCreateDebugBuild(
             "html5",
             project.get('name'),

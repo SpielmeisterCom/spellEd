@@ -104,6 +104,13 @@ Ext.define('Spelled.controller.Projects', {
 				this.getScenesList( project )
 				this.application.setActiveProject( project )
 				Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Scenes') )
+
+				var tree       = Ext.getCmp('ScenesTree'),
+					firstScene = project.getScenes().first()
+
+				tree.getSelectionModel().select( tree.getRootNode().findChild( 'id', firstScene.get('name') ) )
+
+				this.application.getController( 'Scenes' ).renderScene( firstScene )
             }
         })
 
