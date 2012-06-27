@@ -55,7 +55,6 @@ define(
 			vec2.subtract( targetTransform.position, aiTransform.position, tmp )
 			vec2.normalize( tmp )
 
-			// TODO: find the bug that causes the ai spacecraft to occasionally steer in the wrong direction (rotates the bigger angle)
 			var deltaAngle = Math.atan2( tmp[ 0 ], tmp[ 1 ] ) - aiTransform.rotation
 			deltaAngle += ( deltaAngle > Math.PI ) ? -2 * Math.PI : ( deltaAngle < -Math.PI ) ? 2 * Math.PI : 0
 
