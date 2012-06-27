@@ -286,16 +286,38 @@ Ext.define('Spelled.controller.Scenes', {
 
 		this.application.getController('Projects').saveActiveProject()
 
-        SpellBuild.ProjectActions.executeCreateDebugBuild(
-            "html5",
-            project.get('name'),
-            project.getConfigName(),
-            function() {
-                iframe.el.dom.src = iframe.el.dom.src
-				iframe.focus()
-			}
-        )
+		var  p = Ext.create('Ext.ProgressBar', {
+			width: 300
+		})
 
+		var w = Ext.create('Ext.window.Window', {
+			modal: true,
+			layout: 'fit',
+			items: p
+		}).show();
+
+		p.wait({
+			interval: 500,
+			duration: 1000,
+			increment: 2,
+			text: 'Updating...',
+			scope: this,
+			fn: function() {
+
+				SpellBuild.ProjectActions.executeCreateDebugBuild(
+					"html5",
+					project.get('name'),
+					project.getConfigName(),
+					function() {
+						p.updateText('Done!');
+						w.close()
+
+						iframe.el.dom.src = iframe.el.dom.src
+						iframe.focus()
+					}
+				)
+			}
+		})
     },
 
     toggleState: function( button ) {
