@@ -16,5 +16,13 @@ Ext.define('Spelled.view.entity.ComponentsList' ,{
 			text: 'Add new Component',
 			action: 'showAddComponent'
 		}
-	]
+	],
+
+	sortByTitle: function() {
+		this.items.items = this.items.items.sort(
+			function( a, b ) {
+				return ( a.title > b.title )
+			}
+		)
+	}
 });

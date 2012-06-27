@@ -120,18 +120,21 @@ Ext.define('Spelled.controller.Entities', {
 
     showComponentsList: function( entity ) {
         var contentPanel = this.getRightPanel(),
-			View = this.getEntityComponentsListView()
+			View         = this.getEntityComponentsListView(),
+			components   = entity.getComponents()
 
 		if( !Ext.isEmpty(entity.get('templateId')) )
 			entity.mergeWithTemplateConfig()
 
 		var view = new View()
-		entity.getComponents().each(
+		components.each(
 			function( component ) {
 				view.add( this.application.getController('Components').createConfigGridView( component ) )
 			},
 			this
 		)
+
+		view.sortByTitle()
 
 		contentPanel.add( view )
 
