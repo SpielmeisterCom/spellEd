@@ -67,7 +67,7 @@ define(
 		}
 
 		var process = function( globals, timeInMs, deltaTimeInMs ) {
-			var deltaTimeInS    = deltaTimeInMs / 1000
+			var deltaTimeInS = deltaTimeInMs / 1000
 
 			this.updateSpacecrafts( deltaTimeInS )
 			this.updateInertialObjects( deltaTimeInS )

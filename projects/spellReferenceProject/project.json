@@ -63,29 +63,31 @@
 						{
 							"templateId": "spell.component.physics.collisionSphere",
 							"config": {
-								"radius": 16
+								"radius": 35
 							}
 						}
 					],
 					"children": [
 						{
+							"name" : "shield",
 							"components": [
 								{
 									"templateId": "spell.component.2d.transform",
-									"config": {
-										"scale": [
-											0.75,
-											0.75
-										]
+									"config" : {
+										"position" : [ 0, -0.025 ],
+										"scale" : [ 0.02, 0.02 ]
 									}
 								},
 								{
-									"templateId": "spell.component.visualObject"
+									"templateId": "spell.component.visualObject",
+									"config" : {
+										"opacity" : 0.33
+									}
 								},
 								{
 									"templateId": "spell.component.2d.graphics.appearance",
 									"config": {
-										"assetId": "appearance:spellReferenceProject.spelljsLogo"
+										"assetId": "appearance:spellReferenceProject.shield"
 									}
 								}
 							]
@@ -254,6 +256,80 @@
 					]
 				},
 				{
+					"name": "asteroid4",
+					"templateId": "spellReferenceProject.entity.asteroid",
+					"components": [
+						{
+							"templateId": "spell.component.2d.transform",
+							"config": {
+								"position": [
+									500,
+									550
+								]
+							}
+						},
+						{
+							"templateId": "spell.component.2d.graphics.appearance",
+							"config": {
+								"assetId": "appearance:spellReferenceProject.asteroid2"
+							}
+						},
+						{
+							"templateId": "spell.component.physics.collisionSphere",
+							"config": {
+								"radius": 13
+							}
+						},
+						{
+							"templateId": "spellReferenceProject.component.2d.physics.inertialObject",
+							"config": {
+								"mass": 12,
+								"velocity": [
+									-10,
+									-3
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "asteroid5",
+					"templateId": "spellReferenceProject.entity.asteroid",
+					"components": [
+						{
+							"templateId": "spell.component.2d.transform",
+							"config": {
+								"position": [
+									25,
+									75
+								]
+							}
+						},
+						{
+							"templateId": "spell.component.2d.graphics.appearance",
+							"config": {
+								"assetId": "appearance:spellReferenceProject.asteroid2"
+							}
+						},
+						{
+							"templateId": "spell.component.physics.collisionSphere",
+							"config": {
+								"radius": 13
+							}
+						},
+						{
+							"templateId": "spellReferenceProject.component.2d.physics.inertialObject",
+							"config": {
+								"mass": 12,
+								"velocity": [
+									-5,
+									-2
+								]
+							}
+						}
+					]
+				},
+				{
 					"name": "camera",
 					"templateId": "spell.entity.camera",
 					"components": [
@@ -294,7 +370,7 @@
 					]
 				},
 				{
-					"name": "look ma, anonymous entity config!",
+					"name": "spelljs logo",
 					"components": [
 						{
 							"templateId": "spell.component.2d.transform",
