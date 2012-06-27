@@ -1,22 +1,7 @@
 Ext.define('Spelled.view.template.entity.Property', {
-    extend: 'Ext.form.Panel',
+    extend: 'Spelled.view.template.component.Property',
     alias : 'widget.entitytemplateproperty',
 
-    bodyPadding: 10,
-    margin: '5 0 0 0',
-    title: 'Property',
-
-    buttons: [
-        {
-            text: "Save",
-            action: "save"
-        },
-        {
-            text: "Reset",
-            action: "reset",
-            formBind:true
-        }
-    ],
     items: [
         {
             xtype: 'textfield',

@@ -138,13 +138,12 @@ Ext.define('Spelled.controller.templates.Components', {
 		var attribute = Ext.getStore('template.ComponentAttributes').getById( record.getId() )
 
         if( attribute ) {
-			var view      = this.getTemplateEditor().getActiveTab().down( 'componenttemplateproperty' )
-			view.showConfig()
-            this.fillAttributeConfigView( view, attribute )
+            this.fillAttributeConfigView( this.getTemplateEditor().getActiveTab().down( 'componenttemplateproperty' ), attribute )
         }
     },
 
     fillAttributeConfigView: function( propertyView, attribute ) {
+		propertyView.showConfig()
         propertyView.getForm().loadRecord( attribute )
     },
 

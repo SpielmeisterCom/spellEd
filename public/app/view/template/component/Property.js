@@ -10,16 +10,17 @@ Ext.define('Spelled.view.template.component.Property', {
 		hidden: true
 	},
 
-    buttons: [
-        {
-            text: "Save",
-            action: "save"
-        },
-        {
-            text: "Reset",
-            action: "reset"
-        }
-    ],
+	buttons: [
+		{
+			text: "Save",
+			action: "save"
+		},
+		{
+			text: "Reset",
+			action: "reset",
+			formBind:true
+		}
+	],
     items: [
         {
             xtype: 'textfield',
@@ -50,14 +51,5 @@ Ext.define('Spelled.view.template.component.Property', {
 				item.show()
 			}
 		)
-	},
-
-	hideConfig: function() {
-		this.items.each(
-			function( item ) {
-				item.hide()
-			}
-		)
 	}
-
 });
