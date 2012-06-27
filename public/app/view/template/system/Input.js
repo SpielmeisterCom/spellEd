@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.template.system.Input' ,{
-    extend: 'Spelled.abstract.view.TreeList',
+    extend: 'Ext.grid.Panel',
     alias : 'widget.systemtemplateinputlist',
 
     title: 'Input',

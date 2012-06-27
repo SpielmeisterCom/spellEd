@@ -37,9 +37,10 @@ Ext.define('Spelled.controller.templates.Systems', {
 		this.control({
 			'systemtemplateinputlist': {
 				editclick:       this.showInputListContextMenu,
-				itemcontextmenu: this.showInputListContextMenu,
-				itemmouseenter:  this.application.showActionsOnFolder,
-				itemmouseleave:  this.application.hideActions
+				itemcontextmenu: this.showInputListContextMenu
+			},
+			'systemblueprintinputlist [action="editclick"]': {
+				click:       this.showInputListContextMenu
 			},
 
 			'systemtemplateinputlist [action="showAddInput"]' : {
@@ -175,16 +176,10 @@ Ext.define('Spelled.controller.templates.Systems', {
     },
 
     refreshSystemTemplateInputList: function( tab ) {
-        var systemTemplate = tab.template,
+        var systemTemplate  = tab.template,
             inputView       = tab.down( 'systemtemplateinputlist' )
 
-        var rootNode = inputView.getStore().setRootNode( {
-                text: systemTemplate.getFullName(),
-                expanded: true
-            }
-        )
-
-        systemTemplate.appendOnTreeNode( rootNode )
+		inputView.reconfigure( systemTemplate.getInput() )
     },
 
     showAddInput: function( ) {
@@ -214,12 +209,14 @@ Ext.define('Spelled.controller.templates.Systems', {
         var panel  = button.up('panel'),
             form   = panel.down('form'),
             values = form.getValues(),
+			grid   = panel.down('systemtemplateinputlist'),
             ownerModel = this.getTemplateEditor().getActiveTab().template
 
         ownerModel.set( values )
 
         if( !!ownerModel ) {
             ownerModel.save( )
+			grid.getStore().commitChanges()
             this.application.getController('Templates').refreshTemplateStores()
         }
 
