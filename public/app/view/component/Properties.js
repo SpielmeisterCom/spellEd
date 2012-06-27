@@ -16,7 +16,16 @@ Ext.define('Spelled.view.component.Properties', {
 			type:'help',
 			tooltip: 'Get Help',
 			handler: function( event, toolEl, panel ){
-				Ext.Msg.alert( 'Status', 'Not Implemented');
+				var componentGrid = panel.up( 'componentproperties' )
+
+				if( !!componentGrid.componentConfigId ) {
+					var component = Ext.getStore( 'config.Components' ).getById( componentGrid.componentConfigId ),
+						template  = component.getTemplate()
+
+					if( !Ext.isEmpty( template.get('doc') ) ) {
+						window.open( template.get('doc'), '_blank')
+					}
+				}
 			}
 		}
 	],

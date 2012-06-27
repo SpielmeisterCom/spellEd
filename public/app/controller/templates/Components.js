@@ -98,9 +98,11 @@ Ext.define('Spelled.controller.templates.Components', {
             values = form.getValues(),
             tab    = this.getTemplateEditor().getActiveTab(),
 			title  = tab.down( 'textfield[name="title"]' ),
+			doc    = tab.down( 'textfield[name="doc"]' ),
 			ownerModel = tab.template
 
 		ownerModel.set('title', title.getValue())
+		ownerModel.set('doc', doc.getValue())
 
 		if( !!record )
         	record.set( values )

@@ -26,15 +26,15 @@ Ext.define('Spelled.view.template.component.Edit', {
                     items: [
                         {
                             xtype: "componenttemplatedetails",
-                            flex: 1
+                            flex: 2
                         },
                         {
                             xtype: 'componenttemplateattributeslist',
-                            flex: 2
+                            flex: 3
                         },
                         {
                             xtype: 'componenttemplateproperty',
-                            flex: 2
+                            flex: 3
                         }
                     ]
                 },

@@ -21,6 +21,10 @@ define(
 
             var util = createUtil( root )
 
+			var buildComponentFromData = function( data ) {
+				return _.pick( data, 'name', 'namespace', 'type', 'title', 'doc')
+			}
+
             /**
              *  Component Templates Actions
              */
@@ -33,7 +37,7 @@ define(
                 var component = payload[ 0 ],
                     tmpPath   = component.id
 
-                var result = _.pick( component, 'name', 'namespace', 'type', 'title')
+                var result = buildComponentFromData( component )
 
                 var attributes = _.map(
                     component.getAttributes,
@@ -65,7 +69,8 @@ define(
 
                 var namespace = util.extractNamespaceFromPath( folder, templatePathPart )
 
-                var component = _.pick( payload, 'name', 'namespace', 'type', 'title')
+				var component = buildComponentFromData( payload )
+				component.namespace  = namespace
 				component.attributes = []
 
                 util.writeFile( filePath , JSON.stringify( component, null, "\t" ), false )

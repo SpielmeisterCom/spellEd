@@ -5,6 +5,7 @@ Ext.define('Spelled.model.template.Component', {
         "type",
         "namespace",
 		{ name: 'title', type: 'string', defaultValue: "" },
+		"doc",
         "name"
     ],
 
