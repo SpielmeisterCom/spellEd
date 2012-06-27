@@ -6,6 +6,8 @@ Ext.define('Spelled.view.component.Add' ,{
     modal : true,
 	layout: 'fit',
 
+	width: 450,
+
     items: [
         {
             bodyPadding: 10,
@@ -14,7 +16,6 @@ Ext.define('Spelled.view.component.Add' ,{
             items: [
                 {
                     xtype: 'combobox',
-                    store: 'template.Components',
 
                     valueField: 'templateId',
                     displayField:'templateId',

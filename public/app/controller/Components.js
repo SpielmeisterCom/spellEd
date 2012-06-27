@@ -71,7 +71,25 @@ Ext.define('Spelled.controller.Components', {
 	},
 
 	showAddComponent: function( button ) {
-		var view = Ext.createWidget( 'addcomponent' )
+		var view   = Ext.createWidget( 'addcomponent' ),
+			entity = this.application.getController('Entities').getActiveEntity(),
+			assignedComponent = entity.getComponents()
+
+		var store = Ext.create( 'Ext.data.Store',
+			{
+				model: 'Spelled.model.template.Component'
+			}
+		)
+
+		Ext.getStore('template.Components').each(
+			function( record ){
+				if( assignedComponent.find( 'templateId', record.get('templateId') ) === -1 ) {
+					store.add( record )
+				}
+			}
+		)
+
+		view.down('combobox[name="templateId"]').bindStore( store )
 
 		view.show()
 	},
