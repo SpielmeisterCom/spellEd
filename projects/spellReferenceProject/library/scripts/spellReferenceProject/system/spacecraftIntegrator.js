@@ -63,7 +63,7 @@ define(
 		var updateInertialObjectIter = function( deltaTimeInS, inertialObject, transform ) {
 			// ds, tmp := deltaPosition
 			vec2.scale( inertialObject.velocity, deltaTimeInS, tmp )
-			vec2.add( tmp, transform.position )
+			vec2.add( tmp, transform.translation )
 		}
 
 		var process = function( globals, timeInMs, deltaTimeInMs ) {

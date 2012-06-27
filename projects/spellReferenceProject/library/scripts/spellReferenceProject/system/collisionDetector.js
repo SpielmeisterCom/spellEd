@@ -120,12 +120,12 @@ define(
 			for( var i = 0; i < numEntityIds; i++ ) {
 				var idA              = entityIds[ i ],
 					collisionSphereA = collisionSpheres[ idA ],
-					positionA        = transforms[ idA ].position
+					positionA        = transforms[ idA ].translation
 
 				for( var j = i + 1; j < numEntityIds; j++ ) {
 					var idB              = entityIds[ j ],
 						collisionSphereB = collisionSpheres[ idB ],
-						positionB        = transforms[ idB ].position
+						positionB        = transforms[ idB ].translation
 
 					if( isColliding( positionA, collisionSphereA, positionB, collisionSphereB ) ) {
 						resolveCollision( positionA, collisionSphereA, inertialObjects[ idA ], positionB, collisionSphereB, inertialObjects[ idB ] )

@@ -24,7 +24,7 @@
 						{
 							"templateId": "spell.component.2d.transform",
 							"config": {
-								"position": [
+								"translation": [
 									128,
 									128
 								]
@@ -74,7 +74,7 @@
 								{
 									"templateId": "spell.component.2d.transform",
 									"config" : {
-										"position" : [ 0, -0.025 ],
+										"translation" : [ 0, -0.025 ],
 										"scale" : [ 0.02, 0.02 ]
 									}
 								},
@@ -101,7 +101,7 @@
 						{
 							"templateId": "spell.component.2d.transform",
 							"config": {
-								"position": [
+								"translation": [
 									400,
 									250
 								],
@@ -139,7 +139,7 @@
 						{
 							"templateId": "spell.component.2d.transform",
 							"config": {
-								"position": [
+								"translation": [
 									700,
 									100
 								]
@@ -163,7 +163,7 @@
 						{
 							"templateId": "spell.component.2d.transform",
 							"config": {
-								"position": [
+								"translation": [
 									600,
 									500
 								]
@@ -188,7 +188,7 @@
 						{
 							"templateId": "spell.component.2d.transform",
 							"config": {
-								"position": [
+								"translation": [
 									725,
 									650
 								]
@@ -225,7 +225,7 @@
 						{
 							"templateId": "spell.component.2d.transform",
 							"config": {
-								"position": [
+								"translation": [
 									300,
 									700
 								]
@@ -262,9 +262,9 @@
 						{
 							"templateId": "spell.component.2d.transform",
 							"config": {
-								"position": [
-									500,
-									550
+								"translation": [
+									250,
+									350
 								]
 							}
 						},
@@ -299,7 +299,7 @@
 						{
 							"templateId": "spell.component.2d.transform",
 							"config": {
-								"position": [
+								"translation": [
 									25,
 									75
 								]
@@ -336,7 +336,7 @@
 						{
 							"templateId": "spell.component.2d.transform",
 							"config": {
-								"position": [
+								"translation": [
 									512,
 									384
 								]
@@ -375,7 +375,7 @@
 						{
 							"templateId": "spell.component.2d.transform",
 							"config": {
-								"position": [
+								"translation": [
 									950,
 									25
 								],

@@ -27,7 +27,7 @@ define(
 		var cleanUp = function( globals ) {}
 
 		var updatePositionIter = function( transform ) {
-			var position = transform.position
+			var position = transform.translation
 
 			if( position[ 0 ] > rightBorder ) {
 				position[ 0 ] = leftBorder
