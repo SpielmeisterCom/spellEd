@@ -25,9 +25,7 @@ Ext.define('Spelled.controller.Components', {
 	init: function() {
 		this.control({
 			'componentproperties': {
-				edit: this.editProperty
-			},
-			'componentproperties': {
+				edit: this.editProperty,
 				beforeclose: this.confirmDelete
 			},
 			'entitycomponentslist button[action="showAddComponent"]': {
