@@ -35,8 +35,12 @@ Ext.define('Spelled.model.config.Component', {
 		if( !Ext.isEmpty( this.get('config') ) ) this.setChanged()
 	},
 
+	getTemplate: function() {
+		return Ext.getStore( 'template.Components').getByTemplateId( this.get('templateId') )
+	},
+
     getConfigMergedWithTemplateConfig: function( ) {
-        var templateComponent = Ext.getStore( 'template.Components').getByTemplateId( this.get('templateId')),
+        var templateComponent = this.getTemplate(),
 			templateConfig    = templateComponent.getConfig()
 
         //TODO: the config from entities get overwritten if we do not mark them

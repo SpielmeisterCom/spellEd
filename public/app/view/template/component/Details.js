@@ -20,6 +20,12 @@ Ext.define('Spelled.view.template.component.Details', {
             fieldLabel: 'Name',
             name: 'tmpName',
             anchor: '100%'
-        }
+        },
+		{
+			xtype: 'textfield',
+			fieldLabel: 'Title',
+			name: 'title',
+			anchor: '100%'
+		}
     ]
 });

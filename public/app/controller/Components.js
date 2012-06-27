@@ -144,7 +144,10 @@ Ext.define('Spelled.controller.Components', {
 	},
 
 	createConfigGridView: function( component ) {
-        var config = {}
+        var config   = {},
+			template = component.getTemplate(),
+			title    = ( Ext.isEmpty( template.get('title') ) ) ? component.get('templateId') : template.get('title')
+
         Ext.iterate(
             component.getConfigMergedWithTemplateConfig(),
             function( key, value ) {
@@ -160,7 +163,7 @@ Ext.define('Spelled.controller.Components', {
 		var configGrid = Ext.createWidget(
 			'componentproperties',
 			{
-				title: component.get('templateId'),
+				title: title,
 				isAdditional: component.get('additional'),
 				source: config,
 				componentConfigId: component.getId()

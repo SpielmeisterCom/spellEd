@@ -6,16 +6,18 @@ Ext.define('Spelled.view.template.component.Property', {
     margin: '5 0 0 0',
     title: 'Property',
 
+	defaults: {
+		hidden: true
+	},
+
     buttons: [
         {
             text: "Save",
-            action: "save",
-            formBind:true
+            action: "save"
         },
         {
             text: "Reset",
-            action: "reset",
-            formBind:true
+            action: "reset"
         }
     ],
     items: [
@@ -40,5 +42,22 @@ Ext.define('Spelled.view.template.component.Property', {
             fieldLabel: 'Default value',
             anchor: '100%'
         }
-    ]
+	],
+
+	showConfig: function() {
+		this.items.each(
+			function( item ) {
+				item.show()
+			}
+		)
+	},
+
+	hideConfig: function() {
+		this.items.each(
+			function( item ) {
+				item.hide()
+			}
+		)
+	}
+
 });

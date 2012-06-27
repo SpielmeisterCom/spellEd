@@ -33,7 +33,7 @@ define(
                 var component = payload[ 0 ],
                     tmpPath   = component.id
 
-                var result = _.pick( component, 'name', 'namespace', 'type')
+                var result = _.pick( component, 'name', 'namespace', 'type', 'title')
 
                 var attributes = _.map(
                     component.getAttributes,
@@ -61,18 +61,12 @@ define(
                 var name        = payload.name,
                     extension   = ".json",
                     folder      = ( payload.namespace === "root" ) ? path.join( root , payload.projectName , templatePathPart ) : payload.namespace,
-                    filePath    = folder + "/"+ name + extension,
-                    type        = payload.type
+                    filePath    = folder + "/"+ name + extension
 
                 var namespace = util.extractNamespaceFromPath( folder, templatePathPart )
 
-                var component = {
-                    type : type,
-                    namespace : namespace,
-                    name : name,
-                    attributes : [
-                    ]
-                }
+                var component = _.pick( payload, 'name', 'namespace', 'type', 'title')
+				component.attributes = []
 
                 util.writeFile( filePath , JSON.stringify( component, null, "\t" ), false )
 

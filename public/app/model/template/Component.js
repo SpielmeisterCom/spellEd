@@ -4,8 +4,8 @@ Ext.define('Spelled.model.template.Component', {
     fields: [
         "type",
         "namespace",
-        "name",
-        "from"
+		{ name: 'title', type: 'string', defaultValue: "" },
+        "name"
     ],
 
     hasMany: {

@@ -93,14 +93,17 @@ Ext.define('Spelled.controller.templates.Components', {
     },
 
     saveComponentTemplate: function( button, event, record ) {
-        var form = button.up('form'),
+        var form   = button.up('form'),
             record = form.getRecord(),
             values = form.getValues(),
-            tab    = this.getTemplateEditor().getActiveTab()
+            tab    = this.getTemplateEditor().getActiveTab(),
+			title  = tab.down( 'textfield[name="title"]' ),
+			ownerModel = tab.template
 
-        var ownerModel = tab.template
+		ownerModel.set('title', title.getValue())
 
-        record.set( values )
+		if( !!record )
+        	record.set( values )
 
         if( !!ownerModel ) {
             ownerModel.save( )
@@ -132,10 +135,12 @@ Ext.define('Spelled.controller.templates.Components', {
     showAttributeConfig: function( treePanel, record ) {
         if( !record.data.leaf ) return
 
-        var attribute = Ext.getStore('template.ComponentAttributes').getById( record.getId() )
+		var attribute = Ext.getStore('template.ComponentAttributes').getById( record.getId() )
 
         if( attribute ) {
-            this.fillAttributeConfigView( this.getTemplateEditor().getActiveTab().down( 'componenttemplateproperty' ), attribute )
+			var view      = this.getTemplateEditor().getActiveTab().down( 'componenttemplateproperty' )
+			view.showConfig()
+            this.fillAttributeConfigView( view, attribute )
         }
     },
 
