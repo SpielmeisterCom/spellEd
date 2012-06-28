@@ -7,7 +7,6 @@ Ext.define('Spelled.controller.Entities', {
     ],
 
     stores: [
-       'EntitiesTree',
        'config.Entities',
        'template.Entities'
     ],
@@ -63,27 +62,32 @@ Ext.define('Spelled.controller.Entities', {
             values = form.getValues(),
 			store  = this.getConfigEntitiesStore()
 
-        var entityTemplate = Ext.getStore('template.Entities').getById( values.templateId )
 		var scene = Ext.getStore('config.Scenes').getById( values.sceneId )
 		delete values.sceneId
 
-        if( entityTemplate && scene ) {
-            entityTemplate.getComponents().each(
-                function( component ) {
+        if( scene ) {
 
-                    var newComponent = Ext.create( 'Spelled.model.config.Component', {
-                        templateId: component.get('templateId'),
-                        config: component.get('config')
-                    } )
+			if( !Ext.isEmpty( values.templateId ) ) {
+				var entityTemplate = Ext.getStore('template.Entities').getById( values.templateId )
 
-					newComponent.setEntity( record )
-                    record.getComponents().add( newComponent )
-                }
-            )
+				entityTemplate.getComponents().each(
+					function( component ) {
+
+						var newComponent = Ext.create( 'Spelled.model.config.Component', {
+							templateId: component.get('templateId'),
+							config: component.get('config')
+						} )
+
+						newComponent.setEntity( record )
+						record.getComponents().add( newComponent )
+					}
+				)
+
+				record.set('templateId', entityTemplate.getFullName() )
+			}
 
             record.set( values )
 			record.setScene( scene )
-            record.set('templateId', entityTemplate.getFullName() )
 
 			scene.getEntities().add( record )
 			store.add( record )

@@ -30,6 +30,7 @@ Ext.define('Spelled.view.entity.Create' ,{
 
 					name: 'sceneId',
 					fieldLabel: 'Select a Scene',
+					emptyText: " -- Select a Scene --",
 					anchor: '100%',
 					allowBlank:false
 				},
@@ -45,8 +46,9 @@ Ext.define('Spelled.view.entity.Create' ,{
                     typeAhead: true,
                     name: 'templateId',
                     fieldLabel: 'Select a Template',
+					emptyText: " -- Is Optional --",
                     anchor: '100%',
-                    allowBlank:false
+					allowBlank: true
                 }
             ],
             buttons: [
