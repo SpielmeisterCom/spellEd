@@ -11,6 +11,11 @@ Ext.define('Spelled.view.menu.contextmenu.EntitiesList', {
     },
 
     items: [
+		{
+			icon: 'images/icons/add.png',
+			text: 'Add a new Entity',
+			action: 'create'
+		},
         {
 			icon: 'images/icons/delete.png',
             text: 'Remove',

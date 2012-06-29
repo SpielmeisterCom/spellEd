@@ -5,6 +5,7 @@ Ext.define('Spelled.controller.Menu', {
         'menu.Menu',
         'menu.contextmenu.ScenesList',
         'menu.contextmenu.EntitiesList',
+		'menu.contextmenu.EntitiesFolderList',
         'menu.contextmenu.AssetsList',
         'menu.contextmenu.ScriptsList',
 		'menu.contextmenu.SceneSystemsList',
@@ -94,6 +95,14 @@ Ext.define('Spelled.controller.Menu', {
             'entitieslistcontextmenu [action="remove"]': {
                 click: this.removeEntity
             },
+			'entitieslistcontextmenu [action="create"]': {
+				click: this.showCreateEntity
+			},
+
+
+			'entitiesfolderlistcontextmenu [action="create"]': {
+				click: this.showCreateEntity
+			},
 
 
             'componenttemplateattributescontextmenu [action="remove"]': {
@@ -127,7 +136,7 @@ Ext.define('Spelled.controller.Menu', {
         return view
     },
 
-	showSceneSystemsListContextMenu: function( e) {
+	showSceneSystemsListContextMenu: function( e ) {
 		this.createAndShowView(
 			this.getMenuContextmenuSceneSystemsListView(),
 			e
@@ -178,6 +187,13 @@ Ext.define('Spelled.controller.Menu', {
 
         view.setEntity( entity )
     },
+
+	showEntitiesFolderListContextMenu: function( e ) {
+		this.createAndShowView(
+			this.getMenuContextmenuEntitiesFolderListView(),
+			e
+		)
+	},
 
     showScenesListContextMenu: function( e ) {
         this.createAndShowView(
@@ -279,6 +295,19 @@ Ext.define('Spelled.controller.Menu', {
 			node.remove()
         }
     },
+
+	showCreateEntity: function( ) {
+		var node             = this.application.getLastSelectedNode( Ext.getCmp("ScenesTree") ),
+			scenesController = this.application.getController('Scenes'),
+			type             = scenesController.getClickedTreeItemType( node)
+
+		var owner = ( type === scenesController.TREE_ITEM_TYPE_ENTITIES ) ?
+			Ext.getStore( 'config.Scenes' ).getById( node.parentNode.getId() )
+			:
+			Ext.getStore( 'config.Entities' ).getById( node.getId() )
+
+		this.application.getController( 'Entities').showCreateEntity( owner )
+	},
 
     removeEntity: function( item ) {
         var view = item.up('entitieslistcontextmenu')

@@ -17,14 +17,6 @@ Ext.define('Spelled.view.scene.TreeList' ,{
                 text:'Create a new Scene',
                 title:'Create'
             }
-        },
-		{
-			text: "Create Entity",
-			action: "showCreateEntity",
-			tooltip: {
-				text:'Create a new Entity',
-				title:'Create'
-			}
-		}
+        }
 	]
 });

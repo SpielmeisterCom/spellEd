@@ -30,10 +30,11 @@ Ext.define('Spelled.controller.Scenes', {
         'ui.SpelledRendered'
     ],
 
-	TREE_ITEM_TYPE_SCENE  : 1,
-	TREE_ITEM_TYPE_ENTITY : 2,
-	TREE_ITEM_TYPE_SYSTEM : 3,
-	TREE_ITEM_TYPE_SCRIPT : 4,
+	TREE_ITEM_TYPE_SCENE    : 1,
+	TREE_ITEM_TYPE_ENTITY   : 2,
+	TREE_ITEM_TYPE_SYSTEM   : 3,
+	TREE_ITEM_TYPE_SCRIPT   : 4,
+	TREE_ITEM_TYPE_ENTITIES : 5,
 
 	BUILD_SERVER_ORIGIN : 'http://localhost:8080',
 
@@ -107,6 +108,9 @@ Ext.define('Spelled.controller.Scenes', {
 			case 'tree-scene-script-icon':
 				type =  this.TREE_ITEM_TYPE_SCRIPT
 				break
+			case 'tree-entities-folder-icon':
+				type = this.TREE_ITEM_TYPE_ENTITIES
+				break
 		}
 
 		return type
@@ -116,6 +120,9 @@ Ext.define('Spelled.controller.Scenes', {
 		var node = gridView.getRecord( gridView.findTargetByEvent(e) )
 
 		switch( this.getClickedTreeItemType( node ) ) {
+			case this.TREE_ITEM_TYPE_ENTITIES:
+				this.application.getController( 'Entities').showEntitiesFolderListContextMenu( gridView, node, columnIndex, rowIndex, e )
+				break
 			case this.TREE_ITEM_TYPE_SCENE:
 				this.showListContextMenu( gridView, list, node, rowIndex, e )
 				break
@@ -130,6 +137,7 @@ Ext.define('Spelled.controller.Scenes', {
 			record = view.getRecord( node )
 
 		switch( this.getClickedTreeItemType( record ) ) {
+			case this.TREE_ITEM_TYPE_ENTITIES:
 			case this.TREE_ITEM_TYPE_ENTITY:
 			case this.TREE_ITEM_TYPE_SCENE:
 				icons = Ext.DomQuery.select( '.edit-action-icon', node)

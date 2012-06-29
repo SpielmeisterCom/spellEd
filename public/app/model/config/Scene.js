@@ -65,6 +65,7 @@ Ext.define('Spelled.model.config.Scene', {
 			node.createNode( {
 					text      : "Entities",
 					id        : "entities",
+					iconCls   : "tree-entities-folder-icon",
 					leaf      : false
 				}
 			)

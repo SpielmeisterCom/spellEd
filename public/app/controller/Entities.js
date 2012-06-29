@@ -25,9 +25,6 @@ Ext.define('Spelled.controller.Entities', {
 
     init: function() {
         this.control({
-            '#ScenesTree button[action="showCreateEntity"]': {
-                click: this.showCreateEntity
-            },
             'createentity button[action="createEntity"]' : {
                 click: this.createEntity
             },
@@ -37,6 +34,10 @@ Ext.define('Spelled.controller.Entities', {
         })
     },
 
+	showEntitiesFolderListContextMenu: function( view, record, item, index, e, options ) {
+		this.application.getController('Menu').showEntitiesFolderListContextMenu( e )
+	},
+
     showListContextMenu: function( view, record, item, index, e, options ) {
 		var entity = Ext.getStore('config.Entities').getById( record.getId() )
 
@@ -45,12 +46,20 @@ Ext.define('Spelled.controller.Entities', {
 		}
     },
 
-    showCreateEntity: function( ) {
-        var CreateView = this.getEntityCreateView(),
-        	createView = new CreateView()
+    showCreateEntity: function( owner ) {
+        var CreateView  = this.getEntityCreateView(),
+        	createView  = new CreateView(),
+			EntityModel = this.getConfigEntityModel(),
+			newEntity   = new EntityModel()
 
-        var EntityModel = this.getConfigEntityModel()
-        createView.down('form').loadRecord( new EntityModel() )
+
+        createView.down('form').loadRecord( newEntity )
+
+		if( owner.modelName === newEntity.modelName ) {
+			newEntity.setEntity( owner )
+		} else {
+			newEntity.setScene( owner )
+		}
 
         createView.show()
     },
@@ -62,39 +71,37 @@ Ext.define('Spelled.controller.Entities', {
             values = form.getValues(),
 			store  = this.getConfigEntitiesStore()
 
-		var scene = Ext.getStore('config.Scenes').getById( values.sceneId )
-		delete values.sceneId
+		if( !Ext.isEmpty( values.templateId ) ) {
+			var entityTemplate = Ext.getStore('template.Entities').getById( values.templateId )
 
-        if( scene ) {
+			entityTemplate.getComponents().each(
+				function( component ) {
 
-			if( !Ext.isEmpty( values.templateId ) ) {
-				var entityTemplate = Ext.getStore('template.Entities').getById( values.templateId )
+					var newComponent = Ext.create( 'Spelled.model.config.Component', {
+						templateId: component.get('templateId'),
+						config: component.get('config')
+					} )
 
-				entityTemplate.getComponents().each(
-					function( component ) {
+					newComponent.setEntity( record )
+					record.getComponents().add( newComponent )
+				}
+			)
 
-						var newComponent = Ext.create( 'Spelled.model.config.Component', {
-							templateId: component.get('templateId'),
-							config: component.get('config')
-						} )
+			record.set('templateId', entityTemplate.getFullName() )
+		}
 
-						newComponent.setEntity( record )
-						record.getComponents().add( newComponent )
-					}
-				)
 
-				record.set('templateId', entityTemplate.getFullName() )
-			}
+		if( record.hasScene() ) {
+			record.getScene().getEntities().add( record )
+		} else {
+			record.getEntity().getChildren().add( record )
+		}
 
-            record.set( values )
-			record.setScene( scene )
+		record.set( values )
+		store.add( record )
 
-			scene.getEntities().add( record )
-			store.add( record )
-
-			this.application.getController('Projects').getScenesList( this.application.getActiveProject() )
-            window.close()
-        }
+		this.application.getController('Projects').getScenesList( this.application.getActiveProject() )
+		window.close()
     },
 
 	getActiveEntity: function() {

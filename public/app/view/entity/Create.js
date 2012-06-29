@@ -19,22 +19,10 @@ Ext.define('Spelled.view.entity.Create' ,{
                     allowBlank:false
                 },
 				{
-					xtype: 'combobox',
-					store: 'config.Scenes',
-
-					valueField: 'name',
-					displayField:'name',
-					queryMode: 'local',
-					forceSelection: true,
-					editable: false,
-
-					name: 'sceneId',
-					fieldLabel: 'Select a Scene',
-					emptyText: " -- Select a Scene --",
-					anchor: '100%',
-					allowBlank:false
+					xtype: 'hiddenfield',
+					name: 'owner'
 				},
-                {
+				{
                     xtype: 'combobox',
                     store: 'template.Entities',
 
