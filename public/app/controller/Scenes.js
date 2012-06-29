@@ -284,32 +284,23 @@ Ext.define('Spelled.controller.Scenes', {
             project = this.application.getActiveProject(),
             iframe  = panel.down( 'spellediframe' )
 
-		this.application.getController('Projects').saveActiveProject()
-
-		var  p = Ext.create('Ext.ProgressBar', {
-			width: 300
-		})
-
 		var w = Ext.create('Ext.window.Window', {
 			modal: true,
 			layout: 'fit',
-			items: p
-		}).show();
+			items: [{
+				xtype: "progressbar",
+				text : "Updating...",
+				width: 300
+			}]
+		}).show()
 
-		p.wait({
-			interval: 500,
-			duration: 1000,
-			increment: 2,
-			text: 'Updating...',
-			scope: this,
-			fn: function() {
-
+		this.application.getController('Projects').saveActiveProject(
+			function() {
 				SpellBuild.ProjectActions.executeCreateDebugBuild(
 					"html5",
 					project.get('name'),
 					project.getConfigName(),
 					function() {
-						p.updateText('Done!');
 						w.close()
 
 						iframe.el.dom.src = iframe.el.dom.src
@@ -317,7 +308,8 @@ Ext.define('Spelled.controller.Scenes', {
 					}
 				)
 			}
-		})
+		)
+
     },
 
     toggleState: function( button ) {

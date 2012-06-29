@@ -72,13 +72,7 @@ Ext.define('Spelled.model.config.Scene', {
 
 		this.getEntities().each( function( entity ) {
 			entitiesNode.appendChild(
-				node.createNode( {
-						text      : entity.get('name'),
-						id        : entity.getId(),
-						iconCls   : "tree-scene-entity-icon",
-						leaf      : true
-					}
-				)
+				entity.createTreeNode( entitiesNode )
 			)
 		})
 

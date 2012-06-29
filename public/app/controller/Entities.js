@@ -106,10 +106,13 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
     deleteEntity: function ( entity ) {
-        var scene     = entity.getScene(),
-            entities = scene.getEntities()
+		this.getConfigEntitiesStore().remove( entity )
 
-        entities.remove( entity )
+		if( entity.hasScene() ) {
+			entity.getScene().getEntities().remove( entity )
+		} else if( entity.hasEntity() ) {
+			entity.getEntity().getChildren().remove( entity )
+		}
     },
 
 	showEntityInfo: function( id ) {
