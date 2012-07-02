@@ -331,7 +331,7 @@
 				},
 				{
 					"name": "camera",
-					"templateId": "spell.entity.camera",
+					"templateId": "spell.entity.2d.graphics.camera",
 					"components": [
 						{
 							"templateId": "spell.component.2d.transform",
