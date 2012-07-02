@@ -26,7 +26,9 @@ define(
 
 		var cleanUp = function( globals ) {}
 
-		var updatePositionIter = function( transform ) {
+		var updatePositionIter = function( transform, inertialObject ) {
+			if( !inertialObject ) return
+
 			var position = transform.translation
 
 			if( position[ 0 ] > rightBorder ) {
@@ -57,7 +59,7 @@ define(
 		 */
 
 		var EndlessPlayingField = function( globals ) {
-			this.updatePosition = createEntityEach( this.transforms, [], updatePositionIter )
+			this.updatePosition = createEntityEach( this.transforms, [ this.inertialObjects ], updatePositionIter )
 		}
 
 		EndlessPlayingField.prototype = {

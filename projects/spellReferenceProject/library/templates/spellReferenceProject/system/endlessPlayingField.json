@@ -7,6 +7,10 @@
 		{
 			"name" : "transforms",
 			"templateId" : "spell.component.2d.transform"
+		},
+		{
+			"name" : "inertialObjects",
+			"templateId" : "spellReferenceProject.component.2d.physics.inertialObject"
 		}
 	],
 	"scriptId" : "spellReferenceProject/system/endlessPlayingField"
