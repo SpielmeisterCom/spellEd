@@ -25,6 +25,13 @@ Ext.define('Spelled.controller.Projects', {
         })
     },
 
+	refs: [
+		{
+			ref : 'ScenesTree',
+			selector: '#ScenesTree'
+		}
+	],
+
     showCreateProject: function() {
         var View = this.getProjectCreateView()
 
@@ -105,10 +112,12 @@ Ext.define('Spelled.controller.Projects', {
 				this.application.setActiveProject( project )
 				Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Scenes') )
 
-				var tree       = Ext.getCmp('ScenesTree'),
-					firstScene = project.getScenes().first()
+				var tree       = this.getScenesTree(),
+					firstScene = project.getScenes().first(),
+					node = tree.getRootNode().findChild( 'id', firstScene.get('name'), true )
 
-				tree.getSelectionModel().select( tree.getRootNode().findChild( 'id', firstScene.get('name') ) )
+				tree.getSelectionModel().select( node )
+				tree.expandPath( node.getPath() )
 
 				this.application.getController( 'Scenes' ).renderScene( firstScene )
             }
@@ -122,7 +131,6 @@ Ext.define('Spelled.controller.Projects', {
 		app.closeAllTabs( Ext.getCmp('ScriptEditor') )
 		app.closeAllTabs( Ext.getCmp('AssetEditor') )
 		app.closeAllTabs( Ext.getCmp('SceneEditor') )
-		app.closeAllTabs( Ext.getCmp('TemplateEditor') )
 	},
 
     getScenesList: function( project ) {

@@ -1,6 +1,26 @@
 Ext.define('Spelled.view.template.entity.Property', {
-    extend: 'Spelled.view.template.component.Property',
+    extend: 'Ext.form.Panel',
     alias : 'widget.entitytemplateproperty',
+
+	bodyPadding: 10,
+	margin: '5 0 0 0',
+	title: 'Property',
+
+	defaults: {
+		hidden: true
+	},
+
+	buttons: [
+		{
+			text: "Save",
+			action: "save"
+		},
+		{
+			text: "Reset",
+			action: "reset",
+			formBind:true
+		}
+	],
 
     items: [
         {
@@ -28,5 +48,13 @@ Ext.define('Spelled.view.template.entity.Property', {
             allowBlank:false,
             anchor: '100%'
         }
-    ]
+    ],
+
+	showConfig: function() {
+	this.items.each(
+		function( item ) {
+			item.show()
+		}
+	)
+}
 });

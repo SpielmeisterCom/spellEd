@@ -31,13 +31,13 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                             id: "Scenes",
                             xtype: "scenesnavigator"
                         },
+						{
+							id: "Templates",
+							xtype: "templatesnavigator"
+						},
                         {
                             id: "Assets",
                             xtype: "assetsnavigator"
-                        },
-                        {
-                            id: "Templates",
-                            xtype: "templatesnavigator"
                         },
                         {
                             id: "Scripts",
@@ -58,10 +58,6 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                         {
                             id: "AssetEditor",
                             xtype: "asseteditor"
-                        },
-                        {
-                            id: "TemplateEditor",
-                            xtype: "templateeditor"
                         },
                         {
                             id: "ScriptEditor",

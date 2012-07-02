@@ -29,7 +29,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 		},
 		{
 			ref : 'TemplateEditor',
-			selector: '#TemplateEditor'
+			selector: '#SceneEditor'
 		}
 	],
 

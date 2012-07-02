@@ -34,8 +34,12 @@ Ext.define('Spelled.controller.Templates', {
             selector: '#MainPanel'
         },
 		{
+			ref : 'RightPanel',
+			selector: '#RightPanel'
+		},
+		{
 			ref : 'TemplateEditor',
-			selector: '#TemplateEditor'
+			selector: '#SceneEditor'
 		},
 		{
 			ref: 'TemplatesTree',
@@ -279,6 +283,7 @@ Ext.define('Spelled.controller.Templates', {
 
     showTemplateEditor : function( ) {
 		this.application.hideMainPanels()
+		this.getRightPanel().show()
         this.loadTrees()
 
 		this.getTemplateEditor().show()

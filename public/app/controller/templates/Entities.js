@@ -24,7 +24,7 @@ Ext.define('Spelled.controller.templates.Entities', {
         },
 		{
 			ref : 'TemplateEditor',
-			selector: '#TemplateEditor'
+			selector: '#SceneEditor'
 		}
     ],
 
@@ -205,7 +205,7 @@ Ext.define('Spelled.controller.templates.Entities', {
         var View = this.getTemplateEntityComponentsAddView(),
             view = new View(),
             entityTemplate          = this.getTemplateEditor().getActiveTab().template,
-            availableComponentsView  = view.down( 'treepanel' ),
+            availableComponentsView = view.down( 'treepanel' ),
             templateComponentsStore = Ext.getStore( 'template.Components' )
 
 
