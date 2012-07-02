@@ -18,6 +18,10 @@ Ext.define('Spelled.controller.Scenes', {
 		{
 			ref : 'RightPanel',
 			selector: '#RightPanel'
+		},
+		{
+			ref : 'ScenesTree',
+			selector: '#ScenesTree'
 		}
     ],
 
@@ -268,7 +272,8 @@ Ext.define('Spelled.controller.Scenes', {
 
 		store.add( record )
 		scenes.add( record )
-        this.showScenesList( scenes )
+
+		record.appendOnTreeNode( this.getScenesTree().getRootNode() )
 
         window.close()
     },
@@ -366,7 +371,7 @@ Ext.define('Spelled.controller.Scenes', {
     },
 
     showScenesList: function( scenes ) {
-        var tree     = Ext.ComponentManager.get( "ScenesTree"),
+        var tree     = this.getScenesTree(),
             rootNode = tree.getStore().getRootNode()
         rootNode.removeAll()
 

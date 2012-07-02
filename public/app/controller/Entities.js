@@ -20,6 +20,10 @@ Ext.define('Spelled.controller.Entities', {
 		{
 			ref : 'RightPanel',
 			selector: '#RightPanel'
+		},
+		{
+			ref: 'ScenesTree',
+			selector: '#ScenesTree'
 		}
 	],
 
@@ -100,12 +104,15 @@ Ext.define('Spelled.controller.Entities', {
 		record.set( values )
 		store.add( record )
 
-		this.application.getController('Projects').getScenesList( this.application.getActiveProject() )
+		var node = this.application.getLastSelectedNode( this.getScenesTree() )
+		node.set( 'leaf', false )
+		this.getScenesTree().selectPath( node.appendChild( record.createTreeNode( node )).getPath() )
+
 		window.close()
     },
 
 	getActiveEntity: function() {
-		var node = Ext.getCmp('ScenesTree').getSelectionModel().getLastSelected()
+		var node = this.application.getLastSelectedNode( this.getScenesTree() )
 
 		if( node ) {
 			return this.getConfigEntitiesStore().getById( node.getId() )
