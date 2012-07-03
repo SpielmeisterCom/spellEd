@@ -3,7 +3,7 @@ define(
 	[
 		'spell/shared/util/platform/underscore',
 
-		'glmatrix/vec2'
+		'spell/math/vec2'
 	],
 	function(
 		_,

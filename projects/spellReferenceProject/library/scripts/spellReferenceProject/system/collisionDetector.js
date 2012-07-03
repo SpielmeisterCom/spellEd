@@ -1,7 +1,7 @@
 define(
 	'spellReferenceProject/system/collisionDetector',
 	[
-		'glmatrix/vec2',
+		'spell/math/vec2',
 
 		'spell/shared/util/platform/underscore'
 	],

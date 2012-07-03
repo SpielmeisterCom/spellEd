@@ -3,7 +3,7 @@ define(
 	[
 		'spell/shared/util/createEntityEach',
 
-		'glmatrix/vec2'
+		'spell/math/vec2'
 	],
 	function(
 		createEntityEach,
