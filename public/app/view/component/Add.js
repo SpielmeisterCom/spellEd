@@ -1,47 +1,28 @@
 Ext.define('Spelled.view.component.Add' ,{
-    extend: 'Ext.Window',
-    alias: 'widget.addcomponent',
+	extend: 'Ext.window.Window',
+	alias: 'widget.addcomponent',
 
-    title : 'Add a new Component to the Entity',
-    modal : true,
+	title: "Add Components to the Entity",
+	modal: true,
+	closable: true,
+
 	layout: 'fit',
+	width : 550,
+	height: 450,
 
-	width: 450,
+	items: [
+		{
+			xtype: 'treepanel',
+			title: 'Available Components',
+			rootVisible: true
+		}
+	],
 
-    items: [
-        {
-            bodyPadding: 10,
+	buttons: [
+		{
+			text: 'Add',
+			action: 'addComponent'
+		}
+	]
 
-            xtype: 'form',
-            items: [
-                {
-                    xtype: 'combobox',
-
-                    valueField: 'templateId',
-                    displayField:'templateId',
-                    queryMode: 'local',
-                    forceSelection: true,
-
-                    typeAhead: true,
-                    name: 'templateId',
-                    fieldLabel: 'Select a Component',
-                    anchor: '100%',
-                    allowBlank:false
-                }
-            ],
-            buttons: [
-                {
-                    text: "Add",
-                    action: "addComponent",
-                    formBind:true
-                },
-                {
-                    text: "Cancel",
-                    handler: function() {
-                        this.up('window').close()
-                    }
-                }
-            ]
-        }
-    ]
 });

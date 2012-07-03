@@ -11,7 +11,6 @@ Ext.define('Spelled.controller.Menu', {
 		'menu.contextmenu.SceneSystemsList',
         'menu.contextmenu.TemplatesList',
         'menu.contextmenu.ComponentTemplateAttributesList',
-        'menu.contextmenu.EntityTemplateComponentsList',
         'menu.contextmenu.SystemTemplateInputList',
         'ui.SpelledConsole',
         'ui.StartScreen'
@@ -107,11 +106,6 @@ Ext.define('Spelled.controller.Menu', {
 
             'componenttemplateattributescontextmenu [action="remove"]': {
                 click: this.removeComponentAttribute
-            },
-
-
-            'entitytemplatecomponentscontextmenu [action="remove"]': {
-                click: this.removeComponent
             },
 
 

@@ -4,7 +4,8 @@ Ext.define('Spelled.controller.Components', {
     views: [
         'component.Properties',
 		'component.property.AssetId',
-		'component.Add'
+		'component.Add',
+		'component.AddButton'
     ],
 
     models: [
@@ -31,11 +32,27 @@ Ext.define('Spelled.controller.Components', {
 			'entitycomponentslist button[action="showAddComponent"]': {
 				click: this.showAddComponent
 			},
+			'entitycomponentslist': {
+				afterlayout: this.showAddComponentButton
+			},
 			'addcomponent button[action="addComponent"]': {
 				click : this.addComponent
 			}
 
 		})
+	},
+
+	showAddComponentButton: function( panel ) {
+		if( !this.addingButton ) {
+			this.addingButton = true
+
+			var cmp = panel.down( 'addcomponentbutton' )
+			if( !!cmp ) panel.remove( cmp )
+
+			panel.add( Ext.createWidget( 'addcomponentbutton' ) )
+
+			this.addingButton = false
+		}
 	},
 
 	confirmDelete: function( panel ) {
@@ -72,46 +89,103 @@ Ext.define('Spelled.controller.Components', {
 
 	showAddComponent: function( button ) {
 		var view   = Ext.createWidget( 'addcomponent' ),
-			entity = this.application.getController('Entities').getActiveEntity(),
-			assignedComponent = entity.getComponents()
+			entity = button.up('entitycomponentslist').entity,
+			availableComponentsView = view.down( 'treepanel' ),
+			templateComponentsStore = Ext.getStore( 'template.Components' )
 
-		var store = Ext.create( 'Ext.data.Store',
-			{
-				model: 'Spelled.model.template.Component'
+
+		var rootNode = availableComponentsView.getStore().setRootNode( {
+				text: 'Components',
+				expanded: true
 			}
 		)
 
-		Ext.getStore('template.Components').each(
-			function( record ){
-				if( assignedComponent.find( 'templateId', record.get('templateId') ) === -1 ) {
-					store.add( record )
+		var notAssignedComponents = Ext.create( 'Ext.util.MixedCollection' )
+
+		templateComponentsStore.each(
+			function( record ) {
+				var found = entity.getComponents().find( 'templateId', record.getFullName() )
+
+				if( found === -1 ) {
+					notAssignedComponents.add( record )
 				}
 			}
 		)
 
-		view.down('combobox[name="templateId"]').bindStore( store )
+		this.appendComponentsAttributesOnTreeNode( rootNode, notAssignedComponents )
+
+		rootNode.eachChild(
+			function( node ) {
+				node.set('checked', false)
+			}
+		)
+
+		view.entity = entity
 
 		view.show()
 	},
 
+	appendComponentsAttributesOnTreeNode: function( node, components ) {
+
+		components.each(
+			function( component ) {
+
+				var componentTemplate = ( !component.get('templateId') ) ?
+					component :
+					Ext.getStore( 'template.Components' ).getByTemplateId( component.get('templateId') )
+
+				if( componentTemplate ) {
+					var newNode = node.createNode ( {
+						text      : componentTemplate.getFullName(),
+						id        : component.getId(),
+						expanded  : true,
+						leaf      : false
+					} )
+
+					componentTemplate.appendOnTreeNode( newNode )
+
+					node.appendChild( newNode )
+				}
+			}
+		)
+
+		return node
+	},
+
 	addComponent: function( button ) {
 		var window = button.up('window'),
+			tree   = window.down('treepanel'),
 			form   = window.down('form'),
-			values = form.getValues(),
-			store  = this.getConfigComponentsStore(),
+			records= tree.getView().getChecked(),
 			Model  = this.getConfigComponentModel(),
-			entity = this.application.getController('Entities').getActiveEntity()
+			componentTemplateStore = Ext.getStore('template.Components'),
+			entity = window.entity
 
 		this.getRightPanel().removeAll()
 
-		var record = new Model( values )
-		record.set('additional', true)
-		record.setEntity( entity )
+		Ext.each(
+			records,
+			function( record ) {
 
-		entity.getComponents().add( record )
-		store.add( record )
+				var componentTemplate = componentTemplateStore.getById( record.get('id') )
 
-		this.application.getController('Entities').showComponentsList( entity )
+				if( componentTemplate ) {
+					var configComponent = new Model( {
+						templateId : componentTemplate.getFullName(),
+						additional: true
+					})
+
+					configComponent.setEntity( entity )
+
+					entity.getComponents().add( configComponent )
+				}
+			}
+		)
+
+		if( entity.modelName === "Spelled.model.template.Entity" )
+			this.application.getController('templates.Entities').showEntityTemplateComponentsList( entity )
+		else
+			this.application.getController('Entities').showComponentsList( entity )
 
 		window.close()
 	},

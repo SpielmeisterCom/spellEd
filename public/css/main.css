@@ -27,3 +27,8 @@
     text-align: center;
     height:     auto;
 }
+
+.add-component-border {
+    border:2px dashed #c9c9c9;
+    text-align: center;
+}

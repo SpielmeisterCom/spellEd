@@ -77,6 +77,7 @@ Ext.define('Spelled.controller.Entities', {
 
 		if( !Ext.isEmpty( values.templateId ) ) {
 			var entityTemplate = Ext.getStore('template.Entities').getById( values.templateId )
+			record.set( 'templateId', entityTemplate.getFullName() )
 
 			entityTemplate.getComponents().each(
 				function( component ) {
@@ -90,8 +91,6 @@ Ext.define('Spelled.controller.Entities', {
 					record.getComponents().add( newComponent )
 				}
 			)
-
-			record.set('templateId', entityTemplate.getFullName() )
 		}
 
 
@@ -101,7 +100,7 @@ Ext.define('Spelled.controller.Entities', {
 			record.getEntity().getChildren().add( record )
 		}
 
-		record.set( values )
+		record.set( 'name', values.name )
 		store.add( record )
 
 		var node = this.application.getLastSelectedNode( this.getScenesTree() )
@@ -110,14 +109,6 @@ Ext.define('Spelled.controller.Entities', {
 
 		window.close()
     },
-
-	getActiveEntity: function() {
-		var node = this.application.getLastSelectedNode( this.getScenesTree() )
-
-		if( node ) {
-			return this.getConfigEntitiesStore().getById( node.getId() )
-		}
-	},
 
     deleteEntity: function ( entity ) {
 		this.getConfigEntitiesStore().remove( entity )
@@ -139,25 +130,33 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
     showComponentsList: function( entity ) {
-        var contentPanel = this.getRightPanel(),
-			View         = this.getEntityComponentsListView(),
-			components   = entity.getComponents()
-
 		if( !Ext.isEmpty(entity.get('templateId')) )
 			entity.mergeWithTemplateConfig()
+
+		this.createComponentsListView( entity )
+	},
+
+	createComponentsListView: function( entity ) {
+		var contentPanel = this.getRightPanel(),
+			View         = this.getEntityComponentsListView(),
+			components   = entity.getComponents()
 
 		var view = new View()
 		components.each(
 			function( component ) {
+				component.setEntity( entity )
 				view.add( this.application.getController('Components').createConfigGridView( component ) )
 			},
 			this
 		)
 
 		view.sortByTitle()
+		view.entity = entity
 
 		contentPanel.add( view )
 
 		contentPanel.setTitle( 'Components in entity "' + entity.get('name') +'"' )
+
+		return view
 	}
 });

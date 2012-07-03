@@ -58,14 +58,9 @@ Ext.define('Spelled.controller.Templates', {
                 editclick:       this.showTemplatesContextMenu,
                 itemcontextmenu: this.showTemplatesContextMenu,
                 itemdblclick:    this.openTemplate,
+				select:          this.showConfig,
                 itemmouseenter:  this.application.showActionsOnLeaf,
                 itemmouseleave:  this.application.hideActions
-            },
-			'templateeditor' : {
-				tabchange: this.expandPathOnTabChange
-			},
-            'templateeditor [action="showCreateTemplate"]' : {
-                click: this.showCreateTemplate
             },
             'createtemplate button[action="createTemplate"]' : {
                 click: this.createTemplate
@@ -76,11 +71,16 @@ Ext.define('Spelled.controller.Templates', {
         })
     },
 
-	expandPathOnTabChange: function( tabpanel, tab ) {
-		var treePanel = this.getTemplatesTree()
-		//works only if title == namespace of the template
-		treePanel.selectPath( ".Root." + tab.title, 'text', '.' )
-		treePanel.expandPath( ".Root." + tab.title, 'text', '.' )
+	showConfig: function( treeGrid, record ) {
+		this.getRightPanel().removeAll()
+
+		switch( record.get('cls') ) {
+			case this.TEMPLATE_TYPE_ENTITY:
+				this.application.getController('templates.Entities').showEntityTemplateComponentsListHelper( record.getId() )
+				break
+			default:
+				return
+		}
 
 	},
 
@@ -128,10 +128,6 @@ Ext.define('Spelled.controller.Templates', {
                 Model = this.getTemplateComponentModel()
                 Controller = this.application.getController('templates.Components')
                 break
-            case this.TEMPLATE_TYPE_ENTITY:
-                Model = this.getTemplateEntityModel()
-                Controller = this.application.getController('templates.Entities')
-                break
             case this.TEMPLATE_TYPE_SYSTEM:
                 Model = this.getTemplateSystemModel()
                 Controller = this.application.getController('templates.Systems')
@@ -174,7 +170,7 @@ Ext.define('Spelled.controller.Templates', {
 
         editorTab.items.each(
             function( tab ) {
-                if( template.get('id') === tab.template.get('id') ) {
+                if( !!tab.template && template.get('id') === tab.template.get('id') ) {
                     tab.destroy()
                 }
             }

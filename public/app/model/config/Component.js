@@ -72,7 +72,7 @@ Ext.define('Spelled.model.config.Component', {
 			var templateEntity          = Ext.getStore( 'template.Entities').getByTemplateId( this.getEntity().get('templateId' )),
 				templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', this.get('templateId') )
 
-			if( !templateEntityComponent ) {
+			if( !templateEntityComponent || templateEntity.modelName === this.getEntity().modelName ) {
 				this.set('additional', true)
 			}
 

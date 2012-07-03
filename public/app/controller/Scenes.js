@@ -243,8 +243,13 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
     showScenesEditor: function() {
+		var tree = this.getScenesTree()
 		this.application.hideMainPanels()
 		this.getRightPanel().show()
+
+		if( tree.getSelectionModel().getSelection().length > 0 ){
+			this.dispatchTreeClick( tree, tree.getSelectionModel().getSelection()[0] )
+		}
 
         Ext.getCmp('SceneEditor').show()
     },

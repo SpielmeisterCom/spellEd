@@ -10,14 +10,6 @@ Ext.define('Spelled.view.entity.ComponentsList' ,{
 
 	buttonAlign:'left',
 
-	buttons: [
-		{
-			xtype: 'button',
-			text: 'Add new Component',
-			action: 'showAddComponent'
-		}
-	],
-
 	sortByTitle: function() {
 		this.items.items = this.items.items.sort(
 			function( a, b ) {
