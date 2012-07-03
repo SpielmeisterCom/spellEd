@@ -16,6 +16,37 @@ Ext.define('Spelled.controller.Menu', {
         'ui.StartScreen'
     ],
 
+	refs: [
+		{
+			ref : 'MainPanel',
+			selector: '#MainPanel'
+		},
+		{
+			ref : 'TemplateEditor',
+			selector: '#SceneEditor'
+		},
+		{
+			ref : 'TemplatesTree',
+			selector: '#TemplatesTree'
+		},
+		{
+			ref : 'RightPanel',
+			selector: '#RightPanel'
+		},
+		{
+			ref : 'ScenesTree',
+			selector: '#ScenesTree'
+		},
+		{
+			ref : 'ScriptsTree',
+			selector: '#ScriptsTree'
+		},
+		{
+			ref: "AssetsTree",
+			selector: '#AssetsTree'
+		}
+	],
+
     init: function() {
         this.control({
 			'#RightPanel': {
@@ -208,7 +239,7 @@ Ext.define('Spelled.controller.Menu', {
     },
 
     removeTemplate: function( ) {
-		var node = this.application.getLastSelectedNode( Ext.getCmp( 'TemplatesTree') )
+		var node = this.application.getLastSelectedNode( this.getTemplatesTree() )
 
         if( node && node.isLeaf() ) {
 			this.application.getController('Templates').deleteTemplateAction( node )
@@ -220,7 +251,7 @@ Ext.define('Spelled.controller.Menu', {
     },
 
     removeScript: function( ) {
-		var node = this.application.getLastSelectedNode( Ext.getCmp( 'ScriptsTree') )
+		var node = this.application.getLastSelectedNode( this.getScriptsTree() )
 
         if( node && node.isLeaf() ) {
             this.application.getController( 'Scripts' ).removeScript( node.get('id') )
@@ -234,7 +265,7 @@ Ext.define('Spelled.controller.Menu', {
 
 
 	showEditAsset: function( ) {
-		var node = this.application.getLastSelectedNode( Ext.getCmp( 'AssetsTree') )
+		var node = this.application.getLastSelectedNode( this.getAssetsTree() )
 
 		if( node && node.isLeaf() ) {
 			this.application.getController( 'Assets' ).showEditHelper( node.get('id') )
@@ -242,7 +273,7 @@ Ext.define('Spelled.controller.Menu', {
 	},
 
 	removeAsset: function( ) {
-		var node = this.application.getLastSelectedNode( Ext.getCmp( 'AssetsTree') )
+		var node = this.application.getLastSelectedNode( this.getAssetsTree() )
 
 		if( node && node.isLeaf() ) {
 			this.application.getController( 'Assets' ).removeAsset( node.get('id') )
@@ -251,7 +282,7 @@ Ext.define('Spelled.controller.Menu', {
 	},
 
 	removeSystemFromScene: function() {
-		var node = this.application.getLastSelectedNode( Ext.getCmp("RightPanel").down( 'systemlist' ) )
+		var node = this.application.getLastSelectedNode( this.getRightPanel().down( 'systemlist' ) )
 
 		if( node && node.isLeaf() && !node.isRoot() ) {
 			this.application.getController( 'Systems' ).removeSceneSystem( node.get('text') )
@@ -265,7 +296,7 @@ Ext.define('Spelled.controller.Menu', {
 	},
 
     removeSystemInput: function( ) {
-        var node = this.application.getLastSelectedNode( Ext.getCmp("TemplateEditor").getActiveTab().down( 'systemtemplateinputlist' ) )
+        var node = this.application.getLastSelectedNode( this.getTemplateEditor().getActiveTab().down( 'systemtemplateinputlist' ) )
 
         if( node ) {
             this.application.getController( 'templates.Systems' ).removeSystemInputDefinition( node.getId() )
@@ -273,7 +304,7 @@ Ext.define('Spelled.controller.Menu', {
     },
 
     removeComponentAttribute: function( ) {
-        var node = this.application.getLastSelectedNode( Ext.getCmp("TemplateEditor").getActiveTab().down( 'componenttemplateattributeslist' ) )
+        var node = this.application.getLastSelectedNode( this.getTemplateEditor().getActiveTab().down( 'componenttemplateattributeslist' ) )
 
         if( node && node.isLeaf() ) {
             this.application.getController( 'templates.Components' ).removeComponentAttribute( node.get('id') )
@@ -282,7 +313,7 @@ Ext.define('Spelled.controller.Menu', {
     },
 
     removeComponent: function( ) {
-        var node = this.application.getLastSelectedNode( Ext.getCmp("TemplateEditor").getActiveTab().down( 'entitytemplatecomponentslist' ) )
+        var node = this.application.getLastSelectedNode( this.getTemplateEditor().getActiveTab().down( 'entitytemplatecomponentslist' ) )
 
         if( node && !node.isLeaf() && !node.isRoot() ) {
             this.application.getController('templates.Entities').removeEntityComponent( node.get('id') )
@@ -291,7 +322,7 @@ Ext.define('Spelled.controller.Menu', {
     },
 
 	showCreateEntity: function( ) {
-		var node             = this.application.getLastSelectedNode( Ext.getCmp("ScenesTree") ),
+		var node             = this.application.getLastSelectedNode( this.getScenesTree() ),
 			scenesController = this.application.getController('Scenes'),
 			type             = scenesController.getClickedTreeItemType( node)
 
@@ -310,7 +341,14 @@ Ext.define('Spelled.controller.Menu', {
 
         if( entity ) {
             this.application.getController( 'Entities' ).deleteEntity( entity )
-			this.application.removeSelectedNode( Ext.getCmp("ScenesTree") )
+			var node = this.application.getLastSelectedNode( this.getScenesTree() ),
+				parentNode = node.parentNode
+
+			node.remove()
+
+			if( !parentNode.hasChildNodes() ) {
+				parentNode.set( 'leaf', true )
+			}
         }
     },
 
@@ -319,7 +357,7 @@ Ext.define('Spelled.controller.Menu', {
 
         if( scene ) {
             this.application.getController( 'Scenes').deleteScene( scene )
-			this.application.removeSelectedNode( Ext.getCmp("ScenesTree") )
+			this.application.removeSelectedNode( this.getScenesTree() )
         }
     },
 
