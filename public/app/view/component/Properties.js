@@ -10,6 +10,7 @@ Ext.define('Spelled.view.component.Properties', {
 	titleCollapse: true,
 
 	hideHeaders: true,
+	deferRowRender: false,
 
 	tools: [
 		{
