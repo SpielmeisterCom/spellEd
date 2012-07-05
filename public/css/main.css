@@ -45,6 +45,10 @@
     background-image: url( '../images/icons/entity.png' ) !important;
 }
 
+.tree-scene-entity-readonly-icon {
+    background-image: url( '../images/icons/entity-link.png' ) !important;
+}
+
 .tree-scene-system-icon {
     background-image: url( '../images/icons/system.png' ) !important;
 }
