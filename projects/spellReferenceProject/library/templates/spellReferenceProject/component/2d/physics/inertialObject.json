@@ -1,17 +1,22 @@
 {
-	"type" : "componentTemplate",
-	"namespace" : "spellReferenceProject.component.2d.physics",
-	"name" : "inertialObject",
-	"attributes" : [
+	"name": "inertialObject",
+	"namespace": "spellReferenceProject.component.2d.physics",
+	"type": "componentTemplate",
+	"title": "2d Physics",
+	"doc": "",
+	"attributes": [
 		{
-			"name" : "mass",
-			"type" : "number",
-			"default" : 1
+			"name": "mass",
+			"type": "number",
+			"default": 1
 		},
 		{
-			"name" : "velocity",
-			"type" : "vec2",
-			"default" : [ 0, 0 ]
+			"name": "velocity",
+			"type": "vec2",
+			"default": [
+				0,
+				0
+			]
 		}
 	]
 }

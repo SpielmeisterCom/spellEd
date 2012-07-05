@@ -1,22 +1,30 @@
 {
-	"type" : "componentTemplate",
-	"namespace" : "spell.component.2d",
-	"name" : "transform",
-	"attributes" : [
+	"name": "transform",
+	"namespace": "spell.component.2d",
+	"type": "componentTemplate",
+	"title": "2d Transformation",
+	"doc": "",
+	"attributes": [
 		{
-			"name" : "translation",
-			"type" : "vec2",
-			"default" : [ 0, 0 ]
+			"name": "translation",
+			"type": "vec2",
+			"default": [
+				0,
+				0
+			]
 		},
 		{
-			"name" : "rotation",
-			"type" : "number",
-			"default" : 0
+			"name": "rotation",
+			"type": "number",
+			"default": 0
 		},
 		{
-			"name" : "scale",
-			"type" : "vec2",
-			"default" : [ 1, 1 ]
+			"name": "scale",
+			"type": "vec2",
+			"default": [
+				1,
+				1
+			]
 		}
 	]
 }
