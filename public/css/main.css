@@ -32,3 +32,23 @@
     border:2px dashed #c9c9c9;
     text-align: center;
 }
+
+.tree-scene-icon {
+    background-image: url( '../images/icons/scene.png' ) !important;
+}
+
+.tree-entities-folder-icon {
+    background-image: url( '../images/icons/entity.png' ) !important;
+}
+
+.tree-scene-entity-icon {
+    background-image: url( '../images/icons/entity.png' ) !important;
+}
+
+.tree-scene-system-icon {
+    background-image: url( '../images/icons/system.png' ) !important;
+}
+
+.tree-scene-script-icon {
+    background-image: url( '../images/icons/script.png' ) !important;
+}
