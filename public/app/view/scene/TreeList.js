@@ -4,15 +4,16 @@ Ext.define('Spelled.view.scene.TreeList' ,{
 
     animate: false,
     animCollapse: false,
-    title : 'All Scenes',
+    title : 'Scenes in this project',
     store : 'ScenesTree',
 
     rootVisible: false,
 
     tbar: [
         {
-            text: "Create Scene",
+            text: "Add new scene",
             action: "showCreateScene",
+	        icon: 'images/icons/scene-add.png',
             tooltip: {
                 text:'Create a new Scene',
                 title:'Create'

@@ -4,17 +4,18 @@ Ext.define('Spelled.view.menu.contextmenu.ScenesList', {
 
     items: [
         {
-            text: 'Set to default Scene',
+	        icon: 'images/icons/scene-link.png',
+	        text: 'Set to default Scene',
             action: 'default'
         },
         {
-			icon: 'images/icons/application_go.png',
+			icon: 'images/icons/scene-go.png',
             text: 'Render Scene',
             action: 'render'
         },
         {
-			icon: 'images/icons/delete.png',
-            text: 'Remove',
+			icon: 'images/icons/scene-delete.png',
+            text: 'Remove Scene',
             action: 'remove'
         }
     ]
