@@ -29,7 +29,7 @@ Ext.define('Spelled.view.template.system.Input' ,{
 			{
 				xtype: 'actioncolumn',
 				width: 24,
-				icon: 'images/icons/cog.png',
+				icon: 'images/icons/magic-wand.png',
 				tooltip: 'Edit',
 				handler: Ext.bind(me.handleEditClick, me)
 			}
