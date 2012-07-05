@@ -104,6 +104,7 @@ Ext.define('Spelled.controller.Scenes', {
 	            type = this.TREE_ITEM_TYPE_SCENE
 				break
 			case 'tree-scene-entity-icon':
+			case 'tree-scene-entity-readonly-icon':
 				type = this.TREE_ITEM_TYPE_ENTITY
 				break
 			case 'tree-scene-system-icon':

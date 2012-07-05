@@ -3,7 +3,8 @@ Ext.define('Spelled.model.config.Entity', {
 
     fields: [
         'templateId',
-        'name'
+        'name',
+		{ name: 'removable', type: 'boolean', defaultValue: true }
     ],
 
 	parsedData: false,
@@ -84,6 +85,10 @@ Ext.define('Spelled.model.config.Entity', {
         return result
     },
 
+	getEntityTemplate: function() {
+		return Ext.getStore( 'template.Entities' ).getByTemplateId( this.get('templateId'))
+	},
+
 	hasScene: function() {
 		return ( this[ 'Spelled.model.config.SceneBelongsToInstance' ] && Ext.isObject( this[ 'Spelled.model.config.SceneBelongsToInstance' ] ) )
 	},
@@ -93,7 +98,7 @@ Ext.define('Spelled.model.config.Entity', {
 	},
 
     mergeWithTemplateConfig: function() {
-        var entityTemplate     = Ext.getStore( 'template.Entities' ).getByTemplateId( this.get('templateId')),
+        var entityTemplate     = this.getEntityTemplate(),
             templateComponents = entityTemplate.getComponents(),
             components         = this.getComponents()
 
@@ -105,7 +110,7 @@ Ext.define('Spelled.model.config.Entity', {
 
                     var newComponent = Ext.create( 'Spelled.model.config.Component', {
                         templateId: templateComponent.get('templateId'),
-                        config: templateComponent.get('config')
+                        config: Ext.clone( templateComponent.get('config') )
                     })
 					newComponent.setEntity( this )
 
@@ -143,16 +148,53 @@ Ext.define('Spelled.model.config.Entity', {
 		return ( this.getChildren().count() > 0 )
 	},
 
+	copyTemplateEntity: function() {
+		var copy = Ext.create( 'Spelled.model.config.Entity', {
+			templateId: this.get('templateId'),
+			name : this.get('name'),
+			removable : false
+		})
+		Ext.getStore( 'config.Entities' ).add( copy )
+		return copy
+	},
+
+	isRemovable: function() {
+		return ( this.get('removable') === true )
+	},
+
 	createTreeNode: function( node ) {
+		var entityTemplate = this.getEntityTemplate(),
+			children       = this.getChildren(),
+			me             = this
+
+		if( entityTemplate ) {
+			entityTemplate.getChildren().each(
+				function( entity ) {
+					var index = children.findBy( function( item ) {
+						return ( item.get('templateId') === entity.get('templateId') )
+					})
+
+					if( index > -1 ) {
+						children.getAt( index ).set( 'removable', false )
+						return
+					}
+
+					var copy = entity.copyTemplateEntity()
+					copy.setEntity( me )
+					children.add( copy )
+				}
+			)
+		}
+
 		var entityNode = node.createNode( {
 				text      : this.get('name'),
 				id        : this.getId(),
-				iconCls   : "tree-scene-entity-icon",
+				iconCls   : ( this.isRemovable() ) ? "tree-scene-entity-icon" : "tree-scene-entity-readonly-icon",
 				leaf      : !this.hasChildren()
 			}
 		)
 
-		this.getChildren().each(
+		children.each(
 			function( entity ) {
 				entityNode.appendChild(
 					entity.createTreeNode( entityNode )

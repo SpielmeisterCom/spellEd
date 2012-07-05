@@ -47,8 +47,6 @@ Ext.define('Spelled.controller.Templates', {
 		}
     ],
 
-    //TODO: Template components get overwritten from entityconfig. strange problem! need to fix ASAP
-
     init: function() {
         this.control({
             'templatesnavigator': {
@@ -269,7 +267,7 @@ Ext.define('Spelled.controller.Templates', {
 	},
 
     loadTrees: function() {
-        this.getTemplatesTreeStore().load( )
+        this.getTemplatesTreeStore().load()
         this.getTemplateFoldersTreeStore().load( )
     },
 

@@ -25,33 +25,49 @@ define(
              *  Entity Templates Actions
              */
 
-            var readentityTemplate = function( req, res, payload, next ) {
+            var readEntityTemplate = function( req, res, payload, next ) {
                 return util.readFile( payload[0].id )
             }
 
-            var updateentityTemplate = function( req, res, payload, next ) {
-                var entity = payload[ 0 ]
+			var entityParsing = function( entity, includeEmptyComponents ) {
+				includeEmptyComponents = !!includeEmptyComponents
 
-                var result = _.pick( entity, 'name', 'namespace', 'type')
+				var result = _.pick( entity, 'name', 'namespace', 'type')
 
-                var components = []
-                _.each(
-                    entity.getComponents,
-                    function( component ) {
-                        components.push(
-                            _.pick( component, 'templateId', 'config' )
-                        )
-                    }
-                )
+				result.components = _.reduce(
+					entity.getComponents,
+					function( memo, component ) {
+						if( !includeEmptyComponents && _.size( component.config ) === 0 ) return memo
 
-                result.components = components
+						var tmp = _.pick( component, 'templateId', 'config' )
+						if( _.size( tmp.config ) === 0 ) delete tmp.config
+
+						return memo.concat( tmp )
+					},
+					[]
+				)
+
+				result.children = _.reduce(
+					entity.getChildren,
+					function( memo, entityChildren ) {
+						return memo.concat( entityParsing( entityChildren ) )
+					},
+					[]
+				)
+
+				return result
+			}
+
+            var updateEntityTemplate = function( req, res, payload, next ) {
+                var entity = payload[ 0 ],
+					result = entityParsing( entity, true )
 
                 util.writeFile( entity.id, JSON.stringify( result, null, "\t" ) )
 
                 return result
             }
 
-            var deleteentityTemplate = function( req, res, payload, next ) {
+            var deleteEntityTemplate = function( req, res, payload, next ) {
                 var jsonFilePath = payload[0].id
 
                 util.deleteFile( jsonFilePath )
@@ -59,7 +75,7 @@ define(
                 return true
             }
 
-            var createentityTemplate = function( req, res, payload, next ) {
+            var createEntityTemplate = function( req, res, payload, next ) {
                 var name        = payload.name,
                     extension   = ".json",
                     folder      = ( payload.namespace === "root" ) ? path.join( root , payload.projectName , templatePathPart ) : payload.namespace,
@@ -89,22 +105,22 @@ define(
                 {
                     name: "read",
                     len: 1,
-                    func: readentityTemplate
+                    func: readEntityTemplate
                 },
                 {
                     name: "create",
                     len: 1,
-                    func: createentityTemplate
+                    func: createEntityTemplate
                 },
                 {
                     name: "update",
                     len: 1,
-                    func: updateentityTemplate
+                    func: updateEntityTemplate
                 },
                 {
                     name: "destroy",
                     len: 1,
-                    func: deleteentityTemplate
+                    func: deleteEntityTemplate
                 }
             ]
         }

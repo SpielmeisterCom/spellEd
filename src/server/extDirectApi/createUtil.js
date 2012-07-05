@@ -4,6 +4,7 @@ define(
         'path',
         'fs',
         'mime',
+		'glob',
 
         'underscore'
     ],
@@ -11,6 +12,7 @@ define(
         path,
         fs,
         mime,
+		glob,
 
         _
     ) {
@@ -80,9 +82,80 @@ define(
                 return object
             }
 
-            var listing = function ( rootPath, withFileType, req, res, payload, next ) {
-                var normalize = path.normalize,
-                    join = path.join
+			//TODO: refactor filelisting for scripts
+			var fileListing = function ( rootPath, withFileType, req, res, payload, next ) {
+				var normalize = path.normalize,
+					join = path.join
+
+
+				var extParams = getExtParams( payload )
+
+				var tmpPath = getPath(
+					(
+						!!extParams ?
+							payload[0] === "root" ?
+								rootPath :
+								payload[0]
+							: rootPath
+						)
+				)
+
+				if ( !tmpPath ) return {}
+
+				// check if we have a directory
+				var stat = fs.statSync( tmpPath )
+
+				if (!stat.isDirectory()) return {}
+
+				// fetch files
+				var files = fs.readdirSync(tmpPath)
+				files.sort()
+
+				var result = []
+
+				_.each(
+					files,
+					function( file ) {
+						var filePath = normalize(join( tmpPath, file))
+
+						var fileStat = fs.statSync( filePath )
+
+						var fileInfo = {
+							text: file,
+							id: filePath
+
+						}
+
+						if( fileStat.isDirectory() ) {
+							fileInfo.cls = "folder"
+
+						} else {
+							if( withFileType === true && path.extname( filePath ) === ".json" ) {
+								var fileContent = fs.readFileSync( filePath, 'utf8' )
+								var object = JSON.parse(fileContent)
+
+								fileInfo.cls  = object.type
+								fileInfo.text = object.name
+
+							} else if( withFileType === true ) {
+								// We read only json files or directories
+								return
+							} else {
+								fileInfo.cls = "file"
+							}
+
+							fileInfo.leaf = true
+						}
+
+						result.push( fileInfo )
+					}
+				)
+
+				return result
+			}
+
+            var jsonListing = function ( rootPath, withFileType, req, res, payload, next ) {
+                var normalize = path.normalize
 
 
                 var extParams = getExtParams( payload )
@@ -105,17 +178,21 @@ define(
                 if (!stat.isDirectory()) return {}
 
                 // fetch files
-                var files = fs.readdirSync(tmpPath)
-                files.sort()
+                var files = glob.sync( "{"+tmpPath + "/**/*.json," + tmpPath + "/**/*.js}" )
 
-                var result = []
+				var namespacesResults  = {}
+				var result = {
+					id: "templates",
+					text: "Templates",
+					cls: "folder",
+					leaf: false,
+					children: []
+				}
 
                 _.each(
                     files,
                     function( file ) {
-                        var filePath = normalize(join( tmpPath, file))
-
-                        var fileStat = fs.statSync( filePath )
+                        var filePath = normalize( file )
 
                         var fileInfo = {
                             text: file,
@@ -123,32 +200,90 @@ define(
 
                         }
 
-                        if( fileStat.isDirectory() ) {
-                            fileInfo.cls = "folder"
+						if( withFileType === true && path.extname( filePath ) === ".json" ) {
+							var fileContent = fs.readFileSync( filePath, 'utf8' )
+							var object = JSON.parse(fileContent)
 
-                        } else {
-                            if( withFileType === true && path.extname( filePath ) === ".json" ) {
-                                var fileContent = fs.readFileSync( filePath, 'utf8' )
-                                var object = JSON.parse(fileContent)
+							fileInfo.cls  = object.type
+							fileInfo.text = object.name
 
-                                fileInfo.cls  = object.type
-                                fileInfo.text = object.name
+							if( !_.has( namespacesResults, object.namespace ) ){
+								namespacesResults[ object.namespace ] = {
+									id: object.namespace,
+									text: _.last( object.namespace.split(".") ),
+									cls: "folder",
+									leaf: false,
+									children: [ fileInfo ]
+								}
 
-                            } else if( withFileType === true ) {
-                                // We read only json files or directories
-                                return
-                            } else {
-                                fileInfo.cls = "file"
-                            }
+							} else {
+								namespacesResults[ object.namespace ].children.push( fileInfo )
+							}
 
-                            fileInfo.leaf = true
-                        }
+						} else {
+							fileInfo.cls = "file"
+						}
 
-                        result.push( fileInfo )
+						fileInfo.leaf = true
                     }
                 )
 
-                return result
+				var hasNode = function( node, id ) {
+					return _.find( node.children, function( iter ) {
+						return ( iter.id === id )
+					} )
+				}
+
+				_.each(
+					namespacesResults,
+					function( node, key ) {
+
+						var startingNode = result
+
+						var namespaceParts = key.split( "." )
+						var lastPart       = _.last( namespaceParts )
+						_.each(
+							namespaceParts,
+							function( part ) {
+								var id = namespaceParts.slice( 0, _.indexOf( namespaceParts, part ) + 1 ).join(".")
+								var existingNode = hasNode( startingNode, id )
+
+								if( !!existingNode ) {
+									startingNode = existingNode
+
+									if( key === id ) {
+										startingNode.children = startingNode.children.concat( node.children )
+									}
+								} else {
+
+									var newNode = {
+										id:  id ,
+										text: part,
+										cls: "folder",
+										leaf: false,
+										children: [ ]
+									}
+
+									if( part === lastPart ) {
+
+										if( part.length === 0 ){
+											startingNode.children = startingNode.children.concat( node.children )
+										} else {
+											startingNode.children.push( node )
+											startingNode = node
+										}
+
+									} else {
+
+										startingNode.children.push( newNode )
+										startingNode = newNode
+									}
+								}
+							}
+						)
+					}
+				)
+				return result
             }
 
             var getDirFilesAsObjects = function( readPath ) {
@@ -215,7 +350,8 @@ define(
                 readFile  : readFile,
                 writeFile : writeFile,
                 getDirFilesAsObjects : getDirFilesAsObjects,
-                listing : listing,
+				jsonListing: jsonListing,
+                fileListing : fileListing,
                 deleteFile: deleteFile
             }
         }

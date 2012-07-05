@@ -94,7 +94,11 @@ define(
 				entityResult.children = _.reduce(
 					entity.getChildren,
 					function( memo, entityChildren ) {
-						return memo.concat( entityParsing( entityChildren ) )
+						var result = entityParsing( entityChildren )
+
+						if( !_.has( result , "components") && !_.has( result, "children" ) ) return memo
+
+						return memo.concat( result )
 					},
 					[]
 				)

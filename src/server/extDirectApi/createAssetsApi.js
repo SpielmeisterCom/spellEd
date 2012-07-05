@@ -120,7 +120,7 @@ define(
                 var tmpPath = path.join( root , payload[1] , assetPathPart)
 
 
-                var result = util.listing( tmpPath, true, req, res, payload, next )
+                var result = util.jsonListing( tmpPath, true, req, res, payload, next )
 
                 return result
             }

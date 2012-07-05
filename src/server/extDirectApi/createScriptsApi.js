@@ -109,7 +109,7 @@ define(
             var getTree = function( req, res, payload, next ) {
                 var tmpPath = path.join( root , payload[1] , scriptPathPart )
 
-                return util.listing(tmpPath, false, req, res, payload, next)
+                return util.fileListing(tmpPath, false, req, res, payload, next)
             }
 
             var getAll = function( req, res, payload ) {

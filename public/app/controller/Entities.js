@@ -68,7 +68,7 @@ Ext.define('Spelled.controller.Entities', {
         createView.show()
     },
 
-    createEntity: function ( button, event, record ) {
+    createEntity: function ( button ) {
         var window = button.up('window'),
             form   = window.down('form'),
             record = form.getRecord(),

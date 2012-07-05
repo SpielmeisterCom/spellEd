@@ -41,7 +41,7 @@ define(
 
                 if ( !tmpPath ) return {}
 
-                return util.listing( tmpPath, true, req, res, payload, next )
+                return util.jsonListing( tmpPath, true, req, res, payload, next )
             }
 
             var getAllTemplates = function( projectName, type ) {
