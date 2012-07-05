@@ -1,7 +1,7 @@
 define(
 	'spellReferenceProject/system/aiControl',
 	[
-		'spell/shared/util/platform/underscore',
+		'spell/functions',
 
 		'spell/math/vec2'
 	],

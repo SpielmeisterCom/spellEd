@@ -8,7 +8,7 @@ define(
 		'spell/math/vec2',
 		'spell/math/mat3',
 
-		'spell/shared/util/platform/underscore'
+		'spell/functions'
 	],
 	function(
 		createWorldToViewMatrix,

@@ -3,7 +3,7 @@ define(
 	[
 		'spell/math/vec2',
 
-		'spell/shared/util/platform/underscore'
+		'spell/functions'
 	],
 	function(
 		vec2,
