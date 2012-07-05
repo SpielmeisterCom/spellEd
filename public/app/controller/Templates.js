@@ -101,7 +101,14 @@ Ext.define('Spelled.controller.Templates', {
     },
 
     showTemplatesContextMenu: function( view, record, item, index, e, options ) {
-        this.application.getController('Menu').showTemplatesListContextMenu( e )
+
+		switch( record.get('cls') ) {
+			case this.TEMPLATE_TYPE_ENTITY:
+				this.application.getController('Menu').showTemplatesListEntityContextMenu( e )
+				break
+			default:
+				this.application.getController('Menu').showTemplatesListContextMenu( e )
+		}
     },
 
     changeTemplateCreationType: function( combo, records ) {

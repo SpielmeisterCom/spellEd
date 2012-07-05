@@ -68,13 +68,7 @@ Ext.define('Spelled.controller.Entities', {
         createView.show()
     },
 
-    createEntity: function ( button ) {
-        var window = button.up('window'),
-            form   = window.down('form'),
-            record = form.getRecord(),
-            values = form.getValues(),
-			store  = this.getConfigEntitiesStore()
-
+	createEntityHelper: function( record, values ) {
 		if( !Ext.isEmpty( values.templateId ) ) {
 			var entityTemplate = Ext.getStore('template.Entities').getById( values.templateId )
 			record.set( 'templateId', entityTemplate.getFullName() )
@@ -101,6 +95,18 @@ Ext.define('Spelled.controller.Entities', {
 		}
 
 		record.set( 'name', values.name )
+
+		return record
+	},
+
+    createEntity: function ( button ) {
+        var window = button.up('window'),
+            form   = window.down('form'),
+            record = form.getRecord(),
+            values = form.getValues(),
+			store  = this.getConfigEntitiesStore()
+
+		record = this.createEntityHelper( record, values )
 		store.add( record )
 
 		var node = this.application.getLastSelectedNode( this.getScenesTree() )

@@ -22,6 +22,45 @@ define(
 
             var root = rootPath
 
+			var entityParsing = function( entity ) {
+				var entityResult = _.pick( entity, 'name' )
+
+				if( _.has( entity, 'templateId' ) &&
+					!!entity.templateId ) {
+
+					entityResult.templateId = entity.templateId
+				}
+
+				entityResult.components = _.reduce(
+					entity.getComponents,
+					function( memo, component ) {
+						if( !component.additional && ( !component.changed || _.size( component.config ) === 0 )) return memo
+
+						return memo.concat( _.pick( component, 'templateId', 'config' ) )
+					},
+					[]
+				)
+
+				entityResult.children = _.reduce(
+					entity.getChildren,
+					function( memo, entityChildren ) {
+						var result = entityParsing( entityChildren )
+
+						if( !_.has( result , "components") && !_.has( result, "children" ) ) return memo
+
+						return memo.concat( result )
+					},
+					[]
+				)
+
+				if( _.isEmpty(entityResult.components) ) delete entityResult.components
+				if( _.isEmpty(entityResult.children) ) delete entityResult.children
+				//delete templateId on anonymous entities
+				if( _.isEmpty(entityResult.templateId) ) delete entityResult.templateId
+
+				return entityResult
+			}
+
             var getExtParams = function( payload ) {
                 if( !payload ) {
                     return undefined
@@ -42,7 +81,7 @@ define(
 
 			var namespaceToFilePath = function( namespace ) {
 				var tmp = ( !_.isString( namespace ) ) ? namespace.toString() : namespace
-
+				if( namespace === "root" ) return ""
 				return tmp.replace( /\./g, ",")
 			}
 
@@ -351,6 +390,7 @@ define(
 
 
             return {
+				entityParsing: entityParsing,
                 getPath   : getPath,
                 extractNamespaceFromPath: extractNamespaceFromPath,
 				convertNamespaceToFilePath: namespaceToFilePath,

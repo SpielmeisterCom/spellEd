@@ -72,45 +72,6 @@ define(
                 return util.readFile( getConfigFilePath(tmpPath) )
             }
 
-			var entityParsing = function( entity ) {
-				var entityResult = _.pick( entity, 'name' )
-
-				if( _.has( entity, 'templateId' ) &&
-					!!entity.templateId ) {
-
-					entityResult.templateId = entity.templateId
-				}
-
-				entityResult.components = _.reduce(
-					entity.getComponents,
-					function( memo, component ) {
-						if( !component.additional && ( !component.changed || _.size( component.config ) === 0 )) return memo
-
-						return memo.concat( _.pick( component, 'templateId', 'config' ) )
-					},
-					[]
-				)
-
-				entityResult.children = _.reduce(
-					entity.getChildren,
-					function( memo, entityChildren ) {
-						var result = entityParsing( entityChildren )
-
-						if( !_.has( result , "components") && !_.has( result, "children" ) ) return memo
-
-						return memo.concat( result )
-					},
-					[]
-				)
-
-				if( _.isEmpty(entityResult.components) ) delete entityResult.components
-				if( _.isEmpty(entityResult.children) ) delete entityResult.children
-				//delete templateId on anonymous entities
-				if( _.isEmpty(entityResult.templateId) ) delete entityResult.templateId
-
-				return entityResult
-			}
-
             //TODO: don't write templatecomponentvalues, maybe the spelljs ext should do this?
             var updateProject = function( req, res, payload, next ) {
                 var project = payload[ 0 ]
@@ -126,7 +87,7 @@ define(
 
                         _.each(
                             scene.getEntities, function( entity ) {
-								sceneResult.entities.push( entityParsing( entity ) )
+								sceneResult.entities.push( util.entityParsing( entity ) )
 							}
                         )
 

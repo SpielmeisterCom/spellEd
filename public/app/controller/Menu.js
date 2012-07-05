@@ -10,6 +10,7 @@ Ext.define('Spelled.controller.Menu', {
         'menu.contextmenu.ScriptsList',
 		'menu.contextmenu.SceneSystemsList',
         'menu.contextmenu.TemplatesList',
+		'menu.contextmenu.templatesList.Entity',
         'menu.contextmenu.ComponentTemplateAttributesList',
         'menu.contextmenu.SystemTemplateInputList',
         'ui.SpelledConsole',
@@ -122,7 +123,18 @@ Ext.define('Spelled.controller.Menu', {
             },
 
 
-            'entitieslistcontextmenu [action="remove"]': {
+			'templateslistentitycontextmenu [action="create"]': {
+				click: this.showCreateTemplate
+			},
+			'templateslistentitycontextmenu [action="add"]': {
+				click: this.showAddEntityToTemplate
+			},
+			'templateslistentitycontextmenu [action="remove"]': {
+				click: this.removeTemplate
+			},
+
+
+			'entitieslistcontextmenu [action="remove"]': {
                 click: this.removeEntity
             },
 			'entitieslistcontextmenu [action="create"]': {
@@ -182,6 +194,13 @@ Ext.define('Spelled.controller.Menu', {
         )
     },
 
+	showTemplatesListEntityContextMenu: function( e ) {
+		this.createAndShowView(
+			this.getMenuContextmenuTemplatesListEntityView(),
+			e
+		)
+	},
+
     showTemplatesListContextMenu: function( e ) {
         this.createAndShowView(
             this.getMenuContextmenuTemplatesListView(),
@@ -237,6 +256,13 @@ Ext.define('Spelled.controller.Menu', {
     showCreateTemplate: function( ) {
         this.application.getController( 'Templates').showCreateTemplate()
     },
+
+	showAddEntityToTemplate: function( ) {
+		var node = this.application.getLastSelectedNode( this.getTemplatesTree()),
+			owner = Ext.getStore( 'template.Entities' ).getById( node.getId() )
+
+		this.application.getController( 'templates.Entities').showAddEntity( owner )
+	},
 
     removeTemplate: function( ) {
 		var node = this.application.getLastSelectedNode( this.getTemplatesTree() )
