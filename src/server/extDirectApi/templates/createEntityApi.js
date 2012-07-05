@@ -78,7 +78,7 @@ define(
             var createEntityTemplate = function( req, res, payload, next ) {
                 var name        = payload.name,
                     extension   = ".json",
-                    folder      = ( payload.namespace === "root" ) ? path.join( root , payload.projectName , templatePathPart ) : payload.namespace,
+                    folder      = path.join( root , payload.projectName , templatePathPart , util.convertNamespaceToFilePath( payload.namespace )),
                     filePath    = folder + "/"+ name + extension,
                     type        = payload.type
 

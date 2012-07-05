@@ -7,6 +7,8 @@ Ext.define('Spelled.view.template.Create', {
 
 	layout: 'fit',
 
+	width : 450,
+
     closable: true,
 
     items: [

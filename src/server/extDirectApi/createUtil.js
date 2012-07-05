@@ -40,6 +40,12 @@ define(
                 )
             }
 
+			var namespaceToFilePath = function( namespace ) {
+				var tmp = ( !_.isString( namespace ) ) ? namespace.toString() : namespace
+
+				return tmp.replace( /\./g, ",")
+			}
+
             /**
              *
              * Main functions
@@ -347,6 +353,7 @@ define(
             return {
                 getPath   : getPath,
                 extractNamespaceFromPath: extractNamespaceFromPath,
+				convertNamespaceToFilePath: namespaceToFilePath,
                 readFile  : readFile,
                 writeFile : writeFile,
                 getDirFilesAsObjects : getDirFilesAsObjects,
