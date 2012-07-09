@@ -8,12 +8,7 @@
 		{
 			"name": "assetId",
 			"type": "assetId:animatedAppearance",
-			"default": "animatedAppearance:spell/not_defined"
-		},
-		{
-			"name": "animationId",
-			"type": "string",
-			"default": ""
+			"default": "animatedAppearance:spell.not_defined"
 		},
 		{
 			"name": "animationSpeedFactor",
