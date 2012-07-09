@@ -10,7 +10,7 @@
 		},
 		{
 			"name" : "inertialObjects",
-			"templateId" : "spellReferenceProject.component.2d.physics.inertialObject"
+			"templateId" : "spell.component.2d.physics.inertialObject"
 		},
 		{
 			"name" : "collisionSpheres",

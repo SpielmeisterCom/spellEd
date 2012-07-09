@@ -16,7 +16,7 @@
 			}
 		},
 		{
-			"templateId" : "spellReferenceProject.component.2d.physics.inertialObject",
+			"templateId" : "spell.component.2d.physics.inertialObject",
 			"config" : {
 				"mass" : 150
 			}
