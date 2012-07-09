@@ -158,7 +158,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 			if( !!ownerModel.isTemplateComposite && ownerModel.isTemplateComposite() ) {
 				ownerModel = ownerModel.getOwner()
 			}
-console.log( ownerModel )
+
 			ownerModel.save( )
         }
 
