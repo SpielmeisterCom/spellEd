@@ -36,12 +36,17 @@ Ext.define('Spelled.controller.templates.Entities', {
         })
     },
 
+	getOwnerNode: function( node ) {
+		return ( node.get('cls') === this.application.getController( 'Templates' ).TEMPLATE_TYPE_ENTITY ) ? node : this.getOwnerNode( node.parentNode )
+	},
+
 	showAddEntity: function( owner ) {
 		var createView  = Ext.createWidget( 'addentitytotemplate' ),
 			EntityModel = this.getConfigEntityModel(),
 			newEntity   = new EntityModel()
 
 		createView.down('form').loadRecord( newEntity )
+		newEntity.set( 'isTemplateComposite', true )
 		newEntity.setEntity( owner )
 
 		createView.show()
@@ -52,15 +57,19 @@ Ext.define('Spelled.controller.templates.Entities', {
 			form   = window.down('form'),
 			record = form.getRecord(),
 			values = form.getValues(),
-			me     = this
+			me     = this,
+			node   = me.application.getLastSelectedNode( me.getTemplatesTree() )
 
 		record = this.application.getController( 'Entities' ).createEntityHelper( record, values )
+		Ext.getStore( 'config.Entities' ).add( record )
 
-		record.getEntity().save( {
+		record.getOwner().save( {
 			callback: function() {
-				var node = me.application.getLastSelectedNode( me.getTemplatesTree() )
 				node.set( 'leaf', false )
-				me.getTemplatesTree().selectPath( node.appendChild( record.createTreeNode( node )).getPath() )
+				var entityNode = record.createTreeNode( node )
+				entityNode.set( 'cls', me.application.getController('Templates').TYPE_ENTITY_COMPOSITE )
+
+				me.getTemplatesTree().selectPath( node.appendChild( entityNode ).getPath() )
 
 				window.close()
 			}
@@ -69,17 +78,39 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
 	showEntityTemplateComponentsListHelper: function( id ) {
-		var EntityTemplate = this.getTemplateEntityModel()
+		var entity = this.getTemplateEntitiesStore().getById( id )
 
-		EntityTemplate.load( id, {
-			scope: this,
-			success: this.showEntityTemplateComponentsList
-		})
+		if( !entity ) {
+			var EntityTemplate = this.getTemplateEntityModel()
+
+			EntityTemplate.load( id, {
+				scope: this,
+				success: this.showEntityTemplateComponentsList
+			})
+		} else {
+			this.showEntityTemplateComponentsList( entity )
+		}
 	},
 
-	showEntityTemplateComponentsList: function( entityTemplate ) {
+	showEntityCompositeComponentsListHelper: function( node ) {
+		var templateEntity = this.getTemplateEntitiesStore().getById( this.getOwnerNode( node ).getId()  )
 
-		var view = this.application.getController('Entities').createComponentsListView( entityTemplate )
+		var entity = templateEntity.getChild( node.get('text') )
+		node.set('id', entity.getId())
+
+		entity.set( 'isTemplateComposite' , true )
+		entity.setOwnerEntity( templateEntity )
+
+		if( entity ) {
+			if( !entity.isAnonymous() ) entity.mergeWithTemplateConfig()
+
+			this.showEntityTemplateComponentsList( entity )
+		}
+	},
+
+	showEntityTemplateComponentsList: function( entity ) {
+
+		var view = this.application.getController('Entities').createComponentsListView( entity )
 
 		view.addDocked(
 			{
@@ -98,6 +129,18 @@ Ext.define('Spelled.controller.templates.Entities', {
 
 	},
 
+	removeEntityCompositeNode: function( node ) {
+        var entity   = Ext.getStore( 'config.Entities' ).getById( node.getId() ),
+			template = entity.getOwner(),
+			owner    = ( entity.hasEntity() ) ? entity.getEntity() : template
+
+		owner.getChildren().remove( entity )
+		Ext.getStore( 'config.Entities' ).remove( entity )
+
+		template.save()
+		node.remove()
+	},
+
     removeEntityTemplate: function( id ) {
         var EntityTemplate = this.getTemplateEntityModel()
 
@@ -112,8 +155,11 @@ Ext.define('Spelled.controller.templates.Entities', {
             ownerModel = panel.entity
 
         if( !!ownerModel ) {
-            ownerModel.save( )
-            this.application.getController('Templates').refreshTemplateStores()
+			if( !!ownerModel.isTemplateComposite && ownerModel.isTemplateComposite() ) {
+				ownerModel = ownerModel.getOwner()
+			}
+console.log( ownerModel )
+			ownerModel.save( )
         }
 
     }

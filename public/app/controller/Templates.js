@@ -4,6 +4,7 @@ Ext.define('Spelled.controller.Templates', {
     TEMPLATE_TYPE_COMPONENT: 'componentTemplate',
 	TEMPLATE_TYPE_ENTITY   : 'entityTemplate',
 	TEMPLATE_TYPE_SYSTEM   : 'systemTemplate',
+	TYPE_ENTITY_COMPOSITE  : 'templateEntityComposite',
 
     views: [
         'template.Editor',
@@ -76,6 +77,9 @@ Ext.define('Spelled.controller.Templates', {
 			case this.TEMPLATE_TYPE_ENTITY:
 				this.application.getController('templates.Entities').showEntityTemplateComponentsListHelper( record.getId() )
 				break
+			case this.TYPE_ENTITY_COMPOSITE:
+				this.application.getController('templates.Entities').showEntityCompositeComponentsListHelper( record )
+				break
 			default:
 				return
 		}
@@ -87,12 +91,17 @@ Ext.define('Spelled.controller.Templates', {
 
         switch( node.get('cls') ) {
             case this.TEMPLATE_TYPE_COMPONENT:
-                this.application.getController('templates.Components').removeComponentTemplate( node.get('id') )
+				if( !node.isLeaf() ) return
+				this.application.getController('templates.Components').removeComponentTemplate( node.get('id') )
                 break
             case this.TEMPLATE_TYPE_ENTITY:
                 this.application.getController('templates.Entities').removeEntityTemplate( node.get('id') )
                 break
+			case this.TYPE_ENTITY_COMPOSITE:
+				this.application.getController('templates.Entities').removeEntityCompositeNode( node )
+				break
             case this.TEMPLATE_TYPE_SYSTEM:
+				if( !node.isLeaf() ) return
                 this.application.getController('templates.Systems').removeSystemTemplate( node.get('id') )
                 break
             default:
@@ -104,6 +113,7 @@ Ext.define('Spelled.controller.Templates', {
 
 		switch( record.get('cls') ) {
 			case this.TEMPLATE_TYPE_ENTITY:
+			case this.TYPE_ENTITY_COMPOSITE:
 				this.application.getController('Menu').showTemplatesListEntityContextMenu( e )
 				break
 			default:

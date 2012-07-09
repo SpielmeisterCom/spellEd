@@ -4,7 +4,8 @@ Ext.define('Spelled.model.config.Entity', {
     fields: [
         'templateId',
         'name',
-		{ name: 'removable', type: 'boolean', defaultValue: true }
+		{ name: 'removable', type: 'boolean', defaultValue: true },
+		{ name: 'isTemplateComposite', type: 'boolean', defaultValue: false}
     ],
 
 	parsedData: false,
@@ -33,6 +34,11 @@ Ext.define('Spelled.model.config.Entity', {
 			type: 'belongsTo',
 			model: 'Spelled.model.config.Entity',
 			getterName: 'getEntity'
+		},
+		{
+			type: 'belongsTo',
+			model: 'Spelled.model.template.Entity',
+			getterName: 'getOwnerEntity'
 		}
 	],
 
@@ -63,8 +69,29 @@ Ext.define('Spelled.model.config.Entity', {
 		return associationData
 	},
 
+	isTemplateComposite: function() {
+		return ( this.get( 'isTemplateComposite' ) === true )
+	},
+
+	getOwner: function() {
+
+		if( this.isTemplateComposite() && this.hasEntity() && this.modelName === this.getEntity().modelName ) {
+			return this.getEntity().getOwner()
+
+		} else if( this.hasOwnerEntity() ) {
+			return this.getOwnerEntity()
+		}
+
+		if( this.hasScene() )  return this.getScene()
+		if( this.hasEntity() ) return this.getEntity()
+	},
+
 	setEntity: function( entity ) {
 		this[ 'Spelled.model.config.EntityBelongsToInstance' ] = entity
+	},
+
+	setOwnerEntity: function( entity ) {
+		this[ 'Spelled.model.template.EntityBelongsToInstance' ] = entity
 	},
 
 	setScene: function( scene ) {
@@ -85,6 +112,10 @@ Ext.define('Spelled.model.config.Entity', {
         return result
     },
 
+	isAnonymous: function() {
+		return ( Ext.isEmpty(this.get('templateId')) )
+	},
+
 	getEntityTemplate: function() {
 		return Ext.getStore( 'template.Entities' ).getByTemplateId( this.get('templateId'))
 	},
@@ -95,6 +126,10 @@ Ext.define('Spelled.model.config.Entity', {
 
 	hasEntity: function() {
 		return ( this[ 'Spelled.model.config.EntityBelongsToInstance' ] && Ext.isObject( this[ 'Spelled.model.config.EntityBelongsToInstance' ] ) )
+	},
+
+	hasOwnerEntity: function() {
+		return ( this[ 'Spelled.model.template.EntityBelongsToInstance' ] && Ext.isObject( this[ 'Spelled.model.template.EntityBelongsToInstance' ] ) )
 	},
 
     mergeWithTemplateConfig: function() {

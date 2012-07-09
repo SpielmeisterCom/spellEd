@@ -182,7 +182,7 @@ Ext.define('Spelled.controller.Components', {
 			}
 		)
 
-		if( entity.modelName === "Spelled.model.template.Entity" )
+		if( entity.modelName === "Spelled.model.template.Entity" || entity.isTemplateComposite() )
 			this.application.getController('templates.Entities').showEntityTemplateComponentsList( entity )
 		else
 			this.application.getController('Entities').showComponentsList( entity )

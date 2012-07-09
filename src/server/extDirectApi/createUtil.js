@@ -22,7 +22,9 @@ define(
 
             var root = rootPath
 
-			var entityParsing = function( entity ) {
+			var entityParsing = function( entity, includeEmptyComponents ) {
+				includeEmptyComponents = !!includeEmptyComponents
+
 				var entityResult = _.pick( entity, 'name' )
 
 				if( _.has( entity, 'templateId' ) &&
@@ -44,9 +46,9 @@ define(
 				entityResult.children = _.reduce(
 					entity.getChildren,
 					function( memo, entityChildren ) {
-						var result = entityParsing( entityChildren )
+						var result = entityParsing( entityChildren, includeEmptyComponents )
 
-						if( !_.has( result , "components") && !_.has( result, "children" ) ) return memo
+						if( !_.has( result , "components") && !_.has( result, "children" ) && !includeEmptyComponents ) return memo
 
 						return memo.concat( result )
 					},
@@ -241,8 +243,8 @@ define(
 
                         var fileInfo = {
                             text: file,
-                            id: filePath
-
+                            id: filePath,
+							leaf: true
                         }
 
 						if( withFileType === true && path.extname( filePath ) === ".json" ) {
@@ -251,6 +253,34 @@ define(
 
 							fileInfo.cls  = object.type
 							fileInfo.text = object.name
+
+							if( object.type === "entityTemplate" && _.has( object, 'children') ) {
+
+								var parseChildren = function( node, entity ) {
+									if(_.has( entity, 'children' ) ) {
+										node.children = []
+										_.each( entity.children, function( child ) {
+											node.leaf = false
+											var newNode = {
+												id: node.id + child.name ,
+												text: child.name,
+												cls: "templateEntityComposite",
+												iconCls: "tree-scene-entity-icon",
+												leaf: true
+											}
+
+											newNode = parseChildren( newNode, child )
+											node.children.push( newNode )
+										})
+									}
+
+									node.iconCls = "tree-scene-entity-icon"
+
+									return node
+								}
+
+								fileInfo = parseChildren( fileInfo, object )
+							}
 
 							if( !_.has( namespacesResults, object.namespace ) ){
 								namespacesResults[ object.namespace ] = {
@@ -268,8 +298,6 @@ define(
 						} else {
 							fileInfo.cls = "file"
 						}
-
-						fileInfo.leaf = true
                     }
                 )
 

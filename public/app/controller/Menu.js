@@ -258,8 +258,11 @@ Ext.define('Spelled.controller.Menu', {
     },
 
 	showAddEntityToTemplate: function( ) {
-		var node = this.application.getLastSelectedNode( this.getTemplatesTree()),
-			owner = Ext.getStore( 'template.Entities' ).getById( node.getId() )
+		var node  = this.application.getLastSelectedNode( this.getTemplatesTree()),
+			owner = ( node.get('cls') === this.application.getController( 'Templates' ).TYPE_ENTITY_COMPOSITE ) ?
+				Ext.getStore( 'config.Entities' ).getById( node.getId() )
+				:
+				Ext.getStore( 'template.Entities' ).getById( node.getId() )
 
 		this.application.getController( 'templates.Entities').showAddEntity( owner )
 	},
@@ -267,7 +270,7 @@ Ext.define('Spelled.controller.Menu', {
     removeTemplate: function( ) {
 		var node = this.application.getLastSelectedNode( this.getTemplatesTree() )
 
-        if( node && node.isLeaf() ) {
+        if( node ) {
 			this.application.getController('Templates').deleteTemplateAction( node )
 		}
     },

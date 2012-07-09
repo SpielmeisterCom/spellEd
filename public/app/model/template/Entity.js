@@ -42,5 +42,29 @@ Ext.define('Spelled.model.template.Entity', {
         writer: {
             type: 'json'
         }
-    }
+    },
+
+	getChild: function( id ) {
+
+		var helperFunction = function( entity ) {
+			var child = entity.getChildren().findRecord( 'name', id )
+
+			if( !child ) {
+				entity.getChildren().each(
+					function( item ) {
+						var result = helperFunction( item )
+
+						if( !!result ) {
+							child = result
+							return false
+						}
+					}
+				)
+			}
+
+			return child
+		}
+
+		return helperFunction( this )
+	}
 });

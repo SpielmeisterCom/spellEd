@@ -50,7 +50,7 @@ define(
 				result.children = _.reduce(
 					entity.getChildren,
 					function( memo, entityChildren ) {
-						return memo.concat( util.entityParsing( entityChildren ) )
+						return memo.concat( util.entityParsing( entityChildren, includeEmptyComponents ) )
 					},
 					[]
 				)
