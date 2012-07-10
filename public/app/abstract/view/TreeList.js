@@ -18,7 +18,7 @@ Ext.define('Spelled.abstract.view.TreeList' ,{
             {
                 xtype: 'actioncolumn',
                 width: 24,
-                icon: 'images/icons/magic-wand.png',
+                icon: 'images/icons/wrench.png',
                 iconCls: 'x-hidden edit-action-icon',
                 tooltip: 'Edit',
                 handler: Ext.bind(me.handleEditClick, me)
