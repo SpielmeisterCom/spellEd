@@ -5,7 +5,7 @@ Ext.define('Spelled.view.menu.contextmenu.SceneSystemsList', {
     items: [
         {
 			icon: 'images/icons/add.png',
-            text: 'Add a new Script',
+            text: 'Add new system',
             action: 'add'
         },
         {
