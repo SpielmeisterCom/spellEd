@@ -1,14 +1,14 @@
 {
-	"name": "appearance",
-	"namespace": "spell.component.2d.graphics",
-	"type": "componentTemplate",
-	"title": "2d Static Appearance",
-	"doc": "",
-	"attributes": [
+	"type" : "componentTemplate",
+	"namespace" : "spell.component.2d.graphics",
+	"name" : "appearance",
+	"title" : "2D Appearance",
+	"attributes" : [
 		{
-			"name": "assetId",
-			"type": "assetId:appearance",
-			"default": "appearance:spell.defaultAppearance"
+			"name" : "assetId",
+			"type" : "assetId:appearance",
+			"default" : "appearance:spell.defaultAppearance",
+			"doc" : "the appearance asset used for rendering"
 		}
 	]
 }
