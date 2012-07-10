@@ -32,7 +32,7 @@ Ext.define('Spelled.model.Project', {
 		var checkEntity = function( entity ) {
 			entity.getComponents().each(
 				function( component ) {
-					component.markChanges()
+					component.getConfigMergedWithTemplateConfig()
 				}
 			)
 

@@ -164,7 +164,7 @@ Ext.define('Spelled.model.config.Entity', {
     },
 
     getJSONConfig: function() {
-        var result = this.data
+		var result = Ext.clone( this.data )
 
         result.components = []
 		this.getComponents().each( function( component ){

@@ -64,7 +64,7 @@ define(
 
                 util.writeFile( entity.id, JSON.stringify( result, null, "\t" ) )
 
-                return result
+                return entity
             }
 
             var deleteEntityTemplate = function( req, res, payload, next ) {

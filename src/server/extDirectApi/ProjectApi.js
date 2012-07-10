@@ -98,7 +98,7 @@ define(
 
                 util.writeFile( getConfigFilePath( projectFilePath ) , JSON.stringify( result, null, "\t" ) )
 
-                return result
+                return project
             }
 
             var deleteProject = function( req, res, payload, next ) {

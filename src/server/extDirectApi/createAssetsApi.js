@@ -99,7 +99,7 @@ define(
 
 				util.writeFile( asset.id, JSON.stringify( result, null, "\t" ) )
 
-				return result
+				return asset
             }
 
             var deleteAsset = function( req, res, payload, next ) {

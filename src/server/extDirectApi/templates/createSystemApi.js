@@ -48,7 +48,7 @@ define(
 
                 util.writeFile( system.id, JSON.stringify( result, null, "\t" ) )
 
-                return result
+                return system
             }
 
             var deleteTemplate = function( req, res, payload, next ) {

@@ -271,13 +271,12 @@ Ext.define('Spelled.controller.Scenes', {
             record = form.getRecord(),
             values = form.getValues(),
             project= this.application.getActiveProject(),
-            scenes  = project.getScenes(),
 			store  = this.getConfigScenesStore()
 
         record.set( values )
 
 		store.add( record )
-		scenes.add( record )
+		project.getScenes().add( record )
 
 		record.appendOnTreeNode( this.getScenesTree().getRootNode() )
 
@@ -289,7 +288,7 @@ Ext.define('Spelled.controller.Scenes', {
     },
 
     deleteScene: function( scene ) {
-        var project = this.application.getActiveProject(),
+        var project  = this.application.getActiveProject(),
             scenes   = project.getScenes(),
 			sceneEditor = Ext.getCmp('SceneEditor')
 

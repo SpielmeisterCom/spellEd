@@ -29,11 +29,11 @@ define(
              *  Component Templates Actions
              */
 
-            var readcomponentTemplate = function( req, res, payload, next ) {
+            var readComponentTemplate = function( req, res, payload, next ) {
                 return util.readFile( payload[0].id )
             }
 
-            var updatecomponentTemplate = function( req, res, payload, next ) {
+            var updateComponentTemplate = function( req, res, payload, next ) {
                 var component = payload[ 0 ],
                     tmpPath   = component.id
 
@@ -50,10 +50,10 @@ define(
 
                 util.writeFile( tmpPath, JSON.stringify( result, null, "\t" ) )
 
-                return result
+                return component
             }
 
-            var deletecomponentTemplate = function( req, res, payload, next ) {
+            var deleteComponentTemplate = function( req, res, payload, next ) {
                 var jsonFilePath = payload[0].id
 
                 util.deleteFile( jsonFilePath )
@@ -61,7 +61,7 @@ define(
                 return true
             }
 
-            var createcomponentTemplate = function( req, res, payload, next ) {
+            var createComponentTemplate = function( req, res, payload, next ) {
                 var name        = payload.name,
                     extension   = ".json",
                     folder      = path.join( root , payload.projectName , templatePathPart , util.convertNamespaceToFilePath( payload.namespace )),
@@ -85,22 +85,22 @@ define(
                 {
                     name: "read",
                     len: 1,
-                    func: readcomponentTemplate
+                    func: readComponentTemplate
                 },
                 {
                     name: "create",
                     len: 1,
-                    func: createcomponentTemplate
+                    func: createComponentTemplate
                 },
                 {
                     name: "update",
                     len: 1,
-                    func: updatecomponentTemplate
+                    func: updateComponentTemplate
                 },
                 {
                     name: "destroy",
                     len: 1,
-                    func: deletecomponentTemplate
+                    func: deleteComponentTemplate
                 }
             ]
         }

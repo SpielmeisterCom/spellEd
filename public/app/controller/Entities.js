@@ -124,7 +124,7 @@ Ext.define('Spelled.controller.Entities', {
 		} else if( entity.hasEntity() ) {
 			entity.getEntity().getChildren().remove( entity )
 		}
-    },
+	},
 
 	showEntityInfo: function( id ) {
 		var entity = this.getConfigEntitiesStore().getById( id )

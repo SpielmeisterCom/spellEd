@@ -90,7 +90,7 @@ Ext.define('Spelled.model.config.Component', {
 
     getJSONConfig: function() {
 
-        var result = this.data
+		var result = Ext.clone( this.data )
 
         return result
     }

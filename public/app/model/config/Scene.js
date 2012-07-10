@@ -39,11 +39,10 @@ Ext.define('Spelled.model.config.Scene', {
 
     getJSONConfig: function() {
 
-        var result = this.data
-        var entities = this.getEntities()
+        var result = Ext.clone( this.data )
 
         result.entities = []
-        entities.each( function( entity ) {
+		this.getEntities().each( function( entity ) {
             result.entities.push( entity.getJSONConfig() )
         })
 
