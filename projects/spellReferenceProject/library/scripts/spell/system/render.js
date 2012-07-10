@@ -1,21 +1,21 @@
 define(
 	'spell/system/render',
 	[
-		'spell/client/2d/graphics/createWorldToViewMatrix',
 		'spell/client/2d/graphics/drawCoordinateGrid',
 		'spell/shared/util/Events',
 
 		'spell/math/vec2',
+		'spell/math/vec4',
 		'spell/math/mat3',
 
 		'spell/functions'
 	],
 	function(
-		createWorldToViewMatrix,
 		drawCoordinateGrid,
 		Events,
 
 		vec2,
+		vec4,
 		mat3,
 
 		_
@@ -27,8 +27,9 @@ define(
 		 * private
 		 */
 
-		var tmpVec2 = vec2.create(),
-			tmpMat3 = mat3.identity(),
+		var tmpVec2  = vec2.create(),
+			tmpMat3  = mat3.identity(),
+			darkGrey = vec4.create( [ 0.125, 0.125, 0.125, 1.0 ] ),
 			currentCameraId
 
 		var createSortedByLayer = function( roots, visualObjects ) {
@@ -260,8 +261,12 @@ define(
 				context = this.context,
 				screenSize = this.configurationManager.screenSize
 
-			// setting up the view space matrix
-			context.setViewMatrix( createWorldToViewMatrix( tmpMat3, screenSize ) )
+			context.setClearColor( darkGrey )
+
+			// world to view matrix
+			mat3.ortho( 0, screenSize[ 0 ], 0, screenSize[ 1 ], tmpMat3 )
+
+			context.setViewMatrix( tmpMat3 )
 
 			// setting up the viewport
 			var viewportPositionX = 0,
