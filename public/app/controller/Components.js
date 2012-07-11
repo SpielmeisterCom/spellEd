@@ -252,7 +252,7 @@ Ext.define('Spelled.controller.Components', {
 		var configGrid = Ext.createWidget(
 			'componentproperties',
 			{
-				title: title,
+				title: (  ( component.get('additional') ) ? "<span class='component-icon'/> " : "<span class='linked-component-icon'/> " ) + "<span>" + title +"</span>" ,
 				isAdditional: component.get('additional'),
 				source: config,
 				componentConfigId: component.getId()

@@ -56,3 +56,17 @@
 .tree-scene-script-icon {
     background-image: url( '../images/icons/script.png' ) !important;
 }
+
+.component-icon {
+    display: inline-block;
+    padding-left:      18px;
+    background-image:  url( '../images/icons/component.png' ) !important;
+    background-repeat: no-repeat;
+}
+
+.linked-component-icon {
+    display: inline-block;
+    padding-left:      18px;
+    background-repeat: no-repeat;
+    background-image:  url( '../images/icons/component-link.png' ) !important;
+}
