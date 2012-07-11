@@ -64,8 +64,9 @@ Ext.define('Spelled.model.config.Component', {
 	},
 
     getConfigMergedWithTemplateConfig: function( ) {
-        //TODO: the config from entities get overwritten if we do not mark them
         this.markChanges()
+
+		var config = {}
 
 		//Only merge with enityconfig, if it is really linked to a entity
 		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && !Ext.isEmpty( this.getEntity().get('templateId' ) ) ) {
@@ -80,16 +81,15 @@ Ext.define('Spelled.model.config.Component', {
 			this.set('additional', true)
 		}
 
-		var tmp = Ext.Object.merge( this.getTemplateConfig(), this.get('config') )
+		config = Ext.Object.merge( config, this.getTemplateConfig(), this.get('config') )
 
 		//TODO: Warum ist trim in der config durch den merge
-        delete tmp.trim
+        delete config.trim
 
-        return tmp
+        return config
     },
 
     getJSONConfig: function() {
-
 		var result = Ext.clone( this.data )
 
         return result

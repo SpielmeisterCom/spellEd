@@ -190,16 +190,12 @@ Ext.define('Spelled.controller.Components', {
 		window.close()
 	},
 
-    formatConfiguration: function( component ) {
-
-    },
-
 	editProperty: function( editor, e ) {
 		var componentConfigId = e.grid.componentConfigId,
 			record            = e.record.data,
 			component         = this.getConfigComponentsStore().getById( componentConfigId ),
-			config            = component.get('config'),
-			defaultConfig     = component.getTemplateConfig(),
+			config            = Ext.Object.merge( {}, component.get('config') ),
+			defaultConfig     = component.getConfigMergedWithTemplateConfig(),
 			value             = record.value
 
 		try {
@@ -207,7 +203,6 @@ Ext.define('Spelled.controller.Components', {
 		} catch ( e ) {}
 
 		if( config[ record.name ] != value ) {
-			var config = component.get( 'config' )
 			try {
 				config[ record.name ] = eval( value )
 			} catch( e ) {
