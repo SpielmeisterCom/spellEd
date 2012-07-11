@@ -31,12 +31,14 @@ Ext.define('Spelled.view.component.Properties', {
 		}
 	],
 
-    customEditors: {
-        //TODO: when a assigned asset gets removed, the field will disappear
-        assetId: 'assetidproperty'
-    },
 
 	initComponent: function() {
+		var me = this
+
+		me.customEditors = {
+			assetId:  new Ext.grid.CellEditor({ field: 'assetidproperty' })
+		}
+
 		if( this.isAdditional === true ) this.closable = true
 
 		this.callParent( arguments )
