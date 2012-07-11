@@ -55,6 +55,10 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                             id: "SceneEditor",
                             xtype: "sceneeditor"
                         },
+						{
+							id: "TemplateEditor",
+							xtype: "templateeditor"
+						},
                         {
                             id: "AssetEditor",
                             xtype: "asseteditor"

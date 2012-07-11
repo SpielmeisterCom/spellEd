@@ -40,7 +40,7 @@ Ext.define('Spelled.controller.Templates', {
 		},
 		{
 			ref : 'TemplateEditor',
-			selector: '#SceneEditor'
+			selector: '#TemplateEditor'
 		},
 		{
 			ref: 'TemplatesTree',
@@ -53,6 +53,9 @@ Ext.define('Spelled.controller.Templates', {
             'templatesnavigator': {
                 activate: this.showTemplateEditor
             },
+			'templateeditor button[action="showCreateTemplate"]': {
+				click: this.showCreateTemplate
+			},
             'templatestreelist': {
                 editclick:       this.showTemplatesContextMenu,
                 itemcontextmenu: this.showTemplatesContextMenu,
