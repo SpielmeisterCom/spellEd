@@ -26,6 +26,7 @@ Ext.define('Spelled.controller.Systems', {
 		this.control({
 			'systemlist': {
 				itemdblclick  : this.showSystemItem,
+				itemcontextmenu: this.showSceneSystemsListContextMenu,
 				editclick   :   this.showSceneSystemsListContextMenu,
 				itemmouseenter: this.application.showActionsOnLeaf,
 				itemmouseleave: this.application.hideActions
