@@ -66,7 +66,7 @@ Ext.define('Spelled.controller.Systems', {
 			values  = window.down('form').getForm().getValues(),
 			tree    = window.down('treepanel'),
 			records = tree.getView().getChecked(),
-			scene    = this.application.getActiveScene(),
+			scene   = this.application.getActiveScene(),
 			systems = scene.get('systems')
 
 		Ext.each(
@@ -130,7 +130,7 @@ Ext.define('Spelled.controller.Systems', {
 		}
 
 		var parent = getRootNode( model ) ,
-			scene   = this.application.getActiveScene()
+			scene  = this.application.getActiveScene()
 
 		var systems = {}
 		parent.eachChild(
@@ -161,10 +161,8 @@ Ext.define('Spelled.controller.Systems', {
 			rootNode = tree.getStore().getRootNode(),
 			me       = this
 
-		contentPanel.add( tree )
+		contentPanel.removeAll()
 		rootNode.removeAll()
-
-		var systems = scene.get('systems')
 
 		Ext.Object.each(
 			scene.get('systems'),
@@ -175,6 +173,8 @@ Ext.define('Spelled.controller.Systems', {
 					expanded  : true,
 					leaf      : false
 				} )
+
+				rootNode.appendChild( node )
 
 				Ext.each(
 					value,
@@ -196,8 +196,10 @@ Ext.define('Spelled.controller.Systems', {
 					}
 				)
 
-				rootNode.appendChild( node )
+
 			}
 		)
+
+		contentPanel.add( tree )
 	}
 });
