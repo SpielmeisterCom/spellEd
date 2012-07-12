@@ -53,24 +53,5 @@ Ext.define('Spelled.model.template.Component', {
 		)
 
 		return templateConfig
-	},
-
-    mergeComponentConfig: function( values ) {
-        var componentConfig = {}
-
-        //Overwrite only the submitted attribute
-        this.getAttributes().each(
-            function( attribute ) {
-                //TODO: Converting types and only insert keys and changes
-                if( values.default != attribute.get('default') ) {
-                    componentConfig[ attribute.get('name') ] = ( attribute.get('name') === values.name ) ? values.default : attribute.get('default')
-                }
-            }
-        )
-
-        return componentConfig
-    }
-
-
-
+	}
 });
