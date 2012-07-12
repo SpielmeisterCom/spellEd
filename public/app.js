@@ -212,6 +212,15 @@ var startEditor = function() {
 		},
 
         launch: function() {
+			var me = this
+
+			Ext.Ajax.request({
+				url: 'configuration.json',
+				success: function( response ){
+					me.configuration = Ext.decode( response.responseText, true)
+				}
+			})
+
 
             Ext.get('loading').remove()
             Ext.get('loading-mask').fadeOut( {

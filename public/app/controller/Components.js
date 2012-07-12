@@ -27,6 +27,7 @@ Ext.define('Spelled.controller.Components', {
 		this.control({
 			'componentproperties': {
 				edit: this.editProperty,
+				showDocumentation: this.showDocumentation,
 				beforeclose: this.confirmDelete
 			},
 			'entitycomponentslist button[action="showAddComponent"]': {
@@ -40,6 +41,20 @@ Ext.define('Spelled.controller.Components', {
 			}
 
 		})
+	},
+
+	showDocumentation: function( event, toolEl, panel ) {
+		var componentGrid = panel.up( 'componentproperties' )
+
+		if( !!componentGrid.componentConfigId ) {
+			var component = Ext.getStore( 'config.Components' ).getById( componentGrid.componentConfigId ),
+				template  = component.getTemplate()
+
+			if( template && Ext.isObject( this.application.configuration ) ) {
+				var docPath = this.application.configuration.documentationServerURL + "#!/guide/" + template.getDocumentationName()
+				window.open( docPath, '_blank')
+			}
+		}
 	},
 
 	showAddComponentButton: function( panel ) {
