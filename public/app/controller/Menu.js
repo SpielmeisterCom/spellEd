@@ -67,6 +67,9 @@ Ext.define('Spelled.controller.Menu', {
             'spelledmenu [action="saveProject"]': {
                 click: this.saveProject
             },
+			'spelledmenu button[action="exportProject"]': {
+				click: this.exportProject
+			},
 
 
 			'scenesystemslistcontextmenu [action="remove"]': {
@@ -408,5 +411,9 @@ Ext.define('Spelled.controller.Menu', {
 
     saveProject: function() {
         this.application.getController('Projects').saveActiveProject()
-    }
+    },
+
+	exportProject: function() {
+		this.application.getController('Projects').exportActiveProject()
+	}
 });

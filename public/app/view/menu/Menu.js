@@ -24,8 +24,12 @@ Ext.define('Spelled.view.menu.Menu', {
                 {
                     text: "Save",
                     action: "saveProject"
-                }
-            ]
+                },
+				{
+					text: "Export",
+					action: "exportProject"
+				}
+			]
         }
     ]
 });

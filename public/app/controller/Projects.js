@@ -75,6 +75,15 @@ Ext.define('Spelled.controller.Projects', {
         project.save( {	callback: callback } )
     },
 
+	exportActiveProject: function() {
+		var project        = this.application.getActiveProject(),
+			exportFileName = project.get('name') +".tar"
+
+		SpellBuild.ProjectActions.exportDeployment( project.get('name'), exportFileName , function( provider, response ) {
+			window.location = exportFileName
+		})
+	},
+
     loadProjectAction: function ( button, event, record ) {
         var window = button.up('window'),
             form   = window.down('form'),
