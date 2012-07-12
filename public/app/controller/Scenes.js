@@ -49,6 +49,9 @@ Ext.define('Spelled.controller.Scenes', {
 
 			switch ( event.data.action ) {
 				case 'spell.initialized' :
+					var scene   = me.application.getActiveScene()
+
+					me.answerIframePostMessage( event, "debug", { type: 'drawCoordinateGrid', payload: scene.get('showGrid') } )
 					me.answerIframePostMessage( event, "run" )
 					return
 			}
@@ -62,14 +65,11 @@ Ext.define('Spelled.controller.Scenes', {
 					panel.down( 'spellediframe').focus()
 				}
 			},
-			'renderedscene > toolbar button[action="saveScene"]': {
-                click: me.saveScene
-            },
             'renderedscene > toolbar button[action="reloadScene"]': {
                 click: me.reloadScene
             },
-            'renderedscene > toolbar button[action="toggleState"]': {
-                click: me.toggleState
+            'renderedscene > toolbar button[action="toggleGrid"]': {
+                toggle: me.toggleGrid
             },
             'scenetreelist': {
 				select         : me.dispatchTreeClick,
@@ -228,17 +228,15 @@ Ext.define('Spelled.controller.Scenes', {
 		this.sendIframePostMessage( event.data.iframeId, type, options )
 	},
 
-	sendIframePostMessage: function( iFrameId, type, options ) {
-		var cmp    = Ext.getCmp( iFrameId ),
-			config = ( Ext.isObject( options ) ) ? options : {}
-
-		if( !cmp ) return
-
-		config.type 	= "spelled." + type
-		config.iframeId = cmp.id
+	sendIframePostMessage: function( iFrameId, type, message ) {
+		var cmp            = Ext.getCmp( iFrameId ),
+			wrapperMessage = {
+				type: "spelled." + type,
+				data: message || {}
+			}
 
 		cmp.el.dom.contentWindow.postMessage(
-			config,
+			wrapperMessage,
 			this.BUILD_SERVER_ORIGIN
 		)
 	},
@@ -300,7 +298,7 @@ Ext.define('Spelled.controller.Scenes', {
     reloadScene: function( button ) {
         var panel   = button.up('panel'),
             project = this.application.getActiveProject(),
-            iframe  = panel.down( 'spellediframe' )
+			iframe  = panel.down( 'spellediframe')
 
 		var w = Ext.create('Ext.window.Window', {
 			modal: true,
@@ -330,12 +328,14 @@ Ext.define('Spelled.controller.Scenes', {
 
     },
 
-    toggleState: function( button ) {
-        console.log( "should toggle play/pause")
-    },
+    toggleGrid: function( button, state ) {
+		var tab   = button.up( 'renderedscene').down( 'spellediframe' ),
+			scene = this.application.getActiveScene()
 
-    saveScene: function( button ) {
-        console.log( "Should save the content ")
+		if( tab ) {
+			scene.set('showGrid', state)
+			this.sendIframePostMessage( tab.getId(), "debug", { type: 'drawCoordinateGrid', payload: state } )
+		}
     },
 
     renderScene: function( scene ) {
@@ -348,7 +348,8 @@ Ext.define('Spelled.controller.Scenes', {
             return foundTab
 
         var spellTab = Ext.create( 'Spelled.view.ui.SpelledRendered', {
-                title: title
+                title: title,
+				showGrid: scene.get('showGrid')
             }
         )
 

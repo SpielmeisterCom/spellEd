@@ -4,6 +4,7 @@ Ext.define('Spelled.model.config.Scene', {
     fields: [
         'name',
 		'scriptId',
+		{ name: 'showGrid', type: 'boolean', defaultValue: false },
 		{ name: 'systems', type: 'object', defaultValue: { update: [], render: [] } }
     ],
 

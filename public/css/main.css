@@ -70,3 +70,7 @@
     background-repeat: no-repeat;
     background-image:  url( '../images/icons/component-link.png' ) !important;
 }
+
+.grid-icon {
+    background-image:  url( '../images/icons/coordinateGrid.png' ) !important;
+}

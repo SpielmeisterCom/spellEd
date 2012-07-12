@@ -3,32 +3,30 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
     alias : 'widget.renderedscene',
     closable: true,
 
-	tbar: [
-		{
-			text: "Reload",
-			action: "reloadScene",
-			tooltip: {
-				text:'Reload and Render Scene',
-				title:'Reload'
+	initComponent: function() {
+		var me = this
+
+		me.tbar = [
+			{
+				text: "Reload",
+				action: "reloadScene",
+				tooltip: {
+					text:'Reload and Render Scene',
+					title:'Reload'
+				}
+			},
+			{
+				iconCls: 'grid-icon',
+				action: "toggleGrid",
+				enableToggle: true,
+				pressed: me.showGrid,
+				tooltip: {
+					text:'Render the SpellJS Grid on the Canvas',
+					title:'Show Grid'
+				}
 			}
-		}
-//		,{
-//			text: "Save",
-//			action: "saveScene",
-//			tooltip: {
-//				text:'Saves settings as default configuration',
-//				title:'Save'
-//			}
-//		},
-//		{
-//			iconCls: 'play',
-//			action: "toggleState",
-//			enableToggle: true,
-//			pressed: true,
-//			tooltip: {
-//				text:'Run or Hold the Spelled Tab',
-//				title:'Run & Hold'
-//			}
-//		}
-	]
+		]
+
+		me.callParent( arguments )
+	}
 });
