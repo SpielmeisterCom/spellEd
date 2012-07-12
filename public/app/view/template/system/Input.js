@@ -28,8 +28,8 @@ Ext.define('Spelled.view.template.system.Input' ,{
 			},
 			{
 				xtype: 'actioncolumn',
-				width: 24,
-				icon: 'images/icons/wrench.png',
+				width: 30,
+				icon: 'images/icons/wrench-arrow.png',
 				tooltip: 'Edit',
 				handler: Ext.bind(me.handleEditClick, me)
 			}
