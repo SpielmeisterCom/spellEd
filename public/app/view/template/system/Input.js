@@ -8,6 +8,12 @@ Ext.define('Spelled.view.template.system.Input' ,{
 	initComponent: function() {
 		var me = this;
 
+		me.tools = [{
+			type:'help',
+			tooltip: 'Get Help',
+			handler:  Ext.bind( me.handleDocClick, me)
+		}]
+
 		me.columns = [
 			{
 				header: 'Name',
@@ -55,6 +61,10 @@ Ext.define('Spelled.view.template.system.Input' ,{
 		ptype: 'cellediting',
 		clicksToEdit: 1
 	}],
+
+	handleDocClick: function( event, toolEl, panel ) {
+		this.fireEvent( 'showDocumentation', event, toolEl, panel );
+	},
 
     bbar: [
         {

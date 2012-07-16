@@ -36,8 +36,9 @@ Ext.define('Spelled.controller.templates.Systems', {
 	init: function() {
 		this.control({
 			'systemtemplateinputlist': {
-				editclick:       this.showInputListContextMenu,
-				itemcontextmenu: this.showInputListContextMenu
+				editclick:         this.showInputListContextMenu,
+				itemcontextmenu:   this.showInputListContextMenu,
+				showDocumentation: this.showDocumentation
 			},
 			'systemblueprintinputlist [action="editclick"]': {
 				click:       this.showInputListContextMenu
@@ -59,6 +60,10 @@ Ext.define('Spelled.controller.templates.Systems', {
 				select: this.changeScript
 			}
 		})
+	},
+
+	showDocumentation: function() {
+		this.application.showDocumentation( "#!/guide/concepts_systems" )
 	},
 
 	unSelectOtherComponents: function( grid, node ) {
