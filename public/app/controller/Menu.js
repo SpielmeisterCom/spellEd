@@ -70,6 +70,9 @@ Ext.define('Spelled.controller.Menu', {
 			'spelledmenu button[action="exportProject"]': {
 				click: this.exportProject
 			},
+			'spelledmenu button[action="showDocumentation"]': {
+				click: this.showDocumentation
+			},
 
 
 			'scenesystemslistcontextmenu [action="remove"]': {
@@ -169,6 +172,10 @@ Ext.define('Spelled.controller.Menu', {
             }
         })
     },
+
+	showDocumentation: function() {
+		this.application.showDocumentation( "" )
+	},
 
     createAndShowView: function( View, event ) {
         event.stopEvent()

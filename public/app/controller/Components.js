@@ -50,9 +50,8 @@ Ext.define('Spelled.controller.Components', {
 			var component = Ext.getStore( 'config.Components' ).getById( componentGrid.componentConfigId ),
 				template  = component.getTemplate()
 
-			if( template && Ext.isObject( this.application.configuration ) ) {
-				var docPath = this.application.configuration.documentationServerURL + "#!/guide/" + template.getDocumentationName()
-				window.open( docPath, '_blank')
+			if( template ) {
+				this.application.showDocumentation( "#!/guide/" + template.getDocumentationName() )
 			}
 		}
 	},

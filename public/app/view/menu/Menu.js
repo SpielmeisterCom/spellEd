@@ -28,6 +28,10 @@ Ext.define('Spelled.view.menu.Menu', {
 				{
 					text: "Export",
 					action: "exportProject"
+				},
+				{
+					iconCls: 'documentation-icon',
+					action: "showDocumentation"
 				}
 			]
         }

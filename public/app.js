@@ -87,6 +87,13 @@ var startEditor = function() {
         project: undefined,
         scene: undefined,
 
+		showDocumentation: function( docString ) {
+			if( Ext.isObject( this.configuration ) ) {
+				var docPath = this.configuration.documentationServerURL + docString
+				window.open( docPath, '_blank')
+			}
+		},
+
 		showBuildServerConnectError: function() {
 			Ext.Msg.alert( 'Service unavailable', "SpellEd can't connect to the Build-Server." )
 		},
