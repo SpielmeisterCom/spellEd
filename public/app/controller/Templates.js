@@ -53,7 +53,7 @@ Ext.define('Spelled.controller.Templates', {
             'templatesnavigator': {
                 activate: this.showTemplateEditor
             },
-			'templateeditor button[action="showCreateTemplate"]': {
+			'templatestreelist button[action="showCreateTemplate"]': {
 				click: this.showCreateTemplate
 			},
             'templatestreelist': {

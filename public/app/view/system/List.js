@@ -16,11 +16,7 @@ Ext.define('Spelled.view.system.List' ,{
         {
             text: "Add new system",
 			icon: "images/icons/add.png",
-            action: "showAddSystem",
-            tooltip: {
-                text:'Adds a new System to the Scene',
-                title:'Add'
-            }
+            action: "showAddSystem"
         }
     ]
 });

@@ -4,12 +4,5 @@ Ext.define('Spelled.view.template.Editor', {
 
     title: 'Template Editor',
     titleCollapse: false,
-    activeTab: 0,
-    bbar: [
-        {
-            xtype: 'button',
-            action: 'showCreateTemplate',
-            text: 'Create a new Template'
-        }
-    ]
+    activeTab: 0
 });

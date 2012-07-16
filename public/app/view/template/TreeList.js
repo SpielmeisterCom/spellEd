@@ -7,5 +7,13 @@ Ext.define('Spelled.view.template.TreeList' ,{
     title : 'All Templates',
     store : 'TemplatesTree',
 
-    rootVisible: false
+    rootVisible: false,
+
+	tbar: [
+	{
+		icon: "images/icons/add.png",
+		action: 'showCreateTemplate',
+		text: 'Create new template'
+	}
+]
 });
