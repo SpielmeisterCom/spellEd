@@ -75,9 +75,6 @@ Ext.define('Spelled.controller.Menu', {
 			'scenesystemslistcontextmenu [action="remove"]': {
 				click: this.removeSystemFromScene
 			},
-			'scenesystemslistcontextmenu [action="add"]': {
-				click: this.addSystemToScene
-			},
 			'scenesystemslistcontextmenu [action="moveUp"]': {
 				click: this.moveSystemNodeUp
 			},
@@ -343,10 +340,6 @@ Ext.define('Spelled.controller.Menu', {
 		if( node && !node.parentNode.isRoot() ) {
 			this.application.getController( 'Systems' ).moveSystemNodeDown( node )
 		}
-	},
-
-	addSystemToScene: function() {
-		this.application.getController('Systems').showAddSystem()
 	},
 
     removeSystemInput: function( ) {

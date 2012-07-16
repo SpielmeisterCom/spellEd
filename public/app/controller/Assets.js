@@ -64,7 +64,7 @@ Ext.define('Spelled.controller.Assets', {
             'AssetEditor': {
                 dragover: this.dropAsset
             },
-            'asseteditor [action="showCreateAsset"]' : {
+            'assetstreelist button[action="showCreateAsset"]' : {
                 click: this.showCreateAsset
             },
             'createasset button[action="createAsset"]' : {

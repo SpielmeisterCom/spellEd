@@ -3,16 +3,6 @@ Ext.define('Spelled.view.menu.contextmenu.SceneSystemsList', {
     alias : 'widget.scenesystemslistcontextmenu',
 
     items: [
-        {
-			icon: 'images/icons/add.png',
-            text: 'Add new system',
-            action: 'add'
-        },
-        {
-			icon: 'images/icons/delete.png',
-            text: 'Remove',
-            action: 'remove'
-        },
 		{
 			icon: 'images/icons/arrow-up.png',
 			text: 'Move up',
@@ -22,6 +12,11 @@ Ext.define('Spelled.view.menu.contextmenu.SceneSystemsList', {
 			icon: 'images/icons/arrow-down.png',
 			text: 'Move down',
 			action: 'moveDown'
+		},
+		{
+			icon: 'images/icons/delete.png',
+			text: 'Remove',
+			action: 'remove'
 		}
     ]
 });
