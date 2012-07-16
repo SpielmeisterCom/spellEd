@@ -3,7 +3,7 @@ Ext.define('Spelled.view.template.component.Attributes' ,{
     alias : 'widget.componenttemplateattributeslist',
 
     title: 'Attributes',
-    rootVisible: true,
+    rootVisible: false,
     flex: 1,
 
     bbar: [
