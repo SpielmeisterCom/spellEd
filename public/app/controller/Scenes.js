@@ -298,7 +298,8 @@ Ext.define('Spelled.controller.Scenes', {
     reloadScene: function( button ) {
         var panel   = button.up('panel'),
             project = this.application.getActiveProject(),
-			iframe  = panel.down( 'spellediframe')
+			iframe  = panel.down( 'spellediframe'),
+			me      = this
 
 		var w = Ext.create('Ext.window.Window', {
 			modal: true,
@@ -316,11 +317,15 @@ Ext.define('Spelled.controller.Scenes', {
 					"html5",
 					project.get('name'),
 					project.getConfigName(),
-					function() {
+					function( provider, response  ) {
 						w.close()
 
-						iframe.el.dom.src = iframe.el.dom.src
-						iframe.focus()
+						if( !!response.data ) {
+							iframe.el.dom.src = iframe.el.dom.src
+							iframe.focus()
+						} else {
+							me.application.showBuildServerConnectError()
+						}
 					}
 				)
 			}
