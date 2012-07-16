@@ -51,7 +51,7 @@ Ext.define('Spelled.controller.Projects', {
             if( response.result !== false ) {
                 var configFilePath   = values.name + '/project.json'
 
-                SpellBuild.ProjectActions.initDirectory( values.name, configFilePath, function( provider, response ) {
+				Spelled.SpellBuildActions.initDirectory( values.name, configFilePath, function( provider, response ) {
                     me.loadProject( values.name )
                     window.close()
                 })
@@ -77,10 +77,15 @@ Ext.define('Spelled.controller.Projects', {
 
 	exportActiveProject: function() {
 		var project        = this.application.getActiveProject(),
-			exportFileName = project.get('name') +".tar"
+			exportFileName = project.get('name') +".tar",
+			me             = this
 
-		SpellBuild.ProjectActions.exportDeployment( project.get('name'), exportFileName , function( provider, response ) {
-			window.location = exportFileName
+		Spelled.SpellBuildActions.exportDeployment( project.get('name'), exportFileName , function( provider, response ) {
+			if( !!response.data ) {
+				window.location = exportFileName
+			} else {
+				me.application.showBuildServerConnectError()
+			}
 		})
 	},
 

@@ -312,7 +312,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		this.application.getController('Projects').saveActiveProject(
 			function() {
-				SpellBuild.ProjectActions.executeCreateDebugBuild(
+				Spelled.SpellBuildActions.executeCreateDebugBuild(
 					"html5",
 					project.get('name'),
 					project.getConfigName(),
@@ -357,17 +357,22 @@ Ext.define('Spelled.controller.Scenes', {
 
         var createTab = function( provider, response ) {
 
-            var iframe = Ext.create( 'Spelled.view.ui.SpelledIframe', {
-                projectName: project.get('name'),
-				sceneId: scene.getId()
-            })
+			if( !!response.data ) {
+				var iframe = Ext.create( 'Spelled.view.ui.SpelledIframe', {
+					projectName: project.get('name'),
+					sceneId: scene.getId()
+				})
 
-            spellTab.add( iframe )
+				spellTab.add( iframe )
 
-            this.application.createTab( sceneEditor, spellTab )
+				this.application.createTab( sceneEditor, spellTab )
+			} else {
+				this.application.showBuildServerConnectError()
+			}
+
 		}
 
-        SpellBuild.ProjectActions.executeCreateDebugBuild(
+		Spelled.SpellBuildActions.executeCreateDebugBuild(
             "html5",
             project.get('name'),
             project.getConfigName(),

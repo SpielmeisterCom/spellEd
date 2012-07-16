@@ -15,7 +15,13 @@ require(
     ) {
         "use strict"
 
-        var projectsRoot = 'projects/'
+        var projectsRoot        = 'projects/',
+			buildServerOptions  = {
+				host: 'localhost',
+				port: '8080',
+				path: '/router/',
+				method: 'POST'
+			}
 
         var app = connect()
             .use( connect.favicon() )
@@ -24,7 +30,7 @@ require(
                 extDirect(
                     'router/',
                     'Spelled',
-                    createExtDirectApi( projectsRoot )
+                    createExtDirectApi( projectsRoot, buildServerOptions )
                 )
             )
             .use( connect.static('public'))

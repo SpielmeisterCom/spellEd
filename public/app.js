@@ -5,8 +5,7 @@ Ext.require([
 ]);
 
 var apis = [
-    '/api',
-    'http://localhost:8080/api'
+    '/api'
 ]
 
 var after = function(times, func) {
@@ -87,6 +86,10 @@ var startEditor = function() {
 
         project: undefined,
         scene: undefined,
+
+		showBuildServerConnectError: function() {
+			Ext.Msg.alert( 'Service unavailable', "SpellEd can't connect to the Build-Server." )
+		},
 
 		getLastSelectedNode: function( treePanel ) {
 			return treePanel.getSelectionModel().getLastSelected()

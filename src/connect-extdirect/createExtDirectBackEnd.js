@@ -144,6 +144,9 @@ define(
 								extdirect_req = act_data;
 							}
 
+							// Workaround for saving the Ext-Id on the specified Request
+							request.extDirectId = data[i].tid
+
 							var extdirect_res = extdirect_req;
 
 							var action = extdirect_req.action;
@@ -175,12 +178,15 @@ define(
 										responses.push(extdirect_res);
 										complited_req++;
 										if (complited_req == data.length) {
-											if (!extdirect_res.isUpload) {
-												response.writeHead(200, {'Content-type': 'application/json'});
-											} else {
-												response.writeHead(200, {'Content-type': 'text/html'});
+											//For SpellBuildActions don't respond at this point
+											if( extdirect_res.action !== "SpellBuildActions" ) {
+												if (!extdirect_res.isUpload) {
+													response.writeHead(200, {'Content-type': 'application/json'});
+												} else {
+													response.writeHead(200, {'Content-type': 'text/html'});
+												}
+												response.end(JSON.stringify(responses), 'utf8');
 											}
-											response.end(JSON.stringify(responses), 'utf8');
 										}
 									}
 								}.apply(null, [extdirect_res]);
