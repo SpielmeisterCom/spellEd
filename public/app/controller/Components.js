@@ -239,14 +239,7 @@ Ext.define('Spelled.controller.Components', {
 		} else if( Ext.isObject( value ) ) {
 			return Ext.encode( value )
 		} else {
-			try{
-				if( !eval(value) )
-					return value
-				else
-					return eval(value)
-			} catch( e ) {
-				return value
-			}
+		    return value
 		}
 	},
 
