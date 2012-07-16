@@ -37,10 +37,6 @@ Ext.define('Spelled.view.template.component.Edit', {
                             flex: 3
                         }
                     ]
-                },
-                {
-                    xtype: 'panel',
-                    title: 'Script'
                 }
             ]
         }
