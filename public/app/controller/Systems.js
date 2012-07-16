@@ -186,7 +186,8 @@ Ext.define('Spelled.controller.Systems', {
 					text      : key,
 					id        : key,
 					expanded  : true,
-					leaf      : false
+					leaf      : false,
+					iconCls   : "tree-system-folder-icon"
 				} )
 
 				rootNode.appendChild( node )
@@ -203,7 +204,8 @@ Ext.define('Spelled.controller.Systems', {
 										text         : systemTemplate.getFullName(),
 										cls		     : me.application.getController('Templates').TEMPLATE_TYPE_SYSTEM,
 										leaf         : true,
-										id           : systemTemplate.getId()
+										id           : systemTemplate.getId(),
+										iconCls      : "tree-system-icon"
 									}
 								)
 							)

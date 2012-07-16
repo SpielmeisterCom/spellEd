@@ -50,7 +50,7 @@
 }
 
 .tree-scene-system-icon {
-    background-image: url( '../images/icons/system.png' ) !important;
+    background-image: url( '../images/icons/system-box.png' ) !important;
 }
 
 .tree-scene-script-icon {
@@ -77,4 +77,12 @@
 
 .documentation-icon {
     background-image:  url( '../images/icons/information.png' ) !important;
+}
+
+.tree-system-icon {
+    background-image:  url( '../images/icons/system.png' ) !important;
+}
+
+.tree-system-folder-icon {
+    background-image:  url( '../images/icons/system-box.png' ) !important;
 }

@@ -17,7 +17,7 @@ Ext.define('Spelled.view.system.List' ,{
     tbar: [
         {
             text: "Add new system",
-			icon: "images/icons/add.png",
+			icon: "images/icons/system-add.png",
             action: "showAddSystem"
         }
     ]
