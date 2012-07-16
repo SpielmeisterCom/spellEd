@@ -2,6 +2,8 @@ Ext.define('Spelled.view.entity.ComponentsList' ,{
     extend: 'Ext.panel.Panel',
     alias: 'widget.entitycomponentslist',
 
+	docString: "#!/guide/entity_documentation",
+
 	padding: '5px',
 
 	border: false,

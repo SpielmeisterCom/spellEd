@@ -6,6 +6,8 @@ Ext.define('Spelled.view.system.List' ,{
 
 	rootVisible: false,
 
+	docString: "#!/guide/system_list_documentation",
+
 	viewConfig: {
 		plugins: {
 			ptype: 'treeviewdragdrop'

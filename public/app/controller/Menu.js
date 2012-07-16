@@ -14,6 +14,7 @@ Ext.define('Spelled.controller.Menu', {
         'menu.contextmenu.ComponentTemplateAttributesList',
         'menu.contextmenu.SystemTemplateInputList',
         'ui.SpelledConsole',
+		'ui.SpelledRightPanel',
         'ui.StartScreen'
     ],
 
@@ -53,10 +54,15 @@ Ext.define('Spelled.controller.Menu', {
 			'#RightPanel': {
 				remove: function( panel ) {
 					panel.setTitle( panel.defaultTitle )
+					panel.docString = ""
+				},
+				add: function( panel, item ) {
+					panel.docString = ( !!item.docString ) ? item.docString : ''
 				},
 				hide: function( panel ) {
 					panel.removeAll()
-				}
+				},
+				showDocumentation: this.showDocumentation
 			},
             'spelledmenu [action="showCreateProject"]': {
                 click: this.showCreateProject
@@ -71,7 +77,7 @@ Ext.define('Spelled.controller.Menu', {
 				click: this.exportProject
 			},
 			'spelledmenu button[action="showDocumentation"]': {
-				click: this.showDocumentation
+				click: this.showEditorDocumentation
 			},
 
 
@@ -173,8 +179,12 @@ Ext.define('Spelled.controller.Menu', {
         })
     },
 
-	showDocumentation: function() {
+	showEditorDocumentation: function() {
 		this.application.showDocumentation( "" )
+	},
+
+	showDocumentation: function() {
+		this.application.showDocumentation( this.getRightPanel().docString )
 	},
 
     createAndShowView: function( View, event ) {

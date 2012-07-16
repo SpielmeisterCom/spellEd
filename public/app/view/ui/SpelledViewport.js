@@ -71,12 +71,7 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                 },
 				{
 					id: "RightPanel",
-					title: "Inspector",
-					defaultTitle: "Inspector",
-					region:'east',
-					layout: 'fit',
-					width: 300,
-					minSize: 100
+					xtype: 'rightpanel'
 				},
                 {
                     xtype : 'console',

@@ -159,6 +159,13 @@ Ext.define('Spelled.controller.Entities', {
 		view.sortByTitle()
 		view.entity = entity
 
+		if( !!entity.isAnonymous ) {
+			view.docString = ( entity.isAnonymous() ) ? view.docString : "#!/guide/" + entity.getEntityTemplate().getDocumentationName()
+		} else {
+			view.docString = "#!/guide/" + entity.getDocumentationName()
+		}
+
+
 		contentPanel.add( view )
 
 		contentPanel.setTitle( 'Components in entity "' + entity.get('name') +'"' )
