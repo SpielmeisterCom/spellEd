@@ -4,12 +4,5 @@ Ext.define('Spelled.view.script.Manager', {
 
     title: 'Script Editor',
     titleCollapse: false,
-    activeTab: 0,
-    bbar: [
-        {
-            xtype: 'button',
-            action: 'showCreateScript',
-            text: 'Create a new Script'
-        }
-    ]
+    activeTab: 0
 });

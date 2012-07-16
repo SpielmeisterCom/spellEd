@@ -43,7 +43,7 @@ Ext.define('Spelled.controller.Scripts', {
                 itemmouseenter:  this.application.showActionsOnLeaf,
                 itemmouseleave:  this.application.hideActions
             },
-            'scriptmanager [action="showCreateScript"]' : {
+            'scriptstreelist [action="showCreateScript"]' : {
                 click: this.showCreateScript
             },
             'createscript button[action="createScript"]' : {

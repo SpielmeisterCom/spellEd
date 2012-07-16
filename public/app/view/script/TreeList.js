@@ -7,5 +7,14 @@ Ext.define('Spelled.view.script.TreeList' ,{
     title : 'All Scripts',
     store : 'script.Tree',
 
-    rootVisible: false
+    rootVisible: false,
+
+	tbar: [
+		{
+			xtype: 'button',
+			icon: "images/icons/add.png",
+			action: 'showCreateScript',
+			text: 'Create a new Script'
+		}
+	]
 });
