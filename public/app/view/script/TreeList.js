@@ -12,9 +12,9 @@ Ext.define('Spelled.view.script.TreeList' ,{
 	tbar: [
 		{
 			xtype: 'button',
-			icon: "images/icons/add.png",
+			icon: "images/icons/script-add.png",
 			action: 'showCreateScript',
-			text: 'Create a new Script'
+			text: 'Create new script'
 		}
 	]
 });

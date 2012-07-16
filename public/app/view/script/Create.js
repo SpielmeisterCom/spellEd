@@ -2,7 +2,7 @@ Ext.define('Spelled.view.script.Create' ,{
     extend: 'Ext.Window',
     alias: 'widget.createscript',
 
-    title : 'Create a new Script',
+    title : 'Create new script',
     modal : true,
 
 	layout: 'fit',
