@@ -78,6 +78,12 @@ Ext.define('Spelled.controller.Menu', {
 			'scenesystemslistcontextmenu [action="add"]': {
 				click: this.addSystemToScene
 			},
+			'scenesystemslistcontextmenu [action="moveUp"]': {
+				click: this.moveSystemNodeUp
+			},
+			'scenesystemslistcontextmenu [action="moveDown"]': {
+				click: this.moveSystemNodeDown
+			},
 
 
 			'startscreen button[action="showCreateProject"]': {
@@ -321,6 +327,22 @@ Ext.define('Spelled.controller.Menu', {
 			node.remove()
 		}
 
+	},
+
+	moveSystemNodeUp: function() {
+		var node = this.application.getLastSelectedNode( this.getRightPanel().down( 'systemlist' )  )
+
+		if( node && !node.parentNode.isRoot() ) {
+			this.application.getController( 'Systems' ).moveSystemNodeUp( node )
+		}
+	},
+
+	moveSystemNodeDown: function() {
+		var node = this.application.getLastSelectedNode( this.getRightPanel().down( 'systemlist' )  )
+
+		if( node && !node.parentNode.isRoot() ) {
+			this.application.getController( 'Systems' ).moveSystemNodeDown( node )
+		}
 	},
 
 	addSystemToScene: function() {

@@ -43,6 +43,20 @@ Ext.define('Spelled.controller.Systems', {
 		})
 	},
 
+	moveSystemNodeDown: function( node ) {
+		if( node.nextSibling ) {
+			node.parentNode.insertBefore( node.nextSibling, node )
+			this.updateSceneSystems( null, null, node )
+		}
+	},
+
+	moveSystemNodeUp: function( node ) {
+		if( node.previousSibling ) {
+			node.parentNode.insertBefore( node, node.previousSibling )
+			this.updateSceneSystems( null, null, node )
+		}
+	},
+
 	showSceneSystemsListContextMenu: function( view, record, item, index, e, options ) {
 		this.application.getController('Menu').showSceneSystemsListContextMenu( e )
 	},
