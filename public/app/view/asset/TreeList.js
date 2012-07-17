@@ -13,11 +13,7 @@ Ext.define('Spelled.view.asset.TreeList' ,{
 		{
 			text: "Add new asset",
 			action: "showCreateAsset",
-			icon: 'images/icons/add.png',
-			tooltip: {
-				text:'Create a new Asset',
-				title:'Create'
-			}
+			icon: 'images/icons/add.png'
 		}
 	]
 });
