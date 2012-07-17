@@ -37,7 +37,7 @@ Ext.define('Spelled.view.system.Add' ,{
 
 					editable: false,
 					name: 'type',
-					fieldLabel: 'Select the System Type'
+					fieldLabel: 'Select the execution group'
                 },
                 {
 					flex: 1,
