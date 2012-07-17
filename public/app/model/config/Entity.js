@@ -223,7 +223,7 @@ Ext.define('Spelled.model.config.Entity', {
 		var entityNode = node.createNode( {
 				text      : this.get('name'),
 				id        : this.getId(),
-				iconCls   : ( this.isRemovable() ) ? "tree-scene-entity-icon" : "tree-scene-entity-readonly-icon",
+				iconCls   : ( this.isRemovable() && this.isAnonymous() ) ? "tree-scene-entity-icon" : "tree-scene-entity-readonly-icon",
 				leaf      : !this.hasChildren()
 			}
 		)
