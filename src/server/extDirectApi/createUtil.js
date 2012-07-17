@@ -280,6 +280,12 @@ define(
 								}
 
 								fileInfo = parseChildren( fileInfo, object )
+							} else if( object.type === "entityTemplate" ) {
+								fileInfo.iconCls = "tree-scene-entity-icon"
+							} else if( object.type === "componentTemplate" ) {
+								fileInfo.iconCls = "tree-component-icon"
+							} else if( object.type === "systemTemplate" ) {
+								fileInfo.iconCls = "tree-scene-script-icon"
 							}
 
 							if( !_.has( namespacesResults, object.namespace ) ){
