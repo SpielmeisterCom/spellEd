@@ -16,7 +16,7 @@ Ext.define('Spelled.view.template.system.Input' ,{
 
 		me.columns = [
 			{
-				header: 'Imported into variable',
+				header: 'Local alias',
 				width: 120,
 				dataIndex: 'name',
 				editor: {
@@ -68,7 +68,7 @@ Ext.define('Spelled.view.template.system.Input' ,{
 
     bbar: [
         {
-            text: "Register for additional input",
+            text: "Register component dictionary",
             action: "showAddInput"
         }
     ]

@@ -2,7 +2,7 @@ Ext.define('Spelled.view.template.system.input.Add' ,{
     extend: 'Ext.window.Window',
     alias: 'widget.addinputtotemplate',
 
-    title: "Add new Input-Definition to the System",
+    title: "Register additional component dictionary for system input",
     modal: true,
     closable: true,
 
@@ -29,7 +29,7 @@ Ext.define('Spelled.view.template.system.input.Add' ,{
                 {
                     xtype: 'textfield',
                     name: "name",
-                    fieldLabel: 'Import into variable'
+                    fieldLabel: 'Local alias'
                 },
                 {
 					flex:1,
