@@ -37,7 +37,7 @@ Ext.define('Spelled.view.asset.Form', {
 			xtype: 'filefield',
 			allowBlank: true,
 			name: 'asset',
-			fieldLabel: 'Asset',
+			fieldLabel: 'File',
 			labelWidth: 50,
 			msgTarget: 'side',
 			buttonText: 'Select a File...',

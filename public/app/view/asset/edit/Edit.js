@@ -55,7 +55,7 @@ Ext.define('Spelled.view.asset.edit.Edit', {
 			{
 				xtype: 'filefield',
 				name: 'asset',
-				fieldLabel: 'Asset',
+				fieldLabel: 'File',
 				labelWidth: 50,
 				msgTarget: 'side',
 				buttonText: 'Select a File...'
