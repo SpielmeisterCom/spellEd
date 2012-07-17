@@ -4,14 +4,14 @@ Ext.define('Spelled.store.asset.Types', {
     fields: ['type', 'name'],
 
     data : [
-        {
-            "type":"appearance",
-            "name":"2D Static Appearance"
-        },
 		{
 			"type":"animation",
 			"name":"2D Animated Appearance"
 		},
+        {
+            "type":"appearance",
+            "name":"2D Static Appearance"
+        },
 		{
 			"type":"spriteSheet",
 			"name":"Sprite Sheet"
