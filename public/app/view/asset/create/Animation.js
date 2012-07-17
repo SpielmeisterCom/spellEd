@@ -2,48 +2,68 @@ Ext.define('Spelled.view.asset.create.Animation', {
     extend: 'Ext.container.Container',
     alias: 'widget.animationassetconfig',
 
-	items: [
-		{
-			xtype: "assetidproperty",
-			store: 'asset.SpriteSheets',
-			allowBlank: true,
-			fieldLabel: "From existing Sprite Sheet",
-			listeners: {
-				'change': function( cmp, value) {
-					if( value )
-						this.up('form').down('filefield').reset()
+	initComponent: function() {
+		var me = this
+
+		Ext.applyIf( me, {
+			items: [
+				{
+					xtype: 'tool',
+					cls: "doc-tool",
+					type:'help',
+					tooltip: 'Get Help',
+					docString: "#Animation-Documentation",
+					width: 'null',
+					handler:  function() {
+						me.fireEvent( 'showDocumentation', this.docString )
+					}
+				},
+				{
+					xtype: "assetidproperty",
+					store: 'asset.SpriteSheets',
+					allowBlank: true,
+					fieldLabel: "From existing Sprite Sheet",
+					listeners: {
+						'change': function( cmp, value) {
+							if( value )
+								this.up('form').down('filefield').reset()
+						}
+					},
+					validator: function( value ) {
+						var file = this.up('form').down('filefield').getValue()
+						if( ( !file && !value ) )
+							return "You need to select a existing Asset"
+						else
+							return true
+					}
+				},
+				{
+					xtype: "textfield",
+					name: 'animationType',
+					value: 'sprite',
+					fieldLabel: 'Animation Type',
+					readOnly: true
+				},
+				{
+					xtype: "checkbox",
+					name: 'looped',
+					fieldLabel: 'Looped'
+				},
+				{
+					xtype: "numberfield",
+					name: 'duration',
+					minValue: 0,
+					fieldLabel: 'Duration'
+				},
+				{
+					xtype: "textfield",
+					name: 'frameIds',
+					fieldLabel: 'Frames'
 				}
-			},
-			validator: function( value ) {
-				var file = this.up('form').down('filefield').getValue()
-				if( ( !file && !value ) )
-					return "You need to select a existing Asset"
-				else
-					return true
-			}
-		},
-		{
-			xtype: "textfield",
-			name: 'animationType',
-			value: 'sprite',
-			fieldLabel: 'Animation Type',
-			readOnly: true
-		},
-		{
-			xtype: "checkbox",
-			name: 'looped',
-			fieldLabel: 'Looped'
-		},
-		{
-			xtype: "numberfield",
-			name: 'duration',
-			minValue: 0,
-			fieldLabel: 'Duration'
-		},
-		{
-			xtype: "textfield",
-			name: 'frameIds',
-			fieldLabel: 'Frames'
-		}
-	]
+			]
+		})
+
+
+		me.callParent()
+	}
 });
