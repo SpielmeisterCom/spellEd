@@ -27,8 +27,10 @@ Ext.define('Spelled.controller.Components', {
 		this.control({
 			'componentproperties': {
 				edit: this.editProperty,
-				showDocumentation: this.showDocumentation,
 				beforeclose: this.confirmDelete
+			},
+			'componentproperties tool-documentation': {
+				showDocumentation: this.showDocumentation
 			},
 			'entitycomponentslist button[action="showAddComponent"]': {
 				click: this.showAddComponent
@@ -43,7 +45,7 @@ Ext.define('Spelled.controller.Components', {
 		})
 	},
 
-	showDocumentation: function( event, toolEl, panel ) {
+	showDocumentation: function( docString, toolEl, panel ) {
 		var componentGrid = panel.up( 'componentproperties' )
 
 		if( !!componentGrid.componentConfigId ) {

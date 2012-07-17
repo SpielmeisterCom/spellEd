@@ -8,15 +8,9 @@ Ext.define('Spelled.view.asset.create.SpriteSheet', {
 		Ext.applyIf( me, {
 			items: [
 				{
-					xtype: 'tool',
-					cls: "doc-tool",
-					type:'help',
-					tooltip: 'Get Help',
+					xtype: 'tool-documentation',
 					docString: "#SpriteSheet-Documentation",
-					width: 'null',
-					handler:  function() {
-						me.fireEvent( 'showDocumentation', this.docString )
-					}
+					width: 'null'
 				},
 				{
 					xtype: "numberfield",

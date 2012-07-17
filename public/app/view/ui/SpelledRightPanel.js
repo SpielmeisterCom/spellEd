@@ -14,18 +14,12 @@ Ext.define('Spelled.view.ui.SpelledRightPanel', {
 				minSize: 100,
 				tools: [
 					{
-						type:'help',
-						tooltip: 'Get Help',
-						handler:  Ext.bind( me.handleDocClick, me)
+						xtype: 'tool-documentation'
 					}
 				]
 			}
 		)
 
 		me.callParent(arguments)
-	},
-
-	handleDocClick: function( event, toolEl, panel ) {
-		this.fireEvent( 'showDocumentation', event, toolEl, panel );
 	}
 });

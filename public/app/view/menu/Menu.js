@@ -33,12 +33,8 @@ Ext.define('Spelled.view.menu.Menu', {
 						action: "exportProject"
 					},
 					{
-						xtype: 'tool',
-						type:'help',
-						tooltip: 'Get Help',
-						handler: function( event, toolEl, panel ) {
-							me.fireEvent( 'showDocumentation', event, toolEl, panel );
-						}
+						xtype: 'tool-documentation',
+						docString: ""
 					}
 				]
 			}

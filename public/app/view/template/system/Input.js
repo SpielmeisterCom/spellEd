@@ -9,9 +9,8 @@ Ext.define('Spelled.view.template.system.Input' ,{
 		var me = this;
 
 		me.tools = [{
-			type:'help',
-			tooltip: 'Get Help',
-			handler:  Ext.bind( me.handleDocClick, me)
+			xtype: 'tool-documentation',
+			docString: "#!/guide/concepts_systems"
 		}]
 
 		me.columns = [
@@ -61,10 +60,6 @@ Ext.define('Spelled.view.template.system.Input' ,{
 		ptype: 'cellediting',
 		clicksToEdit: 1
 	}],
-
-	handleDocClick: function( event, toolEl, panel ) {
-		this.fireEvent( 'showDocumentation', event, toolEl, panel );
-	},
 
     bbar: [
         {

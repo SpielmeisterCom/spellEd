@@ -50,7 +50,7 @@ Ext.define('Spelled.controller.Assets', {
 			'editasset button[action="editAsset"]' : {
 				click: this.editAsset
 			},
-			'spritesheetconfig, animationassetconfig': {
+			'spritesheetconfig > tool-documentation, animationassetconfig > tool-documentation': {
 				showDocumentation: this.showDocumentation
 			},
             'assetsnavigator': {

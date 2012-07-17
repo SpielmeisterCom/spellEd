@@ -16,9 +16,7 @@ Ext.define('Spelled.view.component.Properties', {
 		var me = this
 
 		me.tools = [{
-			type:'help',
-			tooltip: 'Get Help',
-			handler:  Ext.bind( me.handleDocClick, me)
+			xtype: 'tool-documentation'
 		}]
 
 		var storeId = 'asset.Assets'
@@ -53,9 +51,5 @@ Ext.define('Spelled.view.component.Properties', {
 
 	getAssetIdType: function( assetId ) {
 		return assetId.split( ':').shift()
-	},
-
-	handleDocClick: function( event, toolEl, panel ) {
-		this.fireEvent( 'showDocumentation', event, toolEl, panel );
 	}
 });
