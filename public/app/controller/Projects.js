@@ -121,9 +121,9 @@ Ext.define('Spelled.controller.Projects', {
 		Project.load( projectName, {
             scope: this,
             success: function( project ) {
+				this.application.setActiveProject( project )
 				project.checkForComponentChanges()
 				this.getScenesList( project )
-				this.application.setActiveProject( project )
 				Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Scenes') )
 
 				var tree       = this.getScenesTree(),

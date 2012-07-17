@@ -167,7 +167,7 @@ Ext.define('Spelled.controller.Menu', {
                 click: this.removeScene
             },
             'sceneslistcontextmenu [action="default"]': {
-
+				click: this.setDefaultScene
             },
             'sceneslistcontextmenu [action="render"]': {
                 click: this.renderScene
@@ -417,6 +417,15 @@ Ext.define('Spelled.controller.Menu', {
 			this.application.removeSelectedNode( this.getScenesTree() )
         }
     },
+
+
+	setDefaultScene: function() {
+		var scene = this.application.getActiveScene()
+
+		if( scene ) {
+			this.application.getController( 'Scenes' ).setDefaultScene( scene )
+		}
+	},
 
     renderScene: function( ) {
         var scene = this.application.getActiveScene()

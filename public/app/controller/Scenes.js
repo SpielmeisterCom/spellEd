@@ -96,11 +96,27 @@ Ext.define('Spelled.controller.Scenes', {
         })
     },
 
+	setDefaultScene: function( scene ) {
+		var project = this.application.getActiveProject(),
+			tree    = this.getScenesTree()
+
+		project.set( 'startScene', scene.get( 'name' ) )
+
+		tree.getRootNode().eachChild( function( child ) {
+			if( child.getId() === scene.get( 'name' ) ) {
+				child.set( 'iconCls', "tree-default-scene-icon" )
+			} else {
+				child.set( 'iconCls', "tree-scene-icon" )
+			}
+		})
+	},
+
 	getClickedTreeItemType: function( record ) {
 		var type = undefined
 
 		switch( record.get('iconCls') ) {
 			case 'tree-scene-icon':
+			case 'tree-default-scene-icon':
 	            type = this.TREE_ITEM_TYPE_SCENE
 				break
 			case 'tree-scene-entity-icon':
@@ -388,11 +404,16 @@ Ext.define('Spelled.controller.Scenes', {
 
     showScenesList: function( scenes ) {
         var tree     = this.getScenesTree(),
-            rootNode = tree.getStore().getRootNode()
+            rootNode = tree.getStore().getRootNode(),
+			project  = this.application.getActiveProject()
         rootNode.removeAll()
 
         scenes.each( function( scene ) {
-            scene.appendOnTreeNode( rootNode )
+            var node = scene.appendOnTreeNode( rootNode )
+
+			if( project.get( 'startScene' ) == scene.getId() ) {
+				node.set( 'iconCls', 'tree-default-scene-icon' )
+			}
         })
     }
 });

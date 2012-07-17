@@ -37,6 +37,10 @@
     background-image: url( '../images/icons/scene.png' ) !important;
 }
 
+.tree-default-scene-icon {
+    background-image: url( '../images/icons/scene-key.png' ) !important;
+}
+
 .tree-entities-folder-icon {
     background-image: url( '../images/icons/entity-box.png' ) !important;
 }
