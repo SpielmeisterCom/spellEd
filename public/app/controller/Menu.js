@@ -115,10 +115,6 @@ Ext.define('Spelled.controller.Menu', {
                 click: this.removeScript
             },
 
-
-            'assetslistcontextmenu [action="create"]': {
-                click: this.showCreateAsset
-            },
             'assetslistcontextmenu [action="remove"]': {
                 click: this.removeAsset
             },

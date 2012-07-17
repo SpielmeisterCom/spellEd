@@ -3,11 +3,6 @@ Ext.define('Spelled.view.menu.contextmenu.AssetsList', {
     alias : 'widget.assetslistcontextmenu',
 
     items: [
-        {
-			icon: 'images/icons/add.png',
-            text: 'Create a new Asset',
-            action: 'create'
-        },
 		{
 			icon: 'images/icons/cog.png',
 			text: 'Edit',
