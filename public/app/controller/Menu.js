@@ -76,8 +76,8 @@ Ext.define('Spelled.controller.Menu', {
 			'spelledmenu button[action="exportProject"]': {
 				click: this.exportProject
 			},
-			'spelledmenu button[action="showDocumentation"]': {
-				click: this.showEditorDocumentation
+			'spelledmenu': {
+				showDocumentation: this.showEditorDocumentation
 			},
 
 
