@@ -2,7 +2,7 @@ Ext.define('Spelled.view.template.system.Input' ,{
     extend: 'Ext.grid.Panel',
     alias : 'widget.systemtemplateinputlist',
 
-    title: 'Input',
+    title: 'Registered inputs for this system',
     flex: 1,
 
 	initComponent: function() {
@@ -16,7 +16,8 @@ Ext.define('Spelled.view.template.system.Input' ,{
 
 		me.columns = [
 			{
-				header: 'Name',
+				header: 'Imported into variable',
+				width: 120,
 				dataIndex: 'name',
 				editor: {
 					xtype: 'textfield',
@@ -24,7 +25,7 @@ Ext.define('Spelled.view.template.system.Input' ,{
 				}
 			},
 			{
-				header: 'Component',
+				header: 'Mapped component dictionary',
 				dataIndex: 'templateId',
 				flex:1,
 				editor: {
@@ -36,7 +37,6 @@ Ext.define('Spelled.view.template.system.Input' ,{
 				xtype: 'actioncolumn',
 				width: 30,
 				icon: 'images/icons/wrench-arrow.png',
-				tooltip: 'Edit',
 				handler: Ext.bind(me.handleEditClick, me)
 			}
 		];
@@ -68,7 +68,7 @@ Ext.define('Spelled.view.template.system.Input' ,{
 
     bbar: [
         {
-            text: "Add",
+            text: "Register for additional input",
             action: "showAddInput"
         }
     ]

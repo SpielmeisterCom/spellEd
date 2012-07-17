@@ -29,12 +29,12 @@ Ext.define('Spelled.view.template.system.input.Add' ,{
                 {
                     xtype: 'textfield',
                     name: "name",
-                    fieldLabel: 'Name'
+                    fieldLabel: 'Import into variable'
                 },
                 {
 					flex:1,
                     xtype: 'treepanel',
-                    title: 'Available Components',
+                    title: 'Choose component dictionary that will be mapped',
                     rootVisible: true
                 }
 
