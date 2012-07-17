@@ -48,7 +48,7 @@ Ext.define('Spelled.view.asset.edit.Edit', {
 				disabled: true,
 				readOnly: true,
 				name: 'folder',
-				fieldLabel: 'Import into',
+				fieldLabel: 'Namespace',
 				displayField: 'text',
 				valueField: 'id'
 			},

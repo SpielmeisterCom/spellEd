@@ -29,7 +29,7 @@ Ext.define('Spelled.view.asset.Form', {
 		{
 			xtype: "assetfolderpicker",
 			name: 'folder',
-			fieldLabel: 'Import into',
+			fieldLabel: 'Namespace',
 			displayField: 'text',
 			valueField: 'id'
 		},
