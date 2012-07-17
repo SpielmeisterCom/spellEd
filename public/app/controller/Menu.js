@@ -111,9 +111,6 @@ Ext.define('Spelled.controller.Menu', {
             },
 
 
-            'scriptslistcontextmenu [action="create"]': {
-                click: this.showCreateScript
-            },
             'scriptslistcontextmenu [action="remove"]': {
                 click: this.removeScript
             },
@@ -296,10 +293,6 @@ Ext.define('Spelled.controller.Menu', {
         if( node ) {
 			this.application.getController('Templates').deleteTemplateAction( node )
 		}
-    },
-
-    showCreateScript: function( ) {
-        this.application.getController( 'Scripts').showCreateScript( )
     },
 
     removeScript: function( ) {
