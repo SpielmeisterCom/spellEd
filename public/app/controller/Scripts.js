@@ -144,7 +144,7 @@ Ext.define('Spelled.controller.Scripts', {
                         Ext.bind(
                             function( form, action ) {
                                 Ext.Msg.alert('Success', 'Your Script "' + action.result.data.name + '" has been created.')
-                                this.refreshStoresAndTreeStores()
+                                this.refreshStoresAndTreeStores( true )
 
                                 window.close()
                             },
@@ -162,14 +162,18 @@ Ext.define('Spelled.controller.Scripts', {
         this.application.getController('Menu').showScriptsListContextMenu( e )
     },
 
-	refreshStoresAndTreeStores: function() {
-		this.loadTrees()
+	refreshStoresAndTreeStores: function( force ) {
+		this.loadTrees( force )
 
 		this.getScriptScriptsStore().load()
 	},
 
-	loadTrees: function() {
-		this.getScriptTreeStore().load( )
+	loadTrees: function( force ) {
+		if( !this.treeLoaded || force === true ) {
+			this.getScriptTreeStore().load( )
+			this.treeLoaded = true
+		}
+
 		this.getScriptFoldersTreeStore().load( )
     },
 

@@ -226,7 +226,9 @@ Ext.define('Spelled.controller.Assets', {
                             function( fp, o ) {
                                 Ext.Msg.alert('Success', 'Your asset "' + o.result.data.name + '" has been uploaded.')
 
-                                this.refreshStoresAndTreeStores()
+
+
+                                this.refreshStoresAndTreeStores( true )
 
                                 window.close()
                             },
@@ -301,13 +303,17 @@ Ext.define('Spelled.controller.Assets', {
         })
     },
 
-	refreshStoresAndTreeStores: function() {
-		this.loadTrees()
+	refreshStoresAndTreeStores: function( force ) {
+		this.loadTrees( force )
 		this.refreshStores()
 	},
 
-    loadTrees: function() {
-        this.getAssetTreeStore().load()
+	loadTrees: function( force ) {
+		if( !this.treeLoaded || force === true ) {
+			this.getAssetTreeStore().load()
+			this.treeLoaded = true
+		}
+
         this.getAssetFoldersTreeStore().load()
     },
 

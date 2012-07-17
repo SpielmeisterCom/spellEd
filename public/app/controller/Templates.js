@@ -240,7 +240,7 @@ Ext.define('Spelled.controller.Templates', {
                             function( form, action ) {
                                 Ext.Msg.alert('Success', 'Your template "' + action.result.data.name + '" has been created.')
 
-                                this.refreshStoresAndTreeStores()
+                                this.refreshStoresAndTreeStores( true )
 
                                 window.close()
                             },
@@ -280,14 +280,18 @@ Ext.define('Spelled.controller.Templates', {
 		})
     },
 
-	refreshStoresAndTreeStores: function() {
+	refreshStoresAndTreeStores: function( force ) {
 		this.refreshTemplateStores()
 
-		this.loadTrees()
+		this.loadTrees( force )
 	},
 
-    loadTrees: function() {
-        this.getTemplatesTreeStore().load()
+	loadTrees: function( force ) {
+		if( !this.treeLoaded || force === true ) {
+			this.getTemplatesTreeStore().load()
+			this.treeLoaded = true
+		}
+
         this.getTemplateFoldersTreeStore().load( )
     },
 
