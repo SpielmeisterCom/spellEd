@@ -6,7 +6,7 @@ Ext.define('Spelled.view.system.List' ,{
 
 	rootVisible: false,
 
-	docString: "#!/guide/system_list_documentation",
+	docString: "#!/guide/concepts_systems-section-4",
 
 	viewConfig: {
 		plugins: {
