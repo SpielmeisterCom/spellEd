@@ -286,6 +286,14 @@ define(
 								fileInfo.iconCls = "tree-component-icon"
 							} else if( object.type === "systemTemplate" ) {
 								fileInfo.iconCls = "tree-system-icon"
+							} else if (object.type === "spriteSheet") {
+								fileInfo.iconCls = "tree-asset-spritesheet-icon"
+							} else if (object.type === "animation") {
+								fileInfo.iconCls = "tree-asset-2danimation-icon"
+							} else if (object.type === "appearance") {
+								fileInfo.iconCls = "tree-asset-2dstaticappearance-icon"
+							} else {
+								console.log(object);
 							}
 
 							if( !_.has( namespacesResults, object.namespace ) ){

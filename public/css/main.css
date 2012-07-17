@@ -61,6 +61,20 @@
     background-image: url( '../images/icons/component.png' ) !important;
 }
 
+
+.tree-asset-spritesheet-icon {
+    background-image: url( '../images/icons/asset-spritesheet.png' ) !important;
+}
+
+.tree-asset-2danimation-icon {
+    background-image: url( '../images/icons/asset-2danimation.png' ) !important;
+}
+
+.tree-asset-2dstaticappearance-icon {
+    background-image: url( '../images/icons/asset-2dstatic.png' ) !important;
+}
+
+
 .component-icon {
     display: inline-block;
     padding-left:      18px;
