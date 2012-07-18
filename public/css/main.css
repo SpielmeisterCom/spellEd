@@ -113,3 +113,7 @@
     width: 100%;
     text-align: right;
 }
+
+#ScriptsTree .x-tree-icon-leaf {
+    background-image: url( '../images/icons/script.png' ) !important;
+}
