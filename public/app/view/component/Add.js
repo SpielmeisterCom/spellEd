@@ -14,7 +14,7 @@ Ext.define('Spelled.view.component.Add' ,{
 		{
 			xtype: 'treepanel',
 			title: 'Available Components',
-			rootVisible: true
+			rootVisible: false
 		}
 	],
 

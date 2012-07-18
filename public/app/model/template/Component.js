@@ -35,7 +35,7 @@ Ext.define('Spelled.model.template.Component', {
                 node.createNode ( {
                     text      : attribute.get('name'),
                     id        : attribute.getId(),
-                    expanded  : true,
+					iconCls   : "tree-component-attribute-icon",
                     leaf      : true
                 } )
             )

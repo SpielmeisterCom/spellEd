@@ -151,10 +151,12 @@ Ext.define('Spelled.controller.Components', {
 					Ext.getStore( 'template.Components' ).getByTemplateId( component.get('templateId') )
 
 				if( componentTemplate ) {
+					var text = ( Ext.isEmpty( componentTemplate.get('title') ) ) ? componentTemplate.getFullName() : componentTemplate.get('title') + " (" + componentTemplate.getFullName() + ")"
+
 					var newNode = node.createNode ( {
-						text      : componentTemplate.getFullName(),
+						text      : text,
 						id        : component.getId(),
-						expanded  : true,
+						iconCls   : "tree-component-icon",
 						leaf      : false
 					} )
 

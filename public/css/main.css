@@ -65,6 +65,9 @@
     background-image: url( '../images/icons/component.png' ) !important;
 }
 
+.tree-component-attribute-icon {
+    background-image: url( '../images/icons/book.png' ) !important;
+}
 
 .tree-asset-spritesheet-icon {
     background-image: url( '../images/icons/asset-spritesheet.png' ) !important;
