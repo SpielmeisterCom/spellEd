@@ -16,13 +16,6 @@ var after = function(times, func) {
 };
 
 Ext.onReady(function() {
-	//TODO: find out why i couldn't extend the ViewDragDrop plugin and refactor it
-	Ext.override( Ext.tree.ViewDragZone, {
-		isPreventDrag: function(e, record) {
-			return this.callOverridden(arguments) || !record.isLeaf();
-		}
-	});
-
 	Ext.override( Ext.data.proxy.Direct, {
 		listeners: {
 			exception: {

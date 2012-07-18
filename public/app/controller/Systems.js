@@ -179,6 +179,8 @@ Ext.define('Spelled.controller.Systems', {
 		contentPanel.removeAll()
 		rootNode.removeAll()
 
+		rootNode.set( 'allowDrop', false )
+
 		Ext.Object.each(
 			scene.get('systems'),
 			function( key, value ) {
@@ -187,6 +189,8 @@ Ext.define('Spelled.controller.Systems', {
 					id        : key,
 					expanded  : true,
 					leaf      : false,
+					allowDrop : true,
+					allowDrag : false,
 					iconCls   : "tree-system-folder-icon"
 				} )
 
@@ -204,6 +208,8 @@ Ext.define('Spelled.controller.Systems', {
 										text         : systemTemplate.getFullName(),
 										cls		     : me.application.getController('Templates').TEMPLATE_TYPE_SYSTEM,
 										leaf         : true,
+										allowDrop    : false,
+										allowDrag    : true,
 										id           : systemTemplate.getId(),
 										iconCls      : "tree-system-icon"
 									}
