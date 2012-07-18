@@ -56,6 +56,7 @@ Ext.define('Spelled.controller.Entities', {
 
 			if( node ) {
 				tree.selectPath( node.getPath() )
+				tree.getSelectionModel().deselectAll()
 				tree.getSelectionModel().select( node )
 			}
 		}
