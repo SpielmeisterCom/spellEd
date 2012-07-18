@@ -278,6 +278,8 @@ Ext.define('Spelled.controller.Templates', {
 			store.removeAll()
 			store.loadDataViaReader( response.result )
 		})
+
+		this.loadTrees()
     },
 
 	refreshStoresAndTreeStores: function( force ) {

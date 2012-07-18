@@ -13,7 +13,8 @@ Ext.define('Spelled.controller.Entities', {
 
     views: [
         'entity.Create',
-		'entity.ComponentsList'
+		'entity.ComponentsList',
+		'entity.HasTemplateHeader'
     ],
 
 	refs: [
@@ -24,6 +25,10 @@ Ext.define('Spelled.controller.Entities', {
 		{
 			ref: 'ScenesTree',
 			selector: '#ScenesTree'
+		},
+		{
+			ref: 'Navigator',
+			selector: '#Navigator'
 		}
 	],
 
@@ -34,9 +39,27 @@ Ext.define('Spelled.controller.Entities', {
             },
             'entiteslist': {
                 itemcontextmenu: this.showListContextMenu
+			},
+			'entityhastemplateheader tool[type="search"]': {
+				showTemplateEntity: this.showTemplateEntity
 			}
         })
     },
+
+	showTemplateEntity: function( entityTemplateId ) {
+		var entityTemplate = Ext.getStore( 'template.Entities' ).getById( entityTemplateId ),
+			tree           = Ext.getCmp( 'TemplatesTree' ),
+			node           = tree.getRootNode().findChild( 'id', entityTemplateId, true )
+
+		if( entityTemplate && node ) {
+			this.getNavigator().setActiveTab( Ext.getCmp( 'Templates' ) )
+
+			if( node ) {
+				tree.selectPath( node.getPath() )
+				tree.getSelectionModel().select( node )
+			}
+		}
+	},
 
 	showEntitiesFolderListContextMenu: function( view, record, item, index, e, options ) {
 		this.application.getController('Menu').showEntitiesFolderListContextMenu( e )
@@ -148,6 +171,22 @@ Ext.define('Spelled.controller.Entities', {
 			components   = entity.getComponents()
 
 		var view = new View()
+
+		if( !!entity.isAnonymous ) {
+			view.docString = ( entity.isAnonymous() ) ? view.docString : "#!/guide/" + entity.getEntityTemplate().getDocumentationName()
+
+			if( !entity.isAnonymous() ) {
+				view.add( {
+						xtype: 'entityhastemplateheader',
+						entityTemplateId: entity.getEntityTemplate().getId(),
+						html:  entity.getEntityTemplate().getFullName()
+					}
+				)
+			}
+		} else {
+			view.docString = "#!/guide/" + entity.getDocumentationName()
+		}
+
 		components.each(
 			function( component ) {
 				component.setEntity( entity )
@@ -158,13 +197,6 @@ Ext.define('Spelled.controller.Entities', {
 
 		view.sortByTitle()
 		view.entity = entity
-
-		if( !!entity.isAnonymous ) {
-			view.docString = ( entity.isAnonymous() ) ? view.docString : "#!/guide/" + entity.getEntityTemplate().getDocumentationName()
-		} else {
-			view.docString = "#!/guide/" + entity.getDocumentationName()
-		}
-
 
 		contentPanel.add( view )
 

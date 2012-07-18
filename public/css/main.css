@@ -33,6 +33,11 @@
     text-align: center;
 }
 
+.entity-based-on-template {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
 .tree-scene-icon {
     background-image: url( '../images/icons/scene.png' ) !important;
 }
