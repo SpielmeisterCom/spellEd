@@ -304,11 +304,6 @@ Ext.define('Spelled.controller.Menu', {
 		}
     },
 
-    showCreateAsset: function( ) {
-        this.application.getController( 'Assets').showCreateAsset( )
-    },
-
-
 	showEditAsset: function( ) {
 		var node = this.application.getLastSelectedNode( this.getAssetsTree() )
 
