@@ -17,11 +17,22 @@ var after = function(times, func) {
 
 Ext.onReady(function() {
 	//TODO: find out why i couldn't extend the ViewDragDrop plugin and refactor it
-	Ext.override(Ext.tree.ViewDragZone, {
+	Ext.override( Ext.tree.ViewDragZone, {
 		isPreventDrag: function(e, record) {
 			return this.callOverridden(arguments) || !record.isLeaf();
 		}
 	});
+
+	Ext.override( Ext.data.proxy.Direct, {
+		listeners: {
+			exception: {
+				fn: function( proxy, response ) {
+					Ext.Msg.alert( 'An Error occurred',
+						"Could not execute '" + response.transaction.action +"."+ response.transaction.method +"': <br/><br/>"+ response.xhr.responseText )
+				}
+			}
+		}
+	})
 
     var lock = after( apis.length, startEditor )
 

@@ -201,9 +201,11 @@ define(
 									)
 								)
 
-							} catch(e) {
-                                console.log( e )
-                                return next()
+							} catch( e ) {
+								console.log( e )
+								response.writeHead( 500, {'Content-type': 'application/json'});
+								response.end( e.toString(), 'utf8' );
+                                return
 							}
 						}
 					};
