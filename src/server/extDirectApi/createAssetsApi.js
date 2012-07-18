@@ -49,7 +49,8 @@ define(
 			}
 
 			var getFolder = function( payload ) {
-				return ( payload.folder === "root" ) ? path.join( root , payload.projectName , assetPathPart ) : payload.folder
+				var folder = path.join( root , payload.projectName , assetPathPart )
+				return ( payload.folder === "root" ) ? folder :  path.join( folder , payload.folder )
 			}
 
             var createAsset = function( req, res, payload, next ) {
