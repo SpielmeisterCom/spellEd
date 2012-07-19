@@ -46,14 +46,22 @@ Ext.define('Spelled.controller.Scenes', {
 		var me = this
 
         var dispatchPostMessages = function( event ) {
-
-			switch ( event.data.action ) {
+			switch ( event.data.type ) {
 				case 'spell.initialized' :
-					var scene   = me.application.getActiveScene()
+					var scene = me.application.getActiveScene()
 
-					me.answerIframePostMessage( event, "debug", { type: 'drawCoordinateGrid', payload: scene.get('showGrid') } )
-					me.answerIframePostMessage( event, "run" )
+					me.answerIframePostMessage(
+						event,
+						{
+							type : "spelled.debug.drawCoordinateGrid",
+							payload : scene.get( 'showGrid' )
+						}
+					)
+
 					return
+
+				case 'spell.debug.consoleMessage' :
+					// put the message into the console
 			}
         }
 
@@ -80,9 +88,6 @@ Ext.define('Spelled.controller.Scenes', {
             },
             'scenetreelist button[action="showCreateScene"]': {
                 click: me.showCreateScene
-            },
-            'createscene button[action="createScene"]' : {
-                click: me.createScene
             },
             'createscene button[action="createScene"]' : {
                 click: me.createScene
@@ -226,35 +231,16 @@ Ext.define('Spelled.controller.Scenes', {
 		return true
 	},
 
-	sendKeyEventToIframe: function( event ) {
-		var data = {
-			type: "keyEvent",
-			payload: {
-				type: event.type,
-				keyCode: event.keyCode
-			}
-		}
-
-		this.sendIframePostMessage( this.activeIframeId, "debug", data )
-	},
-
-	answerIframePostMessage: function( event, type, options ) {
+	answerIframePostMessage: function( event, message ) {
 		if( !this.checkOrigin( event ) ) return
 
-		this.sendIframePostMessage( event.data.iframeId, type, options )
+		this.sendIframePostMessage( event.data.iframeId, message )
 	},
 
-	sendIframePostMessage: function( iFrameId, type, message ) {
-		var cmp            = Ext.getCmp( iFrameId ),
-			wrapperMessage = {
-				type: "spelled." + type,
-				data: message || {}
-			}
+	sendIframePostMessage: function( iframeId, message ) {
+		var cmp = Ext.getCmp( iframeId )
 
-		cmp.el.dom.contentWindow.postMessage(
-			wrapperMessage,
-			this.BUILD_SERVER_ORIGIN
-		)
+		cmp.el.dom.contentWindow.postMessage( message, this.BUILD_SERVER_ORIGIN )
 	},
 
     showScenesEditor: function() {
@@ -354,8 +340,15 @@ Ext.define('Spelled.controller.Scenes', {
 			scene = this.application.getActiveScene()
 
 		if( tab ) {
-			scene.set('showGrid', state)
-			this.sendIframePostMessage( tab.getId(), "debug", { type: 'drawCoordinateGrid', payload: state } )
+			scene.set('showGrid', state )
+
+			this.sendIframePostMessage(
+				tab.getId(),
+				{
+					type : "spelled.debug.drawCoordinateGrid",
+					payload : state
+				}
+			)
 		}
     },
 
