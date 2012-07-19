@@ -348,7 +348,7 @@ Ext.define('Spelled.controller.Menu', {
 	},
 
     removeSystemInput: function( ) {
-        var node = this.application.getLastSelectedNode( this.getTemplateEditor().getActiveTab().down( 'systemtemplateinputlist' ) )
+        var node = this.application.getLastSelectedNode( this.getRightPanel().down( 'systemtemplateinputlist' ) )
 
         if( node ) {
             this.application.getController( 'templates.Systems' ).removeSystemInputDefinition( node.getId() )

@@ -2,6 +2,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 	extend: 'Ext.app.Controller',
 
 	views: [
+		'template.system.Configuration',
 		'template.system.Edit',
 		'template.system.Details',
 		'template.system.Input',
@@ -30,11 +31,18 @@ Ext.define('Spelled.controller.templates.Systems', {
 		{
 			ref : 'TemplateEditor',
 			selector: '#TemplateEditor'
+		},
+		{
+			ref : 'RightPanel',
+			selector: '#RightPanel'
 		}
 	],
 
 	init: function() {
 		this.control({
+			'systemtemplateedit': {
+				activate: this.refreshSystemConfiguration
+			},
 			'systemtemplateinputlist': {
 				editclick:         this.showInputListContextMenu,
 				itemcontextmenu:   this.showInputListContextMenu
@@ -55,7 +63,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 			'addinputtotemplate button[action="addInput"]' : {
 				click: this.addInput
 			},
-			'systemtemplateedit > panel button[action="saveTemplate"]' : {
+			'systemtemplateconfiguration button[action="saveTemplate"]' : {
 				click: this.saveSystemTemplate
 			},
 			'systemtemplatedetails > combobox[name="scriptId"]' : {
@@ -95,6 +103,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 				scope: this,
 				success: function( script ) {
 					editor.setModel( script )
+					editor.refreshContent()
 				}
 			}
 		)
@@ -141,7 +150,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 
     removeSystemInputDefinition: function( id ) {
         var tab                = this.getTemplateEditor().getActiveTab(),
-            systemTemplate    = tab.template,
+            systemTemplate     = tab.template,
             store              = Ext.getStore( 'template.SystemInputDefinitions' ),
             input              = store.getById( id )
 
@@ -160,8 +169,28 @@ Ext.define('Spelled.controller.templates.Systems', {
         })
     },
 
+	prepareConfigurationView: function( view, systemTemplate ) {
+		var form      = view.down( 'systemtemplatedetails' ),
+			inputView = view.down( 'systemtemplateinputlist' )
+
+		form.loadRecord( systemTemplate )
+		form.getForm().setValues( { tmpName: systemTemplate.getFullName() } )
+
+		inputView.reconfigure( systemTemplate.getInput() )
+	},
+
+	refreshSystemConfiguration: function( tab ) {
+		var configurationView = Ext.createWidget( 'systemtemplateconfiguration' )
+		this.getRightPanel().removeAll()
+
+		this.prepareConfigurationView( configurationView, tab.template )
+		this.getRightPanel().add( configurationView )
+		this.refreshSystemTemplateInputList( tab )
+	},
+
     openTemplate: function( systemTemplate ) {
-		var templateEditor = this.getTemplateEditor()
+		var templateEditor    = this.getTemplateEditor(),
+			configurationView = Ext.createWidget( 'systemtemplateconfiguration' )
 
         var editView = Ext.create( 'Spelled.view.template.system.Edit',  {
                 title: systemTemplate.getFullName(),
@@ -169,22 +198,20 @@ Ext.define('Spelled.controller.templates.Systems', {
             }
         )
 
-        var form = editView.down( 'systemtemplatedetails' )
-        form.loadRecord( systemTemplate )
-        form.getForm().setValues( { tmpName: systemTemplate.getFullName() } )
-
         var tab = this.application.createTab( templateEditor, editView )
 
 		if( systemTemplate.get('scriptId') ) {
 			this.refreshScriptTab( systemTemplate.get('scriptId') )
 		}
 
+		this.prepareConfigurationView( configurationView, systemTemplate )
+		this.getRightPanel().add( configurationView )
         this.refreshSystemTemplateInputList( tab )
     },
 
     refreshSystemTemplateInputList: function( tab ) {
         var systemTemplate  = tab.template,
-            inputView       = tab.down( 'systemtemplateinputlist' )
+            inputView       = this.getRightPanel().down( 'systemtemplateinputlist' )
 
 		inputView.reconfigure( systemTemplate.getInput() )
     },
