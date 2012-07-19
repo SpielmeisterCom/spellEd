@@ -4,7 +4,7 @@ Ext.define('Spelled.view.template.component.Property', {
 
     bodyPadding: 10,
     margin: '5 0 0 0',
-    title: 'Property',
+    title: 'Attribute',
 
 	defaults: {
 		hidden: true
