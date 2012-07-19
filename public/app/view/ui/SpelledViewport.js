@@ -74,6 +74,7 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
 					xtype: 'rightpanel'
 				},
                 {
+					id: "SpelledConsole",
                     xtype : 'console',
                     region: 'south'
                 }

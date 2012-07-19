@@ -125,3 +125,11 @@
 #ScriptsTree .x-tree-icon-leaf {
     background-image: url( '../images/icons/script.png' ) !important;
 }
+
+#SpelledConsole {
+    font-family: monospace;
+}
+
+.console-message-error {
+    color: red;
+}

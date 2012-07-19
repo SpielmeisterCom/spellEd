@@ -50,6 +50,10 @@ var startEditor = function() {
 
         appFolder: 'app',
 
+		requires: [
+			'Spelled.Logger'
+		],
+
         controllers: [
             'Scenes',
             'Entities',

@@ -41,7 +41,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
 	showAddEntity: function( owner ) {
-		var createView  = Ext.createWidget( 'addentitytotemplate' ),
+		var createView  = Ext.widget( 'addentitytotemplate' ),
 			EntityModel = this.getConfigEntityModel(),
 			newEntity   = new EntityModel()
 

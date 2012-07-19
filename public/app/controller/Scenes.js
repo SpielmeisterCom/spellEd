@@ -61,7 +61,7 @@ Ext.define('Spelled.controller.Scenes', {
 					return
 
 				case 'spell.debug.consoleMessage' :
-					// put the message into the console
+					Spelled.Logger.log(  event.data.payload.level, event.data.payload.text )
 			}
         }
 
@@ -354,7 +354,8 @@ Ext.define('Spelled.controller.Scenes', {
 
     renderScene: function( scene ) {
         var sceneEditor = Ext.getCmp( "SceneEditor"),
-            title = scene.getRenderTabTitle()
+            title = scene.getRenderTabTitle(),
+			me    = this
 
         var foundTab = this.application.findActiveTabByTitle( sceneEditor, title )
 
@@ -379,9 +380,9 @@ Ext.define('Spelled.controller.Scenes', {
 
 				spellTab.add( iframe )
 
-				this.application.createTab( sceneEditor, spellTab )
+				me.application.createTab( sceneEditor, spellTab )
 			} else {
-				this.application.showBuildServerConnectError()
+				me.application.showBuildServerConnectError()
 			}
 
 		}

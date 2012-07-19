@@ -143,7 +143,7 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	showEdit: function( asset ) {
-		var view = Ext.createWidget( 'editasset' ),
+		var view = Ext.widget( 'editasset' ),
 			form = view.down( 'form' )
 
 		this.fieldRenderHelper( asset.get('type'), form, asset )
@@ -269,7 +269,7 @@ Ext.define('Spelled.controller.Assets', {
     },
 
     showCreateAsset: function() {
-        var view = Ext.createWidget( 'createasset' )
+        var view = Ext.widget( 'createasset' )
         view.show()
     },
 

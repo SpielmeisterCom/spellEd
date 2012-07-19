@@ -180,7 +180,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 	},
 
 	refreshSystemConfiguration: function( tab ) {
-		var configurationView = Ext.createWidget( 'systemtemplateconfiguration' )
+		var configurationView = Ext.widget( 'systemtemplateconfiguration' )
 		this.getRightPanel().removeAll()
 
 		this.prepareConfigurationView( configurationView, tab.template )
@@ -190,7 +190,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 
     openTemplate: function( systemTemplate ) {
 		var templateEditor    = this.getTemplateEditor(),
-			configurationView = Ext.createWidget( 'systemtemplateconfiguration' )
+			configurationView = Ext.widget( 'systemtemplateconfiguration' )
 
         var editView = Ext.create( 'Spelled.view.template.system.Edit',  {
                 title: systemTemplate.getFullName(),

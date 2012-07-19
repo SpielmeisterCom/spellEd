@@ -65,7 +65,7 @@ Ext.define('Spelled.controller.Components', {
 			var cmp = panel.down( 'addcomponentbutton' )
 			if( !!cmp ) panel.remove( cmp )
 
-			panel.add( Ext.createWidget( 'addcomponentbutton' ) )
+			panel.add( Ext.widget( 'addcomponentbutton' ) )
 
 			this.addingButton = false
 		}
@@ -104,7 +104,7 @@ Ext.define('Spelled.controller.Components', {
 	},
 
 	showAddComponent: function( button ) {
-		var view   = Ext.createWidget( 'addcomponent' ),
+		var view   = Ext.widget( 'addcomponent' ),
 			entity = button.up('entitycomponentslist').entity,
 			availableComponentsView = view.down( 'treepanel' ),
 			templateComponentsStore = Ext.getStore( 'template.Components' )
@@ -260,7 +260,7 @@ Ext.define('Spelled.controller.Components', {
             this
         )
 
-		var configGrid = Ext.createWidget(
+		return Ext.widget(
 			'componentproperties',
 			{
 				title: (  ( component.get('additional') ) ? "<span class='component-icon'/> " : "<span class='linked-component-icon'/> " ) + "<span>" + title +"</span>" ,
@@ -269,7 +269,5 @@ Ext.define('Spelled.controller.Components', {
 				componentConfigId: component.getId()
 			}
 		)
-
-		return configGrid
     }
 });
