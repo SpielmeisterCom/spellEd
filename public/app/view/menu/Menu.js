@@ -11,6 +11,7 @@ Ext.define('Spelled.view.menu.Menu', {
 				items: [
 					{
 						text: 'Project',
+						icon: "/images/icons/book.png",
 						menu: {
 							items: [{
 								text   : 'Create',
@@ -26,10 +27,12 @@ Ext.define('Spelled.view.menu.Menu', {
 					},
 					{
 						text: "Save",
+						icon: "/images/icons/script-save.png",
 						action: "saveProject"
 					},
 					{
-						text: "Export",
+						text: "Export for deployment",
+						icon: "/images/icons/application_go.png",
 						action: "exportProject"
 					},
 					{
