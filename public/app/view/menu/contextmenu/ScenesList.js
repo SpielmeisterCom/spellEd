@@ -4,8 +4,8 @@ Ext.define('Spelled.view.menu.contextmenu.ScenesList', {
 
     items: [
         {
-	        icon: 'images/icons/scene-link.png',
-	        text: 'Set to default Scene',
+	        icon: 'images/icons/scene-key.png',
+	        text: 'Set Start Scene',
             action: 'default'
         },
         {
