@@ -5,7 +5,7 @@ Ext.define('Spelled.view.scene.Script' ,{
 	padding: '15px',
 	border: false,
 
-	docString: "#!/guide/scene_script_documentation",
+	docString: "#!/guide/concepts_scenes",
 
 	items: [
 		{
