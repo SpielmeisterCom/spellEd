@@ -4,8 +4,7 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
     layout: 'border',
 
     defaults: {
-        collapsible: true,
-        split: true
+        collapsible: true
     },
 
     initComponent: function() {
@@ -26,6 +25,7 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                     region:'west',
                     width: 350,
                     minSize: 200,
+					split: true,
                     items: [
                         {
                             id: "Scenes",
@@ -71,10 +71,12 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                 },
 				{
 					id: "RightPanel",
+					split: true,
 					xtype: 'rightpanel'
 				},
                 {
 					id: "SpelledConsole",
+					split: true,
                     xtype : 'console',
                     region: 'south'
                 }
