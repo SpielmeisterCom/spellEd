@@ -55,14 +55,11 @@ Ext.define('Spelled.controller.templates.Components', {
         })
     },
 
-    showComponentsListContextMenu: function( view, record, item, index, e, options ) {
-        var menuController = this.application.getController('Menu')
-        menuController.showEntityTemplateComponentsListContextMenu( e )
-    },
-
     showAttributesListContextMenu: function( view, record, item, index, e, options ) {
-        var menuController = this.application.getController('Menu')
-        menuController.showComponentAttributesListContextMenu( e )
+		if( !view.panel.down( 'actioncolumn').isHidden() )
+        	this.application.getController('Menu').showComponentAttributesListContextMenu( e )
+		else
+			e.preventDefault()
     },
 
     addAttribute: function() {
@@ -161,6 +158,13 @@ Ext.define('Spelled.controller.templates.Components', {
         var form = editView.down( 'componenttemplatedetails' )
         form.loadRecord( componentTemplate )
         form.getForm().setValues( { tmpName: componentTemplate.getFullName() } )
+
+		if( componentTemplate.isReadonly() ) {
+			editView.down('componenttemplatedetails').disable()
+			editView.down('componenttemplateproperty').disable()
+			editView.down('componenttemplateattributeslist').setReadonly()
+//			editView.down( 'componenttemplateproperty').enable()
+		}
 
         var tab = this.application.createTab( templateEditor, editView )
         this.refreshComponentTemplateAttributesList( tab )

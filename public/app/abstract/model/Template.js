@@ -3,6 +3,8 @@ Ext.define('Spelled.abstract.model.Template', {
 
     requires: ['Spelled.abstract.writer.JsonWriter'],
 
+	fields: [{ name: 'readonly', type: 'boolean', defaultValue: false }],
+
 	constructor: function() {
 		this.callParent( arguments )
 
@@ -12,6 +14,10 @@ Ext.define('Spelled.abstract.model.Template', {
 			templateId = ( namespace.length > 0 ) ? namespace +"."+ name : name
 
 		this.set( 'templateId', templateId)
+	},
+
+	isReadonly: function() {
+		return ( this.get('readonly') === true )
 	},
 
     getFullName: function() {

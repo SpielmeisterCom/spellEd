@@ -176,6 +176,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 		form.loadRecord( systemTemplate )
 		form.getForm().setValues( { tmpName: systemTemplate.getFullName() } )
 
+		if( systemTemplate.isReadonly() ) view.disable()
 		inputView.reconfigure( systemTemplate.getInput() )
 	},
 

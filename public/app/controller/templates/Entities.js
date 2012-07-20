@@ -109,23 +109,27 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
 	showEntityTemplateComponentsList: function( entity ) {
-
 		var view = this.application.getController('Entities').createComponentsListView( entity )
 
-		view.addDocked(
-			{
-				xtype: 'toolbar',
-				dock: 'bottom',
-				ui: 'footer',
-				items: [{
-					xtype: 'button',
-					icon: 'images/icons/table_refresh.png',
-					text: 'Save Entity Template to Disk',
-					action: 'saveTemplateEntity',
-					dock: 'bottom'
-				}]
-			}
-		)
+		if( entity.isReadonly() ) {
+			view.disable()
+		} else {
+
+			view.addDocked(
+				{
+					xtype: 'toolbar',
+					dock: 'bottom',
+					ui: 'footer',
+					items: [{
+						xtype: 'button',
+						icon: 'images/icons/table_refresh.png',
+						text: 'Save Entity Template to Disk',
+						action: 'saveTemplateEntity',
+						dock: 'bottom'
+					}]
+				}
+			)
+		}
 
 	},
 
