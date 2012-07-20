@@ -113,8 +113,9 @@ Ext.define('Spelled.controller.Templates', {
     },
 
     showTemplatesContextMenu: function( view, record, item, index, e, options ) {
+		var node = this.application.getLastSelectedNode( this.getTemplatesTree() )
 
-		switch( record.get('cls') ) {
+		switch( node.get('cls') ) {
 			case this.TEMPLATE_TYPE_ENTITY:
 			case this.TYPE_ENTITY_COMPOSITE:
 				this.application.getController('Menu').showTemplatesListEntityContextMenu( e )
