@@ -52,7 +52,13 @@ Ext.define('Spelled.controller.Scripts', {
         })
     },
 
+	saveScriptInPanel: function( panel ) {
+		panel.model.set( 'content', panel.aceEditor.getSession().getValue() )
+		panel.model.save()
+	},
+
 	addAceEditor: function( panel ) {
+		var me = this
 
 		panel.aceEditor = ace.edit( panel.id )
 
@@ -65,9 +71,8 @@ Ext.define('Spelled.controller.Scripts', {
 				win: 'Ctrl-S',
 				mac: 'Command-S'
 			},
-			exec: function( editor ) {
-				panel.model.set( 'content', editor.getSession().getValue() )
-				panel.model.save()
+			exec: function() {
+				me.saveScriptInPanel( panel )
 			}
 		});
 
