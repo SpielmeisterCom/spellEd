@@ -6,6 +6,8 @@ Ext.define('Spelled.view.template.component.Property', {
     margin: '5 0 0 0',
     title: 'Attribute',
 
+	layout: 'form',
+
 	defaults: {
 		hidden: true
 	},
@@ -26,22 +28,18 @@ Ext.define('Spelled.view.template.component.Property', {
             xtype: 'textfield',
             name: 'name',
             fieldLabel: 'Name',
-            allowBlank:false,
-            anchor: '100%'
+            allowBlank:false
         },
         {
             xtype: 'combobox',
+			editable: false,
+			queryMode: 'local',
+			displayField: 'name',
+			valueField: 'name',
             name: 'type',
             fieldLabel: 'Type',
-            allowBlank:false,
-            anchor: '100%'
-        },
-        {
-            xtype: 'textareafield',
-            name: 'default',
-            allowBlank:false,
-            fieldLabel: 'Default value',
-            anchor: '100%'
+            allowBlank: false,
+			store: 'template.component.AttributeTypes'
         }
 	],
 

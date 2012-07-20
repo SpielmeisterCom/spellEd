@@ -18,6 +18,6 @@ Ext.define('Spelled.model.template.ComponentAttribute', {
 
     constructor: function() {
         this.callParent(arguments)
-        Ext.getStore( 'template.ComponentAttributes' ).add( this )
+        Ext.getStore( 'template.component.Attributes' ).add( this )
     }
 });

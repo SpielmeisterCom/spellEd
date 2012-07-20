@@ -5,7 +5,16 @@ Ext.define('Spelled.controller.templates.Components', {
         'template.component.Edit',
         'template.component.Details',
         'template.component.Attributes',
-        'template.component.Property'
+        'template.component.Property',
+		'template.component.attribute.Object',
+		'template.component.attribute.Vec2',
+		'template.component.attribute.String',
+		'template.component.attribute.Number',
+		'template.component.attribute.List',
+		'template.component.attribute.Integer',
+		'template.component.attribute.Boolean',
+		'template.component.attribute.Appearance',
+		'template.component.attribute.AnimatedAppearance'
     ],
 
     models: [
@@ -14,7 +23,8 @@ Ext.define('Spelled.controller.templates.Components', {
     ],
 
     stores: [
-        'template.ComponentAttributes',
+        'template.component.Attributes',
+		'template.component.AttributeTypes',
         'template.Components'
     ],
 
@@ -37,10 +47,8 @@ Ext.define('Spelled.controller.templates.Components', {
             'componenttemplateproperty button[action="reset"]' : {
                 click: this.resetTemplate
             },
-            'componenttemplateproperty > field' : {
-                change: function() {
-                    console.log("change!")
-                }
+            'componenttemplateproperty > combobox[name="type"]' : {
+                change: this.changedAttributeType
             },
             'componenttemplateattributeslist [action="addAttribute"]' : {
                 click: this.addAttribute
@@ -89,7 +97,7 @@ Ext.define('Spelled.controller.templates.Components', {
         })
     },
 
-    saveComponentTemplate: function( button, event, record ) {
+    saveComponentTemplate: function( button ) {
         var form   = button.up('form'),
             record = form.getRecord(),
             values = form.getValues(),
@@ -111,7 +119,7 @@ Ext.define('Spelled.controller.templates.Components', {
         }
     },
 
-    resetTemplate: function( button, event, record ) {
+    resetTemplate: function( button ) {
         var form = button.up('form'),
             record = form.getRecord(),
             values = form.getValues()
@@ -122,7 +130,7 @@ Ext.define('Spelled.controller.templates.Components', {
     removeComponentAttribute: function( id ) {
         var tab                = this.getTemplateEditor().getActiveTab(),
             componentTemplate = tab.template,
-            store              = Ext.getStore( 'template.ComponentAttributes' ),
+            store              = Ext.getStore( 'template.component.Attributes' ),
             attribute          = store.getById( id )
 
         componentTemplate.getAttributes().remove( attribute )
@@ -134,14 +142,34 @@ Ext.define('Spelled.controller.templates.Components', {
     showAttributeConfig: function( treePanel, record ) {
         if( !record.data.leaf ) return
 
-		var attribute = Ext.getStore('template.ComponentAttributes').getById( record.getId() )
+		var attribute = Ext.getStore('template.component.Attributes').getById( record.getId() )
 
         if( attribute ) {
             this.fillAttributeConfigView( this.getTemplateEditor().getActiveTab().down( 'componenttemplateproperty' ), attribute )
         }
     },
 
+	changedAttributeType: function( combobox, value ) {
+		var propertyView = combobox.up( 'componenttemplateproperty'),
+			attribute    = propertyView.getRecord()
+
+		attribute.set( 'type', value )
+
+		this.fillAttributeConfigView( propertyView, attribute )
+	},
+
     fillAttributeConfigView: function( propertyView, attribute ) {
+		var attributeType = this.getTemplateComponentAttributeTypesStore().findRecord( 'name', attribute.get('type') )
+
+		if( propertyView.down('[name="default"]') ) propertyView.remove( propertyView.down('[name="default"]') )
+
+		propertyView.add({
+			xtype: attributeType.get('type'),
+			name: 'default',
+			allowBlank:false,
+			fieldLabel: 'Default value'
+		})
+
 		propertyView.showConfig()
         propertyView.getForm().loadRecord( attribute )
     },
@@ -163,7 +191,6 @@ Ext.define('Spelled.controller.templates.Components', {
 			editView.down('componenttemplatedetails').disable()
 			editView.down('componenttemplateproperty').disable()
 			editView.down('componenttemplateattributeslist').setReadonly()
-//			editView.down( 'componenttemplateproperty').enable()
 		}
 
         var tab = this.application.createTab( templateEditor, editView )
