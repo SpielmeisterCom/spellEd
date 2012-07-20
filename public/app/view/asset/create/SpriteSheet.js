@@ -9,7 +9,7 @@ Ext.define('Spelled.view.asset.create.SpriteSheet', {
 			items: [
 				{
 					xtype: 'tool-documentation',
-					docString: "#SpriteSheet-Documentation",
+					docString: "#!/guide/asset_type_sprite_sheet",
 					width: 'null'
 				},
 				{

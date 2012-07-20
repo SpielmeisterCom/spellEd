@@ -173,6 +173,7 @@ Ext.define('Spelled.controller.Assets', {
 			Asset          = this.getModel('Asset')
 
 		inspectorPanel.removeAll()
+		inspectorPanel.add( this.getDefaultDocumentation() )
 
 		if( !node.isLeaf() ) return
 
@@ -181,6 +182,7 @@ Ext.define('Spelled.controller.Assets', {
 			{
 				scope: this,
 				success: function( asset ) {
+					inspectorPanel.removeAll()
 					this.showConfig( asset )
 				}
 			}
@@ -195,6 +197,18 @@ Ext.define('Spelled.controller.Assets', {
 		view.loadRecord( asset )
 
 		inspectorPanel.setTitle( 'Asset information of "' + asset.get('name') +'"' )
+		switch( asset.get('type') ) {
+			case 'animation':
+				view.docString = '#!/guide/asset_type_2d_animated_appearance'
+				break
+			case 'spriteSheet':
+				view.docString = '#!/guide/asset_type_sprite_sheet'
+				break
+			case 'appearance':
+				view.docString = '#!/guide/asset_type_2d_static_appearance'
+				break
+		}
+
 		inspectorPanel.add( view )
 	},
 
@@ -321,9 +335,14 @@ Ext.define('Spelled.controller.Assets', {
 		this.getAssetAssetsStore().load()
     },
 
+	getDefaultDocumentation: function() {
+		return  { xtype: 'label' , docString : '#!/guide/concepts_assets'}
+	},
+
     showAssets : function( ) {
 		this.application.hideMainPanels()
 		this.getRightPanel().show()
+		this.getRightPanel().add( this.getDefaultDocumentation() )
 
         this.loadTrees()
 

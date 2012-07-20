@@ -178,10 +178,15 @@ Ext.define('Spelled.controller.Scenes', {
 
 		switch( this.getClickedTreeItemType( record ) ) {
 			case this.TREE_ITEM_TYPE_SCENE:
+				this.getRightPanel().add( { xtype: 'label' , docString : '#!/guide/concepts_scenes'} )
+
 				var scene = this.getConfigScenesStore().getById( record.getId() )
 				if( scene ) {
 					this.application.setActiveScene( scene )
 				}
+				break
+			case this.TREE_ITEM_TYPE_ENTITIES:
+				this.getRightPanel().add( { xtype: 'label' , docString : '#!/guide/concepts_entities_components'} )
 				break
 			case this.TREE_ITEM_TYPE_ENTITY:
 				this.application.getController('Entities').showEntityInfo( record.getId() )

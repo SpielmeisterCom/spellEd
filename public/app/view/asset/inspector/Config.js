@@ -5,6 +5,8 @@ Ext.define('Spelled.view.asset.inspector.Config', {
 	padding: '15px',
 	border: false,
 
+	docString: '#!/guide/concepts_assets',
+
 	items: [
 		{
 			xtype: "combo",

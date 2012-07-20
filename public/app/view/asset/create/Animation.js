@@ -9,7 +9,7 @@ Ext.define('Spelled.view.asset.create.Animation', {
 			items: [
 				{
 					xtype: 'tool-documentation',
-					docString: "#Animation-Documentation",
+					docString: "#!/guide/asset_type_2d_animated_appearance",
 					width: 'null'
 				},
 				{
