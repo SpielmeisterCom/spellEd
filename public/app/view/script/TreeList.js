@@ -4,7 +4,6 @@ Ext.define('Spelled.view.script.TreeList' ,{
 
     animate: false,
     animCollapse: false,
-    title : 'All Scripts',
     store : 'script.Tree',
 
     rootVisible: false,

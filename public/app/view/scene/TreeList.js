@@ -4,7 +4,6 @@ Ext.define('Spelled.view.scene.TreeList' ,{
 
     animate: false,
     animCollapse: false,
-    title : 'Scenes in this project',
     store : 'ScenesTree',
 
     rootVisible: false,

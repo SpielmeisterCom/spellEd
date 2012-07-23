@@ -4,7 +4,6 @@ Ext.define('Spelled.view.asset.TreeList' ,{
 
     animate: false,
     animCollapse: false,
-    title : 'All Assets',
     store : 'asset.Tree',
 
     rootVisible: false,

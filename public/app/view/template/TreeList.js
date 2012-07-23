@@ -4,7 +4,6 @@ Ext.define('Spelled.view.template.TreeList' ,{
 
     animate: false,
     animCollapse: false,
-    title : 'All Templates',
     store : 'TemplatesTree',
 
     rootVisible: false,
