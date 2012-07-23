@@ -20,7 +20,6 @@ Ext.define('Spelled.abstract.view.TreeList' ,{
                 width: 30,
                 icon: 'images/icons/wrench-arrow.png',
                 iconCls: 'x-hidden edit-action-icon',
-                tooltip: 'Edit',
                 handler: Ext.bind(me.handleEditClick, me)
             }
         ];
