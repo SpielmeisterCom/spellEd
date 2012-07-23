@@ -7,7 +7,6 @@ Ext.define('Spelled.view.template.system.Configuration', {
 		padding: 5,
 		type: 'vbox'
 	},
-	title: 'Configuration',
 	items: [
 		{
 			xtype: "systemtemplatedetails",
