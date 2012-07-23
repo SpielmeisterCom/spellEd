@@ -263,7 +263,6 @@ Ext.define('Spelled.controller.Components', {
 		return Ext.widget(
 			'componentproperties',
 			{
-				frame: true,
 				title: (  ( component.get('additional') ) ? "<span class='component-icon'/> " : "<span class='linked-component-icon'/> " ) + "<span>" + title +"</span>" ,
 				isAdditional: component.get('additional'),
 				source: config,
