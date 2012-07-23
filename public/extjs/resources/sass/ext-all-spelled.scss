@@ -57,7 +57,9 @@ $tab-base-color-active: $color2;
 $tab-color-active: #fff;
 
 $tabbar-strip-background-color: $color2;
+
 $tab-inner-border: false;
+$tab-closable-icon-top: 7px;
 
 //progress bar
 $progress-bar-background-color: darken($color1,25);

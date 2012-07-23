@@ -8297,7 +8297,7 @@ textarea.x-form-invalid-field {
 /* line 367, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-close-btn {
   position: absolute;
-  top: 2px;
+  top: 7px;
   right: 2px;
   width: 11px;
   height: 11px;
