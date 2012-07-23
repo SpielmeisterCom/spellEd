@@ -710,7 +710,7 @@ tr.x-container:before {
   left: 0;
   padding: 2px;
   border: 1px solid;
-  border-color: transparent;
+  border-color: #646464;
   background-image: none;
   background-color: #797777; }
   /* line 38, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_loadmask.scss */
@@ -3534,10 +3534,10 @@ table.x-datepicker-inner {
 /* line 8, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-panel .x-grid-body {
   background: #444444;
-  border-color: transparent;
+  border-color: #646464;
   border-style: solid;
   border-width: 1px;
-  border-top-color: #242424; }
+  border-top-color: #646464; }
 /* line 17, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-panel .x-grid-header-ct-hidden {
   visibility: hidden; }
@@ -3550,7 +3550,7 @@ table.x-datepicker-inner {
 
 /* line 28, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-header-hidden .x-grid-body {
-  border-top-color: transparent !important; }
+  border-top-color: #646464 !important; }
 
 /* line 32, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-view {
@@ -3581,15 +3581,15 @@ table.x-datepicker-inner {
   cursor: default;
   zoom: 1;
   padding: 0;
-  border: 1px solid transparent;
-  border-bottom-color: #242424;
+  border: 1px solid #646464;
+  border-bottom-color: #646464;
   background-image: none;
-  background-color: #242424;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #4b4b4b), color-stop(50%, #313131), color-stop(51%, #242424), color-stop(100%, #181818));
-  background-image: -webkit-linear-gradient(top, #4b4b4b, #313131 50%, #242424 51%, #181818);
-  background-image: -moz-linear-gradient(top, #4b4b4b, #313131 50%, #242424 51%, #181818);
-  background-image: -o-linear-gradient(top, #4b4b4b, #313131 50%, #242424 51%, #181818);
-  background-image: linear-gradient(top, #4b4b4b, #313131 50%, #242424 51%, #181818); }
+  background-color: #646464;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #8a8a8a), color-stop(50%, #717171), color-stop(51%, #646464), color-stop(100%, #575757));
+  background-image: -webkit-linear-gradient(top, #8a8a8a, #717171 50%, #646464 51%, #575757);
+  background-image: -moz-linear-gradient(top, #8a8a8a, #717171 50%, #646464 51%, #575757);
+  background-image: -o-linear-gradient(top, #8a8a8a, #717171 50%, #646464 51%, #575757);
+  background-image: linear-gradient(top, #8a8a8a, #717171 50%, #646464 51%, #575757); }
 
 /* line 73, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-accordion-item .x-grid-header-ct {
@@ -3600,7 +3600,7 @@ table.x-datepicker-inner {
   padding: 0;
   position: absolute;
   overflow: hidden;
-  border-right: 1px solid #242424;
+  border-right: 1px solid #646464;
   border-left: 0 none;
   border-top: 0 none;
   border-bottom: 0 none;
@@ -3608,12 +3608,12 @@ table.x-datepicker-inner {
   color: white;
   font: normal 11px tahoma, arial, verdana, sans-serif;
   background-image: none;
-  background-color: #242424;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #4b4b4b), color-stop(50%, #313131), color-stop(51%, #242424), color-stop(100%, #181818));
-  background-image: -webkit-linear-gradient(top, #4b4b4b, #313131 50%, #242424 51%, #181818);
-  background-image: -moz-linear-gradient(top, #4b4b4b, #313131 50%, #242424 51%, #181818);
-  background-image: -o-linear-gradient(top, #4b4b4b, #313131 50%, #242424 51%, #181818);
-  background-image: linear-gradient(top, #4b4b4b, #313131 50%, #242424 51%, #181818); }
+  background-color: #646464;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #8a8a8a), color-stop(50%, #717171), color-stop(51%, #646464), color-stop(100%, #575757));
+  background-image: -webkit-linear-gradient(top, #8a8a8a, #717171 50%, #646464 51%, #575757);
+  background-image: -moz-linear-gradient(top, #8a8a8a, #717171 50%, #646464 51%, #575757);
+  background-image: -o-linear-gradient(top, #8a8a8a, #717171 50%, #646464 51%, #575757);
+  background-image: linear-gradient(top, #8a8a8a, #717171 50%, #646464 51%, #575757); }
 
 /* line 99, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-group-header {
@@ -3623,7 +3623,7 @@ table.x-datepicker-inner {
 /* line 103, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-group-sub-header {
   background: transparent;
-  border-top: 1px solid #242424;
+  border-top: 1px solid #646464;
   border-left-width: 0; }
 
 /* line 109, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
@@ -4197,8 +4197,8 @@ browsers will do whacky things with it.
   /* line 744, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
   .x-grid-row-editor .x-panel-body {
     background-color: #8e7372;
-    border-top: 1px solid transparent !important;
-    border-bottom: 1px solid transparent !important; }
+    border-top: 1px solid #646464 !important;
+    border-bottom: 1px solid #646464 !important; }
 
 /* line 754, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-editor .x-form-cb-wrap, .x-grid-row-editor .x-form-cb-wrap {
@@ -4302,7 +4302,7 @@ browsers will do whacky things with it.
   bottom: 0px;
   width: 192px;
   height: 1px;
-  background-color: transparent; }
+  background-color: #646464; }
 
 /* line 876, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-editor-buttons-ml,
@@ -4310,7 +4310,7 @@ browsers will do whacky things with it.
   height: 27px;
   width: 1px;
   top: 1px;
-  background-color: transparent; }
+  background-color: #646464; }
 
 /* line 882, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-editor-buttons-ml {
@@ -5186,12 +5186,12 @@ textarea.x-form-invalid-field {
 
 /* line 248, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-default {
-  border-color: transparent; }
+  border-color: #646464; }
 
 /* line 253, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-default {
   font-size: 11px;
-  border-color: transparent;
+  border-color: #646464;
   border-width: 1px;
   border-style: solid;
   background-image: none;
@@ -5237,7 +5237,7 @@ textarea.x-form-invalid-field {
 /* line 348, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-body-default {
   background: #444444;
-  border-color: transparent;
+  border-color: #646464;
   color: black;
   border-width: 1px;
   border-style: solid; }
@@ -5245,11 +5245,11 @@ textarea.x-form-invalid-field {
 /* line 363, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-collapsed .x-window-header-default,
 .x-panel-collapsed .x-panel-header-default {
-  border-color: transparent; }
+  border-color: #646464; }
 
 /* line 368, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-default-vertical {
-  border-color: transparent; }
+  border-color: #646464; }
 
 /* line 375, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-default-left,
@@ -5361,12 +5361,12 @@ textarea.x-form-invalid-field {
 
 /* line 248, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-default-framed {
-  border-color: transparent; }
+  border-color: #646464; }
 
 /* line 253, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-default-framed {
   font-size: 11px;
-  border-color: transparent;
+  border-color: #646464;
   border-width: 1px;
   border-style: solid;
   background-image: none;
@@ -5437,7 +5437,7 @@ textarea.x-form-invalid-field {
 /* line 348, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-body-default-framed {
   background: #797777;
-  border-color: transparent;
+  border-color: #646464;
   color: black;
   border-width: 0;
   border-style: solid; }
@@ -5445,11 +5445,11 @@ textarea.x-form-invalid-field {
 /* line 363, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-collapsed .x-window-header-default-framed,
 .x-panel-collapsed .x-panel-header-default-framed {
-  border-color: transparent; }
+  border-color: #646464; }
 
 /* line 368, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-default-framed-vertical {
-  border-color: transparent; }
+  border-color: #646464; }
 
 /* line 375, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-default-framed-left,
@@ -5470,7 +5470,7 @@ textarea.x-form-invalid-field {
   -ms-border-radius: 4px;
   -khtml-border-radius: 4px;
   border-radius: 4px;
-  padding: 4px 4px 4px 4px;
+  padding: 3px 3px 3px 3px;
   border-width: 1px;
   border-style: solid;
   background-color: #797777; }
@@ -5511,7 +5511,7 @@ textarea.x-form-invalid-field {
   background-repeat: repeat-y; }
 /* line 200, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-nbr .x-panel-default-framed-mc {
-  padding: 1px 1px 1px 1px; }
+  padding: 0px 0px 0px 0px; }
 
 /* line 210, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-strict .x-ie7 .x-panel-default-framed-tl,
@@ -6785,7 +6785,7 @@ textarea.x-form-invalid-field {
 
 /* line 144, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_toolbar.scss */
 .x-toolbar-default {
-  border-color: transparent;
+  border-color: #646464;
   background-image: none;
   background-color: #707070;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #777777), color-stop(100%, #707070));
@@ -7718,7 +7718,7 @@ textarea.x-form-invalid-field {
 /* line 90, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-tab-bar-body {
   border-style: solid;
-  border-color: transparent;
+  border-color: #646464;
   position: relative;
   z-index: 2;
   zoom: 1; }
@@ -7727,18 +7727,18 @@ textarea.x-form-invalid-field {
 /* line 4, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-tab-bar-top .x-tab-bar-body {
   height: 25px;
-  border-width: 1px 1px 0;
+  border-width: 0px 0px 0;
   padding: 0px 0 0px; }
 /* line 10, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-tab-bar-top .x-tab-bar-strip {
   /*position strip from top rather than bottom to avoid off-by-one error in IE6*/
-  top: 26px;
-  border-width: 1px 1px 0;
-  height: -1px; }
+  top: 25px;
+  border-width: 0px 0px 0;
+  height: 0px; }
 
 /* line 19, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-border-box .x-tab-bar-top .x-tab-bar-body {
-  height: 26px; }
+  height: 25px; }
 /* line 23, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-border-box .x-tab-bar-top .x-tab-bar-strip {
   height: 0px; }
@@ -7752,8 +7752,8 @@ textarea.x-form-invalid-field {
 .x-tab-bar-top .x-tab-bar-strip-default-plain {
   /*position strip from top rather than bottom to avoid off-by-one error in IE6*/
   top: 25px;
-  border-width: 1px 1px 0 1px;
-  height: -1px; }
+  border-width: 0px 0px 0 0px;
+  height: 0px; }
 
 /* line 19, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-border-box .x-tab-bar-top .x-tab-bar-body-default-plain {
@@ -7826,7 +7826,7 @@ textarea.x-form-invalid-field {
   z-index: 1;
   border-style: solid;
   overflow: hidden;
-  border-color: transparent;
+  border-color: #646464;
   background-color: #646464;
   zoom: 1; }
 
@@ -8035,7 +8035,7 @@ textarea.x-form-invalid-field {
 
 /* line 93, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-border-box .x-tab-default-top {
-  height: 26px; }
+  height: 25px; }
 /* line 96, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-border-box .x-tab-default-bottom {
   height: 26px; }
@@ -8057,7 +8057,7 @@ textarea.x-form-invalid-field {
 
 /* line 124, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-default-top {
-  border-bottom: 1px solid transparent !important; }
+  border-bottom: 1px solid #646464 !important; }
   /* line 134, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
   .x-tab-default-top em {
     padding-bottom: 3px; }
@@ -8082,7 +8082,7 @@ textarea.x-form-invalid-field {
 
 /* line 163, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-default-bottom {
-  border-top: 1px solid transparent !important; }
+  border-top: 1px solid #646464 !important; }
   /* line 173, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
   .x-tab-default-bottom em {
     padding-top: 3px; }
@@ -8256,7 +8256,7 @@ textarea.x-form-invalid-field {
 .x-tab-close-btn {
   position: absolute;
   top: 7px;
-  right: 2px;
+  right: 3px;
   width: 11px;
   height: 11px;
   font-size: 0;
@@ -9229,7 +9229,7 @@ svg, vml {
 
 /* line 155, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/layout/_layout.scss */
 .x-accordion-hd-sibling-expanded {
-  border-top-color: transparent !important;
+  border-top-color: #646464 !important;
   -moz-box-shadow: inset 0 1px 0 0 #848484;
   -webkit-box-shadow: inset 0 1px 0 0 #848484;
   -o-box-shadow: inset 0 1px 0 0 #848484;
@@ -9640,12 +9640,12 @@ svg, vml {
 
 /* line 14, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/util/_scroller.scss */
 .x-scroller-vertical {
-  border: 1px solid transparent;
-  border-top-color: #242424; }
+  border: 1px solid #646464;
+  border-top-color: #646464; }
 
 /* line 19, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/util/_scroller.scss */
 .x-scroller-horizontal {
-  border: 1px solid transparent; }
+  border: 1px solid #646464; }
 
 /* line 23, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/util/_scroller.scss */
 .x-vertical-scroller-present .x-scroller-horizontal {

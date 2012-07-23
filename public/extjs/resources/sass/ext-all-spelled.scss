@@ -14,20 +14,20 @@ $base-color: $color1;
 
 //panel
 $panel-header-color: #fff;
-$panel-header-background-color: $color2;
-$panel-border-color: darken($color1, 5);
 
+$panel-header-background-color: $color2;
 $panel-body-background-color: $color3;
 
-$panel-border-color: transparent;
-
-
-
+$panel-border-color: $color1;
 $panel-header-inner-border: false;
+
+$panel-header-inner-border-width: 0px 0 0;
+$panel-border-width: 0px;
+$panel-frame-padding: 0px;
 
 //grid
 $grid-header-color: #fff;
-$grid-header-background-color: darken($color1,25);
+$grid-header-background-color: $color1;
 $grid-header-over-background-color: $color2;
 $grid-header-background-gradient: 'glossy';
 $grid-header-over-background-gradient: 'glossy';
@@ -105,9 +105,14 @@ $tab-color-active: #fff;
 $tabbar-strip-height: 0px;
 
 $tab-inner-border: false;
-$tab-closable-icon-top: 7px;
-$tabbar-top-body-padding: 0px 0 0px !default;
-$tabbar-bottom-body-padding: 0px 0 0px !default;
+
+$tab-closable-icon-top: 6px;
+$tab-closable-icon-right: 3px;
+
+$tabbar-top-body-padding: 0px 0 0px;
+$tabbar-bottom-body-padding: 0px 0 0px;
+$tabbar-top-body-border-width: 0px 0px 0;
+$tabbar-top-strip-border-width: 0px 0px 0;
 
 
 
