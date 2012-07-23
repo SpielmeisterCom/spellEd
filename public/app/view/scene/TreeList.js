@@ -13,11 +13,7 @@ Ext.define('Spelled.view.scene.TreeList' ,{
         {
             text: "Add new scene",
             action: "showCreateScene",
-	        icon: 'images/icons/scene-add.png',
-            tooltip: {
-                text:'Create a new Scene',
-                title:'Create'
-            }
+	        icon: 'images/icons/scene-add.png'
         }
 	]
 });
