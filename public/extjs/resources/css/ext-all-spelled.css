@@ -1077,8 +1077,7 @@ tr.x-container:before {
   line-height: 16px; }
 
 /* line 665, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_button.scss */
-.x-btn-default-small-icon button,
-.x-btn-default-small-icon a {
+.x-btn-default-small-icon button, .x-btn-default-small-icon a {
   padding: 0; }
 /* line 669, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_button.scss */
 .x-btn-default-small-icon .x-btn-inner {
@@ -1095,8 +1094,7 @@ tr.x-container:before {
   right: 0; }
 
 /* line 687, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_button.scss */
-.x-btn-default-small-icon-text-left button,
-.x-btn-default-small-icon-text-left a {
+.x-btn-default-small-icon-text-left button, .x-btn-default-small-icon-text-left a {
   height: 16px; }
 /* line 690, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_button.scss */
 .x-btn-default-small-icon-text-left .x-btn-inner {
@@ -1116,8 +1114,7 @@ tr.x-container:before {
     height: 16px; }
 
 /* line 713, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_button.scss */
-.x-btn-default-small-icon-text-right button,
-.x-btn-default-small-icon-text-right a {
+.x-btn-default-small-icon-text-right button, .x-btn-default-small-icon-text-right a {
   height: 16px; }
 /* line 716, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_button.scss */
 .x-btn-default-small-icon-text-right .x-btn-inner {
@@ -3974,8 +3971,7 @@ browsers will do whacky things with it.
   background-color: #0f0f0f; }
 
 /* line 459, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
-.col-move-top,
-.col-move-bottom {
+.col-move-top, .col-move-bottom {
   width: 9px;
   height: 9px;
   position: absolute;
@@ -7772,14 +7768,14 @@ textarea.x-form-invalid-field {
   /*position strip from top rather than bottom to avoid off-by-one error in IE6*/
   top: 27px;
   border-width: 1px 1px 0;
-  height: 2px; }
+  height: -1px; }
 
 /* line 19, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-border-box .x-tab-bar-top .x-tab-bar-body {
   height: 30px; }
 /* line 23, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-border-box .x-tab-bar-top .x-tab-bar-strip {
-  height: 3px; }
+  height: 0px; }
 
 /* line 4, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-tab-bar-top .x-tab-bar-body-default-plain {
@@ -7791,14 +7787,14 @@ textarea.x-form-invalid-field {
   /*position strip from top rather than bottom to avoid off-by-one error in IE6*/
   top: 25px;
   border-width: 1px 1px 0 1px;
-  height: 2px; }
+  height: -1px; }
 
 /* line 19, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-border-box .x-tab-bar-top .x-tab-bar-body-default-plain {
   height: 27px; }
 /* line 23, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-border-box .x-tab-bar-top .x-tab-bar-strip-default-plain {
-  height: 3px; }
+  height: 0px; }
 
 /* Bottom Tabs */
 /* line 32, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
@@ -7819,14 +7815,14 @@ textarea.x-form-invalid-field {
 .x-tab-bar-bottom .x-tab-bar-strip {
   top: 0;
   border-width: 0 1px 1px 1px;
-  height: 2px; }
+  height: -1px; }
 
 /* line 57, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-border-box .x-tab-bar-bottom .x-tab-bar-body {
   height: 30px; }
 /* line 61, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-border-box .x-tab-bar-bottom .x-tab-bar-strip {
-  height: 3px; }
+  height: 0px; }
 
 /* line 32, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-tab-bar-bottom .x-tab-bar-body-default-plain {
@@ -7846,14 +7842,14 @@ textarea.x-form-invalid-field {
 .x-tab-bar-bottom .x-tab-bar-strip-default-plain {
   top: 0;
   border-width: 0 1px 1px 1px;
-  height: 2px; }
+  height: -1px; }
 
 /* line 57, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-border-box .x-tab-bar-bottom .x-tab-bar-body-default-plain {
   height: 28px; }
 /* line 61, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-border-box .x-tab-bar-bottom .x-tab-bar-strip-default-plain {
-  height: 3px; }
+  height: 0px; }
 
 /* line 141, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tabbar.scss */
 .x-tab-bar-strip-default,
@@ -7865,7 +7861,7 @@ textarea.x-form-invalid-field {
   border-style: solid;
   overflow: hidden;
   border-color: #a8bacd;
-  background-color: #3e546b;
+  background-color: #b8c7d6;
   zoom: 1; }
 
 /* line 69, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
@@ -8116,33 +8112,29 @@ textarea.x-form-invalid-field {
 
 /* line 157, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-default-top-active {
-  border-bottom-color: #3e546b !important; }
+  border-bottom-color: #b8c7d6 !important; }
 
 /* line 163, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-default-bottom {
-  border-top: 1px solid #a8bacd !important;
-  -moz-box-shadow: #d8dee4 0 -1px 0px 0 inset, #d8dee4 -1px 0 0px 0 inset, #d8dee4 1px 0 0px 0 inset;
-  -webkit-box-shadow: #d8dee4 0 -1px 0px 0 inset, #d8dee4 -1px 0 0px 0 inset, #d8dee4 1px 0 0px 0 inset;
-  -o-box-shadow: #d8dee4 0 -1px 0px 0 inset, #d8dee4 -1px 0 0px 0 inset, #d8dee4 1px 0 0px 0 inset;
-  box-shadow: #d8dee4 0 -1px 0px 0 inset, #d8dee4 -1px 0 0px 0 inset, #d8dee4 1px 0 0px 0 inset; }
-  /* line 178, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+  border-top: 1px solid #a8bacd !important; }
+  /* line 173, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
   .x-tab-default-bottom em {
     padding-top: 3px; }
-  /* line 183, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+  /* line 178, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
   .x-tab-default-bottom button,
   .x-tab-default-bottom .x-tab-inner {
     height: 18px;
     line-height: 18px; }
 
-/* line 189, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 184, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-default-bottom {
   border-top-width: 1px !important; }
 
-/* line 193, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 188, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-default-bottom-active {
-  border-top-color: #3e546b !important; }
+  border-top-color: #b8c7d6 !important; }
 
-/* line 197, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 192, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-default-disabled {
   cursor: default;
   border-color: #b3c5d9;
@@ -8153,19 +8145,19 @@ textarea.x-form-invalid-field {
   background-image: -moz-linear-gradient(top, #d0deec, #d6e6f5);
   background-image: -o-linear-gradient(top, #d0deec, #d6e6f5);
   background-image: linear-gradient(top, #d0deec, #d6e6f5); }
-  /* line 203, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+  /* line 198, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
   .x-tab-default-disabled button {
     color: #c3b3b3 !important; }
 
-/* line 209, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 204, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-icon-text-left .x-tab-inner {
   padding-left: 20px; }
 
-/* line 214, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 209, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab button {
   position: relative; }
 
-/* line 218, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 213, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-icon {
   position: absolute;
   background-repeat: no-repeat;
@@ -8177,23 +8169,23 @@ textarea.x-form-invalid-field {
   width: 18px;
   height: 18px; }
 
-/* line 233, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 228, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-strict .x-ie8 .x-tab button,
 .x-strict .x-ie9 .x-tab button {
   overflow-y: visible; }
 
-/* line 238, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 233, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-default-disabled .x-tab-icon {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5; }
 
 /* In IE a disabled icon needs to be hidden or the opacity effect covers some of the text */
-/* line 243, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 238, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-noicon .x-tab-icon {
   display: none; }
 
-/* line 269, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 264, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-top-over {
   background-image: none;
   background-color: #98adc3;
@@ -8203,7 +8195,7 @@ textarea.x-form-invalid-field {
   background-image: -o-linear-gradient(top, #95a2b4, #93a8c0 25%, #98adc3 45%);
   background-image: linear-gradient(top, #95a2b4, #93a8c0 25%, #98adc3 45%); }
 
-/* line 272, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 267, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-bottom-over {
   background-image: none;
   background-color: #98adc3;
@@ -8213,14 +8205,14 @@ textarea.x-form-invalid-field {
   background-image: -o-linear-gradient(bottom, #95a2b4, #93a8c0 25%, #98adc3 45%);
   background-image: linear-gradient(bottom, #95a2b4, #93a8c0 25%, #98adc3 45%); }
 
-/* line 277, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 272, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-active {
   z-index: 3; }
-  /* line 283, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+  /* line 278, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
   .x-tab-active button {
     color: white; }
 
-/* line 299, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 294, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-top-active {
   background-image: none;
   background-color: #3e546b;
@@ -8230,7 +8222,7 @@ textarea.x-form-invalid-field {
   background-image: -o-linear-gradient(top, #666666, #4d6074 25%, #3e546b 45%);
   background-image: linear-gradient(top, #666666, #4d6074 25%, #3e546b 45%); }
 
-/* line 302, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 297, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-bottom-active {
   background-image: none;
   background-color: #3e546b;
@@ -8240,14 +8232,14 @@ textarea.x-form-invalid-field {
   background-image: -o-linear-gradient(bottom, #666666, #4d6074 25%, #3e546b 45%);
   background-image: linear-gradient(bottom, #666666, #4d6074 25%, #3e546b 45%); }
 
-/* line 307, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 302, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-disabled {
   border-color: #b3c5d9; }
-  /* line 312, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+  /* line 307, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
   .x-tab-disabled button {
     color: #c3b3b3; }
 
-/* line 328, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 323, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-top-disabled {
   background-image: none;
   background: transparent;
@@ -8259,7 +8251,7 @@ textarea.x-form-invalid-field {
   background-image: -o-linear-gradient(top, #d0deec, #d6e6f5);
   background-image: linear-gradient(top, #d0deec, #d6e6f5); }
 
-/* line 333, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 328, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-bottom-disabled {
   background-image: none;
   background: transparent;
@@ -8271,30 +8263,30 @@ textarea.x-form-invalid-field {
   background-image: -o-linear-gradient(bottom, #d0deec, #d6e6f5);
   background-image: linear-gradient(bottom, #d0deec, #d6e6f5); }
 
-/* line 347, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 342, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nlg .x-tab-top-over {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-top-over-bg.gif'); }
-/* line 348, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 343, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nlg .x-tab-bottom-over {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-bottom-over-bg.gif'); }
-/* line 352, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 347, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nlg .x-tab-top-active {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-top-active-bg.gif'); }
-/* line 353, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 348, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nlg .x-tab-bottom-active {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-bottom-active-bg.gif'); }
-/* line 357, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 352, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nlg .x-tab-top-disabled {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-top-disabled-bg.gif') !important; }
-/* line 358, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 353, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nlg .x-tab-bottom-disabled {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-bottom-disabled-bg.gif') !important; }
 
-/* line 363, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 358, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-closable em {
   padding-right: 14px; }
 
-/* line 367, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 362, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-close-btn {
   position: absolute;
   top: 7px;
@@ -8310,26 +8302,26 @@ textarea.x-form-invalid-field {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   opacity: 0.6; }
 
-/* line 381, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 376, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-close-btn {
   top: 0px;
   right: 0px; }
 
 /* Include the element name otherwise Internet Explorer 7 & 8 take a performance hit */
-/* line 387, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 382, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 a.x-tab-close-btn:hover {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1; }
 
 /* Include the element name to raise the specificity to equal the :hover */
-/* line 392, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 387, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-default-disabled a.x-tab-close-btn {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
   opacity: 0.3; }
 
-/* line 404, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 399, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-top-over .x-frame-tl,
 .x-nbr .x-tab-top-over .x-frame-bl,
 .x-nbr .x-tab-top-over .x-frame-tr,
@@ -8337,16 +8329,16 @@ a.x-tab-close-btn:hover {
 .x-nbr .x-tab-top-over .x-frame-tc,
 .x-nbr .x-tab-top-over .x-frame-bc {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-top-over-corners.gif'); }
-/* line 408, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 403, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-top-over .x-frame-ml,
 .x-nbr .x-tab-top-over .x-frame-mr {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-top-over-sides.gif'); }
-/* line 412, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 407, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-top-over .x-frame-mc {
   background-color: #98adc3;
   background-repeat: repeat-x;
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-top-over-bg.gif'); }
-/* line 426, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 421, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-bottom-over .x-frame-tl,
 .x-nbr .x-tab-bottom-over .x-frame-bl,
 .x-nbr .x-tab-bottom-over .x-frame-tr,
@@ -8354,16 +8346,16 @@ a.x-tab-close-btn:hover {
 .x-nbr .x-tab-bottom-over .x-frame-tc,
 .x-nbr .x-tab-bottom-over .x-frame-bc {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-bottom-over-corners.gif'); }
-/* line 430, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 425, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-bottom-over .x-frame-ml,
 .x-nbr .x-tab-bottom-over .x-frame-mr {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-bottom-over-sides.gif'); }
-/* line 434, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 429, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-bottom-over .x-frame-mc {
   background-color: #98adc3;
   background-repeat: repeat-x;
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-bottom-over-bg.gif'); }
-/* line 448, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 443, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-top-active .x-frame-tl,
 .x-nbr .x-tab-top-active .x-frame-bl,
 .x-nbr .x-tab-top-active .x-frame-tr,
@@ -8371,16 +8363,16 @@ a.x-tab-close-btn:hover {
 .x-nbr .x-tab-top-active .x-frame-tc,
 .x-nbr .x-tab-top-active .x-frame-bc {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-top-active-corners.gif'); }
-/* line 452, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 447, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-top-active .x-frame-ml,
 .x-nbr .x-tab-top-active .x-frame-mr {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-top-active-sides.gif'); }
-/* line 456, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 451, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-top-active .x-frame-mc {
   background-color: #3e546b;
   background-repeat: repeat-x;
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-top-active-bg.gif'); }
-/* line 470, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 465, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-bottom-active .x-frame-tl,
 .x-nbr .x-tab-bottom-active .x-frame-bl,
 .x-nbr .x-tab-bottom-active .x-frame-tr,
@@ -8388,16 +8380,16 @@ a.x-tab-close-btn:hover {
 .x-nbr .x-tab-bottom-active .x-frame-tc,
 .x-nbr .x-tab-bottom-active .x-frame-bc {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-bottom-active-corners.gif'); }
-/* line 474, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 469, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-bottom-active .x-frame-ml,
 .x-nbr .x-tab-bottom-active .x-frame-mr {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-bottom-active-sides.gif'); }
-/* line 478, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 473, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-bottom-active .x-frame-mc {
   background-color: #3e546b;
   background-repeat: repeat-x;
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-bottom-active-bg.gif'); }
-/* line 492, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 487, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-top-disabled .x-frame-tl,
 .x-nbr .x-tab-top-disabled .x-frame-bl,
 .x-nbr .x-tab-top-disabled .x-frame-tr,
@@ -8405,15 +8397,15 @@ a.x-tab-close-btn:hover {
 .x-nbr .x-tab-top-disabled .x-frame-tc,
 .x-nbr .x-tab-top-disabled .x-frame-bc {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-top-disabled-corners.gif'); }
-/* line 496, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 491, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-top-disabled .x-frame-ml,
 .x-nbr .x-tab-top-disabled .x-frame-mr {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-top-disabled-sides.gif'); }
-/* line 500, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 495, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-top-disabled .x-frame-mc {
   background-repeat: repeat-x;
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-top-disabled-bg.gif'); }
-/* line 513, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 508, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-bottom-disabled .x-frame-tl,
 .x-nbr .x-tab-bottom-disabled .x-frame-bl,
 .x-nbr .x-tab-bottom-disabled .x-frame-tr,
@@ -8421,11 +8413,11 @@ a.x-tab-close-btn:hover {
 .x-nbr .x-tab-bottom-disabled .x-frame-tc,
 .x-nbr .x-tab-bottom-disabled .x-frame-bc {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-bottom-disabled-corners.gif'); }
-/* line 517, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 512, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-bottom-disabled .x-frame-ml,
 .x-nbr .x-tab-bottom-disabled .x-frame-mr {
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-bottom-disabled-sides.gif'); }
-/* line 521, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+/* line 516, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nbr .x-tab-bottom-disabled .x-frame-mc {
   background-repeat: repeat-x;
   background-image: url('../../resources/themes/images/spelled/tab/tab-default-bottom-disabled-bg.gif'); }
@@ -9725,32 +9717,7 @@ svg, vml {
 .x-html {
   /* Begin bidirectionality settings (do not change) */ }
   /* line 34, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
-  .x-html html,
-  .x-html address,
-  .x-html blockquote,
-  .x-html body,
-  .x-html dd,
-  .x-html div,
-  .x-html dl,
-  .x-html dt,
-  .x-html fieldset,
-  .x-html form,
-  .x-html frame, .x-html frameset,
-  .x-html h1,
-  .x-html h2,
-  .x-html h3,
-  .x-html h4,
-  .x-html h5,
-  .x-html h6,
-  .x-html noframes,
-  .x-html ol,
-  .x-html p,
-  .x-html ul,
-  .x-html center,
-  .x-html dir,
-  .x-html hr,
-  .x-html menu,
-  .x-html pre {
+  .x-html html, .x-html address, .x-html blockquote, .x-html body, .x-html dd, .x-html div, .x-html dl, .x-html dt, .x-html fieldset, .x-html form, .x-html frame, .x-html frameset, .x-html h1, .x-html h2, .x-html h3, .x-html h4, .x-html h5, .x-html h6, .x-html noframes, .x-html ol, .x-html p, .x-html ul, .x-html center, .x-html dir, .x-html hr, .x-html menu, .x-html pre {
     display: block; }
   /* line 35, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
   .x-html li {
@@ -9781,8 +9748,7 @@ svg, vml {
   .x-html colgroup {
     display: table-column-group; }
   /* line 45, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
-  .x-html td,
-  .x-html th {
+  .x-html td, .x-html th {
     display: table-cell; }
   /* line 46, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
   .x-html caption {
@@ -9810,16 +9776,7 @@ svg, vml {
     font-size: 1.17em;
     margin: .83em 0; }
   /* line 62, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
-  .x-html h4,
-  .x-html p,
-  .x-html blockquote,
-  .x-html ul,
-  .x-html fieldset,
-  .x-html form,
-  .x-html ol,
-  .x-html dl,
-  .x-html dir,
-  .x-html menu {
+  .x-html h4, .x-html p, .x-html blockquote, .x-html ul, .x-html fieldset, .x-html form, .x-html ol, .x-html dl, .x-html dir, .x-html menu {
     margin: 1.12em 0; }
   /* line 63, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
   .x-html h5 {
@@ -9830,49 +9787,29 @@ svg, vml {
     font-size: .75em;
     margin: 1.67em 0; }
   /* line 72, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
-  .x-html h1,
-  .x-html h2,
-  .x-html h3,
-  .x-html h4,
-  .x-html h5,
-  .x-html h6,
-  .x-html b,
-  .x-html strong {
+  .x-html h1, .x-html h2, .x-html h3, .x-html h4, .x-html h5, .x-html h6, .x-html b, .x-html strong {
     font-weight: bolder; }
   /* line 73, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
   .x-html blockquote {
     margin-left: 40px;
     margin-right: 40px; }
   /* line 78, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
-  .x-html i,
-  .x-html cite,
-  .x-html em,
-  .x-html var,
-  .x-html address {
+  .x-html i, .x-html cite, .x-html em, .x-html var, .x-html address {
     font-style: italic; }
   /* line 83, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
-  .x-html pre,
-  .x-html tt,
-  .x-html code,
-  .x-html kbd,
-  .x-html samp {
+  .x-html pre, .x-html tt, .x-html code, .x-html kbd, .x-html samp {
     font-family: monospace; }
   /* line 84, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
   .x-html pre {
     white-space: pre; }
   /* line 88, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
-  .x-html button,
-  .x-html textarea,
-  .x-html input,
-  .x-html select {
+  .x-html button, .x-html textarea, .x-html input, .x-html select {
     display: inline-block; }
   /* line 89, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
   .x-html big {
     font-size: 1.17em; }
   /* line 92, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
-  .x-html small,
-  .x-html sub,
-  .x-html sup {
+  .x-html small, .x-html sub, .x-html sup {
     font-size: .83em; }
   /* line 93, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
   .x-html sub {
@@ -9884,28 +9821,19 @@ svg, vml {
   .x-html table {
     border-spacing: 2px; }
   /* line 98, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
-  .x-html thead,
-  .x-html tbody,
-  .x-html tfoot {
+  .x-html thead, .x-html tbody, .x-html tfoot {
     vertical-align: middle; }
   /* line 100, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
-  .x-html td,
-  .x-html th {
+  .x-html td, .x-html th {
     vertical-align: inherit; }
   /* line 103, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
-  .x-html s,
-  .x-html strike,
-  .x-html del {
+  .x-html s, .x-html strike, .x-html del {
     text-decoration: line-through; }
   /* line 104, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
   .x-html hr {
     border: 1px inset; }
   /* line 109, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
-  .x-html ol,
-  .x-html ul,
-  .x-html dir,
-  .x-html menu,
-  .x-html dd {
+  .x-html ol, .x-html ul, .x-html dir, .x-html menu, .x-html dd {
     margin-left: 40px; }
   /* line 110, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
   .x-html ul, .x-html menu, .x-html dir {
@@ -9914,15 +9842,11 @@ svg, vml {
   .x-html ol {
     list-style-type: decimal; }
   /* line 115, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
-  .x-html ol ul,
-  .x-html ul ol,
-  .x-html ul ul,
-  .x-html ol ol {
+  .x-html ol ul, .x-html ul ol, .x-html ul ul, .x-html ol ol {
     margin-top: 0;
     margin-bottom: 0; }
   /* line 117, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
-  .x-html u,
-  .x-html ins {
+  .x-html u, .x-html ins {
     text-decoration: underline; }
   /* line 118, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_html.scss */
   .x-html br:before {
