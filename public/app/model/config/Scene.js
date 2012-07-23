@@ -5,7 +5,7 @@ Ext.define('Spelled.model.config.Scene', {
         'name',
 		'scriptId',
 		{ name: 'showGrid', type: 'boolean', defaultValue: false },
-		{ name: 'systems', type: 'object', defaultValue: { update: [], render: [] } }
+		{ name: 'systems', type: 'object', defaultValue: { update: [], render: [ 'spell.system.keyInput', 'spell.system.render' ] } }
     ],
 
     idProperty: 'name',
