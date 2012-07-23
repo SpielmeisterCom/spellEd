@@ -170,11 +170,6 @@
 
         border-top: 1px solid $tabbar-strip-border-color !important;
 
-        @include inner-border(
-            $width: $tab-bottom-inner-border-width,
-            $color: $tab-inner-border-color
-        );
-
         em {
             padding-top: $framepad;
         }
