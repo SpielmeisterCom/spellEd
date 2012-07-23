@@ -65,6 +65,7 @@ Ext.define('Spelled.controller.Scripts', {
 		var JavaScriptMode = require("ace/mode/javascript").Mode;
 		panel.aceEditor.getSession().setMode( new JavaScriptMode() );
 
+		panel.aceEditor.setTheme("ace/theme/pastel_on_dark");
 		panel.aceEditor.commands.addCommand({
 			name: 'saveCommand',
 			bindKey: {
