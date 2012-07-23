@@ -8095,10 +8095,6 @@ textarea.x-form-invalid-field {
 
 /* line 124, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-default-top {
-  -moz-box-shadow: #d8dee4 0 1px 0px 0 inset, #d8dee4 -1px 0 0px 0 inset, #d8dee4 1px 0 0px 0 inset;
-  -webkit-box-shadow: #d8dee4 0 1px 0px 0 inset, #d8dee4 -1px 0 0px 0 inset, #d8dee4 1px 0 0px 0 inset;
-  -o-box-shadow: #d8dee4 0 1px 0px 0 inset, #d8dee4 -1px 0 0px 0 inset, #d8dee4 1px 0 0px 0 inset;
-  box-shadow: #d8dee4 0 1px 0px 0 inset, #d8dee4 -1px 0 0px 0 inset, #d8dee4 1px 0 0px 0 inset;
   border-bottom: 1px solid #a8bacd !important; }
   /* line 134, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
   .x-tab-default-top em {
@@ -8124,10 +8120,6 @@ textarea.x-form-invalid-field {
 
 /* line 163, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-default-bottom {
-  -moz-box-shadow: #d8dee4 0 -1px 0px 0 inset, #d8dee4 -1px 0 0px 0 inset, #d8dee4 1px 0 0px 0 inset;
-  -webkit-box-shadow: #d8dee4 0 -1px 0px 0 inset, #d8dee4 -1px 0 0px 0 inset, #d8dee4 1px 0 0px 0 inset;
-  -o-box-shadow: #d8dee4 0 -1px 0px 0 inset, #d8dee4 -1px 0 0px 0 inset, #d8dee4 1px 0 0px 0 inset;
-  box-shadow: #d8dee4 0 -1px 0px 0 inset, #d8dee4 -1px 0 0px 0 inset, #d8dee4 1px 0 0px 0 inset;
   border-top: 1px solid #a8bacd !important;
   -moz-box-shadow: #d8dee4 0 -1px 0px 0 inset, #d8dee4 -1px 0 0px 0 inset, #d8dee4 1px 0 0px 0 inset;
   -webkit-box-shadow: #d8dee4 0 -1px 0px 0 inset, #d8dee4 -1px 0 0px 0 inset, #d8dee4 1px 0 0px 0 inset;
