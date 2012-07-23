@@ -1,7 +1,7 @@
 $theme-name: 'spelled';
 
-$color1: #abc;
 $color2: #3e546b;
+$color1: lighten($color2, 45);
 
 $include-missing-images: true;
 $base-color: $color1;
@@ -48,7 +48,15 @@ $button-toolbar-color-over: #fff !default;
 $button-toolbar-color-pressed: #fff !default;
 
 //tabs
+$tab-height: 25px;
+
 $tab-base-color: $color1;
+$tab-background-gradient: null;
+$tab-base-color-over: darken($color1, 10);
+$tab-base-color-active: $color2;
+$tab-color-active: #fff;
+
+$tabbar-strip-background-color: $color2;
 
 //progress bar
 $progress-bar-background-color: darken($color1,25);
