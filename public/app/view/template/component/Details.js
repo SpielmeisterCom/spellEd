@@ -6,6 +6,7 @@ Ext.define('Spelled.view.template.component.Details', {
     collapsible: true,
     hideCollapseTool: false,
     title: 'Details',
+	frame: true,
     titleCollapse: false,
     margins: '0 0 5 0',
     items: [

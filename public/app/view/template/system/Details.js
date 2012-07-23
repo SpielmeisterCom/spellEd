@@ -8,6 +8,7 @@ Ext.define('Spelled.view.template.system.Details', {
     title: 'Details',
     titleCollapse: false,
     margins: '0 0 5 0',
+	frame: true,
     items: [
         {
             xtype: 'displayfield',

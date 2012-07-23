@@ -3717,9 +3717,9 @@ table.x-datepicker-inner {
     color: white;
     font: normal 11px/15px tahoma, arial, verdana, sans-serif;
     background-color: #444444;
-    border-color: #ededed;
+    border-color: #444444;
     border-style: solid;
-    border-top-color: #fafafa;
+    border-top-color: #515151;
     border-width: 0; }
 
 /* line 212, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
@@ -3737,7 +3737,7 @@ table.x-datepicker-inner {
 /* line 226, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-alt .x-grid-cell,
 .x-grid-row-alt .x-grid-rowwrap-div {
-  background-color: #979797; }
+  background-color: #444444; }
 
 /* line 231, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-over .x-grid-cell,
@@ -6700,7 +6700,7 @@ textarea.x-form-invalid-field {
 .x-toolbar {
   font-size: 11px;
   border: 1px solid;
-  padding: 2px 0 2px 2px; }
+  padding: 1px 0 1px 2px; }
   /* line 13, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_toolbar.scss */
   .x-toolbar .x-form-item-label {
     font-size: 11px;
@@ -6752,7 +6752,7 @@ textarea.x-form-invalid-field {
 
 /* line 74, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_toolbar.scss */
 .x-toolbar-vertical {
-  padding: 2px 2px 0 2px; }
+  padding: 1px 2px 0 2px; }
   /* line 77, /home/julian/workspace/spelled/public/extjs/resources/sass/../../resources/themes/stylesheets/ext4/default/widgets/_toolbar.scss */
   .x-toolbar-vertical .x-toolbar-item {
     margin: 0 0 2px 0; }

@@ -3,6 +3,7 @@ Ext.define('Spelled.view.template.system.Input' ,{
     alias : 'widget.systemtemplateinputlist',
 
     title: 'Registered inputs for this system',
+	frame: true,
     flex: 1,
 
 	initComponent: function() {

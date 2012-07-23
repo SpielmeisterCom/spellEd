@@ -38,7 +38,11 @@ $grid-row-cell-color: #fff;
 
 $grid-row-cell-over-background-color: $color3;
 
-$grid-row-cell-alt-background: lighten($color1,20);
+$grid-row-cell-alt-background: $color3;
+
+$grid-row-cell-border-color: $color3;
+
+
 $grid-row-cell-selected-background-color: #9a9a9a;
 
 
@@ -84,6 +88,10 @@ $button-toolbar-background-gradient-pressed: 'glossy';
 $button-toolbar-background-gradient-disabled: null;
 
 */
+
+//toolbar
+$toolbar-vertical-spacing: 1px;
+
 
 //tabs
 $tab-height: 25px;
