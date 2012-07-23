@@ -13,7 +13,14 @@ $base-color: $color1;
 $panel-header-color: #fff;
 $panel-header-background-color: $color2;
 $panel-border-color: darken($color1, 5);
+
 $panel-body-background-color: $color3;
+
+$panel-border-color: $color1;
+
+
+
+$panel-header-inner-border: false;
 
 //grid
 $grid-header-color: #fff;
@@ -72,6 +79,8 @@ $tabbar-strip-height: 0px;
 
 $tab-inner-border: false;
 $tab-closable-icon-top: 7px;
+$tabbar-top-body-padding: 0px 0 0px !default;
+$tabbar-bottom-body-padding: 0px 0 0px !default;
 
 
 
