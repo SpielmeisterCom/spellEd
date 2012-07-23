@@ -5,7 +5,10 @@ Ext.define('Spelled.view.ui.SpelledIframe', {
     width : '100%',
     height: '100%',
     autoEl : {
-        tag : 'iframe'
+		tag : 'iframe',
+		border: '0',
+		frameborder: '0',
+		scrolling: 'no'
     },
 
     afterRender: function() {
