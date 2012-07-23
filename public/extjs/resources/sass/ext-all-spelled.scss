@@ -1,6 +1,9 @@
 $theme-name: 'spelled';
 
+//color for panel header
 $color1: #646464;
+
+//color for section headers/tabs
 $color2: #363636;
 
 //color used for panel background
@@ -16,7 +19,7 @@ $panel-border-color: darken($color1, 5);
 
 $panel-body-background-color: $color3;
 
-$panel-border-color: $color1;
+$panel-border-color: transparent;
 
 
 
@@ -31,7 +34,7 @@ $grid-header-over-background-gradient: 'glossy';
 
 
 $grid-row-cell-background: $color3;
-$grid-row-cell-color: #9a9a9a;
+$grid-row-cell-color: #fff;
 
 $grid-row-cell-over-background-color: $color3;
 
@@ -50,21 +53,37 @@ $button-default-color: #fff;
 $button-default-base-color: $color2;
 $button-default-base-color-over: darken($color1,25);
 $button-default-base-color-pressed: darken($color1, 15);
-$button-default-background-gradient-over: 'glossy';
-$button-default-background-gradient-pressed: 'glossy';
 
+
+
+//white text for toolbar button
+$button-toolbar-color: #fff;
+$button-toolbar-color-over: #fff;
+$button-toolbar-color-pressed: #fff;
+
+$button-toolbar-base-color: $color2;
+$button-toolbar-base-color-over: darken($color2,25);
+$button-toolbar-base-color-pressed: darken($color2, 15);
+
+$button-toolbar-background-gradient: 'glossy-button';
+$button-toolbar-background-gradient-over: 'glossy';
+$button-toolbar-background-gradient-pressed: 'glossy';
+
+$button-toolbar-background-color-over: darken($color1, 5);
+
+
+/*
 $button-toolbar-border-color-pressed: darken($color1,25);
 $button-toolbar-background-color-pressed: darken($color1,25);
 $button-toolbar-border-color-over: darken($color1,25);
-$button-toolbar-background-color-over: darken($color1, 5);
-$button-toolbar-background-gradient: null;
+
+
 $button-toolbar-background-gradient-over: 'glossy';
 $button-toolbar-background-gradient-focus: 'glossy';
 $button-toolbar-background-gradient-pressed: 'glossy';
 $button-toolbar-background-gradient-disabled: null;
-$button-toolbar-color: $color2 !default;
-$button-toolbar-color-over: #fff !default;
-$button-toolbar-color-pressed: #fff !default;
+
+*/
 
 //tabs
 $tab-height: 25px;
@@ -110,6 +129,10 @@ $datepicker-monthpicker-item-color: #fff;
 $accordion-header-color: $color2;
 $accordion-header-background-color: $color1;
 
+//qtip
+$tip-base-color: $color1;
+$tip-body-color: #fff;
+$tip-header-color: #fff;
 
 
 
