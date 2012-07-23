@@ -3,3 +3,5 @@
 atlassian-ide-plugin.xml
 projects/spellReferenceProject/public/output
 projects/spellReferenceProject/build
+public/extjs/resources/sass/.sass-cache
+
