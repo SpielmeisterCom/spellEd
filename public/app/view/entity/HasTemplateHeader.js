@@ -10,7 +10,7 @@ Ext.define('Spelled.view.entity.HasTemplateHeader' ,{
 	}],
 
 	frame: true,
-	title: ' Entity linked with template:',
+	title: ' Entity linked with template',
 	cls:   'entity-based-on-template'
 
 
