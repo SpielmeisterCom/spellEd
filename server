@@ -1,3 +1,26 @@
-#!/bin/bash
+#!/usr/bin/env node
 
-./node_modules/.bin/r.js src/server/spellEdServer.js
+var createSpellPath = function( toolPath ) {
+	var parts = toolPath.split( '/' )
+	return parts.slice( 0, parts.length - 1 ).join( '/' )
+}
+
+var spellPath = createSpellPath( process.mainModule.filename )
+
+requirejs = require( 'requirejs' )
+
+requirejs.config( {
+	baseUrl: spellPath + '/src',
+	nodeRequire: require
+} )
+
+requirejs(
+	[
+		'server/spellEdServer'
+	],
+	function(
+		spellEdServer
+	) {
+		spellEdServer( process.argv, process.cwd(), spellPath )
+	}
+)
