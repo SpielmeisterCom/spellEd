@@ -20,6 +20,15 @@ define(
     ) {
         "use strict"
 
+
+	    var printErrors = function( errors ) {
+		    var tmp = []
+		    tmp = tmp.concat( errors )
+
+		    console.error( tmp.join( '\n' ) )
+	    }
+
+
 	    return function(argv, cwd, spellPath) {
 		    var executableName  = 'server'
 
