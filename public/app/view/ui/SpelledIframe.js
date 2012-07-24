@@ -12,7 +12,7 @@ Ext.define('Spelled.view.ui.SpelledIframe', {
     },
 
     afterRender: function() {
-        this.el.dom.src = '/' + this.projectName + '/public/spellEdShim.html?iframeId='+this.id
+        this.el.dom.src = '/' + this.projectName + '/output/spellEdShim.html?iframeId='+this.id
 		this.focus()
     }
 });
