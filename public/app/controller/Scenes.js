@@ -40,8 +40,6 @@ Ext.define('Spelled.controller.Scenes', {
 	TREE_ITEM_TYPE_SCRIPT   : 4,
 	TREE_ITEM_TYPE_ENTITIES : 5,
 
-	BUILD_SERVER_ORIGIN : 'http://localhost:8080',
-
     init: function() {
 		var me = this
 
@@ -226,12 +224,14 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	checkOrigin: function( event ) {
-		if ( event.origin !== this.BUILD_SERVER_ORIGIN ){
+		/*if ( event.origin !== this.BUILD_SERVER_ORIGIN ){
 			console.log( 'event.origin: ' + event.origin )
 			console.log( 'Error: origin does not match.' )
 
 			return false
-		}
+		}*/
+
+		//bypassing origin check for now
 
 		return true
 	},
@@ -245,7 +245,7 @@ Ext.define('Spelled.controller.Scenes', {
 	sendIframePostMessage: function( iframeId, message ) {
 		var cmp = Ext.getCmp( iframeId )
 
-		cmp.el.dom.contentWindow.postMessage( message, this.BUILD_SERVER_ORIGIN )
+		cmp.el.dom.contentWindow.postMessage( message, '*' )
 	},
 
     showScenesEditor: function() {
