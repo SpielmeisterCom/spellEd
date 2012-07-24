@@ -1,7 +1,5 @@
 .idea
 *.iml
 atlassian-ide-plugin.xml
-projects/spellReferenceProject/output
-projects/spellReferenceProject/build
 public/extjs/resources/sass/.sass-cache
 
