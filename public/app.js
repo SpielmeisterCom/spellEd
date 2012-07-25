@@ -252,7 +252,11 @@ var startEditor = function() {
 
             var projectName = Ext.state.Manager.get( 'projectName' )
 
-            //TODO: what if the project is deleted?
+	        //if no saved project exists, try loading spellReferenceProject
+			if (!projectName) {
+				projectName = 'spellReferenceProject';
+			}
+
             try {
                 this.getController('Projects').loadProject( projectName )
             } catch( e ) {
