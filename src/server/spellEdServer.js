@@ -58,12 +58,12 @@ define(
 					    .use( connect.favicon() )
 					    .use( connect.logger('dev') )
 					    .use(
-					    extDirect(
-						    'router/',
-						    'Spelled',
-						    createExtDirectApi( projectsPath, buildServerOptions )
-					    )
-				    )
+							extDirect(
+								'router/',
+								'Spelled',
+								createExtDirectApi( projectsPath, buildServerOptions )
+							)
+						)
 					    .use( connect.static('public'))
 					    //TODO: remove this line
 					    .use( connect.static( projectsPath ) )
