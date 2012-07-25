@@ -123,7 +123,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 					items: [{
 						xtype: 'button',
 						icon: 'images/icons/table_refresh.png',
-						text: 'Save Entity Template to Disk',
+						text: 'Save',
 						action: 'saveTemplateEntity',
 						dock: 'bottom'
 					}]
