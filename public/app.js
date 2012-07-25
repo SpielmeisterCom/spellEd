@@ -247,15 +247,8 @@ var startEditor = function() {
 
             Ext.create('Spelled.view.ui.SpelledViewport')
 
-            var stateProvider = undefined
-            try {
-                stateProvider = Ext.create( 'Ext.state.LocalStorageProvider' )
-            } catch( e ) {
-                console.log( "Browser does not support local storage. Fallback to Cookie storage" )
-                stateProvider = Ext.create( 'Ext.state.CookieProvider')
-            }
-
-            Ext.state.Manager.setProvider( stateProvider )
+            var stateProvider = Ext.create( 'Ext.state.CookieProvider');
+	        Ext.state.Manager.setProvider( stateProvider )
 
             var projectName = Ext.state.Manager.get( 'projectName' )
 
