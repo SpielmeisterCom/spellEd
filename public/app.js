@@ -1,13 +1,8 @@
 Ext.require([
 	'Ext.app.Application',
     'Ext.data.*',
-	'Ext.direct.*',
 	'Ext.tree.ViewDragZone'
 ]);
-
-Ext.Loader.setConfig( { enabled: true } );
-Ext.Loader.setPath( 'Spelled', 'app' );
-Ext.Loader.require( 'Spelled.view.ui.SpelledViewport' );
 
 Ext.application( {
 	name: 'Spelled',
@@ -196,6 +191,9 @@ Ext.application( {
 	launch: function() {
 		var me = this
 
+		//load configuration from global CONFIGURATION variable that is defined in app-initialize
+		me.configuration = Ext.decode( Ext.app.CONFIGURATION, true);
+
 		Ext.override(
 			Ext.data.proxy.Direct,
 			{
@@ -213,15 +211,6 @@ Ext.application( {
 		)
 
 		Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
-
-		Ext.Ajax.request({
-			url: '/configuration.json',
-			success: function( response ){
-				me.configuration = Ext.decode( response.responseText, true)
-			}
-		})
-
-
 
 		Ext.get('loading').remove()
 		Ext.get('loading-mask').fadeOut( {
