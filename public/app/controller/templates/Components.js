@@ -79,7 +79,7 @@ Ext.define('Spelled.controller.templates.Components', {
             {
                 type: "string",
                 name: "newAttribute",
-                default: "defaultValue"
+                "default": "defaultValue"
             }
         )
 

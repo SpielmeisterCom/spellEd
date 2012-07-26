@@ -215,7 +215,7 @@ Ext.application( {
 		Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
 
 		Ext.Ajax.request({
-			url: 'configuration.json',
+			url: '/configuration.json',
 			success: function( response ){
 				me.configuration = Ext.decode( response.responseText, true)
 			}

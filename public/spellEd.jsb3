@@ -20,6 +20,11 @@
 					"path": "extjs/src/data/"
 				},
 				{
+					"clsName": "Ext.data.ResultSet",
+					"name": "ResultSet.js",
+					"path": "extjs/src/data/"
+				},
+				{
 					"clsName": "Ext.data.Request",
 					"name": "Request.js",
 					"path": "extjs/src/data/"
@@ -27,11 +32,6 @@
 				{
 					"clsName": "Ext.data.Operation",
 					"name": "Operation.js",
-					"path": "extjs/src/data/"
-				},
-				{
-					"clsName": "Ext.data.ResultSet",
-					"name": "ResultSet.js",
 					"path": "extjs/src/data/"
 				},
 				{
@@ -45,13 +45,13 @@
 					"path": "extjs/src/data/"
 				},
 				{
-					"clsName": "Ext.data.UuidGenerator",
-					"name": "UuidGenerator.js",
+					"clsName": "Ext.data.Types",
+					"name": "Types.js",
 					"path": "extjs/src/data/"
 				},
 				{
-					"clsName": "Ext.data.Types",
-					"name": "Types.js",
+					"clsName": "Ext.data.UuidGenerator",
+					"name": "UuidGenerator.js",
 					"path": "extjs/src/data/"
 				},
 				{
@@ -80,8 +80,18 @@
 					"path": "extjs/src/data/writer/"
 				},
 				{
+					"clsName": "Ext.data.writer.Xml",
+					"name": "Xml.js",
+					"path": "extjs/src/data/writer/"
+				},
+				{
 					"clsName": "Ext.direct.RemotingMethod",
 					"name": "RemotingMethod.js",
+					"path": "extjs/src/direct/"
+				},
+				{
+					"clsName": "Ext.direct.Transaction",
+					"name": "Transaction.js",
 					"path": "extjs/src/direct/"
 				},
 				{
@@ -90,23 +100,13 @@
 					"path": "extjs/src/util/"
 				},
 				{
-					"clsName": "Ext.app.Controller",
-					"name": "Controller.js",
-					"path": "extjs/src/app/"
-				},
-				{
-					"clsName": "Ext.direct.Transaction",
-					"name": "Transaction.js",
-					"path": "extjs/src/direct/"
+					"clsName": "Ext.util.Filter",
+					"name": "Filter.js",
+					"path": "extjs/src/util/"
 				},
 				{
 					"clsName": "Ext.util.Sorter",
 					"name": "Sorter.js",
-					"path": "extjs/src/util/"
-				},
-				{
-					"clsName": "Ext.util.Filter",
-					"name": "Filter.js",
 					"path": "extjs/src/util/"
 				},
 				{
@@ -120,13 +120,18 @@
 					"path": "extjs/src/util/"
 				},
 				{
+					"clsName": "Ext.util.HashMap",
+					"name": "HashMap.js",
+					"path": "extjs/src/util/"
+				},
+				{
 					"clsName": "Ext.Template",
 					"name": "Template.js",
 					"path": "extjs/src/"
 				},
 				{
-					"clsName": "Ext.util.HashMap",
-					"name": "HashMap.js",
+					"clsName": "Ext.util.Renderable",
+					"name": "Renderable.js",
 					"path": "extjs/src/util/"
 				},
 				{
@@ -135,14 +140,14 @@
 					"path": "extjs/src/util/"
 				},
 				{
-					"clsName": "Ext.util.Renderable",
-					"name": "Renderable.js",
-					"path": "extjs/src/util/"
+					"clsName": "Ext.XTemplateParser",
+					"name": "XTemplateParser.js",
+					"path": "extjs/src/"
 				},
 				{
-					"clsName": "Ext.ComponentQuery",
-					"name": "ComponentQuery.js",
-					"path": "extjs/src/"
+					"clsName": "Ext.util.ElementContainer",
+					"name": "ElementContainer.js",
+					"path": "extjs/src/util/"
 				},
 				{
 					"clsName": "Ext.util.Animate",
@@ -150,9 +155,9 @@
 					"path": "extjs/src/util/"
 				},
 				{
-					"clsName": "Ext.util.ElementContainer",
-					"name": "ElementContainer.js",
-					"path": "extjs/src/util/"
+					"clsName": "Ext.ComponentQuery",
+					"name": "ComponentQuery.js",
+					"path": "extjs/src/"
 				},
 				{
 					"clsName": "Ext.ZIndexManager",
@@ -163,11 +168,6 @@
 					"clsName": "Ext.util.ProtoElement",
 					"name": "ProtoElement.js",
 					"path": "extjs/src/util/"
-				},
-				{
-					"clsName": "Ext.XTemplateParser",
-					"name": "XTemplateParser.js",
-					"path": "extjs/src/"
 				},
 				{
 					"clsName": "Ext.util.KeyMap",
@@ -210,14 +210,14 @@
 					"path": "extjs/src/fx/target/"
 				},
 				{
-					"clsName": "Ext.layout.container.boxOverflow.None",
-					"name": "None.js",
-					"path": "extjs/src/layout/container/boxOverflow/"
-				},
-				{
 					"clsName": "Ext.draw.Color",
 					"name": "Color.js",
 					"path": "extjs/src/draw/"
+				},
+				{
+					"clsName": "Ext.layout.container.boxOverflow.None",
+					"name": "None.js",
+					"path": "extjs/src/layout/container/boxOverflow/"
 				},
 				{
 					"clsName": "Ext.util.ClickRepeater",
@@ -230,13 +230,13 @@
 					"path": "extjs/src/util/"
 				},
 				{
-					"clsName": "Ext.data.Batch",
-					"name": "Batch.js",
+					"clsName": "Ext.data.Connection",
+					"name": "Connection.js",
 					"path": "extjs/src/data/"
 				},
 				{
-					"clsName": "Ext.data.Connection",
-					"name": "Connection.js",
+					"clsName": "Ext.data.Batch",
+					"name": "Batch.js",
 					"path": "extjs/src/data/"
 				},
 				{
@@ -305,11 +305,6 @@
 					"path": "extjs/src/data/writer/"
 				},
 				{
-					"clsName": "Ext.data.writer.Xml",
-					"name": "Xml.js",
-					"path": "extjs/src/data/writer/"
-				},
-				{
 					"clsName": "Ext.direct.Provider",
 					"name": "Provider.js",
 					"path": "extjs/src/direct/"
@@ -318,6 +313,11 @@
 					"clsName": "Ext.direct.JsonProvider",
 					"name": "JsonProvider.js",
 					"path": "extjs/src/direct/"
+				},
+				{
+					"clsName": "Ext.app.Controller",
+					"name": "Controller.js",
+					"path": "extjs/src/app/"
 				},
 				{
 					"clsName": "Ext.util.Sortable",
@@ -440,6 +440,11 @@
 					"path": "extjs/src/data/reader/"
 				},
 				{
+					"clsName": "Ext.data.reader.Xml",
+					"name": "Xml.js",
+					"path": "extjs/src/data/reader/"
+				},
+				{
 					"clsName": "Ext.data.reader.Json",
 					"name": "Json.js",
 					"path": "extjs/src/data/reader/"
@@ -475,6 +480,11 @@
 					"path": "extjs/src/data/"
 				},
 				{
+					"clsName": "Ext.data.XmlStore",
+					"name": "XmlStore.js",
+					"path": "extjs/src/data/"
+				},
+				{
 					"clsName": "Ext.data.reader.Array",
 					"name": "Array.js",
 					"path": "extjs/src/data/reader/"
@@ -482,16 +492,6 @@
 				{
 					"clsName": "Ext.data.ArrayStore",
 					"name": "ArrayStore.js",
-					"path": "extjs/src/data/"
-				},
-				{
-					"clsName": "Ext.data.reader.Xml",
-					"name": "Xml.js",
-					"path": "extjs/src/data/reader/"
-				},
-				{
-					"clsName": "Ext.data.XmlStore",
-					"name": "XmlStore.js",
 					"path": "extjs/src/data/"
 				},
 				{
@@ -533,11 +533,6 @@
 					"clsName": "Ext.dd.DragDropManager",
 					"name": "DragDropManager.js",
 					"path": "extjs/src/dd/"
-				},
-				{
-					"clsName": "Ext.fx.Easing",
-					"name": "Easing.js",
-					"path": "extjs/src/fx/"
 				},
 				{
 					"clsName": "Ext.layout.Layout",
@@ -635,6 +630,11 @@
 					"path": "extjs/src/panel/"
 				},
 				{
+					"clsName": "Ext.fx.Easing",
+					"name": "Easing.js",
+					"path": "extjs/src/fx/"
+				},
+				{
 					"clsName": "Ext.toolbar.Fill",
 					"name": "Fill.js",
 					"path": "extjs/src/toolbar/"
@@ -648,6 +648,16 @@
 					"clsName": "Ext.fx.target.ElementCSS",
 					"name": "ElementCSS.js",
 					"path": "extjs/src/fx/target/"
+				},
+				{
+					"clsName": "Ext.draw.Draw",
+					"name": "Draw.js",
+					"path": "extjs/src/draw/"
+				},
+				{
+					"clsName": "Ext.fx.PropertyHandler",
+					"name": "PropertyHandler.js",
+					"path": "extjs/src/fx/"
 				},
 				{
 					"clsName": "Ext.fx.target.CompositeElement",
@@ -668,16 +678,6 @@
 					"clsName": "Ext.fx.target.CompositeSprite",
 					"name": "CompositeSprite.js",
 					"path": "extjs/src/fx/target/"
-				},
-				{
-					"clsName": "Ext.draw.Draw",
-					"name": "Draw.js",
-					"path": "extjs/src/draw/"
-				},
-				{
-					"clsName": "Ext.fx.PropertyHandler",
-					"name": "PropertyHandler.js",
-					"path": "extjs/src/fx/"
 				},
 				{
 					"clsName": "Ext.fx.target.Component",
@@ -705,6 +705,11 @@
 					"path": "extjs/src/layout/container/boxOverflow/"
 				},
 				{
+					"clsName": "Ext.menu.Manager",
+					"name": "Manager.js",
+					"path": "extjs/src/menu/"
+				},
+				{
 					"clsName": "Ext.toolbar.Item",
 					"name": "Item.js",
 					"path": "extjs/src/toolbar/"
@@ -713,11 +718,6 @@
 					"clsName": "Ext.toolbar.Separator",
 					"name": "Separator.js",
 					"path": "extjs/src/toolbar/"
-				},
-				{
-					"clsName": "Ext.menu.Manager",
-					"name": "Manager.js",
-					"path": "extjs/src/menu/"
 				},
 				{
 					"clsName": "Ext.layout.component.Auto",
@@ -800,8 +800,8 @@
 					"path": "extjs/src/util/"
 				},
 				{
-					"clsName": "Ext.Layer",
-					"name": "Layer.js",
+					"clsName": "Ext.PluginManager",
+					"name": "PluginManager.js",
 					"path": "extjs/src/"
 				},
 				{
@@ -810,19 +810,19 @@
 					"path": "extjs/src/util/"
 				},
 				{
-					"clsName": "Ext.PluginManager",
-					"name": "PluginManager.js",
+					"clsName": "Ext.Layer",
+					"name": "Layer.js",
 					"path": "extjs/src/"
-				},
-				{
-					"clsName": "Ext.panel.Tool",
-					"name": "Tool.js",
-					"path": "extjs/src/panel/"
 				},
 				{
 					"clsName": "Ext.resizer.Resizer",
 					"name": "Resizer.js",
 					"path": "extjs/src/resizer/"
+				},
+				{
+					"clsName": "Ext.panel.Tool",
+					"name": "Tool.js",
+					"path": "extjs/src/panel/"
 				},
 				{
 					"clsName": "Ext.util.CSS",
@@ -840,14 +840,14 @@
 					"path": "extjs/src/"
 				},
 				{
-					"clsName": "Ext.ElementLoader",
-					"name": "ElementLoader.js",
-					"path": "extjs/src/"
-				},
-				{
 					"clsName": "Ext.util.Queue",
 					"name": "Queue.js",
 					"path": "extjs/src/util/"
+				},
+				{
+					"clsName": "Ext.ElementLoader",
+					"name": "ElementLoader.js",
+					"path": "extjs/src/"
 				},
 				{
 					"clsName": "Ext.util.Bindable",
@@ -865,14 +865,14 @@
 					"path": "extjs/src/dd/"
 				},
 				{
-					"clsName": "Ext.menu.Item",
-					"name": "Item.js",
-					"path": "extjs/src/menu/"
-				},
-				{
 					"clsName": "Ext.layout.container.Fit",
 					"name": "Fit.js",
 					"path": "extjs/src/layout/container/"
+				},
+				{
+					"clsName": "Ext.menu.Item",
+					"name": "Item.js",
+					"path": "extjs/src/menu/"
 				},
 				{
 					"clsName": "Ext.menu.CheckItem",
@@ -955,9 +955,9 @@
 					"path": "extjs/src/menu/"
 				},
 				{
-					"clsName": "Ext.resizer.ResizeTracker",
-					"name": "ResizeTracker.js",
-					"path": "extjs/src/resizer/"
+					"clsName": "Ext.draw.engine.ImageExporter",
+					"name": "ImageExporter.js",
+					"path": "extjs/src/draw/engine/"
 				},
 				{
 					"clsName": "Ext.draw.engine.SvgExporter",
@@ -965,9 +965,9 @@
 					"path": "extjs/src/draw/engine/"
 				},
 				{
-					"clsName": "Ext.draw.engine.ImageExporter",
-					"name": "ImageExporter.js",
-					"path": "extjs/src/draw/engine/"
+					"clsName": "Ext.resizer.ResizeTracker",
+					"name": "ResizeTracker.js",
+					"path": "extjs/src/resizer/"
 				},
 				{
 					"clsName": "Ext.draw.SpriteDD",
@@ -985,11 +985,6 @@
 					"path": "extjs/src/"
 				},
 				{
-					"clsName": "Ext.Shadow",
-					"name": "Shadow.js",
-					"path": "extjs/src/"
-				},
-				{
 					"clsName": "Ext.draw.Sprite",
 					"name": "Sprite.js",
 					"path": "extjs/src/draw/"
@@ -1003,6 +998,11 @@
 					"clsName": "Ext.draw.engine.Svg",
 					"name": "Svg.js",
 					"path": "extjs/src/draw/engine/"
+				},
+				{
+					"clsName": "Ext.Shadow",
+					"name": "Shadow.js",
+					"path": "extjs/src/"
 				},
 				{
 					"clsName": "Spelled.abstract.store.TreeStore",
@@ -1075,74 +1075,24 @@
 					"path": "app/"
 				},
 				{
-					"clsName": "Spelled.view.scene.Create",
-					"name": "Create.js",
-					"path": "app/view/scene/"
-				},
-				{
-					"clsName": "Spelled.model.config.Scene",
-					"name": "Scene.js",
+					"clsName": "Spelled.model.config.Component",
+					"name": "Component.js",
 					"path": "app/model/config/"
 				},
 				{
-					"clsName": "Spelled.view.scene.Navigator",
-					"name": "Navigator.js",
-					"path": "app/view/scene/"
+					"clsName": "Spelled.view.component.AddButton",
+					"name": "AddButton.js",
+					"path": "app/view/component/"
 				},
 				{
-					"clsName": "Spelled.view.ui.SpelledRendered",
-					"name": "SpelledRendered.js",
-					"path": "app/view/ui/"
+					"clsName": "Spelled.view.component.Add",
+					"name": "Add.js",
+					"path": "app/view/component/"
 				},
 				{
-					"clsName": "Spelled.store.ScenesTree",
-					"name": "ScenesTree.js",
-					"path": "app/store/"
-				},
-				{
-					"clsName": "Spelled.store.config.Scenes",
-					"name": "Scenes.js",
+					"clsName": "Spelled.store.config.Components",
+					"name": "Components.js",
 					"path": "app/store/config/"
-				},
-				{
-					"clsName": "Spelled.model.config.Entity",
-					"name": "Entity.js",
-					"path": "app/model/config/"
-				},
-				{
-					"clsName": "Spelled.view.entity.Create",
-					"name": "Create.js",
-					"path": "app/view/entity/"
-				},
-				{
-					"clsName": "Spelled.view.entity.ComponentsList",
-					"name": "ComponentsList.js",
-					"path": "app/view/entity/"
-				},
-				{
-					"clsName": "Spelled.view.entity.HasTemplateHeader",
-					"name": "HasTemplateHeader.js",
-					"path": "app/view/entity/"
-				},
-				{
-					"clsName": "Spelled.store.config.Entities",
-					"name": "Entities.js",
-					"path": "app/store/config/"
-				},
-				{
-					"clsName": "Spelled.view.menu.Menu",
-					"name": "Menu.js",
-					"path": "app/view/menu/"
-				},
-				{
-					"clsName": "Spelled.view.project.Load",
-					"name": "Load.js",
-					"path": "app/view/project/"
-				},
-				{
-					"clsName": "Spelled.view.project.Create",
-					"name": "Create.js",
-					"path": "app/view/project/"
 				},
 				{
 					"clsName": "Spelled.model.Project",
@@ -1155,6 +1105,26 @@
 					"path": "app/view/menu/contextmenu/"
 				},
 				{
+					"clsName": "Spelled.view.menu.Menu",
+					"name": "Menu.js",
+					"path": "app/view/menu/"
+				},
+				{
+					"clsName": "Spelled.store.Projects",
+					"name": "Projects.js",
+					"path": "app/store/"
+				},
+				{
+					"clsName": "Spelled.view.project.Load",
+					"name": "Load.js",
+					"path": "app/view/project/"
+				},
+				{
+					"clsName": "Spelled.view.project.Create",
+					"name": "Create.js",
+					"path": "app/view/project/"
+				},
+				{
 					"clsName": "Spelled.view.menu.contextmenu.EntitiesList",
 					"name": "EntitiesList.js",
 					"path": "app/view/menu/contextmenu/"
@@ -1162,6 +1132,11 @@
 				{
 					"clsName": "Spelled.view.menu.contextmenu.EntitiesFolderList",
 					"name": "EntitiesFolderList.js",
+					"path": "app/view/menu/contextmenu/"
+				},
+				{
+					"clsName": "Spelled.view.menu.contextmenu.TemplatesList",
+					"name": "TemplatesList.js",
 					"path": "app/view/menu/contextmenu/"
 				},
 				{
@@ -1180,11 +1155,6 @@
 					"path": "app/view/menu/contextmenu/"
 				},
 				{
-					"clsName": "Spelled.view.menu.contextmenu.TemplatesList",
-					"name": "TemplatesList.js",
-					"path": "app/view/menu/contextmenu/"
-				},
-				{
 					"clsName": "Spelled.view.menu.contextmenu.templatesList.Entity",
 					"name": "Entity.js",
 					"path": "app/view/menu/contextmenu/templatesList/"
@@ -1200,8 +1170,8 @@
 					"path": "app/view/menu/contextmenu/"
 				},
 				{
-					"clsName": "Spelled.view.ui.SpelledConsole",
-					"name": "SpelledConsole.js",
+					"clsName": "Spelled.view.ui.SpelledRightPanel",
+					"name": "SpelledRightPanel.js",
 					"path": "app/view/ui/"
 				},
 				{
@@ -1210,14 +1180,9 @@
 					"path": "app/view/doc/"
 				},
 				{
-					"clsName": "Spelled.view.ui.SpelledRightPanel",
-					"name": "SpelledRightPanel.js",
+					"clsName": "Spelled.view.ui.SpelledConsole",
+					"name": "SpelledConsole.js",
 					"path": "app/view/ui/"
-				},
-				{
-					"clsName": "Spelled.model.config.Component",
-					"name": "Component.js",
-					"path": "app/model/config/"
 				},
 				{
 					"clsName": "Spelled.view.ui.StartScreen",
@@ -1225,18 +1190,58 @@
 					"path": "app/view/ui/"
 				},
 				{
-					"clsName": "Spelled.view.component.Add",
-					"name": "Add.js",
-					"path": "app/view/component/"
+					"clsName": "Spelled.model.config.Entity",
+					"name": "Entity.js",
+					"path": "app/model/config/"
 				},
 				{
-					"clsName": "Spelled.view.component.AddButton",
-					"name": "AddButton.js",
-					"path": "app/view/component/"
+					"clsName": "Spelled.view.entity.HasTemplateHeader",
+					"name": "HasTemplateHeader.js",
+					"path": "app/view/entity/"
 				},
 				{
-					"clsName": "Spelled.store.config.Components",
-					"name": "Components.js",
+					"clsName": "Spelled.view.entity.ComponentsList",
+					"name": "ComponentsList.js",
+					"path": "app/view/entity/"
+				},
+				{
+					"clsName": "Spelled.view.entity.Create",
+					"name": "Create.js",
+					"path": "app/view/entity/"
+				},
+				{
+					"clsName": "Spelled.store.config.Entities",
+					"name": "Entities.js",
+					"path": "app/store/config/"
+				},
+				{
+					"clsName": "Spelled.model.config.Scene",
+					"name": "Scene.js",
+					"path": "app/model/config/"
+				},
+				{
+					"clsName": "Spelled.view.scene.Navigator",
+					"name": "Navigator.js",
+					"path": "app/view/scene/"
+				},
+				{
+					"clsName": "Spelled.view.scene.Create",
+					"name": "Create.js",
+					"path": "app/view/scene/"
+				},
+				{
+					"clsName": "Spelled.view.ui.SpelledRendered",
+					"name": "SpelledRendered.js",
+					"path": "app/view/ui/"
+				},
+				{
+					"clsName": "Spelled.store.ScenesTree",
+					"name": "ScenesTree.js",
+					"path": "app/store/"
+				},
+				{
+					"clsName": "Spelled.store.config.Scenes",
+					"name": "Scenes.js",
 					"path": "app/store/config/"
 				},
 				{
@@ -1245,14 +1250,14 @@
 					"path": "app/view/template/"
 				},
 				{
-					"clsName": "Spelled.view.template.Create",
-					"name": "Create.js",
-					"path": "app/view/template/"
-				},
-				{
 					"clsName": "Spelled.store.template.Types",
 					"name": "Types.js",
 					"path": "app/store/template/"
+				},
+				{
+					"clsName": "Spelled.view.template.Create",
+					"name": "Create.js",
+					"path": "app/view/template/"
 				},
 				{
 					"clsName": "Spelled.view.asset.Navigator",
@@ -1270,24 +1275,24 @@
 					"path": "app/view/asset/create/"
 				},
 				{
-					"clsName": "Spelled.view.asset.create.Texture",
-					"name": "Texture.js",
-					"path": "app/view/asset/create/"
-				},
-				{
 					"clsName": "Spelled.view.asset.create.SpriteSheet",
 					"name": "SpriteSheet.js",
 					"path": "app/view/asset/create/"
 				},
 				{
-					"clsName": "Spelled.view.asset.create.Animation",
-					"name": "Animation.js",
+					"clsName": "Spelled.view.asset.create.Texture",
+					"name": "Texture.js",
 					"path": "app/view/asset/create/"
 				},
 				{
 					"clsName": "Spelled.view.asset.edit.Edit",
 					"name": "Edit.js",
 					"path": "app/view/asset/edit/"
+				},
+				{
+					"clsName": "Spelled.view.asset.create.Animation",
+					"name": "Animation.js",
+					"path": "app/view/asset/create/"
 				},
 				{
 					"clsName": "Spelled.store.asset.Types",
@@ -1305,11 +1310,6 @@
 					"path": "app/store/asset/"
 				},
 				{
-					"clsName": "Spelled.view.script.Navigator",
-					"name": "Navigator.js",
-					"path": "app/view/script/"
-				},
-				{
 					"clsName": "Spelled.view.script.Create",
 					"name": "Create.js",
 					"path": "app/view/script/"
@@ -1320,14 +1320,19 @@
 					"path": "app/view/script/"
 				},
 				{
-					"clsName": "Spelled.model.template.ComponentAttribute",
-					"name": "ComponentAttribute.js",
-					"path": "app/model/template/"
+					"clsName": "Spelled.view.script.Navigator",
+					"name": "Navigator.js",
+					"path": "app/view/script/"
 				},
 				{
 					"clsName": "Spelled.view.template.component.Edit",
 					"name": "Edit.js",
 					"path": "app/view/template/component/"
+				},
+				{
+					"clsName": "Spelled.model.template.ComponentAttribute",
+					"name": "ComponentAttribute.js",
+					"path": "app/model/template/"
 				},
 				{
 					"clsName": "Spelled.store.template.component.Attributes",
@@ -1355,9 +1360,9 @@
 					"path": "app/view/template/entity/"
 				},
 				{
-					"clsName": "Spelled.view.template.system.Edit",
-					"name": "Edit.js",
-					"path": "app/view/template/system/"
+					"clsName": "Spelled.model.template.SystemInputDefinition",
+					"name": "SystemInputDefinition.js",
+					"path": "app/model/template/"
 				},
 				{
 					"clsName": "Spelled.view.template.system.Configuration",
@@ -1365,9 +1370,9 @@
 					"path": "app/view/template/system/"
 				},
 				{
-					"clsName": "Spelled.model.template.SystemInputDefinition",
-					"name": "SystemInputDefinition.js",
-					"path": "app/model/template/"
+					"clsName": "Spelled.view.template.system.Edit",
+					"name": "Edit.js",
+					"path": "app/view/template/system/"
 				},
 				{
 					"clsName": "Spelled.view.template.system.input.Add",
@@ -1385,24 +1390,14 @@
 					"path": "app/abstract/store/"
 				},
 				{
-					"clsName": "Ext.layout.container.Card",
-					"name": "Card.js",
-					"path": "extjs/src/layout/container/"
-				},
-				{
-					"clsName": "Ext.form.FieldAncestor",
-					"name": "FieldAncestor.js",
-					"path": "extjs/src/form/"
-				},
-				{
 					"clsName": "Spelled.abstract.writer.JsonWriter",
 					"name": "JsonWriter.js",
 					"path": "app/abstract/writer/"
 				},
 				{
-					"clsName": "Ext.form.Labelable",
-					"name": "Labelable.js",
-					"path": "extjs/src/form/"
+					"clsName": "Ext.layout.container.Card",
+					"name": "Card.js",
+					"path": "extjs/src/layout/container/"
 				},
 				{
 					"clsName": "Ext.form.field.Field",
@@ -1410,19 +1405,19 @@
 					"path": "extjs/src/form/field/"
 				},
 				{
-					"clsName": "Ext.panel.Table",
-					"name": "Table.js",
-					"path": "extjs/src/panel/"
+					"clsName": "Ext.form.Labelable",
+					"name": "Labelable.js",
+					"path": "extjs/src/form/"
+				},
+				{
+					"clsName": "Ext.form.FieldAncestor",
+					"name": "FieldAncestor.js",
+					"path": "extjs/src/form/"
 				},
 				{
 					"clsName": "Ext.layout.component.field.Field",
 					"name": "Field.js",
 					"path": "extjs/src/layout/component/field/"
-				},
-				{
-					"clsName": "Ext.form.CheckboxManager",
-					"name": "CheckboxManager.js",
-					"path": "extjs/src/form/"
 				},
 				{
 					"clsName": "Ext.form.field.VTypes",
@@ -1435,9 +1430,14 @@
 					"path": "extjs/src/layout/component/field/"
 				},
 				{
-					"clsName": "Ext.layout.component.BoundList",
-					"name": "BoundList.js",
-					"path": "extjs/src/layout/component/"
+					"clsName": "Ext.panel.Table",
+					"name": "Table.js",
+					"path": "extjs/src/panel/"
+				},
+				{
+					"clsName": "Ext.form.CheckboxManager",
+					"name": "CheckboxManager.js",
+					"path": "extjs/src/form/"
 				},
 				{
 					"clsName": "Ext.layout.component.field.Trigger",
@@ -1445,19 +1445,9 @@
 					"path": "extjs/src/layout/component/field/"
 				},
 				{
-					"clsName": "Ext.layout.component.Tab",
-					"name": "Tab.js",
+					"clsName": "Ext.layout.component.BoundList",
+					"name": "BoundList.js",
 					"path": "extjs/src/layout/component/"
-				},
-				{
-					"clsName": "Ext.layout.container.Anchor",
-					"name": "Anchor.js",
-					"path": "extjs/src/layout/container/"
-				},
-				{
-					"clsName": "Ext.form.action.Action",
-					"name": "Action.js",
-					"path": "extjs/src/form/action/"
 				},
 				{
 					"clsName": "Ext.toolbar.TextItem",
@@ -1465,14 +1455,14 @@
 					"path": "extjs/src/toolbar/"
 				},
 				{
-					"clsName": "Ext.grid.ColumnComponentLayout",
-					"name": "ColumnComponentLayout.js",
-					"path": "extjs/src/grid/"
-				},
-				{
 					"clsName": "Ext.grid.ColumnLayout",
 					"name": "ColumnLayout.js",
 					"path": "extjs/src/grid/"
+				},
+				{
+					"clsName": "Ext.layout.container.Anchor",
+					"name": "Anchor.js",
+					"path": "extjs/src/layout/container/"
 				},
 				{
 					"clsName": "Ext.selection.Model",
@@ -1480,19 +1470,39 @@
 					"path": "extjs/src/selection/"
 				},
 				{
+					"clsName": "Ext.selection.DataViewModel",
+					"name": "DataViewModel.js",
+					"path": "extjs/src/selection/"
+				},
+				{
+					"clsName": "Ext.grid.ColumnComponentLayout",
+					"name": "ColumnComponentLayout.js",
+					"path": "extjs/src/grid/"
+				},
+				{
+					"clsName": "Ext.form.action.Action",
+					"name": "Action.js",
+					"path": "extjs/src/form/action/"
+				},
+				{
+					"clsName": "Ext.layout.component.Tab",
+					"name": "Tab.js",
+					"path": "extjs/src/layout/component/"
+				},
+				{
 					"clsName": "Ext.layout.component.ProgressBar",
 					"name": "ProgressBar.js",
 					"path": "extjs/src/layout/component/"
 				},
 				{
-					"clsName": "Ext.AbstractPlugin",
-					"name": "AbstractPlugin.js",
-					"path": "extjs/src/"
-				},
-				{
 					"clsName": "Ext.grid.header.DragZone",
 					"name": "DragZone.js",
 					"path": "extjs/src/grid/header/"
+				},
+				{
+					"clsName": "Ext.AbstractPlugin",
+					"name": "AbstractPlugin.js",
+					"path": "extjs/src/"
 				},
 				{
 					"clsName": "Ext.dd.Registry",
@@ -1510,18 +1520,13 @@
 					"path": "extjs/src/dd/"
 				},
 				{
-					"clsName": "Spelled.controller.Menu",
-					"name": "Menu.js",
+					"clsName": "Spelled.controller.Projects",
+					"name": "Projects.js",
 					"path": "app/controller/"
 				},
 				{
-					"clsName": "Spelled.store.Projects",
-					"name": "Projects.js",
-					"path": "app/store/"
-				},
-				{
-					"clsName": "Spelled.controller.Projects",
-					"name": "Projects.js",
+					"clsName": "Spelled.controller.Menu",
+					"name": "Menu.js",
 					"path": "app/controller/"
 				},
 				{
@@ -1560,16 +1565,6 @@
 					"path": "app/view/template/component/attribute/"
 				},
 				{
-					"clsName": "Ext.form.field.Checkbox",
-					"name": "Checkbox.js",
-					"path": "extjs/src/form/field/"
-				},
-				{
-					"clsName": "Spelled.view.template.component.attribute.Boolean",
-					"name": "Boolean.js",
-					"path": "app/view/template/component/attribute/"
-				},
-				{
 					"clsName": "Ext.form.field.Text",
 					"name": "Text.js",
 					"path": "extjs/src/form/field/"
@@ -1577,6 +1572,16 @@
 				{
 					"clsName": "Spelled.view.template.component.attribute.String",
 					"name": "String.js",
+					"path": "app/view/template/component/attribute/"
+				},
+				{
+					"clsName": "Ext.form.field.Checkbox",
+					"name": "Checkbox.js",
+					"path": "extjs/src/form/field/"
+				},
+				{
+					"clsName": "Spelled.view.template.component.attribute.Boolean",
+					"name": "Boolean.js",
 					"path": "app/view/template/component/attribute/"
 				},
 				{
@@ -1598,51 +1603,6 @@
 					"clsName": "Spelled.view.template.component.attribute.Object",
 					"name": "Object.js",
 					"path": "app/view/template/component/attribute/"
-				},
-				{
-					"clsName": "Ext.tab.Tab",
-					"name": "Tab.js",
-					"path": "extjs/src/tab/"
-				},
-				{
-					"clsName": "Ext.tab.Bar",
-					"name": "Bar.js",
-					"path": "extjs/src/tab/"
-				},
-				{
-					"clsName": "Ext.tab.Panel",
-					"name": "Panel.js",
-					"path": "extjs/src/tab/"
-				},
-				{
-					"clsName": "Spelled.view.scene.Editor",
-					"name": "Editor.js",
-					"path": "app/view/scene/"
-				},
-				{
-					"clsName": "Spelled.view.template.Editor",
-					"name": "Editor.js",
-					"path": "app/view/template/"
-				},
-				{
-					"clsName": "Spelled.view.asset.Editor",
-					"name": "Editor.js",
-					"path": "app/view/asset/"
-				},
-				{
-					"clsName": "Spelled.view.script.Manager",
-					"name": "Manager.js",
-					"path": "app/view/script/"
-				},
-				{
-					"clsName": "Ext.form.action.Load",
-					"name": "Load.js",
-					"path": "extjs/src/form/action/"
-				},
-				{
-					"clsName": "Ext.form.action.Submit",
-					"name": "Submit.js",
-					"path": "extjs/src/form/action/"
 				},
 				{
 					"clsName": "Ext.form.field.Trigger",
@@ -1685,19 +1645,149 @@
 					"path": "extjs/src/form/field/"
 				},
 				{
-					"clsName": "Spelled.view.template.component.attribute.Integer",
-					"name": "Integer.js",
+					"clsName": "Spelled.view.template.component.attribute.Number",
+					"name": "Number.js",
 					"path": "app/view/template/component/attribute/"
 				},
 				{
-					"clsName": "Spelled.view.template.component.attribute.Number",
-					"name": "Number.js",
+					"clsName": "Spelled.view.template.component.attribute.Integer",
+					"name": "Integer.js",
 					"path": "app/view/template/component/attribute/"
 				},
 				{
 					"clsName": "Ext.toolbar.Paging",
 					"name": "Paging.js",
 					"path": "extjs/src/toolbar/"
+				},
+				{
+					"clsName": "Ext.view.AbstractView",
+					"name": "AbstractView.js",
+					"path": "extjs/src/view/"
+				},
+				{
+					"clsName": "Ext.view.View",
+					"name": "View.js",
+					"path": "extjs/src/view/"
+				},
+				{
+					"clsName": "Ext.view.BoundList",
+					"name": "BoundList.js",
+					"path": "extjs/src/view/"
+				},
+				{
+					"clsName": "Ext.view.BoundListKeyNav",
+					"name": "BoundListKeyNav.js",
+					"path": "extjs/src/view/"
+				},
+				{
+					"clsName": "Ext.form.field.ComboBox",
+					"name": "ComboBox.js",
+					"path": "extjs/src/form/field/"
+				},
+				{
+					"clsName": "Spelled.view.component.property.AssetId",
+					"name": "AssetId.js",
+					"path": "app/view/component/property/"
+				},
+				{
+					"clsName": "Spelled.view.template.component.attribute.AnimatedAppearance",
+					"name": "AnimatedAppearance.js",
+					"path": "app/view/template/component/attribute/"
+				},
+				{
+					"clsName": "Spelled.view.template.component.attribute.Appearance",
+					"name": "Appearance.js",
+					"path": "app/view/template/component/attribute/"
+				},
+				{
+					"clsName": "Spelled.view.template.system.input.ComboBox",
+					"name": "ComboBox.js",
+					"path": "app/view/template/system/input/"
+				},
+				{
+					"clsName": "Ext.form.action.Load",
+					"name": "Load.js",
+					"path": "extjs/src/form/action/"
+				},
+				{
+					"clsName": "Ext.form.action.Submit",
+					"name": "Submit.js",
+					"path": "extjs/src/form/action/"
+				},
+				{
+					"clsName": "Ext.tab.Tab",
+					"name": "Tab.js",
+					"path": "extjs/src/tab/"
+				},
+				{
+					"clsName": "Ext.tab.Bar",
+					"name": "Bar.js",
+					"path": "extjs/src/tab/"
+				},
+				{
+					"clsName": "Ext.tab.Panel",
+					"name": "Panel.js",
+					"path": "extjs/src/tab/"
+				},
+				{
+					"clsName": "Spelled.view.scene.Editor",
+					"name": "Editor.js",
+					"path": "app/view/scene/"
+				},
+				{
+					"clsName": "Spelled.view.template.Editor",
+					"name": "Editor.js",
+					"path": "app/view/template/"
+				},
+				{
+					"clsName": "Spelled.view.asset.Editor",
+					"name": "Editor.js",
+					"path": "app/view/asset/"
+				},
+				{
+					"clsName": "Spelled.view.script.Manager",
+					"name": "Manager.js",
+					"path": "app/view/script/"
+				},
+				{
+					"clsName": "Ext.view.Table",
+					"name": "Table.js",
+					"path": "extjs/src/view/"
+				},
+				{
+					"clsName": "Ext.tree.View",
+					"name": "View.js",
+					"path": "extjs/src/tree/"
+				},
+				{
+					"clsName": "Ext.grid.View",
+					"name": "View.js",
+					"path": "extjs/src/grid/"
+				},
+				{
+					"clsName": "Ext.grid.Panel",
+					"name": "Panel.js",
+					"path": "extjs/src/grid/"
+				},
+				{
+					"clsName": "Spelled.view.template.system.Input",
+					"name": "Input.js",
+					"path": "app/view/template/system/"
+				},
+				{
+					"clsName": "Ext.grid.property.Grid",
+					"name": "Grid.js",
+					"path": "extjs/src/grid/property/"
+				},
+				{
+					"clsName": "Spelled.view.component.Properties",
+					"name": "Properties.js",
+					"path": "app/view/component/"
+				},
+				{
+					"clsName": "Spelled.controller.Components",
+					"name": "Components.js",
+					"path": "app/controller/"
 				},
 				{
 					"clsName": "Ext.selection.RowModel",
@@ -1750,109 +1840,19 @@
 					"path": "app/view/asset/inspector/"
 				},
 				{
-					"clsName": "Spelled.view.template.component.Property",
-					"name": "Property.js",
+					"clsName": "Spelled.view.template.component.Details",
+					"name": "Details.js",
 					"path": "app/view/template/component/"
 				},
 				{
-					"clsName": "Spelled.view.template.component.Details",
-					"name": "Details.js",
+					"clsName": "Spelled.view.template.component.Property",
+					"name": "Property.js",
 					"path": "app/view/template/component/"
 				},
 				{
 					"clsName": "Spelled.view.template.system.Details",
 					"name": "Details.js",
 					"path": "app/view/template/system/"
-				},
-				{
-					"clsName": "Ext.selection.DataViewModel",
-					"name": "DataViewModel.js",
-					"path": "extjs/src/selection/"
-				},
-				{
-					"clsName": "Ext.view.AbstractView",
-					"name": "AbstractView.js",
-					"path": "extjs/src/view/"
-				},
-				{
-					"clsName": "Ext.view.View",
-					"name": "View.js",
-					"path": "extjs/src/view/"
-				},
-				{
-					"clsName": "Ext.view.BoundList",
-					"name": "BoundList.js",
-					"path": "extjs/src/view/"
-				},
-				{
-					"clsName": "Ext.view.BoundListKeyNav",
-					"name": "BoundListKeyNav.js",
-					"path": "extjs/src/view/"
-				},
-				{
-					"clsName": "Ext.form.field.ComboBox",
-					"name": "ComboBox.js",
-					"path": "extjs/src/form/field/"
-				},
-				{
-					"clsName": "Spelled.view.component.property.AssetId",
-					"name": "AssetId.js",
-					"path": "app/view/component/property/"
-				},
-				{
-					"clsName": "Spelled.view.template.component.attribute.Appearance",
-					"name": "Appearance.js",
-					"path": "app/view/template/component/attribute/"
-				},
-				{
-					"clsName": "Spelled.view.template.component.attribute.AnimatedAppearance",
-					"name": "AnimatedAppearance.js",
-					"path": "app/view/template/component/attribute/"
-				},
-				{
-					"clsName": "Spelled.view.template.system.input.ComboBox",
-					"name": "ComboBox.js",
-					"path": "app/view/template/system/input/"
-				},
-				{
-					"clsName": "Ext.view.Table",
-					"name": "Table.js",
-					"path": "extjs/src/view/"
-				},
-				{
-					"clsName": "Ext.tree.View",
-					"name": "View.js",
-					"path": "extjs/src/tree/"
-				},
-				{
-					"clsName": "Ext.grid.View",
-					"name": "View.js",
-					"path": "extjs/src/grid/"
-				},
-				{
-					"clsName": "Ext.grid.Panel",
-					"name": "Panel.js",
-					"path": "extjs/src/grid/"
-				},
-				{
-					"clsName": "Spelled.view.template.system.Input",
-					"name": "Input.js",
-					"path": "app/view/template/system/"
-				},
-				{
-					"clsName": "Ext.grid.property.Grid",
-					"name": "Grid.js",
-					"path": "extjs/src/grid/property/"
-				},
-				{
-					"clsName": "Spelled.view.component.Properties",
-					"name": "Properties.js",
-					"path": "app/view/component/"
-				},
-				{
-					"clsName": "Spelled.controller.Components",
-					"name": "Components.js",
-					"path": "app/controller/"
 				},
 				{
 					"clsName": "Ext.grid.plugin.HeaderResizer",
@@ -2005,24 +2005,19 @@
 					"path": "extjs/src/selection/"
 				},
 				{
-					"clsName": "Ext.view.TableLayout",
-					"name": "TableLayout.js",
-					"path": "extjs/src/view/"
-				},
-				{
 					"clsName": "Ext.grid.PagingScroller",
 					"name": "PagingScroller.js",
 					"path": "extjs/src/grid/"
 				},
 				{
-					"clsName": "Ext.view.TableChunker",
-					"name": "TableChunker.js",
+					"clsName": "Ext.view.TableLayout",
+					"name": "TableLayout.js",
 					"path": "extjs/src/view/"
 				},
 				{
-					"clsName": "Ext.grid.property.HeaderContainer",
-					"name": "HeaderContainer.js",
-					"path": "extjs/src/grid/property/"
+					"clsName": "Ext.view.TableChunker",
+					"name": "TableChunker.js",
+					"path": "extjs/src/view/"
 				},
 				{
 					"clsName": "Ext.grid.plugin.Editing",
@@ -2035,19 +2030,24 @@
 					"path": "extjs/src/grid/property/"
 				},
 				{
+					"clsName": "Ext.grid.property.HeaderContainer",
+					"name": "HeaderContainer.js",
+					"path": "extjs/src/grid/property/"
+				},
+				{
 					"clsName": "Ext.grid.LockingView",
 					"name": "LockingView.js",
 					"path": "extjs/src/grid/"
 				},
 				{
-					"clsName": "Ext.picker.Month",
-					"name": "Month.js",
-					"path": "extjs/src/picker/"
-				},
-				{
 					"clsName": "Ext.button.Split",
 					"name": "Split.js",
 					"path": "extjs/src/button/"
+				},
+				{
+					"clsName": "Ext.picker.Month",
+					"name": "Month.js",
+					"path": "extjs/src/picker/"
 				},
 				{
 					"clsName": "Ext.layout.container.Editor",
@@ -2128,13 +2128,18 @@
 					"clsName": "Ext.form.Label",
 					"name": "Label.js",
 					"path": "extjs/src/form/"
+				},
+				{
+					"clsName": "Spelled.view.ui.SpelledIframe",
+					"name": "SpelledIframe.js",
+					"path": "app/view/ui/"
 				}
 			]
 		},
 		{
 			"name": "Application - Production",
 			"target": "output/app-all.js",
-			"compress": false,
+			"compress": true,
 			"files": [
 				{
 					"path": "../build/tmp/",

@@ -55,11 +55,11 @@ define(
 
 			    } else {
 				    var app = connect()
-					    .use( connect.favicon() )
+						.use( connect.favicon() )
 					    .use( connect.logger('dev') )
 					    .use(
 							extDirect(
-								'router/',
+								'/router/',
 								'Spelled',
 								createExtDirectApi( projectsPath, buildServerOptions )
 							)
