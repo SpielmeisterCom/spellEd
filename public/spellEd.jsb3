@@ -2178,7 +2178,7 @@
 	            {
 		            "path": "extjs/",
 	            "name": "ext-debug.js"
-            },	    
+            },
                 {
                     "path": "../build/tmp/",
                     "name": "ext-classes.js"
