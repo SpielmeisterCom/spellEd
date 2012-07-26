@@ -4,7 +4,7 @@ Ext.define('Spelled.view.doc.Tool' ,{
 
 	cls: "doc-tool",
 	type:'help',
-	tooltip: 'Get Help',
+	tooltip: 'Show documentation',
 	docString: "",
 	initComponent: function() {
 		var me = this
