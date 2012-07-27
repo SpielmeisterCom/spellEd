@@ -82,7 +82,7 @@ Ext.define('Spelled.controller.Projects', {
 
 		Spelled.SpellBuildActions.exportDeployment( project.get('name'), exportFileName , function( provider, response ) {
 			if( !!response.data ) {
-				window.location = exportFileName
+				window.location = '/' + exportFileName
 			} else {
 				me.application.showBuildServerConnectError()
 			}
