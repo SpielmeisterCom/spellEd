@@ -9,4 +9,3 @@ deploy:
 	cp public/lib/ace/ace.js public/lib/ace/worker-javascript.js public/lib/ace/mode-javascript.js public/lib/ace/theme-pastel_on_dark.js build/output/lib/ace
 	cp deployPublic/* build/output/
 	PATH=${PATH} sencha build -p public/spellEd.jsb3 -v -d build
-	cp -R build public/
