@@ -5,7 +5,7 @@
 Ext.ns("Ext.app");
 
 Ext.app.CONFIGURATION = {
-	"version" : "latest",
-	"name" : "SpellEd",
-	"documentationServerURL": "http://docs.spelljs.com/latest/"
+        "version" : "0.0.1",
+        "name" : "SpellEd",
+        "documentationServerURL": "http://docs.spelljs.com/0.0.1/"
 };
