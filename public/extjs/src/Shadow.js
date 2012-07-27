@@ -16,7 +16,7 @@ Ext.define('Ext.Shadow', {
             adjusts,
             offset,
             rad;
-        
+
         Ext.apply(me, config);
         if (!Ext.isString(me.mode)) {
             me.mode = me.defaultMode;
@@ -149,7 +149,7 @@ Ext.define('Ext.Shadow', {
     show: function(target) {
         var me = this,
             index;
-        
+
         target = Ext.get(target);
         if (!me.el) {
             me.el = Ext.ShadowPool.pull();
@@ -219,7 +219,7 @@ Ext.define('Ext.Shadow', {
      */
     hide: function() {
         var me = this;
-        
+
         if (me.el) {
             me.el.dom.style.display = "none";
             Ext.ShadowPool.push(me.el);
@@ -237,7 +237,7 @@ Ext.define('Ext.Shadow', {
             this.el.setStyle("z-index", z);
         }
     },
-    
+
     /**
      * Sets the opacity of the shadow
      * @param {Number} opacity The opacity
@@ -252,3 +252,5 @@ Ext.define('Ext.Shadow', {
         }
     }
 });
+
+Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
