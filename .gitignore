@@ -1,5 +1,5 @@
 .idea
 *.iml
 atlassian-ide-plugin.xml
-public/extjs/resources/sass/.sass-cache
-
+public/sass/.sass-cache
+build
