@@ -112,7 +112,7 @@ define(
 					'actions'   : actions
 				}
 
-				var api = 'Ext={};Ext.app={};Ext.app.REMOTING_API = ' + JSON.stringify( config )
+				var api = 'if( !Ext ) Ext={}; if( !Ext.app ) Ext.app={}; Ext.app.REMOTING_API = ' + JSON.stringify( config )
 				response.writeHead(200, {'Content-Type': 'text/javascript'});
 				response.end(api);
 			}
