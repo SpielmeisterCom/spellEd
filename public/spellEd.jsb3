@@ -2185,6 +2185,10 @@
                 },
                 {
                     "path": "",
+                    "name": "app-configuration.js"
+                },
+                {
+                    "path": "",
                     "name": "app-initialize.js"
                 },
                 {

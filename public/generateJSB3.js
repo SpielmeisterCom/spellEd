@@ -35,6 +35,10 @@ window.generateJSB3 = function() {
 		                },
 			            {
 				            "path": "",
+				            "name": "app-configuration.js"
+			            },
+			            {
+				            "path": "",
 				            "name": "app-initialize.js"
 			            },
 			            {

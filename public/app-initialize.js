@@ -6,11 +6,3 @@ Ext.require('Ext.direct.*', function() {
 	Ext.Direct.addProvider(Ext.app.REMOTING_API);
 });
 
-//Provide a configuration for the SpellEd Editor
-Ext.ns("Ext.app");
-
-Ext.app.CONFIGURATION = {
-	"version" : "latest",
-	"name" : "SpellEd",
-	"documentationServerURL": "http://docs.spelljs.elaine/"
-};
