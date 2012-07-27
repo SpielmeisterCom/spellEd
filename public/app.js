@@ -192,7 +192,7 @@ Ext.application( {
 		var me = this
 
 		//load configuration from global CONFIGURATION variable that is defined in app-initialize
-		me.configuration = Ext.decode( Ext.app.CONFIGURATION, true);
+		me.configuration = Ext.app.CONFIGURATION;
 
 		Ext.override(
 			Ext.data.proxy.Direct,
