@@ -308,7 +308,7 @@ Ext.define('Spelled.controller.Assets', {
                     title: title,
                     autoEl: {
                         tag : 'iframe',
-                        src: asset.getFilePath( this.application.getActiveProject().get('name') ),
+                        src: '/' + asset.getFilePath( this.application.getActiveProject().get('name') ),
 	                    border: '0',
 		                frameborder: '0',
 		                scrolling: 'no'
