@@ -1,11 +1,20 @@
 export PATH:=${PATH}:/opt/SenchaSDKTools-2.0.0-beta3:/Applications/SenchaSDKTools-2.0.0-beta3
 
 deploy:
+	# cleaning up and creating directory tree
 	rm -rf build
 	mkdir -p build/tmp
 	mkdir -p build/output
 	mkdir -p build/output/lib/ace
+
+	# populating output with static content
 	cp -R public/css public/images build/output
 	cp public/lib/ace/ace.js public/lib/ace/worker-javascript.js public/lib/ace/mode-javascript.js public/lib/ace/theme-pastel_on_dark.js build/output/lib/ace
 	cp deployPublic/* build/output/
+	cp public/dependencies.json build/output/
+
+	# creating the build configuration file
+	node scripts/createJSB3Config.js public/dependencies.json > public/spellEd.jsb3
+
+	# creating the javascript include
 	PATH=${PATH} sencha build -p public/spellEd.jsb3 -v -d build
