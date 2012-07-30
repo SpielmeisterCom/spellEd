@@ -9,10 +9,6 @@ Ext.application( {
 
 	appFolder: 'app',
 
-	requires: [
-		'Spelled.Logger'
-	],
-
 	controllers: [
 		'Scenes',
 		'Entities',
