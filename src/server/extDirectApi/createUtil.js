@@ -63,6 +63,42 @@ define(
 				return entityResult
 			}
 
+			/**
+			 * Transforms the supplied entity config from the spell engine format to the editor format.
+			 *
+			 * @param entity
+			 * @param includeEmptyComponents
+			 */
+			var entityToEditorFormat = function( entity ) {
+				var result = _.pick( entity, 'name' )
+
+				if( _.has( entity, 'templateId' ) &&
+					!!entity.templateId ) {
+
+					result.templateId = entity.templateId
+				}
+
+				result.components = _.reduce(
+					entity.config,
+					function( memo, componentConfig, componentTemplateId ) {
+						return memo.concat( {
+							templateId : componentTemplateId,
+							config : componentConfig
+						} )
+					},
+					[]
+				)
+
+				result.children = _.map(
+					entity.children,
+					function( entityChild ) {
+						return entityToEditorFormat( entityChild )
+					}
+				)
+
+				return result
+			}
+
             var getExtParams = function( payload ) {
                 if( !payload ) {
                     return undefined
@@ -432,16 +468,18 @@ define(
 
 
             return {
-				entityParsing: entityParsing,
-                getPath   : getPath,
-                extractNamespaceFromPath: extractNamespaceFromPath,
-				convertNamespaceToFilePath: namespaceToFilePath,
-                readFile  : readFile,
-                writeFile : writeFile,
-                getDirFilesAsObjects : getDirFilesAsObjects,
-				jsonListing: jsonListing,
-                fileListing : fileListing,
-                deleteFile: deleteFile
+				entityParsing              : entityParsing,
+				entityToEngineFormat       : entityParsing,
+				entityToEditorFormat       : entityToEditorFormat,
+                getPath                    : getPath,
+                extractNamespaceFromPath   : extractNamespaceFromPath,
+				convertNamespaceToFilePath : namespaceToFilePath,
+                readFile                   : readFile,
+                writeFile                  : writeFile,
+                getDirFilesAsObjects       : getDirFilesAsObjects,
+				jsonListing                : jsonListing,
+                fileListing                : fileListing,
+                deleteFile                 : deleteFile
             }
         }
     }

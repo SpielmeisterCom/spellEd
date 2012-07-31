@@ -25,11 +25,11 @@ define(
 			var util = createUtil( root )
 
 			/**
-			 * This function creates a project in spell engine format. It requires the project in editor format as argument.
+			 * This function creates a project in the spell engine format. It requires the project in the editor format as argument.
 			 *
 			 * @param {Object} project
 			 */
-			var createProjectConfigFromEditorFormat = function( project ) {
+			var translateProjectConfigToEngineFormat = function( project ) {
 				var result = _.pick( project, 'name', 'startScene', 'scenes' )
 
 				result.scenes = _.map(
@@ -40,7 +40,34 @@ define(
 						scene.entities = _.map(
 							sceneEditorFormat.getEntities,
 							function( entityEditorFormat ) {
-								return util.entityParsing( entityEditorFormat )
+								return util.entityToEngineFormat( entityEditorFormat )
+							}
+						)
+
+						return scene
+					}
+				)
+
+				return result
+			}
+
+			/**
+			 * This function creates a project in the editor format. It requires the project in the spell engine format as argument.
+			 *
+			 * @param {Object} project
+			 */
+			var translateProjectConfigToEditorFormat = function( project ) {
+				var result = _.pick( project, 'name', 'startScene', 'scenes' )
+
+				result.scenes = _.map(
+					project.scenes,
+					function( sceneEngineFormat ) {
+						var scene = _.pick( sceneEngineFormat, 'name', 'scriptId', 'systems' )
+
+						scene.entities = _.map(
+							sceneEngineFormat.entities,
+							function( entity ) {
+								return util.entityToEditorFormat( entity )
 							}
 						)
 
@@ -94,8 +121,13 @@ define(
             }
 
             var readProject = function( req, res, payload, next ) {
-                var tmpPath = util.getPath( payload[0].id )
-                return util.readFile( getConfigFilePath(tmpPath) )
+                var projectFilePath = util.getPath( payload[ 0 ].id )
+
+				return translateProjectConfigToEditorFormat(
+					util.readFile(
+						getConfigFilePath( projectFilePath )
+					)
+				)
             }
 
             var updateProject = function( req, res, payload, next ) {
@@ -104,7 +136,7 @@ define(
 
 				util.writeFile(
 					getConfigFilePath( projectFilePath ),
-					JSON.stringify( createProjectConfigFromEditorFormat( project ), null, "\t" )
+					JSON.stringify( translateProjectConfigToEngineFormat( project ), null, "\t" )
 				)
             }
 
