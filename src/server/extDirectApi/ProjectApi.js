@@ -1,29 +1,55 @@
 define(
-    'server/extDirectApi/ProjectApi',
-    [
-        'path',
-        'fs',
-        'server/extDirectApi/createUtil',
+	'server/extDirectApi/ProjectApi',
+	[
+		'path',
+		'fs',
+		'server/extDirectApi/createUtil',
 
-        'underscore'
+		'underscore'
+	],
+	function(
+		path,
+		fs,
+		createUtil,
 
-    ],
-    function(
-        path,
-        fs,
-        createUtil,
+		_
+	) {
+		'use strict'
 
-        _
-    ) {
-        'use strict'
+		return function( root ) {
 
-        return function( root ) {
+			var getConfigFilePath = function ( projectsDir ) {
+				return projectsDir + "/project.json"
+			}
 
-            var getConfigFilePath = function ( projectsDir ) {
-                return projectsDir + "/project.json"
-            }
+			var util = createUtil( root )
 
-            var util = createUtil( root )
+			/**
+			 * This function creates a project in spell engine format. It requires the project in editor format as argument.
+			 *
+			 * @param {Object} project
+			 */
+			var createProjectConfigFromEditorFormat = function( project ) {
+				var result = _.pick( project, 'name', 'startScene', 'scenes' )
+
+				result.scenes = _.map(
+					project.getScenes,
+					function( sceneEditorFormat ) {
+						var scene = _.pick( sceneEditorFormat, 'name', 'scriptId', 'systems' )
+
+						scene.entities = _.map(
+							sceneEditorFormat.getEntities,
+							function( entityEditorFormat ) {
+								return util.entityParsing( entityEditorFormat )
+							}
+						)
+
+						return scene
+					}
+				)
+
+				return result
+			}
 
             var createProject = function( req, res, payload, next ) {
                 var projectName = payload[0],
@@ -72,33 +98,14 @@ define(
                 return util.readFile( getConfigFilePath(tmpPath) )
             }
 
-            //TODO: don't write templatecomponentvalues, maybe the spelljs ext should do this?
             var updateProject = function( req, res, payload, next ) {
-                var project = payload[ 0 ]
+				var project         = payload[ 0 ],
+					projectFilePath = util.getPath( project.name )
 
-                var result = _.pick( project, 'name', 'startScene', 'scenes')
-                result.scenes = []
-
-                _.each(
-                    project.getScenes,
-                    function( scene ) {
-                        var sceneResult = _.pick( scene, 'name', 'scriptId', 'systems' )
-                        sceneResult.entities = []
-
-                        _.each(
-                            scene.getEntities, function( entity ) {
-								sceneResult.entities.push( util.entityParsing( entity ) )
-							}
-                        )
-
-                        result.scenes.push( sceneResult )
-                    }
-                )
-                var projectFilePath = util.getPath( project.name )
-
-                util.writeFile( getConfigFilePath( projectFilePath ) , JSON.stringify( result, null, "\t" ) )
-
-                return project
+				util.writeFile(
+					getConfigFilePath( projectFilePath ),
+					JSON.stringify( createProjectConfigFromEditorFormat( project ), null, "\t" )
+				)
             }
 
             var deleteProject = function( req, res, payload, next ) {

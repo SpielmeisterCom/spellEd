@@ -1,30 +1,27 @@
 define(
-    'server/extDirectApi/createUtil',
-    [
-        'path',
-        'fs',
-        'mime',
+	'server/extDirectApi/createUtil',
+	[
+		'path',
+		'fs',
+		'mime',
 		'glob',
 
-        'underscore'
-    ],
-    function(
-        path,
-        fs,
-        mime,
+		'underscore'
+	],
+	function(
+		path,
+		fs,
+		mime,
 		glob,
 
-        _
-    ) {
-        'use strict'
+		_
+	) {
+		'use strict'
 
-        return function( rootPath ){
-
-            var root = rootPath
+		return function( rootPath ) {
+			var root = rootPath
 
 			var entityParsing = function( entity, includeEmptyComponents ) {
-				includeEmptyComponents = !!includeEmptyComponents
-
 				var entityResult = _.pick( entity, 'name' )
 
 				if( _.has( entity, 'templateId' ) &&
@@ -33,14 +30,16 @@ define(
 					entityResult.templateId = entity.templateId
 				}
 
-				entityResult.components = _.reduce(
+				entityResult.config = _.reduce(
 					entity.getComponents,
 					function( memo, component ) {
-						if( !component.additional && ( !component.changed || _.size( component.config ) === 0 )) return memo
+						if( !component.additional && ( !component.changed || _.size( component.config ) === 0 ) ) return memo
 
-						return memo.concat( _.pick( component, 'templateId', 'config' ) )
+						memo[ component.templateId ] = component.config
+
+						return memo
 					},
-					[]
+					{}
 				)
 
 				entityResult.children = _.reduce(
@@ -48,17 +47,18 @@ define(
 					function( memo, entityChildren ) {
 						var result = entityParsing( entityChildren, includeEmptyComponents )
 
-						if( !_.has( result , "components") && !_.has( result, "children" ) && !includeEmptyComponents ) return memo
+						if( !_.has( result, "config" ) && !_.has( result, "children" ) && !includeEmptyComponents ) return memo
 
 						return memo.concat( result )
 					},
 					[]
 				)
 
-				if( _.isEmpty(entityResult.components) ) delete entityResult.components
-				if( _.isEmpty(entityResult.children) ) delete entityResult.children
-				//delete templateId on anonymous entities
-				if( _.isEmpty(entityResult.templateId) ) delete entityResult.templateId
+				if( _.isEmpty( entityResult.config ) ) delete entityResult.config
+				if( _.isEmpty( entityResult.children ) ) delete entityResult.children
+
+				// delete templateId on anonymous entities
+				if( _.isEmpty( entityResult.templateId ) ) delete entityResult.templateId
 
 				return entityResult
 			}
