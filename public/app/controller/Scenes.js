@@ -1,20 +1,22 @@
 Ext.define('Spelled.controller.Scenes', {
-    extend: 'Ext.app.Controller',
+	extend: 'Ext.app.Controller',
 
-    models: [
-        'config.Scene'
-    ],
+	requires: [ 'Spelled.Logger' ],
 
-    stores: [
-       'ScenesTree',
-       'config.Scenes'
-    ],
+	models: [
+		'config.Scene'
+	],
 
-    refs: [
-        {
-            ref : 'MainPanel',
-            selector: '#MainPanel'
-        },
+	stores: [
+		'ScenesTree',
+		'config.Scenes'
+	],
+
+	refs: [
+		{
+			ref : 'MainPanel',
+			selector: '#MainPanel'
+		},
 		{
 			ref : 'RightPanel',
 			selector: '#RightPanel'
@@ -23,16 +25,16 @@ Ext.define('Spelled.controller.Scenes', {
 			ref : 'ScenesTree',
 			selector: '#ScenesTree'
 		}
-    ],
+	],
 
-    views: [
-        'scene.TreeList',
-        'scene.Navigator',
-        'scene.Create',
-        'scene.Editor',
+	views: [
+		'scene.TreeList',
+		'scene.Navigator',
+		'scene.Create',
+		'scene.Editor',
 		'scene.Script',
-        'ui.SpelledRendered'
-    ],
+		'ui.SpelledRendered'
+	],
 
 	TREE_ITEM_TYPE_SCENE    : 1,
 	TREE_ITEM_TYPE_ENTITY   : 2,
@@ -40,20 +42,20 @@ Ext.define('Spelled.controller.Scenes', {
 	TREE_ITEM_TYPE_SCRIPT   : 4,
 	TREE_ITEM_TYPE_ENTITIES : 5,
 
-    init: function() {
+	init: function() {
 		var me = this
 
-        var dispatchPostMessages = function( event ) {
+		var dispatchPostMessages = function( event ) {
 			switch ( event.data.type ) {
 				case 'spell.initialized' :
 					var scene = me.application.getActiveScene()
 
 					me.answerIframePostMessage(
-						event,
-						{
-							type : "spelled.debug.drawCoordinateGrid",
-							payload : scene.get( 'showGrid' )
-						}
+							event,
+							{
+								type : "spelled.debug.drawCoordinateGrid",
+								payload : scene.get( 'showGrid' )
+							}
 					)
 
 					return
@@ -61,43 +63,43 @@ Ext.define('Spelled.controller.Scenes', {
 				case 'spell.debug.consoleMessage' :
 					Spelled.Logger.log(  event.data.payload.level, event.data.payload.text )
 			}
-        }
+		}
 
-        window.addEventListener("message", dispatchPostMessages, false);
+		window.addEventListener("message", dispatchPostMessages, false);
 
-        this.control({
+		this.control({
 			'renderedscene': {
 				show: function( panel ) {
 					panel.down( 'spellediframe').focus()
 				}
 			},
-            'renderedscene > toolbar button[action="reloadScene"]': {
-                click: me.reloadScene
-            },
-            'renderedscene > toolbar button[action="toggleGrid"]': {
-                toggle: me.toggleGrid
-            },
-            'scenetreelist': {
+			'renderedscene > toolbar button[action="reloadScene"]': {
+				click: me.reloadScene
+			},
+			'renderedscene > toolbar button[action="toggleGrid"]': {
+				toggle: me.toggleGrid
+			},
+			'scenetreelist': {
 				select         : me.dispatchTreeClick,
-                itemcontextmenu: me.dispatchTreeListContextMenu,
+				itemcontextmenu: me.dispatchTreeListContextMenu,
 				editclick    :   me.dispatchTreeListContextMenu,
-                itemmouseenter : me.dispatchMouseEnterTree,
-                itemmouseleave : me.application.hideActions
-            },
-            'scenetreelist button[action="showCreateScene"]': {
-                click: me.showCreateScene
-            },
-            'createscene button[action="createScene"]' : {
-                click: me.createScene
-            },
-            'scenesnavigator': {
-                activate: me.showScenesEditor
-            },
+				itemmouseenter : me.dispatchMouseEnterTree,
+				itemmouseleave : me.application.hideActions
+			},
+			'scenetreelist button[action="showCreateScene"]': {
+				click: me.showCreateScene
+			},
+			'createscene button[action="createScene"]' : {
+				click: me.createScene
+			},
+			'scenesnavigator': {
+				activate: me.showScenesEditor
+			},
 			'scenescript > combobox[name="scriptId"]' : {
 				select: this.setSceneScript
 			}
-        })
-    },
+		})
+	},
 
 	setDefaultScene: function( scene ) {
 		var project = this.application.getActiveProject(),
@@ -120,7 +122,7 @@ Ext.define('Spelled.controller.Scenes', {
 		switch( record.get('iconCls') ) {
 			case 'tree-scene-icon':
 			case 'tree-default-scene-icon':
-	            type = this.TREE_ITEM_TYPE_SCENE
+				type = this.TREE_ITEM_TYPE_SCENE
 				break
 			case 'tree-scene-entity-icon':
 			case 'tree-scene-entity-readonly-icon':
@@ -225,11 +227,11 @@ Ext.define('Spelled.controller.Scenes', {
 
 	checkOrigin: function( event ) {
 		/*if ( event.origin !== this.BUILD_SERVER_ORIGIN ){
-			console.log( 'event.origin: ' + event.origin )
-			console.log( 'Error: origin does not match.' )
+		 console.log( 'event.origin: ' + event.origin )
+		 console.log( 'Error: origin does not match.' )
 
-			return false
-		}*/
+		 return false
+		 }*/
 
 		//bypassing origin check for now
 
@@ -248,7 +250,7 @@ Ext.define('Spelled.controller.Scenes', {
 		cmp.el.dom.contentWindow.postMessage( message, '*' )
 	},
 
-    showScenesEditor: function() {
+	showScenesEditor: function() {
 		var tree = this.getScenesTree()
 		this.application.hideMainPanels()
 		this.getRightPanel().show()
@@ -257,54 +259,54 @@ Ext.define('Spelled.controller.Scenes', {
 			this.dispatchTreeClick( tree, tree.getSelectionModel().getSelection()[0] )
 		}
 
-        Ext.getCmp('SceneEditor').show()
-    },
+		Ext.getCmp('SceneEditor').show()
+	},
 
-    showCreateScene: function( ) {
-        var View  = this.getSceneCreateView(),
-            Model = this.getConfigSceneModel()
+	showCreateScene: function( ) {
+		var View  = this.getSceneCreateView(),
+			Model = this.getConfigSceneModel()
 
-        var view = new View()
-        view.down('form').loadRecord( new Model() )
+		var view = new View()
+		view.down('form').loadRecord( new Model() )
 
-        view.show()
-    },
+		view.show()
+	},
 
-    createScene: function ( button ) {
-        var window = button.up('window'),
-            form   = window.down('form'),
-            record = form.getRecord(),
-            values = form.getValues(),
-            project= this.application.getActiveProject(),
+	createScene: function ( button ) {
+		var window = button.up('window'),
+			form   = window.down('form'),
+			record = form.getRecord(),
+			values = form.getValues(),
+			project= this.application.getActiveProject(),
 			store  = this.getConfigScenesStore()
 
-        record.set( values )
+		record.set( values )
 
 		store.add( record )
 		project.getScenes().add( record )
 
 		record.appendOnTreeNode( this.getScenesTree().getRootNode() )
 
-        window.close()
-    },
+		window.close()
+	},
 
-    showListContextMenu: function( view, record, item, index, e, options ) {
+	showListContextMenu: function( view, record, item, index, e, options ) {
 		this.application.getController('Menu').showScenesListContextMenu( e )
-    },
+	},
 
-    deleteScene: function( scene ) {
-        var project  = this.application.getActiveProject(),
-            scenes   = project.getScenes(),
+	deleteScene: function( scene ) {
+		var project  = this.application.getActiveProject(),
+			scenes   = project.getScenes(),
 			sceneEditor = Ext.getCmp('SceneEditor')
 
-        scenes.remove( scene )
+		scenes.remove( scene )
 		this.application.closeOpenedTabs( sceneEditor, scene.getRenderTabTitle() )
 		this.application.closeOpenedTabs( sceneEditor, scene.getSourceTabTitle() )
-    },
+	},
 
-    reloadScene: function( button ) {
-        var panel   = button.up('panel'),
-            project = this.application.getActiveProject(),
+	reloadScene: function( button ) {
+		var panel   = button.up('panel'),
+			project = this.application.getActiveProject(),
 			iframe  = panel.down( 'spellediframe'),
 			me      = this
 
@@ -337,10 +339,9 @@ Ext.define('Spelled.controller.Scenes', {
 				)
 			}
 		)
+	},
 
-    },
-
-    toggleGrid: function( button, state ) {
+	toggleGrid: function( button, state ) {
 		var tab   = button.up( 'renderedscene').down( 'spellediframe' ),
 			scene = this.application.getActiveScene()
 
@@ -355,28 +356,29 @@ Ext.define('Spelled.controller.Scenes', {
 				}
 			)
 		}
-    },
+	},
 
-    renderScene: function( scene ) {
-        var sceneEditor = Ext.getCmp( "SceneEditor"),
-            title = scene.getRenderTabTitle(),
+	renderScene: function( scene ) {
+		var sceneEditor = Ext.getCmp( "SceneEditor"),
+			title = scene.getRenderTabTitle(),
 			me    = this
 
-        var foundTab = this.application.findActiveTabByTitle( sceneEditor, title )
+		var foundTab = this.application.findActiveTabByTitle( sceneEditor, title )
 
-        if( foundTab )
-            return foundTab
+		if( foundTab )
+			return foundTab
 
-        var spellTab = Ext.create( 'Spelled.view.ui.SpelledRendered', {
-                title: title,
+		var spellTab = Ext.create(
+			'Spelled.view.ui.SpelledRendered',
+			{
+				title: title,
 				showGrid: scene.get('showGrid')
-            }
-        )
+			}
+		)
 
-        var project = this.application.getActiveProject()
+		var project = this.application.getActiveProject()
 
-        var createTab = function( provider, response ) {
-
+		var createTab = function( provider, response ) {
 			if( !!response.data ) {
 				var iframe = Ext.create( 'Spelled.view.ui.SpelledIframe', {
 					projectName: project.get('name'),
@@ -386,33 +388,32 @@ Ext.define('Spelled.controller.Scenes', {
 				spellTab.add( iframe )
 
 				me.application.createTab( sceneEditor, spellTab )
+
 			} else {
 				me.application.showBuildServerConnectError()
 			}
-
 		}
 
 		Spelled.SpellBuildActions.executeCreateDebugBuild(
-            "html5",
-            project.get('name'),
-            project.getConfigName(),
-            Ext.bind( createTab, this )
-        )
+			"html5",
+			project.get('name'),
+			project.getConfigName(),
+			Ext.bind( createTab, this )
+		)
+	},
 
-    },
-
-    showScenesList: function( scenes ) {
-        var tree     = this.getScenesTree(),
-            rootNode = tree.getStore().getRootNode(),
+	showScenesList: function( scenes ) {
+		var tree     = this.getScenesTree(),
+			rootNode = tree.getStore().getRootNode(),
 			project  = this.application.getActiveProject()
-        rootNode.removeAll()
+			rootNode.removeAll()
 
-        scenes.each( function( scene ) {
-            var node = scene.appendOnTreeNode( rootNode )
+		scenes.each( function( scene ) {
+			var node = scene.appendOnTreeNode( rootNode )
 
 			if( project.get( 'startScene' ) == scene.getId() ) {
 				node.set( 'iconCls', 'tree-default-scene-icon' )
 			}
-        })
-    }
+		})
+	}
 });

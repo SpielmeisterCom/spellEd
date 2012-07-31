@@ -1,239 +1,262 @@
-Ext.require([
-	'Ext.app.Application',
-    'Ext.data.*',
-	'Ext.tree.ViewDragZone'
-]);
+Ext.Loader.setConfig( {
+	paths : {
+		"Spelled" : "app"
+	}
+} );
 
-Ext.application( {
-	name: 'Spelled',
+var resolveDependencies = function( response ) {
+	Ext.require(
+		JSON.parse( response.responseText ).dependencies,
+		createApplication
+	);
+};
 
-	appFolder: 'app',
+var loadDependencies = function() {
+	Ext.Ajax.request( {
+	   url: 'dependencies.json',
+	   success: resolveDependencies
+	} );
+};
 
-	requires: [
-		'Spelled.Logger'
-	],
+var startApplication = function() {
+	if( !Ext.Ajax ) throw "Error: Missing dependency Ext.Ajax."
 
-	controllers: [
-		'Scenes',
-		'Entities',
-		'Menu',
-		'Projects',
-		'Components',
-		'Assets',
-		'Templates',
-		'Scripts',
-		'Systems',
-		'templates.Components',
-		'templates.Entities',
-		'templates.Systems'
-	],
+	Ext.Loader.setConfig( { enabled : true } );
+	loadDependencies();
+}
 
-	stores: [
-		'asset.Tree',
-		'asset.FoldersTree',
-		'asset.Textures',
-		'asset.Sounds',
-		'script.Scripts',
-		'script.Tree',
-		'script.FoldersTree',
-		'TemplatesTree',
-		'template.FoldersTree'
-	],
+var createApplication = function() {
+	Ext.Loader.setConfig( { enabled : false } );
 
-	refs: [
-		{
-			ref : 'MainPanel',
-			selector: '#MainPanel'
-		},
-		{
-			ref: 'RightPanel',
-			selector: '#RightPanel'
-		}
-	],
+	Ext.application( {
+		name: 'Spelled',
 
-	project: undefined,
-	scene: undefined,
+		appFolder: 'app',
 
-	showDocumentation: function( docString ) {
-		if( Ext.isObject( this.configuration ) ) {
-			var docPath = this.configuration.documentationServerURL + docString
-			window.open( docPath, '_blank')
-		}
-	},
+		controllers: [
+			'Scenes',
+			'Entities',
+			'Menu',
+			'Projects',
+			'Components',
+			'Assets',
+			'Templates',
+			'Scripts',
+			'Systems',
+			'templates.Components',
+			'templates.Entities',
+			'templates.Systems'
+		],
 
-	showBuildServerConnectError: function() {
-		Ext.Msg.alert( 'Service unavailable', "SpellEd can't connect to the Build-Server." )
-	},
+		stores: [
+			'asset.Tree',
+			'asset.FoldersTree',
+			'asset.Textures',
+			'asset.Sounds',
+			'script.Scripts',
+			'script.Tree',
+			'script.FoldersTree',
+			'TemplatesTree',
+			'template.FoldersTree'
+		],
 
-	getLastSelectedNode: function( treePanel ) {
-		return treePanel.getSelectionModel().getLastSelected()
-	},
-
-	removeSelectedNode: function( treePanel, callback ) {
-		this.getLastSelectedNode( treePanel ).remove()
-	},
-
-	createTab: function( tabPanel, view ) {
-
-		var newPanel  = tabPanel.add(
-			view
-		)
-
-		tabPanel.setActiveTab( newPanel )
-
-		return newPanel
-	},
-
-	closeAllTabs: function( tabPanel ) {
-		tabPanel.items.each(
-			function( tab ) {
-				tab.destroy()
+		refs: [
+			{
+				ref : 'MainPanel',
+				selector: '#MainPanel'
+			},
+			{
+				ref: 'RightPanel',
+				selector: '#RightPanel'
 			}
-		)
-	},
+		],
 
-	closeOpenedTabs: function( tabPanel, title ) {
-		tabPanel.items.each(
-			function( tab ) {
-				if( tab.title === title ) {
+		project: undefined,
+		scene: undefined,
+
+		showDocumentation: function( docString ) {
+			if( Ext.isObject( this.configuration ) ) {
+				var docPath = this.configuration.documentationServerURL + docString
+				window.open( docPath, '_blank')
+			}
+		},
+
+		showBuildServerConnectError: function() {
+			Ext.Msg.alert( 'Service unavailable', "SpellEd can't connect to the Build-Server." )
+		},
+
+		getLastSelectedNode: function( treePanel ) {
+			return treePanel.getSelectionModel().getLastSelected()
+		},
+
+		removeSelectedNode: function( treePanel, callback ) {
+			this.getLastSelectedNode( treePanel ).remove()
+		},
+
+		createTab: function( tabPanel, view ) {
+
+			var newPanel  = tabPanel.add(
+				view
+			)
+
+			tabPanel.setActiveTab( newPanel )
+
+			return newPanel
+		},
+
+		closeAllTabs: function( tabPanel ) {
+			tabPanel.items.each(
+				function( tab ) {
 					tab.destroy()
 				}
-			}
-		)
-	},
+			)
+		},
 
-	findActiveTabByTitle: function( tabPanel, title ) {
-		var foundPanel = undefined
-
-		//looking for hidden tabs. returning if we found one
-		tabPanel.items.each(
-			function( panel ) {
-				if( panel.title === title ) {
-					foundPanel = panel
-					tabPanel.setActiveTab( foundPanel )
-					return foundPanel
+		closeOpenedTabs: function( tabPanel, title ) {
+			tabPanel.items.each(
+				function( tab ) {
+					if( tab.title === title ) {
+						tab.destroy()
+					}
 				}
+			)
+		},
+
+		findActiveTabByTitle: function( tabPanel, title ) {
+			var foundPanel = undefined
+
+			//looking for hidden tabs. returning if we found one
+			tabPanel.items.each(
+				function( panel ) {
+					if( panel.title === title ) {
+						foundPanel = panel
+						tabPanel.setActiveTab( foundPanel )
+						return foundPanel
+					}
+				}
+			)
+
+			return foundPanel
+		},
+
+		hideMainPanels: function() {
+			this.getRightPanel().hide()
+
+			this.getMainPanel().items.each(
+				function( panel ) {
+					panel.hide()
+				}
+			)
+		},
+
+		hideActions: function( view, list, node, rowIndex, e ) {
+			var icons = Ext.DomQuery.select('.x-action-col-icon', node)
+			Ext.each( icons, function( icon ){
+				Ext.get( icon ).addCls( 'x-hidden' )
+			})
+		},
+
+		showActionsOnLeaf: function( view, list, node, rowIndex, e ) {
+			this.application.showActions( true, view, list, node, rowIndex, e )
+		},
+
+		showActionsOnFolder: function( view, list, node, rowIndex, e ) {
+			this.application.showActions( false, view, list, node, rowIndex, e )
+		},
+
+		showActions: function( showOnLeaf, view, list, node, rowIndex, e ) {
+			var icons = Ext.DomQuery.select('.edit-action-icon', node),
+				node  = view.getRecord( node )
+
+			if( node.isLeaf() === showOnLeaf && !node.isRoot() ) {
+				this.showActionColumnIcons( icons )
 			}
-		)
+		},
 
-		return foundPanel
-	},
+		showActionColumnIcons: function( icons ) {
+			Ext.each(
+				icons,
+				function(icon){
+					Ext.get(icon).removeCls('x-hidden')
+				}
+			)
+		},
 
-	hideMainPanels: function() {
-		this.getRightPanel().hide()
+		getActiveProject: function() {
+			return this.project
+		},
 
-		this.getMainPanel().items.each(
-			function( panel ) {
-				panel.hide()
-			}
-		)
-	},
+		setActiveProject: function( project ) {
+			Ext.state.Manager.set( 'projectName', project.get('name') )
+			this.project = project
+		},
 
-	hideActions: function( view, list, node, rowIndex, e ) {
-		var icons = Ext.DomQuery.select('.x-action-col-icon', node)
-		Ext.each( icons, function( icon ){
-			Ext.get( icon ).addCls( 'x-hidden' )
-		})
-	},
+		getActiveScene: function() {
+			return this.scene
+		},
 
-	showActionsOnLeaf: function( view, list, node, rowIndex, e ) {
-		this.application.showActions( true, view, list, node, rowIndex, e )
-	},
+		setActiveScene: function( scene ) {
+			this.scene = scene
+		},
 
-	showActionsOnFolder: function( view, list, node, rowIndex, e ) {
-		this.application.showActions( false, view, list, node, rowIndex, e )
-	},
+		setExtraParamOnProxies: function( name, value ) {
+			Ext.each(
+				this.stores,
+				function( storeId ) {
+					Ext.getStore( storeId ).getProxy().setExtraParam( name, value )
+				}
+			)
+		},
 
-	showActions: function( showOnLeaf, view, list, node, rowIndex, e ) {
-		var icons = Ext.DomQuery.select('.edit-action-icon', node),
-			node  = view.getRecord( node )
+		launch: function() {
+			var me = this
 
-		if( node.isLeaf() === showOnLeaf && !node.isRoot() ) {
-			this.showActionColumnIcons( icons )
-		}
-	},
+			//load configuration from global CONFIGURATION variable that is defined in app-initialize
+			me.configuration = Ext.app.CONFIGURATION;
 
-	showActionColumnIcons: function( icons ) {
-		Ext.each(
-			icons,
-			function(icon){
-				Ext.get(icon).removeCls('x-hidden')
-			}
-		)
-	},
-
-	getActiveProject: function() {
-		return this.project
-	},
-
-	setActiveProject: function( project ) {
-		Ext.state.Manager.set( 'projectName', project.get('name') )
-		this.project = project
-	},
-
-	getActiveScene: function() {
-		return this.scene
-	},
-
-	setActiveScene: function( scene ) {
-		this.scene = scene
-	},
-
-	setExtraParamOnProxies: function( name, value ) {
-		Ext.each(
-			this.stores,
-			function( storeId ) {
-				Ext.getStore( storeId ).getProxy().setExtraParam( name, value )
-			}
-		)
-	},
-
-	launch: function() {
-		var me = this
-
-		//load configuration from global CONFIGURATION variable that is defined in app-initialize
-		me.configuration = Ext.app.CONFIGURATION;
-
-		Ext.override(
-			Ext.data.proxy.Direct,
-			{
-				listeners: {
-					exception: {
-						fn: function( proxy, response ) {
-							Ext.Msg.alert(
-								'An Error occurred',
-								"Could not execute '" + response.transaction.action +"."+ response.transaction.method +"': <br/><br/>"+ response.xhr.responseText
-							)
+			Ext.override(
+				Ext.data.proxy.Direct,
+				{
+					listeners: {
+						exception: {
+							fn: function( proxy, response ) {
+								Ext.Msg.alert(
+									'An Error occurred',
+									"Could not execute '" + response.transaction.action +"."+ response.transaction.method +"': <br/><br/>"+ response.xhr.responseText
+								)
+							}
 						}
 					}
 				}
+			)
+
+			Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
+
+			Ext.get('loading').remove()
+			Ext.get('loading-mask').fadeOut( {
+				remove: true
+			} )
+
+			Ext.create('Spelled.view.ui.SpelledViewport')
+
+			var stateProvider = Ext.create( 'Ext.state.CookieProvider');
+			Ext.state.Manager.setProvider( stateProvider )
+
+			var projectName = Ext.state.Manager.get( 'projectName' )
+
+			//if no saved project exists, try loading spellReferenceProject
+			if (!projectName) {
+				projectName = 'spellReferenceProject';
 			}
-		)
 
-		Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
-
-		Ext.get('loading').remove()
-		Ext.get('loading-mask').fadeOut( {
-			remove: true
-		} )
-
-		Ext.create('Spelled.view.ui.SpelledViewport')
-
-		var stateProvider = Ext.create( 'Ext.state.CookieProvider');
-		Ext.state.Manager.setProvider( stateProvider )
-
-		var projectName = Ext.state.Manager.get( 'projectName' )
-
-		//if no saved project exists, try loading spellReferenceProject
-		if (!projectName) {
-			projectName = 'spellReferenceProject';
+			try {
+				this.getController('Projects').loadProject( projectName )
+			} catch( e ) {
+				Ext.state.Manager.clear( 'projectName' )
+				Ext.create( 'Spelled.view.ui.StartScreen').show()
+			}
 		}
+	} )
+};
 
-		try {
-			this.getController('Projects').loadProject( projectName )
-		} catch( e ) {
-			Ext.state.Manager.clear( 'projectName' )
-			Ext.create( 'Spelled.view.ui.StartScreen').show()
-		}
-	}
-} )
+startApplication();
