@@ -8,6 +8,7 @@ define(
         'server/extDirectApi/templates/createComponentApi',
         'server/extDirectApi/templates/createEntityApi',
         'server/extDirectApi/templates/createSystemApi',
+		'server/extDirectApi/templates/entityTemplateFormatter',
         'server/extDirectApi/createAssetsApi',
         'server/extDirectApi/createScriptsApi',
         'server/extDirectApi/ProjectApi',
@@ -22,6 +23,7 @@ define(
         createComponentApi,
         createEntityApi,
         createSystemApi,
+		entityTemplateFormatter,
         createAssetsApi,
         createScriptsApi,
         createProjectApi,
@@ -29,6 +31,7 @@ define(
         _
     ) {
         'use strict'
+
 
         return function( projectsRoot, buildServerOptions ) {
 
@@ -67,8 +70,14 @@ define(
             }
 
             var getAllentityTemplates = function( req, res, payload, next ) {
-                var projectName =  payload[0]
-                return getAllTemplates( projectName, 'entityTemplate' )
+                var projectName = payload[ 0 ]
+
+                return _.map(
+					getAllTemplates( projectName, 'entityTemplate' ),
+					function( entityTemplate ) {
+						return entityTemplateFormatter.toEditorFormat( entityTemplate )
+					}
+				)
             }
 
             var getAllcomponentTemplates = function( req, res, payload, next ) {
@@ -167,7 +176,7 @@ define(
                 AssetsActions            : createAssetsApi( projectsRoot ),
                 SystemTemplateActions    : createSystemApi( projectsRoot ),
                 ScriptsActions           : createScriptsApi( projectsRoot ),
-				SpellBuildActions: [
+				SpellBuildActions : [
 					{
 						name: "executeCreateDebugBuild",
 						len: 3,
@@ -184,7 +193,7 @@ define(
 						func: exportDeployment
 					}
 				],
-                TemplatesActions         : [
+                TemplatesActions : [
                     {
                         name: "createTemplate",
                         len: 0,

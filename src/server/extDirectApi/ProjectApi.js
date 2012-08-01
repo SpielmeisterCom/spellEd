@@ -4,6 +4,7 @@ define(
 		'path',
 		'fs',
 		'server/extDirectApi/createUtil',
+		'server/extDirectApi/templates/entityFormatter',
 
 		'underscore'
 	],
@@ -11,6 +12,7 @@ define(
 		path,
 		fs,
 		createUtil,
+		entityFormatter,
 
 		_
 	) {
@@ -40,7 +42,7 @@ define(
 						scene.entities = _.map(
 							sceneEditorFormat.getEntities,
 							function( entityEditorFormat ) {
-								return util.entityToEngineFormat( entityEditorFormat )
+								return entityFormatter.toEngineFormat( entityEditorFormat )
 							}
 						)
 
@@ -67,7 +69,7 @@ define(
 						scene.entities = _.map(
 							sceneEngineFormat.entities,
 							function( entity ) {
-								return util.entityToEditorFormat( entity )
+								return entityFormatter.toEditorFormat( entity )
 							}
 						)
 
@@ -107,9 +109,10 @@ define(
                         var fileStat = fs.statSync( projectFilePath )
 
                         if( fileStat.isDirectory() ) {
-
-                            var fileContent = fs.readFileSync( getConfigFilePath( projectFilePath ) , 'utf8' )
-                            var object = JSON.parse( fileContent )
+                            var fileContent = fs.readFileSync( getConfigFilePath( projectFilePath ) , 'utf8' ),
+                            	object = translateProjectConfigToEditorFormat(
+									JSON.parse( fileContent )
+								)
 
                             object.name = projectDir
                             result.push( object )

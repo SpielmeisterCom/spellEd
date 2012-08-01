@@ -1,71 +1,43 @@
 define(
-    'server/extDirectApi/templates/createEntityApi',
-    [
-        'path',
-        'fs',
-        'server/extDirectApi/createUtil',
+	'server/extDirectApi/templates/createEntityApi',
+	[
+		'path',
+		'fs',
+		'server/extDirectApi/createUtil',
+		'server/extDirectApi/templates/entityTemplateFormatter',
 
-        'underscore'
+		'underscore'
 
-    ],
-    function(
-        path,
-        fs,
-        createUtil,
+	],
+	function(
+		path,
+		fs,
+		createUtil,
+		entityTemplateFormatter,
 
-        _
-    ) {
-        'use strict'
-        return function( root ) {
-            var templatePathPart = "/library/templates"
+		_
+	) {
+		'use strict'
 
-            var util      = createUtil( root )
 
-            /**
-             *  Entity Templates Actions
-             */
+		return function( root ) {
+			var templatePathPart = "/library/templates",
+				util = createUtil( root )
 
-            var readEntityTemplate = function( req, res, payload, next ) {
-                return util.readFile( payload[0].id )
-            }
-
-			var entityParsing = function( entity, includeEmptyComponents ) {
-				includeEmptyComponents = !!includeEmptyComponents
-
-				var result = _.pick( entity, 'name', 'namespace', 'type')
-
-				result.components = _.reduce(
-					entity.getComponents,
-					function( memo, component ) {
-						if( !includeEmptyComponents && _.size( component.config ) === 0 ) return memo
-
-						var tmp = _.pick( component, 'templateId', 'config' )
-						if( _.size( tmp.config ) === 0 ) delete tmp.config
-
-						return memo.concat( tmp )
-					},
-					[]
+			var readEntityTemplate = function( req, res, payload, next ) {
+				return entityTemplateFormatter.toEditorFormat(
+					util.readFile( payload[ 0 ].id )
 				)
-
-				result.children = _.reduce(
-					entity.getChildren,
-					function( memo, entityChildren ) {
-						return memo.concat( util.entityParsing( entityChildren, includeEmptyComponents ) )
-					},
-					[]
-				)
-
-				return result
 			}
 
-            var updateEntityTemplate = function( req, res, payload, next ) {
-                var entity = payload[ 0 ],
-					result = entityParsing( entity, true )
+			var updateEntityTemplate = function( req, res, payload, next ) {
+				var entity = payload[ 0 ],
+					result = entityTemplateFormatter.toEngineFormat( entity, true )
 
-                util.writeFile( entity.id, JSON.stringify( result, null, "\t" ) )
+				util.writeFile( entity.id, JSON.stringify( result, null, "\t" ) )
 
-                return entity
-            }
+				return entity
+			}
 
             var deleteEntityTemplate = function( req, res, payload, next ) {
                 var jsonFilePath = payload[0].id
@@ -85,11 +57,11 @@ define(
                 var namespace = util.extractNamespaceFromPath( folder, templatePathPart )
 
                 var entity = {
-                    type : type,
+                    type      : type,
                     namespace : namespace,
-                    name : name,
-                    components : [
-                    ]
+                    name      : name,
+                    config    : {},
+					children  : []
                 }
 
                 util.writeFile( filePath , JSON.stringify( entity, null, "\t" ), false )
