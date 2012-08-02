@@ -23,7 +23,18 @@ Ext.define('Spelled.controller.Projects', {
                 click: this.loadProjectAction
             }
         })
-    },
+
+		// loading default project
+		var projectName = Ext.state.Manager.get( 'projectName' ) || 'spellReferenceProject'
+
+		try {
+			this.loadProject( projectName )
+
+		} catch( e ) {
+			Ext.state.Manager.clear( 'projectName' )
+			Ext.create( 'Spelled.view.ui.StartScreen' ).show()
+		}
+	},
 
 	refs: [
 		{
@@ -118,26 +129,76 @@ Ext.define('Spelled.controller.Projects', {
 		this.prepareStores( projectName )
 		this.closeAllTabsFromProject()
 
-		Project.load( projectName, {
-            scope: this,
-            success: function( project ) {
-				this.application.setActiveProject( project )
-				project.checkForComponentChanges()
-				this.getScenesList( project )
-				Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Scenes') )
+		Project.load(
+			projectName,
+			{
+				scope: this,
+				success: this.onProjectLoaded
+			}
+		)
+	},
 
-				var tree       = this.getScenesTree(),
-					firstScene = project.getScenes().first(),
-					node = tree.getRootNode().findChild( 'id', firstScene.get('name'), true )
+	onProjectLoaded: function( project ) {
+		this.application.setActiveProject( project )
+		project.checkForComponentChanges()
+		this.getScenesList( project )
+		Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Scenes') )
 
-				tree.getSelectionModel().select( node )
-				tree.expandPath( node.getPath() )
+		var tree       = this.getScenesTree(),
+			firstScene = project.getScenes().first(),
+			node       = tree.getRootNode().findChild( 'id', firstScene.get( 'name' ), true )
 
-				this.application.getController( 'Scenes' ).renderScene( firstScene )
-            }
-        })
+		this.initConfigEntityIdGenerator( firstScene.getEntities() )
 
-    },
+		tree.getSelectionModel().select( node )
+		tree.expandPath( node.getPath() )
+
+		this.application.getController( 'Scenes' ).renderScene( firstScene )
+	},
+
+	initConfigEntityIdGenerator: function( entities ) {
+		var collectConfigEntityIds = function( items ) {
+			var ids = []
+
+			Ext.iterate(
+				items,
+				function( item ) {
+					ids.push( parseInt( item.internalId ) )
+
+					if( item.hasChildren() ) {
+						ids = ids.concat(
+							collectConfigEntityIds(
+								item.getChildren().data.items
+							)
+						)
+					}
+				}
+			)
+
+			return ids
+		}
+
+		var nextId = Ext.max( collectConfigEntityIds( entities.data.items ) ) + 1
+
+		Ext.data.IdGenerator.all.configEntity.seed = nextId
+	},
+
+	collectConfigEntityIds: function( items ) {
+		var ids = []
+
+		Ext.iterate(
+			items,
+			function( item ) {
+				ids.push( item.internalId )
+
+				if( item.hasChildren() ) {
+					ids.concat(  )
+				}
+			}
+		)
+
+		return ids
+	},
 
 	closeAllTabsFromProject: function() {
 		var app = this.application

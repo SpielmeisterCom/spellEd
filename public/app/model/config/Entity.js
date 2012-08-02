@@ -10,7 +10,10 @@ Ext.define('Spelled.model.config.Entity', {
 
 	parsedData: false,
 
-    idgen: 'uuid',
+    idgen: {
+		type: 'sequential',
+		id: 'configEntity'
+	},
 
 	associations: [
 		{

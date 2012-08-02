@@ -105,6 +105,8 @@ var createApplication = function() {
 		},
 
 		closeAllTabs: function( tabPanel ) {
+			if( !tabPanel ) return
+
 			tabPanel.items.each(
 				function( tab ) {
 					tab.destroy()
@@ -241,20 +243,6 @@ var createApplication = function() {
 
 			var stateProvider = Ext.create( 'Ext.state.CookieProvider');
 			Ext.state.Manager.setProvider( stateProvider )
-
-			var projectName = Ext.state.Manager.get( 'projectName' )
-
-			//if no saved project exists, try loading spellReferenceProject
-			if (!projectName) {
-				projectName = 'spellReferenceProject';
-			}
-
-			try {
-				this.getController('Projects').loadProject( projectName )
-			} catch( e ) {
-				Ext.state.Manager.clear( 'projectName' )
-				Ext.create( 'Spelled.view.ui.StartScreen').show()
-			}
 		}
 	} )
 };
