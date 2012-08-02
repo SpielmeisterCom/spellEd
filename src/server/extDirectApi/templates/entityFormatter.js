@@ -17,7 +17,7 @@ define(
 		 * @return {*}
 		 */
 		var toEngineFormat = function( entity, includeEmptyComponents ) {
-			var entityResult = _.pick( entity, 'id', 'name' )
+			var entityResult = _.pick( entity, 'name' )
 
 			if( _.has( entity, 'templateId' ) &&
 				!!entity.templateId ) {
@@ -65,7 +65,7 @@ define(
 		 * @return {*}
 		 */
 		var toEditorFormat = function( entity ) {
-			var result = _.pick( entity, 'id', 'name' )
+			var result = _.pick( entity, 'name' )
 
 			if( _.has( entity, 'templateId' ) &&
 				!!entity.templateId ) {

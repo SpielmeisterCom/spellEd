@@ -148,39 +148,10 @@ Ext.define('Spelled.controller.Projects', {
 			firstScene = project.getScenes().first(),
 			node       = tree.getRootNode().findChild( 'id', firstScene.get( 'name' ), true )
 
-		this.initConfigEntityIdGenerator( firstScene.getEntities() )
-
 		tree.getSelectionModel().select( node )
 		tree.expandPath( node.getPath() )
 
 		this.application.getController( 'Scenes' ).renderScene( firstScene )
-	},
-
-	initConfigEntityIdGenerator: function( entities ) {
-		var collectConfigEntityIds = function( items ) {
-			var ids = []
-
-			Ext.iterate(
-				items,
-				function( item ) {
-					ids.push( parseInt( item.internalId ) )
-
-					if( item.hasChildren() ) {
-						ids = ids.concat(
-							collectConfigEntityIds(
-								item.getChildren().data.items
-							)
-						)
-					}
-				}
-			)
-
-			return ids
-		}
-
-		var nextId = Ext.max( collectConfigEntityIds( entities.data.items ) ) + 1
-
-		Ext.data.IdGenerator.all.configEntity.seed = nextId
 	},
 
 	collectConfigEntityIds: function( items ) {
