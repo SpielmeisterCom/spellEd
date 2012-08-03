@@ -6,12 +6,10 @@
 		<link rel="stylesheet" type="text/css" href="css/ext-all-spelled.css">
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 
-		<script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>
-		<script type="text/javascript" src="createDependencies.js"></script>
-
-		<script type="text/javascript" src="lib/ace/ace.js" charset="utf-8"></script>
-		<script type="text/javascript" src="lib/ace/mode-javascript.js" charset="utf-8"></script>
-		<script type="text/javascript" src="lib/ace/theme-pastel_on_dark.js" charset="utf-8"></script>
+		<script type="text/javascript" src="libs/require.js"></script>
+		<script type="text/javascript">
+			require.config( { baseUrl : 'libs' } )
+		</script>
 
 		<script type="text/javascript" src="extjs/ext-all-debug.js"></script>
 		<script type="text/javascript" src="/api"></script>
@@ -23,6 +21,8 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
+		<!-- The "create dependencies" script is only required in the development build. -->
+		<script type="text/javascript" src="createDependencies.js"></script>
     </head>
 	<body>
 		<div id="loading-mask"></div>

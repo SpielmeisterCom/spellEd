@@ -5,11 +5,10 @@ deploy:
 	rm -rf build
 	mkdir -p build/tmp
 	mkdir -p build/output
-	mkdir -p build/output/lib/ace
 
 	# populating output with static content
-	cp -R public/css public/images build/output
-	cp public/lib/ace/ace.js public/lib/ace/worker-javascript.js public/lib/ace/mode-javascript.js public/lib/ace/theme-pastel_on_dark.js build/output/lib/ace
+	cp -r public/css public/images build/output
+	cp -rL public/libs build/output
 	cp deployPublic/* build/output/
 	cp public/dependencies.json build/output/
 
