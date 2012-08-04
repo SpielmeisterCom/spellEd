@@ -7,8 +7,8 @@ deploy:
 	mkdir -p build/output
 
 	# populating output with static content
-	cp -r public/css public/images build/output
-	cp -rL public/libs build/output
+	cp -R public/css public/images build/output
+	cp -RL public/libs build/output
 	cp deployPublic/* build/output/
 	cp public/dependencies.json build/output/
 
