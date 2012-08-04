@@ -298,6 +298,7 @@
 		"Ext.layout.container.Form",
 		"Ext.form.field.File",
 		"Ext.form.action.DirectSubmit",
+		"Ext.form.field.Hidden",
 		"Spelled.abstract.store.TreeStore",
 		"Spelled.store.asset.Tree",
 		"Spelled.store.asset.FoldersTree",
