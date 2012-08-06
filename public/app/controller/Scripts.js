@@ -60,12 +60,12 @@ Ext.define('Spelled.controller.Scripts', {
 	addAceEditor: function( panel ) {
 		var me = this
 
-		panel.aceEditor = Ext.amdModules[ "ace/ace" ].edit( panel.id )
+		panel.aceEditor = Ext.amdModules.ace.edit( panel.id )
 
-		var JavaScriptMode = Ext.amdModules[ "ace/mode/javascript" ].Mode;
+		var JavaScriptMode = Ext.amdModules.aceModeJavascript.Mode;
 		panel.aceEditor.getSession().setMode( new JavaScriptMode() );
 
-		panel.aceEditor.setTheme( Ext.amdModules[ "ace/theme/pastel_on_dark" ] );
+		panel.aceEditor.setTheme( Ext.amdModules.aceThemePastelOnDark );
 
 		panel.aceEditor.commands.addCommand( {
 			name: 'saveCommand',

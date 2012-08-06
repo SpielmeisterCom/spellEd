@@ -1,7 +1,10 @@
 Ext.define('Spelled.controller.Scenes', {
 	extend: 'Ext.app.Controller',
 
-	requires: [ 'Spelled.Logger' ],
+	requires: [
+		'Spelled.Logger',
+		'Spelled.MessageBus'
+	],
 
 	models: [
 		'config.Scene'
@@ -42,30 +45,44 @@ Ext.define('Spelled.controller.Scenes', {
 	TREE_ITEM_TYPE_SCRIPT   : 4,
 	TREE_ITEM_TYPE_ENTITIES : 5,
 
+	/**
+	 * Message bus used for communication with engine instances.
+	 */
+	engineMessageBus : undefined,
+
+
 	init: function() {
 		var me = this
 
-		var dispatchPostMessages = function( event ) {
-			switch ( event.data.type ) {
-				case 'spell.initialized' :
-					var scene = me.application.getActiveScene()
+		// initializing the engine message bus
+		this.engineMessageBus = Ext.create(
+			'Spelled.MessageBus',
+			{
+				handlers : {
+					'spell.initialized' : function( sourceId, payload ) {
+						me.engineMessageBus.flushQueue( sourceId )
 
-					me.answerIframePostMessage(
-							event,
+						me.engineMessageBus.send(
+							sourceId,
 							{
 								type : "spelled.debug.drawCoordinateGrid",
-								payload : scene.get( 'showGrid' )
+								payload : me.application.getActiveScene().get( 'showGrid' )
 							}
-					)
-
-					return
-
-				case 'spell.debug.consoleMessage' :
-					Spelled.Logger.log(  event.data.payload.level, event.data.payload.text )
+						)
+					},
+					'spell.debug.consoleMessage' : function( sourceId, payload ) {
+						Spelled.Logger.log( payload.level, payload.text )
+					}
+				}
 			}
-		}
+		)
 
-		window.addEventListener("message", dispatchPostMessages, false);
+		window.addEventListener(
+			'message',
+			Ext.bind( this.engineMessageBus.receive, this.engineMessageBus ),
+			false
+		)
+
 
 		this.control({
 			'renderedscene': {
@@ -225,31 +242,6 @@ Ext.define('Spelled.controller.Scenes', {
 		scene.set('scriptId', combo.getValue())
 	},
 
-	checkOrigin: function( event ) {
-		/*if ( event.origin !== this.BUILD_SERVER_ORIGIN ){
-		 console.log( 'event.origin: ' + event.origin )
-		 console.log( 'Error: origin does not match.' )
-
-		 return false
-		 }*/
-
-		//bypassing origin check for now
-
-		return true
-	},
-
-	answerIframePostMessage: function( event, message ) {
-		if( !this.checkOrigin( event ) ) return
-
-		this.sendIframePostMessage( event.data.iframeId, message )
-	},
-
-	sendIframePostMessage: function( iframeId, message ) {
-		var cmp = Ext.getCmp( iframeId )
-
-		cmp.el.dom.contentWindow.postMessage( message, '*' )
-	},
-
 	showScenesEditor: function() {
 		var tree = this.getScenesTree()
 		this.application.hideMainPanels()
@@ -305,9 +297,9 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	reloadScene: function( button ) {
-		var panel   = button.up('panel'),
+		var panel   = button.up( 'panel' ),
 			project = this.application.getActiveProject(),
-			iframe  = panel.down( 'spellediframe'),
+			iframe  = panel.down( 'spellediframe' ),
 			me      = this
 
 		var w = Ext.create('Ext.window.Window', {
@@ -346,9 +338,9 @@ Ext.define('Spelled.controller.Scenes', {
 			scene = this.application.getActiveScene()
 
 		if( tab ) {
-			scene.set('showGrid', state )
+			scene.set( 'showGrid', state )
 
-			this.sendIframePostMessage(
+			this.engineMessageBus.send(
 				tab.getId(),
 				{
 					type : "spelled.debug.drawCoordinateGrid",
@@ -358,47 +350,57 @@ Ext.define('Spelled.controller.Scenes', {
 		}
 	},
 
-	renderScene: function( scene ) {
-		var sceneEditor = Ext.getCmp( "SceneEditor"),
-			title = scene.getRenderTabTitle(),
-			me    = this
-
-		var foundTab = this.application.findActiveTabByTitle( sceneEditor, title )
-
-		if( foundTab )
-			return foundTab
-
-		var spellTab = Ext.create(
+	createSpellTab: function( title, projectName, sceneId, showGrid ) {
+		var tab = Ext.create(
 			'Spelled.view.ui.SpelledRendered',
 			{
-				title: title,
-				showGrid: scene.get('showGrid')
+				title : title,
+				showGrid : showGrid
 			}
 		)
 
-		var project = this.application.getActiveProject()
-
-		var createTab = function( provider, response ) {
-			if( !!response.data ) {
-				var iframe = Ext.create( 'Spelled.view.ui.SpelledIframe', {
-					projectName: project.get('name'),
-					sceneId: scene.getId()
-				})
-
-				spellTab.add( iframe )
-
-				me.application.createTab( sceneEditor, spellTab )
-
-			} else {
-				me.application.showBuildServerConnectError()
+		var iframe = Ext.create(
+			'Spelled.view.ui.SpelledIframe',
+			{
+				projectName : projectName,
+				sceneId : sceneId
 			}
+		)
+
+		tab.add( iframe )
+
+		return tab
+	},
+
+	renderScene: function( scene ) {
+		var sceneEditor = Ext.getCmp( "SceneEditor" ),
+			title = scene.getRenderTabTitle()
+
+		var foundTab = this.application.findActiveTabByTitle( sceneEditor, title )
+
+		if( foundTab ) {
+			return foundTab
 		}
 
-		Spelled.SpellBuildActions.executeCreateDebugBuild(
-			"html5",
-			project.get('name'),
-			project.getConfigName(),
-			Ext.bind( createTab, this )
+		var project = this.application.getActiveProject()
+
+		var tab = this.createSpellTab(
+			title,
+			project.get( 'name' ),
+			scene.getId(),
+			scene.get( 'showGrid' )
+		)
+
+		this.application.createTab( sceneEditor, tab )
+
+		var projectConverter = Ext.amdModules.projectConverter
+
+		this.engineMessageBus.send(
+			tab.down( 'spellediframe' ).getId(),
+			{
+				type : 'spelled.debug.runProject',
+				payload : projectConverter.toEngineFormat( project.getProxy().getWriter().getRecordData( project ) )
+			}
 		)
 	},
 

@@ -1,16 +1,24 @@
 require(
 	[
 		'requireToExt/inject',
+
 		'ace/ace',
 		'ace/mode/javascript',
 		'ace/theme/pastel_on_dark',
+
+		'spell/editor/converter/project',
+
 		'underscore'
 	],
 	function(
 		injectModulesIntoExt,
+
 		ace,
 		aceModeJavascript,
 		aceThemePastelOnDark,
+
+		projectConverter,
+
 		_
 	) {
 		Ext.Loader.setConfig( {
@@ -20,10 +28,11 @@ require(
 		} );
 
 		injectModulesIntoExt( {
-			'ace/ace'                  : ace,
-			'ace/mode/javascript'      : aceModeJavascript,
-			'ace/theme/pastel_on_dark' : aceThemePastelOnDark,
-			'underscore'               : _
+			'ace'                  : ace,
+			'aceModeJavascript'    : aceModeJavascript,
+			'aceThemePastelOnDark' : aceThemePastelOnDark,
+			'projectConverter'     : projectConverter,
+			'underscore'           : _
 		} )
 
 		var resolveDependencies = function( response ) {

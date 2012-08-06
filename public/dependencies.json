@@ -313,6 +313,7 @@
 		"Spelled.store.TemplatesTree",
 		"Spelled.store.template.FoldersTree",
 		"Spelled.Logger",
+		"Spelled.MessageBus",
 		"Spelled.model.config.Component",
 		"Spelled.view.component.Add",
 		"Spelled.store.config.Components",

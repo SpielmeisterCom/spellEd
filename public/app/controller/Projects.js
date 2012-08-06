@@ -80,11 +80,11 @@ Ext.define('Spelled.controller.Projects', {
         view.show()
     },
 
-    saveActiveProject: function( callback ) {
-        var project = this.application.getActiveProject()
+	saveActiveProject: function( callback ) {
+		var project = this.application.getActiveProject()
 
-        project.save( {	callback: callback } )
-    },
+		project.save( {	callback: callback } )
+	},
 
 	exportActiveProject: function() {
 		var project        = this.application.getActiveProject(),
@@ -111,7 +111,6 @@ Ext.define('Spelled.controller.Projects', {
 
             window.close()
         }
-
     },
 
 	prepareStores: function( projectName ) {
