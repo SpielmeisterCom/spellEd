@@ -6,7 +6,7 @@ require(
 		'ace/mode/javascript',
 		'ace/theme/pastel_on_dark',
 
-		'spell/editor/converter/project',
+		'spell/editor/createRuntimeModule',
 
 		'underscore'
 	],
@@ -17,7 +17,7 @@ require(
 		aceModeJavascript,
 		aceThemePastelOnDark,
 
-		projectConverter,
+		createRuntimeModule,
 
 		_
 	) {
@@ -31,7 +31,7 @@ require(
 			'ace'                  : ace,
 			'aceModeJavascript'    : aceModeJavascript,
 			'aceThemePastelOnDark' : aceThemePastelOnDark,
-			'projectConverter'     : projectConverter,
+			'createRuntimeModule'  : createRuntimeModule,
 			'underscore'           : _
 		} )
 

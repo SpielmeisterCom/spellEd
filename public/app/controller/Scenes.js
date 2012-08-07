@@ -393,13 +393,11 @@ Ext.define('Spelled.controller.Scenes', {
 
 		this.application.createTab( sceneEditor, tab )
 
-		var projectConverter = Ext.amdModules.projectConverter
-
 		this.engineMessageBus.send(
 			tab.down( 'spellediframe' ).getId(),
 			{
-				type : 'spelled.debug.runProject',
-				payload : projectConverter.toEngineFormat( project.getProxy().getWriter().getRecordData( project ) )
+				type : 'spelled.debug.executeRuntimeModule',
+				payload : Ext.amdModules.createRuntimeModule( project )
 			}
 		)
 	},
