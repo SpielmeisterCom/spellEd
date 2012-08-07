@@ -12,7 +12,7 @@ define(
 		 * Creates a runtime module out of a project in editor format.
 		 */
 		return function( project ) {
-			projectConverter.toEngineFormat( project.getProxy().getWriter().getRecordData( project ) )
+			return projectConverter.toEngineFormat( project.getProxy().getWriter().getRecordData( project ) )
 		}
 	}
 )
