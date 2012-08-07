@@ -1,1 +1,1 @@
-../../modules/requirejs/require.js
+../../../requirejs/require.js
