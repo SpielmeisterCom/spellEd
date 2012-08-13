@@ -10,10 +10,45 @@ Ext.define('Spelled.model.Project', {
         }
     },
 
+	save: function() {
+		this.syncAssetIds()
+		this.syncTemplateIds()
+
+		this.callParent( arguments )
+	},
+
+	getStoreIds: function( store ) {
+		var array = []
+		store.each(
+			function( asset ) {
+				array.push( asset.getFullName() )
+			},
+			this
+		)
+
+		return array
+	},
+
+	syncAssetIds: function() {
+		this.set( 'assetIds', this.getStoreIds( Ext.getStore( 'asset.Assets' ) ) )
+	},
+
+	syncTemplateIds: function() {
+		var result = []
+
+		this.set( 'templateIds', result.concat(
+			this.getStoreIds( Ext.getStore( 'template.Components' ) ),
+			this.getStoreIds( Ext.getStore( 'template.Entities' ) ),
+			this.getStoreIds( Ext.getStore( 'template.Systems' ) )
+		))
+	},
+
     fields: [
         'name',
-        'startScene'
-    ],
+        'startScene',
+		{ name: 'assetIds'   , type: 'array', defaultValue: [] },
+		{ name: 'templateIds', type: 'array', defaultValue: [] }
+	],
 
     idProperty: 'name',
 

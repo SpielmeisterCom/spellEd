@@ -20,6 +20,10 @@ Ext.define('Spelled.model.Asset', {
 		'assetId'
     ],
 
+	getFullName: function() {
+		return ( ( this.get('namespace').length > 0 ) ? this.get('namespace') +"."+ this.get('name') : this.get('name') )
+	},
+
 	constructor: function() {
 		this.callParent( arguments )
 

@@ -397,7 +397,7 @@ Ext.define('Spelled.controller.Scenes', {
 			tab.down( 'spellediframe' ).getId(),
 			{
 				type : 'spelled.debug.executeRuntimeModule',
-				payload : Ext.amdModules.createRuntimeModule( project )
+				payload : Ext.amdModules.createProjectInEngineFormat( project )
 			}
 		)
 	},
