@@ -7,6 +7,7 @@ require(
 		'ace/theme/pastel_on_dark',
 
 		'spell/editor/createProjectInEngineFormat',
+		'spell/editor/converter/project',
 
 		'underscore'
 	],
@@ -18,6 +19,7 @@ require(
 		aceThemePastelOnDark,
 
 		createProjectInEngineFormat,
+		createProjectConverter,
 
 		_
 	) {
@@ -32,6 +34,7 @@ require(
 			'aceModeJavascript'    : aceModeJavascript,
 			'aceThemePastelOnDark' : aceThemePastelOnDark,
 			'createProjectInEngineFormat'  : createProjectInEngineFormat,
+			'createProjectConverter': createProjectConverter,
 			'underscore'           : _
 		} )
 

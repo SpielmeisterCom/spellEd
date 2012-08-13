@@ -26,60 +26,6 @@ define(
 
 			var util = createUtil( root )
 
-			/**
-			 * This function creates a project in the spell engine format. It requires the project in the editor format as argument.
-			 *
-			 * @param {Object} project
-			 */
-			var translateProjectConfigToEngineFormat = function( project ) {
-				var result = _.pick( project, 'name', 'startScene', 'scenes' )
-
-				result.scenes = _.map(
-					project.getScenes,
-					function( sceneEditorFormat ) {
-						var scene = _.pick( sceneEditorFormat, 'name', 'scriptId', 'systems' )
-
-						scene.entities = _.map(
-							sceneEditorFormat.getEntities,
-							function( entityEditorFormat ) {
-								return entityFormatter.toEngineFormat( entityEditorFormat )
-							}
-						)
-
-						return scene
-					}
-				)
-
-				return result
-			}
-
-			/**
-			 * This function creates a project in the editor format. It requires the project in the spell engine format as argument.
-			 *
-			 * @param {Object} project
-			 */
-			var translateProjectConfigToEditorFormat = function( project ) {
-				var result = _.pick( project, 'name', 'startScene', 'scenes' )
-
-				result.scenes = _.map(
-					project.scenes,
-					function( sceneEngineFormat ) {
-						var scene = _.pick( sceneEngineFormat, 'name', 'scriptId', 'systems' )
-
-						scene.entities = _.map(
-							sceneEngineFormat.entities,
-							function( entity ) {
-								return entityFormatter.toEditorFormat( entity )
-							}
-						)
-
-						return scene
-					}
-				)
-
-				return result
-			}
-
             var createProject = function( req, res, payload, next ) {
                 var projectName = payload[0],
                     projectDir  = util.getPath( projectName, false )
@@ -110,9 +56,7 @@ define(
 
                         if( fileStat.isDirectory() ) {
                             var fileContent = fs.readFileSync( getConfigFilePath( projectFilePath ) , 'utf8' ),
-                            	object = translateProjectConfigToEditorFormat(
-									JSON.parse( fileContent )
-								)
+                            	object = JSON.parse( fileContent )
 
                             object.name = projectDir
                             result.push( object )
@@ -126,10 +70,8 @@ define(
             var readProject = function( req, res, payload, next ) {
                 var projectFilePath = util.getPath( payload[ 0 ].id )
 
-				return translateProjectConfigToEditorFormat(
-					util.readFile(
-						getConfigFilePath( projectFilePath )
-					)
+				return util.readFile(
+					getConfigFilePath( projectFilePath )
 				)
             }
 
@@ -139,7 +81,7 @@ define(
 
 				util.writeFile(
 					getConfigFilePath( projectFilePath ),
-					JSON.stringify( translateProjectConfigToEngineFormat( project ), null, "\t" )
+					JSON.stringify( project, null, "\t" )
 				)
             }
 

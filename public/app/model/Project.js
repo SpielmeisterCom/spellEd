@@ -7,7 +7,34 @@ Ext.define('Spelled.model.Project', {
             read:    Spelled.ProjectActions.read,
             update:  Spelled.ProjectActions.update,
             destroy: Spelled.ProjectActions.destroy
-        }
+        },
+		reader: {
+			read: function( response ) {
+				var data
+
+				response = Ext.amdModules.createProjectConverter.toEditorFormat(response )
+
+				if (response) {
+					data = response.responseText ? this.getResponseData(response) : this.readRecords(response);
+				}
+
+				return data || this.nullResultSet;
+			}
+		},
+		writer: {
+			write: function( request ) {
+				var operation = request.operation,
+					records   = operation.records || [],
+					len       = records.length,
+					i         = 0,
+					data      = [];
+
+				for (; i < len; i++) {
+					data.push( Ext.amdModules.createProjectConverter.toEngineFormat( this.getRecordData(records[i], operation) ) );
+				}
+				return this.writeRecords(request, data);
+			}
+		}
     },
 
 	save: function() {
