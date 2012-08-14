@@ -83,6 +83,18 @@ Ext.define('Spelled.controller.Templates', {
 			case this.TYPE_ENTITY_COMPOSITE:
 				this.application.getController('templates.Entities').showEntityCompositeComponentsListHelper( record )
 				break
+			case this.TEMPLATE_TYPE_SYSTEM:
+				var template = this.getTemplateSystemsStore().getById( record.getId() )
+				if( !template ) return
+
+				var tab = this.application.findActiveTabByTitle( this.getTemplateEditor(), template.getFullName() )
+				if( tab ) {
+					this.application.getController('templates.Systems').refreshSystemConfiguration( tab )
+				} else {
+					this.openTemplate( treeGrid, record )
+				}
+
+				break
 			default:
 				return
 		}
@@ -302,7 +314,6 @@ Ext.define('Spelled.controller.Templates', {
     },
 
     refreshStores: function() {
-		console.log( "Drin" )
         this.refreshTemplateStores()
     },
 
@@ -310,6 +321,11 @@ Ext.define('Spelled.controller.Templates', {
 		this.application.hideMainPanels()
 		this.getRightPanel().show()
         this.loadTrees()
+
+
+		if( this.getTemplatesTree().getSelectionModel().getSelection().length > 0 ){
+			this.showConfig( this.getTemplatesTree(), this.getTemplatesTree().getSelectionModel().getSelection()[0] )
+		}
 
 		this.getTemplateEditor().show()
 
