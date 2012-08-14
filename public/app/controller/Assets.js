@@ -275,8 +275,12 @@ Ext.define('Spelled.controller.Assets', {
             {
                 scope: this,
                 success: function( asset ) {
-                    asset.destroy()
-                    this.refreshStores()
+                    asset.destroy(
+						{
+							callback: this.refreshStores,
+							scope: this
+						}
+					)
 				}
             }
         )

@@ -180,8 +180,11 @@ Ext.define('Spelled.controller.Templates', {
     removeTemplate: function( template ) {
         this.closeOpenedTabs( template )
 
-        template.destroy()
-        this.refreshStores()
+        template.destroy({
+			callback: this.refreshStores,
+			scope: this
+		})
+
     },
 
     closeOpenedTabs: function( template ) {
@@ -299,6 +302,7 @@ Ext.define('Spelled.controller.Templates', {
     },
 
     refreshStores: function() {
+		console.log( "Drin" )
         this.refreshTemplateStores()
     },
 
