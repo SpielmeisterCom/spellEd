@@ -113,10 +113,6 @@ define(
 				spellBuildServerWrapper( "initDirectory", payload, req, res )
 			}
 
-			var executeCreateDebugBuild = function( req, res, payload, next ) {
-				spellBuildServerWrapper( "executeCreateDebugBuild", payload, req, res )
-			}
-
 			var spellBuildServerWrapper = function( method, payload, req, res) {
 
 				var post_data = {
@@ -177,11 +173,6 @@ define(
                 SystemTemplateActions    : createSystemApi( projectsRoot ),
                 ScriptsActions           : createScriptsApi( projectsRoot ),
 				SpellBuildActions : [
-					{
-						name: "executeCreateDebugBuild",
-						len: 3,
-						func: executeCreateDebugBuild
-					},
 					{
 						name: "initDirectory",
 						len: 2,

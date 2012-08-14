@@ -312,25 +312,7 @@ Ext.define('Spelled.controller.Scenes', {
 			}]
 		}).show()
 
-		this.application.getController('Projects').saveActiveProject(
-			function() {
-				Spelled.SpellBuildActions.executeCreateDebugBuild(
-					"html5",
-					project.get('name'),
-					project.getConfigName(),
-					function( provider, response  ) {
-						w.close()
-
-						if( !!response.data ) {
-							iframe.el.dom.src = iframe.el.dom.src
-							iframe.focus()
-						} else {
-							me.application.showBuildServerConnectError()
-						}
-					}
-				)
-			}
-		)
+		this.application.getController('Projects').saveActiveProject()
 	},
 
 	toggleGrid: function( button, state ) {
