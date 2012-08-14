@@ -300,6 +300,7 @@ Ext.define('Spelled.controller.Scenes', {
 		var panel   = button.up( 'panel' ),
 			project = this.application.getActiveProject(),
 			iframe  = panel.down( 'spellediframe' ),
+			sceneId = iframe.sceneId,
 			me      = this
 
 		var w = Ext.create('Ext.window.Window', {
@@ -312,7 +313,30 @@ Ext.define('Spelled.controller.Scenes', {
 			}]
 		}).show()
 
-		this.application.getController('Projects').saveActiveProject()
+		this.application.getController('Projects').saveActiveProject(
+			function() {
+				iframe.destroy()
+				w.close()
+
+				var newIframe = Ext.create(
+					'Spelled.view.ui.SpelledIframe',
+					{
+						projectName : project.get('name'),
+						sceneId : sceneId
+					}
+				)
+
+				panel.add( newIframe )
+
+				me.engineMessageBus.send(
+					newIframe.getId(),
+					{
+						type : 'spelled.debug.executeRuntimeModule',
+						payload : Ext.amdModules.createProjectInEngineFormat( project )
+					}
+				)
+			}
+		)
 	},
 
 	toggleGrid: function( button, state ) {
