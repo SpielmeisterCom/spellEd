@@ -91,13 +91,18 @@ Ext.define('Spelled.controller.Projects', {
 			exportFileName = project.get('name') +".tar",
 			me             = this
 
-		Spelled.SpellBuildActions.exportDeployment( project.get('name'), exportFileName , function( provider, response ) {
-			if( !!response.data ) {
-				window.location = '/' + exportFileName
-			} else {
-				me.application.showBuildServerConnectError()
+		Spelled.SpellBuildActions.exportDeployment(
+			project.get( 'name' ),
+			exportFileName,
+			function( provider, response ) {
+				if( !!response.data ) {
+					window.location = '/' + exportFileName
+
+				} else {
+					me.application.showBuildServerConnectError()
+				}
 			}
-		})
+		)
 	},
 
     loadProjectAction: function ( button, event, record ) {
