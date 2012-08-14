@@ -95,15 +95,14 @@ Ext.define('Spelled.controller.templates.Systems', {
 
 	refreshScriptTab: function( scriptId ) {
 		var tab	   = this.getTemplateEditor().getActiveTab(),
-			editor = tab.down('scripteditor'),
 			Script = this.getScriptModel()
 
 		Script.load(
 			scriptId, {
 				scope: this,
 				success: function( script ) {
-					editor.setModel( script )
-					editor.refreshContent()
+					tab.setModel( script )
+					tab.refreshContent()
 				}
 			}
 		)
@@ -193,9 +192,9 @@ Ext.define('Spelled.controller.templates.Systems', {
 		var templateEditor    = this.getTemplateEditor(),
 			configurationView = Ext.widget( 'systemtemplateconfiguration' )
 
-        var editView = Ext.create( 'Spelled.view.template.system.Edit',  {
+        var editView = Ext.widget( 'systemtemplateedit',  {
                 title: systemTemplate.getFullName(),
-                template : systemTemplate
+                template: systemTemplate
             }
         )
 
