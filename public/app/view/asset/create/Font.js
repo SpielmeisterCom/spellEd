@@ -52,6 +52,7 @@ Ext.define('Spelled.view.asset.create.Font', {
 				{
 					xtype: "numberfield",
 					name: 'spacing',
+					value: 0,
 					fieldLabel: 'Spacing'
 				},
 				{

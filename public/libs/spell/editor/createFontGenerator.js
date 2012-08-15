@@ -1,11 +1,20 @@
 define(
-	'spell/fontGenerator',
+	'spell/editor/createFontGenerator',
 	[
 		'underscore'
 	],
 	function(
 		_
 	) {
+		var lychee = { debug : false }
+
+		var done = function( imageDataUrl, settings ) {
+			return {
+				imageDataUrl : imageDataUrl,
+				settings : settings
+			}
+		}
+
 		var Class = function(canvas) {
 			this.__canvas = canvas instanceof HTMLCanvasElement ? canvas : document.createElement('canvas');
 			this.__ctx = this.__canvas.getContext('2d');
@@ -211,7 +220,7 @@ define(
 
 			export: function(settings) {
 
-				this.settings = _.defaults(this.defaults, settings);
+				this.settings = _.defaults(settings, this.defaults);
 
 				var charset = [];
 				for (var c = this.settings.firstChar; c < this.settings.lastChar; c++) {
@@ -287,12 +296,13 @@ define(
 				};
 
 
-				// 6. Sprite the Font now
-				var that = this;
-				sprite.onload = function() {
-					that.__sprite(this, that.__canvas.width, that.__canvas.height, settings, widthMap);
-				};
+//				// 6. Sprite the Font now
+//				var that = this;
+//				sprite.onload = function() {
+//					that.__sprite(this, that.__canvas.width, that.__canvas.height, settings, widthMap);
+//				};
 
+				return this.__sprite(this.__canvas, this.__canvas.width, this.__canvas.height, settings, widthMap);
 			},
 
 
@@ -335,11 +345,14 @@ define(
 						}
 
 
-						this.trigger('ready', [{
-							sprite: sprite,
-							images: images,
-							settings: JSON.stringify(settings)
-						}]);
+//						this.trigger('ready', [{
+//							sprite: sprite,
+//							images: images,
+//							settings: JSON.stringify(settings)
+//						}]);
+
+//						done( sprite )
+						throw 'Error: mode ' + Class.SPRITEMAP.none + ' not implemented.'
 
 						break;
 
@@ -377,10 +390,14 @@ define(
 //						}
 
 
-						this.trigger('ready', [{
-							sprite: sprite,
-							settings: JSON.stringify(settings)
-						}]);
+//						this.trigger('ready', [{
+//							sprite: sprite,
+//							settings: JSON.stringify(settings)
+//						}]);
+
+
+//						done( this.__canvas.toDataURL('image/png') )
+						throw 'Error: mode ' + Class.SPRITEMAP.x + ' not implemented.'
 
 						break;
 
@@ -511,21 +528,24 @@ define(
 						settings.map = widthMap;
 
 
-						this.trigger('ready', [{
-							sprite: sprite,
-							settings: JSON.stringify(
-									settings,
-									null,
-									'\t'
-							)
-						}]);
+//						this.trigger('ready', [{
+//							sprite: sprite,
+//							settings: JSON.stringify(
+//									settings,
+//									null,
+//									'\t'
+//							)
+//						}]);
+
+						return done( this.__canvas.toDataURL('image/png'), settings )
 
 						break;
 
 
 					default:
 
-						this.trigger('error', [ 'Invalid Spritemap Settings' ]);
+//						this.trigger('error', [ 'Invalid Spritemap Settings' ]);
+						throw 'Error: Invalid spritemap settings'
 
 						break;
 
@@ -544,10 +564,15 @@ define(
 		};
 
 
-		var context = document.getElementById( 'canvas' ).getContext( '2d' );
-		var settings = {};
+//		var context = document.getElementById( 'canvas' ).getContext( '2d' );
+//		var settings = {};
+//
+//		var fontGenerator = new Class( context );
+//		fontGenerator.export( settings );
 
-		var fontGenerator = new Class( context );
-		fontGenerator.export( settings );
+
+		return function( canvas ) {
+			return new Class( canvas )
+		}
 	}
 )

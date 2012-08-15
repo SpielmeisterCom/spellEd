@@ -8,6 +8,7 @@ require(
 
 		'spell/editor/createProjectInEngineFormat',
 		'spell/editor/converter/project',
+		'spell/editor/createFontGenerator',
 
 		'underscore'
 	],
@@ -20,6 +21,7 @@ require(
 
 		createProjectInEngineFormat,
 		createProjectConverter,
+		createFontGenerator,
 
 		_
 	) {
@@ -30,12 +32,13 @@ require(
 		} );
 
 		injectModulesIntoExt( {
-			'ace'                  : ace,
-			'aceModeJavascript'    : aceModeJavascript,
-			'aceThemePastelOnDark' : aceThemePastelOnDark,
-			'createProjectInEngineFormat'  : createProjectInEngineFormat,
-			'createProjectConverter': createProjectConverter,
-			'underscore'           : _
+			'ace'                         : ace,
+			'aceModeJavascript'           : aceModeJavascript,
+			'aceThemePastelOnDark'        : aceThemePastelOnDark,
+			'createProjectInEngineFormat' : createProjectInEngineFormat,
+			'createProjectConverter'      : createProjectConverter,
+			'createFontGenerator'         : createFontGenerator,
+			'underscore'                  : _
 		} )
 
 		var resolveDependencies = function( response ) {

@@ -248,14 +248,20 @@ Ext.define('Spelled.controller.Assets', {
     },
 
 	generateFontCanvas: function( values ) {
-		var canvas = document.createElement('canvas');
-		canvas.width  = 300
-		canvas.height = 300
-		var context = canvas.getContext("2d")
-		context.fillStyle = "#FF0000"
-		context.fillRect(0,0,150,75)
+		var fontGenerator = Ext.amdModules.createFontGenerator( document.createElement( 'fontGenerationCanvas' ) )
 
-		return canvas
+		var settings = {
+			font : values.fontFamily,
+			size : parseInt( values.fontSize ),
+			style : values.fontStyle,
+			color : values.color,
+			outline : parseInt( values.outline ),
+			outlineColor : values.outlineColor,
+			spacing : parseInt( values.spacing ),
+			spritemap : 'xy'
+		}
+
+		return fontGenerator.export( settings )
 	},
 
     createAsset: function( button ) {
@@ -271,8 +277,10 @@ Ext.define('Spelled.controller.Assets', {
 			}
 
 			if( values.type === "font" ) {
-				var canvas = this.generateFontCanvas( values )
-				additionalParams.fontCanvas = canvas.toDataURL()
+				var result = this.generateFontCanvas( values )
+
+				additionalParams.fontCanvas = result.imageDataUrl
+				additionalParams.charset    = Ext.encode( {} )
 			}
 
             form.submit(
