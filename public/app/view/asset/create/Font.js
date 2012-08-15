@@ -17,6 +17,7 @@ Ext.define('Spelled.view.asset.create.Font', {
 					queryMode: 'local',
 					displayField: 'name',
 					valueField: 'name',
+					value: "Open Sans",
 					name: 'fontFamily',
 					fieldLabel: 'Font Family'
 				},
@@ -24,6 +25,7 @@ Ext.define('Spelled.view.asset.create.Font', {
 					xtype: "numberfield",
 					name: 'fontSize',
 					minValue: 0,
+					value: 14,
 					fieldLabel: 'Font Size'
 				},
 				{
@@ -40,12 +42,14 @@ Ext.define('Spelled.view.asset.create.Font', {
 					queryMode: 'local',
 					displayField: 'name',
 					valueField: 'name',
+					value: "normal",
 					name: 'fontStyle',
 					fieldLabel: 'Font Style'
 				},
 				{
 					xtype: "colorfield",
 					allowBlank: true,
+					value: "FFF",
 					name: 'color',
 					fieldLabel: 'Color'
 				},
@@ -58,11 +62,13 @@ Ext.define('Spelled.view.asset.create.Font', {
 				{
 					xtype: "numberfield",
 					name: 'outline',
+					value: 1,
 					fieldLabel: 'Outline'
 				},
 				{
 					xtype: "colorfield",
 					allowBlank: true,
+					value: "000",
 					name: 'outlineColor',
 					fieldLabel: 'Outline Color'
 				}
