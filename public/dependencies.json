@@ -432,6 +432,8 @@
 		"Spelled.controller.Templates",
 		"Spelled.controller.templates.Systems",
 		"Spelled.view.ui.SpelledViewport",
-		"Spelled.view.ui.SpelledIframe"
+		"Spelled.view.ui.SpelledIframe",
+		"Spelled.view.asset.ColorField",
+		"Spelled.view.asset.create.Font"
 	]
 }

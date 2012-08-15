@@ -24,6 +24,8 @@ Ext.define('Spelled.view.asset.create.Animation', {
 						}
 					},
 					validator: function( value ) {
+						if( !this.isVisible( true ) ) return true
+
 						var file = this.up('form').down('filefield').getValue()
 						if( ( !file && !value ) )
 							return "You need to select a existing Asset"

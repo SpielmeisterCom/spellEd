@@ -19,7 +19,13 @@ Ext.define('Spelled.view.asset.Form', {
 			queryMode: 'local',
 			fieldLabel: "Type",
 			displayField: 'name',
-			valueField: 'type'
+			valueField: 'type',
+			listeners: {
+				'change': function() {
+					this.up('form').down('combobox[name="assetId"]').reset()
+					this.up('form').down('filefield').reset()
+				}
+			}
 		},
 		{
 			xtype: "textfield",
@@ -48,6 +54,8 @@ Ext.define('Spelled.view.asset.Form', {
 				}
 			},
 			validator: function( value ) {
+				if( !this.isVisible( true ) ) return true
+
 				var file = this.up('form').down('combobox[name="assetId"]').getValue()
 				if( ( !file && !value ) )
 					return "You need to select a new File"
@@ -62,6 +70,9 @@ Ext.define('Spelled.view.asset.Form', {
 			hidden: true
 		},{
 			xtype: 'animationassetconfig',
+			hidden: true
+		},{
+			xtype: 'textappearanceconfig',
 			hidden: true
 		}
 	],

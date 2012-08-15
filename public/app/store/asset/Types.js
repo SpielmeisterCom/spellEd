@@ -15,10 +15,10 @@ Ext.define('Spelled.store.asset.Types', {
 		{
 			"type":"spriteSheet",
 			"name":"Sprite Sheet"
-		}//,
-//        {
-//            "type":"sounds",
-//            "name":"Sounds"
-//        }
+		},
+        {
+            "type":"font",
+            "name":"Font"
+        }
     ]
 });

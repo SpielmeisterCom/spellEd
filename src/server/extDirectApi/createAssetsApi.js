@@ -35,14 +35,16 @@ define(
 
 				if( result.type === 'spriteSheet' ) {
 					result.config = _.pick( configObject, 'textureWidth', 'textureHeight', 'frameWidth', 'frameHeight')
-				} else {
-					if(  result.type === 'animation' ) {
-						result.config          = _.pick( configObject, 'duration' )
-						result.config.looped   = !!configObject.looped
-						result.config.type     = configObject.animationType
-						result.config.frameIds = configObject.frameIds.split(",")
-						result.assetId         = configObject.assetId
-					}
+
+				} else if( result.type === 'animation' ) {
+					result.config          = _.pick( configObject, 'duration' )
+					result.config.looped   = !!configObject.looped
+					result.config.type     = configObject.animationType
+					result.config.frameIds = configObject.frameIds.split(",")
+					result.assetId         = configObject.assetId
+
+				} else if( result.type === 'font' ) {
+					result.config = _.pick( configObject, 'fontFamily', 'fontSize', 'fontStyle', 'color', 'spacing', 'outline', 'outlineColor', 'charset' )
 				}
 
 				return result
@@ -68,10 +70,19 @@ define(
 					var extension = mime.extension( Asset.file.type),
 						baseName  = assetName +"." + extension,
 						filePath  = newFileNameWithoutExtension + "." + extension,
-						assetId   = ( namespace.length > 0 ) ? namespace + "/" + baseName : baseName
+						fileName   = ( namespace.length > 0 ) ? namespace + "/" + baseName : baseName
 
 					fs.renameSync( Asset.file.path, filePath )
-					result.file = assetId
+					result.file = fileName
+				}
+
+				if( payload.type === 'font' ) {
+					var data          = payload.fontCanvas.replace(/^data:image\/\w+;base64,/, ""),
+						buf           = new Buffer(data, 'base64'),
+						fontImageName = ( ( namespace.length > 0 ) ? namespace + "/" + assetName : assetName ) + ".png"
+
+					util.writeFile( newFileNameWithoutExtension + ".png", buf, false )
+					result.file = fontImageName
 				}
 
                 util.writeFile( newFileNameWithoutExtension + ".json", JSON.stringify( result, null, "\t" ), false )

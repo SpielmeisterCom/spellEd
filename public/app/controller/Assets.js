@@ -2,6 +2,7 @@ Ext.define('Spelled.controller.Assets', {
     extend: 'Ext.app.Controller',
 
     views: [
+		'asset.ColorField',
         'asset.Navigator',
         'asset.Editor',
         'asset.TreeList',
@@ -12,6 +13,7 @@ Ext.define('Spelled.controller.Assets', {
 		'asset.create.Texture',
 		'asset.create.SpriteSheet',
 		'asset.create.Animation',
+		'asset.create.Font',
 		'asset.edit.Edit',
 		'asset.inspector.Config'
     ],
@@ -50,7 +52,7 @@ Ext.define('Spelled.controller.Assets', {
 			'editasset button[action="editAsset"]' : {
 				click: this.editAsset
 			},
-			'spritesheetconfig > tool-documentation, animationassetconfig > tool-documentation': {
+			'spritesheetconfig > tool-documentation, animationassetconfig > tool-documentation, textappearanceconfig > tool-documentation': {
 				showDocumentation: this.showDocumentation
 			},
             'assetsnavigator': {
@@ -98,12 +100,13 @@ Ext.define('Spelled.controller.Assets', {
 		var assetsCombo = form.down('combobox[name="assetId"]'),
 			fileUpload  = form.down('filefield[name="asset"]'),
 			spriteSheetConfig    = form.down('spritesheetconfig'),
-			animationassetconfig = form.down('animationassetconfig')
-
+			animationAssetConfig = form.down('animationassetconfig'),
+			textAssetConfig      = form.down('textappearanceconfig')
 		//Resetting defaults
 		assetsCombo.hide()
 		spriteSheetConfig.hide()
-		animationassetconfig.hide()
+		animationAssetConfig.hide()
+		textAssetConfig.hide()
 		fileUpload.hide()
 		fileUpload.reset()
 		assetsCombo.clearValue()
@@ -122,7 +125,24 @@ Ext.define('Spelled.controller.Assets', {
 				}
 
 				assetsCombo.show()
-				animationassetconfig.show()
+				animationAssetConfig.show()
+				break
+			case "font":
+				if( !!asset ) {
+					form.getForm().setValues(
+						{
+							spacing      : asset.get('config').spacing,
+							fontFamily   : asset.get('config').fontFamily,
+							fontSize     : asset.get('config').fontSize,
+							fontStyle    : asset.get('config').fontStyle,
+							color        : asset.get('config').color,
+							outline      : asset.get('config').outline,
+							outlineColor : asset.get('config').outlineColor
+						}
+					)
+				}
+
+				textAssetConfig.show()
 				break
 			case "spriteSheet":
 				if( !!asset ) {
@@ -137,6 +157,8 @@ Ext.define('Spelled.controller.Assets', {
 				}
 
 				spriteSheetConfig.show()
+				fileUpload.show()
+				break
 			default:
 				fileUpload.show()
 		}
@@ -207,6 +229,9 @@ Ext.define('Spelled.controller.Assets', {
 			case 'appearance':
 				view.docString = '#!/guide/asset_type_2d_static_appearance'
 				break
+			case 'text':
+				view.docString = '#!/guide/asset_type_text_appearance'
+				break
 		}
 
 		inspectorPanel.add( view )
@@ -222,18 +247,37 @@ Ext.define('Spelled.controller.Assets', {
         this.application.getController('Menu').showAssetsListContextMenu( e )
     },
 
+	generateFontCanvas: function( values ) {
+		var canvas = document.createElement('canvas');
+		canvas.width  = 300
+		canvas.height = 300
+		var context = canvas.getContext("2d")
+		context.fillStyle = "#FF0000"
+		context.fillRect(0,0,150,75)
+
+		return canvas
+	},
+
     createAsset: function( button ) {
         var form    = button.up('form').getForm(),
             window  = button.up( 'window' ),
-            project = this.application.getActiveProject()
+            project = this.application.getActiveProject(),
+			values  = form.getValues()
 
-        if( form.isValid() ){
+		if( form.isValid() ){
+
+			var additionalParams = {
+				projectName: project.get('name')
+			}
+
+			if( values.type === "font" ) {
+				var canvas = this.generateFontCanvas( values )
+				additionalParams.fontCanvas = canvas.toDataURL()
+			}
 
             form.submit(
                 {
-                    params: {
-                        projectName: project.get('name')
-                    },
+                    params: additionalParams,
                     waitMsg: 'Uploading your asset...',
                     success:
                         Ext.bind(

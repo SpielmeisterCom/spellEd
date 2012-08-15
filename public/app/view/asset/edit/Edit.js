@@ -68,6 +68,9 @@ Ext.define('Spelled.view.asset.edit.Edit', {
 			},{
 				xtype: 'animationassetconfig',
 				hidden: true
+			},{
+				xtype: 'textappearanceconfig',
+				hidden: true
 			}
 		],
 
