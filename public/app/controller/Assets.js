@@ -280,7 +280,7 @@ Ext.define('Spelled.controller.Assets', {
 				var result = this.createFontMap( values )
 
 				additionalParams.fontCanvas = result.imageDataUrl
-				additionalParams.charset    = Ext.encode( {} )
+				additionalParams.charset    = Ext.encode( result.charset )
 			}
 
             form.submit(

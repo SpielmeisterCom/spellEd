@@ -44,7 +44,8 @@ define(
 					result.assetId         = configObject.assetId
 
 				} else if( result.type === 'font' ) {
-					result.config = _.pick( configObject, 'fontFamily', 'fontSize', 'fontStyle', 'color', 'spacing', 'outline', 'outlineColor', 'charset' )
+					result.config = _.pick( configObject, 'fontFamily', 'fontSize', 'fontStyle', 'color', 'spacing', 'outline', 'outlineColor' )
+					result.config.charset = JSON.parse( configObject.charset )
 				}
 
 				return result
