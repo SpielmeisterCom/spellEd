@@ -32,6 +32,9 @@ Ext.define('Spelled.view.component.Properties', {
 				case 'spriteSheet':
 					storeId = 'asset.SpriteSheet'
 					break
+				case 'font':
+					storeId = 'asset.Fonts'
+					break
 			}
 		}
 

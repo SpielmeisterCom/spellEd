@@ -24,6 +24,7 @@ Ext.define('Spelled.controller.Assets', {
         'asset.FoldersTree',
         'asset.Textures',
         'asset.Sounds',
+		'asset.Fonts',
 		'asset.SpriteSheets',
 		'asset.Animations',
 		'asset.Assets'
