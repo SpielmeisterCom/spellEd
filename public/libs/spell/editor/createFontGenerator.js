@@ -377,7 +377,7 @@ define(
 					widthMap.push({
 						width: frame.width - this.settings.spacing * 2,
 						height: frame.height,
-						x: frame.dx + this.settings.spacing,
+						x: frame.dx,
 						y: frame.dy + frame.rowIndex * rowMarginInPx
 					});
 				}
