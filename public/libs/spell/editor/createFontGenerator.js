@@ -314,6 +314,8 @@ define(
 				var srcOffsetX = this.settings.spacing;
 				var offsetX = 0;
 				var offsetY = 0;
+				var rowIndex = 0;
+				var rowMarginInPx = 1;
 
 				for (var w = 0, l = widthMap.length; w < l; w++) {
 					var frame = {
@@ -322,7 +324,8 @@ define(
 						sx: srcOffsetX - this.settings.spacing,
 						sy: 0,
 						dx: offsetX,
-						dy: offsetY
+						dy: offsetY,
+						rowIndex: rowIndex
 					};
 
 					spriteMap.push(frame);
@@ -339,13 +342,14 @@ define(
 						offsetX = 0;
 						offsetY += height;
 						spriteHeight += height;
+						rowIndex++;
 					}
 				}
 
 
 				// 3. Re-draw the sprite image
 				this.__canvas.width = spriteWidth;
-				this.__canvas.height = spriteHeight;
+				this.__canvas.height = spriteHeight + rowIndex * rowMarginInPx;
 
 
 				for (var s = 0, l = spriteMap.length; s < l; s++) {
@@ -358,7 +362,7 @@ define(
 							frame.width,
 							frame.height,
 							frame.dx,
-							frame.dy,
+							frame.dy + frame.rowIndex * rowMarginInPx,
 							frame.width,
 							frame.height
 					);
@@ -374,7 +378,7 @@ define(
 						width: frame.width - this.settings.spacing * 2,
 						height: frame.height,
 						x: frame.dx + this.settings.spacing,
-						y: frame.dy
+						y: frame.dy + frame.rowIndex * rowMarginInPx
 					});
 				}
 
