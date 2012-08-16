@@ -28,7 +28,6 @@ define(
 
 
 		Class.prototype = {
-
 			defaults: {
 				font: 'Ubuntu',
 				size: 32,
@@ -41,6 +40,21 @@ define(
 				lastChar: 127,
 				spritemap: Class.SPRITEMAP.x
 			},
+
+
+			__cloneCanvas: function( canvas ) {
+			    var newCanvas = document.createElement( 'canvas' )
+
+				newCanvas.width  = canvas.width
+				newCanvas.heigth = canvas.heigth
+
+				var context = newCanvas.getContext( '2d' )
+
+			    context.drawImage( canvas, 0, 0 )
+
+			    return newCanvas
+			},
+
 
 			__updateFont: function() {
 
@@ -283,9 +297,11 @@ define(
 				var baseline = this.__getBaseline(charset, widthMap);
 
 
-				// 5. Generate Image and Settings for Spriting
-				var sprite = new Image();
-				sprite.src = this.__canvas.toDataURL('image/png');
+//				// 5. Generate Image and Settings for Spriting
+//				var sprite = new Image();
+//				sprite.src = this.__canvas.toDataURL('image/png');
+
+				var sprite = this.__cloneCanvas( this.__canvas )
 
 
 				var settings = {
@@ -307,7 +323,6 @@ define(
 
 
 			__sprite: function(sprite, width, height, settings, widthMap) {
-
 				switch (this.settings.spritemap) {
 
 //					case Class.SPRITEMAP.none:
@@ -463,9 +478,9 @@ define(
 						}
 
 
-						// 4. Regenerate sprite image (data)
-						sprite = new Image();
-						sprite.src = this.__canvas.toDataURL('image/png');
+//						// 4. Regenerate sprite image (data)
+//						sprite = new Image();
+//						sprite.src = this.__canvas.toDataURL('image/png');
 
 
 						// 5. Regenerate sprite map
@@ -485,7 +500,7 @@ define(
 
 						settings.map = widthMap;
 
-						return done( this.__canvas.toDataURL('image/png'), settings )
+						return done( this.__canvas.toDataURL( 'image/png' ), settings )
 
 						break;
 
