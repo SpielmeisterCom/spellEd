@@ -277,11 +277,10 @@ Ext.define('Spelled.controller.Assets', {
 			color : values.color,
 			outline : parseInt( values.outline ),
 			outlineColor : values.outlineColor,
-			spacing : parseInt( values.spacing ),
-			spritemap : 'xy'
+			spacing : parseInt( values.spacing )
 		}
 
-		return fontGenerator.export( settings )
+		return fontGenerator.create( settings )
 	},
 
     createAsset: function( button ) {

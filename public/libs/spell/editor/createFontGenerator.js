@@ -225,7 +225,7 @@ define(
 
 			},
 
-			export: function(settings) {
+			create: function(settings) {
 
 				this.settings = _.defaults(settings, this.defaults);
 
