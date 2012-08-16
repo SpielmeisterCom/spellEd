@@ -9,6 +9,7 @@ require(
 		'spell/editor/createProjectInEngineFormat',
 		'spell/editor/converter/project',
 		'spell/editor/createFontGenerator',
+		'spell/editor/systemFontDetector',
 
 		'underscore'
 	],
@@ -22,6 +23,7 @@ require(
 		createProjectInEngineFormat,
 		createProjectConverter,
 		createFontGenerator,
+		systemFontDetector,
 
 		_
 	) {
@@ -38,6 +40,7 @@ require(
 			'createProjectInEngineFormat' : createProjectInEngineFormat,
 			'createProjectConverter'      : createProjectConverter,
 			'createFontGenerator'         : createFontGenerator,
+			'systemFontDetector'          : systemFontDetector,
 			'underscore'                  : _
 		} )
 

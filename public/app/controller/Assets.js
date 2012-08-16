@@ -128,6 +128,7 @@ Ext.define('Spelled.controller.Assets', {
 				animationAssetConfig.show()
 				break
 			case "font":
+
 				if( !!asset ) {
 					form.getForm().setValues(
 						{

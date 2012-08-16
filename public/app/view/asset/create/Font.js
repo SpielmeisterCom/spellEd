@@ -5,6 +5,11 @@ Ext.define('Spelled.view.asset.create.Font', {
 	initComponent: function() {
 	    var me = this
 
+		var fontStore =  Ext.create( 'Ext.data.Store', {
+			fields: ['fontName', 'fontStyle'],
+			data: Ext.amdModules.systemFontDetector.getFonts()
+		})
+
 		Ext.applyIf( me, {
 			items: [
 				{
@@ -15,9 +20,10 @@ Ext.define('Spelled.view.asset.create.Font', {
 				{
 					xtype: "combo",
 					queryMode: 'local',
-					displayField: 'name',
-					valueField: 'name',
-					value: "Open Sans",
+					forceSelection: true,
+					store: fontStore,
+					displayField: 'fontName',
+					valueField: 'fontName',
 					name: 'fontFamily',
 					fieldLabel: 'Font Family'
 				},
