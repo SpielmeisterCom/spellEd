@@ -111,6 +111,15 @@ define(
 				if( !!asset.file )
 					result.file = asset.file
 
+
+				if( asset.type === 'font' ) {
+					var data          = asset.config.fontCanvas.replace(/^data:image\/\w+;base64,/, ""),
+						buf           = new Buffer(data, 'base64'),
+						filePath      = path.dirname( asset.id ) + "/" + path.basename( asset.file )
+
+					util.writeFile( filePath, buf, false )
+				}
+
 				util.writeFile( asset.id, JSON.stringify( result, null, "\t" ) )
 
 				return asset

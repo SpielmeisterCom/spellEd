@@ -74,9 +74,20 @@ Ext.define('Spelled.controller.Assets', {
             },
             'createasset button[action="createAsset"]' : {
                 click: this.createAsset
-            }
+            },
+		    'textappearanceconfig field' : {
+				change: this.refreshFontPreview
+			}
         })
     },
+
+	refreshFontPreview: function( field ) {
+		var form       = field.up( 'form' ),
+			imageField = form.down( 'image' ),
+			values     = form.getValues()
+
+		imageField.setSrc( this.createFontMap( values ).imageDataUrl )
+	},
 
 	showDocumentation: function( docString ) {
 		this.application.showDocumentation( docString )
@@ -128,6 +139,7 @@ Ext.define('Spelled.controller.Assets', {
 				animationAssetConfig.show()
 				break
 			case "font":
+				this.refreshFontPreview( assetsCombo )
 
 				if( !!asset ) {
 					form.getForm().setValues(
@@ -183,6 +195,12 @@ Ext.define('Spelled.controller.Assets', {
 			window  = button.up( 'window' ),
 			record  = form.getRecord(),
 			values  = form.getValues()
+
+		if( !!values.fontFamily ) {
+			var result = this.createFontMap( values )
+			values.fontCanvas = result.imageDataUrl
+			values.charset    = Ext.encode( result.charset )
+		}
 
 		record.set( 'config', values)
 
