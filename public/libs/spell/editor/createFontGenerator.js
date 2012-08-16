@@ -302,7 +302,7 @@ define(
 //					that.__sprite(this, that.__canvas.width, that.__canvas.height, settings, widthMap);
 //				};
 
-				return this.__sprite(this.__canvas, this.__canvas.width, this.__canvas.height, settings, widthMap);
+				return this.__sprite(sprite, this.__canvas.width, this.__canvas.height, settings, widthMap);
 			},
 
 
@@ -310,99 +310,98 @@ define(
 
 				switch (this.settings.spritemap) {
 
-					case Class.SPRITEMAP.none:
-
-						var images = [];
-						var outline = this.settings.outline;
-
-						for (var w = 0, margin = this.settings.spacing, l = widthMap.length; w < l; w++) {
-
-							var frameWidth = widthMap[w];
-
-							this.__canvas.width = frameWidth + this.settings.spacing * 2;
-							this.__canvas.height = height;
-
-							this.__ctx.drawImage(
-									sprite,
-									margin - this.settings.spacing,
-									0,
-									frameWidth + this.settings.spacing * 2,
-									height,
-									0,
-									0,
-									frameWidth + this.settings.spacing * 2,
-									height
-							);
-
-
-							var image = new Image();
-							image.src = this.__canvas.toDataURL('image/png');
-
-							images.push(image);
-
-							margin += frameWidth + this.settings.spacing * 2;
-
-						}
-
-
-//						this.trigger('ready', [{
-//							sprite: sprite,
-//							images: images,
-//							settings: JSON.stringify(settings)
-//						}]);
-
-//						done( sprite )
-						throw 'Error: mode ' + Class.SPRITEMAP.none + ' not implemented.'
-
-						break;
-
-
-					case Class.SPRITEMAP.x:
-
-						settings.map = widthMap;
-
-
-						var offset = this.settings.spacing;
-						for (var w = 0, l = widthMap.length; w < l; w++) {
-
-							var frame = {
-								width: widthMap[w],
-								height: height,
-								x: offset,
-								y: 0
-							};
-
-
-							offset += frame.width + this.settings.spacing * 2;
-
-
-							if (lychee.debug === true) {
-								this.__ctx.lineWidth = 1;
-								this.__ctx.strokeStyle = 'blue';
-								this.__ctx.strokeRect(frame.x, frame.y, frame.width, frame.height);
-							}
-
-						}
-
-
-//						if (lychee.debug === true) {
-//							this.__createShadowCopy(this.__canvas);
+//					case Class.SPRITEMAP.none:
+//
+//						var images = [];
+//						var outline = this.settings.outline;
+//
+//						for (var w = 0, margin = this.settings.spacing, l = widthMap.length; w < l; w++) {
+//
+//							var frameWidth = widthMap[w];
+//
+//							this.__canvas.width = frameWidth + this.settings.spacing * 2;
+//							this.__canvas.height = height;
+//
+//							this.__ctx.drawImage(
+//									sprite,
+//									margin - this.settings.spacing,
+//									0,
+//									frameWidth + this.settings.spacing * 2,
+//									height,
+//									0,
+//									0,
+//									frameWidth + this.settings.spacing * 2,
+//									height
+//							);
+//
+//
+//							var image = new Image();
+//							image.src = this.__canvas.toDataURL('image/png');
+//
+//							images.push(image);
+//
+//							margin += frameWidth + this.settings.spacing * 2;
+//
 //						}
+//
+//
+////						this.trigger('ready', [{
+////							sprite: sprite,
+////							images: images,
+////							settings: JSON.stringify(settings)
+////						}]);
+//
+////						done( sprite )
+//						throw 'Error: mode ' + Class.SPRITEMAP.none + ' not implemented.'
+//
+//						break;
 
 
-//						this.trigger('ready', [{
-//							sprite: sprite,
-//							settings: JSON.stringify(settings)
-//						}]);
-
-
-//						done( this.__canvas.toDataURL('image/png') )
-						throw 'Error: mode ' + Class.SPRITEMAP.x + ' not implemented.'
-
-						break;
+//					case Class.SPRITEMAP.x:
+//
+//						settings.map = widthMap;
+//
+//
+//						var offset = this.settings.spacing;
+//						for (var w = 0, l = widthMap.length; w < l; w++) {
+//
+//							var frame = {
+//								width: widthMap[w],
+//								height: height,
+//								x: offset,
+//								y: 0
+//							};
+//
+//
+//							offset += frame.width + this.settings.spacing * 2;
+//
+//
+//							if (lychee.debug === true) {
+//								this.__ctx.lineWidth = 1;
+//								this.__ctx.strokeStyle = 'blue';
+//								this.__ctx.strokeRect(frame.x, frame.y, frame.width, frame.height);
+//							}
+//
+//						}
+//
+//
+////						if (lychee.debug === true) {
+////							this.__createShadowCopy(this.__canvas);
+////						}
+//
+//
+////						this.trigger('ready', [{
+////							sprite: sprite,
+////							settings: JSON.stringify(settings)
+////						}]);
+//
+//
+////						done( this.__canvas.toDataURL('image/png') )
+//						throw 'Error: mode ' + Class.SPRITEMAP.x + ' not implemented.'
+//
+//						break;
 
 					case Class.SPRITEMAP.xy:
-
 						// 1. Determination of best matching sprite width
 						var spriteWidth = Math.round(Math.sqrt(width * height));
 						var spriteHeight = height;
@@ -413,8 +412,8 @@ define(
 						var srcOffsetX = this.settings.spacing;
 						var offsetX = 0;
 						var offsetY = 0;
-						for (var w = 0, l = widthMap.length; w < l; w++) {
 
+						for (var w = 0, l = widthMap.length; w < l; w++) {
 							var frame = {
 								width: widthMap[w] + this.settings.spacing * 2,
 								height: height,
@@ -424,28 +423,15 @@ define(
 								dy: offsetY
 							};
 
-
-							if (lychee.debug === true) {
-								this.__ctx.lineWidth = 1;
-								this.__ctx.strokeStyle = 'blue';
-								this.__ctx.strokeRect(srcOffsetX, 0, widthMap[w], height);
-								this.__ctx.strokeStyle = 'red';
-								this.__ctx.strokeRect(frame.sx, frame.sy, frame.width, frame.height);
-							}
-
-
 							spriteMap.push(frame);
-
 
 							offsetX += frame.width;
 							srcOffsetX += frame.width;
-
 
 							var nextFrameWidth = 0;
 							if (widthMap[w + 1] !== undefined) {
 								nextFrameWidth = widthMap[w + 1] + this.settings.spacing * 2;
 							}
-
 
 							if (offsetX + nextFrameWidth > spriteWidth) {
 								offsetX = 0;
@@ -455,18 +441,12 @@ define(
 						}
 
 
-//						if (lychee.debug === true) {
-//							this.__createShadowCopy(this.__canvas);
-//						}
-
-
 						// 3. Re-draw the sprite image
 						this.__canvas.width = spriteWidth;
 						this.__canvas.height = spriteHeight;
 
 
 						for (var s = 0, l = spriteMap.length; s < l; s++) {
-
 							var frame = spriteMap[s];
 
 							this.__ctx.drawImage(
@@ -480,7 +460,6 @@ define(
 									frame.width,
 									frame.height
 							);
-
 						}
 
 
@@ -493,7 +472,6 @@ define(
 						widthMap = [];
 
 						for (var s = 0, l = spriteMap.length; s < l; s++) {
-
 							var frame = spriteMap[s];
 
 							widthMap.push({
@@ -502,40 +480,10 @@ define(
 								x: frame.dx + this.settings.spacing,
 								y: frame.dy
 							});
-
 						}
-
-
-						if (lychee.debug === true) {
-							var that = this;
-
-							for (var w = 0, l = widthMap.length; w < l; w++) {
-								var map = widthMap[w];
-
-								this.__ctx.lineWidth = 1;
-								this.__ctx.strokeStyle = 'blue';
-								this.__ctx.strokeRect(map.x, map.y, map.width, map.height);
-								this.__ctx.strokeStyle = 'red';
-								this.__ctx.strokeRect(map.x - this.settings.spacing, map.y, map.width + this.settings.spacing * 2, map.height);
-							}
-						}
-
-//						if (lychee.debug === true) {
-//							this.__createShadowCopy(this.__canvas);
-//						}
 
 
 						settings.map = widthMap;
-
-
-//						this.trigger('ready', [{
-//							sprite: sprite,
-//							settings: JSON.stringify(
-//									settings,
-//									null,
-//									'\t'
-//							)
-//						}]);
 
 						return done( this.__canvas.toDataURL('image/png'), settings )
 

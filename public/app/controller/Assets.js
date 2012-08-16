@@ -247,8 +247,8 @@ Ext.define('Spelled.controller.Assets', {
         this.application.getController('Menu').showAssetsListContextMenu( e )
     },
 
-	generateFontCanvas: function( values ) {
-		var fontGenerator = Ext.amdModules.createFontGenerator( document.createElement( 'fontGenerationCanvas' ) )
+	createFontMap: function( values ) {
+		var fontGenerator = Ext.amdModules.createFontGenerator( document.createElement( 'canvas' ) )
 
 		var settings = {
 			font : values.fontFamily,
@@ -277,7 +277,7 @@ Ext.define('Spelled.controller.Assets', {
 			}
 
 			if( values.type === "font" ) {
-				var result = this.generateFontCanvas( values )
+				var result = this.createFontMap( values )
 
 				additionalParams.fontCanvas = result.imageDataUrl
 				additionalParams.charset    = Ext.encode( {} )
