@@ -418,6 +418,8 @@
 		"Spelled.view.scene.TreeList",
 		"Spelled.controller.Scenes",
 		"Spelled.view.asset.TreeList",
+		"Spelled.view.asset.ColorField",
+		"Spelled.view.asset.create.Font",
 		"Spelled.controller.Assets",
 		"Spelled.view.template.component.Attributes",
 		"Spelled.view.system.List",
@@ -434,8 +436,6 @@
 		"Spelled.controller.Templates",
 		"Spelled.controller.templates.Systems",
 		"Spelled.view.ui.SpelledViewport",
-		"Spelled.view.ui.SpelledIframe",
-		"Spelled.view.asset.ColorField",
-		"Spelled.view.asset.create.Font"
+		"Spelled.view.ui.SpelledIframe"
 	]
 }
