@@ -267,17 +267,29 @@ Ext.define('Spelled.controller.Assets', {
         this.application.getController('Menu').showAssetsListContextMenu( e )
     },
 
+	/**
+	 * Normalizes a color string. Proper color strings start with a sharp.
+	 *
+	 * @param {String} color
+	 * @return {String}
+	 */
+	normalizeColorValue: function( color ) {
+		var firstChar = color[ 0 ]
+
+		return ( firstChar && firstChar !== '#' ? '#' : '' ) + color
+	},
+
 	createFontMap: function( values ) {
 		var fontGenerator = Ext.amdModules.createFontGenerator( document.createElement( 'canvas' ) )
 
 		var settings = {
-			font : values.fontFamily,
-			size : parseInt( values.fontSize ),
-			style : values.fontStyle,
-			color : values.color,
-			outline : parseInt( values.outline ),
-			outlineColor : values.outlineColor,
-			spacing : parseInt( values.spacing )
+			font         : values.fontFamily,
+			size         : parseInt( values.fontSize ),
+			style        : values.fontStyle,
+			spacing      : parseInt( values.spacing ),
+			color        : this.normalizeColorValue( values.color ),
+			outlineColor : this.normalizeColorValue( values.outlineColor ),
+			outline      : parseInt( values.outline )
 		}
 
 		return fontGenerator.create( settings )
