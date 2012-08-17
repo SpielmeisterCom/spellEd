@@ -69,7 +69,7 @@ define(
                 var result = getAssetConfigFromPayload( payload )
 
 				if( Asset.file.size > 0 ) {
-					var extension = mime.extension( Asset.file.type),
+					var extension = mime.extension( Asset.file.type ),
 						baseName  = assetName +"." + extension,
 						filePath  = newFileNameWithoutExtension + "." + extension,
 						fileName   = ( namespace.length > 0 ) ? namespace + "/" + baseName : baseName
@@ -153,6 +153,9 @@ define(
 
                 return util.getDirFilesAsObjects( path.join( root , projectName , assetPathPart ) )
             }
+
+			//Adding additional mime types
+			mime.define( { 'audio/mp3' : [ 'mp3' ] } )
 
             return [
                 {

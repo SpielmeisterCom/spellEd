@@ -14,7 +14,9 @@ Ext.define('Spelled.controller.templates.Components', {
 		'template.component.attribute.Integer',
 		'template.component.attribute.Boolean',
 		'template.component.attribute.Appearance',
-		'template.component.attribute.AnimatedAppearance'
+		'template.component.attribute.AnimatedAppearance',
+		'template.component.attribute.TextAppearance',
+		'template.component.attribute.Sound'
     ],
 
     models: [

@@ -407,6 +407,7 @@
 		"Spelled.view.template.component.Property",
 		"Spelled.view.template.system.Details",
 		"Spelled.view.component.property.AssetId",
+		"Spelled.view.template.component.attribute.Sound",
 		"Spelled.view.template.component.attribute.TextAppearance",
 		"Spelled.view.template.component.attribute.Appearance",
 		"Spelled.view.template.component.attribute.AnimatedAppearance",

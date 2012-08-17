@@ -3,7 +3,7 @@ Ext.define('Spelled.store.asset.Sounds', {
 
     filters: [
         function( item ) {
-            return item.get('type') === 'sounds'
+            return item.get('type') === 'sound'
         }
     ]
 });

@@ -19,6 +19,10 @@ Ext.define('Spelled.store.asset.Types', {
         {
             "type":"font",
             "name":"Font"
-        }
+		},
+		{
+			"type":"sound",
+			"name":"Sound"
+		}
     ]
 });

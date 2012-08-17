@@ -43,6 +43,10 @@ Ext.define('Spelled.store.template.component.AttributeTypes', {
 		{
 			"type":"spelledtextappearancefield",
 			"name":"assetId:font"
+		},
+		{
+			"type":"spelledsoundfield",
+			"name":"assetId:sound"
 		}
 	]
 });
