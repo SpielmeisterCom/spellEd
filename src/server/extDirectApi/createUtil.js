@@ -250,6 +250,8 @@ define(
 								fileInfo.iconCls = "tree-asset-2danimation-icon"
 							} else if (object.type === "appearance") {
 								fileInfo.iconCls = "tree-asset-2dstaticappearance-icon"
+							} else if(object.type === "font") {
+								fileInfo.iconCls = "tree-asset-2dtextappearance-icon"
 							} else {
 								console.log(object);
 							}
