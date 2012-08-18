@@ -75,14 +75,14 @@ Ext.define('Spelled.view.asset.create.Font', {
 						{
 							xtype: "colorfield",
 							allowBlank: true,
-							value: "#FFF",
+							value: "FFF",
 							name: 'color',
 							fieldLabel: 'Color'
 						},
 						{
 							xtype: "colorfield",
 							allowBlank: true,
-							value: "#000",
+							value: "000",
 							name: 'outlineColor',
 							fieldLabel: 'Outline Color'
 						}

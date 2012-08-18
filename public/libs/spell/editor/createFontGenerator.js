@@ -1,33 +1,3 @@
-/**
- *
- * The MIT License (MIT)
- *
- * Copyright (c) 2011 - 2012 Christoph Martens
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
- * Software, and to permit persons to whom the Software is furnished to do so, subject
- * to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies
- * or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, E * PRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
- * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
- * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- *
- */
-
-/**
- * This file is a based on lycheeJS' font generator class "lycheeJS/tool/source/FontGenerator.js".
- */
-
-
 define(
 	'spell/editor/createFontGenerator',
 	[
@@ -39,389 +9,528 @@ define(
 		'use strict'
 
 
-		var Class = function(canvas) {
-			this.__canvas = canvas instanceof HTMLCanvasElement ? canvas : document.createElement('canvas');
-			this.__ctx = this.__canvas.getContext('2d');
-		};
+		/**
+		 * Normalizes a color string. Proper color strings start with a sharp.
+		 *
+		 * @param {String} color
+		 * @return {String}
+		 */
+		var normalizeColor = function( color ) {
+			var firstChar = color[ 0 ]
 
+			return ( firstChar && firstChar !== '#' ? '#' : '' ) + color
+		}
 
-		Class.prototype = {
-			defaults: {
-				font: 'Ubuntu',
-				size: 32,
-				color: '#933',
-				style: 'normal',
-				spacing: 1,
-				outline: 1,
-				outlineColor: '#000',
-				firstChar: 32,
-				lastChar: 127
-			},
+		var drawRect = function( context, dx, dy, width, height ) {
+			context.save()
+			{
+				// horizontal
+				context.fillRect( dx, dy, width, 1 )
+				context.fillRect( dx, dy + height - 1, width, 1 )
 
+				// vertical
+				context.fillRect( dx, dy + 1, 1, height - 2 )
+				context.fillRect( dx + width - 1, dy + 1, 1, height - 2 )
+			}
+			context.restore()
+		}
 
-			__createCharset: function( charset, map ) {
-				return _.reduce(
-					_.zip( charset, map ),
-					function( memo, iter ) {
-						memo[ iter[ 0 ] ] = iter[ 1 ]
+		var drawBoundingRect = function( context, dx, dy, width, height ) {
+			drawRect( context, dx - 1, dy - 1, width + 2, height + 2 )
+		}
 
-						return memo
-					},
-					{}
-				)
-			},
+		var drawDebugGrid = function( context, spacing, charInfos ) {
+			// draw spacing
+			var doubledSpacing = spacing * 2
+			context.fillStyle = '#090'
 
-
-			__cloneCanvas: function( canvas ) {
-			    var newCanvas = document.createElement( 'canvas' )
-
-				newCanvas.width  = canvas.width
-				newCanvas.heigth = canvas.heigth
-
-				var context = newCanvas.getContext( '2d' )
-
-			    context.drawImage( canvas, 0, 0 )
-
-			    return newCanvas
-			},
-
-
-			__updateFont: function() {
-
-				this.__ctx.font = this.settings.style + ' ' + this.settings.size + 'px ' + '"' + this.settings.font + '"';
-				this.__ctx.textBaseline = 'top';
-
-			},
-
-			__clear: function() {
-				this.__ctx.clearRect(0, 0, this.__canvas.width, this.__canvas.height);
-			},
-
-			__render: function(charset, widthMap, offsetY) {
-
-				offsetY = typeof offsetY === 'number' ? offsetY : 0;
-
-				this.__ctx.fillStyle = this.settings.color;
-
-				for (var c = 0, margin = this.settings.spacing; c < charset.length; c++) {
-					this.__ctx.fillText(charset[c], margin, offsetY);
-					margin += widthMap[c] + this.settings.spacing * 2;
+			_.each(
+				charInfos,
+				function( charInfo ) {
+					drawBoundingRect( context, charInfo.x - spacing, charInfo.y, charInfo.width + doubledSpacing, charInfo.height )
 				}
+			)
 
-			},
+			// draw bounding
+			context.fillStyle = '#909'
 
-			__renderOutline: function(charset, widthMap, offsetY) {
+			_.each(
+				charInfos,
+				function( charInfo ) {
+					drawBoundingRect( context, charInfo.x, charInfo.y, charInfo.width, charInfo.height )
+				}
+			)
+		}
 
-				offsetY = typeof offsetY === 'number' ? offsetY : 0;
+		var createCharMap = function( charSet, map ) {
+			return _.reduce(
+				_.zip( charSet, map ),
+				function( memo, iter ) {
+					memo[ iter[ 0 ] ] = iter[ 1 ]
 
-				this.__ctx.fillStyle = this.settings.outlineColor;
+					return memo
+				},
+				{}
+			)
+		}
 
-				var outline = this.settings.outline;
+		var createResult = function( canvas, charSet, baseline ) {
+			return {
+				baseline     : baseline,
+				charset      : charSet,
+				imageDataUrl : canvas.toDataURL( 'image/png' )
+			}
+		}
 
-				for (var c = 0, margin = this.settings.spacing; c < charset.length; c++) {
+		var createCharSet = function( firstCharCode, lastCharCode ) {
+			return _.map(
+				_.range( firstCharCode, lastCharCode ),
+				function( charCode ) {
+					return String.fromCharCode( charCode )
+				}
+			)
+		}
 
-					for (var x = -1 * outline; x <= outline; x++) {
-						for (var y = -1 * outline; y <= outline; y++) {
-							this.__ctx.fillText(charset[c], margin + x, offsetY + y);
+		var setFont =  function( context, font, style, size ) {
+			context.font = style + ' ' + size + 'px "' + font + '"'
+			context.textBaseline = 'top'
+		}
+
+		var createCharInfos = function( context, charSet, outline, size, spacing ) {
+			var doubledOutline = outline * 2,
+				doubledSpacing = spacing * 2
+
+			return _.reduce(
+				charSet,
+				function( memo, char ) {
+					var widthInfo = context.measureText( char ),
+						width     = Math.max( 1, Math.ceil( widthInfo.width ) ) + doubledOutline
+
+					memo.charInfos.push( {
+						char   : char,
+						width  : width,
+						height : size,
+						x      : memo.offsetX,
+						y      : 0
+					} )
+
+					memo.offsetX += width + doubledSpacing
+
+					return memo
+				},
+				{
+					charInfos : [],
+					offsetX : spacing
+				}
+			).charInfos
+		}
+
+		var createTiledCharInfos = function( charInfos, textureWidth, actualHeight, filteringGap, spacing ) {
+			var doubledSpacing = spacing * 2
+
+			return _.reduce(
+				charInfos,
+				function( memo, charInfo ) {
+					var charWidthWithSpacing = charInfo.width + doubledSpacing
+
+					if( memo.offsetX + charWidthWithSpacing > textureWidth ) {
+						memo.offsetX = spacing
+						memo.rowIndex += 1
+					}
+
+					memo.charInfos.push( {
+						char   : charInfo.char,
+						width  : charInfo.width,
+						height : actualHeight,
+						x      : memo.offsetX,
+						y      : memo.rowIndex * ( actualHeight + filteringGap )
+					} )
+
+					memo.offsetX += charWidthWithSpacing
+
+					return memo
+				},
+				{
+					charInfos : [],
+					offsetX   : spacing,
+					rowIndex  : 0
+				}
+			).charInfos
+		}
+
+		var createTotalWidth = function( charInfos, spacing ) {
+			var last = _.last( charInfos )
+
+			return last.x + last.width + spacing
+		}
+
+		var renderCharSet = function( context, charInfos, color, outlineColor, outline, spacing, offsetY ) {
+			context.fillStyle   = color
+			context.strokeStyle = normalizeColor( outlineColor )
+			context.lineWidth   = normalizeColor( outline )
+
+			_.each(
+				charInfos,
+				function( charInfo ) {
+					if( outline > 0 ) {
+						context.strokeText( charInfo.char, charInfo.x, charInfo.y + offsetY )
+					}
+
+					context.fillText( charInfo.char, charInfo.x, charInfo.y + offsetY )
+				}
+			)
+		}
+
+		var createMargins = function( imageData ) {
+			var data   = imageData.data,
+				width  = imageData.width,
+				height = imageData.height,
+				top    = 0,
+				bottom = 0
+
+				// top margin
+				var x, y, found = false
+
+				for( y = 0; y < height; y++ ) {
+					for( x = 0; x < width; x++ ) {
+						if( data[ y * width * 4 + x * 4 + 3 ] ) {
+							found = true
+							break
 						}
 					}
 
-					margin += widthMap[c] + this.settings.spacing * 2;
-
-				}
-
-			},
-
-			__getBaseline: function(charset, widthMap) {
-
-				var width = this.__canvas.width,
-						height = this.__canvas.height;
-
-				var baselines = [],
-						data = this.__ctx.getImageData(0, 0, width, height);
-
-
-				for (var c = 0, margin = this.settings.spacing; c < charset.length; c++) {
-
-					var baseline = height;
-
-					for (var x = margin; x < margin + widthMap[c]; x++) {
-
-						for (var y = 0; y < height / 2; y++) {
-
-							if (
-									data.data[y * width * 4 + x * 4 + 3]
-											&& baseline > y
-									) {
-								baseline = y;
-								break;
-							}
-
-						}
-
+					if( found ) {
+						top = y
+						break
 					}
-
-					baselines.push(baseline);
-
-					margin += widthMap[c] + this.settings.spacing * 2;
-
 				}
 
+				// bottom margin
+				found = false
 
-				var rating = {};
-				for (var b = 0; b < baselines.length; b++) {
-
-					if (rating[baselines[b]] === undefined) {
-						rating[baselines[b]] = 0;
-					} else {
-						rating[baselines[b]]++;
-					}
-
-				}
-
-
-				var currentAmount = 0;
-				var currentBaseline = 0;
-				for (var r in rating) {
-
-					var baseline = parseInt(r, 10);
-
-					if (rating[r] > currentAmount) {
-						currentAmount = rating[r];
-						currentBaseline = baseline;
-					} else if (rating[r] === currentAmount && baseline < currentBaseline) {
-						currentBaseline = baseline;
-					}
-
-				}
-
-
-				return currentBaseline;
-			},
-
-			__getMargin: function() {
-
-				var width = this.__canvas.width,
-						height = this.__canvas.height;
-
-
-				var data = this.__ctx.getImageData(0, 0, width, height);
-
-				var margin = {
-					top: 0,
-					bottom: 0
-				};
-
-				var x, y, found = false;
-				for (y = 0; y < height; y++) {
-
-					found = false;
-
-					for (x = 0; x < width; x++) {
-						if (data.data[y * width * 4 + x * 4 + 3]) {
-							found = true;
-							break;
+				for( y = height - 1; y >= 0; y-- ) {
+					for( x = 0; x < width; x++ ) {
+						if( data[ y * width * 4 + x * 4 + 3 ] ) {
+							found = true
+							break
 						}
 					}
 
-					if (found === true) {
-						margin.top = y;
-						break;
+					if( found ) {
+						bottom = height - ( y + 1 )
+						break
 					}
-
-				}
-
-
-				for (y = height - 1; y >= 0; y--) {
-
-					found = false;
-
-					for (x = 0; x < width; x++) {
-						if (data.data[y * width * 4 + x * 4 + 3]) {
-							found = true;
-							break;
-						}
-					}
-
-					if (found === true) {
-						margin.bottom = y + 1;
-						break;
-					}
-
-				}
-
-
-				return margin;
-
-			},
-
-			create: function(settings) {
-
-				this.settings = _.defaults(settings, this.defaults);
-
-				var charset = [];
-				for (var c = this.settings.firstChar; c < this.settings.lastChar; c++) {
-					charset.push(String.fromCharCode(c));
-				}
-
-
-				this.__updateFont();
-
-
-				// 1. Measure the approximate the canvas dimensions
-				var width = this.settings.spacing,
-						widthMap = [];
-
-				for (var i = 0; i < charset.length; i++) {
-
-					var m = this.__ctx.measureText(charset[i]);
-					var charWidth = Math.max(1, Math.ceil(m.width)) + this.settings.outline * 2;
-
-					widthMap.push(charWidth);
-					width += charWidth + this.settings.spacing * 2;
-
-				}
-
-
-				// 2. Render it the first time to find out character heights
-				this.__canvas.width = width;
-				this.__canvas.height = this.settings.size * 3;
-				this.__updateFont();
-
-				this.__clear();
-
-				if (this.settings.outline > 0) {
-					this.__renderOutline(charset, widthMap, this.settings.size);
-				}
-
-				this.__render(charset, widthMap, this.settings.size);
-
-
-				// 3. Rerender everything if we know that the font size differed from the actual height
-				var margin = this.__getMargin();
-				if (margin.top > 0 || margin.bottom > 0) {
-
-					var height = this.__canvas.height;
-					this.__canvas.height = height - margin.top - (height - margin.bottom);
-					this.__updateFont();
-
-					this.__clear();
-
-					if (this.settings.outline > 0) {
-						this.__renderOutline(charset, widthMap, this.settings.size - margin.top);
-					}
-
-					this.__render(charset, widthMap, this.settings.size - margin.top);
-
-				}
-
-
-				// 4. Detect the Baseline
-				var baseline = this.__getBaseline(charset, widthMap);
-
-
-				var sprite = this.__cloneCanvas( this.__canvas )
-
-				var settings = {
-					baseline: baseline,
-					charset: charset.join(''),
-					kerning: 0,
-					spacing: this.settings.spacing
-				};
-
-				return this.__sprite(sprite, this.__canvas.width, this.__canvas.height, settings, widthMap);
-			},
-
-
-			__sprite: function(sprite, width, height, settings, widthMap) {
-				// 1. Determination of best matching sprite width
-				var spriteWidth = Math.round(Math.sqrt(width * height));
-				var spriteHeight = height;
-
-
-				// 2. Determination of sprite height && generation of spritemap
-				var spriteMap = [];
-				var srcOffsetX = this.settings.spacing;
-				var offsetX = 0;
-				var offsetY = 0;
-				var rowIndex = 0;
-				var rowMarginInPx = 1;
-
-				for (var w = 0, l = widthMap.length; w < l; w++) {
-					var frame = {
-						width: widthMap[w] + this.settings.spacing * 2,
-						height: height,
-						sx: srcOffsetX - this.settings.spacing,
-						sy: 0,
-						dx: offsetX,
-						dy: offsetY,
-						rowIndex: rowIndex
-					};
-
-					spriteMap.push(frame);
-
-					offsetX += frame.width;
-					srcOffsetX += frame.width;
-
-					var nextFrameWidth = 0;
-					if (widthMap[w + 1] !== undefined) {
-						nextFrameWidth = widthMap[w + 1] + this.settings.spacing * 2;
-					}
-
-					if (offsetX + nextFrameWidth > spriteWidth) {
-						offsetX = 0;
-						offsetY += height;
-						spriteHeight += height;
-						rowIndex++;
-					}
-				}
-
-
-				// 3. Re-draw the sprite image
-				this.__canvas.width = spriteWidth;
-				this.__canvas.height = spriteHeight + rowIndex * rowMarginInPx;
-
-
-				for (var s = 0, l = spriteMap.length; s < l; s++) {
-					var frame = spriteMap[s];
-
-					this.__ctx.drawImage(
-							sprite,
-							frame.sx,
-							frame.sy,
-							frame.width,
-							frame.height,
-							frame.dx,
-							frame.dy + frame.rowIndex * rowMarginInPx,
-							frame.width,
-							frame.height
-					);
-				}
-
-				// 5. Regenerate sprite map
-				widthMap = [];
-
-				for (var s = 0, l = spriteMap.length; s < l; s++) {
-					var frame = spriteMap[s];
-
-					widthMap.push({
-						width: frame.width - this.settings.spacing * 2,
-						height: frame.height,
-						x: frame.dx,
-						y: frame.dy + frame.rowIndex * rowMarginInPx
-					});
 				}
 
 				return {
-					imageDataUrl : this.__canvas.toDataURL( 'image/png' ),
-					charset      : this.__createCharset( settings.charset, widthMap )
+					top    : top,
+					bottom : bottom
 				}
+		}
+
+		var createBaseline = function( charInfos, imageData, spacing ) {
+			var data      = imageData.data,
+				width     = imageData.width,
+				height    = imageData.height
+
+			var baselines = _.reduce(
+				charInfos,
+				function( memo, charInfo ) {
+					var baseline = height,
+						fromX    = charInfo.x - spacing,
+						untilX   = charInfo.x + charInfo.width + spacing
+
+					for( var x = fromX; x < untilX; x++ ) {
+						for( var y = 0; y < height / 2; y++ ) {
+							if( data[ y * width * 4 + x * 4 + 3 ] &&
+								baseline > y ) {
+
+								baseline = y
+								break
+							}
+						}
+					}
+
+					return memo.concat( baseline )
+				},
+				[]
+			)
+
+			var rating = _.reduce(
+				baselines,
+				function( memo, baseline ) {
+					var votes = memo[ baseline ]
+
+					memo[ baseline ] = !votes ? 1 : votes + 1
+
+					return memo
+				},
+				{}
+			)
+
+			var likelyBaseline = _.reduce(
+				rating,
+				function( memo, votes, baseline ) {
+					baseline = parseInt( baseline, 10 )
+
+					if( votes > memo.bestVotes ) {
+						memo.baseline  = baseline
+						memo.bestVotes = votes
+
+					} else if( votes === memo.bestVotes &&
+						baseline < memo.baseline ) {
+
+						memo.baseline  = baseline
+					}
+
+					return memo
+				},
+				{
+					baseline  : 0,
+					bestVotes : 0
+				}
+			).baseline
+
+			return likelyBaseline
+		}
+
+		var clear = function( context, width, height ) {
+			context.clearRect( 0, 0, width, height )
+		}
+
+		var ln = function( n ) {
+			return Math.log( n ) / Math.log( 2 )
+		}
+
+		var computeDimensions = function( charInfos, textureWidth, textureHeight, actualHeight, filteringGap, spacing ) {
+			var doubledSpacing = spacing * 2
+
+			var fitsInDimensions = _.reduce(
+				charInfos,
+				function( memo, charInfo ) {
+					var charWidthWithSpacing = charInfo.width + doubledSpacing,
+						maxY = memo.rowIndex * ( actualHeight + filteringGap ) + actualHeight
+
+					if( maxY >= textureHeight ) {
+						memo.fits = false
+					}
+
+					if( memo.offsetX + charWidthWithSpacing > textureWidth ) {
+						memo.offsetX = spacing
+						memo.rowIndex += 1
+					}
+
+					memo.offsetX += charWidthWithSpacing
+
+					return memo
+				},
+				{
+					fits     : true,
+					offsetX  : spacing,
+					rowIndex : 0
+				}
+			).fits
+
+			if( fitsInDimensions ) {
+				return {
+					width  : textureWidth,
+					height : textureHeight
+				}
+
+			} else {
+				var area              = textureWidth * textureHeight,
+					nextMagnitude     = Math.ceil( ln( area ) + 1 ),
+					nextTextureWidth  = Math.pow( 2, Math.floor( nextMagnitude / 2 ) ),
+					nextTextureHeight = Math.pow( 2, Math.ceil( nextMagnitude / 2 ) )
+
+				return computeDimensions(
+					charInfos,
+					nextTextureWidth,
+					nextTextureHeight,
+					actualHeight,
+					spacing,
+					filteringGap
+				)
 			}
-		};
+		}
+
+		/**
+		 * Creates an object that has the texture width and height as properties.
+		 *
+		 * @param charInfos
+		 * @param totalWidth
+		 * @param actualHeight
+		 * @param filteringGap Describes how thick the additional row of transparent pixels is which gets inserted between character rows.
+		 * @param spacing
+		 * @return {*}
+		 */
+		var createTextureDimensions = function( charInfos, totalWidth, actualHeight, filteringGap, spacing ) {
+			filteringGap = filteringGap || 0
+
+			var area      = totalWidth * ( actualHeight + filteringGap ),
+				magnitude = Math.ceil( ln( area ) ),
+				width     = Math.pow( 2, Math.floor( magnitude / 2 ) ),
+				height    = Math.pow( 2, Math.ceil( magnitude / 2 ) )
+
+			return computeDimensions(
+				charInfos,
+				width,
+				height,
+				actualHeight,
+				filteringGap,
+				spacing
+			)
+		}
+
+		var createCanvas = function( width, height ) {
+			var canvas = document.createElement( 'canvas' )
+
+			canvas.width  = width
+			canvas.height = height
+
+			return canvas
+		}
 
 
-		return function( canvas ) {
-			return new Class( canvas )
+		var FontGenerator = function() {}
+
+		FontGenerator.prototype = {
+			defaults: {
+				font         : 'Arial',
+				size         : 32,
+				style        : 'normal',
+				spacing      : 1,
+				outline      : 1,
+				color        : 'fff',
+				outlineColor : '000',
+				firstChar    : 32,
+				lastChar     : 127
+			},
+
+			create : function( settings, debug ) {
+				settings = _.defaults( settings, this.defaults )
+
+				var tmpCanvas  = createCanvas( settings.size * 3, settings.size * 3 ),
+					tmpContext = tmpCanvas.getContext( '2d' ),
+					charSet = createCharSet( settings.firstChar, settings.lastChar )
+
+				setFont( tmpContext, settings.font, settings.style, settings.size )
+
+				var doubledSize = settings.size * 2,
+				    charInfos   = createCharInfos( tmpContext, charSet, settings.outline, doubledSize, settings.spacing ),
+					totalWidth  = createTotalWidth( charInfos, settings.spacing )
+
+
+				// perform preliminary pass to determine actual required height
+				tmpCanvas.width  = totalWidth
+				tmpCanvas.height = doubledSize
+
+				setFont( tmpContext, settings.font, settings.style, settings.size )
+
+				var offsetY = Math.ceil( settings.size / 2 )
+
+				renderCharSet(
+					tmpContext,
+					charInfos,
+					settings.color,
+					settings.outlineColor,
+					settings.outline,
+					settings.spacing,
+					offsetY
+				)
+
+				var margins = createMargins(
+					tmpContext.getImageData( 0, 0, tmpCanvas.width, tmpCanvas.height )
+				)
+
+				// "actualHeight" is the height of a character frame in the font map
+				var actualHeight = doubledSize - margins.top - margins.bottom
+
+
+				// render character set again with the actual character height
+				if( actualHeight < doubledSize ) {
+					tmpCanvas.width  = totalWidth
+					tmpCanvas.height = actualHeight
+
+					clear( tmpContext, tmpCanvas.width, tmpCanvas.height )
+
+					setFont( tmpContext, settings.font, settings.style, settings.size )
+
+					renderCharSet(
+						tmpContext,
+						charInfos,
+						settings.color,
+						settings.outlineColor,
+						settings.outline,
+						settings.spacing,
+						offsetY - margins.top
+					)
+				}
+
+
+				// detect the most likely baseline
+				var baseline = createBaseline(
+					charInfos,
+					tmpContext.getImageData( 0, 0, tmpCanvas.width, tmpCanvas.height ),
+					settings.spacing
+				)
+
+
+				// determine texture dimensions
+				var filteringGap = 1
+				var outputTextureDimensions = createTextureDimensions(
+					charInfos,
+					totalWidth,
+					actualHeight,
+					filteringGap,
+					settings.spacing
+				)
+
+
+				// transform the character information to a tiled representation
+				var tiledCharInfos = createTiledCharInfos(
+					charInfos,
+					outputTextureDimensions.width,
+					actualHeight,
+					filteringGap,
+					settings.spacing
+				)
+
+
+				// render character set again to produce final texture
+				var outputCanvas  = createCanvas( outputTextureDimensions.width, outputTextureDimensions.height ),
+					outputContext = outputCanvas.getContext( '2d' )
+
+				setFont( outputContext, settings.font, settings.style, settings.size )
+
+				renderCharSet(
+					outputContext,
+					tiledCharInfos,
+					settings.color,
+					settings.outlineColor,
+					settings.outline,
+					settings.spacing,
+					offsetY - margins.top
+				)
+
+
+				// draw the debug overlay
+				if( debug ) {
+					drawDebugGrid( outputContext, settings.spacing, tiledCharInfos )
+				}
+
+
+				return createResult(
+					outputCanvas,
+					createCharMap( charSet.join( '' ), tiledCharInfos ),
+					baseline
+				)
+			}
+		}
+
+
+		return function() {
+			return new FontGenerator()
 		}
 	}
 )

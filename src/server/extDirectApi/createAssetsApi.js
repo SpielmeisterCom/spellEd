@@ -45,8 +45,10 @@ define(
 
 				} else if( result.type === 'font' ) {
 					result.config = _.pick( configObject, 'fontFamily', 'fontSize', 'fontStyle', 'color', 'outline', 'outlineColor' )
-					result.config.charset = JSON.parse( configObject.charset )
-					result.config.spacing = parseInt( configObject.spacing )
+
+					result.config.baseline = parseInt( configObject.baseline )
+					result.config.charset  = JSON.parse( configObject.charset )
+					result.config.spacing  = parseInt( configObject.spacing )
 				}
 
 				return result

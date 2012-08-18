@@ -87,7 +87,7 @@ Ext.define('Spelled.controller.Assets', {
 			imageField = form.down( 'image' ),
 			values     = form.getValues()
 
-		imageField.setSrc( this.createFontMap( values ).imageDataUrl )
+		imageField.setSrc( this.createFontMap( values, true ).imageDataUrl )
 	},
 
 	showDocumentation: function( docString ) {
@@ -201,9 +201,10 @@ Ext.define('Spelled.controller.Assets', {
 			var result = this.createFontMap( values )
 			values.fontCanvas = result.imageDataUrl
 			values.charset    = Ext.encode( result.charset )
+			values.baseline   = result.baseline
 		}
 
-		record.set( 'config', values)
+		record.set( 'config', values )
 
 		record.save()
 
@@ -267,32 +268,20 @@ Ext.define('Spelled.controller.Assets', {
         this.application.getController('Menu').showAssetsListContextMenu( e )
     },
 
-	/**
-	 * Normalizes a color string. Proper color strings start with a sharp.
-	 *
-	 * @param {String} color
-	 * @return {String}
-	 */
-	normalizeColorValue: function( color ) {
-		var firstChar = color[ 0 ]
-
-		return ( firstChar && firstChar !== '#' ? '#' : '' ) + color
-	},
-
-	createFontMap: function( values ) {
-		var fontGenerator = Ext.amdModules.createFontGenerator( document.createElement( 'canvas' ) )
+	createFontMap: function( values, debug ) {
+		var fontGenerator = Ext.amdModules.createFontGenerator()
 
 		var settings = {
 			font         : values.fontFamily,
 			size         : parseInt( values.fontSize ),
 			style        : values.fontStyle,
 			spacing      : parseInt( values.spacing ),
-			color        : this.normalizeColorValue( values.color ),
-			outlineColor : this.normalizeColorValue( values.outlineColor ),
+			color        : values.color,
+			outlineColor : values.outlineColor,
 			outline      : parseInt( values.outline )
 		}
 
-		return fontGenerator.create( settings )
+		return fontGenerator.create( settings, debug )
 	},
 
     createAsset: function( button ) {
@@ -312,6 +301,7 @@ Ext.define('Spelled.controller.Assets', {
 
 				additionalParams.fontCanvas = result.imageDataUrl
 				additionalParams.charset    = Ext.encode( result.charset )
+				additionalParams.baseline   = result.baseline
 			}
 
             form.submit(
