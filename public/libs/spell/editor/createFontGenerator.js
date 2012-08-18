@@ -104,12 +104,13 @@ define(
 				charSet,
 				function( memo, char ) {
 					var widthInfo = context.measureText( char ),
-						width     = Math.max( 1, Math.ceil( widthInfo.width ) ) + doubledOutline
+						width     = Math.max( 1, Math.ceil( widthInfo.width ) ) + doubledOutline,
+						height    = size
 
 					memo.charInfos.push( {
 						char   : char,
 						width  : width,
-						height : size,
+						height : height,
 						x      : memo.offsetX,
 						y      : 0
 					} )
@@ -172,11 +173,12 @@ define(
 			_.each(
 				charInfos,
 				function( charInfo ) {
+					// x := charInfo.x + outline, because the additional width due to drawing with an outline is not included in the character width measurement
 					if( outline > 0 ) {
-						context.strokeText( charInfo.char, charInfo.x, charInfo.y + offsetY )
+						context.strokeText( charInfo.char, charInfo.x + outline, charInfo.y + offsetY )
 					}
 
-					context.fillText( charInfo.char, charInfo.x, charInfo.y + offsetY )
+					context.fillText( charInfo.char, charInfo.x + outline, charInfo.y + offsetY )
 				}
 			)
 		}
