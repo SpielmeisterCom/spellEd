@@ -166,9 +166,9 @@ define(
 		}
 
 		var renderCharSet = function( context, charInfos, color, outlineColor, outline, spacing, offsetY ) {
-			context.fillStyle   = color
+			context.fillStyle   = normalizeColor( color )
 			context.strokeStyle = normalizeColor( outlineColor )
-			context.lineWidth   = normalizeColor( outline )
+			context.lineWidth   = outline
 
 			_.each(
 				charInfos,
