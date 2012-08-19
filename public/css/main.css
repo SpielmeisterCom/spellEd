@@ -86,6 +86,9 @@
     background-image: url( '../images/icons/asset-2dstatic.png' ) !important;
 }
 
+.tree-asset-2dtextappearance-icon {
+    background-image: url( '../images/icons/asset-font.gif' ) !important;
+}
 
 .component-icon {
     display: inline-block;
