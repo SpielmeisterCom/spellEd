@@ -151,14 +151,17 @@ Ext.define('Spelled.controller.Components', {
 					Ext.getStore( 'template.Components' ).getByTemplateId( component.get('templateId') )
 
 				if( componentTemplate ) {
-					var text = ( Ext.isEmpty( componentTemplate.get('title') ) ) ? componentTemplate.getFullName() : componentTemplate.get('title') + " (" + componentTemplate.getFullName() + ")"
+					var text = ( Ext.isEmpty( componentTemplate.get('title') ) ) ? componentTemplate.getFullName() : componentTemplate.get('title') + " (" + componentTemplate.getFullName() + ")",
+						config = {
+							text      : text,
+							id        : component.getId(),
+							leaf      : false
+						}
 
-					var newNode = node.createNode ( {
-						text      : text,
-						id        : component.getId(),
-						iconCls   : "tree-component-icon",
-						leaf      : false
-					} )
+					if( !Ext.isEmpty( componentTemplate.get('icon') ) ) config.icon = componentTemplate.get( 'icon' )
+					else config.iconCls = "tree-component-icon"
+
+					var newNode = node.createNode ( config )
 
 					componentTemplate.appendOnTreeNode( newNode )
 
@@ -260,10 +263,14 @@ Ext.define('Spelled.controller.Components', {
             this
         )
 
+		var icon     = ( Ext.isEmpty( template.get('icon') ) )? "" : "style='background: url(" + template.get('icon') +") no-repeat;'",
+			iconClass   = ( component.get('additional') ) ? "component-icon" : "linked-component-icon",
+			linkedImage = ( !component.get('additional') && !Ext.isEmpty( template.get('icon') ) ) ? "<img src='/images/icons/link.png' style='margin-left: -18px;'/>" : "<img/>"
+
 		return Ext.widget(
 			'componentproperties',
 			{
-				title: (  ( component.get('additional') ) ? "<span class='component-icon'/> " : "<span class='linked-component-icon'/> " ) + "<span>" + title +"</span>" ,
+				title: "<span class='"+ iconClass +"' "+ icon +">" + linkedImage +"</span> <span>" + title +"</span>",
 				isAdditional: component.get('additional'),
 				source: config,
 				componentConfigId: component.getId()

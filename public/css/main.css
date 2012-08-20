@@ -93,15 +93,13 @@
 .component-icon {
     display: inline-block;
     padding-left:      18px;
-    background-image:  url( '../images/icons/component.png' ) !important;
-    background-repeat: no-repeat;
+    background:  url( '../images/icons/component.png' ) no-repeat;
 }
 
 .linked-component-icon {
     display: inline-block;
     padding-left:      18px;
-    background-repeat: no-repeat;
-    background-image:  url( '../images/icons/component-link.png' ) !important;
+    background:  url( '../images/icons/component-link.png' ) no-repeat;
 }
 
 .grid-icon {

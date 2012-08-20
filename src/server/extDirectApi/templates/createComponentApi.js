@@ -22,7 +22,7 @@ define(
             var util = createUtil( root )
 
 			var buildComponentFromData = function( data ) {
-				return _.pick( data, 'name', 'namespace', 'type', 'title', 'doc')
+				return _.pick( data, 'name', 'namespace', 'type', 'title', 'doc', 'icon')
 			}
 
             /**

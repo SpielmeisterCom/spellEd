@@ -106,10 +106,12 @@ Ext.define('Spelled.controller.templates.Components', {
             tab    = this.getTemplateEditor().getActiveTab(),
 			title  = tab.down( 'textfield[name="title"]' ),
 			doc    = tab.down( 'textfield[name="doc"]' ),
+			icon   = tab.down( 'textfield[name="icon"]' ),
 			ownerModel = tab.template
 
 		ownerModel.set('title', title.getValue())
 		ownerModel.set('doc', doc.getValue())
+		ownerModel.set('icon', icon.getValue())
 
 		if( !!record )
         	record.set( values )
