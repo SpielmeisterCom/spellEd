@@ -6,14 +6,17 @@ Ext.define('Spelled.abstract.view.TreeList' ,{
 
     hideHeaders: true,
 
-    initComponent: function() {
-        var me = this;
+	initComponent: function() {
+        var me = this
 
         me.columns = [
             {
                 xtype: 'treecolumn',
                 dataIndex: 'text',
-                flex: 1
+                flex: 1,
+				editor:{
+					xtype:'textfield'
+				}
             },
             {
                 xtype: 'actioncolumn',
@@ -22,7 +25,7 @@ Ext.define('Spelled.abstract.view.TreeList' ,{
                 iconCls: 'x-hidden edit-action-icon',
                 handler: Ext.bind(me.handleEditClick, me)
             }
-        ];
+        ]
 
         me.addEvents(
 			'editclick'

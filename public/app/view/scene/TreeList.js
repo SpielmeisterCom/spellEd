@@ -8,6 +8,14 @@ Ext.define('Spelled.view.scene.TreeList' ,{
 
     rootVisible: false,
 
+	toggleOnDblClick: false,
+
+	plugins:[
+		Ext.create('Ext.grid.plugin.CellEditing', {
+			triggerEvent: 'celldblclick'
+		})
+	],
+
     tbar: [
         {
             text: "Add new scene",

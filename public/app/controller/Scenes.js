@@ -98,6 +98,8 @@ Ext.define('Spelled.controller.Scenes', {
 			},
 			'scenetreelist': {
 				select         : me.dispatchTreeClick,
+				beforeedit     : me.checkIfTreeColumnIsEditable,
+				edit           : me.changeEntityName,
 				itemcontextmenu: me.dispatchTreeListContextMenu,
 				editclick    :   me.dispatchTreeListContextMenu,
 				itemmouseenter : me.dispatchMouseEnterTree,
@@ -116,6 +118,17 @@ Ext.define('Spelled.controller.Scenes', {
 				select: this.setSceneScript
 			}
 		})
+	},
+
+	changeEntityName: function( editor, e ) {
+		var entity = Ext.getStore( 'config.Entities' ).getById( e.record.getId() )
+
+		entity.set( 'name', e.record.get('text') )
+		e.record.commit()
+	},
+
+	checkIfTreeColumnIsEditable: function( editor, e ) {
+		return ( this.getClickedTreeItemType( e.record ) === this.TREE_ITEM_TYPE_ENTITY )
 	},
 
 	setDefaultScene: function( scene ) {
