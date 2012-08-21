@@ -148,6 +148,8 @@ $tip-base-color: $color1;
 $tip-body-color: #fff;
 $tip-header-color: #fff;
 
+$tip-background-color: $color1 !important;
+$window-body-background-color: adjust-color($color1, $hue: 3.188deg, $saturation: 0.542%, $lightness: 7.843%) !important;
 
 
 @import 'compass';

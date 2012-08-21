@@ -6266,11 +6266,11 @@ textarea.x-form-invalid-field {
   padding: 2px 2px 2px 2px;
   border-width: 1px;
   border-style: solid;
-  background-color: #646464; }
+  background-color: #646464 !important; }
 
 /* line 102, ../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-nlg .x-tip-mc {
-  background-color: #646464; }
+  background-color: #646464 !important; }
 
 /* line 115, ../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-nbr .x-tip {
@@ -7003,7 +7003,7 @@ textarea.x-form-invalid-field {
 .x-window-body-default {
   border-color: #544848;
   border-width: 1px;
-  background: #797777;
+  background: #797777 !important;
   color: black; }
 
 /* line 188, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_window.scss */
