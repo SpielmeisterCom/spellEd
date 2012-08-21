@@ -32,7 +32,6 @@ Ext.define('Spelled.view.scene.TreeList' ,{
 				],
 				listeners: {
 					afterrender: function() {
-						console.log( "Remove" )
 						cellEditor.removeManagedListener( cellEditor.view, 'celldblclick' )
 					}
 				}
