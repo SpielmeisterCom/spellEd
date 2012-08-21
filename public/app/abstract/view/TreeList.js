@@ -7,31 +7,34 @@ Ext.define('Spelled.abstract.view.TreeList' ,{
     hideHeaders: true,
 
 	initComponent: function() {
-        var me = this
+		var me = this
 
-        me.columns = [
-            {
-                xtype: 'treecolumn',
-                dataIndex: 'text',
-                flex: 1,
-				editor:{
-					xtype:'textfield'
+		Ext.applyIf( me, {
+			columns : [
+				{
+					xtype: 'treecolumn',
+					dataIndex: 'text',
+					flex: 1,
+					editor:{
+						xtype:'textfield'
+					}
+				},
+				{
+					xtype: 'actioncolumn',
+					width: 30,
+					icon: 'images/icons/wrench-arrow.png',
+					iconCls: 'x-hidden edit-action-icon',
+					handler: Ext.bind(me.handleEditClick, me)
 				}
-            },
-            {
-                xtype: 'actioncolumn',
-                width: 30,
-                icon: 'images/icons/wrench-arrow.png',
-                iconCls: 'x-hidden edit-action-icon',
-                handler: Ext.bind(me.handleEditClick, me)
-            }
-        ]
+			]
+		})
+
 
         me.addEvents(
 			'editclick'
         )
 
-        me.callParent( arguments )
+        me.callParent()
     },
 
 	handleEditClick: function(gridView, rowIndex, colIndex, column, e, node) {

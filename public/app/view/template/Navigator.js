@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.template.Navigator', {
-    extend: 'Ext.panel.Panel',
+	extend: 'Spelled.abstract.view.Navigator',
     alias : 'widget.templatesnavigator',
 
     title: "Templates",

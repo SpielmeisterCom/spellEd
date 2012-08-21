@@ -344,6 +344,7 @@
 		"Spelled.view.entity.ComponentsList",
 		"Spelled.store.config.Entities",
 		"Spelled.view.entity.HasTemplateHeader",
+		"Spelled.abstract.view.Navigator",
 		"Spelled.view.scene.Navigator",
 		"Spelled.model.config.Scene",
 		"Spelled.store.config.Scenes",

@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.script.Navigator', {
-    extend: 'Ext.panel.Panel',
+	extend: 'Spelled.abstract.view.Navigator',
     alias : 'widget.scriptsnavigator',
 
     title: "Scripts",

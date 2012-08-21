@@ -2,6 +2,9 @@ Ext.define('Spelled.view.scene.TreeList' ,{
     extend: 'Spelled.abstract.view.TreeList',
     alias : 'widget.scenetreelist',
 
+	title: "Scene - Navigator",
+	header: false,
+
     animate: false,
     animCollapse: false,
     store : 'ScenesTree',

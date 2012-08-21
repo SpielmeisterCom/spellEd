@@ -1,12 +1,9 @@
 Ext.define('Spelled.view.scene.Navigator', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Spelled.abstract.view.Navigator',
     alias : 'widget.scenesnavigator',
 
     title: "Scenes",
-    layout: {
-        align: 'stretch',
-        type: 'vbox'
-    },
+
     items:[
         {
             id: "ScenesTree",
