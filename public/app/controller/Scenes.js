@@ -120,6 +120,11 @@ Ext.define('Spelled.controller.Scenes', {
 		})
 	},
 
+	triggerRenameEntityEvent: function( node ) {
+		var cellEditor = this.getScenesTree().getPlugin( 'renameEntityPlugin' )
+		cellEditor.startEdit( node, 0 )
+	},
+
 	changeEntityName: function( editor, e ) {
 		var entity = Ext.getStore( 'config.Entities' ).getById( e.record.getId() )
 

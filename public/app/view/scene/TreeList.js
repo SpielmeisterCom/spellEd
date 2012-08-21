@@ -11,19 +11,34 @@ Ext.define('Spelled.view.scene.TreeList' ,{
 
     rootVisible: false,
 
-	toggleOnDblClick: false,
-
-	plugins:[
-		Ext.create('Ext.grid.plugin.CellEditing', {
-			triggerEvent: 'celldblclick'
-		})
-	],
-
     tbar: [
         {
             text: "Add new scene",
             action: "showCreateScene",
 	        icon: 'images/icons/scene-add.png'
         }
-	]
+	],
+
+	initComponent: function() {
+		var me = this,
+			cellEditor = Ext.create('Ext.grid.plugin.CellEditing', {
+				clicksToEdit: 4,
+				pluginId:'renameEntityPlugin'
+			})
+
+		Ext.applyIf( me, {
+				plugins:[
+					cellEditor
+				],
+				listeners: {
+					afterrender: function() {
+						console.log( "Remove" )
+						cellEditor.removeManagedListener( cellEditor.view, 'celldblclick' )
+					}
+				}
+			}
+		)
+
+		me.callParent()
+	}
 });
