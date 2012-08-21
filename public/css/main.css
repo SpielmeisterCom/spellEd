@@ -127,6 +127,12 @@
     background-image: url( '../images/icons/script.png' ) !important;
 }
 
+.no-animation-text {
+    padding: 15px;
+    font-size: 15pt;
+    color: #ffffff;
+}
+
 #SpelledConsole {
     font-family: monospace;
 }

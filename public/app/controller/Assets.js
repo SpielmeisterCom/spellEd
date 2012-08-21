@@ -379,22 +379,29 @@ Ext.define('Spelled.controller.Assets', {
 
         Asset.load( record.getId() , {
             scope: this,
-            success: function( asset ) {
-                var View = this.getAssetIframeView()
-                var view = new View( {
-                    title: title,
-                    autoEl: {
-                        tag : 'iframe',
-                        src: '/' + asset.getFilePath( this.application.getActiveProject().get('name') ),
-	                    border: '0',
-		                frameborder: '0',
-		                scrolling: 'no'
-                    }
-                } )
+			success: function( asset ) {
+				var View    = this.getAssetIframeView(),
+					iframe  = {
+						tag : 'iframe',
+						src: '/' + asset.getFilePath( this.application.getActiveProject().get('name') ),
+						border: '0',
+						frameborder: '0',
+						scrolling: 'no'
+					},
+					errorTag = {
+						tag: 'h1',
+						cls: "no-animation-text",
+						html: 'Animation preview is not implemented yet.'
+					}
 
-                this.application.createTab( assetEditor, view )
-            }
-        })
+				var view = new View( {
+					title: title,
+					autoEl: ( asset.get('type') === 'animation' ) ? errorTag : iframe
+				} )
+
+				this.application.createTab( assetEditor, view )
+			}
+		})
     },
 
 	refreshStoresAndTreeStores: function( force ) {
