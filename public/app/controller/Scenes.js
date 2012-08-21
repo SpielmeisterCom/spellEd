@@ -27,6 +27,10 @@ Ext.define('Spelled.controller.Scenes', {
 		{
 			ref : 'ScenesTree',
 			selector: '#ScenesTree'
+		},
+		{
+			ref : 'SceneEditor',
+			selector: '#SceneEditor'
 		}
 	],
 
@@ -53,6 +57,17 @@ Ext.define('Spelled.controller.Scenes', {
 
 	init: function() {
 		var me = this
+
+		// Keymapping for reloadingScenes on ctrl+R
+		var map = new Ext.KeyMap( {
+			target: document,
+			binding: {
+				key: Ext.EventObject.R,
+				ctrl: true,
+				scope: this,
+				handler: me.reloadSceneKeyEvent
+			}
+		})
 
 		// initializing the engine message bus
 		this.engineMessageBus = Ext.create(
@@ -118,6 +133,15 @@ Ext.define('Spelled.controller.Scenes', {
 				select: this.setSceneScript
 			}
 		})
+	},
+
+	reloadSceneKeyEvent: function( keyCode, e ) {
+		var sceneEditor = this.getSceneEditor(),
+			activeTab   = sceneEditor.getActiveTab()
+
+		e.stopEvent()
+		if( activeTab && !sceneEditor.isHidden() )
+			this.reloadScene( activeTab.down( 'button' ) )
 	},
 
 	triggerRenameEntityEvent: function( node ) {
