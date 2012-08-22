@@ -11,7 +11,8 @@ Ext.define('Spelled.controller.templates.Entities', {
     ],
 
 	views: [
-		'template.entity.Add'
+		'template.entity.Add',
+		'template.entity.Edit'
 	],
 
 	refs: [
@@ -22,6 +23,10 @@ Ext.define('Spelled.controller.templates.Entities', {
 		{
 			ref: 'TemplatesTree',
 			selector: '#TemplatesTree'
+		},
+		{
+			ref : 'TemplateEditor',
+			selector: '#TemplateEditor'
 		}
 	],
 
@@ -35,6 +40,18 @@ Ext.define('Spelled.controller.templates.Entities', {
 			}
         })
     },
+
+	openTemplate: function( entityTemplate ) {
+		var templateEditor = this.getTemplateEditor()
+
+		var editView = Ext.widget( 'entitytemplateedit',  {
+				title    : entityTemplate.getFullName(),
+				template : entityTemplate
+			}
+		)
+
+		this.application.createTab( templateEditor, editView )
+	},
 
 	getOwnerNode: function( node ) {
 		return ( node.get('cls') === this.application.getController( 'Templates' ).TEMPLATE_TYPE_ENTITY ) ? node : this.getOwnerNode( node.parentNode )

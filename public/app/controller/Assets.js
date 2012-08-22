@@ -391,7 +391,7 @@ Ext.define('Spelled.controller.Assets', {
 					errorTag = {
 						tag: 'h1',
 						cls: "no-animation-text",
-						html: 'Animation preview is not implemented yet.'
+						html: 'Animation preview is not available.'
 					}
 
 				var view = new View( {

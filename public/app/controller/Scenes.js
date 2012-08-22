@@ -203,6 +203,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 	dispatchTreeListContextMenu: function( gridView, list, columnIndex, rowIndex, e ) {
 		var node = gridView.getRecord( gridView.findTargetByEvent(e) )
+		e.stopEvent()
 
 		switch( this.getClickedTreeItemType( node ) ) {
 			case this.TREE_ITEM_TYPE_ENTITIES:

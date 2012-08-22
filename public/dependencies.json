@@ -364,6 +364,7 @@
 		"Spelled.view.template.component.Edit",
 		"Spelled.model.template.ComponentAttribute",
 		"Spelled.view.template.entity.Add",
+		"Spelled.view.template.entity.Edit",
 		"Spelled.store.template.component.AttributeTypes",
 		"Spelled.store.template.component.Attributes",
 		"Spelled.store.system.Types",

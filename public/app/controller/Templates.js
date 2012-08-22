@@ -60,7 +60,6 @@ Ext.define('Spelled.controller.Templates', {
                 editclick:       this.showTemplatesContextMenu,
                 itemcontextmenu: this.showTemplatesContextMenu,
                 itemdblclick:    this.openTemplate,
-				select:          this.showConfig,
                 itemmouseenter:  this.application.showActionsOnLeaf,
                 itemmouseleave:  this.application.hideActions
             },
@@ -90,8 +89,6 @@ Ext.define('Spelled.controller.Templates', {
 				var tab = this.application.findActiveTabByTitle( this.getTemplateEditor(), template.getFullName() )
 				if( tab ) {
 					this.application.getController('templates.Systems').refreshSystemConfiguration( tab )
-				} else {
-					this.openTemplate( treeGrid, record )
 				}
 
 				break
@@ -150,6 +147,8 @@ Ext.define('Spelled.controller.Templates', {
     openTemplate: function( treeGrid, record ) {
         if( !record.data.leaf ) return
 
+		this.showConfig( treeGrid, record )
+
         var Model      = undefined,
             Controller = undefined
 
@@ -163,6 +162,10 @@ Ext.define('Spelled.controller.Templates', {
                 Model = this.getTemplateSystemModel()
                 Controller = this.application.getController('templates.Systems')
                 break
+			case this.TEMPLATE_TYPE_ENTITY:
+				Model = this.getTemplateEntityModel()
+				Controller = this.application.getController('templates.Entities')
+				break
             default:
                 return
         }
