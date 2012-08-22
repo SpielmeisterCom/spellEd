@@ -145,8 +145,6 @@ Ext.define('Spelled.controller.Templates', {
     },
 
     openTemplate: function( treeGrid, record ) {
-        if( !record.data.leaf ) return
-
 		this.showConfig( treeGrid, record )
 
         var Model      = undefined,
@@ -165,6 +163,12 @@ Ext.define('Spelled.controller.Templates', {
 			case this.TEMPLATE_TYPE_ENTITY:
 				Model = this.getTemplateEntityModel()
 				Controller = this.application.getController('templates.Entities')
+				break
+			case this.TYPE_ENTITY_COMPOSITE:
+				//composites show owner entity as preview
+				Model = this.getTemplateEntityModel()
+				Controller = this.application.getController('templates.Entities')
+				record = Controller.getOwnerNode( record )
 				break
             default:
                 return

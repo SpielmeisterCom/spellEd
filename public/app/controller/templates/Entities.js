@@ -128,7 +128,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 	showEntityTemplateComponentsList: function( entity ) {
 		var view = this.application.getController('Entities').createComponentsListView( entity )
 
-		if( entity.isReadonly() ) {
+		if( !!entity.isReadonly && entity.isReadonly() ) {
 			view.disable()
 		} else {
 
