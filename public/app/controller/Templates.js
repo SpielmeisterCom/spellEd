@@ -171,41 +171,43 @@ Ext.define('Spelled.controller.Templates', {
 		this.showConfig( treeGrid, record )
 
         var Model      = undefined,
-            Controller = undefined
+            Controller = undefined,
+			store      = undefined
 
 
         switch( record.get('cls') ) {
             case this.TEMPLATE_TYPE_COMPONENT:
                 Model = this.getTemplateComponentModel()
                 Controller = this.application.getController('templates.Components')
+				store = this.getTemplateComponentsStore()
                 break
             case this.TEMPLATE_TYPE_SYSTEM:
                 Model = this.getTemplateSystemModel()
                 Controller = this.application.getController('templates.Systems')
+				store = this.getTemplateSystemsStore()
                 break
 			case this.TEMPLATE_TYPE_ENTITY:
 				Model = this.getTemplateEntityModel()
 				Controller = this.application.getController('templates.Entities')
+				store = this.getTemplateEntitiesStore()
 				break
 			case this.TYPE_ENTITY_COMPOSITE:
 				//composites show owner entity as preview
 				Model = this.getTemplateEntityModel()
 				Controller = this.application.getController('templates.Entities')
+				store = this.getTemplateEntitiesStore()
 				record = Controller.getOwnerNode( record )
 				break
             default:
                 return
         }
 
-        Model.load( record.getId(), {
-            scope: this,
-            success: function( template ) {
-				var foundTab = this.application.findActiveTabByTitle( this.getTemplateEditor(), template.getFullName() )
-				if( foundTab ) return foundTab
+		var template = store.getById( record.getId() ),
+			foundTab = this.application.findActiveTabByTitle( this.getTemplateEditor(), template.getFullName() )
 
-                Controller.openTemplate( template )
-			}
-        })
+		if( foundTab ) return foundTab
+
+		Controller.openTemplate( template )
     },
 
     removeTemplateCallback: function( template ) {
