@@ -2,6 +2,7 @@ Ext.define('Spelled.view.template.component.Property', {
     extend: 'Ext.form.Panel',
     alias : 'widget.componenttemplateproperty',
 
+	overflowY: 'auto',
     bodyPadding: 10,
     margin: '5 0 0 0',
     title: 'Attribute',

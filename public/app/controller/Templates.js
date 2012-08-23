@@ -174,7 +174,6 @@ Ext.define('Spelled.controller.Templates', {
             Controller = undefined,
 			store      = undefined
 
-
         switch( record.get('cls') ) {
             case this.TEMPLATE_TYPE_COMPONENT:
                 Model = this.getTemplateComponentModel()

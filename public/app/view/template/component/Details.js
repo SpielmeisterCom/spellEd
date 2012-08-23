@@ -2,6 +2,7 @@ Ext.define('Spelled.view.template.component.Details', {
     extend: 'Ext.form.Panel',
     alias : 'widget.componenttemplatedetails',
 
+	overflowY: 'auto',
     bodyPadding: 10,
     collapsible: true,
     hideCollapseTool: false,
