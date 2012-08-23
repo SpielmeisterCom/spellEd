@@ -136,8 +136,25 @@ Ext.define('Spelled.model.config.Entity', {
 	},
 
     mergeWithTemplateConfig: function() {
-        var entityTemplate     = this.getEntityTemplate(),
-            templateComponents = entityTemplate.getComponents(),
+		if( !this.isAnonymous() ) {
+			this.mergeEntityTemplateWithTemplateConfig( this.getEntityTemplate() )
+
+		} else if( this.hasEntity() ) {
+			var owner = this.getOwner()
+
+			if( owner && !owner.isAnonymous() ) {
+				var ownerTemplate = owner.getEntityTemplate(),
+					entity        = ownerTemplate.getChildren().findRecord( 'name', this.get('name') )
+
+				if( entity ) {
+					this.mergeEntityTemplateWithTemplateConfig( entity )
+				}
+			}
+		}
+	},
+
+	mergeEntityTemplateWithTemplateConfig: function( entityTemplate ) {
+        var templateComponents = entityTemplate.getComponents(),
             components         = this.getComponents()
 
         templateComponents.each(

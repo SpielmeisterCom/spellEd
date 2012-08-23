@@ -160,8 +160,7 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
     showComponentsList: function( entity ) {
-		if( !Ext.isEmpty(entity.get('templateId')) )
-			entity.mergeWithTemplateConfig()
+		entity.mergeWithTemplateConfig()
 
 		this.createComponentsListView( entity )
 	},
