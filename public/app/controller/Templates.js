@@ -49,10 +49,20 @@ Ext.define('Spelled.controller.Templates', {
     ],
 
     init: function() {
+		var me = this
+
         this.control({
             'templatesnavigator': {
                 activate: this.showTemplateEditor
             },
+			'templateeditor': {
+				tabchange: this.openTabTemplate
+			},
+			'templateeditor tab': {
+				close: function() {
+					me.getRightPanel().removeAll()
+				}
+			},
 			'templatestreelist button[action="showCreateTemplate"]': {
 				click: this.showCreateTemplate
 			},
@@ -72,17 +82,30 @@ Ext.define('Spelled.controller.Templates', {
         })
     },
 
-	showConfig: function( treeGrid, record ) {
+	openTabTemplate: function( tabPanel, newCard ) {
+		var tree = this.getTemplatesTree(),
+			node = tree.getRootNode().findChild( 'id', newCard.template.getId(), true )
+
+		tree.expandPath( node.getPath() )
+		tree.getSelectionModel().select( node )
+
 		this.getRightPanel().removeAll()
 
+		this.openTemplate( tree, node )
+	},
+
+	showConfig: function( treeGrid, record ) {
 		switch( record.get('cls') ) {
 			case this.TEMPLATE_TYPE_ENTITY:
+				this.getRightPanel().removeAll()
 				this.application.getController('templates.Entities').showEntityTemplateComponentsListHelper( record.getId() )
 				break
 			case this.TYPE_ENTITY_COMPOSITE:
+				this.getRightPanel().removeAll()
 				this.application.getController('templates.Entities').showEntityCompositeComponentsListHelper( record )
 				break
 			case this.TEMPLATE_TYPE_SYSTEM:
+				this.getRightPanel().removeAll()
 				var template = this.getTemplateSystemsStore().getById( record.getId() )
 				if( !template ) return
 
