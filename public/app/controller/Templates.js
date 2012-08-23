@@ -59,7 +59,7 @@ Ext.define('Spelled.controller.Templates', {
 				tabchange: this.openTabTemplate
 			},
 			'templateeditor tab': {
-				close: function() {
+				beforeclose: function() {
 					me.getRightPanel().removeAll()
 				}
 			},
