@@ -156,6 +156,7 @@ Ext.define('Spelled.controller.Scenes', {
 				toggle: me.toggleGrid
 			},
 			'scenetreelist': {
+				itemdblclick   : me.dispatchTreeDblClick,
 				select         : me.dispatchTreeClick,
 				beforeedit     : me.checkIfTreeColumnIsEditable,
 				edit           : me.changeEntityName,
@@ -177,6 +178,16 @@ Ext.define('Spelled.controller.Scenes', {
 				select: this.setSceneScript
 			}
 		})
+	},
+
+	dispatchTreeDblClick: function( treePanel, record ) {
+		switch( this.getClickedTreeItemType( record ) ) {
+			case this.TREE_ITEM_TYPE_SCRIPT:
+				this.application.getController( 'Scripts').openSceneScript()
+				break
+			default:
+				return
+		}
 	},
 
 	reloadSceneKeyEvent: function( keyCode, e ) {

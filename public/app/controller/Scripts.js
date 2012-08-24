@@ -24,7 +24,15 @@ Ext.define('Spelled.controller.Scripts', {
         {
             ref : 'MainPanel',
             selector: '#MainPanel'
-        }
+        },
+		{
+			ref: 'RightPanel',
+			selector: '#RightPanel'
+		},
+		{
+			ref : 'ScriptsTree',
+			selector: '#ScriptsTree'
+		}
     ],
 
     init: function() {
@@ -37,7 +45,7 @@ Ext.define('Spelled.controller.Scripts', {
                 activate: this.showScripts
             },
             'scriptstreelist': {
-                itemdblclick:    this.openScript,
+                itemdblclick:    this.openScriptHelper,
                 itemcontextmenu: this.showListContextMenu,
                 editclick:       this.showListContextMenu,
                 itemmouseenter:  this.application.showActionsOnLeaf,
@@ -51,6 +59,27 @@ Ext.define('Spelled.controller.Scripts', {
             }
         })
     },
+
+	openSceneScript: function(  ) {
+		var sceneScriptView = this.getRightPanel().down( 'scenescript' )
+
+		if( sceneScriptView ) {
+			var scriptId = sceneScriptView.down( 'combo' ).getValue(),
+				script   = this.getScriptScriptsStore().findRecord( 'name', scriptId),
+				tree     = this.getScriptsTree(),
+				node     = tree.getRootNode().findChild( 'id', script.get('path'), true )
+
+			Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Scripts') )
+
+			//TODO: find solution for asynchronous closed folders
+			if( node ) {
+				tree.expandPath( node.getPath() )
+				tree.getSelectionModel().select( node )
+			}
+
+			this.openScript( scriptId )
+		}
+	},
 
 	saveScriptInPanel: function( panel ) {
 		panel.model.set( 'content', panel.aceEditor.getSession().getValue() )
@@ -102,32 +131,35 @@ Ext.define('Spelled.controller.Scripts', {
         )
     },
 
-    openScript: function( treePanel, record ) {
+    openScriptHelper: function( treePanel, record ) {
         if( !record.data.leaf ) return
 
-        var scriptEditor = Ext.getCmp('ScriptEditor'),
-            title        = record.internalId,
+		this.openScript( record.getId() )
+    },
+
+	openScript: function( scriptId ) {
+		var scriptEditor = Ext.getCmp('ScriptEditor'),
 			Script 		 = this.getScriptModel()
 
-        var foundTab = this.application.findActiveTabByTitle( scriptEditor, title )
+		var foundTab = this.application.findActiveTabByTitle( scriptEditor, scriptId )
 
-        if( foundTab )
-            return foundTab
+		if( foundTab )
+			return foundTab
 
-        Script.load( record.internalId, {
-            scope: this,
-            success: function( script ) {
+		Script.load( scriptId, {
+			scope: this,
+			success: function( script ) {
 
-                var View = this.getScriptEditorView()
-                var view = View.create( {
-                    title: script.get('name'),
-                    model: script
-                } )
+				var View = this.getScriptEditorView()
+				var view = View.create( {
+					title: script.get('name'),
+					model: script
+				} )
 
-                this.application.createTab( scriptEditor, view )
-            }
-        })
-    },
+				this.application.createTab( scriptEditor, view )
+			}
+		})
+	},
 
     showCreateScript: function() {
         var View = this.getScriptCreateView()
