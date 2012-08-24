@@ -8011,7 +8011,7 @@ textarea.x-form-invalid-field {
     font-size: 11px;
     font-weight: bold;
     font-family: tahoma, arial, verdana, sans-serif;
-    color: black;
+    color: white;
     outline: 0 none;
     overflow-x: visible; }
     /* line 69, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
@@ -8174,9 +8174,6 @@ textarea.x-form-invalid-field {
 /* line 272, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-active {
   z-index: 3; }
-  /* line 278, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
-  .x-tab-active button {
-    color: white; }
 
 /* line 294, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-top-active {
