@@ -58,16 +58,60 @@ Ext.define('Spelled.controller.Scenes', {
 	init: function() {
 		var me = this
 
+		//Show Scenes on ctrl+1
+		Spelled.KeyMap = new Ext.util.KeyMap( document,
+			{
+				key: Ext.EventObject.ONE,
+				ctrl: true,
+				scope: this,
+				handler: function( keycode, event) {
+					this.application.activateTabByEvent( Ext.getCmp('Scenes'), event )
+				}
+			}
+		)
+		//Show Templates on ctrl+2
+		Spelled.KeyMap.addBinding(
+			{
+				key: Ext.EventObject.TWO,
+				ctrl: true,
+				scope: this,
+				handler: function( keycode, event) {
+					this.application.activateTabByEvent( Ext.getCmp('Templates'), event )
+				}
+			}
+		)
+		//Show Assets on ctrl+1
+		Spelled.KeyMap.addBinding(
+			{
+				key: Ext.EventObject.THREE,
+				ctrl: true,
+				scope: this,
+				handler: function( keycode, event) {
+					this.application.activateTabByEvent( Ext.getCmp('Assets'), event )
+				}
+			}
+		)
+		//Show Assets on ctrl+4
+		Spelled.KeyMap.addBinding(
+			{
+				key: Ext.EventObject.FOUR,
+				ctrl: true,
+				scope: this,
+				handler: function( keycode, event) {
+					this.application.activateTabByEvent( Ext.getCmp('Scripts'), event )
+				}
+			}
+		)
+
 		// Keymapping for reloadingScenes on ctrl+R
-		var map = new Ext.KeyMap( {
-			target: document,
-			binding: {
+		Spelled.KeyMap.addBinding(
+			{
 				key: Ext.EventObject.R,
 				ctrl: true,
 				scope: this,
-				handler: me.reloadSceneKeyEvent
+				fn: me.reloadSceneKeyEvent
 			}
-		})
+		)
 
 		// initializing the engine message bus
 		this.engineMessageBus = Ext.create(

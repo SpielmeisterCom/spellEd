@@ -121,6 +121,11 @@ require(
 					}
 				},
 
+				activateTabByEvent: function( tab, event ) {
+					event.stopEvent()
+					Ext.getCmp('Navigator').setActiveTab( tab, event )
+				},
+
 				showBuildServerConnectError: function() {
 					Ext.Msg.alert( 'Service unavailable', "SpellEd can't connect to the Build-Server." )
 				},
