@@ -5,7 +5,8 @@ Ext.define('Spelled.view.template.component.Edit', {
 
     layout: {
         align: 'stretch',
-        type: 'vbox'
+        type: 'vbox',
+		padding: 5
     },
 
     items: [
@@ -15,7 +16,6 @@ Ext.define('Spelled.view.template.component.Edit', {
 			flex: 1,
 			layout: {
 				align: 'stretch',
-				padding: 5,
 				type: 'vbox'
 			},
 			items: [

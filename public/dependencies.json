@@ -361,6 +361,7 @@
 		"Spelled.store.asset.Types",
 		"Spelled.store.asset.Animations",
 		"Spelled.store.asset.SpriteSheets",
+		"Spelled.view.template.ReadOnly",
 		"Spelled.view.template.component.Edit",
 		"Spelled.model.template.ComponentAttribute",
 		"Spelled.view.template.entity.Add",

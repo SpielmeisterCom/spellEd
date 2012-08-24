@@ -192,6 +192,8 @@ Ext.define('Spelled.controller.templates.Components', {
         form.getForm().setValues( { tmpName: componentTemplate.getFullName() } )
 
 		if( componentTemplate.isReadonly() ) {
+			this.application.getController( 'Templates' ).addDisabledTemplateHeader( editView )
+
 			editView.down('componenttemplatedetails').disable()
 			editView.down('componenttemplateproperty').disable()
 			editView.down('componenttemplateattributeslist').setReadonly()

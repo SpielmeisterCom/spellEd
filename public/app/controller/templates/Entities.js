@@ -130,6 +130,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 
 		if( !!entity.isReadonly && entity.isReadonly() ) {
 			view.disable()
+			this.application.getController( 'Templates' ).addDisabledTemplateHeader( view )
 		} else {
 
 			view.addDocked(

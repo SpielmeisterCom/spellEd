@@ -11,7 +11,8 @@ Ext.define('Spelled.controller.Templates', {
         'template.Navigator',
         'template.TreeList',
         'template.Create',
-        'template.FolderPicker'
+        'template.FolderPicker',
+		'template.ReadOnly'
     ],
 
     models: [
@@ -81,6 +82,13 @@ Ext.define('Spelled.controller.Templates', {
             }
         })
     },
+
+	addDisabledTemplateHeader: function( view ) {
+		view.insert( 0,{
+				xtype: 'readonlytemplateheader'
+			}
+		)
+	},
 
 	openTabTemplate: function( tabPanel, newCard ) {
 		var tree = this.getTemplatesTree(),

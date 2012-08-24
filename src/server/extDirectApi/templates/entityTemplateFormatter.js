@@ -50,7 +50,7 @@ define(
 		 * @return {*}
 		 */
 		var toEditorFormat = function( entity ) {
-			var result = _.pick( entity, 'name', 'namespace', 'type', 'id' )
+			var result = _.pick( entity, 'name', 'namespace', 'type', 'id', 'readonly' )
 
 			result.components = _.reduce(
 				entity.config,
