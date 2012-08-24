@@ -129,7 +129,7 @@ Ext.define('Spelled.controller.Scenes', {
 			'scenesnavigator': {
 				activate: me.showScenesEditor
 			},
-			'scenescript > combobox[name="scriptId"]' : {
+			'scenescript combobox[name="scriptId"]' : {
 				select: this.setSceneScript
 			}
 		})
