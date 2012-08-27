@@ -146,28 +146,39 @@ Ext.define('Spelled.controller.Projects', {
 		Ext.state.Manager.set( 'projectName', project.get('name') )
 		app.setActiveProject( project )
 
-		app.getController( 'Assets' ).refreshStoresAndTreeStores( true )
 		app.getController( 'Scripts' ).refreshStoresAndTreeStores( true )
+		//Need to do a synchronous load
+		//TODO: find a solution for synchonous loading stores with proxies etc.
+		app.getController( 'Assets' ).refreshStoresAndTreeStores(
+			true,
+			Ext.bind( function() {
+				var callback = Ext.bind( function() {
+						this.projectLoadedCallback( project )
+					},
+					this
+				)
 
-		var callback = Ext.bind( function() {
-				project.checkForComponentChanges()
-				this.getScenesList( project )
-				Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Scenes') )
-
-				var tree       = this.getScenesTree(),
-					firstScene = project.getScenes().first(),
-					node       = tree.getRootNode().findChild( 'id', firstScene.get( 'name' ), true )
-
-				tree.getSelectionModel().select( node )
-				tree.expandPath( node.getPath() )
-
-
-				app.getController( 'Scenes' ).renderScene( firstScene )
+				app.getController( 'Templates' ).loadTemplateStores( project.get('name'), callback, true )
 			},
 			this
 		)
+		)
+	},
 
-		app.getController( 'Templates' ).loadTemplateStores( project.get('name'), callback, true )
+	projectLoadedCallback: function( project ) {
+		project.checkForComponentChanges()
+		this.getScenesList( project )
+		Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Scenes') )
+
+		var tree       = this.getScenesTree(),
+			firstScene = project.getScenes().first(),
+			node       = tree.getRootNode().findChild( 'id', firstScene.get( 'name' ), true )
+
+		tree.getSelectionModel().select( node )
+		tree.expandPath( node.getPath() )
+
+
+		this.application.getController( 'Scenes' ).renderScene( firstScene )
 	},
 
 	collectConfigEntityIds: function( items ) {
