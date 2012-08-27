@@ -45,7 +45,8 @@ Ext.define('Spelled.view.template.Create', {
                 {
                     xtype: "textfield",
                     name: 'name',
-                    fieldLabel: 'Name'
+                    fieldLabel: 'Name',
+					vtype: 'alphanum'
                 }
             ],
 

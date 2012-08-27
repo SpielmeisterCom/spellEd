@@ -395,21 +395,30 @@ Ext.define('Spelled.controller.Menu', {
 	},
 
     removeEntity: function( item ) {
-        var view = item.up('entitieslistcontextmenu')
+		var view = item.up('entitieslistcontextmenu')
 
-        var entity = view.getEntity()
+		var entity = view.getEntity()
 
-        if( entity ) {
-            this.application.getController( 'Entities' ).deleteEntity( entity )
-			var node = this.application.getLastSelectedNode( this.getScenesTree() ),
-				parentNode = node.parentNode
+		Ext.Msg.confirm(
+			'Remove '+ entity.get('name'),
+			'Should the Entity: "' + entity.get('name') + '" be removed?',
+			function( button ) {
+				if ( button === 'yes' ) {
+					if( entity ) {
+						this.application.getController( 'Entities' ).deleteEntity( entity )
+						var node = this.application.getLastSelectedNode( this.getScenesTree() ),
+							parentNode = node.parentNode
 
-			node.remove()
+						node.remove()
 
-			if( !parentNode.hasChildNodes() ) {
-				parentNode.set( 'leaf', true )
-			}
-        }
+						if( !parentNode.hasChildNodes() ) {
+							parentNode.set( 'leaf', true )
+						}
+					}
+				}
+			},
+			this
+		)
     },
 
     removeScene: function( ) {

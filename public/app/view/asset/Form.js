@@ -30,7 +30,8 @@ Ext.define('Spelled.view.asset.Form', {
 		{
 			xtype: "textfield",
 			name: 'name',
-			fieldLabel: 'Name'
+			fieldLabel: 'Name',
+			vtype: 'alphanum'
 		},
 		{
 			xtype: "assetfolderpicker",
