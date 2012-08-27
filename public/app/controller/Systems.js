@@ -127,12 +127,15 @@ Ext.define('Spelled.controller.Systems', {
 							text      : template.getFullName(),
 							id        : template.getFullName(),
 							expanded  : true,
+							cls		  : this.application.getController('Templates').TEMPLATE_TYPE_SYSTEM,
+							iconCls   : "tree-system-icon",
 							leaf      : true,
 							checked   : false
 						} )
 					)
 				}
-			}
+			},
+			this
 		)
 
 		view.show()

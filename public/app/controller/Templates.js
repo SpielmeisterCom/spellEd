@@ -315,26 +315,37 @@ Ext.define('Spelled.controller.Templates', {
       this.loadTemplateStores( projectName )
     },
 
-    loadTemplateStores: function( projectName ) {
+    loadTemplateStores: function( projectName, callback, force ) {
+		var finished = 0,
+			called   = function() {
+				finished++
+				//TODO: find a better solution for his
+				if( finished >= 3 && !!callback ) callback()
+			}
+
+
         Spelled.TemplatesActions.getAllEntitiesTemplates( projectName, function( provider, response ) {
             var store = Ext.getStore('template.Entities')
             store.removeAll()
             store.loadDataViaReader( response.result )
+			called()
         })
 
         Spelled.TemplatesActions.getAllComponentsTemplates( projectName, function( provider, response ) {
             var store = Ext.getStore('template.Components')
             store.removeAll()
             store.loadDataViaReader( response.result )
+			called()
         })
 
 		Spelled.TemplatesActions.getAllSystemsTemplates( projectName, function( provider, response ) {
 			var store = Ext.getStore('template.Systems')
 			store.removeAll()
 			store.loadDataViaReader( response.result )
+			called()
 		})
 
-		this.loadTrees()
+		this.loadTrees( !!force )
     },
 
 	refreshStoresAndTreeStores: function( force ) {

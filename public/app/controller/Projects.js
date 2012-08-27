@@ -23,7 +23,16 @@ Ext.define('Spelled.controller.Projects', {
                 click: this.loadProjectAction
             }
         })
+	},
 
+	refs: [
+		{
+			ref : 'ScenesTree',
+			selector: '#ScenesTree'
+		}
+	],
+
+	loadLastProject: function() {
 		// loading default project
 		var projectName = Ext.state.Manager.get( 'projectName' ) || 'spellReferenceProject'
 
@@ -35,13 +44,6 @@ Ext.define('Spelled.controller.Projects', {
 			Ext.create( 'Spelled.view.ui.StartScreen' ).show()
 		}
 	},
-
-	refs: [
-		{
-			ref : 'ScenesTree',
-			selector: '#ScenesTree'
-		}
-	],
 
     showCreateProject: function() {
         var View = this.getProjectCreateView()
@@ -121,10 +123,6 @@ Ext.define('Spelled.controller.Projects', {
 	prepareStores: function( projectName ) {
 		var app = this.application
 		app.setExtraParamOnProxies( 'projectName', projectName )
-
-		app.getController( 'Templates' ).loadTemplateStores( projectName )
-		app.getController( 'Assets' ).refreshStores()
-		app.getController( 'Scripts' ).refreshStores()
 	},
 
     loadProject: function( projectName ) {
@@ -143,19 +141,33 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
 	onProjectLoaded: function( project ) {
-		this.application.setActiveProject( project )
-		project.checkForComponentChanges()
-		this.getScenesList( project )
-		Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Scenes') )
+		var app = this.application
 
-		var tree       = this.getScenesTree(),
-			firstScene = project.getScenes().first(),
-			node       = tree.getRootNode().findChild( 'id', firstScene.get( 'name' ), true )
+		Ext.state.Manager.set( 'projectName', project.get('name') )
+		app.setActiveProject( project )
 
-		tree.getSelectionModel().select( node )
-		tree.expandPath( node.getPath() )
+		app.getController( 'Assets' ).refreshStoresAndTreeStores( true )
+		app.getController( 'Scripts' ).refreshStoresAndTreeStores( true )
 
-		this.application.getController( 'Scenes' ).renderScene( firstScene )
+		var callback = Ext.bind( function() {
+				project.checkForComponentChanges()
+				this.getScenesList( project )
+				Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Scenes') )
+
+				var tree       = this.getScenesTree(),
+					firstScene = project.getScenes().first(),
+					node       = tree.getRootNode().findChild( 'id', firstScene.get( 'name' ), true )
+
+				tree.getSelectionModel().select( node )
+				tree.expandPath( node.getPath() )
+
+
+				app.getController( 'Scenes' ).renderScene( firstScene )
+			},
+			this
+		)
+
+		app.getController( 'Templates' ).loadTemplateStores( project.get('name'), callback, true )
 	},
 
 	collectConfigEntityIds: function( items ) {
