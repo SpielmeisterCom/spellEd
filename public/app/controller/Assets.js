@@ -404,9 +404,9 @@ Ext.define('Spelled.controller.Assets', {
 		})
     },
 
-	refreshStoresAndTreeStores: function( force ) {
+	refreshStoresAndTreeStores: function( force, callback ) {
 		this.loadTrees( force )
-		this.refreshStores()
+		this.refreshStores( callback )
 	},
 
 	loadTrees: function( force ) {
@@ -418,8 +418,10 @@ Ext.define('Spelled.controller.Assets', {
         this.getAssetFoldersTreeStore().load()
     },
 
-    refreshStores: function() {
-		this.getAssetAssetsStore().load()
+    refreshStores: function( callback ) {
+		this.getAssetAssetsStore().load( {
+			callback: callback
+		})
     },
 
 	getDefaultDocumentation: function() {
