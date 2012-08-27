@@ -33,7 +33,8 @@ Ext.define('Spelled.view.script.Create' ,{
                 {
                     xtype: "textfield",
                     name: 'name',
-                    fieldLabel: 'Name'
+                    fieldLabel: 'Name',
+					vtype: 'alphanum'
                 }
             ],
             buttons: [

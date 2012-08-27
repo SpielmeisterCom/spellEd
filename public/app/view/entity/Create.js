@@ -14,6 +14,7 @@ Ext.define('Spelled.view.entity.Create' ,{
                 {
                     xtype: 'textfield',
                     name: 'name',
+					vtype: 'alphanum',
                     fieldLabel: 'Name',
                     anchor: '100%',
                     allowBlank:false

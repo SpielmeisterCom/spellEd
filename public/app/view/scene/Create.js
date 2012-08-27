@@ -16,6 +16,7 @@ Ext.define('Spelled.view.scene.Create' ,{
                     xtype: 'textfield',
                     name: 'name',
                     fieldLabel: 'Name',
+					vtype: 'alphanum',
                     anchor: '100%',
                     allowBlank:false
                 }

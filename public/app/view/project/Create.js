@@ -17,7 +17,8 @@ Ext.define('Spelled.view.project.Create' ,{
                     name: 'name',
                     fieldLabel: 'Name',
                     anchor: '100%',
-                    allowBlank:false
+                    allowBlank:false,
+					vtype: 'alphanum'
                 }
             ],
             buttons: [
