@@ -139,12 +139,15 @@ Ext.define('Spelled.controller.Scripts', {
 
 	openScript: function( scriptId ) {
 		var scriptEditor = Ext.getCmp('ScriptEditor'),
+			script       = this.getScriptScriptsStore().findRecord( 'path', scriptId ),
 			Script 		 = this.getScriptModel()
 
-		var foundTab = this.application.findActiveTabByTitle( scriptEditor, scriptId )
+		if( script ) {
+			var foundTab = this.application.findActiveTabByTitle( scriptEditor, script.get('name') )
 
-		if( foundTab )
-			return foundTab
+			if( foundTab )
+				return foundTab
+		}
 
 		Script.load( scriptId, {
 			scope: this,
