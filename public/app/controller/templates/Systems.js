@@ -247,7 +247,7 @@ Ext.define('Spelled.controller.templates.Systems', {
             form   = panel.down('form'),
             values = form.getValues(),
 			grid   = panel.down('systemtemplateinputlist'),
-			scriptsPanel = this.getTemplateEditor().getActiveTab().down('scripteditor'),
+			scriptsPanel = this.getTemplateEditor().getActiveTab(),
 			ownerModel   = this.getTemplateEditor().getActiveTab().template
 
         ownerModel.set( values )
@@ -255,9 +255,13 @@ Ext.define('Spelled.controller.templates.Systems', {
         if( !!ownerModel ) {
 			this.application.getController('Scripts').saveScriptInPanel( scriptsPanel )
 
-            ownerModel.save( )
-			grid.getStore().commitChanges()
-            this.application.getController('Templates').refreshTemplateStores()
+            ownerModel.save( {
+				callback: function() {
+					this.application.getController('Templates').refreshTemplateStores()
+					grid.getStore().commitChanges()
+				},
+				scope: this
+			})
         }
 
     }
