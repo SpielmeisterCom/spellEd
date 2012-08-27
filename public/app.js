@@ -259,7 +259,7 @@ require(
 					var me = this
 
 					//load configuration from global CONFIGURATION variable that is defined in app-initialize
-					me.configuration = Ext.app.CONFIGURATION;
+					me.configuration = Ext.app.CONFIGURATION
 
 					Ext.override(
 						Ext.data.proxy.Direct,
@@ -277,7 +277,7 @@ require(
 						}
 					)
 
-					Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
+					Ext.direct.Manager.addProvider(Ext.app.REMOTING_API)
 
 					Ext.get('loading').remove()
 					Ext.get('loading-mask').fadeOut( {
@@ -285,9 +285,9 @@ require(
 					} )
 
 					Ext.create('Spelled.view.ui.SpelledViewport')
-
-					var stateProvider = Ext.create( 'Ext.state.CookieProvider');
+					var stateProvider = Ext.create( 'Ext.state.CookieProvider')
 					Ext.state.Manager.setProvider( stateProvider )
+					this.getController( 'Projects').loadLastProject()
 				}
 			} )
 		};
