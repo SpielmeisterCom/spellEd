@@ -214,7 +214,7 @@ define(
 							}
 						}
 					};
-				if (contentType.match(/multipart/i)) {
+				if ( !!contentType && contentType.match(/multipart/i)) {
 					parseMultipart(request, onEndCallback);
 				} else {
 					parseJson(request, onEndCallback);
