@@ -65,9 +65,8 @@ define(
                 var name        = payload.name,
                     extension   = ".json",
                     folder      = path.join( root , payload.projectName , templatePathPart , util.convertNamespaceToFilePath( payload.namespace )),
-                    filePath    = folder + "/"+ name + extension
-
-                var namespace = util.extractNamespaceFromPath( folder, templatePathPart )
+                    filePath    = folder + "/"+ name + extension,
+					namespace = payload.namespace
 
 				var component = buildComponentFromData( payload )
 				component.namespace  = namespace

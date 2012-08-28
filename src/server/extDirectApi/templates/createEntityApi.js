@@ -52,9 +52,8 @@ define(
                     extension   = ".json",
                     folder      = path.join( root , payload.projectName , templatePathPart , util.convertNamespaceToFilePath( payload.namespace )),
                     filePath    = folder + "/"+ name + extension,
-                    type        = payload.type
-
-                var namespace = util.extractNamespaceFromPath( folder, templatePathPart )
+                    type        = payload.type,
+					namespace = payload.namespace
 
                 var entity = {
                     type      : type,

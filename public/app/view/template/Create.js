@@ -30,6 +30,7 @@ Ext.define('Spelled.view.template.Create', {
                     name: 'type',
                     editable: false,
                     store: 'template.Types',
+					forceSelection: true,
                     queryMode: 'local',
                     fieldLabel: "Template Type",
                     displayField: 'name',
@@ -37,6 +38,7 @@ Ext.define('Spelled.view.template.Create', {
                 },
                 {
                     xtype: "templatefolderpicker",
+					disabled: true,
                     name: 'namespace',
                     fieldLabel: 'Import into',
                     displayField: 'text',

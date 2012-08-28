@@ -42,7 +42,7 @@ define(
 			var namespaceToFilePath = function( namespace ) {
 				var tmp = ( !_.isString( namespace ) ) ? namespace.toString() : namespace
 				if( namespace === "root" ) return ""
-				return tmp.replace( /\./g, ",")
+				return tmp.replace( /\./g, "/")
 			}
 
             /**

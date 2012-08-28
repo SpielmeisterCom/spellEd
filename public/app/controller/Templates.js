@@ -169,10 +169,12 @@ Ext.define('Spelled.controller.Templates', {
 		var folderPicker = combo.up('form').down('templatefolderpicker'),
 			treeStore    = folderPicker.getStore(),
 			projectName  = this.application.getActiveProject().get('name'),
-			rootNode     = undefined
+			rootNode     = treeStore.getRootNode()
 
-		folderPicker.oldRootNode = folderPicker.oldRootNode || treeStore.getRootNode()
-		treeStore.setRootNode( folderPicker.oldRootNode )
+		folderPicker.enable()
+
+		treeStore.oldRootNode = treeStore.oldRootNode || rootNode
+		treeStore.setRootNode( treeStore.oldRootNode )
 
 		switch( combo.getValue()  ) {
 			case this.TEMPLATE_TYPE_COMPONENT:
