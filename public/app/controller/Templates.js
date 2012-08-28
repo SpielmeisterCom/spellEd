@@ -166,7 +166,28 @@ Ext.define('Spelled.controller.Templates', {
     },
 
     changeTemplateCreationType: function( combo, records ) {
+		var folderPicker = combo.up('form').down('templatefolderpicker'),
+			treeStore    = folderPicker.getStore(),
+			projectName  = this.application.getActiveProject().get('name'),
+			rootNode     = undefined
 
+		folderPicker.oldRootNode = folderPicker.oldRootNode || treeStore.getRootNode()
+		treeStore.setRootNode( folderPicker.oldRootNode )
+
+		switch( combo.getValue()  ) {
+			case this.TEMPLATE_TYPE_COMPONENT:
+				rootNode = treeStore.getRootNode().findChild( 'id', projectName + '.component', true )
+				break
+			case this.TEMPLATE_TYPE_ENTITY:
+				rootNode = treeStore.getRootNode().findChild( 'id', projectName + '.entity', true )
+				break
+			case this.TEMPLATE_TYPE_SYSTEM:
+				rootNode = treeStore.getRootNode().findChild( 'id', projectName + '.system', true )
+				break
+		}
+
+		treeStore.setRootNode( rootNode )
+		folderPicker.setValue( rootNode.getId() )
     },
 
     showCreateTemplate: function() {
