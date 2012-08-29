@@ -14,6 +14,11 @@ Ext.define('Spelled.view.menu.contextmenu.SceneSystemsList', {
 			action: 'moveDown'
 		},
 		{
+			icon: 'images/icons/application_go.png',
+			text: 'Show',
+			action: 'open'
+		},
+		{
 			icon: 'images/icons/system-delete.png',
 			text: 'Remove',
 			action: 'remove'

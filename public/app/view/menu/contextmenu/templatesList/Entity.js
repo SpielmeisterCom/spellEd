@@ -5,13 +5,18 @@ Ext.define('Spelled.view.menu.contextmenu.templatesList.Entity', {
     items: [
         {
 			icon: 'images/icons/add.png',
-            text: 'Create a new Template',
+            text: 'Create a new template',
             action: 'create'
         },
 		{
-			icon: 'images/icons/add.png',
+			icon: 'images/icons/entity-add.png',
 			text: 'Add a new Entity to this Entity-Template',
 			action: 'add'
+		},
+		{
+			icon: 'images/icons/application_go.png',
+			text: 'Open template',
+			action: 'open'
 		},
         {
 			icon: 'images/icons/delete.png',

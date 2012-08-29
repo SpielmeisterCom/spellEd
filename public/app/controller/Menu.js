@@ -93,6 +93,9 @@ Ext.define('Spelled.controller.Menu', {
 			'scenesystemslistcontextmenu [action="moveDown"]': {
 				click: this.moveSystemNodeDown
 			},
+			'scenesystemslistcontextmenu [action="open"]': {
+				click: this.showSceneSystem
+			},
 
 
 			'startscreen button[action="showCreateProject"]': {
@@ -117,12 +120,19 @@ Ext.define('Spelled.controller.Menu', {
             'scriptslistcontextmenu [action="remove"]': {
                 click: this.removeScript
             },
+			'scriptslistcontextmenu [action="edit"]': {
+				click: this.showEditScript
+			},
+
 
             'assetslistcontextmenu [action="remove"]': {
                 click: this.removeAsset
             },
 			'assetslistcontextmenu [action="edit"]': {
 				click: this.showEditAsset
+			},
+			'assetslistcontextmenu [action="open"]': {
+				click: this.openAsset
 			},
 
 
@@ -132,6 +142,9 @@ Ext.define('Spelled.controller.Menu', {
             'templateslistcontextmenu [action="remove"]': {
                 click: this.removeTemplate
             },
+			'templateslistcontextmenu [action="open"]': {
+				click: this.openTemplate
+			},
 
 
 			'templateslistentitycontextmenu [action="create"]': {
@@ -142,6 +155,9 @@ Ext.define('Spelled.controller.Menu', {
 			},
 			'templateslistentitycontextmenu [action="remove"]': {
 				click: this.removeTemplate
+			},
+			'templateslistentitycontextmenu [action="open"]': {
+				click: this.openTemplate
 			},
 
 
@@ -280,6 +296,12 @@ Ext.define('Spelled.controller.Menu', {
         this.application.getController( 'Templates').showCreateTemplate()
     },
 
+	openTemplate: function() {
+		var node = this.application.getLastSelectedNode( this.getTemplatesTree() )
+
+		this.application.getController( 'Templates').openTemplate( this.getTemplatesTree(), node  )
+	},
+
 	showAddEntityToTemplate: function( ) {
 		var node  = this.application.getLastSelectedNode( this.getTemplatesTree()),
 			owner = ( node.get('cls') === this.application.getController( 'Templates' ).TYPE_ENTITY_COMPOSITE ) ?
@@ -307,11 +329,28 @@ Ext.define('Spelled.controller.Menu', {
 		}
     },
 
+	showEditScript: function( ) {
+		var node = this.application.getLastSelectedNode( this.getScriptsTree() )
+
+		if( node && node.isLeaf() ) {
+			this.application.getController( 'Scripts' ).openScript( node.get('id') )
+			node.remove()
+		}
+	},
+
 	showEditAsset: function( ) {
 		var node = this.application.getLastSelectedNode( this.getAssetsTree() )
 
 		if( node && node.isLeaf() ) {
 			this.application.getController( 'Assets' ).showEditHelper( node.get('id') )
+		}
+	},
+
+	openAsset: function( ) {
+		var node = this.application.getLastSelectedNode( this.getAssetsTree() )
+
+		if( node && node.isLeaf() ) {
+			this.application.getController( 'Assets' ).openAsset( this.getAssetsTree(), node )
 		}
 	},
 
@@ -324,6 +363,13 @@ Ext.define('Spelled.controller.Menu', {
 		}
 	},
 
+	showSceneSystem: function() {
+		var treePanel = this.getRightPanel().down( 'systemlist' ),
+			node      = this.application.getLastSelectedNode( treePanel )
+
+		this.application.getController( 'Systems' ).showSystemItem( treePanel, node )
+	},
+
 	removeSystemFromScene: function() {
 		var node = this.application.getLastSelectedNode( this.getRightPanel().down( 'systemlist' ) )
 
@@ -331,7 +377,6 @@ Ext.define('Spelled.controller.Menu', {
 			this.application.getController( 'Systems' ).removeSceneSystem( node.get('text') )
 			node.remove()
 		}
-
 	},
 
 	moveSystemNodeUp: function() {
