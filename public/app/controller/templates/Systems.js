@@ -65,9 +65,6 @@ Ext.define('Spelled.controller.templates.Systems', {
 			},
 			'systemtemplateconfiguration button[action="saveTemplate"]' : {
 				click: this.saveSystemTemplate
-			},
-			'systemtemplatedetails > combobox[name="scriptId"]' : {
-				select: this.changeScript
 			}
 		})
 	},
@@ -89,16 +86,13 @@ Ext.define('Spelled.controller.templates.Systems', {
 		)
 	},
 
-	changeScript: function( combo, records ) {
-		this.refreshScriptTab( combo.getValue() )
-	},
-
 	refreshScriptTab: function( scriptId ) {
 		var tab	   = this.getTemplateEditor().getActiveTab(),
 			Script = this.getScriptModel()
 
 		Script.load(
 			scriptId, {
+				params: { systemScript: true },
 				scope: this,
 				success: function( script ) {
 					tab.setModel( script )
@@ -203,9 +197,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 
         var tab = this.application.createTab( templateEditor, editView )
 
-		if( systemTemplate.get('scriptId') ) {
-			this.refreshScriptTab( systemTemplate.get('scriptId') )
-		}
+		this.refreshScriptTab( systemTemplate.getScriptId() )
 
 		this.prepareConfigurationView( configurationView, systemTemplate )
 		this.getRightPanel().add( configurationView )

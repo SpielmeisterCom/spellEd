@@ -325,7 +325,7 @@ Ext.define('Spelled.controller.Templates', {
                             this
                         ),
                     failure: function( form, action ) {
-                        Ext.Msg.alert('Failed', action.result)
+                        Ext.Msg.alert('Failed', action.result || "Could not create template!")
                     }
                 }
             )

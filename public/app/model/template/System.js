@@ -4,13 +4,12 @@ Ext.define('Spelled.model.template.System', {
     fields: [
         "type",
         "namespace",
-        "name",
-        "scriptId"
+        "name"
     ],
 
     hasOne: {
         model: 'Spelled.model.Script',
-        foreignKey: 'scriptId'
+        foreignKey: 'templateId'
     },
 
     hasMany: {
@@ -31,6 +30,10 @@ Ext.define('Spelled.model.template.System', {
             type: 'json'
         }
     },
+
+	getScriptId: function() {
+		return this.get( 'templateId' ).replace( /\./g, "/") + ".js"
+	},
 
     appendOnTreeNode: function( node ) {
 

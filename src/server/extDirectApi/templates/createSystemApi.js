@@ -4,6 +4,7 @@ define(
         'path',
         'fs',
         'server/extDirectApi/createUtil',
+		'amd-helper',
 
         'underscore'
 
@@ -12,6 +13,7 @@ define(
         path,
         fs,
         createUtil,
+		amdHelper,
 
         _
     ) {
@@ -32,7 +34,7 @@ define(
             var updateTemplate = function( req, res, payload, next ) {
                 var system = payload[ 0 ]
 
-                var result = _.pick( system, 'name', 'namespace', 'type', 'scriptId')
+                var result = _.pick( system, 'name', 'namespace', 'type' )
 
                 var inputDefinitions = []
                 _.each(
@@ -52,40 +54,41 @@ define(
             }
 
             var deleteTemplate = function( req, res, payload, next ) {
-                var jsonFilePath = payload[0].id
+                var jsonFilePath = payload[0].id,
+					jsFilePath     = path.dirname( jsonFilePath ) + "/" + payload[0].name + ".js"
 
                 util.deleteFile( jsonFilePath )
+				util.deleteFile( jsFilePath )
+
 
                 return true
             }
 
             var createTemplate = function( req, res, payload, next ) {
                 var name        = payload.name,
-                    extension   = ".json",
-                    folder      = ( payload.namespace === "root" ) ? path.join( root , payload.projectName , templatePathPart ) : payload.namespace,
-                    filePath    = folder + "/"+ name + extension,
+                    templatePath= path.join( root , payload.projectName , templatePathPart ),
+					folder	    = ( payload.namespace === "root" ) ? templatePath : path.join( templatePath, util.convertNamespaceToFilePath( payload.namespace )),
+                    filePath    = folder + "/"+ name,
                     type        = payload.type,
-                    scriptId    = payload.scriptId
-
-                var namespace = util.extractNamespaceFromPath( folder, templatePathPart )
+					namespace   = util.extractNamespaceFromPath( folder, templatePathPart ),
+                    id          = ( namespace.length > 0 ) ? namespace + "." + name : name
 
                 var system = {
                     type : type,
                     namespace : namespace,
                     name : name,
                     input : [
-                    ],
-                    scriptId : scriptId
+                    ]
                 }
 
-                util.writeFile( filePath , JSON.stringify( system, null, "\t" ), false )
+                util.writeFile( filePath + ".json" , JSON.stringify( system, null, "\t" ), false )
+				util.writeFile( filePath + ".js" , amdHelper.createModuleHeader( util.convertNamespaceToFilePath(id) ), false )
 
-                return {
-                    success: true,
-                    data: system
-                }
-            }
-
+				return {
+					success: true,
+					data: system
+				}
+			}
 
             return [
                 {

@@ -48,30 +48,25 @@ define(
             }
 
             var read = function( req, res, payload ) {
-                if( !! payload[0].id ) {
-                    var id 			= payload[0].id,
-						projectName = payload[0].projectName
+				var params = payload[0]
 
-                    var response = amdHelper.loadModules( path.join( root , projectName , scriptPathPart ) )
+                if( !! params.id ) {
+                    var id 			= params.id,
+						projectName = params.projectName
+
+                    var response = ( !!params.systemScript ) ? amdHelper.loadModules( path.join( root , projectName , "/library/templates" )) : amdHelper.loadModules( path.join( root , projectName , scriptPathPart ) )
 
                     //A Treelist sends the path to the JS file not the moduleId
                     if( path.extname( id ) === ".js" ) {
+						var filePath = ( !!params.systemScript ) ? path.join( root , projectName , "/library/templates", id ) : id,
+                        	keys = _.keys( response ),
+							key  = _.find( keys, function( key ) { return ( response[ key ].path === filePath ) } )
 
-                        var keys = _.keys( response )
-
-                        var result = {}
-                        _.each(
-                            keys,
-                            function( key ) {
-                                if( response[ key ].path === id ) {
-                                    result.name    = key
-                                    result.content = response[ key ].source
-                                    result.path    = id
-                                }
-                            }
-                        )
-
-                        return result
+						return ( !!key ) ? {
+							name : key,
+							content : response[ key ].source,
+							path : filePath
+						} : {}
                     }
 
                     if( !_.has( response, id ) ) return {}

@@ -91,7 +91,21 @@ define(
 			}
 
             var createTemplate = function( req, res, payload, next ) {
-                var api = ( payload.type === "componentTemplate" ) ? createComponentApi( projectsRoot ) :  createEntityApi( projectsRoot )
+                var api = undefined
+
+				switch( payload.type ) {
+					case "componentTemplate":
+						api = createComponentApi( projectsRoot )
+						break
+					case "entityTemplate":
+						api = createEntityApi( projectsRoot )
+						break
+					case "systemTemplate":
+						api = createSystemApi( projectsRoot )
+						break
+					default:
+						return writeResponse( 500, res )
+				}
 
                 var apiFunction = _.find(
                     api,

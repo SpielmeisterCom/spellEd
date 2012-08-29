@@ -36,7 +36,7 @@ define(
             var extractNamespaceFromPath = function( filePath, prefix ) {
                return filePath.substring(
                     filePath.indexOf( prefix ) + prefix.length + 1
-                )
+			   ).replace( /\//g, "." )
             }
 
 			var namespaceToFilePath = function( namespace ) {

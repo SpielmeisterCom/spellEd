@@ -21,15 +21,6 @@ Ext.define('Spelled.view.template.system.Details', {
             fieldLabel: 'Name',
             name: 'tmpName',
             anchor: '100%'
-        },
-        {
-            xtype: 'combobox',
-            editable: false,
-            fieldLabel: 'Script',
-            displayField : 'name',
-            valueField: 'name',
-            store: 'script.Scripts',
-            name: 'scriptId'
-        }
+		}
     ]
 });
