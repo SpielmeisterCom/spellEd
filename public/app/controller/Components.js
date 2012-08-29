@@ -217,18 +217,10 @@ Ext.define('Spelled.controller.Components', {
 			component         = this.getConfigComponentsStore().getById( componentConfigId ),
 			config            = Ext.Object.merge( {}, component.get('config') ),
 			defaultConfig     = component.getConfigMergedWithTemplateConfig(),
-			value             = record.value
-
-		try {
-			value = JSON.parse( value )
-		} catch ( e ) {}
+			value             = Ext.decode( record.value, true ) || record.value
 
 		if( config[ record.name ] != value ) {
-			try {
-				config[ record.name ] = eval( value )
-			} catch( e ) {
-				config[ record.name ] = value
-			}
+			config[ record.name ] = value
 
 			if( config[ record.name ] == defaultConfig[ record.name ] ) {
 				delete config[ record.name ]
