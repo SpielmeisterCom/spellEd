@@ -30,7 +30,7 @@ Ext.define('Spelled.model.Asset', {
 		var object    = arguments[2],
 			namespace = object.namespace,
 			name      = object.name,
-			assetId   = object.type + ":" + ( ( namespace.length > 0 ) ? namespace +"."+ name : name )
+			assetId   = object.type + ":" + ( ( !!namespace && namespace.length > 0 ) ? namespace +"."+ name : name )
 
 		this.set( 'internalAssetId', assetId)
 	},

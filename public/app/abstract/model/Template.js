@@ -11,7 +11,7 @@ Ext.define('Spelled.abstract.model.Template', {
 		var object    = arguments[2],
 			namespace = object.namespace,
 			name      = object.name,
-			templateId = ( namespace.length > 0 ) ? namespace +"."+ name : name
+			templateId = ( !!namespace && namespace.length > 0 ) ? namespace +"."+ name : name
 
 		this.set( 'templateId', templateId)
 	},

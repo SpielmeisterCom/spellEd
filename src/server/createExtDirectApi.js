@@ -40,9 +40,8 @@ define(
 
 
             var listTemplates = function( req, res, payload, next ) {
-                var requestedNode = ( payload[ 0 ] !== 'root' ) ? payload[ 0 ] :  projectsRoot + payload[1] + projectTemplateLibraryPath
-
-                var tmpPath = util.getPath( requestedNode )
+                var requestedNode = ( payload[ 0 ] !== 'root' ) ? payload[ 0 ] :  projectsRoot + payload[1] + projectTemplateLibraryPath,
+                	tmpPath       = util.getPath( requestedNode )
 
                 if ( !tmpPath ) return {}
 

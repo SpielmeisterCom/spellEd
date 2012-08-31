@@ -19,7 +19,7 @@ define(
 		'use strict'
 
 		return function( rootPath ) {
-			var root = rootPath
+			var root = path.normalize( rootPath )
 
             var getExtParams = function( payload ) {
                 if( !payload ) {
@@ -36,56 +36,14 @@ define(
             var extractNamespaceFromPath = function( filePath, prefix ) {
                return filePath.substring(
                     filePath.indexOf( prefix ) + prefix.length + 1
-			   ).replace( /\//g, "." )
+			   ).replace( /[\/\\]/g, "." )
             }
 
 			var namespaceToFilePath = function( namespace ) {
 				var tmp = ( !_.isString( namespace ) ) ? namespace.toString() : namespace
 				if( namespace === "root" ) return ""
-				return tmp.replace( /\./g, "/")
+				return path.normalize( tmp.replace( /\./g, path.sep) )
 			}
-
-            /**
-             *
-             * Main functions
-             *
-             */
-            var getPath = function( requestedPath, checkIfExists ) {
-                var normalize = path.normalize,
-                    join = path.join,
-                    pathExistsSync = path.existsSync,
-                    checkIfExists = ( checkIfExists !== undefined ) ? checkIfExists : true
-
-                if( !requestedPath ) return false
-
-                var dir = decodeURIComponent( requestedPath),
-                    filePath  = normalize(
-                        ( 0 != requestedPath.indexOf(root) ? join(root, dir) : dir )
-                    )
-
-                // null byte(s), bad request
-                if ( ~filePath.indexOf('\0') || 0 != filePath.indexOf(root) || ( checkIfExists && !pathExistsSync( filePath ) ) )
-                    return false
-                else
-                    return filePath
-            }
-
-            var readFile = function( filePath ) {
-                var filePath = getPath( filePath )
-
-                if ( !filePath ) return {}
-
-                var stat = fs.statSync( filePath )
-                if ( stat.isDirectory() ) return {}
-
-                var fileContent = fs.readFileSync( filePath, 'utf8' )
-
-                var object = JSON.parse(fileContent)
-
-                object.id = filePath
-
-                return object
-            }
 
 			//TODO: refactor filelisting for scripts
 			var fileListing = function ( rootPath, withFileType, req, res, payload, next ) {
@@ -160,7 +118,10 @@ define(
 			}
 
             var jsonListing = function ( rootPath, withFileType, req, res, payload, next ) {
-                var normalize = path.normalize
+                var normalize = path.normalize,
+					relative  = path.relative,
+					cwd       = process.cwd(),
+					join      = path.join
 
 
                 var extParams = getExtParams( payload )
@@ -183,7 +144,10 @@ define(
                 if (!stat.isDirectory()) return {}
 
                 // fetch files
-                var files = glob.sync( "{"+tmpPath + "/**/*.json," + tmpPath + "/**/*.js}" )
+                var globJsonPath = join( relative( cwd, tmpPath ),"/**/*.json").replace( /\\/g, "/"),
+					globJsPath   = join( relative( cwd, tmpPath ),"/**/*.js").replace( /\\/g, "/")
+
+				var files = glob.sync( "{" + globJsonPath + "," + globJsPath +"}" )
 
 				var namespacesResults  = {}
 				var result = {
@@ -197,7 +161,7 @@ define(
                 _.each(
                     files,
                     function( file ) {
-                        var filePath = normalize( file )
+                        var filePath = path.resolve( cwd, file )
 
                         var fileInfo = {
                             text: file,
@@ -255,7 +219,7 @@ define(
 							} else if(object.type === "sound") {
 								fileInfo.iconCls = "tree-asset-sound-icon"
 							} else {
-								console.log(object);
+								console.error( "Error: Missing treeIcon for " + object.type )
 							}
 
 							if( !_.has( namespacesResults, object.namespace ) ){
@@ -365,6 +329,49 @@ define(
 
                 return result;
             }
+
+			/**
+			 *
+			 * Main functions
+			 *
+			 */
+			var getPath = function( requestedPath, checkIfExists ) {
+				var normalize = path.normalize,
+					join = path.join,
+					pathExistsSync = fs.existsSync,
+					checkIfExists = ( checkIfExists !== undefined ) ? checkIfExists : true,
+					requestedPath = normalize( requestedPath )
+
+				if( !requestedPath ) return false
+
+				var dir = decodeURIComponent( requestedPath ),
+					filePath  = path.resolve( root, normalize(
+						( 0 != requestedPath.indexOf(root) ? join(root, dir) : dir )
+					))
+
+				// null byte(s), bad request
+				if ( ~filePath.indexOf('\0') || 0 != filePath.indexOf( root ) || ( checkIfExists && !pathExistsSync( filePath ) ) )
+					return false
+				else
+					return filePath
+			}
+
+			var readFile = function( filePath ) {
+				var filePath = getPath( filePath )
+
+				if ( !filePath ) return {}
+
+				var stat = fs.statSync( filePath )
+				if ( stat.isDirectory() ) return {}
+
+				var fileContent = fs.readFileSync( filePath, 'utf8' )
+
+				var object = JSON.parse(fileContent)
+
+				object.id = filePath
+
+				return object
+			}
 
             var writeFile = function ( path, data, checkIfExists ) {
                 var tmpPath = getPath( path, checkIfExists )

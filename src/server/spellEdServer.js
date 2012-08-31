@@ -4,6 +4,7 @@ define(
         'connect',
         'http',
         'connect-extdirect/extDirect',
+		'connect-pathMapper/pathMapper',
         'server/createExtDirectApi',
 	    'commander',
 	    'fs',
@@ -13,6 +14,7 @@ define(
         connect,
         http,
         extDirect,
+		pathMapper,
         createExtDirectApi,
         commander,
         fs,
@@ -43,7 +45,12 @@ define(
 					    port: bport,
 					    path: '/router/',
 					    method: 'POST'
-				    }
+					},
+					pathMapperConfig = {
+						'/libs/require.js' : '../requirejs/require.js',
+						'/libs/underscore.js' : '../underscore/underscore.js',
+						'/libs/ace/': '../ace/lib/ace/'
+					}
 
 			    if( !fs.existsSync( projectsPath ) ) {
 				    errors.push( 'Error: No valid projects directory supplied. Unable to start spelled server. ' +
@@ -64,6 +71,7 @@ define(
 								createExtDirectApi( projectsPath, buildServerOptions )
 							)
 						)
+						.use( pathMapper( pathMapperConfig ) )
 					    .use( connect.static('public'))
 					    //TODO: remove this line
 					    .use( connect.static( projectsPath ) )

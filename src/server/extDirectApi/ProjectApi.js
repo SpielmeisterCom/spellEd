@@ -21,7 +21,7 @@ define(
 		return function( root ) {
 
 			var getConfigFilePath = function ( projectsDir ) {
-				return projectsDir + "/project.json"
+				return path.join( projectsDir , "project.json" )
 			}
 
 			var util = createUtil( root )
@@ -31,7 +31,7 @@ define(
                     projectDir  = util.getPath( projectName, false )
 
 
-                if( path.existsSync( projectDir ) === false ) {
+                if( fs.existsSync( projectDir ) === false ) {
                     fs.mkdirSync( projectDir, "0755" )
 
                     return projectDir
