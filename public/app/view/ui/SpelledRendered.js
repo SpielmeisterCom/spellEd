@@ -11,7 +11,7 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				text: "Reload",
 				action: "reloadScene",
 				tooltip: {
-					text:'Reload and Render Scene',
+					text:'Reload and render scene (shortcut CTRL+R/CMD+R)',
 					title:'Reload'
 				}
 			},
@@ -23,6 +23,14 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				tooltip: {
 					text:'Render the SpellJS Grid on the Canvas',
 					title:'Show Grid'
+				}
+			},
+			{
+				iconCls: 'fullscreen-icon',
+				action: "fullscreen",
+				tooltip: {
+					text:'Render the current scene in fullscreen',
+					title:'Fullscreen'
 				}
 			}
 		]

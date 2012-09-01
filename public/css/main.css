@@ -103,7 +103,11 @@
 }
 
 .grid-icon {
-    background-image:  url( '../images/icons/coordinateGrid.png' ) !important;
+     background-image:  url( '../images/icons/coordinateGrid.png' ) !important;
+}
+
+.fullscreen-icon {
+    background-image:  url( '../images/icons/monitor.png' ) !important;
 }
 
 .documentation-icon {

@@ -155,6 +155,9 @@ Ext.define('Spelled.controller.Scenes', {
 			'renderedscene > toolbar button[action="toggleGrid"]': {
 				toggle: me.toggleGrid
 			},
+			'renderedscene > toolbar button[action="fullscreen"]': {
+				click: me.activateFullscreen
+			},
 			'scenetreelist': {
 				itemdblclick   : me.dispatchTreeDblClick,
 				select         : me.dispatchTreeClick,
@@ -452,6 +455,18 @@ Ext.define('Spelled.controller.Scenes', {
 				}
 			)
 		}
+	},
+
+	activateFullscreen: function( button, state ) {
+		var tab      = button.up( 'renderedscene').down( 'spellediframe'),
+			dom      = tab.el.dom,
+			prefixes = ["moz", "webkit", "ms", "o", ""]
+
+		Ext.each(prefixes, function( prefix ) {
+			if (dom[prefix + "RequestFullScreen"] !== undefined) {
+				dom[prefix + "RequestFullScreen"]()
+			}
+		})
 	},
 
 	createSpellTab: function( title, projectName, sceneId, showGrid ) {
