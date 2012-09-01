@@ -470,6 +470,7 @@ Ext.define('Spelled.controller.Scenes', {
 			if (dom[prefix + fnName] !== undefined) {
 				//we need to call this function directly here, because Firefox does
 				//not accept calling a this function from another context
+				dom.contentWindow.focus()
 				dom[prefix + fnName]()
 
 				fullScreenFunctionAvailable = true
