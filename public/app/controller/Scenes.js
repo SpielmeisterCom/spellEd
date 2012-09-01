@@ -460,13 +460,27 @@ Ext.define('Spelled.controller.Scenes', {
 	activateFullscreen: function( button, state ) {
 		var tab      = button.up( 'renderedscene').down( 'spellediframe'),
 			dom      = tab.el.dom,
-			prefixes = ["moz", "webkit", "ms", "o", ""]
+			prefixes = ["moz", "webkit", "ms", "o", ""],
+			docEl    = document.documentElement,
+			fullScreenFunctionAvailable = false
 
 		Ext.each(prefixes, function( prefix ) {
-			if (dom[prefix + "RequestFullScreen"] !== undefined) {
-				dom[prefix + "RequestFullScreen"]()
+			var fnName = (prefix.length > 0) ? "RequestFullScreen" : "requestFullScreen"
+
+			if (dom[prefix + fnName] !== undefined) {
+				//we need to call this function directly here, because Firefox does
+				//not accept calling a this function from another context
+				dom[prefix + fnName]()
+
+				fullScreenFunctionAvailable = true
 			}
 		})
+
+
+		if (!fullScreenFunctionAvailable) {
+			//inform the user if this function is not available
+			window.alert('Sorry, the fullscreen function is not yet supported in your browser. Try using another browser.')
+		}
 	},
 
 	createSpellTab: function( title, projectName, sceneId, showGrid ) {
