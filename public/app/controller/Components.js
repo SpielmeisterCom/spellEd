@@ -217,7 +217,12 @@ Ext.define('Spelled.controller.Components', {
 			component         = this.getConfigComponentsStore().getById( componentConfigId ),
 			config            = Ext.Object.merge( {}, component.get('config') ),
 			defaultConfig     = component.getConfigMergedWithTemplateConfig(),
-			value             = Ext.decode( record.value, true ) || record.value
+			value             = Ext.decode( record.value, true ) || record.value,
+			sceneController   = this.application.getController( 'Scenes'),
+			sceneEditor       = Ext.getCmp( "SceneEditor"),
+			activeSceneTab    = undefined,
+			activeScene       = this.application.getActiveScene(),
+			me                = this
 
 		if( config[ record.name ] != value ) {
 			config[ record.name ] = value
@@ -229,6 +234,29 @@ Ext.define('Spelled.controller.Components', {
 			component.set( 'config', config)
 
 			component.setChanged()
+
+			//TODO: we must find the tab that coresponds to the changed data and not the active tab
+			if ( activeScene ) {
+				activeSceneTab = this.application.findActiveTabByTitle( sceneEditor, activeScene.getRenderTabTitle() )
+			}
+
+			if( activeSceneTab ) {
+				sceneController.engineMessageBus.send(
+					activeSceneTab.down( 'spellediframe' ).getId(),
+					{
+						type : 'spelled.debug.updateComponent',
+						payload : {
+							scene: activeScene.data[ "name" ],
+							entityId: component[ "data" ][ "spelled.model.config.entity_id" ],
+							componentId: component[ "data" ][ "templateId" ],
+							key: record.name,
+							value: value
+						}
+					}
+				)
+			}
+
+
 		}
 	},
 
