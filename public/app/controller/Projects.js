@@ -79,11 +79,9 @@ Ext.define('Spelled.controller.Projects', {
 		var callback = Ext.bind(
 			function( project ) {
 				var sceneController = this.application.getController( 'Scenes' ),
-					scene = project.getScenes().first() || sceneController.createScene( { name: 'Scene1' } )
+					scene = sceneController.createScene( { name: 'Scene1' } )
 
-				sceneController.initScene( scene )
 				project.set('startScene', scene.getId() )
-
 				project.save()
 			},
 			this
