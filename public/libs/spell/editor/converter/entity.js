@@ -12,12 +12,18 @@ define(
 		/**
 		 * Transforms the supplied entity config from the editor format to the spell engine format.
 		 *
-		 * @param entity
-		 * @param includeEmptyComponents
+		 * @param {Object} entity
+		 * @param {Object} config
 		 * @return {*}
 		 */
-		var toEngineFormat = function( entity, includeEmptyComponents ) {
-			var entityResult = _.pick( entity, 'name', 'id' )
+		var toEngineFormat = function( entity, config ) {
+			var includeEmptyComponents = config && !!config.includeEmptyComponents,
+				includeEntityIds       = config && !!config.includeEntityIds,
+				attributeNames         = [ 'name' ]
+
+			if( includeEntityIds ) attributeNames.push( 'id' )
+
+			var entityResult = _.pick( entity, attributeNames )
 
 			if( _.has( entity, 'templateId' ) &&
 				!!entity.templateId ) {
@@ -40,7 +46,7 @@ define(
 			entityResult.children = _.reduce(
 				entity.getChildren,
 				function( memo, entityChildren ) {
-					var result = toEngineFormat( entityChildren, includeEmptyComponents )
+					var result = toEngineFormat( entityChildren, config )
 
 					if( !_.has( result, "config" ) && !_.has( result, "children" ) && !includeEmptyComponents ) return memo
 

@@ -17,8 +17,9 @@ define(
 		 * This function creates a project in the spell engine format. It requires the project in the editor format as input.
 		 *
 		 * @param {Object} project
+		 * @param {Object} config
 		 */
-		var toEngineFormat = function( project ) {
+		var toEngineFormat = function( project, config ) {
 			var result = _.pick( project, 'name', 'startScene', 'scenes', 'assetIds', 'templateIds' )
 
 			result.scenes = _.map(
@@ -29,7 +30,7 @@ define(
 					scene.entities = _.map(
 						sceneEditorFormat.getEntities,
 						function( entityEditorFormat ) {
-							return entityConverter.toEngineFormat( entityEditorFormat )
+							return entityConverter.toEngineFormat( entityEditorFormat, config )
 						}
 					)
 

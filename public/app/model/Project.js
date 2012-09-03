@@ -12,7 +12,7 @@ Ext.define('Spelled.model.Project', {
 			read: function( response ) {
 				var data
 
-				response = Ext.amdModules.createProjectConverter.toEditorFormat(response )
+				response = Ext.amdModules.projectConverter.toEditorFormat(response )
 
 				if (response) {
 					data = response.responseText ? this.getResponseData(response) : this.readRecords(response);
@@ -25,14 +25,18 @@ Ext.define('Spelled.model.Project', {
 			write: function( request ) {
 				var operation = request.operation,
 					records   = operation.records || [],
-					len       = records.length,
-					i         = 0,
-					data      = [];
+					self      = this
 
-				for (; i < len; i++) {
-					data.push( Ext.amdModules.createProjectConverter.toEngineFormat( this.getRecordData(records[i], operation) ) );
-				}
-				return this.writeRecords(request, data);
+				var data = _.map(
+					records,
+					function( record ) {
+						return Ext.amdModules.projectConverter.toEngineFormat(
+							self.getRecordData( record, operation )
+						)
+					}
+				)
+
+				return this.writeRecords( request, data )
 			}
 		}
     },

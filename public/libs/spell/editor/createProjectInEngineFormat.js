@@ -12,7 +12,12 @@ define(
 			project.syncAssetIds()
 			project.syncTemplateIds()
 
-			return projectConverter.toEngineFormat( project.getProxy().getWriter().getRecordData( project ) )
+			return projectConverter.toEngineFormat(
+				project.getProxy().getWriter().getRecordData( project ),
+				{
+					includeEntityIds : true
+				}
+			)
 		}
 	}
 )

@@ -21,7 +21,7 @@ require(
 		aceThemePastelOnDark,
 
 		createProjectInEngineFormat,
-		createProjectConverter,
+		projectConverter,
 		createFontGenerator,
 		systemFontDetector,
 
@@ -38,8 +38,8 @@ require(
 			'aceModeJavascript'           : aceModeJavascript,
 			'aceThemePastelOnDark'        : aceThemePastelOnDark,
 			'createProjectInEngineFormat' : createProjectInEngineFormat,
-			'createProjectConverter'      : createProjectConverter,
 			'createFontGenerator'         : createFontGenerator,
+			'projectConverter'            : projectConverter,
 			'systemFontDetector'          : systemFontDetector,
 			'underscore'                  : _
 		} )
