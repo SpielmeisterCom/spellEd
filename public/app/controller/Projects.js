@@ -65,7 +65,7 @@ Ext.define('Spelled.controller.Projects', {
                 var configFilePath   = values.name + '/project.json'
 
 				Spelled.SpellBuildActions.initDirectory( values.name, configFilePath, function( provider, response ) {
-                    me.loadProject( values.name )
+					me.initProject( values.name )
                     window.close()
                 })
 
@@ -74,6 +74,23 @@ Ext.define('Spelled.controller.Projects', {
             }
         })
     },
+
+	initProject: function( projectName ) {
+		var callback = Ext.bind(
+			function( project ) {
+				var sceneController = this.application.getController( 'Scenes' ),
+					scene = project.getScenes().first() || sceneController.createScene( { name: 'Scene1' } )
+
+				sceneController.initScene( scene )
+				project.set('startScene', scene.getId() )
+
+				project.save()
+			},
+			this
+		)
+
+		this.loadProject( projectName, callback )
+	},
 
     showLoadProject: function( ) {
         var View = this.getProjectLoadView()
@@ -125,7 +142,7 @@ Ext.define('Spelled.controller.Projects', {
 		app.setExtraParamOnProxies( 'projectName', projectName )
 	},
 
-    loadProject: function( projectName ) {
+    loadProject: function( projectName, callback ) {
         var Project = this.getProjectModel()
 
 		this.prepareStores( projectName )
@@ -135,7 +152,12 @@ Ext.define('Spelled.controller.Projects', {
 			projectName,
 			{
 				scope: this,
-				success: this.onProjectLoaded
+				success: function( project ) {
+					this.onProjectLoaded( project )
+
+					if( !!callback )
+						Ext.callback( callback( project ) )
+				}
 			}
 		)
 	},
@@ -152,16 +174,16 @@ Ext.define('Spelled.controller.Projects', {
 		app.getController( 'Assets' ).refreshStoresAndTreeStores(
 			true,
 			Ext.bind( function() {
-				var callback = Ext.bind( function() {
-						this.projectLoadedCallback( project )
-					},
-					this
-				)
+					var callback = Ext.bind( function() {
+							this.projectLoadedCallback( project )
+						},
+						this
+					)
 
-				app.getController( 'Templates' ).loadTemplateStores( project.get('name'), callback, true )
-			},
-			this
-		)
+					app.getController( 'Templates' ).loadTemplateStores( project.get('name'), callback, true )
+				},
+				this
+			)
 		)
 	},
 

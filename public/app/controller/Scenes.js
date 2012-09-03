@@ -172,7 +172,7 @@ Ext.define('Spelled.controller.Scenes', {
 				click: me.showCreateScene
 			},
 			'createscene button[action="createScene"]' : {
-				click: me.createScene
+				click: me.createSceneAction
 			},
 			'scenesnavigator': {
 				activate: me.showScenesEditor
@@ -357,30 +357,38 @@ Ext.define('Spelled.controller.Scenes', {
 
 	showCreateScene: function( ) {
 		var View  = this.getSceneCreateView(),
-			Model = this.getConfigSceneModel()
-
-		var view = new View()
-		view.down('form').loadRecord( new Model() )
+			view = new View()
 
 		view.show()
 	},
 
-	createScene: function ( button ) {
+	createSceneAction: function ( button ) {
 		var window = button.up('window'),
 			form   = window.down('form'),
-			record = form.getRecord(),
-			values = form.getValues(),
-			project= this.application.getActiveProject(),
-			store  = this.getConfigScenesStore()
+			values = form.getValues()
 
-		record.set( values )
-
-		store.add( record )
-		project.getScenes().add( record )
-
-		record.appendOnTreeNode( this.getScenesTree().getRootNode() )
+		this.createScene( values )
 
 		window.close()
+	},
+
+	createScene: function( values ) {
+		var project = this.application.getActiveProject(),
+			Model   = this.getConfigSceneModel(),
+			store   = this.getConfigScenesStore(),
+			scene   = new Model( values)
+
+		store.add( scene )
+		project.getScenes().add( scene )
+		this.initScene( scene )
+
+		scene.appendOnTreeNode( this.getScenesTree().getRootNode() )
+		return scene
+	},
+
+	initScene: function( scene ) {
+		var entity = scene.getEntities().add( { name: 'camera', templateId: 'spell.entity.2d.graphics.camera' } )[0]
+		entity.setScene( scene )
 	},
 
 	showListContextMenu: function( view, record, item, index, e, options ) {
