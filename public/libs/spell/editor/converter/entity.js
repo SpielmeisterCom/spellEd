@@ -17,7 +17,7 @@ define(
 		 * @return {*}
 		 */
 		var toEngineFormat = function( entity, includeEmptyComponents ) {
-			var entityResult = _.pick( entity, 'name' )
+			var entityResult = _.pick( entity, 'name', 'id' )
 
 			if( _.has( entity, 'templateId' ) &&
 				!!entity.templateId ) {
