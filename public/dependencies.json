@@ -300,6 +300,7 @@
 		"Ext.form.action.DirectSubmit",
 		"Ext.form.field.Hidden",
 		"Ext.layout.container.Column",
+		"Ext.picker.Color",
 		"Ext.menu.ColorPicker",
 		"Spelled.abstract.store.TreeStore",
 		"Spelled.store.asset.Tree",
