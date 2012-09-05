@@ -168,8 +168,8 @@ Ext.define('Spelled.controller.Systems', {
 	showSystemItem: function( treePanel, record ) {
 		if( !record.data.leaf ) return
 
-		this.application.getController('Templates').openTemplate( treePanel, record )
 		Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Templates') )
+		this.application.getController('Templates').openTemplate( treePanel, record )
 	},
 
 	refreshSceneSystemList: function( scene ) {
