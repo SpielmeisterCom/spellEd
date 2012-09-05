@@ -387,7 +387,20 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	initScene: function( scene ) {
-		var entity = scene.getEntities().add( { name: 'camera', templateId: 'spell.entity.2d.graphics.camera' } )[0]
+		var entity = scene.getEntities().add( {
+			name: 'camera',
+			templateId: 'spell.entity.2d.graphics.camera'
+		} )[0]
+
+		var cameraComponent = entity.getComponents().add( {
+			templateId : "spell.component.2d.graphics.camera",
+			changed: true,
+			config: {
+				"active": true
+			}
+		} )[0]
+
+		cameraComponent.setEntity( entity )
 		entity.setScene( scene )
 	},
 
