@@ -1,5 +1,6 @@
 export PATH:=${PATH}:/opt/SenchaSDKTools-2.0.0-beta3:/Applications/SenchaSDKTools-2.0.0-beta3
 
+.PHONY: css
 css:
 	#create css files from sass
 	compass compile public/sass public/sass/ext-all-spelled.scss
@@ -9,7 +10,7 @@ css:
 	sed -i 's/..\/images\/spelled\/spelled\//..\/images\/spelled\//' public/css/ext-all-spelled.css
 
 	#slice fallback images for older browsers
-	PATH=${PATH} sencha slice theme -d ./public/extjs -c ./public/css/ext-all-spelled.css -o ./public/images/spelled
+	PATH=${PATH} sencha slice theme -d ./public/extjs -c ./public/css/ext-all-spelled.css -o ./public/images/spelled -v
 
 deploy:
 	# cleaning up and creating directory tree
