@@ -152,15 +152,20 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
 	removeEntityCompositeNode: function( node ) {
-        var entity   = Ext.getStore( 'config.Entities' ).getById( node.getId() ),
-			template = entity.getOwner(),
-			owner    = ( entity.hasEntity() ) ? entity.getEntity() : template
+        var entity    = Ext.getStore( 'config.Entities' ).getById( node.getId() ),
+			template  = entity.getOwner(),
+			owner     = ( entity.hasEntity() ) ? entity.getEntity() : template,
+			ownerNode = node.parentNode
 
 		owner.getChildren().remove( entity )
 		Ext.getStore( 'config.Entities' ).remove( entity )
-
 		template.save()
 		node.remove()
+
+		if( !ownerNode.hasChildNodes() ) {
+			ownerNode.set( 'cls', this.application.getController('Templates').TEMPLATE_TYPE_ENTITY )
+			this.getTemplatesTree().selectPath( ownerNode.getPath() )
+		}
 	},
 
     removeEntityTemplate: function( id ) {
