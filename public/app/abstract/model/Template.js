@@ -3,7 +3,10 @@ Ext.define('Spelled.abstract.model.Template', {
 
     requires: ['Spelled.abstract.writer.JsonWriter'],
 
-	fields: [{ name: 'readonly', type: 'boolean', defaultValue: false }],
+	fields: [
+		{ name: 'readonly', type: 'boolean', defaultValue: false },
+		{ name: 'engineInternal', type: 'boolean', defaultValue: false }
+	],
 
 	constructor: function() {
 		this.callParent( arguments )
@@ -20,7 +23,11 @@ Ext.define('Spelled.abstract.model.Template', {
 		return ( this.get('readonly') === true )
 	},
 
-    getFullName: function() {
+	isEngineInternal: function() {
+		return ( this.get('engineInternal') === true )
+	},
+
+	getFullName: function() {
         return this.get('templateId')
 	},
 

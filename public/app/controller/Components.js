@@ -128,6 +128,12 @@ Ext.define('Spelled.controller.Components', {
 			}
 		)
 
+		notAssignedComponents = notAssignedComponents.filterBy(
+			function( item ) {
+				return !item.isEngineInternal()
+			}
+		)
+
 		this.appendComponentsAttributesOnTreeNode( rootNode, notAssignedComponents )
 
 		rootNode.eachChild(
