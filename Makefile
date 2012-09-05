@@ -9,7 +9,7 @@ css:
 	sed -i 's/..\/images\/spelled\/spelled\//..\/images\/spelled\//' public/css/ext-all-spelled.css
 
 	#slice fallback images for older browsers
-	PATH=${PATH} sencha slice theme -d ./public/extjs -c ./public/css/ext-all-spelled.css -o ./public/images
+	PATH=${PATH} sencha slice theme -d ./public/extjs -c ./public/css/ext-all-spelled.css -o ./public/images/spelled
 
 deploy:
 	# cleaning up and creating directory tree
