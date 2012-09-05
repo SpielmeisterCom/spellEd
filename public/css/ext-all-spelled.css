@@ -7859,10 +7859,17 @@ textarea.x-form-invalid-field {
   padding: 3px 3px 0 3px;
   border-width: 1px 1px 0 1px;
   border-style: solid;
-  background-color: #646464; }
+  background-image: none;
+  background-color: #646464;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #575757), color-stop(25%, #5e5e5e), color-stop(45%, #646464));
+  background-image: -webkit-linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -moz-linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -o-linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%); }
 
 /* line 102, ../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-nlg .x-tab-default-top-mc {
+  background-image: url('../images/spelled/tab/tab-default-top-bg.gif');
   background-color: #646464; }
 
 /* line 115, ../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
@@ -7893,8 +7900,7 @@ textarea.x-form-invalid-field {
 .x-nbr .x-tab-default-top-mr {
   zoom: 1;
   background-image: url('../images/spelled/tab/tab-default-top-sides.gif');
-  background-position: 0 0;
-  background-repeat: repeat-y; }
+  background-position: 0 0; }
 /* line 200, ../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-nbr .x-tab-default-top-mc {
   padding: 0px 0px 0 0px; }
@@ -7934,10 +7940,17 @@ textarea.x-form-invalid-field {
   padding: 0 3px 3px 3px;
   border-width: 0 1px 1px 1px;
   border-style: solid;
-  background-color: #646464; }
+  background-image: none;
+  background-color: #646464;
+  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #575757), color-stop(25%, #5e5e5e), color-stop(45%, #646464));
+  background-image: -webkit-linear-gradient(bottom, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -moz-linear-gradient(bottom, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -o-linear-gradient(bottom, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: linear-gradient(bottom, #575757, #5e5e5e 25%, #646464 45%); }
 
 /* line 102, ../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-nlg .x-tab-default-bottom-mc {
+  background-image: url('../images/spelled/tab/tab-default-bottom-bg.gif');
   background-color: #646464; }
 
 /* line 115, ../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
@@ -7968,8 +7981,7 @@ textarea.x-form-invalid-field {
 .x-nbr .x-tab-default-bottom-mr {
   zoom: 1;
   background-image: url('../images/spelled/tab/tab-default-bottom-sides.gif');
-  background-position: 0 0;
-  background-repeat: repeat-y; }
+  background-position: 0 0; }
 /* line 200, ../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-nbr .x-tab-default-bottom-mc {
   padding: 0 0px 0px 0px; }
@@ -8226,6 +8238,12 @@ textarea.x-form-invalid-field {
   background-image: -o-linear-gradient(bottom, #8f6767, #ad5858);
   background-image: linear-gradient(bottom, #8f6767, #ad5858); }
 
+/* line 337, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+.x-nlg .x-tab-top {
+  background-image: url('../images/spelled/tab/tab-default-top-bg.gif'); }
+/* line 338, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
+.x-nlg .x-tab-bottom {
+  background-image: url('../images/spelled/tab/tab-default-bottom-bg.gif'); }
 /* line 342, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-nlg .x-tab-top-over {
   background-image: url('../images/spelled/tab/tab-default-top-over-bg.gif'); }
