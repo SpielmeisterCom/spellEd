@@ -197,6 +197,8 @@ Ext.define('Spelled.controller.templates.Systems', {
 
         var tab = this.application.createTab( templateEditor, editView )
 
+		editView.aceEditor.setReadOnly( systemTemplate.isReadonly() )
+
 		this.refreshScriptTab( systemTemplate.getScriptId() )
 
 		this.prepareConfigurationView( configurationView, systemTemplate )
