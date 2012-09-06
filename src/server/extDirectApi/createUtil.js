@@ -4,7 +4,7 @@ define(
 		'path',
 		'fs',
 		'mime',
-		'glob',
+		'flob',
 
 		'underscore'
 	],
@@ -12,7 +12,7 @@ define(
 		path,
 		fs,
 		mime,
-		glob,
+		flob,
 
 		_
 	) {
@@ -118,10 +118,7 @@ define(
 			}
 
             var jsonListing = function ( rootPath, withFileType, req, res, payload, next ) {
-                var relative  = path.relative,
-					cwd       = process.cwd(),
-					join      = path.join
-
+                var normalize = path.normalize
 
                 var extParams = getExtParams( payload )
 
@@ -143,10 +140,7 @@ define(
                 if (!stat.isDirectory()) return {}
 
                 // fetch files
-                var globJsonPath = join( relative( cwd, tmpPath ),"/**/*.json").replace( /\\/g, "/"),
-					globJsPath   = join( relative( cwd, tmpPath ),"/**/*.js").replace( /\\/g, "/")
-
-				var files = glob.sync( "{" + globJsonPath + "," + globJsPath +"}" )
+				var files = flob.byTypes( tmpPath + "/**/*", [ '.js', '.json' ] )
 
 				var namespacesResults  = {}
 				var result = {
@@ -160,7 +154,7 @@ define(
                 _.each(
                     files,
                     function( file ) {
-                        var filePath = path.resolve( cwd, file )
+						var filePath = normalize( file )
 
                         var fileInfo = {
                             text: file,
