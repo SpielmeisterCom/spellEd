@@ -241,28 +241,28 @@ Ext.define('Spelled.controller.Components', {
 
 			component.setChanged()
 
-			//TODO: we must find the tab that coresponds to the changed data and not the active tab
+			// TODO: we must find the tab that coresponds to the changed data and not the active tab
 			if ( activeScene ) {
 				activeSceneTab = this.application.findActiveTabByTitle( sceneEditor, activeScene.getRenderTabTitle() )
 			}
 
 			if( activeSceneTab ) {
+				componentConfig = {}
+				componentConfig[ record.name ] = value
+
 				sceneController.engineMessageBus.send(
 					activeSceneTab.down( 'spellediframe' ).getId(),
 					{
 						type : 'spelled.debug.updateComponent',
 						payload : {
-							scene: activeScene.data[ "name" ],
-							entityId: component[ "data" ][ "spelled.model.config.entity_id" ],
-							componentId: component[ "data" ][ "templateId" ],
-							key: record.name,
-							value: value
+							scene       : activeScene.data.name,
+							entityId    : component.data[ "spelled.model.config.entity_id" ],
+							componentId : component.data.templateId,
+							config      : componentConfig
 						}
 					}
 				)
 			}
-
-
 		}
 	},
 
