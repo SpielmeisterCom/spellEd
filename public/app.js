@@ -277,6 +277,19 @@ require(
 						}
 					)
 
+					Ext.Direct.on('exception', function( response ) {
+						if( !Ext.Msg.isVisible() ) {
+							Ext.Msg.show({
+								buttons: Ext.Msg.OK,
+								title: 'Critical Error',
+								msg: "Could not execute '" + response.transaction.action +"."+ response.transaction.method +
+									"': <br/><br/>"+ response.xhr.responseText+
+									"': <br/><br/>Please contact the support with this error description!",
+								icon: Ext.MessageBox.ERROR
+							})
+						}
+					})
+
 					Ext.direct.Manager.addProvider(Ext.app.REMOTING_API)
 
 					Ext.get('loading').remove()

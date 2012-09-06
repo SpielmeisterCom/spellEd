@@ -118,8 +118,7 @@ define(
 			}
 
             var jsonListing = function ( rootPath, withFileType, req, res, payload, next ) {
-                var normalize = path.normalize,
-					relative  = path.relative,
+                var relative  = path.relative,
 					cwd       = process.cwd(),
 					join      = path.join
 
@@ -171,68 +170,72 @@ define(
 
 						if( withFileType === true && path.extname( filePath ) === ".json" ) {
 							var fileContent = fs.readFileSync( filePath, 'utf8' )
-							var object = JSON.parse(fileContent)
+							try{
+								var object = JSON.parse(fileContent)
 
-							fileInfo.cls  = object.type
-							fileInfo.text = object.name
+								fileInfo.cls  = object.type
+								fileInfo.text = object.name
 
-							if( object.type === "entityTemplate" && _.has( object, 'children') ) {
+								if( object.type === "entityTemplate" && _.has( object, 'children') ) {
 
-								var parseChildren = function( node, entity ) {
-									if(_.has( entity, 'children' ) ) {
-										node.children = []
-										_.each( entity.children, function( child ) {
-											node.leaf = false
-											var newNode = {
-												id: node.id + child.name ,
-												text: child.name,
-												cls: "templateEntityComposite",
-												iconCls: "tree-scene-entity-icon",
-												leaf: true
-											}
+									var parseChildren = function( node, entity ) {
+										if(_.has( entity, 'children' ) ) {
+											node.children = []
+											_.each( entity.children, function( child ) {
+												node.leaf = false
+												var newNode = {
+													id: node.id + child.name ,
+													text: child.name,
+													cls: "templateEntityComposite",
+													iconCls: "tree-scene-entity-icon",
+													leaf: true
+												}
 
-											newNode = parseChildren( newNode, child )
-											node.children.push( newNode )
-										})
+												newNode = parseChildren( newNode, child )
+												node.children.push( newNode )
+											})
+										}
+
+										node.iconCls = "tree-scene-entity-icon"
+
+										return node
 									}
 
-									node.iconCls = "tree-scene-entity-icon"
-
-									return node
+									fileInfo = parseChildren( fileInfo, object )
+								} else if( object.type === "entityTemplate" ) {
+									fileInfo.iconCls = "tree-scene-entity-icon"
+								} else if( object.type === "componentTemplate" ) {
+									fileInfo.iconCls = "tree-component-icon"
+								} else if( object.type === "systemTemplate" ) {
+									fileInfo.iconCls = "tree-system-icon"
+								} else if (object.type === "spriteSheet") {
+									fileInfo.iconCls = "tree-asset-spritesheet-icon"
+								} else if (object.type === "animation") {
+									fileInfo.iconCls = "tree-asset-2danimation-icon"
+								} else if (object.type === "appearance") {
+									fileInfo.iconCls = "tree-asset-2dstaticappearance-icon"
+								} else if(object.type === "font") {
+									fileInfo.iconCls = "tree-asset-2dtextappearance-icon"
+								} else if(object.type === "sound") {
+									fileInfo.iconCls = "tree-asset-sound-icon"
+								} else {
+									console.error( "Error: Missing treeIcon for " + object.type )
 								}
 
-								fileInfo = parseChildren( fileInfo, object )
-							} else if( object.type === "entityTemplate" ) {
-								fileInfo.iconCls = "tree-scene-entity-icon"
-							} else if( object.type === "componentTemplate" ) {
-								fileInfo.iconCls = "tree-component-icon"
-							} else if( object.type === "systemTemplate" ) {
-								fileInfo.iconCls = "tree-system-icon"
-							} else if (object.type === "spriteSheet") {
-								fileInfo.iconCls = "tree-asset-spritesheet-icon"
-							} else if (object.type === "animation") {
-								fileInfo.iconCls = "tree-asset-2danimation-icon"
-							} else if (object.type === "appearance") {
-								fileInfo.iconCls = "tree-asset-2dstaticappearance-icon"
-							} else if(object.type === "font") {
-								fileInfo.iconCls = "tree-asset-2dtextappearance-icon"
-							} else if(object.type === "sound") {
-								fileInfo.iconCls = "tree-asset-sound-icon"
-							} else {
-								console.error( "Error: Missing treeIcon for " + object.type )
-							}
+								if( !_.has( namespacesResults, object.namespace ) ){
+									namespacesResults[ object.namespace ] = {
+										id: object.namespace,
+										text: _.last( object.namespace.split(".") ),
+										cls: "folder",
+										leaf: false,
+										children: [ fileInfo ]
+									}
 
-							if( !_.has( namespacesResults, object.namespace ) ){
-								namespacesResults[ object.namespace ] = {
-									id: object.namespace,
-									text: _.last( object.namespace.split(".") ),
-									cls: "folder",
-									leaf: false,
-									children: [ fileInfo ]
+								} else {
+									namespacesResults[ object.namespace ].children.push( fileInfo )
 								}
-
-							} else {
-								namespacesResults[ object.namespace ].children.push( fileInfo )
+							} catch( e ) {
+								createErrorMsg( "Error: JSON file: '" + file + "' could not been parsed" )
 							}
 
 						} else {
@@ -299,33 +302,37 @@ define(
 				return result
             }
 
-            var getDirFilesAsObjects = function( readPath ) {
-                var normalize = path.normalize,
-                    join = path.join
+			var getDirFilesAsObjects = function( readPath ) {
+				var normalize = path.normalize,
+					join = path.join
 
-                var files = fs.readdirSync( readPath )
-                files.sort();
+				var files = fs.readdirSync( readPath )
+				files.sort();
 
                 var result = []
 
-                _.each(
-                    files,
-                    function( file ) {
-                        var filePath = normalize(join( readPath, file ))
+				_.each(
+					files,
+					function( file ) {
+						var filePath = normalize(join( readPath, file ))
 
-                        var fileStat = fs.statSync( filePath )
+						var fileStat = fs.statSync( filePath )
 
-                        if( path.extname( filePath ) === ".json" ) {
-                            var fileContent = fs.readFileSync( filePath, 'utf8' )
-                            var object = JSON.parse(fileContent)
+						if( path.extname( filePath ) === ".json" ) {
+							var fileContent = fs.readFileSync( filePath, 'utf8' )
+							try{
+								var object = JSON.parse(fileContent)
+								object.id = filePath
+								result.push( object )
+							} catch( e ) {
 
-                            object.id = filePath
-                            result.push( object )
-                        } else if( fileStat.isDirectory() ) {
+								createErrorMsg( "Error: Template: '" + file + "' contains syntax errors and could not been loaded" )
+							}
+						} else if( fileStat.isDirectory() ) {
                             result = result.concat( getDirFilesAsObjects( filePath ) )
-                        }
-                    }
-                )
+						}
+					}
+				)
 
                 return result;
             }
@@ -399,6 +406,9 @@ define(
                 return fs.unlinkSync( filePath )
             }
 
+			var createErrorMsg = function( text ) {
+				throw text
+			}
 
             return {
                 getPath                    : getPath,

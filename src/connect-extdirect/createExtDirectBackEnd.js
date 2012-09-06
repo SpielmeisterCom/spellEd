@@ -207,7 +207,7 @@ define(
 								)
 
 							} catch( e ) {
-								console.log( e )
+								console.error( e )
 								response.writeHead( 500, {'Content-type': 'application/json'});
 								response.end( e.toString(), 'utf8' );
                                 return
