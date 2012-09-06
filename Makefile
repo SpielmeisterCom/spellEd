@@ -12,6 +12,8 @@ css:
 	#slice fallback images for older browsers
 	PATH=${PATH} sencha slice theme -d ./public/extjs -c ./public/css/ext-all-spelled.css -o ./public/images/spelled -v
 
+	cp -aR public/images/spelled-patches/* public/images/spelled/
+
 deploy:
 	# cleaning up and creating directory tree
 	rm -rf build
