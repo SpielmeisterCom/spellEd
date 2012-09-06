@@ -227,8 +227,7 @@ Ext.define('Spelled.controller.Components', {
 			sceneController   = this.application.getController( 'Scenes'),
 			sceneEditor       = Ext.getCmp( "SceneEditor"),
 			activeSceneTab    = undefined,
-			activeScene       = this.application.getActiveScene(),
-			me                = this
+			activeScene       = this.application.getActiveScene()
 
 		if( config[ record.name ] != value ) {
 			config[ record.name ] = value
@@ -291,7 +290,7 @@ Ext.define('Spelled.controller.Components', {
 
 		var icon     = ( Ext.isEmpty( template.get('icon') ) )? "" : "style='background: url(" + template.get('icon') +") no-repeat;'",
 			iconClass   = ( component.get('additional') ) ? "component-icon" : "linked-component-icon",
-			linkedImage = ( !component.get('additional') && !Ext.isEmpty( template.get('icon') ) ) ? "<img src='/images/icons/link.png' style='margin-left: -18px;'/>" : "<img/>"
+			linkedImage = ( !component.get('additional') && !Ext.isEmpty( template.get('icon') ) ) ? "<img src='/images/icons/link.png' style='margin-left: -18px;'/>" : "<span/>"
 
 		return Ext.widget(
 			'componentproperties',
