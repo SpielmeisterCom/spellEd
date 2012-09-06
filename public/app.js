@@ -283,8 +283,7 @@ require(
 								buttons: Ext.Msg.OK,
 								title: 'Critical Error',
 								msg: "Could not execute '" + response.transaction.action +"."+ response.transaction.method +
-									"': <br/><br/>"+ response.xhr.responseText+
-									"': <br/><br/>Please contact the support with this error description!",
+									"': <br/><br/>"+ response.xhr.responseText,
 								icon: Ext.MessageBox.ERROR
 							})
 						}
