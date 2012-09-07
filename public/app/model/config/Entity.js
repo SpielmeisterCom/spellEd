@@ -12,6 +12,7 @@ Ext.define('Spelled.model.config.Entity', {
 
     idgen: {
 		type: 'sequential',
+		prefix: '_',
 		id: 'configEntity'
 	},
 
