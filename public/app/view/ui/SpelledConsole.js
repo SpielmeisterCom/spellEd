@@ -6,6 +6,9 @@ Ext.define('Spelled.view.ui.SpelledConsole', {
 	autoScroll: true,
     height: 150,
 
+	floatable: false,
+	titleCollapse: true,
+
 	frame: true,
 
 	bbar: [
