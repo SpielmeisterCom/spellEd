@@ -34,6 +34,7 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				}
 			},{
 				name: 'aspectRatioSelector',
+				width: 400,
 				editable: false,
 				value: 0,
 				xtype: 'combobox',
