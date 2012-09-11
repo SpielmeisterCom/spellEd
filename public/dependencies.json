@@ -304,6 +304,7 @@
 		"Ext.menu.ColorPicker",
 		"Spelled.abstract.grid.Property",
 		"Spelled.abstract.store.TreeStore",
+		"Spelled.store.AspectRatios",
 		"Spelled.store.asset.Tree",
 		"Spelled.store.asset.FoldersTree",
 		"Spelled.model.Asset",

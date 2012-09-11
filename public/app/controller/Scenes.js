@@ -11,6 +11,7 @@ Ext.define('Spelled.controller.Scenes', {
 	],
 
 	stores: [
+		'AspectRatios',
 		'ScenesTree',
 		'config.Scenes'
 	],
@@ -144,7 +145,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 
 		this.control({
-			'#aspectRatioSelector': {
+			'renderedscene > toolbar combobox[name="aspectRatioSelector"]': {
 				change: this.changeAspectRatio
 			},
 			'renderedscene > toolbar button[action="reloadScene"]': {

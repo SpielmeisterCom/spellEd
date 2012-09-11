@@ -6,25 +6,6 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 	initComponent: function() {
 		var me = this
 
-		var store = Ext.create('Ext.data.Store', {
-			fields: ['aspectRatio', 'name'],
-
-			data : [
-				{
-					"aspectRatio": 1.333333,
-					"name":"4:3"
-				},
-				{
-					"aspectRatio": 1.6,
-					"name":"16:9"
-				},
-				{
-					"aspectRatio": 1.7,
-					"name":"16:10"
-				}
-			]
-		});
-
 		me.tbar = [
 			{
 				iconCls: 'reload-icon',
@@ -52,16 +33,15 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 					title:'Fullscreen'
 				}
 			},{
-				id: 'aspectRatioSelector',
+				name: 'aspectRatioSelector',
 				editable: false,
-				value: 1.333333,
+				value: 0,
 				xtype: 'combobox',
-				store: store,
+				store: 'AspectRatios',
 				displayField: 'name',
 				valueField: 'aspectRatio',
 				queryMode: 'local',
 				triggerAction: 'all',
-				selectOnFocus: true,
 				iconCls: 'no-icon'
 			}
 		]
