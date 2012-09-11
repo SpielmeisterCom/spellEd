@@ -212,6 +212,8 @@ define(
 									fileInfo.iconCls = "tree-asset-2dtextappearance-icon"
 								} else if(object.type === "sound") {
 									fileInfo.iconCls = "tree-asset-sound-icon"
+								} else if(object.type === "keyToActionMap") {
+									fileInfo.iconCls = "tree-asset-keytoactionmap-icon"
 								} else {
 									console.error( "Error: Missing treeIcon for " + object.type )
 								}

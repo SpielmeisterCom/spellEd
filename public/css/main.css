@@ -126,6 +126,10 @@
     background-image:  url( '../images/icons/system-box.png' ) !important;
 }
 
+.tree-asset-keytoactionmap-icon {
+    background-image:  url( '../images/icons/keyboard.png' ) !important;
+}
+
 .doc-tool {
     width: 100%;
     text-align: right;
