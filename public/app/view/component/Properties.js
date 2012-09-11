@@ -49,35 +49,6 @@ Ext.define('Spelled.view.component.Properties', {
 			type  = attribute.type,
 			cellEditorConfig = { field: { xtype: type, value: value, initialValue: attribute.initialValue } }
 
-		if( key === 'assetId' ) {
-			var storeId = 'asset.Assets'
-
-			if( !!value ) {
-				switch( this.getAssetIdType( value ) ) {
-					case 'appearance':
-						storeId = 'asset.Textures'
-						break
-					case 'animation':
-						storeId = 'asset.Animations'
-						break
-					case 'spriteSheet':
-						storeId = 'asset.SpriteSheet'
-						break
-					case 'font':
-						storeId = 'asset.Fonts'
-						break
-					case 'sound':
-						storeId = 'asset.Sounds'
-						break
-					case 'keyToActionMap':
-						storeId = 'asset.KeyToActionMappings'
-						break
-				}
-			}
-
-			cellEditorConfig.field.store = storeId
-		}
-
 		this.customEditors[ key ] = new Ext.grid.CellEditor( cellEditorConfig )
 	},
 

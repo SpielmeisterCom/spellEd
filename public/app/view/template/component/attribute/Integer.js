@@ -4,7 +4,10 @@ Ext.define('Spelled.view.template.component.attribute.Integer', {
 
 	decimalPrecision: 0,
 
+	mixins: [ 'Spelled.abstract.grid.Property' ],
+
 	initComponent: function() {
+		this.addEditPropertyEvent()
 		this.callParent()
 	}
 });
