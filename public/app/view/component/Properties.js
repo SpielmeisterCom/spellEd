@@ -19,40 +19,66 @@ Ext.define('Spelled.view.component.Properties', {
 			xtype: 'tool-documentation'
 		}]
 
-		var storeId = 'asset.Assets'
+		this.customEditors = {}
+		Ext.Object.each( this.source,
+			this.addCustomEditor,
+			this
+		)
 
-		if( !!this.source.assetId ) {
-			switch( this.getAssetIdType( this.source.assetId ) ) {
-				case 'appearance':
-					storeId = 'asset.Textures'
-					break
-				case 'animation':
-					storeId = 'asset.Animations'
-					break
-				case 'spriteSheet':
-					storeId = 'asset.SpriteSheet'
-					break
-				case 'font':
-					storeId = 'asset.Fonts'
-					break
-				case 'sound':
-					storeId = 'asset.Sounds'
-					break
-			}
-		}
-
-		me.customEditors = {
-			assetId:  new Ext.grid.CellEditor({
-				field: {
-					xtype: 'assetidproperty',
-					store: storeId
-				}
-			})
-		}
+		this.formatSource()
 
 		if( this.isAdditional === true ) this.closable = true
 
-		this.callParent( arguments )
+		this.callParent()
+	},
+
+	formatSource: function() {
+		var newSource = {}
+		Ext.Object.each( this.source,
+			function( key, attribute ) {
+				newSource[ key ] = attribute.value
+			},
+			this
+		)
+
+		this.source = newSource
+	},
+
+	addCustomEditor: function( key, attribute ) {
+		var value = attribute.value,
+			type  = attribute.type,
+			cellEditorConfig = { field: { xtype: type, value: value, initialValue: attribute.initialValue } }
+
+		if( key === 'assetId' ) {
+			var storeId = 'asset.Assets'
+
+			if( !!value ) {
+				switch( this.getAssetIdType( value ) ) {
+					case 'appearance':
+						storeId = 'asset.Textures'
+						break
+					case 'animation':
+						storeId = 'asset.Animations'
+						break
+					case 'spriteSheet':
+						storeId = 'asset.SpriteSheet'
+						break
+					case 'font':
+						storeId = 'asset.Fonts'
+						break
+					case 'sound':
+						storeId = 'asset.Sounds'
+						break
+					case 'keyToActionMap':
+						storeId = 'asset.KeyToActionMappings'
+						break
+				}
+			}
+
+			cellEditorConfig.field.store = storeId
+		}
+
+		this.customEditors[ key ] = new Ext.grid.CellEditor( cellEditorConfig )
 	},
 
 	getAssetIdType: function( assetId ) {

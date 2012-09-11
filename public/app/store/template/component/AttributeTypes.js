@@ -34,7 +34,7 @@ Ext.define('Spelled.store.template.component.AttributeTypes', {
 		},
 		{
 			"type":"spelledanimatedappearancefield",
-			"name":"assetId:animatedAppearance"
+			"name":"assetId:animation"
 		},
 		{
 			"type":"spelledappearancefield",
@@ -47,6 +47,10 @@ Ext.define('Spelled.store.template.component.AttributeTypes', {
 		{
 			"type":"spelledsoundfield",
 			"name":"assetId:sound"
+		},
+		{
+			"type":"spelledkeyaction",
+			"name":"assetId:keyToActionMap"
 		}
 	]
 });

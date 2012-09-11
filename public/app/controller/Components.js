@@ -25,8 +25,12 @@ Ext.define('Spelled.controller.Components', {
 
 	init: function() {
 		this.control({
+			'field': {
+				editproperty: this.previewAttributeChange
+			},
 			'componentproperties': {
 				edit: this.editProperty,
+				canceledit: this.cancelPropertyEdit,
 				beforeclose: this.confirmDelete
 			},
 			'componentproperties tool-documentation': {
@@ -43,6 +47,13 @@ Ext.define('Spelled.controller.Components', {
 			}
 
 		})
+	},
+
+	cancelPropertyEdit: function( editor, e ) {
+		var value  = e.value,
+			column = e.column
+
+		this.previewAttributeChange( column, value, value )
 	},
 
 	showDocumentation: function( docString, toolEl, panel ) {
@@ -219,49 +230,22 @@ Ext.define('Spelled.controller.Components', {
 
 	editProperty: function( editor, e ) {
 		var componentConfigId = e.grid.componentConfigId,
-			record            = e.record.data,
+			record            = e.record,
 			component         = this.getConfigComponentsStore().getById( componentConfigId ),
 			config            = Ext.Object.merge( {}, component.get('config') ),
 			defaultConfig     = component.getConfigMergedWithTemplateConfig(),
-			value             = Ext.decode( record.value, true ) || record.value,
-			sceneController   = this.application.getController( 'Scenes'),
-			sceneEditor       = Ext.getCmp( "SceneEditor"),
-			activeSceneTab    = undefined,
-			activeScene       = this.application.getActiveScene()
+			value             = Ext.decode( record.get( 'value'), true ) || record.get( 'value'),
+			name              = record.get('name')
 
-		if( config[ record.name ] != value ) {
-			config[ record.name ] = value
+		if( config[ name ] != value ) {
+			config[ name ] = value
 
-			if( config[ record.name ] == defaultConfig[ record.name ] ) {
-				delete config[ record.name ]
+			if( config[ name ] == defaultConfig[ name ] ) {
+				delete config[ name ]
 			}
 
 			component.set( 'config', config)
-
 			component.setChanged()
-
-			// TODO: we must find the tab that coresponds to the changed data and not the active tab
-			if ( activeScene ) {
-				activeSceneTab = this.application.findActiveTabByTitle( sceneEditor, activeScene.getRenderTabTitle() )
-			}
-
-			if( activeSceneTab ) {
-				componentConfig = {}
-				componentConfig[ record.name ] = value
-
-				sceneController.engineMessageBus.send(
-					activeSceneTab.down( 'spellediframe' ).getId(),
-					{
-						type : 'spelled.debug.updateComponent',
-						payload : {
-							scene       : activeScene.data.name,
-							entityId    : component.data[ "spelled.model.config.entity_id" ],
-							componentId : component.data.templateId,
-							config      : componentConfig
-						}
-					}
-				)
-			}
 		}
 	},
 
@@ -275,6 +259,17 @@ Ext.define('Spelled.controller.Components', {
 		}
 	},
 
+	createPropertyFromAttribute: function ( attribute, name, value ) {
+		var typeName      = attribute.get( 'type' ),
+			attributeType = this.getStore( 'template.component.AttributeTypes' ).findRecord( 'name', typeName )
+
+		return {
+			type: attributeType.get('type'),
+			value: this.convertValueForGrid( value ),
+			componentValue: value
+		}
+	},
+
 	createConfigGridView: function( component ) {
         var config   = {},
 			template = component.getTemplate(),
@@ -283,7 +278,7 @@ Ext.define('Spelled.controller.Components', {
         Ext.iterate(
             component.getConfigMergedWithTemplateConfig(),
             function( key, value ) {
-				config[ key ] = this.convertValueForGrid( value )
+				config[ key ] = this.createPropertyFromAttribute( template.getAttributeByName( key ), key, value )
             },
             this
         )
@@ -301,5 +296,37 @@ Ext.define('Spelled.controller.Components', {
 				componentConfigId: component.getId()
 			}
 		)
-    }
+    },
+
+	previewAttributeChange: function( field, newValue, oldValue ) {
+		var activeScene       = this.application.getActiveScene(),
+			sceneController   = this.application.getController( 'Scenes'),
+			sceneEditor       = Ext.getCmp( "SceneEditor"),
+			view              = field.up('componentproperties'),
+			component         = this.getConfigComponentsStore().getById( view.componentConfigId ),
+			name              = view.getSelectionModel().getLastSelected().get('name')
+
+		if ( activeScene && sceneEditor.isVisible() ) {
+			var activeSceneTab = this.application.findActiveTabByTitle( sceneEditor, activeScene.getRenderTabTitle() )
+
+			if( activeSceneTab && activeSceneTab.isVisible() ) {
+				var componentConfig = {}
+
+				componentConfig[ name ] = Ext.decode( newValue, true ) || newValue
+
+				sceneController.engineMessageBus.send(
+					activeSceneTab.down( 'spellediframe' ).getId(),
+					{
+						type : 'spelled.debug.updateComponent',
+						payload : {
+							scene       : activeScene.get( 'name' ),
+							entityId    : component.getEntity().getId(),
+							componentId : component.get( 'templateId' ),
+							config      : componentConfig
+						}
+					}
+				)
+			}
+		}
+	}
 });

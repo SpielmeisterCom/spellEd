@@ -8,5 +8,12 @@ Ext.define('Spelled.view.component.property.AssetId', {
 	store          : 'asset.Assets',
 	name           : 'assetId',
 	displayField   : 'name',
-	valueField     : 'internalAssetId'
+	valueField     : 'internalAssetId',
+
+	mixins: [ 'Spelled.abstract.grid.Property' ],
+
+	initComponent: function() {
+		this.addEditPropertyEvent()
+		this.callParent()
+	}
 });
