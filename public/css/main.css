@@ -102,6 +102,10 @@
     background:  url( '../images/icons/component-link.png' ) no-repeat;
 }
 
+.reload-icon {
+    background-image:  url( '../images/icons/table_refresh.png' ) !important;
+}
+
 .grid-icon {
      background-image:  url( '../images/icons/coordinateGrid.png' ) !important;
 }

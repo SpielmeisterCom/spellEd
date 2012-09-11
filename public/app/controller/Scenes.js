@@ -144,10 +144,8 @@ Ext.define('Spelled.controller.Scenes', {
 
 
 		this.control({
-			'renderedscene': {
-				show: function( panel ) {
-					panel.down( 'spellediframe').focus()
-				}
+			'#aspectRatioSelector': {
+				change: this.changeAspectRatio
 			},
 			'renderedscene > toolbar button[action="reloadScene"]': {
 				click: me.reloadScene
@@ -181,6 +179,21 @@ Ext.define('Spelled.controller.Scenes', {
 				select: this.setSceneScript
 			}
 		})
+	},
+
+	changeAspectRatio: function( field, newValue, oldValue ) {
+		var sceneEditor = this.getSceneEditor(),
+			iframe      = sceneEditor.getActiveTab().down( 'spellediframe' )
+
+		this.engineMessageBus.send(
+			iframe.getId(),
+			{
+				type : 'spelled.debug.simulateScreenAspectRatio',
+				payload : {
+					aspectRatio: newValue
+				}
+			}
+		)
 	},
 
 	dispatchTreeDblClick: function( treePanel, record ) {
