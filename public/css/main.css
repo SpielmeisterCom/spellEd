@@ -103,11 +103,15 @@
 }
 
 .reload-icon {
-    background-image:  url( '../images/icons/table_refresh.png' ) !important;
+    background-image:  url( '../images/icons/arrow_refresh.png' ) !important;
 }
 
 .grid-icon {
      background-image:  url( '../images/icons/coordinateGrid.png' ) !important;
+}
+
+.camera-marker-icon {
+    background-image:  url( '../images/icons/eye.png' ) !important;
 }
 
 .fullscreen-icon {

@@ -47,7 +47,7 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				iconCls: 'no-icon'
 			},
 			{
-				iconCls: 'grid-icon',
+				iconCls: 'camera-marker-icon',
 				action: 'toggleTitleSafe',
 				enableToggle: true,
 				pressed: me.showTitleSafe,
