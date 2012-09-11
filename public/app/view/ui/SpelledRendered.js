@@ -21,8 +21,8 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				enableToggle: true,
 				pressed: me.showGrid,
 				tooltip: {
-					text:'Render the SpellJS Grid on the Canvas',
-					title:'Show Grid'
+					text: 'Shows the world coordinate grid overlay',
+					title: 'Show Grid'
 				}
 			},
 			{
@@ -32,7 +32,8 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 					text:'Render the current scene in fullscreen',
 					title:'Fullscreen'
 				}
-			},{
+			},
+			{
 				name: 'aspectRatioSelector',
 				width: 400,
 				editable: false,
@@ -44,6 +45,16 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				queryMode: 'local',
 				triggerAction: 'all',
 				iconCls: 'no-icon'
+			},
+			{
+				iconCls: 'grid-icon',
+				action: 'toggleTitleSafe',
+				enableToggle: true,
+				pressed: me.showTitleSafe,
+				tooltip: {
+					text: 'Highlights the title safe area of the currently selected camera',
+					title: 'Show Title Safe Area'
+				}
 			}
 		]
 

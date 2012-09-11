@@ -154,6 +154,9 @@ Ext.define('Spelled.controller.Scenes', {
 			'renderedscene > toolbar button[action="toggleGrid"]': {
 				toggle: me.toggleGrid
 			},
+			'renderedscene > toolbar button[action="toggleTitleSafe"]': {
+				toggle: me.toggleTitleSafe
+			},
 			'renderedscene > toolbar button[action="fullscreen"]': {
 				click: me.activateFullscreen
 			},
@@ -490,6 +493,23 @@ Ext.define('Spelled.controller.Scenes', {
 				}
 			)
 		}
+	},
+
+	toggleTitleSafe: function( button, state ) {
+		var tab   = button.up( 'renderedscene' ).down( 'spellediframe' ),
+			scene = this.application.getActiveScene()
+
+		if( !tab ) return
+
+		scene.set( 'showTitleSafe', state )
+
+		this.engineMessageBus.send(
+			tab.getId(),
+			{
+				type : 'spelled.debug.drawTitleSafeOutline',
+				payload : state
+			}
+		)
 	},
 
 	activateFullscreen: function( button, state ) {
