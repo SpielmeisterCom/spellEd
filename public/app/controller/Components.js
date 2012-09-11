@@ -25,6 +25,7 @@ Ext.define('Spelled.controller.Components', {
 
 	init: function() {
 		this.control({
+			//TODO: find out why the selector 'componentproperties field' doesn't work!
 			'field': {
 				editproperty: this.previewAttributeChange
 			},
@@ -302,8 +303,11 @@ Ext.define('Spelled.controller.Components', {
 		var activeScene       = this.application.getActiveScene(),
 			sceneController   = this.application.getController( 'Scenes'),
 			sceneEditor       = Ext.getCmp( "SceneEditor"),
-			view              = field.up('componentproperties'),
-			component         = this.getConfigComponentsStore().getById( view.componentConfigId ),
+			view              = field.up('componentproperties')
+		//Workaround because of the bad control-query in this controller
+		if( !view ) return
+
+		var	component         = this.getConfigComponentsStore().getById( view.componentConfigId ),
 			name              = view.getSelectionModel().getLastSelected().get('name')
 
 		if ( activeScene && sceneEditor.isVisible() ) {
