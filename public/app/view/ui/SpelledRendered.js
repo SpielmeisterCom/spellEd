@@ -11,8 +11,16 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				iconCls: 'reload-icon',
 				action: "reloadScene",
 				tooltip: {
-					text:'Reload and render scene (shortcut CTRL+R/CMD+R)',
+					text:'Reload and render scene (CTRL+R/CMD+R)',
 					title:'Reload'
+				}
+			},
+			{
+				iconCls: 'fullscreen-icon',
+				action: "fullscreen",
+				tooltip: {
+					text:'Render the current scene in fullscreen',
+					title:'Activate Fullscreen (CTRL+F/CMD+F)'
 				}
 			},
 			{
@@ -22,15 +30,17 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				pressed: me.showGrid,
 				tooltip: {
 					text: 'Shows the world coordinate grid overlay',
-					title: 'Show Grid'
+					title: 'Show Grid (CTRL+G/CMD+G)'
 				}
 			},
 			{
-				iconCls: 'fullscreen-icon',
-				action: "fullscreen",
+				iconCls: 'camera-marker-icon',
+				action: 'toggleTitleSafe',
+				enableToggle: true,
+				pressed: me.showTitleSafe,
 				tooltip: {
-					text:'Render the current scene in fullscreen',
-					title:'Fullscreen'
+					text: 'Highlights the title safe area of the currently selected camera',
+					title: 'Show Title Safe Area (CTRL+C/CMD+C)'
 				}
 			},
 			{
@@ -45,17 +55,8 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				queryMode: 'local',
 				triggerAction: 'all',
 				iconCls: 'no-icon'
-			},
-			{
-				iconCls: 'camera-marker-icon',
-				action: 'toggleTitleSafe',
-				enableToggle: true,
-				pressed: me.showTitleSafe,
-				tooltip: {
-					text: 'Highlights the title safe area of the currently selected camera',
-					title: 'Show Title Safe Area'
-				}
 			}
+
 		]
 
 		me.callParent( arguments )
