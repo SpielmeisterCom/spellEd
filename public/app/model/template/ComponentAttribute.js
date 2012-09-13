@@ -12,9 +12,17 @@ Ext.define('Spelled.model.template.ComponentAttribute', {
     associations: [{
         model:"Spelled.model.template.Component",
         type:"belongsTo",
-		getterName: 'getComponent',
-		setterName: 'setComponent'
+		getterName: 'getComponent'
     }],
+
+	setDirty: function() {
+		this.getComponent().setDirty()
+		this.callParent()
+	},
+
+	setComponent: function( component ) {
+		this[ 'Spelled.model.template.ComponentBelongsToInstance' ] = component
+	},
 
     constructor: function() {
         this.callParent(arguments)

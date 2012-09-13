@@ -23,6 +23,12 @@ Ext.define('Spelled.controller.Projects', {
                 click: this.loadProjectAction
             }
         })
+
+		this.application.on( {
+			'globalsave': this.globalSave,
+			'revertmodel': this.revertModel,
+			scope: this
+		})
 	},
 
 	refs: [
@@ -31,6 +37,42 @@ Ext.define('Spelled.controller.Projects', {
 			selector: '#ScenesTree'
 		}
 	],
+
+	globalSave: function() {
+		var stores = [
+			'template.Components',
+			'template.Entities',
+			'template.Systems'
+		]
+
+		Ext.each(
+			stores,
+			function( id ) {
+				Ext.getStore( id ).each(
+					function( item ) {
+						if( item.dirty === true ) item.save()
+					}
+				)
+			}
+		)
+
+		this.saveActiveProject()
+	},
+
+	revertModel: function( model ) {
+		var proxy = model.getProxy(),
+			Model = proxy.getModel(),
+			store = model.store
+
+		Model.load( model.getId(), {
+			scope: this,
+			success: function( record ) {
+				if( !store ) return
+				store.remove( model )
+				store.add( record )
+			}
+		})
+	},
 
 	loadLastProject: function() {
 		// loading default project
@@ -199,23 +241,6 @@ Ext.define('Spelled.controller.Projects', {
 
 
 		this.application.getController( 'Scenes' ).renderScene( firstScene )
-	},
-
-	collectConfigEntityIds: function( items ) {
-		var ids = []
-
-		Ext.iterate(
-			items,
-			function( item ) {
-				ids.push( item.internalId )
-
-				if( item.hasChildren() ) {
-					ids.concat(  )
-				}
-			}
-		)
-
-		return ids
 	},
 
 	closeAllTabsFromProject: function() {

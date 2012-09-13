@@ -7,24 +7,12 @@ Ext.define('Spelled.view.template.component.Property', {
     margin: '5 0 0 0',
     title: 'Attribute',
 	frame: true,
-
 	layout: 'form',
 
 	defaults: {
 		hidden: true
 	},
 
-	buttons: [
-		{
-			text: "Save",
-			action: "save"
-		},
-		{
-			text: "Reset",
-			action: "reset",
-			formBind:true
-		}
-	],
     items: [
         {
             xtype: 'textfield',

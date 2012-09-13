@@ -112,6 +112,7 @@ Ext.define('Spelled.controller.Components', {
 			entity    = component.getEntity()
 
 		entity.getComponents().remove( component )
+		entity.setDirty()
 		store.remove( component )
 	},
 
@@ -205,6 +206,7 @@ Ext.define('Spelled.controller.Components', {
 		Ext.each(
 			records,
 			function( record ) {
+				entity.setDirty()
 
 				var componentTemplate = componentTemplateStore.getById( record.get('id') )
 
@@ -236,7 +238,8 @@ Ext.define('Spelled.controller.Components', {
 			config            = Ext.Object.merge( {}, component.get('config') ),
 			defaultConfig     = component.getConfigMergedWithTemplateConfig(),
 			value             = Ext.decode( record.get( 'value'), true ) || record.get( 'value'),
-			name              = record.get('name')
+			name              = record.get('name'),
+			entity            = component.getEntity()
 
 		if( config[ name ] != value ) {
 			config[ name ] = value
@@ -247,6 +250,8 @@ Ext.define('Spelled.controller.Components', {
 
 			component.set( 'config', config)
 			component.setChanged()
+
+			entity.setDirty()
 		}
 	},
 

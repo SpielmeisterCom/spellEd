@@ -114,6 +114,19 @@ Ext.define('Spelled.controller.Scenes', {
 			}
 		)
 
+		// Keymapping for global Save on ctrl+S
+		Spelled.KeyMap.addBinding(
+			{
+				key: Ext.EventObject.S,
+				ctrl: true,
+				scope: this,
+				fn: function( keyCode, e ) {
+					e.stopEvent()
+					this.application.fireEvent( 'globalsave' )
+				}
+			}
+		)
+
 		// initializing the engine message bus
 		this.engineMessageBus = Ext.create(
 			'Spelled.MessageBus',
@@ -439,41 +452,25 @@ Ext.define('Spelled.controller.Scenes', {
 		var panel   = button.up( 'panel' ),
 			project = this.application.getActiveProject(),
 			iframe  = panel.down( 'spellediframe' ),
-			sceneId = iframe.sceneId,
-			me      = this
+			sceneId = iframe.sceneId
 
-		var w = Ext.create('Ext.window.Window', {
-			modal: true,
-			layout: 'fit',
-			items: [{
-				xtype: "progressbar",
-				text : "Updating...",
-				width: 300
-			}]
-		}).show()
+		iframe.destroy()
 
-		this.application.getController('Projects').saveActiveProject(
-			function() {
-				iframe.destroy()
-				w.close()
+		var newIframe = Ext.create(
+			'Spelled.view.ui.SpelledIframe',
+			{
+				projectName : project.get('name'),
+				sceneId : sceneId
+			}
+		)
 
-				var newIframe = Ext.create(
-					'Spelled.view.ui.SpelledIframe',
-					{
-						projectName : project.get('name'),
-						sceneId : sceneId
-					}
-				)
+		panel.add( newIframe )
 
-				panel.add( newIframe )
-
-				me.engineMessageBus.send(
-					newIframe.getId(),
-					{
-						type : 'spelled.debug.executeRuntimeModule',
-						payload : Ext.amdModules.createProjectInEngineFormat( project )
-					}
-				)
+		this.engineMessageBus.send(
+			newIframe.getId(),
+			{
+				type : 'spelled.debug.executeRuntimeModule',
+				payload : Ext.amdModules.createProjectInEngineFormat( project )
 			}
 		)
 	},

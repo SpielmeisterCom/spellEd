@@ -44,12 +44,9 @@ Ext.define('Spelled.controller.templates.Components', {
 
     init: function() {
         this.control({
-            'componenttemplateproperty button[action="save"]' : {
-                click: this.saveComponentTemplate
-            },
-            'componenttemplateproperty button[action="reset"]' : {
-                click: this.resetTemplate
-            },
+			'componenttemplateedit form field': {
+				change: this.updateComponent
+			},
             'componenttemplateproperty > combobox[name="type"]' : {
                 change: this.changedAttributeType
             },
@@ -65,6 +62,20 @@ Ext.define('Spelled.controller.templates.Components', {
             }
         })
     },
+
+	updateComponent: function( field, newValue ) {
+		var form   = field.up( 'form' ).getForm(),
+			record = form.getRecord(),
+			values = field.getModelData(),
+			tab    = this.getTemplateEditor().getActiveTab()
+
+		if( Ext.isDefined( record.data[ field.getName() ] ) && newValue != record.get( field.getName()) ){
+			record.setDirty()
+
+			record.set( values )
+			if( tab ) this.refreshComponentTemplateAttributesList( tab )
+		}
+	},
 
     showAttributesListContextMenu: function( view, record, item, index, e, options ) {
 		if( !view.panel.down( 'actioncolumn').isHidden() )
@@ -86,7 +97,9 @@ Ext.define('Spelled.controller.templates.Components', {
             }
         )
 
+		newAttribute.setComponent( ownerModel )
         ownerModel.getAttributes().add( newAttribute )
+		newAttribute.setDirty()
 
         this.refreshComponentTemplateAttributesList( tab )
     },
@@ -98,38 +111,6 @@ Ext.define('Spelled.controller.templates.Components', {
             scope: this,
             success: this.application.getController('Templates').removeTemplateCallback
         })
-    },
-
-    saveComponentTemplate: function( button ) {
-        var form   = button.up('form'),
-            record = form.getRecord(),
-            values = form.getValues(),
-            tab    = this.getTemplateEditor().getActiveTab(),
-			title  = tab.down( 'textfield[name="title"]' ),
-			doc    = tab.down( 'textfield[name="doc"]' ),
-			icon   = tab.down( 'textfield[name="icon"]' ),
-			ownerModel = tab.template
-
-		ownerModel.set('title', title.getValue())
-		ownerModel.set('doc', doc.getValue())
-		ownerModel.set('icon', icon.getValue())
-
-		if( !!record )
-        	record.set( values )
-
-        if( !!ownerModel ) {
-            ownerModel.save( )
-            this.application.getController('Templates').refreshTemplateStores()
-            this.refreshComponentTemplateAttributesList( tab )
-        }
-    },
-
-    resetTemplate: function( button ) {
-        var form = button.up('form'),
-            record = form.getRecord(),
-            values = form.getValues()
-
-        console.log( "Reset Template" )
     },
 
     removeComponentAttribute: function( id ) {

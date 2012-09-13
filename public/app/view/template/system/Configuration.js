@@ -16,16 +16,5 @@ Ext.define('Spelled.view.template.system.Configuration', {
 			xtype: 'systemtemplateinputlist',
 			flex: 2
 		}
-	],
-	buttons: [
-		{
-			text: 'Save',
-			action: 'saveTemplate'
-		},
-		{
-			text: 'Cancel',
-			action: 'resetTemplate'
-		}
 	]
-
 });

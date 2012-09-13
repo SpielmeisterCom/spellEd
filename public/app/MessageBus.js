@@ -25,7 +25,7 @@ Ext.define(
 		sendMessageToEngine : function( targetId, message ) {
 			var cmp = Ext.getCmp( targetId )
 
-			cmp.el.dom.contentWindow.postMessage( JSON.stringify( message ), '*' )
+			cmp.el.dom.contentWindow.postMessage( Ext.encode( message ), '*' )
 		},
 
 		isReadyToReceive : function( targetId ) {
@@ -65,8 +65,9 @@ Ext.define(
 		},
 
 		receive : function( event ) {
-			var message = JSON.parse( event.data ),
-				handler = this.handlers[ message.type ]
+			var message = Ext.decode( event.data, true )
+			if( !message ) return
+			var handler = this.handlers[ message.type ]
 
 			if( handler ) {
 				handler( message.iframeId, message.payload )

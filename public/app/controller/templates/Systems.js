@@ -40,10 +40,18 @@ Ext.define('Spelled.controller.templates.Systems', {
 
 	init: function() {
 		this.control({
+			'#TemplateEditor scripteditor': {
+				scriptchange: Ext.bind( function(){
+					var tab = this.getTemplateEditor().getActiveTab()
+
+					this.markSystemAsDirty( tab.template )
+				},this)
+			},
 			'systemtemplateedit': {
 				activate: this.refreshSystemConfiguration
 			},
 			'systemtemplateinputlist': {
+				edit: this.dirtyHelper,
 				editclick:         this.showInputListContextMenu,
 				itemcontextmenu:   this.showInputListContextMenu
 			},
@@ -51,7 +59,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 				showDocumentation: this.showDocumentation
 			},
 			'systemblueprintinputlist [action="editclick"]': {
-				click:       this.showInputListContextMenu
+				click: this.showInputListContextMenu
 			},
 
 			'systemtemplateinputlist [action="showAddInput"]' : {
@@ -62,11 +70,31 @@ Ext.define('Spelled.controller.templates.Systems', {
 			},
 			'addinputtotemplate button[action="addInput"]' : {
 				click: this.addInput
-			},
-			'systemtemplateconfiguration button[action="saveTemplate"]' : {
-				click: this.saveSystemTemplate
 			}
 		})
+
+		this.application.on( {
+			showsystemtemplateconfig: this.refreshSystemConfiguration,
+			globalsave: this.saveAllSystemScriptsInTabs,
+			scope: this
+		})
+	},
+
+	saveAllSystemScriptsInTabs: function() {
+		this.getTemplateEditor().items.each(
+			function( panel ) {
+				if( panel.getXType() === 'systemtemplateedit' ) this.application.fireEvent( 'savescriptpanel', panel )
+			},
+			this
+		)
+	},
+
+	dirtyHelper: function( editor, e ) {
+		this.markSystemAsDirty( e.record )
+	},
+
+	markSystemAsDirty: function( model ) {
+		model.setDirty()
 	},
 
 	showDocumentation: function( docString ) {
@@ -136,6 +164,7 @@ Ext.define('Spelled.controller.templates.Systems', {
         )
 
         systemTemplate.getInput().add( inputDefinition )
+		systemTemplate.setDirty()
 
         this.refreshSystemTemplateInputList( tab )
         window.close()
@@ -148,6 +177,7 @@ Ext.define('Spelled.controller.templates.Systems', {
             input              = store.getById( id )
 
         systemTemplate.getInput().remove( input )
+		systemTemplate.setDirty()
         store.remove( input )
 
         this.refreshSystemTemplateInputList( tab )
@@ -234,29 +264,5 @@ Ext.define('Spelled.controller.templates.Systems', {
             }
         )
         view.show()
-    },
-
-    saveSystemTemplate: function( button ) {
-        var panel  = button.up('panel'),
-            form   = panel.down('form'),
-            values = form.getValues(),
-			grid   = panel.down('systemtemplateinputlist'),
-			scriptsPanel = this.getTemplateEditor().getActiveTab(),
-			ownerModel   = this.getTemplateEditor().getActiveTab().template
-
-        ownerModel.set( values )
-
-        if( !!ownerModel ) {
-			this.application.getController('Scripts').saveScriptInPanel( scriptsPanel )
-
-            ownerModel.save( {
-				callback: function() {
-					this.application.getController('Templates').refreshTemplateStores()
-					grid.getStore().commitChanges()
-				},
-				scope: this
-			})
-        }
-
     }
 });

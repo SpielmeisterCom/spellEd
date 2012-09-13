@@ -66,5 +66,9 @@ Ext.define('Spelled.model.template.Entity', {
 		}
 
 		return helperFunction( this )
+	},
+
+	isDirty: function() {
+		return this.dirty
 	}
 });

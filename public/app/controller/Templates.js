@@ -50,8 +50,6 @@ Ext.define('Spelled.controller.Templates', {
     ],
 
     init: function() {
-		var me = this
-
         this.control({
             'templatesnavigator': {
                 activate: this.showTemplateEditor
@@ -60,9 +58,7 @@ Ext.define('Spelled.controller.Templates', {
 				tabchange: this.openTabTemplate
 			},
 			'templateeditor tab': {
-				beforeclose: function() {
-					me.getRightPanel().removeAll()
-				}
+				beforeclose: this.checkIfTemplateIsDirty
 			},
 			'templatestreelist button[action="showCreateTemplate"]': {
 				click: this.showCreateTemplate
@@ -82,6 +78,32 @@ Ext.define('Spelled.controller.Templates', {
             }
         })
     },
+
+	checkIfTemplateIsDirty: function( tab ) {
+		var panel = this.application.findTabByTitle( this.getTemplateEditor(), tab.text )
+		if( !panel ) return
+
+		var template = panel.template
+		if( template.isDirty() ) {
+			var callback =  Ext.bind(
+				function( button ) {
+					if ( button === 'yes') this.closeTemplateTab( panel )
+					else if ( button === 'no' ) this.closeTemplateTab( panel )
+				},
+				this
+			)
+
+			this.application.dirtySaveAlert( template, callback )
+			return false
+		} else {
+			this.closeTemplateTab( panel )
+		}
+	},
+
+	closeTemplateTab: function( panel ) {
+		panel.destroy()
+		this.getRightPanel().removeAll()
+	},
 
 	addDisabledTemplateHeader: function( view ) {
 		view.insert( 0,{
@@ -106,11 +128,11 @@ Ext.define('Spelled.controller.Templates', {
 		switch( record.get('cls') ) {
 			case this.TEMPLATE_TYPE_ENTITY:
 				this.getRightPanel().removeAll()
-				this.application.getController('templates.Entities').showEntityTemplateComponentsListHelper( record.getId() )
+				this.application.fireEvent( 'showtemplatecomponents', record.getId() )
 				break
 			case this.TYPE_ENTITY_COMPOSITE:
 				this.getRightPanel().removeAll()
-				this.application.getController('templates.Entities').showEntityCompositeComponentsListHelper( record )
+				this.application.fireEvent( 'showcompositecomponents', record )
 				break
 			case this.TEMPLATE_TYPE_SYSTEM:
 				this.getRightPanel().removeAll()
@@ -119,7 +141,7 @@ Ext.define('Spelled.controller.Templates', {
 
 				var tab = this.application.findActiveTabByTitle( this.getTemplateEditor(), template.getFullName() )
 				if( tab ) {
-					this.application.getController('templates.Systems').refreshSystemConfiguration( tab )
+					this.application.fireEvent( 'showsystemtemplateconfig', tab )
 				}
 
 				break

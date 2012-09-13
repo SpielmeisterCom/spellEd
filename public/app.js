@@ -169,20 +169,23 @@ require(
 					)
 				},
 
-				findActiveTabByTitle: function( tabPanel, title ) {
+				findTabByTitle: function( tabPanel, title ) {
 					var foundPanel = undefined
-
-					//looking for hidden tabs. returning if we found one
 					tabPanel.items.each(
 						function( panel ) {
 							if( panel.title === title ) {
 								foundPanel = panel
-								tabPanel.setActiveTab( foundPanel )
 								return foundPanel
 							}
 						}
 					)
 
+					return foundPanel
+				},
+
+				findActiveTabByTitle: function( tabPanel, title ) {
+					var foundPanel = this.findTabByTitle( tabPanel, title )
+					if( foundPanel ) tabPanel.setActiveTab( foundPanel )
 					return foundPanel
 				},
 
@@ -252,6 +255,23 @@ require(
 						function( storeId ) {
 							Ext.getStore( storeId ).getProxy().setExtraParam( name, value )
 						}
+					)
+				},
+
+				dirtySaveAlert: function( model, callback ) {
+					Ext.Msg.confirm(
+						'You have unsaved changed',
+						'Do you want to save the changes?',
+						function( button ) {
+							if ( button === 'yes') {
+								model.save()
+								//this.application.fireEvent( 'globalsave' )
+							} else if ( button === 'no' ) {
+								this.fireEvent( 'revertModel', model )
+							}
+							callback( button )
+						},
+						this
 					)
 				},
 

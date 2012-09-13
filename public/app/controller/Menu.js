@@ -501,7 +501,7 @@ Ext.define('Spelled.controller.Menu', {
     },
 
     saveProject: function() {
-        this.application.getController('Projects').saveActiveProject()
+        this.application.fireEvent( 'globalsave' )
     },
 
 	exportProject: function() {

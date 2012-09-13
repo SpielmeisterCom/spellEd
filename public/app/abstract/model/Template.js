@@ -31,6 +31,10 @@ Ext.define('Spelled.abstract.model.Template', {
         return this.get('templateId')
 	},
 
+	isDirty: function() {
+		return this.dirty
+	},
+
 	getDocumentationName: function() {
 		return this.get('type').replace(/([a-z])([A-Z])/, "$1_$2").toLowerCase() + "_" + this.getFullName().replace( /\./g, "_")
 	}

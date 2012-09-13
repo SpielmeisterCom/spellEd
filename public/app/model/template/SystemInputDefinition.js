@@ -15,6 +15,11 @@ Ext.define('Spelled.model.template.SystemInputDefinition', {
 		setterName: 'setSystem'
     }],
 
+	setDirty: function() {
+		this.getSystem().setDirty()
+		this.callParent()
+	},
+
     constructor: function() {
         this.callParent(arguments)
         Ext.getStore( 'template.SystemInputDefinitions' ).add( this )

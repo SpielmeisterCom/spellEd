@@ -21,6 +21,10 @@ Ext.define('Spelled.controller.Scripts', {
     ],
 
     refs: [
+		{
+			ref: 'ScriptEditor',
+			selector: '#ScriptEditor'
+		},
         {
             ref : 'MainPanel',
             selector: '#MainPanel'
@@ -38,6 +42,8 @@ Ext.define('Spelled.controller.Scripts', {
     init: function() {
         this.control({
 			'scripteditor': {
+				beforeclose: this.checkIfScriptIsDirty,
+				save: this.globalSaveHelper,
 				activate: this.refreshAceEditorContent,
 				render:   this.addAceEditor
 			},
@@ -58,7 +64,43 @@ Ext.define('Spelled.controller.Scripts', {
                 click: this.createScript
             }
         })
+
+		this.application.on( {
+				'globalsave' : this.saveAllScriptsInTabs,
+				'savescriptpanel' : this.saveScriptInPanel,
+				scope: this
+			}
+		)
     },
+
+	saveAllScriptsInTabs: function() {
+		this.getScriptEditor().items.each(
+			function( panel ) {
+				this.saveScriptInPanel( panel )
+			},
+			this
+		)
+	},
+
+	checkIfScriptIsDirty: function( panel ) {
+		var script = panel.model
+
+		if( script.dirty ) {
+			var callback = function( button ) {
+				if ( button === 'yes') panel.destroy()
+				else if ( button === 'no' ) panel.destroy()
+			}
+
+			this.application.dirtySaveAlert( script, callback )
+			return false
+		} else {
+			panel.destroy()
+		}
+	},
+
+	globalSaveHelper: function() {
+		this.application.fireEvent( 'globalsave' )
+	},
 
 	openSceneScript: function(  ) {
 		var sceneScriptView = this.getRightPanel().down( 'scenescript' )
@@ -82,30 +124,17 @@ Ext.define('Spelled.controller.Scripts', {
 	},
 
 	saveScriptInPanel: function( panel ) {
-		panel.model.set( 'content', panel.aceEditor.getSession().getValue() )
-		panel.model.save()
+		var model = panel.model
+		if( model.dirty ) model.save()
 	},
 
 	addAceEditor: function( panel ) {
-		var me = this
-
 		panel.aceEditor = Ext.amdModules.ace.edit( panel.id )
 
-		var JavaScriptMode = Ext.amdModules.aceModeJavascript.Mode;
-		panel.aceEditor.getSession().setMode( new JavaScriptMode() );
+		var JavaScriptMode = Ext.amdModules.aceModeJavascript.Mode
+		panel.aceEditor.getSession().setMode( new JavaScriptMode() )
 
-		panel.aceEditor.setTheme( Ext.amdModules.aceThemePastelOnDark );
-
-		panel.aceEditor.commands.addCommand( {
-			name: 'saveCommand',
-			bindKey: {
-				win: 'Ctrl-S',
-				mac: 'Command-S'
-			},
-			exec: function() {
-				me.saveScriptInPanel( panel )
-			}
-		} );
+		panel.aceEditor.setTheme( Ext.amdModules.aceThemePastelOnDark )
 
 		panel.refreshContent()
 	},

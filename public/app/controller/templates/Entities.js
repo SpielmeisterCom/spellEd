@@ -32,13 +32,16 @@ Ext.define('Spelled.controller.templates.Entities', {
 
     init: function() {
         this.control({
-            'entitycomponentslist button[action="saveTemplateEntity"]' : {
-                click: this.saveEntityTemplate
-			},
 			'addentitytotemplate button[action="addEntityToTemplate"]' : {
 				click: this.addEntityToTemplate
 			}
         })
+
+		this.application.on( {
+			showtemplatecomponents : this.showEntityTemplateComponentsListHelper,
+			showcompositecomponents: this.showEntityCompositeComponentsListHelper,
+			scope: this
+		})
     },
 
 	openTemplate: function( entityTemplate ) {
@@ -131,24 +134,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 		if( !!entity.isReadonly && entity.isReadonly() ) {
 			view.disable()
 			this.application.getController( 'Templates' ).addDisabledTemplateHeader( view )
-		} else {
-
-			view.addDocked(
-				{
-					xtype: 'toolbar',
-					dock: 'bottom',
-					ui: 'footer',
-					items: [{
-						xtype: 'button',
-						icon: 'images/icons/table_refresh.png',
-						text: 'Save',
-						action: 'saveTemplateEntity',
-						dock: 'bottom'
-					}]
-				}
-			)
 		}
-
 	},
 
 	removeEntityCompositeNode: function( node ) {
@@ -175,19 +161,5 @@ Ext.define('Spelled.controller.templates.Entities', {
             scope: this,
             success: this.application.getController('Templates').removeTemplateCallback
         })
-    },
-
-    saveEntityTemplate: function( button ) {
-        var panel      = button.up('entitycomponentslist'),
-            ownerModel = panel.entity
-
-        if( !!ownerModel ) {
-			if( !!ownerModel.isTemplateComposite && ownerModel.isTemplateComposite() ) {
-				ownerModel = ownerModel.getOwner()
-			}
-
-			ownerModel.save( )
-        }
-
     }
 });
