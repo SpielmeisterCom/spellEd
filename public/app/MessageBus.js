@@ -51,13 +51,12 @@ Ext.define(
 
 			if( !queue ) return
 
-			var me = this
-
 			Ext.each(
 				queue.messages,
 				function( message ) {
-					me.sendMessageToEngine( targetId, message )
-				}
+					this.sendMessageToEngine( targetId, message )
+				},
+				this
 			)
 
 			queue.initialized = true

@@ -142,6 +142,25 @@ Ext.define('Spelled.controller.Scenes', {
 								payload : me.application.getActiveScene().get( 'showGrid' )
 							}
 						)
+
+						me.engineMessageBus.send(
+							sourceId,
+							{
+								type : "spelled.debug.simulateScreenAspectRatio",
+								payload : {
+									aspectRatio:  me.application.getActiveScene().get( 'aspectRatio' )
+								}
+							}
+						)
+
+						me.engineMessageBus.send(
+							sourceId,
+							{
+								type : "spelled.debug.drawTitleSafeOutline",
+								payload : me.application.getActiveScene().get( 'showTitleSafe' )
+							}
+						)
+
 					},
 					'spell.debug.consoleMessage' : function( sourceId, payload ) {
 						Spelled.Logger.log( payload.level, payload.text )
@@ -200,7 +219,10 @@ Ext.define('Spelled.controller.Scenes', {
 
 	changeAspectRatio: function( field, newValue, oldValue ) {
 		var sceneEditor = this.getSceneEditor(),
+			scene = this.application.getActiveScene(),
 			iframe      = sceneEditor.getActiveTab().down( 'spellediframe' )
+
+		scene.set( 'aspectRatio', newValue )
 
 		this.engineMessageBus.send(
 			iframe.getId(),
