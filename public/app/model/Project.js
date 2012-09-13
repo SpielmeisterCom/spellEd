@@ -77,6 +77,7 @@ Ext.define('Spelled.model.Project', {
     fields: [
         'name',
         'startScene',
+		{ name: 'config', type: 'object', defaultValue: {} },
 		{ name: 'assetIds'   , type: 'array', defaultValue: [] },
 		{ name: 'templateIds', type: 'array', defaultValue: [] }
 	],
