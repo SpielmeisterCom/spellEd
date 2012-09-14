@@ -126,8 +126,7 @@ define(
 				spellBuildServerWrapper( "initDirectory", payload, req, res )
 			}
 
-			var spellBuildServerWrapper = function( method, payload, req, res) {
-
+			var spellBuildServerWrapper = function( method, payload, req, res ) {
 				var post_data = {
 						action : "ProjectActions",
 						method : method,
@@ -142,25 +141,28 @@ define(
 					'Content-Length': dataAsString.length
 				}
 
-				var post_req = http.request( buildServerOptions, function( response ) {
-					response.setEncoding('utf8')
+				var post_req = http.request(
+					buildServerOptions,
+					function( response ) {
+						response.setEncoding( 'utf8' )
 
-					var data = ''
-					response.on( 'data', function ( chunk) {
-						data += chunk
-					})
+						var data = ''
 
-					response.on('end', function () {
-						var responseData = _.clone( post_data )
-						responseData.result = [ data ]
-						writeResponse( 200, res, JSON.stringify( responseData ) )
-					})
+						response.on( 'data', function ( chunk ) {
+							data += chunk
+						} )
 
-				})
+						response.on( 'end', function () {
+							var responseData = _.clone( post_data )
+							responseData.result = [ data ]
+							writeResponse( 200, res, JSON.stringify( responseData ) )
+						} )
+					}
+				)
 
-				post_req.on('error', function() {
+				post_req.on( 'error', function() {
 					writeResponse( 503, res )
-				})
+				} )
 
 				// post the data
 				post_req.write( dataAsString )

@@ -147,7 +147,7 @@ Ext.define('Spelled.controller.Projects', {
 
 	exportActiveProject: function() {
 		var project        = this.application.getActiveProject(),
-			exportFileName = project.get('name') +".tar",
+			exportFileName = project.get('name') +".zip",
 			me             = this
 
 		Spelled.SpellBuildActions.exportDeployment(
@@ -155,7 +155,12 @@ Ext.define('Spelled.controller.Projects', {
 			exportFileName,
 			function( provider, response ) {
 				if( !!response.data ) {
-					window.location = '/' + exportFileName
+					// WORKAROUND: delaying the download a little bit to mitigate asynchronous race condition
+					var task = new Ext.util.DelayedTask( function() {
+						window.location = '/' + exportFileName
+					} )
+
+					task.delay( 5000 )
 
 				} else {
 					me.application.showBuildServerConnectError()
