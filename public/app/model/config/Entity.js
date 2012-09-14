@@ -232,7 +232,7 @@ Ext.define('Spelled.model.config.Entity', {
 			entityTemplate.getChildren().each(
 				function( entity ) {
 					var index = children.findBy( function( item ) {
-						/TODO: change it
+						//TODO: change it
 						return ( item.get('name') === entity.get('name') )
 					})
 
