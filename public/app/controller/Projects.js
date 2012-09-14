@@ -133,9 +133,9 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
     showLoadProject: function( ) {
-        var View = this.getProjectLoadView()
+        var View = this.getProjectLoadView(),
+			view = new View()
 
-        var view = new View()
         view.show()
     },
 
@@ -179,6 +179,7 @@ Ext.define('Spelled.controller.Projects', {
 
 	prepareStores: function( projectName ) {
 		var app = this.application
+		app.fireEvent( 'clearstores' )
 		app.setExtraParamOnProxies( 'projectName', projectName )
 	},
 
@@ -233,14 +234,14 @@ Ext.define('Spelled.controller.Projects', {
 		Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Scenes') )
 
 		var tree       = this.getScenesTree(),
-			firstScene = project.getScenes().first(),
-			node       = tree.getRootNode().findChild( 'id', firstScene.get( 'name' ), true )
+			startScene = project.getScenes().getById( project.get( 'startScene' ) ),
+			node       = tree.getRootNode().findChild( 'id', startScene.get( 'name' ), true )
 
 		tree.getSelectionModel().select( node )
 		tree.expandPath( node.getPath() )
 
 
-		this.application.getController( 'Scenes' ).renderScene( firstScene )
+		this.application.getController( 'Scenes' ).renderScene( startScene )
 	},
 
 	closeAllTabsFromProject: function() {

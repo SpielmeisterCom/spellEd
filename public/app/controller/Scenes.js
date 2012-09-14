@@ -215,6 +215,15 @@ Ext.define('Spelled.controller.Scenes', {
 				select: this.setSceneScript
 			}
 		})
+
+		this.application.on({
+			clearstores: this.clearScenesStore,
+			scope: this
+		})
+	},
+
+	clearScenesStore: function() {
+		this.getConfigScenesStore().removeAll()
 	},
 
 	changeAspectRatio: function( field, newValue, oldValue ) {
@@ -428,10 +437,11 @@ Ext.define('Spelled.controller.Scenes', {
 		var project = this.application.getActiveProject(),
 			Model   = this.getConfigSceneModel(),
 			store   = this.getConfigScenesStore(),
-			scene   = new Model( values)
+			scene   = new Model( values )
 
 		store.add( scene )
 		project.getScenes().add( scene )
+		scene.setProject( project )
 		this.initScene( scene )
 
 		scene.appendOnTreeNode( this.getScenesTree().getRootNode() )

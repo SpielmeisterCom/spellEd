@@ -90,10 +90,6 @@ Ext.define('Spelled.model.Project', {
         associationKey: 'scenes'
     },
 
-    getConfigName: function() {
-        return 'project.json'
-    },
-
 	checkForComponentChanges: function() {
 
 		var checkEntity = function( entity ) {
