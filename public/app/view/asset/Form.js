@@ -75,6 +75,9 @@ Ext.define('Spelled.view.asset.Form', {
 		},{
 			xtype: 'textappearanceconfig',
 			hidden: true
+		},{
+			xtype: 'keytoactionconfig',
+			hidden: true
 		}
 	],
 

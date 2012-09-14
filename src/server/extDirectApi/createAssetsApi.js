@@ -25,9 +25,9 @@ define(
             var util = createUtil( root )
 
 			var getAssetConfigFromPayload = function( payload ) {
-				var result = _.pick( payload, 'name', 'type' ),
-					folder      = getFolder( payload),
-					namespace   = ( _.has( payload, 'namespace') ) ? payload.namespace : util.extractNamespaceFromPath( folder, assetPathPart ),
+				var result       = _.pick( payload, 'name', 'type' ),
+					folder       = getFolder( payload),
+					namespace    = ( _.has( payload, 'namespace') ) ? payload.namespace : util.extractNamespaceFromPath( folder, assetPathPart ),
 					configObject = ( _.has( payload, 'config' ) ) ? payload.config : payload
 
 				result.namespace = namespace
@@ -49,6 +49,8 @@ define(
 					result.config.baseline = parseInt( configObject.baseline )
 					result.config.charset  = JSON.parse( configObject.charset )
 					result.config.spacing  = parseInt( configObject.spacing )
+				} else if( result.type === 'keyToActionMap' ) {
+					result.config = JSON.parse( configObject.keyToActionMappings )
 				}
 
 				return result
@@ -74,7 +76,7 @@ define(
 					var extension = mime.extension( Asset.file.type ),
 						baseName  = assetName +"." + extension,
 						filePath  = newFileNameWithoutExtension + "." + extension,
-						fileName   = ( namespace.length > 0 ) ? namespace + "/" + baseName : baseName
+						fileName  = ( namespace.length > 0 ) ? namespace + "/" + baseName : baseName
 
 					fs.renameSync( Asset.file.path, filePath )
 					result.file = fileName
@@ -106,18 +108,16 @@ define(
             }
 
             var updateAsset = function( req, res, payload, next ) {
-				var asset     = payload[ 0 ]
-
-				var result = getAssetConfigFromPayload( asset )
+				var asset  = payload[ 0 ],
+					result = getAssetConfigFromPayload( asset )
 
 				if( !!asset.file )
 					result.file = asset.file
 
-
 				if( asset.type === 'font' ) {
-					var data          = asset.config.fontCanvas.replace(/^data:image\/\w+;base64,/, ""),
-						buf           = new Buffer(data, 'base64'),
-						filePath      = path.dirname( asset.id ) + "/" + path.basename( asset.file )
+					var data     = asset.config.fontCanvas.replace(/^data:image\/\w+;base64,/, ""),
+						buf      = new Buffer(data, 'base64'),
+						filePath = path.dirname( asset.id ) + "/" + path.basename( asset.file )
 
 					util.writeFile( filePath, buf, false )
 				}

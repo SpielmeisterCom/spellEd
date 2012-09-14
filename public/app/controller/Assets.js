@@ -14,6 +14,7 @@ Ext.define('Spelled.controller.Assets', {
 		'asset.create.SpriteSheet',
 		'asset.create.Animation',
 		'asset.create.Font',
+		'asset.create.KeyToActionMap',
 		'asset.edit.Edit',
 		'asset.inspector.Config'
     ],
@@ -27,6 +28,7 @@ Ext.define('Spelled.controller.Assets', {
 		'asset.Fonts',
 		'asset.SpriteSheets',
 		'asset.Animations',
+		'asset.ActionKeys',
 		'asset.KeyToActionMappings',
 		'asset.Assets'
     ],
@@ -54,7 +56,7 @@ Ext.define('Spelled.controller.Assets', {
 			'editasset button[action="editAsset"]' : {
 				click: this.editAsset
 			},
-			'spritesheetconfig > tool-documentation, animationassetconfig > tool-documentation, textappearanceconfig > tool-documentation': {
+			'keytoactionconfig > tool-documentation, spritesheetconfig > tool-documentation, animationassetconfig > tool-documentation, textappearanceconfig > tool-documentation': {
 				showDocumentation: this.showDocumentation
 			},
             'assetsnavigator': {
@@ -79,9 +81,41 @@ Ext.define('Spelled.controller.Assets', {
             },
 		    'textappearanceconfig field' : {
 				change: this.refreshFontPreview
+			},
+			'keytoactionconfig': {
+				editclick:         this.showKeyMappingContextMenu
+			},
+			'keytoactionconfig gridpanel': {
+				itemcontextmenu:   this.showKeyMappingContextMenu
+			},
+			'keytoactionconfig button[action="addKeyMapping"]': {
+				click: this.addKeyMapping
 			}
         })
+
+		this.application.on({
+			'removekeymapping': this.removeKeyMapping,
+			scope: this
+		})
     },
+
+	removeKeyMapping: function( view, selectedRow ) {
+		var store = view.getStore()
+		if( Ext.isObject( selectedRow ) ) store.remove( selectedRow )
+		else store.removeAt( selectedRow )
+	},
+
+	showKeyMappingContextMenu: function( view, row, column, index, e, options ) {
+		this.application.fireEvent( 'showkeymappingcontextmenu', view, row, column, index, e, options )
+	},
+
+	addKeyMapping: function( button ) {
+		var grid  = button.up( 'keytoactionconfig' ).down( 'gridpanel' ),
+			store = grid.getStore()
+
+		store.add( { key: "LEFT_ARROW", action: "Default" } )
+		grid.reconfigure( store )
+	},
 
 	refreshFontPreview: function( field ) {
 		var form       = field.up( 'form' ),
@@ -114,12 +148,14 @@ Ext.define('Spelled.controller.Assets', {
 			fileUpload  = form.down('filefield[name="asset"]'),
 			spriteSheetConfig    = form.down('spritesheetconfig'),
 			animationAssetConfig = form.down('animationassetconfig'),
-			textAssetConfig      = form.down('textappearanceconfig')
+			textAssetConfig      = form.down('textappearanceconfig'),
+			keyToActionMapConfig = form.down('keytoactionconfig')
 		//Resetting defaults
 		assetsCombo.hide()
 		spriteSheetConfig.hide()
 		animationAssetConfig.hide()
 		textAssetConfig.hide()
+		keyToActionMapConfig.hide()
 		fileUpload.hide()
 		fileUpload.reset()
 		assetsCombo.clearValue()
@@ -174,6 +210,25 @@ Ext.define('Spelled.controller.Assets', {
 				spriteSheetConfig.show()
 				fileUpload.show()
 				break
+			case "keyToActionMap":
+				keyToActionMapConfig.show()
+				if( !!asset ) {
+					var grid   = keyToActionMapConfig.down('gridpanel'),
+						store  = grid.getStore(),
+						config = asset.get('config')
+
+					store.removeAll()
+					Ext.Object.each(
+						config,
+						function( key, value, myself ) {
+							store.add( { key: key, action: value } )
+						}
+					)
+
+					keyToActionMapConfig.down('gridpanel').reconfigure( store )
+				}
+
+				break
 			default:
 				fileUpload.show()
 		}
@@ -198,14 +253,15 @@ Ext.define('Spelled.controller.Assets', {
 			record  = form.getRecord(),
 			values  = form.getValues()
 
-		if( !!values.fontFamily ) {
-			var result = this.createFontMap( values )
+		if( !!values.fontFamily && record.get( 'type' ) === 'font') {
+			var result        = this.createFontMap( values )
 			values.fontCanvas = result.imageDataUrl
 			values.charset    = Ext.encode( result.charset )
 			values.baseline   = result.baseline
 		}
 
-		record.set( 'config', values )
+		if( record.get( 'type' ) === 'keyToActionMap' ) record.set( 'config', { keyToActionMappings: this.getKeyMappings( window )} )
+		else record.set( 'config', values )
 
 		record.save()
 
@@ -254,14 +310,18 @@ Ext.define('Spelled.controller.Assets', {
 			case 'text':
 				view.docString = '#!/guide/asset_type_text_appearance'
 				break
+			case 'keyToActionMap':
+				view.docString = '#!/guide/asset_type_key_to_action_map'
+				break
 		}
 
 		inspectorPanel.add( view )
 	},
 
 	showAdditionalConfiguration: function( combo ) {
-		var form        = combo.up('form')
-
+		var form = combo.up('form')
+//		assetfolderpicker = form.down( 'assetfolderpicker' )
+//		assetfolderpicker.getStore().setRootNode( this.application.getActiveProject().get('name') )
 		this.fieldRenderHelper( combo.getValue(), form )
 	},
 
@@ -285,6 +345,15 @@ Ext.define('Spelled.controller.Assets', {
 		return fontGenerator.create( settings, debug )
 	},
 
+	getKeyMappings: function( window ) {
+		var grid  = window.down( 'grid' ),
+			store = grid.getStore(),
+			keyToActionMappings = {}
+
+		store.each(	function( item ) { keyToActionMappings[ item.get( 'key' ) ] = item.get( 'action' ) } )
+		return Ext.encode( keyToActionMappings )
+	},
+
     createAsset: function( button ) {
         var form    = button.up('form').getForm(),
             window  = button.up( 'window' ),
@@ -303,6 +372,8 @@ Ext.define('Spelled.controller.Assets', {
 				additionalParams.fontCanvas = result.imageDataUrl
 				additionalParams.charset    = Ext.encode( result.charset )
 				additionalParams.baseline   = result.baseline
+			} else if( values.type === "keyToActionMap" ){
+				additionalParams.keyToActionMappings = this.getKeyMappings( window )
 			}
 
             form.submit(
@@ -313,8 +384,6 @@ Ext.define('Spelled.controller.Assets', {
                         Ext.bind(
                             function( fp, o ) {
                                 Ext.Msg.alert('Success', 'Your asset "' + o.result.data.name + '" has been uploaded.')
-
-
 
                                 this.refreshStoresAndTreeStores( true )
 

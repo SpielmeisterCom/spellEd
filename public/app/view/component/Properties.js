@@ -50,9 +50,5 @@ Ext.define('Spelled.view.component.Properties', {
 			cellEditorConfig = { field: { xtype: type, value: value, initialValue: attribute.initialValue } }
 
 		this.customEditors[ key ] = new Ext.grid.CellEditor( cellEditorConfig )
-	},
-
-	getAssetIdType: function( assetId ) {
-		return assetId.split( ':').shift()
 	}
 });

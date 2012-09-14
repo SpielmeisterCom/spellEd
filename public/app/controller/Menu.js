@@ -13,6 +13,7 @@ Ext.define('Spelled.controller.Menu', {
 		'menu.contextmenu.templatesList.Entity',
         'menu.contextmenu.ComponentTemplateAttributesList',
         'menu.contextmenu.SystemTemplateInputList',
+		'menu.contextmenu.KeyToActionMapping',
 		'doc.Tool',
         'ui.SpelledConsole',
 		'ui.SpelledRightPanel',
@@ -190,8 +191,18 @@ Ext.define('Spelled.controller.Menu', {
             },
             'sceneslistcontextmenu [action="render"]': {
                 click: this.renderScene
-            }
+            },
+
+
+			'keytoactionmappingcontextmenu [action="remove"]': {
+				click: this.removeKeyMapping
+			}
         })
+
+		this.application.on({
+			'showkeymappingcontextmenu': this.showKeyToActionMappingContextMenu,
+			scope: this
+		})
     },
 
 	showEditorDocumentation: function( docString ) {
@@ -254,13 +265,6 @@ Ext.define('Spelled.controller.Menu', {
         )
     },
 
-    showEntityTemplateComponentsListContextMenu: function( e ) {
-        this.createAndShowView(
-            this.getMenuContextmenuEntityTemplateComponentsListView(),
-            e
-        )
-    },
-
     showEntitiesListContextMenu: function( entity, e ) {
 
         var view = this.createAndShowView(
@@ -291,6 +295,16 @@ Ext.define('Spelled.controller.Menu', {
             e
         )
     },
+
+	showKeyToActionMappingContextMenu: function( view, row, column, index, e, options ) {
+		var contextMenu = this.createAndShowView(
+			this.getMenuContextmenuKeyToActionMappingView(),
+			e
+		)
+
+		contextMenu.assetView   = view
+		contextMenu.selectedRow = row
+	},
 
     showCreateTemplate: function( ) {
         this.application.getController( 'Templates').showCreateTemplate()
@@ -402,6 +416,11 @@ Ext.define('Spelled.controller.Menu', {
             this.application.getController( 'templates.Systems' ).removeSystemInputDefinition( node.getId() )
 		}
     },
+
+	removeKeyMapping: function( menu ) {
+		var view = menu.parentMenu
+		this.application.fireEvent( "removekeymapping", view.assetView, view.selectedRow )
+	},
 
     removeComponentAttribute: function( ) {
         var node = this.application.getLastSelectedNode( this.getTemplateEditor().getActiveTab().down( 'componenttemplateattributeslist' ) )
