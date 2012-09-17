@@ -170,33 +170,7 @@ define(
 								fileInfo.cls  = object.type
 								fileInfo.text = object.name
 
-								if( object.type === "entityTemplate" && _.has( object, 'children') ) {
-
-									var parseChildren = function( node, entity ) {
-										if(_.has( entity, 'children' ) ) {
-											node.children = []
-											_.each( entity.children, function( child ) {
-												node.leaf = false
-												var newNode = {
-													id: node.id + child.name ,
-													text: child.name,
-													cls: "templateEntityComposite",
-													iconCls: "tree-scene-entity-icon",
-													leaf: true
-												}
-
-												newNode = parseChildren( newNode, child )
-												node.children.push( newNode )
-											})
-										}
-
-										node.iconCls = "tree-scene-entity-icon"
-
-										return node
-									}
-
-									fileInfo = parseChildren( fileInfo, object )
-								} else if( object.type === "entityTemplate" ) {
+								if( object.type === "entityTemplate" ) {
 									fileInfo.iconCls = "tree-scene-entity-icon"
 								} else if( object.type === "componentTemplate" ) {
 									fileInfo.iconCls = "tree-component-icon"

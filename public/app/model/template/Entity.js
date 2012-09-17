@@ -70,5 +70,23 @@ Ext.define('Spelled.model.template.Entity', {
 
 	isDirty: function() {
 		return this.dirty
+	},
+
+	createTreeNode: function( node ) {
+		this.getChildren().each( function( entity ) {
+			var childNode = entity.createTreeNode( node )
+			node.appendChild( childNode )
+
+			var markAsComposites = function( compositeNode ) {
+				compositeNode.eachChild( function( item ) {
+					item.set( 'cls', 'templateEntityComposite' )
+					item.set( 'id', node.get('id') + item.get('text') )
+					markAsComposites( item )
+				})
+			}
+			markAsComposites( node )
+			node.set( 'leaf', false )
+
+		})
 	}
 });
