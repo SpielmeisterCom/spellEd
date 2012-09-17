@@ -261,14 +261,12 @@ require(
 				dirtySaveAlert: function( model, callback ) {
 					Ext.Msg.confirm(
 						'You have unsaved changed',
-						'Do you want to save the changes?',
+						'Do you really want to close this tab? Your changes will be discarded.',
 						function( button ) {
 							if ( button === 'yes') {
-								model.save()
-								//this.application.fireEvent( 'globalsave' )
-							} else if ( button === 'no' ) {
 								this.fireEvent( 'revertModel', model )
 							}
+
 							callback( button )
 						},
 						this

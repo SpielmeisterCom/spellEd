@@ -88,7 +88,6 @@ Ext.define('Spelled.controller.Scripts', {
 		if( script.dirty ) {
 			var callback = function( button ) {
 				if ( button === 'yes') panel.destroy()
-				else if ( button === 'no' ) panel.destroy()
 			}
 
 			this.application.dirtySaveAlert( script, callback )

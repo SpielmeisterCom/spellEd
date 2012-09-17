@@ -88,7 +88,6 @@ Ext.define('Spelled.controller.Templates', {
 			var callback =  Ext.bind(
 				function( button ) {
 					if ( button === 'yes') this.closeTemplateTab( panel )
-					else if ( button === 'no' ) this.closeTemplateTab( panel )
 				},
 				this
 			)
