@@ -66,9 +66,9 @@ Ext.define('Spelled.controller.Scripts', {
         })
 
 		this.application.on( {
-				'globalsave' : this.saveAllScriptsInTabs,
+				'globalsave'      : this.saveAllScriptsInTabs,
 				'savescriptpanel' : this.saveScriptInPanel,
-				scope: this
+				scope : this
 			}
 		)
     },
@@ -106,19 +106,18 @@ Ext.define('Spelled.controller.Scripts', {
 
 		if( sceneScriptView ) {
 			var scriptId = sceneScriptView.down( 'combo' ).getValue(),
-				script   = this.getScriptScriptsStore().findRecord( 'name', scriptId),
+				script   = this.getScriptScriptsStore().findRecord( 'scriptId', scriptId ),
 				tree     = this.getScriptsTree(),
-				node     = tree.getRootNode().findChild( 'id', script.get('path'), true )
+				node     = tree.getRootNode().findChild( 'id', script.getId(), true )
 
 			Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Scripts') )
 
-			//TODO: find solution for asynchronous closed folders
 			if( node ) {
 				tree.expandPath( node.getPath() )
 				tree.getSelectionModel().select( node )
 			}
 
-			this.openScript( scriptId )
+			this.openScript( script.getId() )
 		}
 	},
 
@@ -144,19 +143,11 @@ Ext.define('Spelled.controller.Scripts', {
 
     removeScript: function( scriptId ) {
         var editorTab = Ext.getCmp("ScriptEditor"),
-			Script = this.getScriptModel()
+			script    = this.getScriptScriptsStore().getById( scriptId )
 
-        Script.load(
-            scriptId,
-            {
-                scope: this,
-                success: function( script ) {
-                    this.application.closeOpenedTabs( editorTab, script.get('name') )
-                    script.destroy()
-					this.refreshStores()
-                }
-            }
-        )
+		this.application.closeOpenedTabs( editorTab, script.get('name') )
+		script.destroy()
+		this.refreshStores()
     },
 
     openScriptHelper: function( treePanel, record ) {
@@ -167,29 +158,22 @@ Ext.define('Spelled.controller.Scripts', {
 
 	openScript: function( scriptId ) {
 		var scriptEditor = Ext.getCmp('ScriptEditor'),
-			script       = this.getScriptScriptsStore().findRecord( 'path', scriptId ),
-			Script 		 = this.getScriptModel()
+			script       = this.getScriptScriptsStore().getById( scriptId )
 
 		if( script ) {
-			var foundTab = this.application.findActiveTabByTitle( scriptEditor, script.get('name') )
+			var foundTab = this.application.findActiveTabByTitle( scriptEditor, script.get( 'scriptId' ) )
 
 			if( foundTab )
 				return foundTab
+
+			var View = this.getScriptEditorView()
+			var view = View.create( {
+				title: script.get('scriptId'),
+				model: script
+			} )
+
+			this.application.createTab( scriptEditor, view )
 		}
-
-		Script.load( scriptId, {
-			scope: this,
-			success: function( script ) {
-
-				var View = this.getScriptEditorView()
-				var view = View.create( {
-					title: script.get('name'),
-					model: script
-				} )
-
-				this.application.createTab( scriptEditor, view )
-			}
-		})
 	},
 
     showCreateScript: function() {
@@ -200,32 +184,41 @@ Ext.define('Spelled.controller.Scripts', {
 
     createScript: function( button ) {
         var window = button.up( 'window' ),
+			me     = this,
             form   = window.down('form').getForm(),
-            projectName = this.application.getActiveProject().get('name')
-
+			Script = this.getScriptModel(),
+			values = form.getValues(),
+			content = {
+				name: values.name,
+				namespace: ( values.folder === 'root' ) ? '' : values.folder,
+				type: 'script'
+			},
+		//TODO: refactor this
+			id     = this.application.getActiveProject().get('name') + "/library/scripts/" + (( content.namespace.length > 0 ) ? content.namespace +"."+ content.name : content.name)
+//TODO maybe i can use Proxies create function
         if( form.isValid() ){
-            form.submit(
-                {
-                    params: {
-                        projectName: projectName
-                    },
-                    waitMsg: 'Creating a new Script',
-                    success:
-                        Ext.bind(
-                            function( form, action ) {
-                                Ext.Msg.alert('Success', 'Your Script "' + action.result.data.name + '" has been created.')
-                                this.refreshStoresAndTreeStores( true )
+			Spelled.StorageActions.create(
+				{ id: id + ".js", content: content },
+				function() {
+					Spelled.StorageActions.create(
+						{ id: id + ".json", content: content },
+						function( scriptId ) {
+							Script.load(
+								scriptId,
+								{
+									success: function( script ) {
+										Ext.Msg.alert('Success', 'Your Script "' + script.get( 'scriptId' ) + '" has been created.')
+										me.refreshStoresAndTreeStores( true )
 
-                                window.close()
-                            },
-                            this
-                        ),
-                    failure: function( form, action ) {
-                        Ext.Msg.alert('Failed', action.result)
-                    }
-                }
-            )
-        }
+										window.close()
+									}
+								}
+							)
+						}
+					)
+				}
+			)
+		}
     },
 
     showListContextMenu: function( view, record, item, index, e, options ) {

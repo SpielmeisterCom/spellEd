@@ -11,10 +11,5 @@ Ext.define('Spelled.store.script.FoldersTree', {
 				})
 			)
 		}
-	},
-
-    root: {
-        text: "Scripts",
-        expanded: true
-    }
+	}
 });

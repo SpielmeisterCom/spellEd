@@ -5,12 +5,12 @@ define(
 		'http',
         'fs',
         'server/extDirectApi/createUtil',
+		'server/extDirectApi/createStorageApi',
         'server/extDirectApi/templates/createComponentApi',
         'server/extDirectApi/templates/createEntityApi',
         'server/extDirectApi/templates/createSystemApi',
 		'server/extDirectApi/templates/entityTemplateFormatter',
         'server/extDirectApi/createAssetsApi',
-        'server/extDirectApi/createScriptsApi',
         'server/extDirectApi/ProjectApi',
 
         'underscore'
@@ -20,12 +20,12 @@ define(
 		http,
         fs,
         createUtil,
+		createStorageApi,
         createComponentApi,
         createEntityApi,
         createSystemApi,
 		entityTemplateFormatter,
         createAssetsApi,
-        createScriptsApi,
         createProjectApi,
 
         _
@@ -181,12 +181,12 @@ define(
 			}
 
             return {
+				StorageActions           : createStorageApi( projectsRoot ),
                 ProjectActions           : createProjectApi( projectsRoot ) ,
                 ComponentTemplateActions : createComponentApi( projectsRoot ),
                 EntityTemplateActions    : createEntityApi( projectsRoot ),
                 AssetsActions            : createAssetsApi( projectsRoot ),
                 SystemTemplateActions    : createSystemApi( projectsRoot ),
-                ScriptsActions           : createScriptsApi( projectsRoot ),
 				SpellBuildActions : [
 					{
 						name: "initDirectory",

@@ -4,11 +4,6 @@ Ext.define('Spelled.store.TemplatesTree', {
     root: {
         expanded: true
     },
-    proxy: {
-        type: 'direct',
-        directFn: Spelled.TemplatesActions.getTree,
-        paramOrder: [ 'node', 'projectName' ]
-    },
 	listeners: {
 		load: function( store, node ) {
 			this.parseNode( node )

@@ -1,18 +1,57 @@
 Ext.define('Spelled.model.Script', {
     extend: 'Ext.data.Model',
+	mixins: ['Spelled.abstract.model.Model'],
     proxy: {
         type: 'direct',
+		extraParams: {
+			type: 'script'
+		},
         api: {
-            create:  Spelled.ScriptsActions.create,
-            read:    Spelled.ScriptsActions.read,
-            update:  Spelled.ScriptsActions.update,
-            destroy: Spelled.ScriptsActions.destroy
-        }
+            create:  Spelled.StorageActions.create,
+            read:    Spelled.StorageActions.read,
+            update:  Spelled.StorageActions.update,
+            destroy: Spelled.StorageActions.destroy
+        },
+		writer: {
+			type: 'script'
+		},
+		reader: {
+			type: 'script'
+		}
     },
+
+	destroy: function( options ) {
+		Spelled.StorageActions.destroy({ id: this.getAccordingJSFileName() } )
+
+		this.callParent( options )
+	},
+
+	listeners: {
+		idchanged: function() {
+			Spelled.StorageActions.read( { id: this.getAccordingJSFileName() },
+				function( result ) {
+					this.set( 'path', this.getAccordingJSFileName() )
+					this.set( 'content', result )
+					this.dirty = false
+				},
+				this
+			)
+
+		}
+	},
+
+	constructor: function() {
+		this.callParent( arguments )
+		var object = arguments[2]
+		this.set( 'scriptId',this.generateIdentifier( object ) )
+		this.setId( object.id )
+	},
 
     fields: [
         'name',
-        'content',
-        'path'
+        'namespace',
+        'type',
+		'path',
+		'content'
     ]
 });

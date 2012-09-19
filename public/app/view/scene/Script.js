@@ -17,8 +17,8 @@ Ext.define('Spelled.view.scene.Script' ,{
 					xtype: 'combobox',
 					editable: false,
 					fieldLabel: 'Script',
-					displayField : 'name',
-					valueField: 'name',
+					displayField : 'scriptId',
+					valueField: 'scriptId',
 					store: 'script.Scripts',
 					name: 'scriptId'
 				}

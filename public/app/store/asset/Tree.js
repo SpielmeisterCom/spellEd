@@ -3,10 +3,5 @@ Ext.define('Spelled.store.asset.Tree', {
 
     root: {
         expanded: true
-    },
-    proxy: {
-        type: 'direct',
-        directFn: Spelled.AssetsActions.getTree,
-        paramOrder: [ 'node', 'projectName' ]
     }
 });

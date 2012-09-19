@@ -18,10 +18,6 @@ Ext.define('Spelled.view.script.Create' ,{
             xtype: "form",
             bodyPadding: 10,
 
-            api: {
-                submit: Spelled.ScriptsActions.create
-            },
-
             items: [
                 {
                     xtype: "scriptfolderpicker",

@@ -96,7 +96,7 @@ define(
 
 		return {
 			toEngineFormat : toEngineFormat,
-			toEditorFormat : toEditorFormat,
+			toEditorFormat : toEditorFormat
 		}
 	}
 )

@@ -1,6 +1,8 @@
 Ext.define('Spelled.abstract.model.Template', {
     extend: 'Ext.data.Model',
 
+	mixins: ['Spelled.abstract.model.Model'],
+
     requires: ['Spelled.abstract.writer.JsonWriter'],
 
 	fields: [
@@ -10,13 +12,7 @@ Ext.define('Spelled.abstract.model.Template', {
 
 	constructor: function() {
 		this.callParent( arguments )
-
-		var object    = arguments[2],
-			namespace = object.namespace,
-			name      = object.name,
-			templateId = ( !!namespace && namespace.length > 0 ) ? namespace +"."+ name : name
-
-		this.set( 'templateId', templateId)
+		this.set( 'templateId', this.generateIdentifier( arguments[2] ))
 	},
 
 	isReadonly: function() {

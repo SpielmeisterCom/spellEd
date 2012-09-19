@@ -89,15 +89,10 @@ require(
 				],
 
 				stores: [
-					'asset.Tree',
-					'asset.FoldersTree',
+//					'Spelled.abstract.store.Template',
 					'asset.Textures',
 					'asset.Sounds',
-					'script.Scripts',
-					'script.Tree',
-					'script.FoldersTree',
-					'TemplatesTree',
-					'template.FoldersTree'
+					'script.Scripts'
 				],
 
 				refs: [

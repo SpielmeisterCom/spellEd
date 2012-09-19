@@ -27,7 +27,7 @@ define(
                 }
 
                 if( _.isArray(payload) ) {
-                    return payload
+                    return payload[0]
                 }
 
                 return payload
@@ -312,14 +312,12 @@ define(
 			 * Main functions
 			 *
 			 */
-			var getPath = function( requestedPath, checkIfExists ) {
-				var normalize = path.normalize,
-					join = path.join,
-					pathExistsSync = fs.existsSync,
-					checkIfExists = ( checkIfExists !== undefined ) ? checkIfExists : true,
+			var getPath = function( requestedPath ) {
+				var normalize     = path.normalize,
+					join          = path.join,
 					requestedPath = normalize( requestedPath )
 
-				if( !requestedPath ) return false
+				if( !requestedPath ) throw "Bad requestPath"
 
 				var dir = decodeURIComponent( requestedPath ),
 					filePath  = path.resolve( root, normalize(
@@ -327,8 +325,8 @@ define(
 					))
 
 				// null byte(s), bad request
-				if ( ~filePath.indexOf('\0') || 0 != filePath.indexOf( root ) || ( checkIfExists && !pathExistsSync( filePath ) ) )
-					return false
+				if ( ~filePath.indexOf('\0') || 0 != filePath.indexOf( root ) )
+					throw "Bad requestPath"
 				else
 					return filePath
 			}
