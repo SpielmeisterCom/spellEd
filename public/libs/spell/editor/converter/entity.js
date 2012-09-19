@@ -17,9 +17,8 @@ define(
 		 * @return {*}
 		 */
 		var toEngineFormat = function( entity, config ) {
-			var includeEmptyComponents = config && !!config.includeEmptyComponents,
-				includeEntityIds       = config && !!config.includeEntityIds,
-				attributeNames         = [ 'name' ]
+			var includeEntityIds = config && !!config.includeEntityIds,
+				attributeNames   = [ 'name' ]
 
 			if( includeEntityIds ) attributeNames.push( 'id' )
 
@@ -48,7 +47,7 @@ define(
 				function( memo, entityChildren ) {
 					var result = toEngineFormat( entityChildren, config )
 
-					if( !_.has( result, "config" ) && !_.has( result, "children" ) && !includeEmptyComponents ) return memo
+					if( !includeEntityIds && !_.has( result, "config" ) && !_.has( result, "children" ) ) return memo
 
 					return memo.concat( result )
 				},
