@@ -20,7 +20,7 @@ Ext.define('Spelled.model.Project', {
 					Ext.Array.each(
 						response,
 						function( item ) {
-							tmpResponse.push( Ext.amdModules.projectConverter.toEditorFormat( item, true ) )
+							tmpResponse.push( Ext.amdModules.projectConverter.toEditorFormat( item, { omitScenes: true } ) )
 						},
 						this
 					)
@@ -47,9 +47,11 @@ Ext.define('Spelled.model.Project', {
 				var data = _.map(
 					records,
 					function( record ) {
-						return Ext.amdModules.projectConverter.toEngineFormat(
+						var content = Ext.amdModules.projectConverter.toEngineFormat(
 							self.getRecordData( record, operation )
 						)
+
+						return { id: record.getId(), content: content }
 					}
 				)
 
@@ -92,6 +94,7 @@ Ext.define('Spelled.model.Project', {
 	},
 
     fields: [
+		{ name: 'type', type: 'string', defaultValue: 'project' },
         'name',
         'startScene',
 		{ name: 'config', type: 'object', defaultValue: {} },
