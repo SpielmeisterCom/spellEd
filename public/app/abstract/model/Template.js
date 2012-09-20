@@ -1,7 +1,9 @@
 Ext.define('Spelled.abstract.model.Template', {
     extend: 'Ext.data.Model',
 
-	mixins: ['Spelled.abstract.model.Model'],
+	mixins: {
+		abstractModel: 'Spelled.abstract.model.Model'
+	},
 
     requires: ['Spelled.abstract.writer.JsonWriter'],
 

@@ -37,9 +37,10 @@ define(
 			}
 
 			var getAllByType = function( params ) {
-				var searchPath = util.getPath( params.projectName),
+				var searchPath = util.getPath( params.projectName || root ),
 					type       = params.type,
-					files      = flob.byTypes( searchPath + "/library/**/*", [ '.json' ] )
+					pattern    = ( params.projectName ) ? searchPath + "/library/**/*" : searchPath + "/*/*",
+					files      = flob.byTypes( pattern, [ '.json' ] )
 
 				var result = _.map(
 					files,

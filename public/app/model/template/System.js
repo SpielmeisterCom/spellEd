@@ -1,6 +1,8 @@
 Ext.define('Spelled.model.template.System', {
     extend: 'Spelled.abstract.model.Template',
 
+	iconCls : "tree-system-icon",
+
     fields: [
         "type",
         "namespace",
@@ -20,11 +22,14 @@ Ext.define('Spelled.model.template.System', {
 
     proxy: {
         type: 'direct',
+		extraParams: {
+			type: 'systemTemplate'
+		},
         api: {
-            create:  Spelled.SystemTemplateActions.create,
-            read:    Spelled.SystemTemplateActions.read,
-            update:  Spelled.SystemTemplateActions.update,
-            destroy: Spelled.SystemTemplateActions.destroy
+			create:  Spelled.StorageActions.create,
+			read:    Spelled.StorageActions.read,
+			update:  Spelled.StorageActions.update,
+			destroy: Spelled.StorageActions.destroy
         },
         writer: {
             type: 'json'

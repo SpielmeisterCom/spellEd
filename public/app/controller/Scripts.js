@@ -208,7 +208,7 @@ Ext.define('Spelled.controller.Scripts', {
 								{
 									success: function( script ) {
 										Ext.Msg.alert('Success', 'Your Script "' + script.get( 'scriptId' ) + '" has been created.')
-										me.refreshStoresAndTreeStores( true )
+										me.refreshStores()
 
 										window.close()
 									}
@@ -225,29 +225,12 @@ Ext.define('Spelled.controller.Scripts', {
         this.application.getController('Menu').showScriptsListContextMenu( e )
     },
 
-	refreshStoresAndTreeStores: function( force ) {
-		this.loadTrees( force )
-
-		this.getScriptScriptsStore().load()
-	},
-
-	loadTrees: function( force ) {
-		if( !this.treeLoaded || force === true ) {
-			this.getScriptTreeStore().load( )
-			this.treeLoaded = true
-		}
-
-		this.getScriptFoldersTreeStore().load( )
-    },
-
     refreshStores: function() {
 		this.getScriptScriptsStore().load()
     },
 
     showScripts : function( ) {
 		this.application.hideMainPanels()
-
-        this.loadTrees()
 
         Ext.getCmp('ScriptEditor').show()
     }

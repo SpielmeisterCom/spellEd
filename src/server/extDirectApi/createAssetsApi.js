@@ -153,7 +153,7 @@ define(
             var getAll = function( req, res, payload ) {
 				var projectName = payload[0].projectName
 
-                return util.getDirFilesAsObjects( path.join( root , projectName , assetPathPart ) )
+                return []
             }
 
 			//Adding additional mime types

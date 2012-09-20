@@ -339,7 +339,7 @@ Ext.define('Spelled.controller.Templates', {
                             function( form, action ) {
                                 Ext.Msg.alert('Success', 'Your template "' + action.result.data.name + '" has been created.')
 
-                                this.refreshStoresAndTreeStores( true )
+                                this.refreshStores()
 
                                 window.close()
                             },
@@ -353,69 +353,32 @@ Ext.define('Spelled.controller.Templates', {
         }
     },
 
-    refreshTemplateStores: function() {
-      var projectName = this.application.getActiveProject().get('name')
-
-      this.loadTemplateStores( projectName )
-    },
-
-    loadTemplateStores: function( projectName, callback, force ) {
+    loadTemplateStores: function( callback, force ) {
 		var finished = 0,
+			stores   = [
+				'template.Entities',
+				'template.Components',
+				'template.Systems'
+			],
 			called   = function() {
-				finished++
-				//TODO: find a better solution for his
-				if( finished >= 3 && !!callback ) callback()
+				if( ++finished >= stores.length && !!callback ) callback()
 			}
 
-
-        Spelled.TemplatesActions.getAllEntitiesTemplates( projectName, function( provider, response ) {
-            var store = Ext.getStore('template.Entities')
-            store.removeAll()
-            store.loadDataViaReader( response.result )
-			called()
-        })
-
-        Spelled.TemplatesActions.getAllComponentsTemplates( projectName, function( provider, response ) {
-            var store = Ext.getStore('template.Components')
-            store.removeAll()
-            store.loadDataViaReader( response.result )
-			called()
-        })
-
-		Spelled.TemplatesActions.getAllSystemsTemplates( projectName, function( provider, response ) {
-			var store = Ext.getStore('template.Systems')
-			store.removeAll()
-			store.loadDataViaReader( response.result )
-			called()
-		})
-
-		this.loadTrees( !!force )
-    },
-
-	refreshStoresAndTreeStores: function( force ) {
-		this.refreshTemplateStores()
-
-		this.loadTrees( force )
-	},
-
-	loadTrees: function( force ) {
-		if( !this.treeLoaded || force === true ) {
-			this.getTemplatesTreeStore().load()
-			this.treeLoaded = true
-		}
-
-        this.getTemplateFoldersTreeStore().load( )
+		Ext.each(
+			stores,
+			function( storeName ) {
+				Ext.getStore( storeName ).load( { callback: called, scope: this } )
+			}
+		)
     },
 
     refreshStores: function() {
-        this.refreshTemplateStores()
+        this.loadTemplateStores()
     },
 
     showTemplateEditor : function( ) {
 		this.application.hideMainPanels()
 		this.getRightPanel().show()
-        this.loadTrees()
-
 
 		if( this.getTemplatesTree().getSelectionModel().getSelection().length > 0 ){
 			this.showConfig( this.getTemplatesTree(), this.getTemplatesTree().getSelectionModel().getSelection()[0] )

@@ -189,23 +189,14 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
     loadProject: function( projectName, callback ) {
-        var Project = this.getProjectModel()
-
+        var project = this.getProjectsStore().findRecord( 'name', projectName )
 		this.prepareStores( projectName )
 		this.closeAllTabsFromProject()
 
-		Project.load(
-			projectName,
-			{
-				scope: this,
-				success: function( project ) {
-					this.onProjectLoaded( project )
+		this.onProjectLoaded( project )
 
-					if( !!callback )
-						Ext.callback( callback( project ) )
-				}
-			}
-		)
+		if( !!callback )
+			Ext.callback( callback( project ) )
 	},
 
 	onProjectLoaded: function( project ) {
@@ -214,7 +205,7 @@ Ext.define('Spelled.controller.Projects', {
 		Ext.state.Manager.set( 'projectName', project.get('name') )
 		app.setActiveProject( project )
 
-		app.getController( 'Scripts' ).refreshStoresAndTreeStores( true )
+		app.getController( 'Scripts' ).refreshStores()
 		//Need to do a synchronous load
 		//TODO: find a solution for synchonous loading stores with proxies etc.
 		app.getController( 'Assets' ).refreshStoresAndTreeStores(
@@ -226,7 +217,7 @@ Ext.define('Spelled.controller.Projects', {
 						this
 					)
 
-					app.getController( 'Templates' ).loadTemplateStores( project.get('name'), callback, true )
+					app.getController( 'Templates' ).loadTemplateStores( callback, true )
 				},
 				this
 			)
@@ -244,7 +235,7 @@ Ext.define('Spelled.controller.Projects', {
 
 		tree.getSelectionModel().select( node )
 		tree.expandPath( node.getPath() )
-
+//		this.application.setActiveScene( startScene )
 
 		this.application.getController( 'Scenes' ).renderScene( startScene )
 	},

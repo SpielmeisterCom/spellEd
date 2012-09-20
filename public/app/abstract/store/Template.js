@@ -18,5 +18,11 @@ Ext.define('Spelled.abstract.store.Template', {
         if( index > -1 ) {
             return this.getAt( index )
         }
-    }
+	},
+
+	listeners: {
+		load: function( store, records ) {
+			Ext.getStore( 'TemplatesTree' ).generateNodesFromRecords( records )
+		}
+	}
 });

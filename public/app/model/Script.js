@@ -40,6 +40,10 @@ Ext.define('Spelled.model.Script', {
 		}
 	},
 
+	getFullName: function() {
+		return this.get('scriptId')
+	},
+
 	constructor: function() {
 		this.callParent( arguments )
 		var object = arguments[2]

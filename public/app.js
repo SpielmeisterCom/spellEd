@@ -8,6 +8,7 @@ require(
 
 		'spell/editor/createProjectInEngineFormat',
 		'spell/editor/converter/project',
+		'spell/editor/converter/component',
 		'spell/editor/createFontGenerator',
 		'spell/editor/systemFontDetector',
 
@@ -22,6 +23,7 @@ require(
 
 		createProjectInEngineFormat,
 		projectConverter,
+		componentConverter,
 		createFontGenerator,
 		systemFontDetector,
 
@@ -39,6 +41,7 @@ require(
 			'aceThemePastelOnDark'        : aceThemePastelOnDark,
 			'createProjectInEngineFormat' : createProjectInEngineFormat,
 			'createFontGenerator'         : createFontGenerator,
+			'componentConverter'          : componentConverter,
 			'projectConverter'            : projectConverter,
 			'systemFontDetector'          : systemFontDetector,
 			'underscore'                  : _
@@ -89,7 +92,9 @@ require(
 				],
 
 				stores: [
-//					'Spelled.abstract.store.Template',
+					'template.Entities',
+					'template.Components',
+					'template.Systems',
 					'asset.Textures',
 					'asset.Sounds',
 					'script.Scripts'
@@ -302,17 +307,24 @@ require(
 						}
 					})
 
-					Ext.direct.Manager.addProvider(Ext.app.REMOTING_API)
+					Ext.direct.Manager.addProvider( Ext.app.REMOTING_API )
 
-					Ext.get('loading').remove()
-					Ext.get('loading-mask').fadeOut( {
-						remove: true
-					} )
+					var loadingComplete = function() {
+						Ext.get('loading').remove()
+						Ext.get('loading-mask').fadeOut( {
+							remove: true
+						} )
 
-					Ext.create('Spelled.view.ui.SpelledViewport')
-					var stateProvider = Ext.create( 'Ext.state.CookieProvider')
-					Ext.state.Manager.setProvider( stateProvider )
-					this.getController( 'Projects').loadLastProject()
+						Ext.create('Spelled.view.ui.SpelledViewport')
+						var stateProvider = Ext.create( 'Ext.state.CookieProvider')
+						Ext.state.Manager.setProvider( stateProvider )
+						this.getController( 'Projects').loadLastProject()
+					}
+
+					Ext.getStore( 'Projects' ).load({
+						callback: loadingComplete,
+						scope: this
+					})
 				}
 			} )
 		};

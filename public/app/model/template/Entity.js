@@ -7,6 +7,8 @@ Ext.define('Spelled.model.template.Entity', {
         "name"
     ],
 
+	iconCls : "tree-scene-entity-icon",
+
 	associations: [
 		{
 			type: 'hasMany',
@@ -32,16 +34,19 @@ Ext.define('Spelled.model.template.Entity', {
 	},
 
 	proxy: {
-        type: 'direct',
-        api: {
-            create:  Spelled.EntityTemplateActions.create,
-            read:    Spelled.EntityTemplateActions.read,
-            update:  Spelled.EntityTemplateActions.update,
-            destroy: Spelled.EntityTemplateActions.destroy
-        },
-        writer: {
-            type: 'json'
-        }
+		type: 'direct',
+		extraParams: {
+			type: 'entityTemplate'
+		},
+		api: {
+			create:  Spelled.StorageActions.create,
+			read:    Spelled.StorageActions.read,
+			update:  Spelled.StorageActions.update,
+			destroy: Spelled.StorageActions.destroy
+		},
+		writer: {
+			type: 'entityTemplate'
+		}
     },
 
 	getChild: function( id ) {
@@ -73,20 +78,23 @@ Ext.define('Spelled.model.template.Entity', {
 	},
 
 	createTreeNode: function( node ) {
+		var entityNode = this.mixins.abstractModel.createTreeNode.call( this, node )
+
 		this.getChildren().each( function( entity ) {
 			var childNode = entity.createTreeNode( node )
-			node.appendChild( childNode )
+			entityNode.appendChild( childNode )
 
 			var markAsComposites = function( compositeNode ) {
 				compositeNode.eachChild( function( item ) {
 					item.set( 'cls', 'templateEntityComposite' )
-					item.set( 'id', node.get('id') + item.get('text') )
+					item.set( 'id', entityNode.get('id') + item.get('text') )
 					markAsComposites( item )
 				})
 			}
 			markAsComposites( node )
-			node.set( 'leaf', false )
-
+			entityNode.set( 'leaf', false )
 		})
+
+		node.appendChild( entityNode )
 	}
 });

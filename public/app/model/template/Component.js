@@ -1,6 +1,8 @@
 Ext.define('Spelled.model.template.Component', {
     extend: 'Spelled.abstract.model.Template',
 
+	iconCls : "tree-component-icon",
+
     fields: [
         "type",
         "namespace",
@@ -16,18 +18,21 @@ Ext.define('Spelled.model.template.Component', {
         name :  'getAttributes'
     },
 
-    proxy: {
-        type: 'direct',
-        api: {
-            create:  Spelled.ComponentTemplateActions.create,
-            read:    Spelled.ComponentTemplateActions.read,
-            update:  Spelled.ComponentTemplateActions.update,
-            destroy: Spelled.ComponentTemplateActions.destroy
-        },
-        writer: {
-            type: 'json'
-        }
-    },
+	proxy: {
+		type: 'direct',
+		extraParams: {
+			type: 'componentTemplate'
+		},
+		api: {
+			create:  Spelled.StorageActions.create,
+			read:    Spelled.StorageActions.read,
+			update:  Spelled.StorageActions.update,
+			destroy: Spelled.StorageActions.destroy
+		},
+		writer: {
+			type: 'componentTemplate'
+		}
+	},
 
 	getAttributeByName: function( name ) {
 		return this.getAttributes().findRecord( 'name', name )

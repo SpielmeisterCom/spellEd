@@ -2,20 +2,37 @@ Ext.define('Spelled.model.Project', {
     extend: 'Ext.data.Model',
     proxy: {
         type: 'direct',
-        api: {
-            create:  Spelled.ProjectActions.create,
-            read:    Spelled.ProjectActions.read,
-            update:  Spelled.ProjectActions.update,
-            destroy: Spelled.ProjectActions.destroy
-        },
+		extraParams: {
+			type: 'project'
+		},
+		api: {
+			create:  Spelled.StorageActions.create,
+			read:    Spelled.StorageActions.read,
+			update:  Spelled.StorageActions.update,
+			destroy: Spelled.StorageActions.destroy
+		},
 		reader: {
 			read: function( response ) {
 				var data
 
-				response = Ext.amdModules.projectConverter.toEditorFormat(response )
+				if( Ext.isArray( response ) ) {
+					var tmpResponse = []
+					Ext.Array.each(
+						response,
+						function( item ) {
+							tmpResponse.push( Ext.amdModules.projectConverter.toEditorFormat( item ) )
+						},
+						this
+					)
 
-				if (response) {
-					data = response.responseText ? this.getResponseData(response) : this.readRecords(response);
+					data = this.readRecords( tmpResponse)
+
+				} else{
+					response = Ext.amdModules.projectConverter.toEditorFormat( response )
+
+					if (response) {
+						data = response.responseText ? this.getResponseData(response) : this.readRecords(response);
+					}
 				}
 
 				return data || this.nullResultSet;
@@ -81,8 +98,6 @@ Ext.define('Spelled.model.Project', {
 		{ name: 'assetIds'   , type: 'array', defaultValue: [] },
 		{ name: 'templateIds', type: 'array', defaultValue: [] }
 	],
-
-    idProperty: 'name',
 
     hasMany: {
         model: 'Spelled.model.config.Scene',

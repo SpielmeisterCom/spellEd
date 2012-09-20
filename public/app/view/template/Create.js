@@ -20,10 +20,6 @@ Ext.define('Spelled.view.template.Create', {
             xtype: "form",
             bodyPadding: 10,
 
-            api: {
-                submit: Spelled.TemplatesActions.createTemplate
-            },
-
             items: [
                 {
                     xtype: "combo",
