@@ -20,7 +20,7 @@ Ext.define('Spelled.model.Project', {
 					Ext.Array.each(
 						response,
 						function( item ) {
-							tmpResponse.push( Ext.amdModules.projectConverter.toEditorFormat( item ) )
+							tmpResponse.push( Ext.amdModules.projectConverter.toEditorFormat( item, true ) )
 						},
 						this
 					)

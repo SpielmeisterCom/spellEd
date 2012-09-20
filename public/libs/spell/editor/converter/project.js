@@ -46,8 +46,11 @@ define(
 		 *
 		 * @param {Object} project
 		 */
-		var toEditorFormat = function( project ) {
-			var result = _.pick( project, 'config', 'name', 'startScene', 'scenes', 'assetIds', 'templateIds', 'id' )
+		var toEditorFormat = function( project, noScenes ) {
+			var result   = _.pick( project, 'config', 'name', 'startScene', 'assetIds', 'templateIds', 'id'),
+				noScenes = !!noScenes
+
+			if( noScenes ) return result
 
 			result.scenes = _.map(
 				project.scenes,
