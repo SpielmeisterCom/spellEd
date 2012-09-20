@@ -189,14 +189,24 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
     loadProject: function( projectName, callback ) {
-        var project = this.getProjectsStore().findRecord( 'name', projectName )
+		var Project = this.getProjectModel(),
+			record  = this.getProjectsStore().findRecord( 'name', projectName )
+
 		this.prepareStores( projectName )
 		this.closeAllTabsFromProject()
 
-		this.onProjectLoaded( project )
+		Project.load(
+			record.getId(),
+			{
+				scope: this,
+				success: function( project ) {
+					this.onProjectLoaded( project )
 
-		if( !!callback )
-			Ext.callback( callback( project ) )
+					if( !!callback )
+						Ext.callback( callback( project ) )
+				}
+			}
+		)
 	},
 
 	onProjectLoaded: function( project ) {
@@ -235,7 +245,6 @@ Ext.define('Spelled.controller.Projects', {
 
 		tree.getSelectionModel().select( node )
 		tree.expandPath( node.getPath() )
-//		this.application.setActiveScene( startScene )
 
 		this.application.getController( 'Scenes' ).renderScene( startScene )
 	},

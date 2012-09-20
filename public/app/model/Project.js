@@ -27,7 +27,7 @@ Ext.define('Spelled.model.Project', {
 
 					data = this.readRecords( tmpResponse)
 
-				} else{
+				} else {
 					response = Ext.amdModules.projectConverter.toEditorFormat( response )
 
 					if (response) {
