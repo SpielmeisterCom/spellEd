@@ -183,8 +183,8 @@ Ext.define('Spelled.controller.Scripts', {
     },
 
     createScript: function( button ) {
-        var window = button.up( 'window' ),
-			me     = this,
+        var me     = this,
+			window = button.up( 'window' ),
             form   = window.down('form').getForm(),
 			Script = this.getScriptModel(),
 			values = form.getValues(),
@@ -193,27 +193,22 @@ Ext.define('Spelled.controller.Scripts', {
 				namespace: ( values.folder === 'root' ) ? '' : values.folder,
 				type: 'script'
 			},
-		//TODO: refactor this
-			id     = this.application.getActiveProject().get('name') + "/library/scripts/" + (( content.namespace.length > 0 ) ? content.namespace +"."+ content.name : content.name)
-//TODO maybe i can use Proxies create function
+			id = this.application.generateFileIdFromObject( content )
+
         if( form.isValid() ){
 			Spelled.StorageActions.create(
 				{ id: id + ".js", content: content },
 				function() {
-					Spelled.StorageActions.create(
-						{ id: id + ".json", content: content },
-						function( scriptId ) {
-							Script.load(
-								scriptId,
-								{
-									success: function( script ) {
-										Ext.Msg.alert('Success', 'Your Script "' + script.get( 'scriptId' ) + '" has been created.')
-										me.refreshStores()
+					content.id = id + ".json"
+					var script = Script.create( content )
 
-										window.close()
-									}
-								}
-							)
+					script.save({
+							success: function( record ) {
+								Ext.Msg.alert('Success', 'Your Script "' + record.get( 'scriptId' ) + '" has been created.')
+								me.refreshStores()
+
+								window.close()
+							}
 						}
 					)
 				}

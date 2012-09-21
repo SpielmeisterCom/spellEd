@@ -11,7 +11,7 @@ Ext.define('Spelled.data.writer.EntityTemplate', {
 
 		for (; i < len; i++) {
 			var record = this.getRecordData( records[i], operation ),
-				entity = Ext.copyTo({}, record, 'name,namespace,type,config,children')
+				entity = Ext.amdModules.entityTemplateConverter.toEngineFormat( record )
 
 			data.push( { id: record.id, content: entity } )
 		}

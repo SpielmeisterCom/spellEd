@@ -13,8 +13,9 @@ Ext.define('Spelled.abstract.model.Template', {
 	],
 
 	constructor: function() {
+		var params = arguments[0] || arguments[2]
 		this.callParent( arguments )
-		this.set( 'templateId', this.generateIdentifier( arguments[2] ))
+		this.set( 'templateId', this.generateIdentifier( params ))
 	},
 
 	isReadonly: function() {

@@ -324,33 +324,39 @@ Ext.define('Spelled.controller.Templates', {
     createTemplate: function( button ) {
         var form    = button.up('form').getForm(),
             window  = button.up( 'window' ),
-            project = this.application.getActiveProject()
+			values  = form.getValues(),
+			Model   = undefined,
+			content = {
+				name: values.name,
+				namespace: ( values.namespace === 'root' ) ? '' : values.namespace,
+				type: values.type
+			}
 
-        if( form.isValid() ){
+		switch( values.type ) {
+			case this.TEMPLATE_TYPE_COMPONENT:
+				Model = this.getTemplateComponentModel()
+				break
+			case this.TEMPLATE_TYPE_SYSTEM:
+				Model = this.getTemplateSystemModel()
+				break
+			case this.TEMPLATE_TYPE_ENTITY:
+				Model = this.getTemplateEntityModel()
+				break
+		}
 
-            form.submit(
-                {
-                    params: {
-                        projectName: project.get('name')
-                    },
-                    waitMsg: 'Creating a new Template',
-                    success:
-                        Ext.bind(
-                            function( form, action ) {
-                                Ext.Msg.alert('Success', 'Your template "' + action.result.data.name + '" has been created.')
+		if( form.isValid() ){
+			content.id = this.application.generateFileIdFromObject( content ) + '.json'
+			var model = Model.create( content )
+			model.save({
+				success: function( result ) {
+					Ext.Msg.alert('Success', 'Your Template "' + result.get( 'templateId' ) + '" has been created.')
+					this.refreshStores()
 
-                                this.refreshStores()
-
-                                window.close()
-                            },
-                            this
-                        ),
-                    failure: function( form, action ) {
-                        Ext.Msg.alert('Failed', action.result || "Could not create template!")
-                    }
-                }
-            )
-        }
+					window.close()
+				},
+				scope: this
+			})
+		}
     },
 
     loadTemplateStores: function( callback, force ) {

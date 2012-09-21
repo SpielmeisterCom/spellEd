@@ -46,8 +46,8 @@ Ext.define('Spelled.model.Script', {
 
 	constructor: function() {
 		this.callParent( arguments )
-		var object = arguments[2]
-		this.set( 'scriptId',this.generateIdentifier( object ) )
+		var object = arguments[0] || arguments[2]
+		this.set( 'scriptId', this.generateIdentifier( object ) )
 		this.setId( object.id )
 	},
 

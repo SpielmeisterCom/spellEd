@@ -120,6 +120,10 @@ require(
 				project: undefined,
 				scene: undefined,
 
+				generateFileIdFromObject: function( object ) {
+					return this.getActiveProject().get('name') + "/library/" + (( object.namespace.length > 0 ) ? object.namespace +"."+ object.name : object.name)
+				},
+
 				showDocumentation: function( docString ) {
 					if( Ext.isObject( this.configuration ) ) {
 						var docPath = this.configuration.documentationServerURL + docString
