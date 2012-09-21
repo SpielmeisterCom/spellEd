@@ -1,26 +1,26 @@
 define(
 	'server/spellEdServer',
-    [
-        'connect',
-        'http',
-        'connect-extdirect/extDirect',
-		'connect-pathMapper/pathMapper',
-        'server/createExtDirectApi',
-	    'commander',
-	    'fs',
-	    'path'
-    ],
-    function(
-        connect,
-        http,
-        extDirect,
-		pathMapper,
-        createExtDirectApi,
-        commander,
-        fs,
-        path
-    ) {
-        "use strict"
+	[
+		'connect',
+		'http',
+		'connect-extdirect/extDirect',
+		'connect-urlRewriter/createUrlRewriter',
+		'server/createExtDirectApi',
+		'commander',
+		'fs',
+		'path'
+	],
+	function(
+		connect,
+		http,
+		extDirect,
+		createUrlRewriter,
+		createExtDirectApi,
+		commander,
+		fs,
+		path
+	) {
+		'use strict'
 
 
 	    var printErrors = function( errors ) {
@@ -31,26 +31,23 @@ define(
 	    }
 
 
-	    return function(argv, cwd, spellPath) {
+	    return function( argv, cwd, spellPath ) {
 		    var executableName  = 'server'
 
-
 		    var startServerCommand = function( command ) {
-			    var errors = [],
-				    port = command.port || 3000,
-				    bport = command.bport || 8080,
-				    projectsPath = path.resolve( cwd + ( command.projectsRoot ? '/' + command.projectsRoot : '/projects' )) + '/',
-				    buildServerOptions  = {
-					    host: 'localhost',
-					    port: bport,
-					    path: '/router/',
-					    method: 'POST'
-					},
-					pathMapperConfig = {
-						'/libs/require.js' : '../requirejs/require.js',
-						'/libs/underscore.js' : '../underscore/underscore.js',
-						'/libs/ace/': '../ace/lib/ace/'
-					}
+			    var errors                 = [],
+				    port                   = command.port || 3000,
+				    bport                  = command.bport || 8080,
+				    projectsPath           = path.resolve( cwd + ( command.projectsRoot ? '/' + command.projectsRoot : '/projects' ) ),
+					spellEngineModulesPath = path.resolve( projectsPath, '../modules' )
+
+				var buildServerOptions = {
+					host   : 'localhost',
+					port   : bport,
+					path   : '/router/',
+					method : 'POST'
+				}
+
 
 			    if( !fs.existsSync( projectsPath ) ) {
 				    errors.push( 'Error: No valid projects directory supplied. Unable to start spelled server. ' +
@@ -63,7 +60,7 @@ define(
 			    } else {
 				    var app = connect()
 						.use( connect.favicon() )
-					    .use( connect.logger('dev') )
+					    .use( connect.logger( 'dev' ) )
 					    .use(
 							extDirect(
 								'/router/',
@@ -71,13 +68,41 @@ define(
 								createExtDirectApi( projectsPath, buildServerOptions )
 							)
 						)
-						.use( pathMapper( pathMapperConfig ) )
-					    .use( connect.static('public'))
-					    //TODO: remove this line
-					    .use( connect.static( projectsPath ) )
+						.use(
+							createUrlRewriter( [
+								{
+									rewrite : '/libs/require.js',
+									to      : '/require.js'
+								},
+								{
+									rewrite : '/libs/underscore.js',
+									to      : '/underscore.js'
+								},
+								{
+									rewrite : '/libs/ace/',
+									to      : '/lib/ace/'
+								},
+								{
+									rewrite : /public\/library/,
+									to      : 'library'
+								}
+							] )
+						)
 
-				    http.Server(app).listen(port);
-				    console.log('Server started on port ' + port + ' and will use project path ' + projectsPath + ' and connect to a build server at port ' + bport);
+						// the user's projects directory
+						.use( connect.static( projectsPath ) )
+
+						// SpellEd public directory
+						.use( connect.static( 'public' ) )
+
+						// Because the modules ace, requirejs and underscore are located outside of the regular webserver root they have to be added manually.
+						.use( connect.static( path.resolve( spellEngineModulesPath, 'ace' ) ) )
+						.use( connect.static( path.resolve( spellEngineModulesPath, 'requirejs' ) ) )
+						.use( connect.static( path.resolve( spellEngineModulesPath, 'underscore' ) ) )
+
+				    http.Server( app ).listen( port )
+
+				    console.log( 'Server started on port ' + port + ' and will use project path ' + projectsPath + ' and connect to a build server at port ' + bport )
 			    }
 		    }
 
