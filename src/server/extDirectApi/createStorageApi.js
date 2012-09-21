@@ -70,16 +70,6 @@ define(
 				)
 			}
 
-			var create = function(  req, res, payload, next  ) {
-				var params   = _.isArray( payload ) ? payload.pop() : payload,
-					filePath = util.getPath( params.id ),
-					content  = params.content
-
-				writeContent( filePath, content )
-
-				return filePath
-			}
-
 			var read = function( req, res, payload, next ) {
 				var params = _.isArray( payload ) ? payload.pop() : payload
 
@@ -89,6 +79,16 @@ define(
 				} else {
 					return getAllByType( params )
 				}
+			}
+
+			var create = function(  req, res, payload, next  ) {
+				var params   = _.isArray( payload ) ? payload.pop() : payload,
+					filePath = util.getPath( params.id ),
+					content  = params.content
+
+				writeContent( filePath, content )
+
+				return filePath
 			}
 
 			var update = function( req, res, payload, next ) {

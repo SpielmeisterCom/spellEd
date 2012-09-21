@@ -88,13 +88,14 @@ Ext.define('Spelled.model.template.Entity', {
 			entityNode.appendChild( childNode )
 
 			var markAsComposites = function( compositeNode ) {
+				compositeNode.set( 'cls', 'templateEntityComposite' )
+				compositeNode.set( 'id', entityNode.get('id') + compositeNode.get('text') )
+
 				compositeNode.eachChild( function( item ) {
-					item.set( 'cls', 'templateEntityComposite' )
-					item.set( 'id', entityNode.get('id') + item.get('text') )
 					markAsComposites( item )
 				})
 			}
-			markAsComposites( node )
+			markAsComposites( childNode )
 			entityNode.set( 'leaf', false )
 		})
 
