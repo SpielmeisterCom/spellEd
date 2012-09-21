@@ -3,38 +3,40 @@ Ext.define('Spelled.abstract.store.TreeStore', {
 
     hasFilter: false,
 
+	createParentNode: function( node, parts ) {
+		if( parts.length === 0 ) return node
+
+		var part        = parts.shift(),
+			localNodeId = node.getId() + "." + part,
+			localNode   = node.findChild( 'id', localNodeId )
+
+		if( !localNode ) {
+			localNode = node.appendChild(
+				node.createNode( {
+					text : part,
+					cls  : 'folder',
+					id   : localNodeId
+				} )
+			)
+		}
+
+		return this.createParentNode( localNode, parts )
+	},
+
 	generateNodesFromRecords: function( records ) {
 		var rootNode  = this.getRootNode()
 
 		Ext.Array.each(
 			records,
 			function( record ) {
-				var namespace = record.getFullName(),
-					parts     = namespace.split( '.'),
-					i         = 0,
-					lastNode  = rootNode
+				var namespace = record.get( 'namespace' ),
+					parts     = namespace.split( '.' )
 
 				if( rootNode.findChild( 'id', record.get( 'id' ), true ) ) return
 
-				for( i; i < parts.length - 1; i++ ) {
-					var nodeId       = Ext.Array.slice( parts, 0, i ).join( '.' ),
-						existingNode = lastNode.findChild( 'id', nodeId )
-
-					if( existingNode ) {
-						lastNode = existingNode
-					} else {
-						lastNode = lastNode.appendChild(
-							rootNode.createNode( {
-								text: parts[i],
-								cls: 'folder',
-								id: nodeId
-							} )
-						)
-					}
-				}
-
-				record.createTreeNode( lastNode )
-			}
+				record.createTreeNode( this.createParentNode( rootNode, parts ) )
+			},
+			this
 		)
 	},
 
