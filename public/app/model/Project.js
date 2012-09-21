@@ -11,53 +11,8 @@ Ext.define('Spelled.model.Project', {
 			update:  Spelled.StorageActions.update,
 			destroy: Spelled.StorageActions.destroy
 		},
-		reader: {
-			read: function( response ) {
-				var data
-
-				if( Ext.isArray( response ) ) {
-					var tmpResponse = []
-					Ext.Array.each(
-						response,
-						function( item ) {
-							tmpResponse.push( Ext.amdModules.projectConverter.toEditorFormat( item, { omitScenes: true } ) )
-						},
-						this
-					)
-
-					data = this.readRecords( tmpResponse)
-
-				} else {
-					response = Ext.amdModules.projectConverter.toEditorFormat( response )
-
-					if (response) {
-						data = response.responseText ? this.getResponseData(response) : this.readRecords(response);
-					}
-				}
-
-				return data || this.nullResultSet;
-			}
-		},
-		writer: {
-			write: function( request ) {
-				var operation = request.operation,
-					records   = operation.records || [],
-					self      = this
-
-				var data = _.map(
-					records,
-					function( record ) {
-						var content = Ext.amdModules.projectConverter.toEngineFormat(
-							self.getRecordData( record, operation )
-						)
-
-						return { id: record.getId(), content: content }
-					}
-				)
-
-				return this.writeRecords( request, data )
-			}
-		}
+		reader: 'project',
+		writer: 'project'
     },
 
 	save: function() {

@@ -9,6 +9,8 @@ require(
 		'spell/editor/createProjectInEngineFormat',
 		'spell/editor/converter/project',
 		'spell/editor/converter/component',
+		'spell/editor/converter/entity',
+		'spell/editor/converter/entityTemplate',
 		'spell/editor/createFontGenerator',
 		'spell/editor/systemFontDetector',
 
@@ -24,6 +26,8 @@ require(
 		createProjectInEngineFormat,
 		projectConverter,
 		componentConverter,
+		entityConverter,
+		entityTemplateConverter,
 		createFontGenerator,
 		systemFontDetector,
 
@@ -42,6 +46,8 @@ require(
 			'createProjectInEngineFormat' : createProjectInEngineFormat,
 			'createFontGenerator'         : createFontGenerator,
 			'componentConverter'          : componentConverter,
+			'entityConverter'             : entityConverter,
+			'entityTemplateConverter'     : entityTemplateConverter,
 			'projectConverter'            : projectConverter,
 			'systemFontDetector'          : systemFontDetector,
 			'underscore'                  : _

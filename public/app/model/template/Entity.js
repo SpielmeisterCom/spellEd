@@ -46,6 +46,9 @@ Ext.define('Spelled.model.template.Entity', {
 		},
 		writer: {
 			type: 'entityTemplate'
+		},
+		reader: {
+			type: 'entityTemplate'
 		}
     },
 
