@@ -32,12 +32,34 @@ Ext.define('Spelled.model.template.System', {
 			destroy: Spelled.StorageActions.destroy
         },
         writer: {
-            type: 'json'
+            type: 'systemTemplate'
         }
     },
 
-	getScriptId: function() {
-		return this.get( 'templateId' ).replace( /\./g, "/") + ".js"
+	destroy: function( options ) {
+		Spelled.StorageActions.destroy({ id: this.getAccordingJSFileName() } )
+
+		this.callParent( options )
+	},
+
+	listeners: {
+		idchanged: function() {
+			Spelled.StorageActions.read( { id: this.getAccordingJSFileName() },
+				function( result ) {
+					this.set( 'path', this.getAccordingJSFileName() )
+					this.set( 'content', result )
+					this.dirty = false
+				},
+				this
+			)
+
+		}
+	},
+
+	constructor: function() {
+		var params = arguments[0] || arguments[2]
+		this.callParent( arguments )
+		this.setId( params.id )
 	},
 
     appendOnTreeNode: function( node ) {

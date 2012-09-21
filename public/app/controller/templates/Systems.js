@@ -114,20 +114,11 @@ Ext.define('Spelled.controller.templates.Systems', {
 		)
 	},
 
-	refreshScriptTab: function( scriptId ) {
-		var tab	   = this.getTemplateEditor().getActiveTab(),
-			Script = this.getScriptModel()
+	refreshScriptTab: function( systemTemplate ) {
+		var tab	   = this.getTemplateEditor().getActiveTab()
 
-		Script.load(
-			scriptId, {
-				params: { systemScript: true },
-				scope: this,
-				success: function( script ) {
-					tab.setModel( script )
-					tab.refreshContent()
-				}
-			}
-		)
+		tab.setModel( systemTemplate )
+		tab.refreshContent()
 	},
 
     showInputListContextMenu: function( view, record, item, index, e, options ) {
@@ -229,7 +220,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 
 		editView.aceEditor.setReadOnly( systemTemplate.isReadonly() )
 
-		this.refreshScriptTab( systemTemplate.getScriptId() )
+		this.refreshScriptTab( systemTemplate )
 
 		this.prepareConfigurationView( configurationView, systemTemplate )
 		this.getRightPanel().add( configurationView )

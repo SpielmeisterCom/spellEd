@@ -5,18 +5,18 @@ Ext.define('Spelled.data.writer.Script', {
 	write: function( request ) {
 		var operation = request.operation,
 			records   = operation.records || [],
-			len       = records.length,
-			i         = 0,
-			data      = []
+			self      = this
 
-		for (; i < len; i++) {
-			var record = this.getRecordData( records[i], operation ),
-				script = Ext.copyTo({}, record, 'name,namespace,type')
+		var data = _.map(
+			records,
+			function( record ) {
+				var script = Ext.copyTo({}, self.getRecordData( record, operation ), 'name,namespace,type')
 
-			data.push( { id: record.id, content: script } )
+				Spelled.StorageActions.update( { id: record.get('path'), content: record.get( 'content' ) } )
 
-			Spelled.StorageActions.update( { id: record.path, content: record.content } )
-		}
+				return { id: record.getId(), content: script }
+			}
+		)
 
 		return this.writeRecords( request, data )
 	}

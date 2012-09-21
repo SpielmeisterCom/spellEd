@@ -307,6 +307,7 @@
 		"Spelled.data.writer.Project",
 		"Spelled.data.reader.Script",
 		"Spelled.data.writer.Script",
+		"Spelled.data.writer.SystemTemplate",
 		"Spelled.data.writer.ComponentTemplate",
 		"Spelled.data.reader.EntityTemplate",
 		"Spelled.data.writer.EntityTemplate",
