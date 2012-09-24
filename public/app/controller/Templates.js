@@ -1,9 +1,9 @@
 Ext.define('Spelled.controller.Templates', {
     extend: 'Ext.app.Controller',
 
-    TEMPLATE_TYPE_COMPONENT: 'componentTemplate',
-	TEMPLATE_TYPE_ENTITY   : 'entityTemplate',
-	TEMPLATE_TYPE_SYSTEM   : 'systemTemplate',
+    TEMPLATE_TYPE_COMPONENT: 'component',
+	TEMPLATE_TYPE_ENTITY   : 'entity',
+	TEMPLATE_TYPE_SYSTEM   : 'system',
 	TYPE_ENTITY_COMPOSITE  : 'templateEntityComposite',
 
     views: [
@@ -329,7 +329,7 @@ Ext.define('Spelled.controller.Templates', {
 			content = {
 				name: values.name,
 				namespace: ( values.namespace === 'root' ) ? '' : values.namespace,
-				type: values.type
+				subtype: values.type
 			}
 
 		switch( values.type ) {

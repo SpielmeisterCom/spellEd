@@ -238,7 +238,7 @@ Ext.define('Spelled.controller.Assets', {
 		var view = Ext.widget( 'editasset' ),
 			form = view.down( 'form' )
 
-		this.fieldRenderHelper( asset.get('type'), form, asset )
+		this.fieldRenderHelper( asset.get('subtype'), form, asset )
 		form.loadRecord( asset )
 
 		//TODO: enable changing file
@@ -253,14 +253,14 @@ Ext.define('Spelled.controller.Assets', {
 			record  = form.getRecord(),
 			values  = form.getValues()
 
-		if( !!values.fontFamily && record.get( 'type' ) === 'font') {
+		if( !!values.fontFamily && record.get( 'subtype' ) === 'font') {
 			var result        = this.createFontMap( values )
 			values.fontCanvas = result.imageDataUrl
 			values.charset    = Ext.encode( result.charset )
 			values.baseline   = result.baseline
 		}
 
-		if( record.get( 'type' ) === 'keyToActionMap' ) record.set( 'config', this.getKeyMappings( window ) )
+		if( record.get( 'subtype' ) === 'keyToActionMap' ) record.set( 'config', this.getKeyMappings( window ) )
 		else record.set( 'config', values )
 
 		record.save()
@@ -297,7 +297,7 @@ Ext.define('Spelled.controller.Assets', {
 		view.loadRecord( asset )
 
 		inspectorPanel.setTitle( 'Asset information of "' + asset.get('name') +'"' )
-		switch( asset.get('type') ) {
+		switch( asset.get('subtype') ) {
 			case 'animation':
 				view.docString = '#!/guide/asset_type_2d_animated_appearance'
 				break
@@ -364,7 +364,7 @@ Ext.define('Spelled.controller.Assets', {
 			content = {
 				name: values.name,
 				namespace: ( values.folder === 'root' ) ? '' : values.folder,
-				type: values.type
+				subtype: values.type
 			},
 			config  = {},
 			id      = this.application.generateFileIdFromObject( content )
@@ -492,7 +492,7 @@ Ext.define('Spelled.controller.Assets', {
 
 				var view = new View( {
 					title: title,
-					autoEl: ( asset.get('type') === 'animation' ) ? errorTag : iframe
+					autoEl: ( asset.get('subtype') === 'animation' ) ? errorTag : iframe
 				} )
 
 				this.application.createTab( assetEditor, view )

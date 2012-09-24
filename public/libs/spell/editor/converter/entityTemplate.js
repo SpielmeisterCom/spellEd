@@ -21,7 +21,7 @@ define(
 		 * @return {*}
 		 */
 		var toEngineFormat = function( entity, includeEmptyComponents ) {
-			var result = _.pick( entity, 'name', 'namespace', 'type' )
+			var result = _.pick( entity, 'name', 'namespace', 'type', 'subtype' )
 
 			result.config = _.reduce(
 				entity.getComponents,
@@ -50,7 +50,7 @@ define(
 		 * @return {*}
 		 */
 		var toEditorFormat = function( entity ) {
-			var result = _.pick( entity, 'name', 'namespace', 'type', 'id', 'readonly' )
+			var result = _.pick( entity, 'name', 'namespace', 'type', 'id', 'readonly', 'subtype' )
 
 			result.components = _.reduce(
 				entity.config,

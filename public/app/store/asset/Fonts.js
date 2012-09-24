@@ -3,7 +3,7 @@ Ext.define('Spelled.store.asset.Fonts', {
 
     filters: [
         function( item ) {
-            return item.get('type') === 'font'
+            return item.get('subtype') === 'font'
         }
     ]
 });

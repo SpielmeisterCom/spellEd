@@ -2,7 +2,6 @@ Ext.define('Spelled.model.template.Entity', {
     extend: 'Spelled.abstract.model.Template',
 
     fields: [
-        "type",
         "namespace",
         "name"
     ],
@@ -36,7 +35,8 @@ Ext.define('Spelled.model.template.Entity', {
 	proxy: {
 		type: 'direct',
 		extraParams: {
-			type: 'entityTemplate'
+			type: 'template',
+			subtype: 'entity'
 		},
 		api: {
 			create:  Spelled.StorageActions.create,

@@ -8,6 +8,8 @@ Ext.define('Spelled.abstract.model.Template', {
     requires: ['Spelled.abstract.writer.JsonWriter'],
 
 	fields: [
+		{ name: 'type', type: 'string', defaultValue: 'template' },
+		'subtype',
 		{ name: 'readonly', type: 'boolean', defaultValue: false },
 		{ name: 'engineInternal', type: 'boolean', defaultValue: false }
 	],

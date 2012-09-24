@@ -5,15 +5,15 @@ Ext.define('Spelled.store.template.Types', {
 
     data : [
         {
-            "type":"componentTemplate",
+			"type":"component",
             "name":"Component"
         },
         {
-            "type":"entityTemplate",
+            "type":"entity",
             "name":"Entity"
         },
         {
-            "type":"systemTemplate",
+            "type":"system",
             "name":"System"
         }
     ]

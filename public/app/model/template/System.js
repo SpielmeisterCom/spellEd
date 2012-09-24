@@ -4,7 +4,6 @@ Ext.define('Spelled.model.template.System', {
 	iconCls : "tree-system-icon",
 
     fields: [
-        "type",
         "namespace",
         "name"
     ],
@@ -23,7 +22,8 @@ Ext.define('Spelled.model.template.System', {
     proxy: {
         type: 'direct',
 		extraParams: {
-			type: 'systemTemplate'
+			type: 'template',
+			subtype: 'system'
 		},
         api: {
 			create:  Spelled.StorageActions.create,

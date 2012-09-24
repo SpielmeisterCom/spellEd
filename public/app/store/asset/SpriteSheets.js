@@ -3,7 +3,7 @@ Ext.define('Spelled.store.asset.SpriteSheets', {
 
     filters: [
         function( item ) {
-            return item.get('type') === 'spriteSheet'
+            return item.get('subtype') === 'spriteSheet'
         }
     ]
 });

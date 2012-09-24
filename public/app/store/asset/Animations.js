@@ -3,7 +3,7 @@ Ext.define('Spelled.store.asset.Animations', {
 
     filters: [
         function( item ) {
-            return item.get('type') === 'animation'
+            return item.get('subtype') === 'animation'
         }
     ]
 });

@@ -3,7 +3,7 @@ Ext.define('Spelled.store.asset.KeyToActionMappings', {
 
     filters: [
         function( item ) {
-            return item.get('type') === 'keyToActionMap'
+            return item.get('subtype') === 'keyToActionMap'
         }
     ]
 });

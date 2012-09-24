@@ -43,6 +43,7 @@ define(
 			var getAllByType = function( params ) {
 				var searchPath = util.getPath( params.projectName || root ),
 					type       = params.type,
+					subtype    = params.subtype,
 					pattern    = ( params.projectName ) ? searchPath + "/library/**/*" : searchPath + "/*/*",
 					files      = flob.byTypes( pattern, [ '.json' ] )
 
@@ -55,6 +56,8 @@ define(
 							if( _.isArray( type ) ) {
 								return ( _.find( type, function( key ){ return key === content.type } ) ) ? content : false
 
+							} else if( subtype ) {
+								return ( content.type === type && content.subtype === subtype ) ? content : false
 							} else {
 								return ( content.type === type ) ? content : false
 							}

@@ -6,7 +6,7 @@ Ext.define('Spelled.model.Asset', {
 	proxy: {
 		type: 'direct',
 		extraParams: {
-			type: 'appearance'
+			type: 'asset'
 		},
 		api: {
 			create:  Spelled.StorageActions.create,
@@ -20,7 +20,8 @@ Ext.define('Spelled.model.Asset', {
 	},
 
     fields: [
-        'type',
+		{ name: 'type', type: 'string', defaultValue: 'asset' },
+		'subtype',
 		'file',
         'namespace',
 		'config',
@@ -38,7 +39,7 @@ Ext.define('Spelled.model.Asset', {
 		return node.appendChild(
 			node.createNode( {
 				text   : this.get( 'name' ),
-				cls    : this.get( 'type' ),
+				cls    : this.get( 'subtype' ),
 				iconCls: this.iconCls,
 				leaf   : true,
 				id     : this.getId()
@@ -52,9 +53,9 @@ Ext.define('Spelled.model.Asset', {
 
 	constructor: function() {
 		var object  = arguments[0] || arguments[2],
-			assetId = object.type + ":" + this.generateIdentifier( object )
+			assetId = object.subtype + ":" + this.generateIdentifier( object )
 
-		switch( object.type ) {
+		switch( object.subtype ) {
 			case "spriteSheet":
 				this.iconCls = "tree-asset-spritesheet-icon"
 				break

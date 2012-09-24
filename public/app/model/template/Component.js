@@ -4,7 +4,6 @@ Ext.define('Spelled.model.template.Component', {
 	iconCls : "tree-component-icon",
 
     fields: [
-        "type",
         "namespace",
 		{ name: 'title', type: 'string', defaultValue: "" },
 		{ name: 'icon', type: 'string', defaultValue: '' },
@@ -21,7 +20,8 @@ Ext.define('Spelled.model.template.Component', {
 	proxy: {
 		type: 'direct',
 		extraParams: {
-			type: 'componentTemplate'
+			type: 'template',
+			subtype: 'component'
 		},
 		api: {
 			create:  Spelled.StorageActions.create,
