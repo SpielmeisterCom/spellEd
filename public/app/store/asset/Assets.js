@@ -1,5 +1,11 @@
 Ext.define('Spelled.store.asset.Assets', {
     extend: 'Ext.data.Store',
 
-    model: 'Spelled.model.Asset'
+    model: 'Spelled.model.Asset',
+
+	listeners: {
+		load: function( me, records, successful ) {
+			Ext.getStore( 'asset.Tree' ).generateNodesFromRecords( records )
+		}
+	}
 });

@@ -303,6 +303,7 @@
 		"Ext.picker.Color",
 		"Ext.menu.ColorPicker",
 		"Spelled.abstract.model.Model",
+		"Spelled.data.writer.Asset",
 		"Spelled.data.reader.Project",
 		"Spelled.data.writer.Project",
 		"Spelled.data.reader.Script",

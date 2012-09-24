@@ -10,6 +10,8 @@ Ext.define('Spelled.abstract.store.TreeStore', {
 			localNodeId = node.getId() + "." + part,
 			localNode   = node.findChild( 'id', localNodeId )
 
+		if( !part ) return node
+
 		if( !localNode ) {
 			localNode = node.appendChild(
 				node.createNode( {

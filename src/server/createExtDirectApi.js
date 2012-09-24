@@ -6,7 +6,6 @@ define(
         'fs',
         'server/extDirectApi/createUtil',
 		'server/extDirectApi/createStorageApi',
-        'server/extDirectApi/createAssetsApi',
 
         'underscore'
     ],
@@ -16,7 +15,6 @@ define(
         fs,
         createUtil,
 		createStorageApi,
-        createAssetsApi,
 
         _
     ) {
@@ -89,7 +87,6 @@ define(
 
             return {
 				StorageActions           : createStorageApi( projectsRoot ),
-                AssetsActions            : createAssetsApi( projectsRoot ),
 				SpellBuildActions : [
 					{
 						name: "initDirectory",

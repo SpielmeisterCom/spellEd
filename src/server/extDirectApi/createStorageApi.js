@@ -32,8 +32,12 @@ define(
 				return fs.readFileSync( filePath, 'utf8' )
 			}
 
-			var writeContent = function( filePath, content ) {
-				return fs.writeFileSync( filePath, ( _.isObject( content ) ) ? JSON.stringify( content, '', '\t' ) : content )
+			var writeContent = function( filePath, content, encoding ) {
+
+				return fs.writeFileSync( filePath, ( _.isObject( content ) )
+					? JSON.stringify( content, '', '\t' )
+					: ( encoding === 'base64' ) ?  new Buffer( content, 'base64' ) : content
+				)
 			}
 
 			var getAllByType = function( params ) {
@@ -86,7 +90,7 @@ define(
 					filePath = util.getPath( params.id ),
 					content  = params.content
 
-				writeContent( filePath, content )
+				writeContent( filePath, content, params.encoding )
 
 				return filePath
 			}
@@ -96,7 +100,7 @@ define(
 					filePath = util.getPath( params.id),
 					content  = params.content
 
-				return writeContent( filePath, content )
+				return writeContent( filePath, content, params.encoding )
 			}
 
 			var destroy = function( req, res, payload, next ) {

@@ -17,20 +17,6 @@ define(
 
 
 //
-//						if( withFileType === true && path.extname( filePath ) === ".json" ) {
-//							var fileContent = fs.readFileSync( filePath, 'utf8' )
-//							try{
-//								var object = JSON.parse(fileContent)
-//
-//								fileInfo.cls  = object.type
-//								fileInfo.text = object.name
-//
-//								if( object.type === "entityTemplate" ) {
-//									fileInfo.iconCls = "tree-scene-entity-icon"
-//								} else if( object.type === "componentTemplate" ) {
-//									fileInfo.iconCls = "tree-component-icon"
-//								} else if( object.type === "systemTemplate" ) {
-//									fileInfo.iconCls = "tree-system-icon"
 //								} else if (object.type === "spriteSheet") {
 //									fileInfo.iconCls = "tree-asset-spritesheet-icon"
 //								} else if (object.type === "animation") {

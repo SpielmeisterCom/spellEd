@@ -20,10 +20,6 @@ Ext.define('Spelled.view.asset.edit.Edit', {
 			allowBlank: true
 		},
 
-		api: {
-			submit: Spelled.AssetsActions.update
-		},
-
 		items: [
 			{
 				xtype: "combo",

@@ -13,9 +13,6 @@ Ext.define('Spelled.view.asset.create.Create', {
     closable: true,
 
     items: [ {
-		xtype: 'assetform',
-		api: {
-			submit: Spelled.AssetsActions.create
-		}
+		xtype: 'assetform'
 	}]
 });

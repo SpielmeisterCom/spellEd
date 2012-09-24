@@ -49,6 +49,18 @@ Ext.define('Spelled.view.asset.Form', {
 			msgTarget: 'side',
 			buttonText: 'Select a File...',
 			listeners: {
+				'show': function( file ) {
+					var domElement = document.querySelector('input[type="file"]')
+
+					if( domElement && !domElement.onChange ) {
+						domElement.addEventListener( 'change',
+							function(event) {
+								file.fileRawInput = event.target.files[0]
+							},
+							false
+						)
+					}
+				},
 				'change': function( cmp, value) {
 					if( value )
 						this.up('form').down('combobox[name="assetId"]').reset()

@@ -42,7 +42,8 @@ Ext.define('Spelled.controller.Projects', {
 		var stores = [
 			'template.Components',
 			'template.Entities',
-			'template.Systems'
+			'template.Systems',
+			'script.Scripts'
 		]
 
 		Ext.each(
