@@ -3,9 +3,6 @@ Ext.define('Spelled.controller.Assets', {
 
     views: [
 		'asset.ColorField',
-        'asset.Navigator',
-        'asset.Editor',
-        'asset.TreeList',
         'asset.Iframe',
         'asset.Form',
         'asset.FolderPicker',
@@ -20,9 +17,7 @@ Ext.define('Spelled.controller.Assets', {
     ],
 
     stores: [
-        'asset.Tree',
         'asset.Types',
-        'asset.FoldersTree',
         'asset.Textures',
         'asset.Sounds',
 		'asset.Fonts',
@@ -45,7 +40,15 @@ Ext.define('Spelled.controller.Assets', {
 		{
 			ref : 'RightPanel',
 			selector: '#RightPanel'
-		}
+		},
+		{
+			ref : 'AssetEditor',
+			selector: '#LibraryTabPanel'
+		},
+		{
+			ref : 'Navigator',
+			selector: '#LibraryTree'
+		},
     ],
 
     init: function() {
@@ -59,21 +62,10 @@ Ext.define('Spelled.controller.Assets', {
 			'keytoactionconfig > tool-documentation, spritesheetconfig > tool-documentation, animationassetconfig > tool-documentation, textappearanceconfig > tool-documentation': {
 				showDocumentation: this.showDocumentation
 			},
-            'assetsnavigator': {
-                activate: this.showAssets
-            },
-            'assetstreelist': {
-				select:          this.showConfigHelper,
-                itemdblclick:    this.openAsset,
-                itemcontextmenu: this.showListContextMenu,
-				editclick:	     this.showListContextMenu,
-                itemmouseenter:  this.application.showActionsOnLeaf,
-                itemmouseleave:  this.application.hideActions
-            },
             'AssetEditor': {
                 dragover: this.dropAsset
             },
-            'assetstreelist button[action="showCreateAsset"]' : {
+            'librarytreelist button[action="showCreateAsset"]' : {
                 click: this.showCreateAsset
             },
             'createasset button[action="createAsset"]' : {
@@ -95,9 +87,18 @@ Ext.define('Spelled.controller.Assets', {
 
 		this.application.on({
 			'removekeymapping': this.removeKeyMapping,
+			'assettabchange'  : this.assetTabChange,
+			'assetselect'     : this.showConfigHelper,
+			'assetdblclick'   : this.openAsset,
+			'assetcontextmenu': this.showListContextMenu,
 			scope: this
 		})
     },
+
+	assetTabChange: function( tabPanel, newCard ) {
+		var asset  = this.getAssetAssetsStore().getById( newCard.title )
+		if( asset ) this.showConfig( asset )
+	},
 
 	removeKeyMapping: function( view, selectedRow ) {
 		var store = view.getStore()
@@ -435,7 +436,7 @@ Ext.define('Spelled.controller.Assets', {
 
     removeAsset: function( assetId ) {
         var Asset       = this.getModel('Asset'),
-			assetEditor = Ext.getCmp('AssetEditor')
+			assetEditor = this.getAssetEditor()
 
 		this.application.closeOpenedTabs( assetEditor, assetId )
 
@@ -463,8 +464,8 @@ Ext.define('Spelled.controller.Assets', {
     openAsset: function( treePanel, record ) {
         if( !record.isLeaf() ) return
 
-        var assetEditor = Ext.getCmp('AssetEditor'),
-            title     = record.getId()
+        var assetEditor = this.getAssetEditor(),
+            title       = record.getId()
 
         var Asset = this.getAssetModel()
 
@@ -501,18 +502,8 @@ Ext.define('Spelled.controller.Assets', {
     },
 
 	refreshStoresAndTreeStores: function( force, callback ) {
-		this.loadTrees( force )
 		this.refreshStores( callback )
 	},
-
-	loadTrees: function( force ) {
-		if( !this.treeLoaded || force === true ) {
-			this.getAssetTreeStore().load()
-			this.treeLoaded = true
-		}
-
-        this.getAssetFoldersTreeStore().load()
-    },
 
     refreshStores: function( callback ) {
 		this.getAssetAssetsStore().load( {
@@ -522,15 +513,5 @@ Ext.define('Spelled.controller.Assets', {
 
 	getDefaultDocumentation: function() {
 		return  { xtype: 'label' , docString : '#!/guide/concepts_assets'}
-	},
-
-    showAssets : function( ) {
-		this.application.hideMainPanels()
-		this.getRightPanel().show()
-		this.getRightPanel().add( this.getDefaultDocumentation() )
-
-        this.loadTrees()
-
-        Ext.getCmp('AssetEditor').show()
-    }
+	}
 });

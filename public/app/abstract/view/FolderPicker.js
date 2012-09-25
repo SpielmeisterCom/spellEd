@@ -9,7 +9,7 @@ Ext.define('Spelled.abstract.view.FolderPicker', {
          * @cfg {Ext.data.TreeStore} store
          * A tree store that the tree picker will be bound to
          */
-        store: null,
+        store: 'FoldersTree',
 
         /**
          * @cfg {String} displayField
@@ -47,6 +47,7 @@ Ext.define('Spelled.abstract.view.FolderPicker', {
 
     initComponent: function() {
         var me = this;
+		me.store = Ext.getStore( me.store )
 
         me.callParent(arguments);
 

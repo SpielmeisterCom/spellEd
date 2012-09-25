@@ -53,7 +53,8 @@ Ext.define('Spelled.model.Asset', {
 
 	constructor: function() {
 		var object  = arguments[0] || arguments[2],
-			assetId = object.subtype + ":" + this.generateIdentifier( object )
+			assetId =this.generateIdentifier( object ),
+			internalAssetId = object.subtype + ":" + assetId
 
 		switch( object.subtype ) {
 			case "spriteSheet":
@@ -78,7 +79,8 @@ Ext.define('Spelled.model.Asset', {
 
 		this.callParent( arguments )
 
-		this.set( 'internalAssetId', assetId)
+		this.set( 'assetId', assetId)
+		this.set( 'internalAssetId', internalAssetId)
 	},
 
 	getAbsoluteFilePath: function() {

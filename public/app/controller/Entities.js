@@ -29,6 +29,10 @@ Ext.define('Spelled.controller.Entities', {
 		{
 			ref: 'Navigator',
 			selector: '#Navigator'
+		},
+		{
+			ref: 'TemplatesTree',
+			selector: '#LibraryTree'
 		}
 	],
 
@@ -47,17 +51,18 @@ Ext.define('Spelled.controller.Entities', {
     },
 
 	showTemplateEntity: function( entityTemplateId ) {
-		var entityTemplate = Ext.getStore( 'template.Entities' ).getById( entityTemplateId ),
-			tree           = Ext.getCmp( 'TemplatesTree' ),
+		var entityTemplate = this.getTemplateEntitiesStore().getById( entityTemplateId ),
+			tree           = this.getTemplatesTree(),
 			node           = tree.getRootNode().findChild( 'id', entityTemplateId, true )
 
 		if( entityTemplate && node ) {
-			this.getNavigator().setActiveTab( Ext.getCmp( 'Templates' ) )
+			this.getNavigator().setActiveTab( Ext.getCmp( 'Library' ) )
 
 			if( node ) {
 				tree.selectPath( node.getPath() )
 				tree.getSelectionModel().deselectAll()
 				tree.getSelectionModel().select( node )
+				this.application.fireEvent( 'templatedblclick', this.getNavigator(), node )
 			}
 		}
 	},
@@ -67,7 +72,7 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
     showListContextMenu: function( view, record, item, index, e, options ) {
-		var entity = Ext.getStore('config.Entities').getById( record.getId() )
+		var entity = this.getConfigEntitiesStore().getById( record.getId() )
 
 		if( entity ) {
 			this.application.getController('Menu').showEntitiesListContextMenu( entity, e )
@@ -94,7 +99,7 @@ Ext.define('Spelled.controller.Entities', {
 
 	createEntityHelper: function( record, values ) {
 		if( !Ext.isEmpty( values.templateId ) ) {
-			var entityTemplate = Ext.getStore('template.Entities').getById( values.templateId )
+			var entityTemplate = this.getTemplateEntitiesStore().getById( values.templateId )
 			record.set( 'templateId', entityTemplate.getFullName() )
 
 			entityTemplate.getComponents().each(

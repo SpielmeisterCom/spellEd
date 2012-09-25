@@ -95,6 +95,7 @@ require(
 					'Templates',
 					'Scripts',
 					'Systems',
+					'Library',
 					'templates.Components',
 					'templates.Entities',
 					'templates.Systems'

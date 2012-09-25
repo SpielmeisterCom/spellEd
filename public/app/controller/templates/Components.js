@@ -38,7 +38,7 @@ Ext.define('Spelled.controller.templates.Components', {
         },
 		{
 			ref : 'TemplateEditor',
-			selector: '#TemplateEditor'
+			selector: '#LibraryTabPanel'
 		}
     ],
 

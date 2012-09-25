@@ -11,7 +11,7 @@ Ext.define('Spelled.abstract.model.Model', {
 		return node.appendChild(
 			node.createNode( {
 				text   : this.get( 'name' ),
-				cls    : this.get( 'subtype' ),
+				cls    : this.get( 'subtype' ) || this.get( 'type' ),
 				iconCls: this.iconCls,
 				leaf   : true,
 				id     : this.getId()

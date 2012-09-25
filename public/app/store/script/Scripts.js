@@ -5,7 +5,7 @@ Ext.define('Spelled.store.script.Scripts', {
 
 	listeners: {
 		load: function( me, records, successful ) {
-			Ext.getStore( 'script.Tree' ).generateNodesFromRecords( records )
+			Ext.getStore( 'Library' ).generateNodesFromRecords( records )
 		}
 	}
 });

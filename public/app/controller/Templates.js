@@ -7,9 +7,6 @@ Ext.define('Spelled.controller.Templates', {
 	TYPE_ENTITY_COMPOSITE  : 'templateEntityComposite',
 
     views: [
-        'template.Editor',
-        'template.Navigator',
-        'template.TreeList',
         'template.Create',
         'template.FolderPicker',
 		'template.ReadOnly'
@@ -22,9 +19,7 @@ Ext.define('Spelled.controller.Templates', {
     ],
 
     stores: [
-        'TemplatesTree',
         'template.Types',
-        'template.FoldersTree',
         'template.Components',
         'template.Entities',
         'template.Systems'
@@ -41,35 +36,19 @@ Ext.define('Spelled.controller.Templates', {
 		},
 		{
 			ref : 'TemplateEditor',
-			selector: '#TemplateEditor'
+			selector: '#LibraryTabPanel'
 		},
 		{
 			ref: 'TemplatesTree',
-			selector: '#TemplatesTree'
+			selector: '#LibraryTree'
 		}
     ],
 
     init: function() {
         this.control({
-            'templatesnavigator': {
-                activate: this.showTemplateEditor
-            },
-			'templateeditor': {
-				tabchange: this.openTabTemplate
-			},
-			'templateeditor tab': {
-				beforeclose: this.checkIfTemplateIsDirty
-			},
-			'templatestreelist button[action="showCreateTemplate"]': {
+			'librarytreelist button[action="showCreateTemplate"]': {
 				click: this.showCreateTemplate
 			},
-            'templatestreelist': {
-                editclick:       this.showTemplatesContextMenu,
-                itemcontextmenu: this.showTemplatesContextMenu,
-                itemdblclick:    this.openTemplate,
-                itemmouseenter:  this.application.showActionsOnLeaf,
-                itemmouseleave:  this.application.hideActions
-            },
             'createtemplate button[action="createTemplate"]' : {
                 click: this.createTemplate
             },
@@ -77,12 +56,17 @@ Ext.define('Spelled.controller.Templates', {
                 select: this.changeTemplateCreationType
             }
         })
+
+		this.application.on({
+			templatecontextmenu: this.showTemplatesContextMenu,
+			templatedblclick:    this.openTemplate,
+			templatebeforeclose: this.checkIfTemplateIsDirty,
+			templatetabchange:  this.openTabTemplate,
+			scope: this
+		})
     },
 
-	checkIfTemplateIsDirty: function( tab ) {
-		var panel = this.application.findTabByTitle( this.getTemplateEditor(), tab.text )
-		if( !panel ) return
-
+	checkIfTemplateIsDirty: function( panel ) {
 		var template = panel.template
 		if( template.isDirty() ) {
 			var callback =  Ext.bind(
@@ -95,7 +79,7 @@ Ext.define('Spelled.controller.Templates', {
 			this.application.dirtySaveAlert( template, callback )
 			return false
 		} else {
-			this.closeTemplateTab( panel )
+			return this.closeTemplateTab( panel )
 		}
 	},
 
@@ -380,17 +364,5 @@ Ext.define('Spelled.controller.Templates', {
 
     refreshStores: function() {
         this.loadTemplateStores()
-    },
-
-    showTemplateEditor : function( ) {
-		this.application.hideMainPanels()
-		this.getRightPanel().show()
-
-		if( this.getTemplatesTree().getSelectionModel().getSelection().length > 0 ){
-			this.showConfig( this.getTemplatesTree(), this.getTemplatesTree().getSelectionModel().getSelection()[0] )
-		}
-
-		this.getTemplateEditor().show()
-
     }
 });

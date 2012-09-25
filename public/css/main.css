@@ -139,7 +139,7 @@
     text-align: right;
 }
 
-#ScriptsTree .x-tree-icon-leaf {
+.tree-script-icon {
     background-image: url( '../images/icons/script.png' ) !important;
 }
 

@@ -4,16 +4,11 @@ Ext.define('Spelled.controller.Scripts', {
     views: [
         'script.Create',
         'script.FolderPicker',
-        'script.Editor',
-        'script.TreeList',
-        'script.Manager',
-        'script.Navigator'
+        'script.Editor'
     ],
 
     stores: [
-        'script.Scripts',
-        'script.Tree',
-        'script.FoldersTree'
+        'script.Scripts'
     ],
 
     models: [
@@ -22,8 +17,8 @@ Ext.define('Spelled.controller.Scripts', {
 
     refs: [
 		{
-			ref: 'ScriptEditor',
-			selector: '#ScriptEditor'
+			ref: 'Navigator',
+			selector: '#Navigator'
 		},
         {
             ref : 'MainPanel',
@@ -35,29 +30,22 @@ Ext.define('Spelled.controller.Scripts', {
 		},
 		{
 			ref : 'ScriptsTree',
-			selector: '#ScriptsTree'
+			selector: '#LibraryTree'
+		},
+		{
+			ref: 'ScriptEditor',
+			selector: '#LibraryTabPanel'
 		}
     ],
 
     init: function() {
         this.control({
 			'scripteditor': {
-				beforeclose: this.checkIfScriptIsDirty,
 				save: this.globalSaveHelper,
 				activate: this.refreshAceEditorContent,
 				render:   this.addAceEditor
 			},
-            'scriptsnavigator': {
-                activate: this.showScripts
-            },
-            'scriptstreelist': {
-                itemdblclick:    this.openScriptHelper,
-                itemcontextmenu: this.showListContextMenu,
-                editclick:       this.showListContextMenu,
-                itemmouseenter:  this.application.showActionsOnLeaf,
-                itemmouseleave:  this.application.hideActions
-            },
-            'scriptstreelist [action="showCreateScript"]' : {
+            'librarytreelist [action="showCreateScript"]' : {
                 click: this.showCreateScript
             },
             'createscript button[action="createScript"]' : {
@@ -66,8 +54,11 @@ Ext.define('Spelled.controller.Scripts', {
         })
 
 		this.application.on( {
-				'globalsave'      : this.saveAllScriptsInTabs,
-				'savescriptpanel' : this.saveScriptInPanel,
+				scriptdblclick    : this.openScriptHelper,
+				scriptbeforeclose : this.checkIfScriptIsDirty,
+				scriptcontextmenu : this.showListContextMenu,
+				globalsave        : this.saveAllScriptsInTabs,
+				savescriptpanel   : this.saveScriptInPanel,
 				scope : this
 			}
 		)
@@ -110,7 +101,7 @@ Ext.define('Spelled.controller.Scripts', {
 				tree     = this.getScriptsTree(),
 				node     = tree.getRootNode().findChild( 'id', script.getId(), true )
 
-			Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Scripts') )
+			this.getNavigator().setActiveTab( Ext.getCmp( 'Library' ) )
 
 			if( node ) {
 				tree.expandPath( node.getPath() )
@@ -142,7 +133,7 @@ Ext.define('Spelled.controller.Scripts', {
 	},
 
     removeScript: function( scriptId ) {
-        var editorTab = Ext.getCmp("ScriptEditor"),
+        var editorTab = this.getScriptEditor(),
 			script    = this.getScriptScriptsStore().getById( scriptId )
 
 		this.application.closeOpenedTabs( editorTab, script.get('name') )
@@ -157,7 +148,7 @@ Ext.define('Spelled.controller.Scripts', {
     },
 
 	openScript: function( scriptId ) {
-		var scriptEditor = Ext.getCmp('ScriptEditor'),
+		var scriptEditor = this.getScriptEditor(),
 			script       = this.getScriptScriptsStore().getById( scriptId )
 
 		if( script ) {
@@ -222,11 +213,5 @@ Ext.define('Spelled.controller.Scripts', {
 
     refreshStores: function() {
 		this.getScriptScriptsStore().load()
-    },
-
-    showScripts : function( ) {
-		this.application.hideMainPanels()
-
-        Ext.getCmp('ScriptEditor').show()
     }
 });

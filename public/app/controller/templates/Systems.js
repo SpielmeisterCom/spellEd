@@ -30,7 +30,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 		},
 		{
 			ref : 'TemplateEditor',
-			selector: '#TemplateEditor'
+			selector: '#LibraryTabPanel'
 		},
 		{
 			ref : 'RightPanel',
@@ -40,11 +40,10 @@ Ext.define('Spelled.controller.templates.Systems', {
 
 	init: function() {
 		this.control({
-			'#TemplateEditor scripteditor': {
+			'#LibraryTabPanel scripteditor': {
 				scriptchange: Ext.bind( function(){
 					var tab = this.getTemplateEditor().getActiveTab()
-
-					this.markSystemAsDirty( tab.template )
+					if( tab.getXType() === 'scripteditor' && tab.template ) this.markSystemAsDirty( tab.template )
 				},this)
 			},
 			'systemtemplateedit': {

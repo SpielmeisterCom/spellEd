@@ -28,6 +28,8 @@ Ext.define('Spelled.abstract.store.TreeStore', {
 	generateNodesFromRecords: function( records ) {
 		var rootNode  = this.getRootNode()
 
+		this.fireEvent( 'generateNodesFromRecords' )
+
 		Ext.Array.each(
 			records,
 			function( record ) {

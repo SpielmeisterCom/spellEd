@@ -27,11 +27,11 @@ Ext.define('Spelled.controller.Menu', {
 		},
 		{
 			ref : 'TemplateEditor',
-			selector: '#TemplateEditor'
+			selector: '#LibraryTabPanel'
 		},
 		{
 			ref : 'TemplatesTree',
-			selector: '#TemplatesTree'
+			selector: '#LibraryTree'
 		},
 		{
 			ref : 'RightPanel',
@@ -43,11 +43,11 @@ Ext.define('Spelled.controller.Menu', {
 		},
 		{
 			ref : 'ScriptsTree',
-			selector: '#ScriptsTree'
+			selector: '#LibraryTree'
 		},
 		{
 			ref: "AssetsTree",
-			selector: '#AssetsTree'
+			selector: '#LibraryTree'
 		}
 	],
 
@@ -348,7 +348,6 @@ Ext.define('Spelled.controller.Menu', {
 
 		if( node && node.isLeaf() ) {
 			this.application.getController( 'Scripts' ).openScript( node.get('id') )
-			node.remove()
 		}
 	},
 

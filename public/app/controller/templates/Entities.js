@@ -21,12 +21,12 @@ Ext.define('Spelled.controller.templates.Entities', {
 			selector: '#RightPanel'
 		},
 		{
-			ref: 'TemplatesTree',
-			selector: '#TemplatesTree'
+			ref : 'TemplateEditor',
+			selector: '#LibraryTabPanel'
 		},
 		{
-			ref : 'TemplateEditor',
-			selector: '#TemplateEditor'
+			ref: 'TemplatesTree',
+			selector: '#LibraryTree'
 		}
 	],
 

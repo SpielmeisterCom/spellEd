@@ -32,17 +32,9 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                             xtype: "scenesnavigator"
                         },
 						{
-							id: "Templates",
-							xtype: "templatesnavigator"
-						},
-                        {
-                            id: "Assets",
-                            xtype: "assetsnavigator"
-                        },
-                        {
-                            id: "Scripts",
-                            xtype: "scriptsnavigator"
-                        }
+							id: "Library",
+							xtype: "librarynavigator"
+						}
                     ]
                 },
                 {
@@ -56,17 +48,9 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                             xtype: "sceneeditor"
                         },
 						{
-							id: "TemplateEditor",
-							xtype: "templateeditor"
-						},
-                        {
-                            id: "AssetEditor",
-                            xtype: "asseteditor"
-                        },
-                        {
-                            id: "ScriptEditor",
-                            xtype: "scriptmanager"
-                        }
+							id: "LibraryTabPanel",
+							xtype: "librarytabpanel"
+						}
                     ]
                 },
 				{

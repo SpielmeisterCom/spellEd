@@ -22,7 +22,7 @@ Ext.define('Spelled.abstract.store.Template', {
 
 	listeners: {
 		load: function( store, records ) {
-			Ext.getStore( 'TemplatesTree' ).generateNodesFromRecords( records )
+			Ext.getStore( 'Library' ).generateNodesFromRecords( records )
 		}
 	}
 });
