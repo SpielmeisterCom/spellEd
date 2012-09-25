@@ -249,7 +249,7 @@ Ext.define('Spelled.controller.Templates', {
 
         if( !this.application.getController('Templates').checkForReferences( template ) ) {
             this.application.getController('Templates').removeTemplate( template )
-			this.application.removeSelectedNode( Ext.getCmp( 'TemplatesTree' ) )
+			this.application.removeSelectedNode( this.getTemplatesTree() )
         } else {
             Ext.Msg.alert( 'Error', 'The Template "' + template.getFullName() + '" is used in this Project and can not be deleted.' +
                 '<br>Remove all references to this Template first!')

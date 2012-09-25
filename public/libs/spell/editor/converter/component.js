@@ -16,7 +16,7 @@ define(
 		 * @return {*}
 		 */
 		var toEngineFormat = function( component ) {
-			var componentResult = _.pick( component , 'name','namespace','type','title','doc','icon' )
+			var componentResult = _.pick( component , 'name','namespace','type','title','doc','icon','subtype' )
 
 			componentResult.attributes = _.map(
 				component.getAttributes,

@@ -57,21 +57,11 @@ Ext.define('Spelled.controller.Scripts', {
 				scriptdblclick    : this.openScriptHelper,
 				scriptbeforeclose : this.checkIfScriptIsDirty,
 				scriptcontextmenu : this.showListContextMenu,
-				globalsave        : this.saveAllScriptsInTabs,
 				savescriptpanel   : this.saveScriptInPanel,
 				scope : this
 			}
 		)
     },
-
-	saveAllScriptsInTabs: function() {
-		this.getScriptEditor().items.each(
-			function( panel ) {
-				this.saveScriptInPanel( panel )
-			},
-			this
-		)
-	},
 
 	checkIfScriptIsDirty: function( panel ) {
 		var script = panel.model
