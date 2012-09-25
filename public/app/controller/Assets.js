@@ -48,7 +48,7 @@ Ext.define('Spelled.controller.Assets', {
 		{
 			ref : 'Navigator',
 			selector: '#LibraryTree'
-		},
+		}
     ],
 
     init: function() {
@@ -86,6 +86,7 @@ Ext.define('Spelled.controller.Assets', {
         })
 
 		this.application.on({
+			'assetbeforeclose': this.assetTabClose,
 			'removekeymapping': this.removeKeyMapping,
 			'assettabchange'  : this.assetTabChange,
 			'assetselect'     : this.showConfigHelper,
@@ -94,6 +95,11 @@ Ext.define('Spelled.controller.Assets', {
 			scope: this
 		})
     },
+
+	assetTabClose: function( panel ) {
+		this.getRightPanel().removeAll()
+		panel.destroy()
+	},
 
 	assetTabChange: function( tabPanel, newCard ) {
 		var asset  = this.getAssetAssetsStore().getById( newCard.title )

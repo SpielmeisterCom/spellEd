@@ -110,7 +110,7 @@ Ext.define('Spelled.controller.Library', {
 
 		switch( this.getTabType( panel ) ) {
 			case this.TYPE_ASSET:
-				this.getRightPanel().removeAll()
+				this.application.fireEvent( 'assetbeforeclose', panel )
 				break
 			case this.TYPE_TEMPLATE:
 				this.application.fireEvent( 'templatebeforeclose', panel )
