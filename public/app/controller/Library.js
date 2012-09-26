@@ -160,13 +160,10 @@ Ext.define('Spelled.controller.Library', {
 	showLibrary : function( ) {
 		this.application.hideMainPanels()
 		this.getRightPanel().show()
-//		this.getRightPanel().add( this.getDefaultDocumentation() )
 
-//		this.loadTrees()
-
-//		if( this.getTemplatesTree().getSelectionModel().getSelection().length > 0 ){
-//			this.showConfig( this.getTemplatesTree(), this.getTemplatesTree().getSelectionModel().getSelection()[0] )
-//		}
+		if( this.getNavigator().getSelectionModel().getSelection().length > 0 ){
+			this.dispatchLibraryNodeDoubleClick( this.getNavigator(), this.getNavigator().getSelectionModel().getSelection()[0] )
+		}
 
 		this.getLibraryTabPanel().show()
 	}
