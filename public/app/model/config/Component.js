@@ -63,6 +63,34 @@ Ext.define('Spelled.model.config.Component', {
 		return config
 	},
 
+	getTemplateCompositeConfig: function() {
+		var componentEntity    = this.getEntity()
+
+		if( !componentEntity.hasEntity || !componentEntity.hasEntity() ) return {}
+		var owner = componentEntity.getOwner()
+		if( owner.isAnonymous && owner.isAnonymous() ) return {}
+
+		var	tmp    = ( owner.getEntityTemplate ) ? owner.getEntityTemplate() : owner,
+			entity = tmp.getChildren().findRecord( 'name', componentEntity.get('name') )
+
+		if( !entity ) return {}
+
+		var	templateComponents = entity.getComponents(),
+			component          = undefined
+
+		templateComponents.each(
+			function( templateComponent ) {
+				if( templateComponent.get('templateId') === this.get( 'templateId' ) ) {
+					component = templateComponent
+					return false
+				}
+			},
+			this
+		)
+
+		return ( component ) ? component.get( 'config' ) : {}
+	},
+
     getConfigMergedWithTemplateConfig: function( ) {
         this.markChanges()
 
@@ -81,7 +109,7 @@ Ext.define('Spelled.model.config.Component', {
 			this.set('additional', true)
 		}
 
-		config = Ext.Object.merge( config, this.getTemplateConfig(), this.get('config') )
+		config = Ext.Object.merge( config, this.getTemplateConfig(), this.getTemplateCompositeConfig(), this.get('config') )
 
 		//TODO: Warum ist trim in der config durch den merge
         delete config.trim
@@ -90,8 +118,6 @@ Ext.define('Spelled.model.config.Component', {
     },
 
     getJSONConfig: function() {
-		var result = Ext.clone( this.data )
-
-        return result
+        return Ext.clone( this.data )
     }
 });
