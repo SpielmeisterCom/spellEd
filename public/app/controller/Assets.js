@@ -470,40 +470,35 @@ Ext.define('Spelled.controller.Assets', {
         if( !record.isLeaf() ) return
 
         var assetEditor = this.getAssetEditor(),
-            title       = record.getId()
-
-        var Asset = this.getAssetModel()
-
-        var foundTab = this.application.findActiveTabByTitle( assetEditor, title )
+			asset       = this.getAssetAssetsStore().getById( record.getId() ),
+            title       = asset.getFullName(),
+			foundTab    = this.application.findActiveTabByTitle( assetEditor, title )
 
         if( foundTab )
             return foundTab
 
-        Asset.load( record.getId() , {
-            scope: this,
-			success: function( asset ) {
-				var View    = this.getAssetIframeView(),
-					iframe  = {
-						tag : 'iframe',
-						src: '/' + asset.getFilePath( this.application.getActiveProject().get('name') ),
-						border: '0',
-						frameborder: '0',
-						scrolling: 'no'
-					},
-					errorTag = {
-						tag: 'h1',
-						cls: "no-animation-text",
-						html: 'Animation preview is not available.'
-					}
-
-				var view = new View( {
-					title: title,
-					autoEl: ( asset.get('subtype') === 'animation' ) ? errorTag : iframe
-				} )
-
-				this.application.createTab( assetEditor, view )
+		var View    = this.getAssetIframeView(),
+			iframe  = {
+				tag : 'iframe',
+				src: '/' + asset.getFilePath( this.application.getActiveProject().get('name') ),
+				border: '0',
+				frameborder: '0',
+				scrolling: 'no'
+			},
+			errorTag = {
+				tag: 'h1',
+				cls: "no-animation-text",
+				html: 'Animation preview is not available.'
 			}
-		})
+
+		if(  asset.get('subtype') !== 'keyToActionMap' ) {
+			var view = new View( {
+				title: title,
+				autoEl: ( asset.get('subtype') === 'animation' ) ? errorTag : iframe
+			} )
+
+			this.application.createTab( assetEditor, view )
+		}
     },
 
 	refreshStoresAndTreeStores: function( force, callback ) {
