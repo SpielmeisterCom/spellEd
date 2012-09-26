@@ -1,6 +1,6 @@
-Ext.define('Spelled.abstract.view.FolderPicker', {
+Ext.define('Spelled.view.library.FolderPicker', {
     extend: 'Ext.form.field.Picker',
-    xtype: 'assetfolderpicker',
+    xtype: 'libraryfolderpicker',
 
     triggerCls: Ext.baseCSSPrefix + 'form-arrow-trigger',
 
@@ -70,6 +70,8 @@ Ext.define('Spelled.abstract.view.FolderPicker', {
      * @private
      */
     createPicker: function() {
+		this.store.filter()
+
         var me = this,
             picker = Ext.create('Ext.tree.Panel', {
                 store: me.store,

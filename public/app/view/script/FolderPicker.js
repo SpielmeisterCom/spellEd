@@ -1,4 +1,4 @@
 Ext.define('Spelled.view.script.FolderPicker', {
-    extend: 'Spelled.abstract.view.FolderPicker',
+    extend: 'Spelled.view.library.FolderPicker',
     xtype: 'scriptfolderpicker'
 });

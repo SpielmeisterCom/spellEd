@@ -51,9 +51,6 @@ Ext.define('Spelled.controller.Templates', {
 			},
             'createtemplate button[action="createTemplate"]' : {
                 click: this.createTemplate
-            },
-            'createtemplate > form > combobox[name="type"]' : {
-                select: this.changeTemplateCreationType
             }
         })
 
@@ -170,33 +167,6 @@ Ext.define('Spelled.controller.Templates', {
 		}
     },
 
-    changeTemplateCreationType: function( combo, records ) {
-		var folderPicker = combo.up('form').down('templatefolderpicker'),
-			treeStore    = folderPicker.getStore(),
-			projectName  = this.application.getActiveProject().get('name'),
-			rootNode     = treeStore.getRootNode()
-
-		folderPicker.enable()
-
-		treeStore.oldRootNode = treeStore.oldRootNode || rootNode
-		treeStore.setRootNode( treeStore.oldRootNode )
-
-		switch( combo.getValue()  ) {
-			case this.TEMPLATE_TYPE_COMPONENT:
-				rootNode = treeStore.getRootNode().findChild( 'id', projectName + '.component', true )
-				break
-			case this.TEMPLATE_TYPE_ENTITY:
-				rootNode = treeStore.getRootNode().findChild( 'id', projectName + '.entity', true )
-				break
-			case this.TEMPLATE_TYPE_SYSTEM:
-				rootNode = treeStore.getRootNode().findChild( 'id', projectName + '.system', true )
-				break
-		}
-
-		treeStore.setRootNode( rootNode )
-		folderPicker.setValue( rootNode.getId() )
-    },
-
     showCreateTemplate: function() {
         var View = this.getTemplateCreateView()
         var view = new View( )
@@ -249,7 +219,7 @@ Ext.define('Spelled.controller.Templates', {
 
         if( !this.application.getController('Templates').checkForReferences( template ) ) {
             this.application.getController('Templates').removeTemplate( template )
-			this.application.removeSelectedNode( this.getTemplatesTree() )
+			this.application.removeSelectedNode( Ext.getCmp( 'LibraryTree' ) )
         } else {
             Ext.Msg.alert( 'Error', 'The Template "' + template.getFullName() + '" is used in this Project and can not be deleted.' +
                 '<br>Remove all references to this Template first!')
@@ -312,7 +282,7 @@ Ext.define('Spelled.controller.Templates', {
 			Model   = undefined,
 			content = {
 				name: values.name,
-				namespace: ( values.namespace === 'root' ) ? '' : values.namespace,
+				namespace: ( values.namespace === 'root' ) ? '' : values.namespace.substring( 5 ),
 				subtype: values.type
 			}
 

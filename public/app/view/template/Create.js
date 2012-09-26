@@ -34,7 +34,6 @@ Ext.define('Spelled.view.template.Create', {
                 },
                 {
                     xtype: "templatefolderpicker",
-					disabled: true,
                     name: 'namespace',
                     fieldLabel: 'Import into',
                     displayField: 'text',

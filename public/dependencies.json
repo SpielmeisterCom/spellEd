@@ -409,7 +409,7 @@
 		"Spelled.view.template.component.attribute.Boolean",
 		"Spelled.view.template.component.attribute.String",
 		"Spelled.view.template.component.attribute.Object",
-		"Spelled.abstract.view.FolderPicker",
+		"Spelled.view.library.FolderPicker",
 		"Spelled.view.asset.FolderPicker",
 		"Spelled.view.script.FolderPicker",
 		"Spelled.view.template.FolderPicker",

@@ -8,6 +8,7 @@ Ext.define('Spelled.controller.Library', {
     views: [
         'library.Navigator',
         'library.TabPanel',
+		'library.FolderPicker',
 		'library.TreeList'
     ],
 

@@ -6,10 +6,8 @@ Ext.define('Spelled.store.Library', {
 		cls: 'folder'
     },
 	listeners: {
-		generateNodesFromRecords: function() {
-			Ext.getStore( 'FoldersTree' ).filter(function( item ) {
-				return item.get( 'cls' ) === 'folder'
-			})
+		generateNodesFromRecords: function( records ) {
+			Ext.getStore( 'FoldersTree' ).generateNodesFromRecords( records )
 		}
 	}
 });

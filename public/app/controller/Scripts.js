@@ -171,7 +171,7 @@ Ext.define('Spelled.controller.Scripts', {
 			values = form.getValues(),
 			content = {
 				name: values.name,
-				namespace: ( values.folder === 'root' ) ? '' : values.folder,
+				namespace: ( values.folder === 'root' ) ? '' : values.folder.substring( 5 ),
 				type: 'script'
 			},
 			id = this.application.generateFileIdFromObject( content )

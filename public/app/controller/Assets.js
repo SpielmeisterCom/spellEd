@@ -327,8 +327,7 @@ Ext.define('Spelled.controller.Assets', {
 
 	showAdditionalConfiguration: function( combo ) {
 		var form = combo.up('form')
-		assetfolderpicker = form.down( 'assetfolderpicker' )
-		assetfolderpicker.getStore().setRootNode( this.application.getActiveProject().get('name') )
+
 		this.fieldRenderHelper( combo.getValue(), form )
 	},
 
@@ -370,7 +369,7 @@ Ext.define('Spelled.controller.Assets', {
 			me      = this,
 			content = {
 				name: values.name,
-				namespace: ( values.folder === 'root' ) ? '' : values.folder,
+				namespace: ( values.folder === 'root' ) ? '' : values.folder.substring( 5 ),
 				subtype: values.type
 			},
 			config  = {},
