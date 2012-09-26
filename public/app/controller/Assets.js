@@ -461,9 +461,16 @@ Ext.define('Spelled.controller.Assets', {
         )
     },
 
-    showCreateAsset: function() {
-        var view = Ext.widget( 'createasset' )
-        view.show()
+    showCreateAsset: function( button ) {
+        var view        = Ext.widget( 'createasset' ),
+			assetsCombo = view.down('combobox[name="type"]'),
+			assetType   = button.type
+
+		assetsCombo.setValue( assetType )
+
+		this.fieldRenderHelper( assetType, view )
+
+		view.show()
     },
 
     openAsset: function( treePanel, record ) {

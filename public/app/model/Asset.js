@@ -73,7 +73,7 @@ Ext.define('Spelled.model.Asset', {
 				this.iconCls = "tree-asset-sound-icon"
 				break
 			case "keyToActionMap":
-				this.iconCls = "tree-asset-keyToActionMap-icon"
+				this.iconCls = "tree-asset-keytoactionmap-icon"
 				break
 		}
 

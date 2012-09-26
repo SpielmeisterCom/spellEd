@@ -167,9 +167,13 @@ Ext.define('Spelled.controller.Templates', {
 		}
     },
 
-    showCreateTemplate: function() {
-        var View = this.getTemplateCreateView()
-        var view = new View( )
+    showCreateTemplate: function( button ) {
+        var View = this.getTemplateCreateView(),
+        	view = new View(),
+			combo = view.down('combobox[name="type"]')
+
+		combo.setValue( button.type )
+
         view.show()
     },
 
