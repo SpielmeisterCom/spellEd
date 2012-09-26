@@ -2,13 +2,11 @@ define(
 	'connect-urlRewriter/createUrlRewriter',
 	[
 		'fs',
-		'path',
 
 		'underscore'
 	],
 	function(
 		fs,
-		path,
 
 		_
 	) {
@@ -30,7 +28,7 @@ define(
 							rewrittenUrl = replacement
 
 						} else if( url.indexOf( pattern ) === 0 ) {
-							rewrittenUrl = path.join( replacement, url.substr( pattern.length ) )
+							rewrittenUrl = replacement + '/' + url.substr( pattern.length )
 						}
 
 					} else if( _.isRegExp( pattern ) ) {
@@ -38,7 +36,7 @@ define(
 					}
 
 					if( rewrittenUrl ) {
-						req.url = path.normalize( rewrittenUrl )
+						req.url = rewrittenUrl
 						break
 					}
 				}
