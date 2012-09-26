@@ -176,13 +176,13 @@ Ext.define('Spelled.controller.Scripts', {
 			},
 			id = this.application.generateFileIdFromObject( content )
 
+		content.id = id + ".json"
+		var script = Script.create( content )
+
         if( form.isValid() ){
 			Spelled.StorageActions.create(
-				{ id: id + ".js", content: content },
+				{ id: id + ".js", content: this.createModuleHeader( script.getFullName() ) },
 				function() {
-					content.id = id + ".json"
-					var script = Script.create( content )
-
 					script.save({
 							success: function( record ) {
 								Ext.Msg.alert('Success', 'Your Script "' + record.get( 'scriptId' ) + '" has been created.')
@@ -196,6 +196,26 @@ Ext.define('Spelled.controller.Scripts', {
 			)
 		}
     },
+
+	createModuleHeader: function( name ) {
+		var parts = [
+			"define(",
+			"	'" + name.replace(/\./g, "/") + "',",
+			"	[",
+			"		'spell/functions'",
+			"	],",
+			"	function(",
+			"		_",
+			"	) {",
+			'		"use strict"',
+			"		// all the codes belongs to here",
+			"	}",
+			")",
+			""
+		]
+
+		return parts.join( "\n" )
+	},
 
     showListContextMenu: function( view, record, item, index, e, options ) {
         this.application.getController('Menu').showScriptsListContextMenu( e )
