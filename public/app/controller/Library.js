@@ -174,11 +174,13 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	showLibrary : function( ) {
+		var node = this.getNavigator().getSelectionModel().getSelection()[0]
+
 		this.application.hideMainPanels()
 		this.getRightPanel().show()
 
-		if( this.getNavigator().getSelectionModel().getSelection().length > 0 ){
-			this.dispatchLibraryNodeDoubleClick( this.getNavigator(), this.getNavigator().getSelectionModel().getSelection()[0] )
+		if( node && node.parentNode ){
+			this.dispatchLibraryNodeDoubleClick( this.getNavigator(), node )
 		}
 
 		this.getLibraryTabPanel().show()
