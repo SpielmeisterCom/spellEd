@@ -36,7 +36,6 @@ Ext.define('Spelled.store.Library', {
 			this.sortFunction( node )
 		},
 		generateNodesFromRecords: function( records ) {
-			this.sortFunction( this.getRootNode() )
 			Ext.getStore( 'FoldersTree' ).generateNodesFromRecords( records )
 		}
 	}
