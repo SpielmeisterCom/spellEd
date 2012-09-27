@@ -14,7 +14,24 @@ Ext.define('Spelled.controller.Projects', {
         'Project'
     ],
 
+	storesForSave: [
+		'template.Components',
+		'template.Entities',
+		'template.Systems',
+		'script.Scripts'
+	],
+
     init: function() {
+		Ext.EventManager.on( window, 'beforeunload', function() {
+				if( this.checkIfDirty() ) return "Leaving without saving?"
+		},
+		this)
+
+		Ext.EventManager.on( window, 'unload', function() {
+				if( this.checkIfDirty() ) return "Leaving without saving?"
+		},
+		this)
+
         this.control({
             'createproject button[action="createProject"]': {
                 click: this.createProject
@@ -35,19 +52,43 @@ Ext.define('Spelled.controller.Projects', {
 		{
 			ref : 'ScenesTree',
 			selector: '#ScenesTree'
+		},
+		{
+			ref : 'Scenes',
+			selector: '#Scenes'
+		},
+		{
+			ref : 'Navigator',
+			selector: '#Navigator'
+		},
+		{
+			ref : 'Library',
+			selector: '#LibraryTabPanel'
 		}
 	],
 
-	globalSave: function() {
-		var stores = [
-			'template.Components',
-			'template.Entities',
-			'template.Systems',
-			'script.Scripts'
-		]
-
+	checkIfDirty: function() {
+		var dirty = false
 		Ext.each(
-			stores,
+			this.storesForSave,
+			function( id ) {
+				Ext.getStore( id ).each(
+					function( item ) {
+						if( item.dirty === true ) {
+							dirty = true
+							return false
+						}
+					}
+				)
+			}
+		)
+
+		return ( dirty ) ? true : this.application.getActiveProject().dirty
+	},
+
+	globalSave: function() {
+		Ext.each(
+			this.storesForSave,
 			function( id ) {
 				Ext.getStore( id ).each(
 					function( item ) {
@@ -238,7 +279,7 @@ Ext.define('Spelled.controller.Projects', {
 	projectLoadedCallback: function( project ) {
 		project.checkForComponentChanges()
 		this.getScenesList( project )
-		Ext.getCmp('Navigator').setActiveTab( Ext.getCmp('Scenes') )
+		this.getNavigator().setActiveTab( this.getScenes() )
 
 		var tree       = this.getScenesTree(),
 			startScene = project.getScenes().getById( project.get( 'startScene' ) ),
@@ -248,14 +289,13 @@ Ext.define('Spelled.controller.Projects', {
 		tree.expandPath( node.getPath() )
 
 		this.application.getController( 'Scenes' ).renderScene( startScene )
+		project.unDirty()
 	},
 
 	closeAllTabsFromProject: function() {
 		var app = this.application
 
-		app.closeAllTabs( Ext.getCmp('ScriptEditor') )
-		app.closeAllTabs( Ext.getCmp('AssetEditor') )
-		app.closeAllTabs( Ext.getCmp('SceneEditor') )
+		app.closeAllTabs( this.getLibrary() )
 	},
 
     getScenesList: function( project ) {

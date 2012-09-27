@@ -29,7 +29,14 @@ Ext.define('Spelled.model.config.Component', {
 
     setChanged: function() {
         this.set( 'changed', true)
+		this.dirty = true
+		this.getEntity().setDirty()
     },
+
+	unDirty: function() {
+		this.dirty = false
+		this.changed = false
+	},
 
 	markChanges: function() {
 		if( !Ext.isEmpty( this.get('config') ) ) this.setChanged()

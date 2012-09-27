@@ -83,6 +83,12 @@ Ext.define('Spelled.model.config.Entity', {
 		this.callParent()
 	},
 
+	unDirty: function() {
+		this.dirty = false
+		this.getComponents().each( function( component ) { component.unDirty() } )
+		this.getChildren().each( function( entity ) { entity.unDirty() } )
+	},
+
 	getOwner: function() {
 
 		if( this.isTemplateComposite() && this.hasEntity() && this.modelName === this.getEntity().modelName ) {

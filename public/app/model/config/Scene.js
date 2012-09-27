@@ -25,6 +25,17 @@ Ext.define('Spelled.model.config.Scene', {
         name :  'getEntities'
     },
 
+	setDirty: function() {
+		this.getProject().setDirty()
+
+		this.callParent()
+	},
+
+	unDirty: function() {
+		this.dirty = false
+		this.getEntities().each( function( entity ){ entity.unDirty() } )
+	},
+
 	getRenderTabTitle: function() {
 		return "Rendered: " + this.getId()
 	},

@@ -63,6 +63,11 @@ Ext.define('Spelled.model.Project', {
         associationKey: 'scenes'
     },
 
+	unDirty:function() {
+		this.dirty = false
+		this.getScenes().each( function( scene ){ scene.unDirty() } )
+	},
+
 	checkForComponentChanges: function() {
 
 		var checkEntity = function( entity ) {
