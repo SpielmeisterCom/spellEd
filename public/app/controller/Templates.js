@@ -305,6 +305,9 @@ Ext.define('Spelled.controller.Templates', {
 		if( form.isValid() ){
 			content.id = this.application.generateFileIdFromObject( content ) + '.json'
 			var model = Model.create( content )
+
+			if( values.type === this.TEMPLATE_TYPE_SYSTEM ) model.set( 'content', this.application.getController( 'Scripts' ).createModuleHeader( model.getFullName() ) )
+
 			model.save({
 				success: function( result ) {
 					Ext.Msg.alert('Success', 'Your Template "' + result.get( 'templateId' ) + '" has been created.')

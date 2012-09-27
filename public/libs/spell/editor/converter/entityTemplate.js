@@ -21,7 +21,7 @@ define(
 		 * @return {*}
 		 */
 		var toEngineFormat = function( entity, includeEmptyComponents ) {
-			var result = _.pick( entity, 'type', 'subtype' )
+			var result = _.pick( entity, 'version','type', 'subtype' )
 
 			result.config = _.reduce(
 				entity.getComponents,

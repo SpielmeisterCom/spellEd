@@ -3,6 +3,7 @@ Ext.define('Spelled.abstract.writer.JsonWriter', {
 
     getRecordData: function( record ) {
 		Ext.apply( record.data, record.getAssociatedData() )
+		record.data.version = Ext.app.CONFIGURATION.storageVersion
         return record.data
     }
 });
