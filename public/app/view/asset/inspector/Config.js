@@ -14,6 +14,12 @@ Ext.define('Spelled.view.asset.inspector.Config', {
 			padding: '15px',
 			items: [
 				{
+					xtype: "displayfield",
+					readOnly: true,
+					name: 'internalAssetId',
+					fieldLabel: 'Identifier'
+				},
+				{
 					xtype: "combo",
 					readOnly: true,
 					readOnlyCls: '',
