@@ -10,7 +10,7 @@ Ext.define('Spelled.data.writer.Asset', {
 		var data = _.map(
 			records,
 			function( record ) {
-				var asset = Ext.copyTo({}, self.getRecordData( record, operation ), 'name,namespace,type,subtype,doc')
+				var asset = Ext.copyTo({}, self.getRecordData( record, operation ), 'type,subtype,doc')
 
 				if( record.get( 'file' ) ) asset.file = record.get( 'file' )
 				if( record.get( 'config' ) ) asset.config = record.get( 'config' )

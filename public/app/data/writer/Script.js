@@ -10,7 +10,7 @@ Ext.define('Spelled.data.writer.Script', {
 		var data = _.map(
 			records,
 			function( record ) {
-				var script = Ext.copyTo({}, self.getRecordData( record, operation ), 'name,namespace,type')
+				var script = Ext.copyTo({}, self.getRecordData( record, operation ), 'type')
 
 				Spelled.StorageActions.update( { id: record.get('path'), content: record.get( 'content' ) } )
 

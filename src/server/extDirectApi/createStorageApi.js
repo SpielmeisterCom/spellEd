@@ -19,11 +19,21 @@ define(
 		'use strict'
 
 		return function( root ) {
-			var util = createUtil( root )
+			var util          = createUtil( root),
+				libraryPrefix = "library"
 
 			var generateExtModel = function( filePath ) {
-				var content = JSON.parse( getByFilePath( filePath ) )
+				var content   = JSON.parse( getByFilePath( filePath ) ),
+					fileParts = filePath.substr( filePath.indexOf( libraryPrefix ) + libraryPrefix.length + 1 ).split( path.sep ),
+					baseName  = fileParts.pop()
+
 				content.id = filePath
+
+				//TODO: fix this right. maybe rename project json files to projectname
+				if( !content.startScene ) {
+					content.name      = path.basename( baseName, path.extname( baseName ) )
+					content.namespace = fileParts.join( "." )
+				}
 
 				return content
 			}
