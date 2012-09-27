@@ -440,25 +440,17 @@ Ext.define('Spelled.controller.Assets', {
     },
 
     removeAsset: function( assetId ) {
-        var Asset       = this.getModel('Asset'),
+        var asset       = this.getAssetAssetsStore().getById( assetId ),
 			assetEditor = this.getAssetEditor()
 
-		this.application.closeOpenedTabs( assetEditor, assetId )
+		this.application.closeOpenedTabs( assetEditor, asset.getFullName() )
 
-        Asset.load(
-            assetId,
-            {
-                scope: this,
-                success: function( asset ) {
-                    asset.destroy(
-						{
-							callback: this.refreshStores,
-							scope: this
-						}
-					)
-				}
-            }
-        )
+		asset.destroy(
+			{
+				callback: this.refreshStores,
+				scope: this
+			}
+		)
     },
 
     showCreateAsset: function( button ) {
@@ -466,11 +458,11 @@ Ext.define('Spelled.controller.Assets', {
 			assetsCombo = view.down('combobox[name="type"]'),
 			assetType   = button.type
 
+		view.show()
+
 		assetsCombo.setValue( assetType )
 
 		this.fieldRenderHelper( assetType, view )
-
-		view.show()
     },
 
     openAsset: function( treePanel, record ) {

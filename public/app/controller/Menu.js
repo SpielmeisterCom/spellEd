@@ -327,19 +327,25 @@ Ext.define('Spelled.controller.Menu', {
 	},
 
     removeTemplate: function( ) {
-		var node = this.application.getLastSelectedNode( this.getTemplatesTree() )
+		var node       = this.application.getLastSelectedNode( this.getTemplatesTree() ) ,
+			controller = this.application.getController('Templates')
 
         if( node ) {
-			this.application.getController('Templates').deleteTemplateAction( node )
+			this.application.fireEvent( 'removeFromLibrary', node, Ext.bind( controller.deleteTemplateAction, controller ) )
 		}
     },
 
     removeScript: function( ) {
-		var node = this.application.getLastSelectedNode( this.getScriptsTree() )
+		var node = this.application.getLastSelectedNode( this.getScriptsTree() ) ,
+			me   = this
 
         if( node && node.isLeaf() ) {
-            this.application.getController( 'Scripts' ).removeScript( node.get('id') )
-			node.remove()
+			this.application.fireEvent( 'removeFromLibrary', node,
+				function(){
+					me.application.getController( 'Scripts' ).removeScript( node.get('id') )
+					node.remove()
+				}
+			)
 		}
     },
 
@@ -368,11 +374,16 @@ Ext.define('Spelled.controller.Menu', {
 	},
 
 	removeAsset: function( ) {
-		var node = this.application.getLastSelectedNode( this.getAssetsTree() )
+		var node = this.application.getLastSelectedNode( this.getAssetsTree() ),
+			me   = this
 
 		if( node && node.isLeaf() ) {
-			this.application.getController( 'Assets' ).removeAsset( node.get('id') )
-			node.remove()
+			this.application.fireEvent( 'removeFromLibrary', node,
+				function(){
+					me.application.getController( 'Assets' ).removeAsset( node.get('id') )
+					node.remove()
+				}
+			)
 		}
 	},
 

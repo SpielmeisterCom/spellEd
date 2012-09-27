@@ -56,7 +56,22 @@ Ext.define('Spelled.controller.Library', {
 			}
         })
 
+		this.application.on({
+			removeFromLibrary: this.removeFromLibrary,
+			scope : this
+		})
     },
+
+	removeFromLibrary: function( node, callback ) {
+		Ext.Msg.confirm(
+			'Confirm remove',
+			'Do you really want to delete "' + node.get( 'text' )+ '" from your library?' ,
+			function( button ) {
+				if ( button === 'yes' ) callback( node )
+			},
+			this
+		)
+	},
 
 	getNodeType: function( node ) {
 		var type = node.get( 'cls' )
