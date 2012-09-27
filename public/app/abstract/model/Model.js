@@ -1,5 +1,7 @@
 Ext.define('Spelled.abstract.model.Model', {
 
+	sortOrder: 9,
+
 	generateIdentifier: function( object ) {
 		var namespace = object.namespace,
 			name      = object.name
@@ -12,6 +14,7 @@ Ext.define('Spelled.abstract.model.Model', {
 			node.createNode( {
 				text   : this.get( 'name' ),
 				cls    : this.get( 'subtype' ) || this.get( 'type' ),
+				qtitle   : this.sortOrder,
 				iconCls: this.iconCls,
 				leaf   : true,
 				id     : this.getId()

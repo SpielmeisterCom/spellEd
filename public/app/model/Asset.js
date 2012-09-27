@@ -3,6 +3,8 @@ Ext.define('Spelled.model.Asset', {
 
 	mixins: ['Spelled.abstract.model.Model'],
 
+	sortOrder: 5,
+
 	proxy: {
 		type: 'direct',
 		extraParams: {
@@ -40,6 +42,7 @@ Ext.define('Spelled.model.Asset', {
 			node.createNode( {
 				text   : this.get( 'name' ),
 				cls    : this.get( 'subtype' ),
+				qtitle   : this.sortOrder,
 				iconCls: this.iconCls,
 				leaf   : true,
 				id     : this.getId()
@@ -68,12 +71,14 @@ Ext.define('Spelled.model.Asset', {
 				break
 			case "font":
 				this.iconCls = "tree-asset-2dtextappearance-icon"
+				this.sortOrder = 6
 				break
 			case "sound":
 				this.iconCls = "tree-asset-sound-icon"
 				break
 			case "keyToActionMap":
 				this.iconCls = "tree-asset-keytoactionmap-icon"
+				this.sortOrder = 5
 				break
 		}
 

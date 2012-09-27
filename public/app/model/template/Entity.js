@@ -6,6 +6,7 @@ Ext.define('Spelled.model.template.Entity', {
         "name"
     ],
 
+	sortOrder : 3,
 	iconCls : "tree-scene-entity-icon",
 
 	associations: [
@@ -81,7 +82,9 @@ Ext.define('Spelled.model.template.Entity', {
 	},
 
 	createTreeNode: function( node ) {
-		var entityNode = this.mixins.abstractModel.createTreeNode.call( this, node )
+		var entityNode = this.mixins.abstractModel.createTreeNode.call( this, node),
+			me         = this
+
 
 		this.getChildren().each( function( entity ) {
 			var childNode = entity.createTreeNode( node )
@@ -89,6 +92,7 @@ Ext.define('Spelled.model.template.Entity', {
 
 			var markAsComposites = function( compositeNode ) {
 				compositeNode.set( 'cls', 'templateEntityComposite' )
+				compositeNode.set( 'qtitle', me.sortOrder )
 				compositeNode.set( 'id', entityNode.get('id') + compositeNode.get('text') )
 
 				compositeNode.eachChild( function( item ) {

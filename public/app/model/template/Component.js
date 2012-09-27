@@ -2,6 +2,7 @@ Ext.define('Spelled.model.template.Component', {
     extend: 'Spelled.abstract.model.Template',
 
 	iconCls : "tree-component-icon",
+	sortOrder: 2,
 
     fields: [
         "namespace",
@@ -45,6 +46,7 @@ Ext.define('Spelled.model.template.Component', {
                 node.createNode ( {
                     text      : attribute.get('name'),
                     id        : attribute.getId(),
+					qtitle      : 2,
 					iconCls   : "tree-component-attribute-icon",
                     leaf      : true
                 } )

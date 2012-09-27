@@ -4,6 +4,8 @@ Ext.define('Spelled.model.Script', {
 
 	iconCls : "tree-script-icon",
 
+	sortOrder: 7,
+
     proxy: {
         type: 'direct',
 		extraParams: {
