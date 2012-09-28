@@ -27,7 +27,7 @@ Ext.define('Spelled.controller.Menu', {
 		},
 		{
 			ref : 'TemplateEditor',
-			selector: '#LibraryTabPanel'
+			selector: '#SceneEditor'
 		},
 		{
 			ref : 'TemplatesTree',

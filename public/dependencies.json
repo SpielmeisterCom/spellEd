@@ -334,7 +334,6 @@
 		"Spelled.view.menu.contextmenu.ScenesList",
 		"Spelled.view.menu.Menu",
 		"Spelled.store.Projects",
-		"Spelled.view.library.TabPanel",
 		"Spelled.view.library.TreeList",
 		"Spelled.view.library.Navigator",
 		"Spelled.view.project.Load",

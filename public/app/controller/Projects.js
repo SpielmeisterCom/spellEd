@@ -63,7 +63,7 @@ Ext.define('Spelled.controller.Projects', {
 		},
 		{
 			ref : 'Library',
-			selector: '#LibraryTabPanel'
+			selector: '#SceneEditor'
 		}
 	],
 

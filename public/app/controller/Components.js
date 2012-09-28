@@ -20,6 +20,10 @@ Ext.define('Spelled.controller.Components', {
 		{
 			ref : 'RightPanel',
 			selector: '#RightPanel'
+		},
+		{
+			ref : 'SceneEditor',
+			selector: '#SceneEditor'
 		}
 	],
 
@@ -307,7 +311,7 @@ Ext.define('Spelled.controller.Components', {
 	previewAttributeChange: function( field, newValue, oldValue ) {
 		var activeScene       = this.application.getActiveScene(),
 			sceneController   = this.application.getController( 'Scenes'),
-			sceneEditor       = Ext.getCmp( "SceneEditor"),
+			sceneEditor       = this.getSceneEditor(),
 			view              = field.up('componentproperties')
 		//Workaround because of the bad control-query in this controller
 		if( !view ) return

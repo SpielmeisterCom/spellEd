@@ -33,6 +33,10 @@ Ext.define('Spelled.controller.Entities', {
 		{
 			ref: 'TemplatesTree',
 			selector: '#LibraryTree'
+		},
+		{
+			ref: 'Library',
+			selector: '#Library'
 		}
 	],
 
@@ -56,7 +60,7 @@ Ext.define('Spelled.controller.Entities', {
 			node           = tree.getRootNode().findChild( 'id', entityTemplateId, true )
 
 		if( entityTemplate && node ) {
-			this.getNavigator().setActiveTab( Ext.getCmp( 'Library' ) )
+			this.getNavigator().setActiveTab( this.getLibrary() )
 
 			if( node ) {
 				tree.selectPath( node.getPath() )

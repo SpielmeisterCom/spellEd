@@ -34,7 +34,7 @@ Ext.define('Spelled.controller.Scripts', {
 		},
 		{
 			ref: 'ScriptEditor',
-			selector: '#LibraryTabPanel'
+			selector: '#SceneEditor'
 		}
     ],
 
@@ -91,7 +91,7 @@ Ext.define('Spelled.controller.Scripts', {
 				tree     = this.getScriptsTree(),
 				node     = tree.getRootNode().findChild( 'id', script.getId(), true )
 
-			this.getNavigator().setActiveTab( Ext.getCmp( 'Library' ) )
+			this.getNavigator().setActiveTab( this.getScriptEditor() )
 
 			if( node ) {
 				tree.expandPath( node.getPath() )

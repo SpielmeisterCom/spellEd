@@ -7,7 +7,6 @@ Ext.define('Spelled.controller.Library', {
 
     views: [
         'library.Navigator',
-        'library.TabPanel',
 		'library.FolderPicker',
 		'library.TreeList'
     ],
@@ -24,7 +23,7 @@ Ext.define('Spelled.controller.Library', {
         },
 		{
 			ref : 'LibraryTabPanel',
-			selector: '#LibraryTabPanel'
+			selector: '#SceneEditor'
 		},
 		{
 			ref : 'Navigator',
@@ -41,10 +40,10 @@ Ext.define('Spelled.controller.Library', {
 			'librarynavigator': {
 				activate: this.showLibrary
 			},
-			'librarytabpanel': {
+			'sceneeditor': {
 				tabchange: this.dispatchLibraryTabChange
 			},
-			'librarytabpanel tab': {
+			'sceneeditor tab': {
 				beforeclose: this.dispatchLibraryTabBeforeClose
 			},
 			'librarytreelist': {
@@ -106,6 +105,7 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	dispatchLibraryTabChange: function( tabPanel, newCard ) {
+		this.getRightPanel().removeAll()
 		switch( this.getTabType( newCard ) ) {
 			case this.TYPE_ASSET:
 				this.application.fireEvent( 'assettabchange', tabPanel, newCard )
@@ -116,6 +116,8 @@ Ext.define('Spelled.controller.Library', {
 			case this.TYPE_SCRIPT:
 				this.application.fireEvent( 'scripttabchange', tabPanel, newCard )
 				break
+			default:
+				this.application.fireEvent( 'scenetabchange' )
 		}
 
 	},
@@ -174,13 +176,14 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	showLibrary : function( ) {
-		var node = this.getNavigator().getSelectionModel().getSelection()[0]
+		var tree = this.getNavigator(),
+			node = tree.getSelectionModel().getSelection()[0]
 
 		this.application.hideMainPanels()
 		this.getRightPanel().show()
 
 		if( node && node.parentNode ){
-			this.dispatchLibraryNodeDoubleClick( this.getNavigator(), node )
+			this.dispatchLibraryNodeDoubleClick( tree, node )
 		}
 
 		this.getLibraryTabPanel().show()

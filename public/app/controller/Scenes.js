@@ -32,6 +32,14 @@ Ext.define('Spelled.controller.Scenes', {
 		{
 			ref : 'SceneEditor',
 			selector: '#SceneEditor'
+		},
+		{
+			ref : 'Library',
+			selector: '#Library'
+		},
+		{
+			ref : 'Scenes',
+			selector: '#Scenes'
 		}
 	],
 
@@ -66,7 +74,7 @@ Ext.define('Spelled.controller.Scenes', {
 				ctrl: true,
 				scope: this,
 				handler: function( keycode, event) {
-					this.application.activateTabByEvent( Ext.getCmp('Scenes'), event )
+					this.application.activateTabByEvent( this.getScenes(), event )
 				}
 			}
 		)
@@ -77,29 +85,7 @@ Ext.define('Spelled.controller.Scenes', {
 				ctrl: true,
 				scope: this,
 				handler: function( keycode, event) {
-					this.application.activateTabByEvent( Ext.getCmp('Templates'), event )
-				}
-			}
-		)
-		//Show Assets on ctrl+1
-		Spelled.KeyMap.addBinding(
-			{
-				key: Ext.EventObject.THREE,
-				ctrl: true,
-				scope: this,
-				handler: function( keycode, event) {
-					this.application.activateTabByEvent( Ext.getCmp('Assets'), event )
-				}
-			}
-		)
-		//Show Assets on ctrl+4
-		Spelled.KeyMap.addBinding(
-			{
-				key: Ext.EventObject.FOUR,
-				ctrl: true,
-				scope: this,
-				handler: function( keycode, event) {
-					this.application.activateTabByEvent( Ext.getCmp('Scripts'), event )
+					this.application.activateTabByEvent( this.getLibrary(), event )
 				}
 			}
 		)
@@ -218,6 +204,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		this.application.on({
 			clearstores: this.clearScenesStore,
+			scenetabchange: this.showScenesEditor,
 			scope: this
 		})
 	},
@@ -405,15 +392,16 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	showScenesEditor: function() {
-		var tree = this.getScenesTree()
+		var tree = this.getScenesTree(),
+			node = tree.getSelectionModel().getSelection()[0]
 		this.application.hideMainPanels()
 		this.getRightPanel().show()
 
-		if( tree.getSelectionModel().getSelection().length > 0 ){
-			this.dispatchTreeClick( tree, tree.getSelectionModel().getSelection()[0] )
+		if( node && node.parentNode ){
+			this.dispatchTreeClick( tree, node )
 		}
 
-		Ext.getCmp('SceneEditor').show()
+		this.getSceneEditor().show()
 	},
 
 	showCreateScene: function( ) {
@@ -471,13 +459,12 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	deleteScene: function( scene ) {
-		var project  = this.application.getActiveProject(),
-			scenes   = project.getScenes(),
-			sceneEditor = Ext.getCmp('SceneEditor')
+		var project     = this.application.getActiveProject(),
+			scenes      = project.getScenes(),
+			sceneEditor = this.getSceneEditor()
 
 		scenes.remove( scene )
 		this.application.closeOpenedTabs( sceneEditor, scene.getRenderTabTitle() )
-		this.application.closeOpenedTabs( sceneEditor, scene.getSourceTabTitle() )
 	},
 
 	reloadScene: function( button ) {
@@ -592,12 +579,14 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	renderScene: function( scene ) {
-		var sceneEditor = Ext.getCmp( "SceneEditor" ),
-			title = scene.getRenderTabTitle()
+		var sceneEditor = this.getSceneEditor(),
+			title       = scene.getRenderTabTitle()
 
 		var foundTab = this.application.findActiveTabByTitle( sceneEditor, title )
 
 		if( foundTab ) {
+			this.setDefaultScene( scene )
+			this.reloadScene( foundTab.down( 'button' ) )
 			return foundTab
 		}
 

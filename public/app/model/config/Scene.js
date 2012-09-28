@@ -37,11 +37,7 @@ Ext.define('Spelled.model.config.Scene', {
 	},
 
 	getRenderTabTitle: function() {
-		return "Rendered: " + this.getId()
-	},
-
-	getSourceTabTitle: function() {
-		return "Source: " + this.getId()
+		return "Rendered: Scene"// + this.getId()
 	},
 
     constructor: function() {

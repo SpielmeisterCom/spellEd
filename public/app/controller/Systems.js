@@ -21,6 +21,10 @@ Ext.define('Spelled.controller.Systems', {
 			selector: '#RightPanel'
 		},
 		{
+			ref : 'LibraryEditor',
+			selector: '#SceneEditor'
+		},
+		{
 			ref: 'Navigator',
 			selector: '#Navigator'
 		}
@@ -172,7 +176,7 @@ Ext.define('Spelled.controller.Systems', {
 	showSystemItem: function( treePanel, record ) {
 		if( !record.data.leaf ) return
 
-		this.getNavigator().setActiveTab( Ext.getCmp('Library') )
+		this.getNavigator().setActiveTab( this.getLibraryEditor() )
 		this.application.getController('Templates').openTemplate( treePanel, record )
 	},
 

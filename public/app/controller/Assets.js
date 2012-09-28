@@ -44,7 +44,7 @@ Ext.define('Spelled.controller.Assets', {
 		},
 		{
 			ref : 'AssetEditor',
-			selector: '#LibraryTabPanel'
+			selector: '#SceneEditor'
 		},
 		{
 			ref : 'Navigator',
@@ -63,9 +63,6 @@ Ext.define('Spelled.controller.Assets', {
 			'keytoactionconfig > tool-documentation, spritesheetconfig > tool-documentation, animationassetconfig > tool-documentation, textappearanceconfig > tool-documentation': {
 				showDocumentation: this.showDocumentation
 			},
-            'AssetEditor': {
-                dragover: this.dropAsset
-            },
             'librarytreelist button[action="showCreateAsset"]' : {
                 click: this.showCreateAsset
             },
@@ -107,12 +104,11 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	assetTabClose: function( panel ) {
-		this.getRightPanel().removeAll()
 		panel.destroy()
 	},
 
 	assetTabChange: function( tabPanel, newCard ) {
-		var asset  = this.getAssetAssetsStore().getById( newCard.title )
+		var asset  = this.getAssetAssetsStore().findRecord( 'assetId', newCard.title )
 		if( asset ) this.showConfig( asset )
 	},
 
@@ -147,17 +143,8 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	showEditHelper: function( id ) {
-		var Asset = this.getModel('Asset')
-
-		Asset.load(
-			id,
-			{
-				scope: this,
-				success: function( asset ) {
-					this.showEdit( asset )
-				}
-			}
-		)
+		var asset = this.getAssetAssetsStore().getById( id )
+		this.showEdit( asset )
 	},
 
 	fieldRenderHelper: function( type, form, asset ) {
@@ -306,24 +293,13 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	showConfigHelper: function( tree, node ) {
-		var inspectorPanel = this.getRightPanel(),
-			Asset          = this.getModel('Asset')
-
-		inspectorPanel.removeAll()
-		inspectorPanel.add( this.getDefaultDocumentation() )
+		var inspectorPanel = this.getRightPanel()
 
 		if( !node.isLeaf() ) return
 
-		Asset.load(
-			node.getId(),
-			{
-				scope: this,
-				success: function( asset ) {
-					inspectorPanel.removeAll()
-					this.showConfig( asset )
-				}
-			}
-		)
+		var asset = this.getAssetAssetsStore().getById( node.getId() )
+		inspectorPanel.removeAll()
+		this.showConfig( asset )
 	},
 
 	showConfig: function( asset ) {
@@ -471,15 +447,7 @@ Ext.define('Spelled.controller.Assets', {
 		})
 	},
 
-    dropAsset: function() {
-        console.log( arguments )
-        console.log( "Dropped item in asset editor" )
-
-        e.stopPropagation()
-        e.preventDefault()
-    },
-
-    removeAsset: function( assetId ) {
+	removeAsset: function( assetId ) {
         var asset       = this.getAssetAssetsStore().getById( assetId ),
 			assetEditor = this.getAssetEditor()
 
@@ -548,9 +516,5 @@ Ext.define('Spelled.controller.Assets', {
 		this.getAssetAssetsStore().load( {
 			callback: callback
 		})
-    },
-
-	getDefaultDocumentation: function() {
-		return  { xtype: 'label' , docString : '#!/guide/concepts_assets'}
-	}
+    }
 });

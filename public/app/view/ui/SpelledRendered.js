@@ -1,7 +1,7 @@
 Ext.define('Spelled.view.ui.SpelledRendered', {
     extend: 'Ext.panel.Panel',
     alias : 'widget.renderedscene',
-    closable: true,
+    closable: false,
 
 	initComponent: function() {
 		var me = this

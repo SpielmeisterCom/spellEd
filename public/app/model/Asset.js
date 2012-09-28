@@ -27,8 +27,7 @@ Ext.define('Spelled.model.Asset', {
 		'file',
         'namespace',
 		'config',
-		'name',
-		'assetId'
+		'name'
     ],
 
 	destroy: function( options ) {
