@@ -12,6 +12,10 @@ Ext.define('Spelled.store.asset.Types', {
             "type":"appearance",
             "name":"2D Static Appearance"
         },
+//		{
+//			"type":"domvas",
+//			"name":"2D Static Domvas Appearance"
+//		},
 		{
 			"type":"spriteSheet",
 			"name":"Sprite Sheet"

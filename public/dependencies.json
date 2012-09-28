@@ -315,6 +315,7 @@
 		"Spelled.abstract.grid.Property",
 		"Spelled.abstract.store.TreeStore",
 		"Spelled.store.AspectRatios",
+		"Spelled.view.asset.create.Domvas",
 		"Spelled.model.Asset",
 		"Spelled.store.asset.Assets",
 		"Spelled.store.asset.Textures",

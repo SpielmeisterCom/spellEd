@@ -4,6 +4,7 @@ require(
 
 		'ace/ace',
 		'ace/mode/javascript',
+		'ace/mode/html',
 		'ace/theme/pastel_on_dark',
 
 		'spell/editor/createProjectInEngineFormat',
@@ -22,6 +23,7 @@ require(
 
 		ace,
 		aceModeJavascript,
+		aceModeHtml,
 		aceThemePastelOnDark,
 
 		createProjectInEngineFormat,
@@ -44,6 +46,7 @@ require(
 		injectModulesIntoExt( {
 			'ace'                         : ace,
 			'aceModeJavascript'           : aceModeJavascript,
+			'aceModeHtml'                 : aceModeHtml,
 			'aceThemePastelOnDark'        : aceThemePastelOnDark,
 			'createProjectInEngineFormat' : createProjectInEngineFormat,
 			'createFontGenerator'         : createFontGenerator,

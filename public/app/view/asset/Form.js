@@ -90,6 +90,9 @@ Ext.define('Spelled.view.asset.Form', {
 		},{
 			xtype: 'keytoactionconfig',
 			hidden: true
+		},{
+			xtype: 'domvasassetconfig',
+			hidden: true
 		}
 	],
 

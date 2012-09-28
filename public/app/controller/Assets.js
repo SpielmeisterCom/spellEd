@@ -13,7 +13,8 @@ Ext.define('Spelled.controller.Assets', {
 		'asset.create.Font',
 		'asset.create.KeyToActionMap',
 		'asset.edit.Edit',
-		'asset.inspector.Config'
+		'asset.inspector.Config',
+		'asset.create.Domvas'
     ],
 
     stores: [
@@ -82,6 +83,9 @@ Ext.define('Spelled.controller.Assets', {
 			},
 			'keytoactionconfig button[action="addKeyMapping"]': {
 				click: this.addKeyMapping
+			},
+			'domvasassetconfig': {
+				domvasedit: this.showDomvasPreview
 			}
         })
 
@@ -95,6 +99,12 @@ Ext.define('Spelled.controller.Assets', {
 			scope: this
 		})
     },
+
+	showDomvasPreview: function( view, content ) {
+		var iframe = view.down( 'container[id="aceDomvasPreview"]' )
+
+		iframe.el.dom.contentWindow.document.body.innerHTML = content
+	},
 
 	assetTabClose: function( panel ) {
 		this.getRightPanel().removeAll()
@@ -156,8 +166,10 @@ Ext.define('Spelled.controller.Assets', {
 			spriteSheetConfig    = form.down('spritesheetconfig'),
 			animationAssetConfig = form.down('animationassetconfig'),
 			textAssetConfig      = form.down('textappearanceconfig'),
-			keyToActionMapConfig = form.down('keytoactionconfig')
+			keyToActionMapConfig = form.down('keytoactionconfig'),
+			domvasassetconfig    = form.down('domvasassetconfig')
 		//Resetting defaults
+		domvasassetconfig.hide()
 		assetsCombo.hide()
 		spriteSheetConfig.hide()
 		animationAssetConfig.hide()
@@ -169,6 +181,24 @@ Ext.define('Spelled.controller.Assets', {
 
 
 		switch( type ) {
+			case "domvas":
+				domvasassetconfig.show()
+
+				var aceContainer = domvasassetconfig.down( 'container[id="aceDomvasContainer"]' ),
+					Mode         = Ext.amdModules.aceModeHtml.Mode,
+					editor       = Ext.amdModules.ace.edit( aceContainer.id ),
+					session      = editor.getSession()
+
+				domvasassetconfig.aceEditor = editor
+				session.setMode( new Mode() )
+				editor.setTheme( Ext.amdModules.aceThemePastelOnDark )
+
+				if( !!asset ) {
+					session.setValue( asset.get('config').html )
+				}
+
+				domvasassetconfig.startEdit()
+				break
 			case "animation":
 				if( !!asset ) {
 					form.getForm().setValues(
@@ -379,26 +409,31 @@ Ext.define('Spelled.controller.Assets', {
 			content.id = id + ".json"
 			var asset = Asset.create( content )
 
-			if( values.type === "font" ) {
-				var result = this.createFontMap( values )
+			switch( values.type ) {
+				case 'font':
+					var result = this.createFontMap( values )
 
-				config.charset    = result.charset
-				config.baseline   = result.baseline
+					config.charset    = result.charset
+					config.baseline   = result.baseline
 
-				this.saveBase64AssetFile( id + ".png", result.imageDataUrl )
-				asset.set( 'file', asset.get( 'name' ) + ".png" )
-
-			} else if( values.type === "keyToActionMap" ){
-				config = this.getKeyMappings( window )
+					this.saveBase64AssetFile( id + ".png", result.imageDataUrl )
+					asset.set( 'file', asset.get( 'name' ) + ".png" )
+					break
+				case 'keyToActionMap':
+					config = this.getKeyMappings( window )
+					break
+				case 'domvas':
+					var aceEditor = window.down( 'domvasassetconfig' ).aceEditor
+					config.html = aceEditor.getSession().getValue()
+					break
 			}
 
 			if( !Ext.isEmpty( config ) ) asset.set( 'config', config )
 
-			var successCallback = function( result ) {
-				Ext.Msg.alert('Success', 'Your asset "' + result.getFullName() + '" has been uploaded.')
-				me.refreshStoresAndTreeStores( true )
+			var successCallback = Ext.bind( function( result) {
+				this.successCallback( result )
 				window.close()
-			}
+			},this)
 
 			if( fileField.isVisible() && fileField.isValid() ) {
 				var reader = new FileReader(),
@@ -412,16 +447,21 @@ Ext.define('Spelled.controller.Assets', {
 
 						me.saveBase64AssetFile( id + extension, result )
 						asset.set( 'file', asset.get( 'name' ) + extension )
-						asset.save({ success: successCallback } )
+						asset.save({ success: successCallback })
 					};
 				})( file )
 
 				reader.readAsDataURL( file )
 			} else {
-				asset.save({ success: successCallback } )
+				asset.save({ success: successCallback })
 			}
         }
     },
+
+	successCallback : function( result ) {
+		Ext.Msg.alert('Success', 'Your asset "' + result.getFullName() + '" has been uploaded.')
+		this.refreshStoresAndTreeStores( true )
+	},
 
 	saveBase64AssetFile: function( filePath, content ) {
 		Spelled.StorageActions.create( {

@@ -35,6 +35,12 @@ Ext.define('Spelled.view.library.TreeList' ,{
 								type: 'appearance',
 								icon: 'images/icons/asset-2dstatic.png'
 							},
+//							{
+//								text: "2D Static Domvas Appearance",
+//								action: "showCreateAsset",
+//								type: 'domvas',
+//								icon: 'images/icons/asset-2dstatic.png'
+//							},
 							{
 								text: "Sprite Sheet",
 								action: "showCreateAsset",
