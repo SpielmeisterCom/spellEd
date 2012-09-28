@@ -302,8 +302,13 @@
 		"Ext.layout.container.Column",
 		"Ext.picker.Color",
 		"Ext.menu.ColorPicker",
+        "Ext.layout.container.Table",
+        "Ext.container.ButtonGroup",
+        "Spelled.abstract.view.TreeList",
+        "Spelled.abstract.view.Navigator",
 		"Spelled.abstract.model.Model",
-		"Spelled.data.writer.Asset",
+        "Spelled.view.library.FolderPicker",
+        "Spelled.data.writer.Asset",
 		"Spelled.data.reader.Project",
 		"Spelled.data.writer.Project",
 		"Spelled.data.reader.Script",
@@ -451,6 +456,10 @@
 		"Spelled.controller.Templates",
 		"Spelled.controller.templates.Systems",
 		"Spelled.view.ui.SpelledViewport",
-		"Spelled.view.ui.SpelledIframe"
+		"Spelled.view.ui.SpelledIframe",
+        "Spelled.view.library.Navigator",
+        "Spelled.view.library.TreeList",
+        "Spelled.controller.Library"
+
 	]
 }

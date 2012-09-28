@@ -23,6 +23,10 @@ deploy:
 	# populating output with static content
 	cp -R public/css public/images build/output
 	cp -RL public/libs build/output
+	cp ../requirejs/require.js build/output/libs
+	cp ../underscore/underscore.js build/output/libs
+	cp -R ../ace/lib/ace build/output/libs
+
 	cp deployPublic/* build/output/
 	cp public/dependencies.json build/output/
 
