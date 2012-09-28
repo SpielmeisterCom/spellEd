@@ -92,6 +92,6 @@ Ext.define('Spelled.model.Asset', {
 	},
 
     getFilePath: function( projectName ) {
-		return projectName + "/library/" + this.get( 'file' )
+		return projectName + "/library/" + this.get( 'namespace').split( "." ).join( "/" ) + "/" + this.get( 'file' )
     }
 });
