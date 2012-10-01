@@ -27,7 +27,7 @@ Ext.define('Spelled.controller.Library', {
 		},
 		{
 			ref : 'Navigator',
-			selector: '#LibraryTree'
+			selector: '#Navigator'
 		},
 		{
 			ref : 'RightPanel',
@@ -176,15 +176,8 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	showLibrary : function( ) {
-		var tree = this.getNavigator(),
-			node = tree.getSelectionModel().getSelection()[0]
-
 		this.application.hideMainPanels()
 		this.getRightPanel().show()
-
-		if( node && node.parentNode ){
-			this.dispatchLibraryNodeDoubleClick( tree, node )
-		}
 
 		this.getLibraryTabPanel().show()
 	}

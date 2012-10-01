@@ -207,7 +207,7 @@ require(
 				},
 
 				hideMainPanels: function() {
-					this.getRightPanel().hide()
+//					this.getRightPanel().hide()
 
 					this.getMainPanel().items.each(
 						function( panel ) {

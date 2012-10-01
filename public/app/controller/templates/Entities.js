@@ -17,10 +17,6 @@ Ext.define('Spelled.controller.templates.Entities', {
 
 	refs: [
 		{
-			ref : 'RightPanel',
-			selector: '#RightPanel'
-		},
-		{
 			ref : 'TemplateEditor',
 			selector: '#SceneEditor'
 		},
