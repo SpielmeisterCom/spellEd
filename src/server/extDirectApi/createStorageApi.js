@@ -29,8 +29,9 @@ define(
 
 				content.id = filePath
 
-				//TODO: fix this right. maybe rename project json files to projectname
-				if( !content.startScene ) {
+				if( content.startScene ) {
+					content.name = fileParts.pop()
+				} else {
 					content.name      = path.basename( baseName, path.extname( baseName ) )
 					content.namespace = fileParts.join( "." )
 				}
