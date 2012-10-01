@@ -13,6 +13,7 @@ Ext.define('Spelled.data.writer.Asset', {
 				var asset = Ext.copyTo({}, self.getRecordData( record, operation ), 'version,type,subtype,doc')
 
 				if( record.get( 'file' ) ) asset.file = record.get( 'file' )
+				if( record.get( 'assetId' ) ) asset.assetId = record.get( 'assetId' )
 				if( record.get( 'config' ) ) asset.config = record.get( 'config' )
 
 				return { id: record.getId(), content: asset }

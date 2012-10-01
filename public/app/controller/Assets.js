@@ -108,7 +108,7 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	assetTabChange: function( tabPanel, newCard ) {
-		var asset  = this.getAssetAssetsStore().findRecord( 'assetId', newCard.title )
+		var asset  = this.getAssetAssetsStore().findRecord( 'myAssetId', newCard.title )
 		if( asset ) this.showConfig( asset )
 	},
 
@@ -190,6 +190,7 @@ Ext.define('Spelled.controller.Assets', {
 				if( !!asset ) {
 					form.getForm().setValues(
 						{
+							assetId  : asset.get( 'assetId' ),
 							looped   : asset.get('config').looped,
 							duration : asset.get('config').duration,
 							frameIds : asset.get('config').frameIds
@@ -274,20 +275,9 @@ Ext.define('Spelled.controller.Assets', {
 	editAsset: function( button ) {
 		var form    = button.up('form').getForm(),
 			window  = button.up( 'window' ),
-			record  = form.getRecord(),
-			values  = form.getValues()
+			record  = form.getRecord()
 
-		if( !!values.fontFamily && record.get( 'subtype' ) === 'font') {
-			var result        = this.createFontMap( values )
-			values.fontCanvas = result.imageDataUrl
-			values.charset    = Ext.encode( result.charset )
-			values.baseline   = result.baseline
-		}
-
-		if( record.get( 'subtype' ) === 'keyToActionMap' ) record.set( 'config', this.getKeyMappings( window ) )
-		else record.set( 'config', values )
-
-		record.save()
+		this.saveAsset( button.up('form'), record )
 
 		window.close()
 	},
@@ -366,71 +356,89 @@ Ext.define('Spelled.controller.Assets', {
 		return keyToActionMappings
 	},
 
+	saveAsset: function( form, asset ) {
+		var values    = form.getForm().getValues(),
+			window    = form.up( 'window' ),
+			fileField = form.down( 'filefield'),
+			me        = this,
+			config    = {},
+			id      = this.application.generateFileIdFromObject( asset.data )
+
+		switch( asset.get( 'subtype' ) ) {
+			case 'font':
+				var result = this.createFontMap( values )
+				config.charset    = result.charset
+				config.baseline   = result.baseline
+
+				Ext.copyTo( config, values, 'fontFamily,fontSize,fontStyle,color,outline,outlineColor,spacing' )
+
+				this.saveBase64AssetFile( id + ".png", result.imageDataUrl )
+				asset.set( 'file', asset.get( 'name' ) + ".png" )
+				break
+			case 'keyToActionMap':
+				config = this.getKeyMappings( window )
+				break
+			case 'domvas':
+				var aceEditor = window.down( 'domvasassetconfig' ).aceEditor
+				config.html = aceEditor.getSession().getValue()
+				break
+			case 'animation':
+				asset.set( 'assetId', values.assetId )
+				config.type     = values.animationType
+				config.duration = values.duration
+				config.looped   = !!values.looped
+				config.frameIds = values.frameIds.split( "," )
+				break
+			case 'spriteSheet':
+				Ext.copyTo( config, values, 'textureWidth,textureHeight,frameWidth,frameHeight' )
+				break
+		}
+
+		if( !Ext.isEmpty( config ) ) asset.set( 'config', config )
+
+		var successCallback = Ext.bind( function( result) {
+			this.successCallback( result )
+			window.close()
+		},this)
+
+		if( fileField.isVisible() && fileField.isValid() ) {
+			var reader = new FileReader(),
+				file   = fileField.fileRawInput
+
+			// Closure to capture the file information.
+			reader.onload = (function(theFile) {
+				return function( e ) {
+					var result    = e.target.result,
+						extension = "." + theFile.type.split( "/").pop()
+
+					me.saveBase64AssetFile( id + extension, result )
+					asset.set( 'file', asset.get( 'name' ) + extension )
+					asset.save({ success: successCallback })
+				};
+			})( file )
+
+			reader.readAsDataURL( file )
+		} else {
+			asset.save({ success: successCallback })
+		}
+	},
+
     createAsset: function( button ) {
         var form    = button.up('form').getForm(),
             window  = button.up( 'window' ),
-			fileField = window.down( 'filefield'),
 			values  = form.getValues(),
 			Asset   = this.getAssetModel(),
-			me      = this,
 			content = {
 				name: values.name,
-				namespace: ( values.folder === 'root' ) ? '' : values.folder.substring( 5 ),
+				namespace: ( values.namespace === 'root' ) ? '' : values.namespace.substring( 5 ),
 				subtype: values.type
 			},
-			config  = {},
 			id      = this.application.generateFileIdFromObject( content )
 
 		if( form.isValid() ){
 			content.id = id + ".json"
 			var asset = Asset.create( content )
-
-			switch( values.type ) {
-				case 'font':
-					var result = this.createFontMap( values )
-
-					config.charset    = result.charset
-					config.baseline   = result.baseline
-
-					this.saveBase64AssetFile( id + ".png", result.imageDataUrl )
-					asset.set( 'file', asset.get( 'name' ) + ".png" )
-					break
-				case 'keyToActionMap':
-					config = this.getKeyMappings( window )
-					break
-				case 'domvas':
-					var aceEditor = window.down( 'domvasassetconfig' ).aceEditor
-					config.html = aceEditor.getSession().getValue()
-					break
-			}
-
-			if( !Ext.isEmpty( config ) ) asset.set( 'config', config )
-
-			var successCallback = Ext.bind( function( result) {
-				this.successCallback( result )
-				window.close()
-			},this)
-
-			if( fileField.isVisible() && fileField.isValid() ) {
-				var reader = new FileReader(),
-					file   = fileField.fileRawInput
-
-				// Closure to capture the file information.
-				reader.onload = (function(theFile) {
-					return function( e ) {
-						var result    = e.target.result,
-							extension = "." + theFile.type.split( "/").pop()
-
-						me.saveBase64AssetFile( id + extension, result )
-						asset.set( 'file', asset.get( 'name' ) + extension )
-						asset.save({ success: successCallback })
-					};
-				})( file )
-
-				reader.readAsDataURL( file )
-			} else {
-				asset.save({ success: successCallback })
-			}
+			this.saveAsset( button.up('form'), asset )
         }
     },
 

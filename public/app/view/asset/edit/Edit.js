@@ -25,7 +25,7 @@ Ext.define('Spelled.view.asset.edit.Edit', {
 				xtype: "combo",
 				disabled: true,
 				readOnly: true,
-				name: 'type',
+				name: 'subtype',
 				editable: false,
 				emptyText: '-- Select Type --',
 				store: 'asset.Types',
@@ -41,13 +41,10 @@ Ext.define('Spelled.view.asset.edit.Edit', {
 				fieldLabel: 'Name'
 			},
 			{
-				xtype: "assetfolderpicker",
+				xtype: "textfield",
 				disabled: true,
-				readOnly: true,
-				name: 'folder',
-				fieldLabel: 'Namespace',
-				displayField: 'text',
-				valueField: 'id'
+				name: 'namespace',
+				fieldLabel: 'Namespace'
 			},
 			{
 				xtype: 'filefield',

@@ -27,7 +27,8 @@ Ext.define('Spelled.model.Asset', {
 		'file',
         'namespace',
 		'config',
-		'name'
+		'name',
+		'assetId'
     ],
 
 	destroy: function( options ) {
@@ -83,7 +84,7 @@ Ext.define('Spelled.model.Asset', {
 
 		this.callParent( arguments )
 
-		this.set( 'assetId', assetId)
+		this.set( 'myAssetId', assetId)
 		this.set( 'internalAssetId', internalAssetId)
 	},
 
