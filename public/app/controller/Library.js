@@ -57,9 +57,14 @@ Ext.define('Spelled.controller.Library', {
 
 		this.application.on({
 			removeFromLibrary: this.removeFromLibrary,
+			clearstores: this.clearStore,
 			scope : this
 		})
     },
+
+	clearStore: function() {
+		this.getLibraryStore().getRootNode().removeAll()
+	},
 
 	removeFromLibrary: function( node, callback ) {
 		Ext.Msg.confirm(
