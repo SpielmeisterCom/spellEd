@@ -308,6 +308,17 @@ Ext.define('Spelled.controller.Components', {
 		)
     },
 
+	getComponentScene: function( component ) {
+		var entity = component.getEntity()
+
+		var getScene = function( entity ) {
+			var owner = entity.getOwner()
+			return ( entity.hasScene() ? owner : getScene( owner ) )
+		}
+
+		return getScene( entity )
+	},
+
 	previewAttributeChange: function( field, newValue, oldValue ) {
 		var activeScene       = this.application.getActiveScene(),
 			sceneController   = this.application.getController( 'Scenes'),
@@ -318,6 +329,8 @@ Ext.define('Spelled.controller.Components', {
 
 		var	component         = this.getConfigComponentsStore().getById( view.componentConfigId ),
 			name              = view.getSelectionModel().getLastSelected().get('name')
+
+		if ( this.getComponentScene( component ) != activeScene ) return
 
 		if ( activeScene && sceneEditor.isVisible() ) {
 			var activeSceneTab = this.application.findActiveTabByTitle( sceneEditor, activeScene.getRenderTabTitle() )
