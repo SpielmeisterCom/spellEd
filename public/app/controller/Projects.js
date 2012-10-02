@@ -23,12 +23,12 @@ Ext.define('Spelled.controller.Projects', {
 
     init: function() {
 		Ext.EventManager.on( window, 'beforeunload', function() {
-				if( this.checkIfDirty() ) return "Leaving without saving?"
+				return "You have unsaved changes.\nDo you really want to close this application?"
 		},
 		this)
 
 		Ext.EventManager.on( window, 'unload', function() {
-				if( this.checkIfDirty() ) return "Leaving without saving?"
+				if( this.checkIfDirty() ) return "You have unsaved changes.\nDo you really want to close this application?"
 		},
 		this)
 
