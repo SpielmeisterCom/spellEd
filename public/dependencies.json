@@ -435,6 +435,8 @@
 		"Spelled.view.template.component.attribute.KeyToActionMap",
 		"Spelled.view.template.system.input.ComboBox",
 		"Spelled.view.template.system.Input",
+		"Spelled.view.template.component.attribute.KeyFrameAnimation",
+		"Spelled.store.asset.KeyFrameAnimations",
 		"Spelled.view.component.Properties",
 		"Spelled.controller.Components",
 		"Spelled.abstract.view.TreeList",

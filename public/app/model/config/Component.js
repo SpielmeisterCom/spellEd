@@ -43,7 +43,13 @@ Ext.define('Spelled.model.config.Component', {
 	},
 
 	getTemplate: function() {
-		return Ext.getStore( 'template.Components').getByTemplateId( this.get('templateId') )
+		var template = Ext.getStore( 'template.Components' ).getByTemplateId( this.get( 'templateId' ) )
+
+		if( !template ) {
+			throw 'Error: Could not resolve template id \'' + this.get( 'templateId' ) + '\' to template.'
+		}
+
+		return template
 	},
 
 	getTemplateConfig: function() {

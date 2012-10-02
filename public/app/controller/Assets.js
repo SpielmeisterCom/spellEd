@@ -26,6 +26,7 @@ Ext.define('Spelled.controller.Assets', {
 		'asset.Animations',
 		'asset.ActionKeys',
 		'asset.KeyToActionMappings',
+		'asset.KeyFrameAnimations',
 		'asset.Assets'
     ],
 

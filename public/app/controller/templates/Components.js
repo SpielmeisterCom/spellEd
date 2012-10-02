@@ -15,6 +15,7 @@ Ext.define('Spelled.controller.templates.Components', {
 		'template.component.attribute.Boolean',
 		'template.component.attribute.Appearance',
 		'template.component.attribute.AnimatedAppearance',
+		'template.component.attribute.KeyFrameAnimation',
 		'template.component.attribute.TextAppearance',
 		'template.component.attribute.Sound',
 		'template.component.attribute.KeyToActionMap'
