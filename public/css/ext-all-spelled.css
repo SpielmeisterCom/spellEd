@@ -1,21 +1,5 @@
-/*
-
-$button-default-base-color-over: darken($color1,25);
-$button-default-base-color-pressed: darken($color1, 15);
-
-
-$button-toolbar-base-color: $color2;
-$button-toolbar-base-color-over: darken($color2,25);
-$button-toolbar-base-color-pressed: darken($color2, 15);
-
-$button-toolbar-background-color-over: darken($color1, 25);
-$button-toolbar-background-color-pressed: darken($color1, 15);
-
-$button-toolbar-background-gradient-pressed: 'glossy-button-over';
-*/
-/* line 198, ../sass/ext-all-spelled.scss */
+/* line 180, ../sass/ext-all-spelled.scss */
 .x-window-item {
-  color: #fff !important;
   background-color: #444444; }
 
 /**
@@ -2941,7 +2925,7 @@ tr.x-container:before {
 /* line 72, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_btn-group.scss */
 .x-btn-group-header-body-default-framed {
   padding: 1px 0;
-  background: #6c6162;
+  background: #363636;
   -moz-border-radius-topleft: 2px;
   -webkit-border-top-left-radius: 2px;
   -o-border-top-left-radius: 2px;
@@ -2958,7 +2942,7 @@ tr.x-container:before {
 /* line 80, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_btn-group.scss */
 .x-btn-group-header-text-default-framed {
   font: normal 11px tahoma, arial, verdana, sans-serif;
-  color: #020202; }
+  color: white; }
 
 /* line 6, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_datepicker.scss */
 .x-datepicker {
@@ -3344,7 +3328,7 @@ table.x-datepicker-inner {
   -moz-user-select: -moz-none;
   -webkit-user-select: none;
   cursor: default;
-  background: #f0f0f0 !important;
+  background: #363636 !important;
   padding: 2px; }
 
 /* line 12, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_menu.scss */
@@ -3362,8 +3346,8 @@ table.x-datepicker-inner {
   top: 0px;
   left: 27px;
   z-index: 0;
-  border-left: solid 1px #e0e0e0;
-  background-color: white;
+  border-left: solid 1px #363636;
+  background-color: #363636;
   width: 2px;
   overflow: hidden; }
 
@@ -3424,7 +3408,7 @@ table.x-datepicker-inner {
 /* line 96, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_menu.scss */
 .x-menu-item-text {
   font-size: 11px;
-  color: #222222; }
+  color: white; }
 
 /* line 102, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_menu.scss */
 .x-menu-item-checked .x-menu-item-icon {
@@ -3443,8 +3427,8 @@ table.x-datepicker-inner {
 /* line 119, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_menu.scss */
 .x-menu-item-separator {
   height: 2px;
-  border-top: solid 1px #e0e0e0;
-  background-color: white;
+  border-top: solid 1px #363636;
+  background-color: #363636;
   margin: 2px 0px;
   overflow: hidden; }
 
@@ -3469,14 +3453,14 @@ table.x-datepicker-inner {
   /* line 144, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_menu.scss */
   .x-menu-item-active .x-menu-item-link {
     background-image: none;
-    background-color: #965959;
-    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #9f5f5f), color-stop(100%, #895252));
-    background-image: -webkit-linear-gradient(top, #9f5f5f, #895252);
-    background-image: -moz-linear-gradient(top, #9f5f5f, #895252);
-    background-image: -o-linear-gradient(top, #9f5f5f, #895252);
-    background-image: linear-gradient(top, #9f5f5f, #895252);
+    background-color: #9a9a9a;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2a2a2), color-stop(100%, #909090));
+    background-image: -webkit-linear-gradient(top, #a2a2a2, #909090);
+    background-image: -moz-linear-gradient(top, #a2a2a2, #909090);
+    background-image: -o-linear-gradient(top, #a2a2a2, #909090);
+    background-image: linear-gradient(top, #a2a2a2, #909090);
     margin: 0px;
-    border: 1px solid #724747;
+    border: 1px solid #363636;
     cursor: pointer;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -3514,7 +3498,7 @@ table.x-datepicker-inner {
 
 /* line 192, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_menu.scss */
 .x-nlg .x-menu-item-active .x-menu-item-link {
-  background: #965959 repeat-x left top;
+  background: #9a9a9a repeat-x left top;
   background-image: url('../images/spelled/menu/menu-item-active-bg.gif'); }
 
 /* line 199, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_menu.scss */

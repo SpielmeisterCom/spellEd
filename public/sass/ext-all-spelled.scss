@@ -178,13 +178,25 @@ $window-body-color: #fff;
 $window-body-background-color: $color3;
 
 .x-window-item {
-  color: #fff !important;
   background-color: $color3;
 }
 
 
 //form
 $form-field-color: #fff;
+
+//menu
+$menu-text-color: #fff;
+$menu-item-active-background-color: #9a9a9a;
+$menu-item-active-border-color: $color2;
+$menu-background-color: $color2;
+
+$menu-separator-border-color: $menu-background-color;
+$menu-separator-background-color: $menu-background-color;
+
+//btn-group
+$btn-group-header-background-color: $color2;
+$btn-group-header-color: #fff;
 
 @import 'compass';
 @import 'ext4/default/all';
