@@ -108,8 +108,7 @@ require(
 					'template.Entities',
 					'template.Components',
 					'template.Systems',
-					'asset.Textures',
-					'asset.Sounds',
+					'asset.Assets',
 					'script.Scripts'
 				],
 

@@ -3,12 +3,37 @@ Ext.define('Spelled.view.component.property.AssetId', {
 
 	alias : 'widget.assetidproperty',
 
-	editable       : false,
-	emptyText      : '-- Select a existing Asset --',
-	store          : 'asset.Assets',
-	name           : 'assetId',
-	displayField   : 'name',
-	valueField     : 'internalAssetId',
+	listeners: {
+		focus: function() {
+			var store   = this.getStore(),
+				filters = store.filters.items
+
+			if( filters.length > 0 ) store.filter( filters )
+		},
+		added: function() {
+			this.getStore().load()
+		},
+		beforequery: function(qe){
+			qe.query = new RegExp(qe.query, 'i')
+			qe.forceAll = true
+		}
+	},
+
+	validator: function( value ) {
+		var record = this.getStore().findRecord( 'myAssetId', value, 0, false, false, true )
+		if( record ) return true
+		else return "No such asset"
+	},
+
+	matchFieldWidth : false,
+	forceSelection  : true,
+	queryMode       : 'local',
+	editable        : true,
+	emptyText       : '-- Select a existing Asset --',
+	store           : 'asset.Assets',
+	name            : 'assetId',
+	displayField    : 'myAssetId',
+	valueField      : 'internalAssetId',
 
 	mixins: [ 'Spelled.abstract.grid.Property' ],
 
