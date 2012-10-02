@@ -1,4 +1,4 @@
-/* line 180, ../sass/ext-all-spelled.scss */
+/* line 183, ../sass/ext-all-spelled.scss */
 .x-window-item {
   background-color: #444444; }
 
@@ -275,7 +275,7 @@ input, textarea, select {
 
 /* line 1, ../extjs/resources/themes/stylesheets/ext4/default/core/_core.scss */
 .x-body {
-  color: black;
+  color: white;
   font-size: 12px;
   font-family: tahoma, arial, verdana, sans-serif; }
 
@@ -741,10 +741,10 @@ tr.x-container:before {
  */
 /* line 6, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_boundlist.scss */
 .x-boundlist {
-  border-width: 1px;
+  border-width: 2px;
   border-style: solid;
-  border-color: #683f3f;
-  background: white; }
+  border-color: #222732;
+  background: #363636; }
   /* line 12, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_boundlist.scss */
   .x-boundlist .x-toolbar {
     border-width: 1px 0 0 0; }
@@ -767,18 +767,18 @@ tr.x-container:before {
   cursor: hand;
   position: relative;
   /*allow hover in IE on empty items*/
-  border-width: 1px;
+  border-width: 0;
   border-style: dotted;
-  border-color: white; }
+  border-color: #363636; }
 
 /* line 43, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_boundlist.scss */
 .x-boundlist-selected {
-  background: #6c6b6b;
+  background: #9a9a9a;
   border-color: #4b4443; }
 
 /* line 48, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_boundlist.scss */
 .x-boundlist-item-over {
-  background: #797777;
+  background: #9a9a9a;
   border-color: #58504f; }
 
 /* line 53, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_boundlist.scss */
@@ -2925,7 +2925,7 @@ tr.x-container:before {
 /* line 72, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_btn-group.scss */
 .x-btn-group-header-body-default-framed {
   padding: 1px 0;
-  background: #363636;
+  background: #444444;
   -moz-border-radius-topleft: 2px;
   -webkit-border-top-left-radius: 2px;
   -o-border-top-left-radius: 2px;
@@ -4417,9 +4417,9 @@ textarea.x-form-field {
   padding: 1px 3px;
   background: repeat-x 0 0;
   border: 1px solid;
-  background-color: white;
-  background-image: url('../images/spelled/form/text-bg.gif');
-  border-color: #b5b8c8; }
+  background-color: #797777;
+  background-image: url('../images/spelled/trans.gif');
+  border-color: #363636; }
 
 /* line 36, ../extjs/resources/themes/stylesheets/ext4/default/widgets/form/_field.scss */
 .x-form-text {
@@ -4442,8 +4442,8 @@ textarea.x-form-field {
   height: auto;
   line-height: normal;
   background: repeat-x 0 0;
-  background-color: white;
-  background-image: url('../images/spelled/form/text-bg.gif');
+  background-color: #797777;
+  background-image: url('../images/spelled/trans.gif');
   resize: none; }
 
 /* line 65, ../extjs/resources/themes/stylesheets/ext4/default/widgets/form/_field.scss */
@@ -4462,8 +4462,8 @@ textarea.x-form-focus {
 /* line 81, ../extjs/resources/themes/stylesheets/ext4/default/widgets/form/_field.scss */
 .x-form-invalid-field,
 textarea.x-form-invalid-field {
-  background-color: white;
-  background-image: url('../images/spelled/grid/invalid_line.gif');
+  background-color: #797777;
+  background-image: url('../images/spelled/trans.gif');
   background-repeat: repeat-x;
   background-position: bottom;
   border-color: #cc3300; }
@@ -4756,7 +4756,7 @@ textarea.x-form-invalid-field {
   background-position: 0 0;
   width: 17px;
   height: 21px;
-  border-bottom: 1px solid #b5b8c8;
+  border-bottom: 1px solid #363636;
   cursor: pointer;
   cursor: hand;
   overflow: hidden; }
@@ -4920,7 +4920,7 @@ textarea.x-form-invalid-field {
 
 /* line 6, ../extjs/resources/themes/stylesheets/ext4/default/widgets/form/_htmleditor.scss */
 .x-html-editor-wrap {
-  border: 1px solid #b5b8c8; }
+  border: 1px solid #363636; }
   /* line 9, ../extjs/resources/themes/stylesheets/ext4/default/widgets/form/_htmleditor.scss */
   .x-html-editor-wrap .x-toolbar {
     border-top-width: 0;
@@ -4928,7 +4928,7 @@ textarea.x-form-invalid-field {
     border-right-width: 0; }
   /* line 15, ../extjs/resources/themes/stylesheets/ext4/default/widgets/form/_htmleditor.scss */
   .x-html-editor-wrap textarea {
-    background-color: white; }
+    background-color: #797777; }
 
 /* line 20, ../extjs/resources/themes/stylesheets/ext4/default/widgets/form/_htmleditor.scss */
 .x-html-editor-tb .x-btn-text {

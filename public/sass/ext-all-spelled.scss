@@ -10,6 +10,9 @@ $color2: #363636;
 //color used for panel background
 $color3: #444444;
 
+
+$color: #fff;
+
 $include-missing-images: true;
 $base-color: $color1;
 
@@ -184,6 +187,24 @@ $window-body-background-color: $color3;
 
 //form
 $form-field-color: #fff;
+$form-field-background-color: #797777;
+$form-field-background-image: 'trans.gif';
+$form-field-border-color: $color2;
+
+$form-field-invalid-background-color: $form-field-background-color;
+$form-field-invalid-background-image: 'trans.gif';
+
+//boundlist
+$boundlist-color: #fff;
+$boundlist-background-color: $color2;
+$boundlist-border-color: #222732;
+$boundlist-border-width: 2px;
+
+$boundlist-item-border-width: 0;
+$boundlist-item-over-background-color: #9a9a9a;
+$boundlist-item-selected-background-color: #9a9a9a;
+
+
 
 //menu
 $menu-text-color: #fff;
@@ -195,7 +216,7 @@ $menu-separator-border-color: $menu-background-color;
 $menu-separator-background-color: $menu-background-color;
 
 //btn-group
-$btn-group-header-background-color: $color2;
+$btn-group-header-background-color: $color3;
 $btn-group-header-color: #fff;
 
 @import 'compass';
