@@ -15,8 +15,9 @@ $base-color: $color1;
 
 //panel
 $panel-header-color: #fff;
-
 $panel-header-background-color: $color2;
+
+$panel-body-color: #fff;
 $panel-body-background-color: $color3;
 
 $panel-border-color: $color1;
@@ -50,45 +51,62 @@ $grid-row-cell-selected-background-color: #9a9a9a;
 $grid-row-cell-over-background-gradient: 'flat';
 $grid-row-cell-focus-background-gradient: 'flat';
 
-//window
-$window-background-color: $color3;
-
 //buttons
-$button-default-color: #fff;
 $button-default-base-color: $color2;
-$button-default-base-color-over: darken($color1,25);
-$button-default-base-color-pressed: darken($color1, 15);
+$button-default-base-color-over: darken($color2,5);
+$button-default-base-color-focus: $button-default-base-color-over;
+$button-default-base-color-pressed: $button-default-base-color-over;
+$button-default-base-color-disabled: adjust-color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%) !default; //F7F7F7
 
+$button-default-border-color: $color1;
+$button-default-border-color-over: darken($color1,5);
+$button-default-border-color-focus: $button-default-border-color-over;
+$button-default-border-color-pressed: $button-default-border-color-over;
+$button-default-border-color-disabled: adjust-color($button-default-base-color-disabled, $hue: 0deg, $saturation: 0%, $lightness: -8.627%) !default;
 
-
-//white text for toolbar button
+$button-default-color: #fff;
 $button-toolbar-color: #fff;
 $button-toolbar-color-over: #fff;
 $button-toolbar-color-pressed: #fff;
 
-$button-toolbar-base-color: $color2;
-$button-toolbar-base-color-over: darken($color2,25);
-$button-toolbar-base-color-pressed: darken($color2, 15);
+$button-default-background-gradient: 'matte';
+$button-default-background-gradient-over: 'matte';
+$button-default-background-gradient-focus: 'matte';
+$button-default-background-gradient-pressed: 'matte-reverse';
+$button-default-background-gradient-disabled: 'matte';
 
-$button-toolbar-background-gradient: 'glossy-button';
-$button-toolbar-background-gradient-over: 'glossy';
-$button-toolbar-background-gradient-pressed: 'glossy';
+$button-default-background-gradient-color-stops: null;
+$button-default-background-gradient-color-stops-over: null;
+$button-default-background-gradient-color-stops-focus: null;
+$button-default-background-gradient-color-stops-pressed: null;
+$button-default-background-gradient-color-stops-disabled: null;
 
-$button-toolbar-background-color-over: darken($color1, 5);
+$button-toolbar-base-color: $button-default-base-color;
 
+$button-toolbar-border-color: transparent !default;
+$button-toolbar-border-color-over: $button-default-border-color-over;
+$button-toolbar-border-color-focus: $button-default-border-color-focus;
+$button-toolbar-border-color-pressed: $button-default-border-color-pressed;
+$button-toolbar-border-color-disabled: $button-default-border-color-disabled;
 
-/*
-$button-toolbar-border-color-pressed: darken($color1,25);
-$button-toolbar-background-color-pressed: darken($color1,25);
-$button-toolbar-border-color-over: darken($color1,25);
+$button-toolbar-background-color: transparent !default;
+$button-toolbar-background-color-over: $button-default-base-color-over;
+$button-toolbar-background-color-focus: $button-default-base-color-focus;
+$button-toolbar-background-color-pressed: $button-default-base-color-pressed;
+$button-toolbar-background-color-disabled: transparent;
 
-
-$button-toolbar-background-gradient-over: 'glossy';
-$button-toolbar-background-gradient-focus: 'glossy';
-$button-toolbar-background-gradient-pressed: 'glossy';
+$button-toolbar-background-gradient: null;
+$button-toolbar-background-gradient-over: 'matte';
+$button-toolbar-background-gradient-focus: 'matte';
+$button-toolbar-background-gradient-pressed: 'matte-reverse';
 $button-toolbar-background-gradient-disabled: null;
 
-*/
+$button-toolbar-background-gradient-color-stops: null;
+$button-toolbar-background-gradient-color-stops-over: null;
+$button-toolbar-background-gradient-color-stops-focus: null;
+$button-toolbar-background-gradient-color-stops-pressed: null;
+$button-toolbar-background-gradient-color-stops-disabled: null;
+
 
 //toolbar
 $toolbar-vertical-spacing: 1px;
@@ -110,13 +128,11 @@ $tab-inner-border: false;
 $tab-closable-icon-top: 6px;
 $tab-closable-icon-right: 3px;
 
+//tabbar
 $tabbar-top-body-padding: 0px 0 0px;
 $tabbar-bottom-body-padding: 0px 0 0px;
 $tabbar-top-body-border-width: 0px 0px 0;
 $tabbar-top-strip-border-width: 0px 0px 0;
-
-
-
 
 //progress bar
 $progress-bar-background-color: darken($color1,25);
@@ -149,8 +165,28 @@ $tip-body-color: #fff;
 $tip-header-color: #fff;
 
 $tip-background-color: $color1 !important;
-$window-body-background-color: adjust-color($color1, $hue: 3.188deg, $saturation: 0.542%, $lightness: 7.843%) !important;
 
+//window
+$window-border-color: $color2;
+$window-inner-border-color: $color3;
+
+$window-header-color: #fff;
+
+$window-background-color: $color2;
+
+$window-body-color: #fff;
+$window-body-background-color: $color3;
+
+.x-window-item {
+  color: #fff !important;
+  background-color: $color3;
+}
+
+
+//form
+$form-field-color: #fff;
 
 @import 'compass';
 @import 'ext4/default/all';
+
+
