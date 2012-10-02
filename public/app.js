@@ -278,7 +278,7 @@ require(
 				dirtySaveAlert: function( model, callback ) {
 					Ext.Msg.confirm(
 						'You have unsaved changed',
-						'Do you really want to close this tab? Your changes will be discarded.',
+						'Do you really want to close this tab?<br/>Your changes will be discarded.',
 						function( button ) {
 							if ( button === 'yes') {
 								this.fireEvent( 'revertModel', model )
