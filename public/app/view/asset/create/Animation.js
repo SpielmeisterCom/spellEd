@@ -41,11 +41,6 @@ Ext.define('Spelled.view.asset.create.Animation', {
 					readOnly: true
 				},
 				{
-					xtype: "checkbox",
-					name: 'looped',
-					fieldLabel: 'Looped'
-				},
-				{
 					xtype: "numberfield",
 					name: 'duration',
 					minValue: 0,

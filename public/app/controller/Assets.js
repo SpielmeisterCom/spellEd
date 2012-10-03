@@ -192,7 +192,6 @@ Ext.define('Spelled.controller.Assets', {
 					form.getForm().setValues(
 						{
 							assetId  : asset.get( 'assetId' ),
-							looped   : asset.get('config').looped,
 							duration : asset.get('config').duration,
 							frameIds : asset.get('config').frameIds
 						}
@@ -387,7 +386,6 @@ Ext.define('Spelled.controller.Assets', {
 				asset.set( 'assetId', values.assetId )
 				config.type     = values.animationType
 				config.duration = values.duration
-				config.looped   = !!values.looped
 				config.frameIds = values.frameIds.split( "," )
 				break
 			case 'spriteSheet':
