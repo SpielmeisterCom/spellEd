@@ -345,7 +345,8 @@
     }
 
     .#{$prefix}grid-cell-selected {
-        background-color: #B8CFEE !important;
+        background-color: $grid-row-cell-selected-background-color !important;
+       // background-color: #B8CFEE !important;
     }
 
     @if not $supports-gradients or $compile-all {
