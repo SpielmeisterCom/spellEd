@@ -10,6 +10,9 @@ $color2: #363636;
 //color used for panel background
 $color3: #444444;
 
+//color used to to highlight selected content
+$color_selected: #9a9a9a;
+
 
 $color: #fff;
 
@@ -48,7 +51,7 @@ $grid-row-cell-alt-background: $color3;
 $grid-row-cell-border-color: $color3;
 
 
-$grid-row-cell-selected-background-color: #9a9a9a;
+$grid-row-cell-selected-background-color: $color_selected;
 
 
 $grid-row-cell-over-background-gradient: 'flat';
@@ -189,7 +192,8 @@ $window-body-background-color: $color3;
 $form-field-color: #fff;
 $form-field-background-color: #797777;
 $form-field-background-image: 'trans.gif';
-$form-field-border-color: $color2;
+$form-field-border-color: $color_selected;
+$form-field-focus-border-color: $color_selected;
 
 $form-field-invalid-background-color: $form-field-background-color;
 $form-field-invalid-background-image: 'trans.gif';
@@ -197,18 +201,18 @@ $form-field-invalid-background-image: 'trans.gif';
 //boundlist
 $boundlist-color: #fff;
 $boundlist-background-color: $color2;
-$boundlist-border-color: #222732;
-$boundlist-border-width: 2px;
+$boundlist-border-color: $color_selected;
+$boundlist-border-width: 1px;
 
 $boundlist-item-border-width: 0;
-$boundlist-item-over-background-color: #9a9a9a;
-$boundlist-item-selected-background-color: #9a9a9a;
+$boundlist-item-over-background-color: $color_selected;
+$boundlist-item-selected-background-color: $color_selected;
 
 
 
 //menu
 $menu-text-color: #fff;
-$menu-item-active-background-color: #9a9a9a;
+$menu-item-active-background-color: $color_selected;
 $menu-item-active-border-color: $color2;
 $menu-background-color: $color2;
 

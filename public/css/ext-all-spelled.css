@@ -1,4 +1,4 @@
-/* line 183, ../sass/ext-all-spelled.scss */
+/* line 186, ../sass/ext-all-spelled.scss */
 .x-window-item {
   background-color: #444444; }
 
@@ -741,9 +741,9 @@ tr.x-container:before {
  */
 /* line 6, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_boundlist.scss */
 .x-boundlist {
-  border-width: 2px;
+  border-width: 1px;
   border-style: solid;
-  border-color: #222732;
+  border-color: #9a9a9a;
   background: #363636; }
   /* line 12, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_boundlist.scss */
   .x-boundlist .x-toolbar {
@@ -4419,7 +4419,7 @@ textarea.x-form-field {
   border: 1px solid;
   background-color: #797777;
   background-image: url('../images/spelled/trans.gif');
-  border-color: #363636; }
+  border-color: #9a9a9a; }
 
 /* line 36, ../extjs/resources/themes/stylesheets/ext4/default/widgets/form/_field.scss */
 .x-form-text {
@@ -4457,7 +4457,7 @@ textarea.x-form-field {
 /* line 76, ../extjs/resources/themes/stylesheets/ext4/default/widgets/form/_field.scss */
 .x-form-focus,
 textarea.x-form-focus {
-  border-color: #393939; }
+  border-color: #9a9a9a; }
 
 /* line 81, ../extjs/resources/themes/stylesheets/ext4/default/widgets/form/_field.scss */
 .x-form-invalid-field,
@@ -4756,7 +4756,7 @@ textarea.x-form-invalid-field {
   background-position: 0 0;
   width: 17px;
   height: 21px;
-  border-bottom: 1px solid #363636;
+  border-bottom: 1px solid #9a9a9a;
   cursor: pointer;
   cursor: hand;
   overflow: hidden; }
@@ -4920,7 +4920,7 @@ textarea.x-form-invalid-field {
 
 /* line 6, ../extjs/resources/themes/stylesheets/ext4/default/widgets/form/_htmleditor.scss */
 .x-html-editor-wrap {
-  border: 1px solid #363636; }
+  border: 1px solid #9a9a9a; }
   /* line 9, ../extjs/resources/themes/stylesheets/ext4/default/widgets/form/_htmleditor.scss */
   .x-html-editor-wrap .x-toolbar {
     border-top-width: 0;
