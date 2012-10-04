@@ -198,6 +198,10 @@ $form-field-focus-border-color: $color_selected;
 $form-field-invalid-background-color: $form-field-background-color;
 $form-field-invalid-background-image: 'trans.gif';
 
+//tip
+$tip-base-color: #797777;
+$tip-error-background-color: #797777;
+
 //boundlist
 $boundlist-color: #fff;
 $boundlist-background-color: $color2;
@@ -207,8 +211,6 @@ $boundlist-border-width: 1px;
 $boundlist-item-border-width: 0;
 $boundlist-item-over-background-color: $color_selected;
 $boundlist-item-selected-background-color: $color_selected;
-
-
 
 //menu
 $menu-text-color: #fff;
