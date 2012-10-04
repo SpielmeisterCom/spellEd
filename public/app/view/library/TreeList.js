@@ -60,7 +60,7 @@ Ext.define('Spelled.view.library.TreeList' ,{
 								icon: 'images/icons/asset-sound.png'
 							},
 							{
-								text: "Key to action Mapping",
+								text: "Keyboard mapping",
 								action: "showCreateAsset",
 								type: 'keyToActionMap',
 								icon: 'images/icons/keyboard.png'
@@ -73,19 +73,19 @@ Ext.define('Spelled.view.library.TreeList' ,{
 						columns: 1,
 						items: [
 							{
-								icon: "images/icons/component-add.png",
+								icon: "images/icons/component.png",
 								action: 'showCreateTemplate',
 								text: 'Component',
 								type: 'component'
 							},
 							{
-								icon: "images/icons/entity-add.png",
+								icon: "images/icons/entity.png",
 								action: 'showCreateTemplate',
 								text: 'Entity',
 								type: 'entity'
 							},
 							{
-								icon: "images/icons/system-add.png",
+								icon: "images/icons/system.png",
 								action: 'showCreateTemplate',
 								text: 'System',
 								type: 'system'

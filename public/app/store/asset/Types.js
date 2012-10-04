@@ -30,7 +30,7 @@ Ext.define('Spelled.store.asset.Types', {
 		},
 		{
 			"type":"keyToActionMap",
-			"name":"Key to action Mapping"
+			"name":"Keyboard mapping"
 		}
     ]
 });
