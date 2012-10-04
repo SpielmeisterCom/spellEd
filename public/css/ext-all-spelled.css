@@ -1,4 +1,4 @@
-/* line 186, ../sass/ext-all-spelled.scss */
+/* line 185, ../sass/ext-all-spelled.scss */
 .x-window-item {
   background-color: #444444; }
 
@@ -3723,7 +3723,7 @@ table.x-datepicker-inner {
 .x-grid-row-focused .x-grid-cell,
 .x-grid-row-focused .x-grid-rowwrap-div {
   border-color: #dddddd;
-  background-color: #efefef; }
+  background-color: #9a9a9a; }
 
 /* line 245, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-selected .x-grid-cell,
@@ -3829,27 +3829,27 @@ browsers will do whacky things with it.
 
 /* line 347, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-cell-selected {
-  background-color: #B8CFEE !important; }
+  background-color: #9a9a9a !important; }
 
-/* line 353, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 354, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-nlg .x-grid-cell-special {
   background-repeat: repeat-y;
   background-position: top right; }
-/* line 359, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 360, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-nlg .x-grid-row .x-grid-cell-special,
 .x-nlg .x-grid-row-over .x-grid-cell-special {
   background-image: url('../images/spelled/grid/cell-special-bg.gif'); }
-/* line 365, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 366, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-nlg .x-grid-row-focused .x-grid-cell-special,
 .x-nlg .x-grid-row-selected .x-grid-cell-special {
   background-image: url('../images/spelled/grid/cell-special-selected-bg.gif'); }
 
-/* line 371, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 372, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-with-col-lines .x-grid-cell {
   padding-right: 0;
   border-right: 1px solid #5e5e5e; }
 
-/* line 378, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 379, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-property-grid .x-grid-row .x-grid-property-name .x-grid-cell-inner,
 .x-property-grid .x-grid-row-over .x-grid-property-name .x-grid-cell-inner {
   padding-left: 12px;
@@ -3857,16 +3857,16 @@ browsers will do whacky things with it.
   background-repeat: no-repeat;
   background-position: -16px 2px; }
 
-/* line 388, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 389, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-with-row-lines.x-property-grid .x-grid-row .x-grid-property-name .x-grid-cell-inner,
 .x-grid-with-row-lines.x-property-grid .x-grid-row-over .x-grid-property-name .x-grid-cell-inner {
   background-position: -16px 1px; }
 
-/* line 394, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 395, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-quirks .x-ie .x-grid-row .x-grid-property-name .x-grid-cell-inner {
   background-position: -16px 2px; }
 
-/* line 399, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 400, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-unselectable {
   user-select: none;
   -o-user-select: none;
@@ -3875,27 +3875,27 @@ browsers will do whacky things with it.
   -webkit-user-select: none;
   cursor: default; }
 
-/* line 403, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 404, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-body-hidden {
   display: none; }
 
-/* line 407, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 408, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-group-collapsed {
   display: none; }
 
-/* line 413, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 414, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-view .x-grid-td-expander {
   vertical-align: top; }
 
-/* line 418, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 419, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-td-expander {
   background: repeat-y right transparent; }
 
-/* line 424, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 425, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-view .x-grid-td-expander .x-grid-cell-inner {
   padding: 0 !important; }
 
-/* line 430, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 431, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-expander {
   background-image: url('../images/spelled/grid/group-collapse.gif');
   background-color: transparent;
@@ -3905,11 +3905,11 @@ browsers will do whacky things with it.
   background-repeat: no-repeat;
   background-position: 0 -2px; }
 
-/* line 444, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 445, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-collapsed .x-grid-row-expander {
   background-image: url('../images/spelled/grid/group-expand.gif'); }
 
-/* line 449, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 450, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-resize-marker {
   position: absolute;
   z-index: 5;
@@ -3917,7 +3917,7 @@ browsers will do whacky things with it.
   width: 1px;
   background-color: #0f0f0f; }
 
-/* line 459, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 460, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .col-move-top,
 .col-move-bottom {
   width: 9px;
@@ -3930,28 +3930,28 @@ browsers will do whacky things with it.
   z-index: 20000;
   background: no-repeat left top transparent; }
 
-/* line 471, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 472, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .col-move-top {
   background-image: url('../images/spelled/grid/col-move-top.gif'); }
 
-/* line 475, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 476, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .col-move-bottom {
   background-image: url('../images/spelled/grid/col-move-bottom.gif'); }
 
-/* line 480, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 481, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-tbar-page-number {
   width: 30px; }
 
-/* line 487, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 488, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-group,
 .x-grid-group-body,
 .x-grid-group-hd {
   zoom: 1; }
 
-/* line 491, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 492, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-group-hd {
   padding-top: 6px; }
-  /* line 494, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+  /* line 495, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
   .x-grid-group-hd .x-grid-cell-inner {
     padding: 10px 4px 4px 4px;
     background: white;
@@ -3960,47 +3960,47 @@ browsers will do whacky things with it.
     border-color: #544848;
     cursor: pointer; }
 
-/* line 508, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 509, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-group-hd-collapsible .x-grid-group-title {
   background: transparent no-repeat 0 -1px;
   background-image: url('../images/spelled/grid/group-collapse.gif');
   padding: 0 0 0 14px; }
 
-/* line 515, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 516, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-group-title {
   color: black;
   font: bold 11px tahoma, arial, verdana, sans-serif; }
 
-/* line 521, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 522, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-group-hd-collapsed .x-grid-group-title {
   background-image: url('../images/spelled/grid/group-expand.gif'); }
 
-/* line 526, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 527, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-group-collapsed .x-grid-group-body {
   display: none; }
 
-/* line 530, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 531, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-group-collapsed .x-grid-group-title {
   background-image: url('../images/spelled/grid/group-expand.gif'); }
 
-/* line 534, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 535, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-group-by-icon {
   background-image: url('../images/spelled/grid/group-by.gif'); }
 
-/* line 538, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 539, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-show-groups-icon {
   background-image: url('../images/spelled/grid/group-by.gif'); }
 
-/* line 542, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 543, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-column-header-checkbox .x-column-header-inner {
   padding: 0; }
 
-/* line 546, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 547, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-cell-special .x-grid-cell-inner {
   padding-left: 4px;
   padding-right: 4px; }
 
-/* line 552, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 553, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-checker,
 .x-column-header-checkbox .x-column-header-text {
   height: 14px;
@@ -4011,113 +4011,113 @@ browsers will do whacky things with it.
   background-repeat: no-repeat;
   background-color: transparent; }
 
-/* line 564, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 565, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-column-header-checkbox .x-column-header-text {
   display: block;
   margin: 0 5px; }
 
 /* IE6, IE7, and all IE Quirks mode need line-height to be the same as checkbox height or the header/row height will be too tall */
-/* line 573, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 574, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-quirks .x-ie .x-grid-row-checker,
 .x-quirks .x-ie .x-column-header-checkbox .x-column-header-text, .x-ie7m .x-grid-row-checker, .x-ie7m .x-column-header-checkbox .x-column-header-text {
   line-height: 14px; }
 
-/* line 579, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 580, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-hd-checker-on .x-column-header-text {
   background-image: url('../images/spelled/grid/checked.gif'); }
 
-/* line 583, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 584, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-cell-row-checker .x-grid-cell-inner {
   padding-top: 4px;
   padding-bottom: 2px;
   line-height: 14px; }
 
-/* line 588, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 589, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-with-row-lines .x-grid-cell-row-checker .x-grid-cell-inner {
   padding-top: 3px; }
 
-/* line 591, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 592, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-checker {
   margin-left: 1px;
   background-position: 50% -2px; }
 
-/* line 598, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 599, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-selected .x-grid-row-checker,
 .x-grid-row-checked .x-grid-row-checker {
   background-image: url('../images/spelled/grid/checked.gif'); }
 
-/* line 603, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 604, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-tbar-page-first {
   background-image: url('../images/spelled/grid/page-first.gif') !important; }
 
-/* line 607, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 608, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-tbar-loading {
   background-image: url('../images/spelled/grid/refresh.gif') !important; }
 
-/* line 611, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 612, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-tbar-page-last {
   background-image: url('../images/spelled/grid/page-last.gif') !important; }
 
-/* line 615, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 616, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-tbar-page-next {
   background-image: url('../images/spelled/grid/page-next.gif') !important; }
 
-/* line 619, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 620, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-tbar-page-prev {
   background-image: url('../images/spelled/grid/page-prev.gif') !important; }
 
-/* line 624, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 625, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-item-disabled .x-tbar-loading {
   background-image: url('../images/spelled/grid/refresh-disabled.gif') !important; }
-/* line 628, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 629, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-item-disabled .x-tbar-page-first {
   background-image: url('../images/spelled/grid/page-first-disabled.gif') !important; }
-/* line 632, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 633, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-item-disabled .x-tbar-page-last {
   background-image: url('../images/spelled/grid/page-last-disabled.gif') !important; }
-/* line 636, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 637, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-item-disabled .x-tbar-page-next {
   background-image: url('../images/spelled/grid/page-next-disabled.gif') !important; }
-/* line 640, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 641, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-item-disabled .x-tbar-page-prev {
   background-image: url('../images/spelled/grid/page-prev-disabled.gif') !important; }
 
-/* line 646, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 647, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-hmenu-sort-asc .x-menu-item-icon {
   background-image: url('../images/spelled/grid/hmenu-asc.gif'); }
 
-/* line 650, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 651, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-hmenu-sort-desc .x-menu-item-icon {
   background-image: url('../images/spelled/grid/hmenu-desc.gif'); }
 
-/* line 654, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 655, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-hmenu-lock .x-menu-item-icon {
   background-image: url('../images/spelled/grid/hmenu-lock.gif'); }
 
-/* line 658, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 659, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-hmenu-unlock .x-menu-item-icon {
   background-image: url('../images/spelled/grid/hmenu-unlock.gif'); }
 
-/* line 662, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 663, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-group-by-icon {
   background-image: url('../images/spelled/grid/group-by.gif'); }
 
-/* line 666, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 667, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-cols-icon .x-menu-item-icon {
   background-image: url('../images/spelled/grid/columns.gif'); }
 
-/* line 670, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 671, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-show-groups-icon {
   background-image: url('../images/spelled/grid/group-by.gif'); }
 
-/* line 675, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 676, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-drop-indicator {
   position: absolute;
   height: 1px;
   line-height: 0px;
   background-color: #77BC71;
   overflow: visible; }
-  /* line 682, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+  /* line 683, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
   .x-grid-drop-indicator .x-grid-drop-indicator-left {
     position: absolute;
     top: -8px;
@@ -4125,7 +4125,7 @@ browsers will do whacky things with it.
     background-image: url('../images/spelled/grid/dd-insert-arrow-right.png');
     height: 16px;
     width: 16px; }
-  /* line 691, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+  /* line 692, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
   .x-grid-drop-indicator .x-grid-drop-indicator-right {
     position: absolute;
     top: -8px;
@@ -4134,115 +4134,115 @@ browsers will do whacky things with it.
     height: 16px;
     width: 16px; }
 
-/* line 702, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 703, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-ie6 .x-grid-drop-indicator-left {
   background-image: url('../images/spelled/grid/dd-insert-arrow-right.gif'); }
-/* line 706, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 707, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-ie6 .x-grid-drop-indicator-right {
   background-image: url('../images/spelled/grid/dd-insert-arrow-left.gif'); }
 
-/* line 714, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 715, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-editor .x-form-text {
   padding: 0 4px; }
-/* line 717, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 718, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-editor .x-form-cb-wrap {
   padding-top: 3px; }
 
-/* line 723, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 724, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-editor {
   position: absolute !important;
   z-index: 1;
   zoom: 1;
   overflow: visible !important; }
-  /* line 729, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+  /* line 730, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
   .x-grid-row-editor .x-form-text {
     padding: 0 2px; }
-  /* line 732, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+  /* line 733, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
   .x-grid-row-editor .x-form-cb-wrap {
     padding-top: 0; }
-  /* line 735, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+  /* line 736, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
   .x-grid-row-editor .x-form-checkbox {
     margin-left: -4px; }
-  /* line 738, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+  /* line 739, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
   .x-grid-row-editor .x-form-display-field {
     font: normal 11px/15px tahoma, arial, verdana, sans-serif;
     padding-top: 0;
     padding-left: 2px; }
-  /* line 744, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+  /* line 745, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
   .x-grid-row-editor .x-panel-body {
     background-color: #8e7372;
     border-top: 1px solid #646464 !important;
     border-bottom: 1px solid #646464 !important; }
 
-/* line 754, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 755, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-editor .x-form-cb-wrap, .x-grid-row-editor .x-form-cb-wrap {
   text-align: center; }
-/* line 757, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 758, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-editor .x-form-trigger, .x-grid-row-editor .x-form-trigger {
   height: 19px; }
-/* line 761, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 762, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-editor .x-form-trigger-wrap .x-form-spinner-up, .x-grid-editor .x-form-trigger-wrap .x-form-spinner-down, .x-grid-row-editor .x-form-trigger-wrap .x-form-spinner-up, .x-grid-row-editor .x-form-trigger-wrap .x-form-spinner-down {
   background-image: url('../images/spelled/form/spinner-small.gif');
   height: 10px !important; }
 
-/* line 768, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 769, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-editor .x-form-text, .x-grid-row-editor .x-form-text {
   font: normal 11px/15px tahoma, arial, verdana, sans-serif;
   height: 18px; }
 
-/* line 776, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 777, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-border-box .x-grid-editor .x-form-trigger,
 .x-border-box .x-grid-row-editor .x-form-trigger {
   height: 20px; }
-/* line 779, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 780, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-border-box .x-grid-editor .x-form-text,
 .x-border-box .x-grid-row-editor .x-form-text {
   height: 20px;
   padding-bottom: 1px; }
 
-/* line 787, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 788, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-ie .x-grid-editor .x-form-text {
   padding-left: 5px; }
-/* line 790, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 791, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-ie .x-grid-row-editor .x-form-text {
   padding-left: 3px; }
 
-/* line 796, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 797, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-ie8m .x-grid-editor .x-form-text,
 .x-ie8m .x-grid-row-editor .x-form-text {
   padding-top: 1px; }
 
-/* line 803, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 804, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-strict .x-ie6 .x-grid-editor .x-form-text,
 .x-strict .x-ie6 .x-grid-row-editor .x-form-text,
 .x-strict .x-ie7 .x-grid-editor .x-form-text,
 .x-strict .x-ie7 .x-grid-row-editor .x-form-text {
   height: 17px; }
 
-/* line 809, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 810, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-quirks .x-ie9 .x-grid-editor .x-form-text, .x-quirks .x-ie9 .x-grid-row-editor .x-form-text {
   line-height: 17px; }
 
-/* line 818, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 819, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-opera .x-grid-editor .x-form-text {
   padding-left: 5px; }
-/* line 821, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 822, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-opera .x-grid-row-editor .x-form-text {
   padding-left: 3px; }
 
-/* line 828, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 829, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-editor-buttons {
   background-color: #8e7372;
   position: absolute;
   bottom: -31px;
   padding: 4px;
   height: 32px; }
-  /* line 835, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+  /* line 836, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
   .x-strict .x-ie7m .x-grid-row-editor-buttons {
     width: 192px;
     height: 24px; }
 
-/* line 845, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 846, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-editor-buttons-ml,
 .x-grid-row-editor-buttons-mr,
 .x-grid-row-editor-buttons-bl,
@@ -4251,7 +4251,7 @@ browsers will do whacky things with it.
   position: absolute;
   overflow: hidden; }
 
-/* line 851, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 852, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-editor-buttons-bl,
 .x-grid-row-editor-buttons-br {
   width: 4px;
@@ -4259,17 +4259,17 @@ browsers will do whacky things with it.
   bottom: 0px;
   background-image: url('../images/spelled/panel/panel-default-framed-corners.gif'); }
 
-/* line 857, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 858, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-editor-buttons-bl {
   left: 0px;
   background-position: 0px -16px; }
 
-/* line 861, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 862, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-editor-buttons-br {
   right: 0px;
   background-position: 0px -20px; }
 
-/* line 866, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 867, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-editor-buttons-bc {
   position: absolute;
   left: 4px;
@@ -4278,7 +4278,7 @@ browsers will do whacky things with it.
   height: 1px;
   background-color: #646464; }
 
-/* line 876, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 877, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-editor-buttons-ml,
 .x-grid-row-editor-buttons-mr {
   height: 27px;
@@ -4286,19 +4286,19 @@ browsers will do whacky things with it.
   top: 1px;
   background-color: #646464; }
 
-/* line 882, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 883, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-editor-buttons-ml {
   left: 0px; }
 
-/* line 885, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 886, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-editor-buttons-mr {
   background-position: 0px -20px;
   right: 0px; }
 
-/* line 891, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 892, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-editor-errors ul {
   margin-left: 5px; }
-/* line 894, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
+/* line 895, ../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-grid-row-editor-errors li {
   list-style: disc;
   margin-left: 15px; }
