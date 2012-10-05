@@ -23,8 +23,7 @@ Ext.define('Spelled.model.template.System', {
     proxy: {
         type: 'direct',
 		extraParams: {
-			type: 'template',
-			subtype: 'system'
+			type: 'system'
 		},
         api: {
 			create:  Spelled.StorageActions.create,

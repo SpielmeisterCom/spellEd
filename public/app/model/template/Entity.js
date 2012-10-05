@@ -36,8 +36,7 @@ Ext.define('Spelled.model.template.Entity', {
 	proxy: {
 		type: 'direct',
 		extraParams: {
-			type: 'template',
-			subtype: 'entity'
+			type: 'entity'
 		},
 		api: {
 			create:  Spelled.StorageActions.create,
