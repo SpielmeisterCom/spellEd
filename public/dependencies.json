@@ -304,6 +304,8 @@
 		"Ext.menu.ColorPicker",
         "Ext.layout.container.Table",
         "Ext.container.ButtonGroup",
+	"Spelled.view.layout.Split",
+	"Spelled.view.layout.Main",
         "Spelled.abstract.view.TreeList",
         "Spelled.abstract.view.Navigator",
 		"Spelled.abstract.model.Model",
@@ -465,7 +467,8 @@
 		"Spelled.view.ui.SpelledIframe",
         "Spelled.view.library.Navigator",
         "Spelled.view.library.TreeList",
-        "Spelled.controller.Library"
+        "Spelled.controller.Library",
+	"Spelled.controller.Layout"
 
 	]
 }
