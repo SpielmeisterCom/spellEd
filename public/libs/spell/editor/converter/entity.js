@@ -27,7 +27,7 @@ define(
 			if( _.has( entity, 'templateId' ) &&
 				!!entity.templateId ) {
 
-				entityResult.templateId = entity.templateId
+				entityResult.entityTemplateId = entity.templateId
 			}
 
 			entityResult.config = _.reduce(
@@ -58,7 +58,7 @@ define(
 			if( _.isEmpty( entityResult.children ) ) delete entityResult.children
 
 			// delete templateId on anonymous entities
-			if( _.isEmpty( entityResult.templateId ) ) delete entityResult.templateId
+			if( _.isEmpty( entityResult.entityTemplateId ) ) delete entityResult.entityTemplateId
 
 			return entityResult
 		}
@@ -72,17 +72,17 @@ define(
 		var toEditorFormat = function( entity ) {
 			var result = _.pick( entity, 'name' )
 
-			if( _.has( entity, 'templateId' ) &&
-				!!entity.templateId ) {
+			if( _.has( entity, 'entityTemplateId' ) &&
+				!!entity.entityTemplateId ) {
 
-				result.templateId = entity.templateId
+				result.templateId = entity.entityTemplateId
 			}
 
 			result.components = _.reduce(
 				entity.config,
-				function( memo, componentConfig, componentTemplateId ) {
+				function( memo, componentConfig, componentId ) {
 					return memo.concat( {
-						templateId : componentTemplateId,
+						templateId : componentId,
 						config : componentConfig
 					} )
 				},

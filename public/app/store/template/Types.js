@@ -9,7 +9,7 @@ Ext.define('Spelled.store.template.Types', {
             "name":"Component"
         },
         {
-            "type":"entity",
+            "type":"entityTemplate",
             "name":"Entity"
         },
         {

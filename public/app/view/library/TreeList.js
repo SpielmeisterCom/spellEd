@@ -82,7 +82,7 @@ Ext.define('Spelled.view.library.TreeList' ,{
 								icon: "images/icons/entity.png",
 								action: 'showCreateTemplate',
 								text: 'Entity',
-								type: 'entity'
+								type: 'entityTemplate'
 							},
 							{
 								icon: "images/icons/system.png",

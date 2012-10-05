@@ -54,9 +54,9 @@ define(
 
 			result.components = _.reduce(
 				entity.config,
-				function( memo, componentConfig, componentTemplateId ) {
+				function( memo, componentConfig, componentId ) {
 					return memo.concat( {
-						templateId : componentTemplateId,
+						templateId : componentId,
 						config : componentConfig
 					} )
 				},

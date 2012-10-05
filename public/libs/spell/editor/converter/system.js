@@ -21,7 +21,7 @@ define(
 			result.input = _.map(
 				system.getInput,
 				function( input ) {
-					return _.pick( input, 'name','templateId')
+					return _.pick( input, 'name','componentId')
 				}
 			)
 
