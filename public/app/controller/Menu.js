@@ -214,10 +214,10 @@ Ext.define('Spelled.controller.Menu', {
 		this.application.showDocumentation( docString )
 	},
 
-    createAndShowView: function( View, event ) {
+    createAndShowView: function( View, event, ownerView ) {
         event.stopEvent()
 
-        var view = new View()
+        var view = new View( { ownerView: ownerView} )
         view.showAt( event.getXY() )
 
         return view
@@ -258,10 +258,11 @@ Ext.define('Spelled.controller.Menu', {
         )
     },
 
-    showComponentAttributesListContextMenu: function( e ) {
+    showComponentAttributesListContextMenu: function( view, e ) {
         this.createAndShowView(
             this.getMenuContextmenuComponentTemplateAttributesListView(),
-            e
+            e,
+			view
         )
     },
 
@@ -432,11 +433,14 @@ Ext.define('Spelled.controller.Menu', {
 		this.application.fireEvent( "removekeymapping", view.assetView, view.selectedRow )
 	},
 
-    removeComponentAttribute: function( ) {
-        var node = this.application.getLastSelectedNode( this.getTemplateEditor().getActiveTab().down( 'componenttemplateattributeslist' ) )
+    removeComponentAttribute: function( button ) {
+		var contextmenu = button.ownerCt,
+			tabPanel    = contextmenu.getTabPanel()
+
+        var node = this.application.getLastSelectedNode( tabPanel.down( 'componenttemplateattributeslist' ) )
 
         if( node && node.isLeaf() ) {
-            this.application.getController( 'templates.Components' ).removeComponentAttribute( node.get('id') )
+            this.application.getController( 'templates.Components' ).removeComponentAttribute( tabPanel, node.get('id') )
 			node.remove()
         }
     },

@@ -44,9 +44,12 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                     layout: 'fit',
                     items:[
                         {
-                            id: "SceneEditor",
-                            xtype: "sceneeditor"
-                        }
+							xtype: "mainlayout"
+						},
+						{
+							xtype: "splitlayout",
+							hidden: true
+						}
                     ]
                 },
 				{

@@ -204,6 +204,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		this.application.on({
 			clearstores: this.clearScenesStore,
+			reloadscene: this.reloadSceneKeyEvent,
 			scenetabchange: this.showScenesEditor,
 			scope: this
 		})
@@ -243,11 +244,12 @@ Ext.define('Spelled.controller.Scenes', {
 
 	reloadSceneKeyEvent: function( keyCode, e ) {
 		var sceneEditor = this.getSceneEditor(),
-			activeTab   = sceneEditor.getActiveTab()
+			sceneTab    = sceneEditor.items.first()
 
-		e.stopEvent()
-		if( activeTab && !sceneEditor.isHidden() )
-			this.reloadScene( activeTab.down( 'button' ) )
+		if( e )	e.stopEvent()
+
+		if( sceneTab && !sceneEditor.isHidden() )
+			this.reloadScene( sceneTab.down( 'button' ) )
 	},
 
 	triggerRenameEntityEvent: function( node ) {
@@ -392,7 +394,7 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	showScenesEditor: function() {
-		this.application.hideMainPanels()
+
 		this.getRightPanel().show()
 
 		this.getSceneEditor().show()

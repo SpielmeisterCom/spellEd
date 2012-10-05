@@ -38,6 +38,20 @@ Ext.define('Spelled.view.menu.Menu', {
 						action: "exportProject"
 					},
 					{
+						text: 'Layout',
+						icon: "images/icons/monitor.png",
+						menu: {
+							items: [{
+								text   : 'Main layout',
+								action: 'changeToMainLayout'
+							},{
+								text   : 'Split layout',
+								action: 'changeToSplitLayout'
+							}]
+
+						}
+					},
+					{
 						xtype: 'tool-documentation',
 						docString: ""
 					}

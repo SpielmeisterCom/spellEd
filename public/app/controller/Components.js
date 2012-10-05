@@ -311,6 +311,8 @@ Ext.define('Spelled.controller.Components', {
 	getComponentScene: function( component ) {
 		var entity = component.getEntity()
 
+		if( !entity.getOwner ) return
+
 		var getScene = function( entity ) {
 			var owner = entity.getOwner()
 			return ( entity.hasScene() ? owner : getScene( owner ) )

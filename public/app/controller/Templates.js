@@ -101,7 +101,7 @@ Ext.define('Spelled.controller.Templates', {
 
 		this.getRightPanel().removeAll()
 
-		this.openTemplate( tree, node )
+		this.showConfig( tree, node )
 	},
 
 	showConfig: function( treeGrid, record ) {
@@ -118,12 +118,7 @@ Ext.define('Spelled.controller.Templates', {
 				this.getRightPanel().removeAll()
 				var template = this.getTemplateSystemsStore().getById( record.getId() )
 				if( !template ) return
-
-				var tab = this.application.findActiveTabByTitle( this.getTemplateEditor(), template.getFullName() )
-				if( tab ) {
-					this.application.fireEvent( 'showsystemtemplateconfig', tab )
-				}
-
+				this.application.fireEvent( 'showsystemtemplateconfig', template )
 				break
 			default:
 				return

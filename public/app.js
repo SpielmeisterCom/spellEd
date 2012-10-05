@@ -89,6 +89,7 @@ require(
 				appFolder: 'app',
 
 				controllers: [
+					'Layout',
 					'Scenes',
 					'Entities',
 					'Menu',
@@ -203,16 +204,6 @@ require(
 					var foundPanel = this.findTabByTitle( tabPanel, title )
 					if( foundPanel ) tabPanel.setActiveTab( foundPanel )
 					return foundPanel
-				},
-
-				hideMainPanels: function() {
-//					this.getRightPanel().hide()
-
-					this.getMainPanel().items.each(
-						function( panel ) {
-							panel.hide()
-						}
-					)
 				},
 
 				hideActions: function( view, list, node, rowIndex, e ) {

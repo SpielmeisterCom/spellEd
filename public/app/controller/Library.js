@@ -40,10 +40,10 @@ Ext.define('Spelled.controller.Library', {
 			'librarynavigator': {
 				activate: this.showLibrary
 			},
-			'sceneeditor': {
+			'sceneeditor,#SecondTabPanel': {
 				tabchange: this.dispatchLibraryTabChange
 			},
-			'sceneeditor tab': {
+			'sceneeditor tab,#SecondTabPanel tab': {
 				beforeclose: this.dispatchLibraryTabBeforeClose
 			},
 			'librarytreelist': {
@@ -128,7 +128,7 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	dispatchLibraryTabBeforeClose: function( tab ) {
-		var panel = this.application.findTabByTitle( this.getLibraryTabPanel(), tab.text )
+		var panel = this.application.findTabByTitle( tab.ownerCt.tabPanel, tab.text )
 		if( !panel ) return true
 
 		switch( this.getTabType( panel ) ) {
@@ -181,7 +181,6 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	showLibrary : function( ) {
-		this.application.hideMainPanels()
 		this.getRightPanel().show()
 
 		this.getLibraryTabPanel().show()

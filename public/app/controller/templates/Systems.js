@@ -35,6 +35,10 @@ Ext.define('Spelled.controller.templates.Systems', {
 		{
 			ref : 'RightPanel',
 			selector: '#RightPanel'
+		},
+		{
+			ref : 'SecondTabPanel',
+			selector: '#SecondTabPanel'
 		}
 	],
 
@@ -47,7 +51,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 				},this)
 			},
 			'systemtemplateedit': {
-				activate: this.refreshSystemConfiguration
+				activate: Ext.bind( function( tab ) { this.refreshSystemConfiguration( tab.template ) }, this)
 			},
 			'systemtemplateinputlist': {
 				edit: this.dirtyHelper,
@@ -113,9 +117,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 		)
 	},
 
-	refreshScriptTab: function( systemTemplate ) {
-		var tab	   = this.getTemplateEditor().getActiveTab()
-
+	refreshScriptTab: function( tab, systemTemplate ) {
 		tab.setModel( systemTemplate )
 		tab.refreshContent()
 	},
@@ -130,9 +132,8 @@ Ext.define('Spelled.controller.templates.Systems', {
             values     = form.getValues(),
             tree       = window.down('treepanel'),
             components = tree.getView().getChecked(),
-            tab        = this.getTemplateEditor().getActiveTab(),
             componentTemplateStore = Ext.getStore('template.Components'),
-            systemTemplate         = tab.template
+			systemTemplate         = this.getRightPanel().down( 'systemtemplatedetails').getForm().getRecord()
 
         var inputDefinition = Ext.create(
             'Spelled.model.template.SystemInputDefinition',
@@ -156,13 +157,12 @@ Ext.define('Spelled.controller.templates.Systems', {
         systemTemplate.getInput().add( inputDefinition )
 		systemTemplate.setDirty()
 
-        this.refreshSystemTemplateInputList( tab )
+        this.refreshSystemTemplateInputList()
         window.close()
     },
 
     removeSystemInputDefinition: function( id ) {
-        var tab                = this.getTemplateEditor().getActiveTab(),
-            systemTemplate     = tab.template,
+        var systemTemplate     = this.getRightPanel().down( 'systemtemplatedetails').getForm().getRecord(),
             store              = Ext.getStore( 'template.SystemInputDefinitions' ),
             input              = store.getById( id )
 
@@ -170,7 +170,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 		systemTemplate.setDirty()
         store.remove( input )
 
-        this.refreshSystemTemplateInputList( tab )
+        this.refreshSystemTemplateInputList()
     },
 
     removeSystemTemplate: function( id ) {
@@ -196,13 +196,13 @@ Ext.define('Spelled.controller.templates.Systems', {
 		inputView.reconfigure( systemTemplate.getInput() )
 	},
 
-	refreshSystemConfiguration: function( tab ) {
+	refreshSystemConfiguration: function( template ) {
 		var configurationView = Ext.widget( 'systemtemplateconfiguration' )
 		this.getRightPanel().removeAll()
 
-		this.prepareConfigurationView( configurationView, tab.template )
+		this.prepareConfigurationView( configurationView, template )
 		this.getRightPanel().add( configurationView )
-		this.refreshSystemTemplateInputList( tab )
+		this.refreshSystemTemplateInputList()
 	},
 
     openTemplate: function( systemTemplate ) {
@@ -217,17 +217,16 @@ Ext.define('Spelled.controller.templates.Systems', {
 
         var tab = this.application.createTab( templateEditor, editView )
 
-		editView.aceEditor.setReadOnly( systemTemplate.isReadonly() )
-
-		this.refreshScriptTab( systemTemplate )
-
 		this.prepareConfigurationView( configurationView, systemTemplate )
 		this.getRightPanel().add( configurationView )
-        this.refreshSystemTemplateInputList( tab )
+        this.refreshSystemTemplateInputList()
+
+		editView.aceEditor.setReadOnly( systemTemplate.isReadonly() )
+		this.refreshScriptTab( tab, systemTemplate )
     },
 
-    refreshSystemTemplateInputList: function( tab ) {
-        var systemTemplate  = tab.template,
+    refreshSystemTemplateInputList: function() {
+        var systemTemplate  = this.getRightPanel().down( 'systemtemplatedetails').getForm().getRecord(),
             inputView       = this.getRightPanel().down( 'systemtemplateinputlist' )
 
 		inputView.reconfigure( systemTemplate.getInput() )

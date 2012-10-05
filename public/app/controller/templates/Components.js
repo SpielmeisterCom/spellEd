@@ -80,13 +80,13 @@ Ext.define('Spelled.controller.templates.Components', {
 
     showAttributesListContextMenu: function( view, record, item, index, e, options ) {
 		if( !view.panel.down( 'actioncolumn').isHidden() )
-        	this.application.getController('Menu').showComponentAttributesListContextMenu( e )
+        	this.application.getController('Menu').showComponentAttributesListContextMenu( view, e )
 		else
 			e.preventDefault()
     },
 
-    addAttribute: function() {
-        var tab        = this.getTemplateEditor().getActiveTab(),
+    addAttribute: function( button ) {
+        var tab        = button.up('tabpanel').getActiveTab(),
             ownerModel = tab.template
 
         var newAttribute = Ext.create(
@@ -114,9 +114,9 @@ Ext.define('Spelled.controller.templates.Components', {
         })
     },
 
-    removeComponentAttribute: function( id ) {
-        var tab                = this.getTemplateEditor().getActiveTab(),
-            componentTemplate = tab.template,
+    removeComponentAttribute: function( tabPanel, id ) {
+        var tab                = tabPanel.getActiveTab(),
+            componentTemplate  = tab.template,
             store              = Ext.getStore( 'template.component.Attributes' ),
             attribute          = store.getById( id )
 
@@ -132,7 +132,7 @@ Ext.define('Spelled.controller.templates.Components', {
 		var attribute = Ext.getStore('template.component.Attributes').getById( record.getId() )
 
         if( attribute ) {
-            this.fillAttributeConfigView( this.getTemplateEditor().getActiveTab().down( 'componenttemplateproperty' ), attribute )
+            this.fillAttributeConfigView( treePanel.view.up('tabpanel').getActiveTab().down( 'componenttemplateproperty' ), attribute )
         }
     },
 
