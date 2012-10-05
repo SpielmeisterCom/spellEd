@@ -130,9 +130,13 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
     showCreateProject: function() {
-        var View = this.getProjectCreateView()
+        var View = this.getProjectCreateView(),
+			view = new View(),
+			Project = this.getProjectModel(),
+			form = view.down( 'form' )
 
-        var view = new View()
+		form.loadRecord( new Project() )
+
         view.show()
     },
 
@@ -140,23 +144,18 @@ Ext.define('Spelled.controller.Projects', {
         var window = button.up('window'),
             form   = window.down('form'),
             values = form.getValues(),
-            me     = this
+			record = form.getRecord(),
+            me     = this,
+			store  = this.getProjectsStore()
 
+		record.setId( values.name + '/project.json' )
+		record.set( values )
+		store.add( record )
 
-        Spelled.ProjectActions.create( values.name , function( provider, response ) {
-
-            if( response.result !== false ) {
-                var configFilePath   = values.name + '/project.json'
-
-				Spelled.SpellBuildActions.initDirectory( values.name, configFilePath, function( provider, response ) {
-					me.initProject( values.name )
-                    window.close()
-                })
-
-            } else {
-
-            }
-        })
+		Spelled.SpellBuildActions.initDirectory( record.get('name'), record.getId(), function( provider, response ) {
+			me.initProject( record.get('name') )
+			window.close()
+		})
     },
 
 	initProject: function( projectName ) {

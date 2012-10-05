@@ -29,7 +29,7 @@ define(
 
 				content.id = filePath
 
-				if( content.startScene ) {
+				if( content.type === 'project' ) {
 					content.name = fileParts.pop()
 				} else {
 					content.name      = path.basename( baseName, path.extname( baseName ) )

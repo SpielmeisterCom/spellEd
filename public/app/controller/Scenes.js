@@ -471,8 +471,8 @@ Ext.define('Spelled.controller.Scenes', {
 
 		iframe.destroy()
 
-		var newIframe = Ext.create(
-			'Spelled.view.ui.SpelledIframe',
+		var newIframe = Ext.widget(
+			'spellediframe',
 			{
 				projectName : project.get('name'),
 				sceneId : sceneId
@@ -553,16 +553,16 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	createSpellTab: function( title, projectName, sceneId, showGrid ) {
-		var tab = Ext.create(
-			'Spelled.view.ui.SpelledRendered',
+		var tab = Ext.widget(
+			'renderedscene',
 			{
 				title : title,
 				showGrid : showGrid
 			}
 		)
 
-		var iframe = Ext.create(
-			'Spelled.view.ui.SpelledIframe',
+		var iframe = Ext.widget(
+			'spellediframe',
 			{
 				projectName : projectName,
 				sceneId : sceneId
