@@ -3,7 +3,7 @@ Ext.define('Spelled.model.Asset', {
 
 	mixins: ['Spelled.abstract.model.Model'],
 
-	sortOrder: 5,
+	sortOrder: 999,
 
 	proxy: {
 		type: 'direct',
@@ -66,32 +66,12 @@ Ext.define('Spelled.model.Asset', {
 	constructor: function() {
 		var object  = arguments[0] || arguments[2],
 			assetId =this.generateIdentifier( object ),
-			internalAssetId = object.subtype + ":" + assetId
+			internalAssetId = object.subtype + ":" + assetId,
+			metaData = Ext.getStore( 'asset.Types' ).findRecord( 'type', object.subtype )
 
-		switch( object.subtype ) {
-			case "spriteSheet":
-				this.iconCls = "tree-asset-spritesheet-icon"
-				break
-			case "animation":
-				this.iconCls = "tree-asset-2danimation-icon"
-				break
-			case "appearance":
-				this.iconCls = "tree-asset-2dstaticappearance-icon"
-				break
-			case "font":
-				this.iconCls = "tree-asset-2dtextappearance-icon"
-				this.sortOrder = 6
-				break
-			case "sound":
-				this.iconCls = "tree-asset-sound-icon"
-				break
-			case "keyFrameAnimation":
-				this.iconCls = "tree-asset-keyframeanimation-icon"
-				break
-			case "keyToActionMap":
-				this.iconCls = "tree-asset-keytoactionmap-icon"
-				this.sortOrder = 5
-				break
+		if ( metaData ) {
+			this.iconCls = metaData.data.iconCls
+			this.sortOrder = metaData.data.sortOrder
 		}
 
 		this.callParent( arguments )

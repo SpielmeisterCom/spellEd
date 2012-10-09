@@ -2,7 +2,7 @@ Ext.define('Spelled.model.template.Component', {
     extend: 'Spelled.abstract.model.Template',
 
 	iconCls : "tree-component-icon",
-	sortOrder: 2,
+	sortOrder: 210,
 
     fields: [
         "namespace",
