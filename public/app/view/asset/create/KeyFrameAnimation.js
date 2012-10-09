@@ -29,6 +29,9 @@ Ext.define('Spelled.view.asset.create.KeyFrameAnimation', {
 							rootVisible: false
 						},
 						{
+							listeners: {
+								edit: me.sortGridByTimeColumn
+							},
 //							columnWidth: 0.5,
 							hidden: true,
 							xtype: 'gridpanel',
@@ -101,6 +104,10 @@ Ext.define('Spelled.view.asset.create.KeyFrameAnimation', {
 		)
 
 		me.callParent()
+	},
+
+	sortGridByTimeColumn: function( editor, e) {
+		e.record.store.sort()
 	},
 
 	handleEditClick: function(gridView, rowIndex, colIndex, column, e, record) {

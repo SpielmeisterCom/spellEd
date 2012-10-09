@@ -418,7 +418,8 @@ Ext.define('Spelled.controller.Assets', {
 
 			var store = componentConfig[ attributeName ].tmpStore || Ext.create( 'Ext.data.Store',{
 					fields: [ 'time','value','interpolation' ],
-					data: data
+					data: data,
+					sorters: { property: 'time', direction : 'ASC' }
 				}
 			)
 
