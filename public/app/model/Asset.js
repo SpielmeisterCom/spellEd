@@ -85,6 +85,9 @@ Ext.define('Spelled.model.Asset', {
 			case "sound":
 				this.iconCls = "tree-asset-sound-icon"
 				break
+			case "keyFrameAnimation":
+				this.iconCls = "tree-asset-keyframeanimation-icon"
+				break
 			case "keyToActionMap":
 				this.iconCls = "tree-asset-keytoactionmap-icon"
 				this.sortOrder = 5

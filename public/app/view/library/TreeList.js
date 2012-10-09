@@ -24,16 +24,28 @@ Ext.define('Spelled.view.library.TreeList' ,{
 
 						items: [
 							{
-								text: "2D Animated Appearance",
+								text: "2D Static Appearance (Image)",
+								action: "showCreateAsset",
+								type: 'appearance',
+								icon: 'images/icons/asset-2dstatic.png'
+							},
+							{
+								text: "2D Sprite Sheet",
+								action: "showCreateAsset",
+								type: 'spriteSheet',
+								icon: 'images/icons/asset-spritesheet.png'
+							},
+							{
+								text: "2D Animation",
 								action: "showCreateAsset",
 								type: 'animation',
 								icon: 'images/icons/asset-2danimation.png'
 							},
 							{
-								text: "2D Static Appearance",
+								text: "Keyframe animation",
 								action: "showCreateAsset",
-								type: 'appearance',
-								icon: 'images/icons/asset-2dstatic.png'
+								type: 'keyFrameAnimation',
+								icon: 'images/icons/asset-keyframeanimation.png'
 							},
 //							{
 //								text: "2D Static Domvas Appearance",
@@ -41,18 +53,6 @@ Ext.define('Spelled.view.library.TreeList' ,{
 //								type: 'domvas',
 //								icon: 'images/icons/asset-2dstatic.png'
 //							},
-							{
-								text: "Sprite Sheet",
-								action: "showCreateAsset",
-								type: 'spriteSheet',
-								icon: 'images/icons/asset-spritesheet.png'
-							},
-							{
-								text: "Key frame animation",
-								action: "showCreateAsset",
-								type: 'keyFrameAnimation',
-								icon: 'images/icons/asset-keyframeanimation.png'
-							},
 							{
 								text: "Font",
 								action: "showCreateAsset",
@@ -104,7 +104,7 @@ Ext.define('Spelled.view.library.TreeList' ,{
 						columns: 1,
 						items:[
 							{
-								icon: "images/icons/script-add.png",
+								icon: "images/icons/script.png",
 								action: 'showCreateScript',
 								text: 'Script'
 							}
