@@ -12,6 +12,7 @@ Ext.define('Spelled.controller.Assets', {
 		'asset.create.Animation',
 		'asset.create.Font',
 		'asset.create.KeyToActionMap',
+		'asset.create.KeyFrameAnimation',
 		'asset.edit.Edit',
 		'asset.inspector.Config',
 		'asset.create.Domvas'
@@ -25,8 +26,10 @@ Ext.define('Spelled.controller.Assets', {
 		'asset.SpriteSheets',
 		'asset.Animations',
 		'asset.ActionKeys',
-		'asset.KeyToActionMappings',
+		'template.component.KeyFrameComponents',
 		'asset.KeyFrameAnimations',
+		'asset.KeyToActionMappings',
+		'asset.InterpolationFunctions',
 		'asset.Assets'
     ],
 
@@ -61,7 +64,7 @@ Ext.define('Spelled.controller.Assets', {
 			'editasset button[action="editAsset"]' : {
 				click: this.editAsset
 			},
-			'keytoactionconfig > tool-documentation, spritesheetconfig > tool-documentation, animationassetconfig > tool-documentation, textappearanceconfig > tool-documentation': {
+			'keyframeanimationconfig > tool-documentation, keytoactionconfig > tool-documentation, spritesheetconfig > tool-documentation, animationassetconfig > tool-documentation, textappearanceconfig > tool-documentation': {
 				showDocumentation: this.showDocumentation
 			},
             'librarytreelist button[action="showCreateAsset"]' : {
@@ -73,14 +76,20 @@ Ext.define('Spelled.controller.Assets', {
 		    'textappearanceconfig field' : {
 				change: this.refreshFontPreview
 			},
-			'keytoactionconfig': {
-				editclick:         this.showKeyMappingContextMenu
+			'keytoactionconfig, keyframeanimationconfig': {
+				editclick: this.showKeyMappingContextMenu
 			},
-			'keytoactionconfig gridpanel': {
-				itemcontextmenu:   this.showKeyMappingContextMenu
+			'keytoactionconfig gridpanel, keyframeanimationconfig gridpanel': {
+				itemcontextmenu: this.showKeyMappingContextMenu
 			},
 			'keytoactionconfig button[action="addKeyMapping"]': {
 				click: this.addKeyMapping
+			},
+			'keyframeanimationconfig button[action="addFrame"]': {
+				click: this.addFrame
+			},
+			'keyframeanimationconfig treepanel': {
+				select : this.showKeyFramesFromAttribute
 			},
 			'domvasassetconfig': {
 				domvasedit: this.showDomvasPreview
@@ -123,12 +132,21 @@ Ext.define('Spelled.controller.Assets', {
 		this.application.fireEvent( 'showkeymappingcontextmenu', view, row, column, index, e, options )
 	},
 
-	addKeyMapping: function( button ) {
-		var grid  = button.up( 'keytoactionconfig' ).down( 'gridpanel' ),
-			store = grid.getStore()
+	addToGrid: function( grid, object ) {
+		var store = grid.getStore()
 
-		store.add( { key: "LEFT_ARROW", action: "Default" } )
+		store.add( object )
 		grid.reconfigure( store )
+	},
+
+	addKeyMapping: function( button ) {
+		var grid  = button.up( 'keytoactionconfig' ).down( 'gridpanel' )
+		this.addToGrid( grid, { key: "LEFT_ARROW", action: "Default" } )
+	},
+
+	addFrame: function( button ) {
+		var grid  = button.up( 'keyframeanimationconfig' ).down( 'gridpanel' )
+		this.addToGrid( grid, { interpolation: "LinearInOut", time: 0, value: 0 } )
 	},
 
 	refreshFontPreview: function( field ) {
@@ -151,11 +169,12 @@ Ext.define('Spelled.controller.Assets', {
 	fieldRenderHelper: function( type, form, asset ) {
 		var assetsCombo = form.down('combobox[name="assetId"]'),
 			fileUpload  = form.down('filefield[name="asset"]'),
-			spriteSheetConfig    = form.down('spritesheetconfig'),
-			animationAssetConfig = form.down('animationassetconfig'),
-			textAssetConfig      = form.down('textappearanceconfig'),
-			keyToActionMapConfig = form.down('keytoactionconfig'),
-			domvasassetconfig    = form.down('domvasassetconfig')
+			spriteSheetConfig       = form.down('spritesheetconfig'),
+			animationAssetConfig    = form.down('animationassetconfig'),
+			textAssetConfig         = form.down('textappearanceconfig'),
+			keyToActionMapConfig    = form.down('keytoactionconfig'),
+			domvasassetconfig       = form.down('domvasassetconfig'),
+			keyFrameAnimationConfig = form.down('keyframeanimationconfig')
 		//Resetting defaults
 		domvasassetconfig.hide()
 		assetsCombo.hide()
@@ -164,6 +183,7 @@ Ext.define('Spelled.controller.Assets', {
 		textAssetConfig.hide()
 		keyToActionMapConfig.hide()
 		fileUpload.hide()
+		keyFrameAnimationConfig.hide()
 		fileUpload.reset()
 		assetsCombo.clearValue()
 
@@ -254,8 +274,159 @@ Ext.define('Spelled.controller.Assets', {
 				}
 
 				break
+			case "keyFrameAnimation":
+				this.renderKeyFrameAnimationComponentsTree( keyFrameAnimationConfig )
+				keyFrameAnimationConfig.show()
+
+				if( !!asset ) {
+					var config = asset.get('config')
+					keyFrameAnimationConfig.down( 'numberfield[name="length"]' ).setValue( config.length )
+					keyFrameAnimationConfig.asset = asset
+					keyFrameAnimationConfig.keyFrameConfig = Ext.clone( config )
+				} else {
+					keyFrameAnimationConfig.keyFrameConfig = { animate: {} }
+				}
+
+				break
 			default:
 				fileUpload.show()
+		}
+	},
+
+	renderKeyFrameAnimationComponentsTree: function( view ) {
+		var availableComponentsView = view.down( 'treepanel' ),
+			templateComponentsStore = Ext.getStore( 'template.component.KeyFrameComponents'),
+			rootNode = availableComponentsView.getStore().setRootNode( {
+					text: 'Components',
+					expanded: true
+				}
+			)
+
+		templateComponentsStore.load({
+				scope: this,
+				callback: function() {
+					this.application.getController('Components').appendComponentsAttributesOnTreeNode( rootNode, templateComponentsStore )
+				}
+			}
+		)
+	},
+
+	getKeyFrameAnimationConfig: function( view ) {
+		var config    = view.keyFrameConfig,
+			newConfig = { animate: {} }
+
+		Ext.Object.each(
+			config.animate,
+			function( key, component ) {
+
+				var tmpConfig = {}
+				newConfig.animate[ key ] = tmpConfig
+
+				Ext.Object.each(
+					component,
+					function( key, attribute ) {
+						if( attribute.tmpStore ) {
+							var keyFrames = []
+							tmpConfig[ key ] = {}
+							tmpConfig[ key ].keyFrames = keyFrames
+							attribute.tmpStore.each(
+								function( item ) {
+									var cloned        = Ext.clone( item.data ),
+										value         = item.get( 'value'),
+										interpolation = item.get('interpolation')
+
+									cloned.value = Ext.decode( item.get( 'value'), true ) || item.get( 'value')
+									if( !interpolation || Ext.Array.contains( [ "LinearIn","LinearOut","LinearInOut" ], interpolation ) ) delete cloned.interpolation
+
+									keyFrames.push( cloned )
+								}
+							)
+						} else if( attribute.keyFrames ) {
+							tmpConfig[ key ] = {}
+							tmpConfig[ key ].keyFrames = attribute.keyFrames
+						}
+
+						if( Ext.isEmpty( tmpConfig[ key ].keyFrames ) ) delete tmpConfig[ key ]
+					}
+				)
+
+				if( Ext.isEmpty( Ext.Object.getKeys( newConfig.animate[ key ] ) ) ) delete newConfig.animate[ key ]
+			}
+		)
+
+		return newConfig
+	},
+
+	createKeyFrameComponentConfig: function( config, component ) {
+		component.getAttributes().each(
+			function( attribute ) {
+				if( config[ attribute.get( 'name' ) ] ) return
+
+				config[ attribute.get( 'name' ) ] = {
+					keyFrames: []
+				}
+			}
+		)
+	},
+
+	showKeyFramesFromAttribute: function( selectionModel, node ) {
+		var configPanel   = selectionModel.view.up( 'keyframeanimationconfig' ),
+			grid          = configPanel.down( 'gridpanel' ),
+			parentId      = node.get( 'parentId' ),
+			attributeName = node.get( 'text'),
+			config        = configPanel.keyFrameConfig
+
+
+		if( node.isLeaf() ) {
+			var component   = this.getTemplateComponentKeyFrameComponentsStore().getById( parentId ),
+				componentId = component.getFullName(),
+				data        = [],
+				xtype       = Ext.getStore( 'template.component.AttributeTypes' ).findRecord( 'name',component.getAttributeByName( attributeName ).get('type') ).get('type')
+
+			var componentConfig = config.animate[ componentId ]
+
+			if( !componentConfig ) componentConfig = config.animate[ componentId ] = {}
+
+			if( configPanel.asset ){
+				data = configPanel.asset.getKeyFrameFromComponentAttribute( componentId, attributeName )
+
+				data = Ext.Array.map(
+					data,
+					function( item ) {
+						var converted = Ext.clone( item )
+						if( !converted.interpolation ) converted.interpolation = "LinearInOut"
+						converted.value = this.application.getController( 'Components' ).convertValueForGrid( item.value )
+						return converted
+					},
+					this
+				)
+			}
+
+			var column = Ext.create('Ext.grid.column.Column', {
+				header: 'value',
+				width: 120,
+				dataIndex: 'value',
+				editor: {
+					xtype: xtype
+				}
+			})
+			grid.headerCt.remove( grid.down( 'gridcolumn[dataIndex="value"]' ), true )
+			grid.headerCt.insert( 1, column)
+			grid.getView().refresh()
+
+			this.createKeyFrameComponentConfig( componentConfig, component )
+
+			var store = componentConfig[ attributeName ].tmpStore || Ext.create( 'Ext.data.Store',{
+					fields: [ 'time','value','interpolation' ],
+					data: data
+				}
+			)
+
+			componentConfig[ attributeName ].tmpStore = store
+			grid.reconfigure( store )
+			grid.show()
+		} else {
+			grid.hide()
 		}
 	},
 
@@ -390,6 +561,10 @@ Ext.define('Spelled.controller.Assets', {
 				break
 			case 'spriteSheet':
 				Ext.copyTo( config, values, 'textureWidth,textureHeight,frameWidth,frameHeight' )
+				break
+			case 'keyFrameAnimation':
+				config = this.getKeyFrameAnimationConfig( window.down( 'keyframeanimationconfig' ) )
+				config.length = parseInt( values.length )
 				break
 		}
 

@@ -71,6 +71,9 @@ Ext.define('Spelled.view.asset.edit.Edit', {
 			},{
 				xtype: 'domvasassetconfig',
 				hidden: true
+			},{
+				xtype: 'keyframeanimationconfig',
+				hidden: true
 			}
 		],
 

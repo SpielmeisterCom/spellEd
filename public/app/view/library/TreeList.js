@@ -48,6 +48,12 @@ Ext.define('Spelled.view.library.TreeList' ,{
 								icon: 'images/icons/asset-spritesheet.png'
 							},
 							{
+								text: "Key frame animation",
+								action: "showCreateAsset",
+								type: 'keyFrameAnimation',
+								icon: 'images/icons/asset-keyframeanimation.png'
+							},
+							{
 								text: "Font",
 								action: "showCreateAsset",
 								type: 'font',

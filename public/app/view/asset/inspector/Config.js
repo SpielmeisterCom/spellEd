@@ -23,7 +23,7 @@ Ext.define('Spelled.view.asset.inspector.Config', {
 					xtype: "combo",
 					readOnly: true,
 					readOnlyCls: '',
-					name: 'type',
+					name: 'subtype',
 					hideTrigger: true,
 					store: 'asset.Types',
 					queryMode: 'local',

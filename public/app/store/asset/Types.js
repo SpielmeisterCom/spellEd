@@ -20,6 +20,10 @@ Ext.define('Spelled.store.asset.Types', {
 			"type":"spriteSheet",
 			"name":"Sprite Sheet"
 		},
+		{
+			"type":"keyFrameAnimation",
+			"name":"Key frame animation"
+		},
         {
             "type":"font",
             "name":"Font"

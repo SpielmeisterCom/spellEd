@@ -304,8 +304,8 @@
 		"Ext.menu.ColorPicker",
         "Ext.layout.container.Table",
         "Ext.container.ButtonGroup",
-	"Spelled.view.layout.Split",
-	"Spelled.view.layout.Main",
+		"Spelled.view.layout.Split",
+		"Spelled.view.layout.Main",
         "Spelled.abstract.view.TreeList",
         "Spelled.abstract.view.Navigator",
 		"Spelled.abstract.model.Model",
@@ -379,7 +379,10 @@
 		"Spelled.view.asset.edit.Edit",
 		"Spelled.view.asset.create.Animation",
 		"Spelled.view.asset.create.KeyToActionMap",
+		"Spelled.view.asset.create.KeyFrameAnimation",
 		"Spelled.store.asset.ActionKeys",
+		"Spelled.store.template.component.KeyFrameComponents",
+		"Spelled.store.asset.InterpolationFunctions",
 		"Spelled.store.asset.Types",
 		"Spelled.store.asset.Animations",
 		"Spelled.store.asset.SpriteSheets",
@@ -468,7 +471,6 @@
         "Spelled.view.library.Navigator",
         "Spelled.view.library.TreeList",
         "Spelled.controller.Library",
-	"Spelled.controller.Layout"
-
+		"Spelled.controller.Layout"
 	]
 }

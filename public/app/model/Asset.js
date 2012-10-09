@@ -37,6 +37,15 @@ Ext.define('Spelled.model.Asset', {
 		this.callParent( options )
 	},
 
+	getKeyFrameFromComponentAttribute: function( componentId, attributeName ) {
+		var config = this.get( 'config')
+
+		if( config.animate[ componentId ] && config.animate[ componentId ][ attributeName ] )
+			return config.animate[ componentId ][ attributeName ].keyFrames
+		else
+			return []
+	},
+
 	createTreeNode: function( node ) {
 		return node.appendChild(
 			node.createNode( {

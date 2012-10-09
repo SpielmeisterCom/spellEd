@@ -93,6 +93,9 @@ Ext.define('Spelled.view.asset.Form', {
 		},{
 			xtype: 'domvasassetconfig',
 			hidden: true
+		},{
+			xtype: 'keyframeanimationconfig',
+			hidden: true
 		}
 	],
 
