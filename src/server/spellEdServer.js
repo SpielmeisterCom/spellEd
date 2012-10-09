@@ -39,7 +39,8 @@ define(
 				    port                   = command.port || 3000,
 				    bport                  = command.bport || 8080,
 				    projectsPath           = path.resolve( cwd + ( command.projectsRoot ? '/' + command.projectsRoot : '/projects' ) ),
-					spellEngineModulesPath = path.resolve( projectsPath, '../modules' )
+					spellEngineModulesPath = path.resolve( projectsPath, '../modules' ),
+					nodeModulesPath        = path.resolve( projectsPath, '../node_modules' )
 
 				var buildServerOptions = {
 					host   : 'localhost',
@@ -71,6 +72,10 @@ define(
 						.use(
 							createUrlRewriter( [
 								{
+									rewrite : '/libs/esprima.js',
+									to      : '/esprima.js'
+								},
+								{
 									rewrite : '/libs/require.js',
 									to      : '/require.js'
 								},
@@ -97,8 +102,9 @@ define(
 
 						// Because the modules ace, requirejs and underscore are located outside of the regular webserver root they have to be added manually.
 						.use( connect.static( path.resolve( spellEngineModulesPath, 'ace' ) ) )
-						.use( connect.static( path.resolve( spellEngineModulesPath, 'requirejs' ) ) )
-						.use( connect.static( path.resolve( spellEngineModulesPath, 'underscore' ) ) )
+						.use( connect.static( path.resolve( nodeModulesPath, 'requirejs' ) ) )
+						.use( connect.static( path.resolve( nodeModulesPath, 'underscore' ) ) )
+						.use( connect.static( path.resolve( nodeModulesPath, 'esprima' ) ) )
 
 				    http.Server( app ).listen( port )
 
