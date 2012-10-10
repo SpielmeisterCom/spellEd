@@ -8,6 +8,7 @@ require(
 		'ace/theme/pastel_on_dark',
 
 		'spell/editor/createProjectInEngineFormat',
+		'spell/editor/converter/asset',
 		'spell/editor/converter/project',
 		'spell/editor/converter/component',
 		'spell/editor/converter/system',
@@ -27,6 +28,7 @@ require(
 		aceThemePastelOnDark,
 
 		createProjectInEngineFormat,
+		assetConverter,
 		projectConverter,
 		componentConverter,
 		systemConverter,
@@ -48,6 +50,7 @@ require(
 			'aceModeSpellScript'          : aceModeSpellScript,
 			'aceModeHtml'                 : aceModeHtml,
 			'aceThemePastelOnDark'        : aceThemePastelOnDark,
+			'assetConverter'              : assetConverter,
 			'createProjectInEngineFormat' : createProjectInEngineFormat,
 			'createFontGenerator'         : createFontGenerator,
 			'componentConverter'          : componentConverter,

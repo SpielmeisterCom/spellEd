@@ -210,6 +210,7 @@ Ext.define('Spelled.controller.Scenes', {
 			reloadscene: this.reloadSceneKeyEvent,
 			scenetabchange: this.showScenesEditor,
 			systemchange: this.sendSystemChangeToEngine,
+			assetchange: this.sendAssetChangeToEngine,
 			scope: this
 		})
 	},
@@ -218,34 +219,44 @@ Ext.define('Spelled.controller.Scenes', {
 		return this.getSceneEditor().down( 'spellediframe' )
 	},
 
-	sendSystemChangeToEngine: function( model ) {
-		var iframe     = this.getSpelledIframe(),
-			definition = model.getData( true )
+	sendAssetChangeToEngine: function( asset ) {
+		var data    = asset.getData(),
+			payload = Ext.amdModules.assetConverter.toEngineFormat( data )
+
+		Ext.copyTo( payload, data, 'name,namespace' )
+		this.sendChangeToEngine( "spelled.debug.updateAsset", { definition: payload } )
+	},
+
+	sendChangeToEngine: function( type, payload ) {
+		var iframe     = this.getSpelledIframe()
 
 		this.engineMessageBus.send(
 			iframe.getId(),
 			{
-				type : "spelled.debug.updateSystem",
-				payload : {
-					definition: Ext.amdModules.systemConverter.toEngineFormat( definition )
-				}
+				type : type,
+				payload : payload
+			}
+		)
+	},
+
+	sendSystemChangeToEngine: function( model ) {
+		var definition = model.getData( true )
+		this.sendChangeToEngine(
+			"spelled.debug.updateSystem",
+			{
+				definition: Ext.amdModules.systemConverter.toEngineFormat( definition )
 			}
 		)
 	},
 
 	sendScriptChangeToEngine: function( model, annotations ) {
-		var iframe = this.getSpelledIframe()
-
 		if( annotations.length > 0 ) return
 
-		this.engineMessageBus.send(
-			iframe.getId(),
+		this.sendChangeToEngine(
+			"spelled.debug.updateScript",
 			{
-				type : "spelled.debug.updateScript",
-				payload : {
-					id: model.getFullName(),
-					moduleSource: model.get( 'content' )
-				}
+				id: model.getFullName(),
+				moduleSource: model.get( 'content' )
 			}
 		)
 	},

@@ -451,6 +451,7 @@ Ext.define('Spelled.controller.Assets', {
 
 		this.saveAsset( button.up('form'), record )
 
+		this.application.fireEvent( 'assetchange', record )
 		window.close()
 	},
 
