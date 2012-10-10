@@ -46,6 +46,16 @@ Ext.define('Spelled.model.config.Entity', {
 		}
 	],
 
+	checkForComponentChanges : function() {
+		this.getComponents().each(
+			function( component ) {
+				component.getConfigMergedWithTemplateConfig()
+			}
+		)
+
+		this.getChildren().each( function( entity ) { entity.checkForComponentChanges() } )
+	},
+
 	prepareAssociatedData: function() {
 		var me               = this,
 			associationData  = {}
@@ -193,22 +203,6 @@ Ext.define('Spelled.model.config.Entity', {
 
 		if( !!this.raw )
         	Ext.getStore( 'config.Entities' ).add( this )
-    },
-
-    getJSONConfig: function() {
-		var result = Ext.clone( this.data )
-
-        result.components = []
-		this.getComponents().each( function( component ){
-            result.components.push( component.getJSONConfig() )
-        })
-
-		result.children = []
-		this.getChildren().each( function( entity ){
-			result.children.push( entity.getJSONConfig() )
-		})
-
-        return result
     },
 
 	hasChildren: function() {

@@ -309,16 +309,14 @@ Ext.define('Spelled.controller.Components', {
     },
 
 	getComponentScene: function( component ) {
-		var entity = component.getEntity()
-
-		if( !entity.getOwner ) return
-
 		var getScene = function( entity ) {
+			if( !entity.getOwner ) return
+
 			var owner = entity.getOwner()
 			return ( entity.hasScene() ? owner : getScene( owner ) )
 		}
 
-		return getScene( entity )
+		return getScene( component.getEntity() )
 	},
 
 	previewAttributeChange: function( field, newValue, oldValue ) {

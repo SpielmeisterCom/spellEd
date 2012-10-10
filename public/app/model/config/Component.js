@@ -128,9 +128,5 @@ Ext.define('Spelled.model.config.Component', {
         delete config.trim
 
         return config
-    },
-
-    getJSONConfig: function() {
-        return Ext.clone( this.data )
     }
 });

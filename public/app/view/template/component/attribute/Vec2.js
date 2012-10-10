@@ -26,7 +26,7 @@ Ext.define('Spelled.view.template.component.attribute.Vec2', {
 	validator: function( value ) {
 		var regexp = /^\[ ?-?\d+\.?\d* ?, ?-?\d+\.?\d* ?\]$/
 
-		if( !regexp.test( value ) )	return "This is not a valid vec2. Vec2 Example: '1,2'"
+		if( !regexp.test( value ) )	return "This is not a valid vec2. Vec2 Example: '[1,2]'"
 		else return true
 	},
 

@@ -96,14 +96,8 @@ Ext.define('Spelled.controller.templates.Entities', {
 	showEntityTemplateComponentsListHelper: function( id ) {
 		var entity = this.getTemplateEntitiesStore().getById( id )
 
-		if( !entity ) {
-			var EntityTemplate = this.getTemplateEntityModel()
-
-			EntityTemplate.load( id, {
-				scope: this,
-				success: this.showEntityTemplateComponentsList
-			})
-		} else {
+		if( entity ) {
+			entity.mergeChildrenComponentsConfig()
 			this.showEntityTemplateComponentsList( entity )
 		}
 	},
@@ -151,11 +145,8 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
     removeEntityTemplate: function( id ) {
-        var EntityTemplate = this.getTemplateEntityModel()
+		var entity = this.getTemplateEntitiesStore().getById( id )
 
-        EntityTemplate.load( id, {
-            scope: this,
-            success: this.application.getController('Templates').removeTemplateCallback
-        })
+		if( entity ) this.application.getController('Templates').removeTemplateCallback( entity )
     }
 });

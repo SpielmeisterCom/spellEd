@@ -80,6 +80,14 @@ Ext.define('Spelled.model.template.Entity', {
 		return this.dirty
 	},
 
+	mergeChildrenComponentsConfig: function() {
+		this.getChildren().each(
+			function( entity ){
+				entity.checkForComponentChanges()
+			}
+		)
+	},
+
 	createTreeNode: function( node ) {
 		var entityNode = this.mixins.abstractModel.createTreeNode.call( this, node),
 			me         = this

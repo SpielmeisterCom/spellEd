@@ -47,18 +47,6 @@ Ext.define('Spelled.model.config.Scene', {
         	Ext.getStore( 'config.Scenes' ).add( this )
     },
 
-    getJSONConfig: function() {
-
-        var result = Ext.clone( this.data )
-
-        result.entities = []
-		this.getEntities().each( function( entity ) {
-            result.entities.push( entity.getJSONConfig() )
-        })
-
-        return result
-    },
-
 	appendOnTreeNode: function( node ) {
 		var sceneNode = node.appendChild(
 			node.createNode( {

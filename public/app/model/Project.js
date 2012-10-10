@@ -69,20 +69,13 @@ Ext.define('Spelled.model.Project', {
 	},
 
 	checkForComponentChanges: function() {
-
-		var checkEntity = function( entity ) {
-			entity.getComponents().each(
-				function( component ) {
-					component.getConfigMergedWithTemplateConfig()
-				}
-			)
-
-			entity.getChildren().each( checkEntity )
-		}
-
 		this.getScenes().each(
 			function( scene ) {
-				scene.getEntities().each( checkEntity )
+				scene.getEntities().each(
+					function( entity ) {
+						entity.checkForComponentChanges()
+					}
+				)
 			}
 		)
 	}
