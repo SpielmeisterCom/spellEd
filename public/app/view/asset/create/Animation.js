@@ -3,7 +3,7 @@ Ext.define('Spelled.view.asset.create.Animation', {
     alias: 'widget.animationassetconfig',
 
 	initComponent: function() {
-		var me = this
+		var me    = this
 
 		Ext.applyIf( me, {
 			items: [
@@ -14,6 +14,7 @@ Ext.define('Spelled.view.asset.create.Animation', {
 				},
 				{
 					xtype: "assetidproperty",
+					queryMode: 'remote',
 					store: 'asset.SpriteSheets',
 					allowBlank: true,
 					fieldLabel: "From existing Sprite Sheet",
