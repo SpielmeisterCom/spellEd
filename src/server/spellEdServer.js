@@ -72,10 +72,6 @@ define(
 						.use(
 							createUrlRewriter( [
 								{
-									rewrite : '/libs/esprima.js',
-									to      : '/esprima.js'
-								},
-								{
 									rewrite : '/libs/require.js',
 									to      : '/require.js'
 								},
@@ -104,7 +100,6 @@ define(
 						.use( connect.static( path.resolve( spellEngineModulesPath, 'ace' ) ) )
 						.use( connect.static( path.resolve( nodeModulesPath, 'requirejs' ) ) )
 						.use( connect.static( path.resolve( nodeModulesPath, 'underscore' ) ) )
-						.use( connect.static( path.resolve( nodeModulesPath, 'esprima' ) ) )
 
 				    http.Server( app ).listen( port )
 

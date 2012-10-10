@@ -35,6 +35,10 @@ Ext.define('Spelled.controller.Scripts', {
 		{
 			ref: 'ScriptEditor',
 			selector: '#SceneEditor'
+		},
+		{
+			ref : 'Library',
+			selector: '#Library'
 		}
     ],
 
@@ -54,6 +58,7 @@ Ext.define('Spelled.controller.Scripts', {
         })
 
 		this.application.on( {
+				openscenescript   : this.openSceneScript,
 				scriptdblclick    : this.openScriptHelper,
 				scriptbeforeclose : this.checkIfScriptIsDirty,
 				scriptcontextmenu : this.showListContextMenu,
@@ -91,7 +96,7 @@ Ext.define('Spelled.controller.Scripts', {
 				tree     = this.getScriptsTree(),
 				node     = tree.getRootNode().findChild( 'id', script.getId(), true )
 
-			this.getNavigator().setActiveTab( this.getScriptEditor() )
+			this.getNavigator().setActiveTab( this.getLibrary() )
 
 			if( node ) {
 				tree.expandPath( node.getPath() )
@@ -110,9 +115,8 @@ Ext.define('Spelled.controller.Scripts', {
 	addAceEditor: function( panel ) {
 		panel.aceEditor = Ext.amdModules.ace.edit( panel.id )
 
-		var JavaScriptMode = Ext.amdModules.aceModeJavascript.Mode
-		panel.aceEditor.getSession().setMode( new JavaScriptMode() )
-
+		var SpellScriptMode = Ext.amdModules.aceModeSpellScript.Mode
+		panel.aceEditor.getSession().setMode( new SpellScriptMode() )
 		panel.aceEditor.setTheme( Ext.amdModules.aceThemePastelOnDark )
 
 		panel.refreshContent()

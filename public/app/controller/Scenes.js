@@ -199,6 +199,9 @@ Ext.define('Spelled.controller.Scenes', {
 			},
 			'scenescript combobox[name="scriptId"]' : {
 				select: this.setSceneScript
+			},
+			'scripteditor': {
+				scriptvalidation: this.sendScriptChangeToEngine
 			}
 		})
 
@@ -206,8 +209,45 @@ Ext.define('Spelled.controller.Scenes', {
 			clearstores: this.clearScenesStore,
 			reloadscene: this.reloadSceneKeyEvent,
 			scenetabchange: this.showScenesEditor,
+			systemchange: this.sendSystemChangeToEngine,
 			scope: this
 		})
+	},
+
+	getSpelledIframe: function() {
+		return this.getSceneEditor().down( 'spellediframe' )
+	},
+
+	sendSystemChangeToEngine: function( model ) {
+		var iframe     = this.getSpelledIframe(),
+			definition = model.getData( true )
+
+		this.engineMessageBus.send(
+			iframe.getId(),
+			{
+				type : "spelled.debug.updateSystem",
+				payload : {
+					definition: Ext.amdModules.systemConverter.toEngineFormat( definition )
+				}
+			}
+		)
+	},
+
+	sendScriptChangeToEngine: function( model, annotations ) {
+		var iframe = this.getSpelledIframe()
+
+		if( annotations.length > 0 ) return
+
+		this.engineMessageBus.send(
+			iframe.getId(),
+			{
+				type : "spelled.debug.updateScript",
+				payload : {
+					id: model.getFullName(),
+					moduleSource: model.get( 'content' )
+				}
+			}
+		)
 	},
 
 	clearScenesStore: function() {
@@ -233,9 +273,12 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	dispatchTreeDblClick: function( treePanel, record ) {
+		//TODO: refactor to listen on itemclicks even if its selected.
+		this.dispatchTreeClick( treePanel, record  )
+
 		switch( this.getClickedTreeItemType( record ) ) {
 			case this.TREE_ITEM_TYPE_SCRIPT:
-				this.application.getController( 'Scripts').openSceneScript()
+				this.application.fireEvent( 'openscenescript' )
 				break
 			default:
 				return

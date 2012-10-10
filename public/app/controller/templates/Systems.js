@@ -93,6 +93,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 	},
 
 	dirtyHelper: function( editor, e ) {
+		this.application.fireEvent( 'systemchange', e.record.getSystem() )
 		this.markSystemAsDirty( e.record )
 	},
 
@@ -149,7 +150,7 @@ Ext.define('Spelled.controller.templates.Systems', {
                 var componentTemplate = componentTemplateStore.getById( component.get('id') )
 
                 if( componentTemplate ) {
-					inputDefinition.set( 'templateId', componentTemplate.getFullName() )
+					inputDefinition.set( 'componentId', componentTemplate.getFullName() )
                 }
             }
         )
@@ -157,6 +158,7 @@ Ext.define('Spelled.controller.templates.Systems', {
         systemTemplate.getInput().add( inputDefinition )
 		systemTemplate.setDirty()
 
+		this.application.fireEvent( 'systemchange', systemTemplate )
         this.refreshSystemTemplateInputList()
         window.close()
     },
@@ -170,6 +172,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 		systemTemplate.setDirty()
         store.remove( input )
 
+		this.application.fireEvent( 'systemchange', systemTemplate )
         this.refreshSystemTemplateInputList()
     },
 

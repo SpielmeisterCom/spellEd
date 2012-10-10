@@ -3,7 +3,7 @@ Ext.define('Spelled.model.template.SystemInputDefinition', {
 
     fields: [
         "name",
-        "templateId"
+        "componentId"
     ],
 
     idgen: 'uuid',

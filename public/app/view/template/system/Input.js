@@ -26,7 +26,7 @@ Ext.define('Spelled.view.template.system.Input' ,{
 			},
 			{
 				header: 'Mapped component dictionary',
-				dataIndex: 'templateId',
+				dataIndex: 'componentId',
 				flex:1,
 				editor: {
 					xtype: 'systemtemplateinputgridcombobox',

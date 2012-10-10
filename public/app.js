@@ -3,7 +3,7 @@ require(
 		'requireToExt/inject',
 
 		'ace/ace',
-		'ace/mode/javascript',
+		'spell/ace/mode/spellscript',
 		'ace/mode/html',
 		'ace/theme/pastel_on_dark',
 
@@ -22,7 +22,7 @@ require(
 		injectModulesIntoExt,
 
 		ace,
-		aceModeJavascript,
+		aceModeSpellScript,
 		aceModeHtml,
 		aceThemePastelOnDark,
 
@@ -45,7 +45,7 @@ require(
 
 		injectModulesIntoExt( {
 			'ace'                         : ace,
-			'aceModeJavascript'           : aceModeJavascript,
+			'aceModeSpellScript'          : aceModeSpellScript,
 			'aceModeHtml'                 : aceModeHtml,
 			'aceThemePastelOnDark'        : aceThemePastelOnDark,
 			'createProjectInEngineFormat' : createProjectInEngineFormat,

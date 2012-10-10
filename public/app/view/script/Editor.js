@@ -20,8 +20,9 @@ Ext.define('Spelled.view.script.Editor', {
 	},
 
 	startEdit: function() {
-		var editor = this.aceEditor,
-			me     = this
+		var editor  = this.aceEditor,
+			session = editor.getSession()
+			me      = this
 
 		editor.commands.addCommand( {
 			name: 'saveCommand',
@@ -32,11 +33,19 @@ Ext.define('Spelled.view.script.Editor', {
 			exec: Ext.bind( me.onAceSave, me)
 		} )
 
-		editor.getSession().on( "change", Ext.bind( me.onAceEdit, me) )
+		session.on( "change", Ext.bind( me.onAceEdit, me) )
+		session.on( "changeAnnotation", Ext.bind( me.onAceChangeAnnotation, me ) )
 		this.addEvents(
 			'scriptedit',
+			'scriptvalidation',
 			'save'
 		)
+	},
+
+	onAceChangeAnnotation: function() {
+		var session = this.aceEditor.getSession()
+
+		this.fireEvent( 'scriptvalidation', this.model, session.getAnnotations() )
 	},
 
 	onAceSave: function() {
