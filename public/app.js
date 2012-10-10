@@ -128,7 +128,7 @@ require(
 				scene: undefined,
 
 				generateFileIdFromObject: function( object ) {
-					return this.getActiveProject().get('name') + "/library/" + (( object.namespace.length > 0 ) ? object.namespace +"."+ object.name : object.name)
+					return this.getActiveProject().get('name') + "/library/" + (( object.namespace.length > 0 ) ? object.namespace.replace( /\./g, "/" ) +"/"+ object.name : object.name)
 				},
 
 				showDocumentation: function( docString ) {
