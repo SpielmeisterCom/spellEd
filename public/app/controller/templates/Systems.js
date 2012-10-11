@@ -47,7 +47,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 			'sceneeditor scripteditor': {
 				scriptchange: Ext.bind( function(){
 					var tab = this.getTemplateEditor().getActiveTab()
-					if( tab.getXType() === 'scripteditor' && tab.template ) this.markSystemAsDirty( tab.template )
+					if( tab.getXType() === 'scripteditor' && tab.template ) tab.template.setDirty()
 				},this)
 			},
 			'systemtemplateedit': {
@@ -93,11 +93,8 @@ Ext.define('Spelled.controller.templates.Systems', {
 	},
 
 	dirtyHelper: function( editor, e ) {
-		this.application.fireEvent( 'systemchange', e.record.getSystem() )
-		this.markSystemAsDirty( e.record )
-	},
-
-	markSystemAsDirty: function( model ) {
+		var model =  e.record
+		this.application.fireEvent( 'systemchange', model.getSystem() )
 		model.setDirty()
 	},
 

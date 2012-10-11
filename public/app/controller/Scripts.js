@@ -118,8 +118,6 @@ Ext.define('Spelled.controller.Scripts', {
 		var SpellScriptMode = Ext.amdModules.aceModeSpellScript.Mode
 		panel.aceEditor.getSession().setMode( new SpellScriptMode() )
 		panel.aceEditor.setTheme( Ext.amdModules.aceThemePastelOnDark )
-
-		panel.refreshContent()
 	},
 
 	refreshAceEditorContent: function( panel ) {
@@ -151,8 +149,7 @@ Ext.define('Spelled.controller.Scripts', {
 			if( foundTab )
 				return foundTab
 
-			var View = this.getScriptEditorView()
-			var view = View.create( {
+			var view = Ext.widget( 'scripteditor', {
 				title: script.get('scriptId'),
 				model: script
 			} )

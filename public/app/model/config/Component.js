@@ -39,7 +39,7 @@ Ext.define('Spelled.model.config.Component', {
 	},
 
 	markChanges: function() {
-		if( !Ext.isEmpty( this.get('config') ) ) this.setChanged()
+		if( !Ext.isEmpty( this.get('config') ) ) this.set( 'changed', true)
 	},
 
 	getTemplate: function() {

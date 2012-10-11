@@ -22,15 +22,8 @@ Ext.define('Spelled.controller.Projects', {
 	],
 
     init: function() {
-		Ext.EventManager.on( window, 'beforeunload', function() {
-				return "You have unsaved changes.\nDo you really want to close this application?"
-		},
-		this)
-
-		Ext.EventManager.on( window, 'unload', function() {
-				if( this.checkIfDirty() ) return "You have unsaved changes.\nDo you really want to close this application?"
-		},
-		this)
+		Ext.EventManager.on( window, 'beforeunload', this.projectCloseWarning, this)
+		Ext.EventManager.on( window, 'unload', this.projectCloseWarning, this)
 
         this.control({
             'createproject button[action="createProject"]': {
@@ -66,6 +59,10 @@ Ext.define('Spelled.controller.Projects', {
 			selector: '#SceneEditor'
 		}
 	],
+
+	projectCloseWarning: function() {
+		if( this.checkIfDirty() ) return "You have unsaved changes.\nDo you really want to close this application?"
+	},
 
 	checkIfDirty: function() {
 		var dirty = false
@@ -268,7 +265,7 @@ Ext.define('Spelled.controller.Projects', {
 						this
 					)
 
-					app.getController( 'Templates' ).loadTemplateStores( callback, true )
+					app.getController( 'Templates' ).loadTemplateStores( callback )
 				},
 				this
 			)
