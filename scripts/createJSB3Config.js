@@ -9,7 +9,7 @@ var createClassRecords = function( classNames ) {
 		function( className ) {
 			var parts = className.split( '.' ),
 				first = _.first( parts ),
-				path = [ first === 'Ext' ? 'extjs/src' : 'app' ]
+				path = [ first === 'Ext' ? '../../extjs/src' : 'app' ]
 
 			path = path.concat( _.rest( _.initial( parts ) ) )
 
