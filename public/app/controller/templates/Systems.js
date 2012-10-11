@@ -54,9 +54,9 @@ Ext.define('Spelled.controller.templates.Systems', {
 				activate: Ext.bind( function( tab ) { this.refreshSystemConfiguration( tab.template ) }, this)
 			},
 			'systemtemplateinputlist': {
-				edit: this.dirtyHelper,
-				editclick:         this.showInputListContextMenu,
-				itemcontextmenu:   this.showInputListContextMenu
+				edit:            this.dirtyHelper,
+				editclick:       this.showInputListContextMenu,
+				itemcontextmenu: this.showInputListContextMenu
 			},
 			'systemtemplateinputlist tool-documentation': {
 				showDocumentation: this.showDocumentation
@@ -231,6 +231,39 @@ Ext.define('Spelled.controller.templates.Systems', {
 
 		inputView.reconfigure( systemTemplate.getInput() )
     },
+
+	createSystemBoilerPlate: function( system ) {
+		var parts = [
+		"var System = function ( spell ) {",
+		"	",
+		"}",
+		"",
+		"System.prototype = {",
+		"	init: function ( spell ) {",
+		"		",
+		"	},",
+		"",
+		"	activate: function ( spell ) {",
+		"		",
+		"	},",
+		"",
+		"	deactivate: function ( spell ) {",
+		"		",
+		"	},",
+		"",
+		"	process: function ( spell ) {",
+		"		",
+		"	},",
+		"",
+		"	destroy: function ( spell ) {",
+		"		",
+		"	}",
+		"",
+		"}"
+		]
+
+		return this.application.getController( 'Scripts' ).createModuleHeader( system.getFullName(), parts.join( "\n		" ) )
+	},
 
     showAddInput: function( ) {
         var View = this.getTemplateSystemInputAddView(),

@@ -21,8 +21,10 @@ Ext.define('Spelled.view.script.Editor', {
 
 	startEdit: function() {
 		var editor  = this.aceEditor,
-			session = editor.getSession()
+			session = editor.getSession(),
 			me      = this
+
+		session.setUseSoftTabs( false )
 
 		editor.commands.addCommand( {
 			name: 'saveCommand',

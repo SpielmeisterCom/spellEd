@@ -198,7 +198,7 @@ Ext.define('Spelled.controller.Scripts', {
 		}
     },
 
-	createModuleHeader: function( name ) {
+	createModuleHeader: function( name, content ) {
 		var parts = [
 			"define(",
 			"	'" + name.replace(/\./g, "/") + "',",
@@ -210,6 +210,7 @@ Ext.define('Spelled.controller.Scripts', {
 			"	) {",
 			'		"use strict"',
 			"		// all the codes belongs to here",
+			"		" + content,
 			"	}",
 			")",
 			""
