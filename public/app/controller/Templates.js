@@ -301,7 +301,9 @@ Ext.define('Spelled.controller.Templates', {
 			content.id = this.application.generateFileIdFromObject( content ) + '.json'
 			var model = Model.create( content )
 
-			if( values.type === this.TEMPLATE_TYPE_SYSTEM ) model.set( 'content', this.application.getController( 'templates.Systems' ).createSystemBoilerPlate( model ) )
+			if( values.type === this.TEMPLATE_TYPE_SYSTEM ) {
+				model.set( 'content', this.application.getController( 'templates.Systems' ).createSystemScaffolding( model.getFullName(), model.get( 'name' ) ) )
+			}
 
 			model.save({
 				success: function( result ) {

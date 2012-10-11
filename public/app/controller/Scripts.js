@@ -198,8 +198,12 @@ Ext.define('Spelled.controller.Scripts', {
 		}
     },
 
-	createModuleHeader: function( name, content ) {
-		var parts = [
+	createModuleHeader: function( name, content, prefix ) {
+		var parts = []
+
+		if( prefix ) parts.push( prefix )
+
+		parts = parts.concat( [
 			"define(",
 			"	'" + name.replace(/\./g, "/") + "',",
 			"	[",
@@ -208,13 +212,14 @@ Ext.define('Spelled.controller.Scripts', {
 			"	function(",
 			"		_",
 			"	) {",
-			'		"use strict"',
-			"		// all the codes belongs to here",
+			"		'use strict'",
+			"		",
+			"		",
 			"		" + content,
 			"	}",
 			")",
 			""
-		]
+		] )
 
 		return parts.join( "\n" )
 	},
