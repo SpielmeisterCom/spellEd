@@ -80,6 +80,8 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
 	checkIfDirty: function() {
+		if( !this.application.getActiveProject() ) return
+
 		var dirty = false
 		Ext.each(
 			this.storesForSave,
@@ -300,6 +302,7 @@ Ext.define('Spelled.controller.Projects', {
 		tree.expandPath( node.getPath() )
 
 		this.application.getController( 'Scenes' ).renderScene( startScene )
+		this.application.fireEvent( 'buildnamespacenodes' )
 		project.unDirty()
 	},
 
