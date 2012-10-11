@@ -22,6 +22,12 @@ Ext.define('Spelled.controller.Projects', {
 	],
 
     init: function() {
+		Ext.TaskManager.start({
+			run: this.updateSaveButtonState,
+			interval: 500,
+			scope: this
+		})
+
 		Ext.EventManager.on( window, 'beforeunload', this.projectCloseWarning, this)
 		Ext.EventManager.on( window, 'unload', this.projectCloseWarning, this)
 
@@ -57,8 +63,17 @@ Ext.define('Spelled.controller.Projects', {
 		{
 			ref : 'Library',
 			selector: '#SceneEditor'
+		},
+		{
+			ref: 'saveButton',
+			selector: 'spelledmenu button[action="saveProject"]'
 		}
 	],
+
+	updateSaveButtonState: function() {
+		var state = this.checkIfDirty()
+		this.getSaveButton().setDisabled( !state )
+	},
 
 	projectCloseWarning: function() {
 		if( this.checkIfDirty() ) return "You have unsaved changes.\nDo you really want to close this application?"
