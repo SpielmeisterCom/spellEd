@@ -98,7 +98,7 @@ define(
 
 						// Because the modules ace, requirejs and underscore are located outside of the regular webserver root they have to be added manually.
 						.use( connect.static( path.resolve( spellEngineModulesPath, 'ace' ) ) )
-						.use( connect.static( path.resolve( spellEngineModulesPath, 'requirejs' ) ) )
+						.use( connect.static( path.resolve( nodeModulesPath, 'requirejs' ) ) )
 						.use( connect.static( path.resolve( nodeModulesPath, 'underscore' ) ) )
 
 				    http.Server( app ).listen( port )
