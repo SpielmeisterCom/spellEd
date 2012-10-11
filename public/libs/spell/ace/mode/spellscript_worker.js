@@ -41,7 +41,8 @@ function startRegex(arr) {
 
 var disabledWarningsRe = startRegex([
     "Bad for in variable '(.+)'.",
-    'Missing "use strict"'
+    'Missing "use strict"',
+	"Mixed spaces and tabs."
 ]);
 var errorsRe = startRegex([
     "Unexpected",
