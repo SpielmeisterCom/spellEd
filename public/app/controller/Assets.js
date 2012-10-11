@@ -146,7 +146,7 @@ Ext.define('Spelled.controller.Assets', {
 
 	addFrame: function( button ) {
 		var grid  = button.up( 'keyframeanimationconfig' ).down( 'gridpanel' )
-		this.addToGrid( grid, { interpolation: "LinearInOut", time: 0, value: 0 } )
+		this.addToGrid( grid, { interpolation: "Linear", time: 0, value: 0 } )
 	},
 
 	refreshFontPreview: function( field ) {
@@ -336,7 +336,7 @@ Ext.define('Spelled.controller.Assets', {
 										interpolation = item.get('interpolation')
 
 									cloned.value = Ext.decode( item.get( 'value'), true ) || item.get( 'value')
-									if( !interpolation || Ext.Array.contains( [ "LinearIn","LinearOut","LinearInOut" ], interpolation ) ) delete cloned.interpolation
+									if( !interpolation || Ext.Array.contains( [ "Linear" ], interpolation ) ) delete cloned.interpolation
 
 									keyFrames.push( cloned )
 								}
@@ -394,7 +394,7 @@ Ext.define('Spelled.controller.Assets', {
 					data,
 					function( item ) {
 						var converted = Ext.clone( item )
-						if( !converted.interpolation ) converted.interpolation = "LinearInOut"
+						if( !converted.interpolation ) converted.interpolation = "Linear"
 						converted.value = this.application.getController( 'Components' ).convertValueForGrid( item.value )
 						return converted
 					},
