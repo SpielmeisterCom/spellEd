@@ -8,136 +8,132 @@ Ext.define('Spelled.store.asset.InterpolationFunctions', {
 
 	data: [
 		[
-			"LinearIn",
+			"Linear",
 			1
 		],
 		[
-			"LinearOut",
+			"None",
 			2
 		],
 		[
-			"LinearInOut",
+			"QuadraticIn",
 			3
 		],
 		[
-			"QuadraticIn",
+			"QuadraticOut",
 			4
 		],
 		[
-			"QuadraticOut",
+			"QuadraticInOut",
 			5
 		],
 		[
-			"QuadraticInOut",
+			"CubicIn",
 			6
 		],
 		[
-			"CubicIn",
+			"CubicOut",
 			7
 		],
 		[
-			"CubicOut",
+			"CubicInOut",
 			8
 		],
 		[
-			"CubicInOut",
+			"QuarticIn",
 			9
 		],
 		[
-			"QuarticIn",
+			"QuarticOut",
 			10
 		],
 		[
-			"QuarticOut",
+			"QuarticInOut",
 			11
 		],
 		[
-			"QuarticInOut",
+			"QuinticIn",
 			12
 		],
 		[
-			"QuinticIn",
+			"QuinticOut",
 			13
 		],
 		[
-			"QuinticOut",
+			"QuinticInOut",
 			14
 		],
 		[
-			"QuinticInOut",
+			"SinusoidalIn",
 			15
 		],
 		[
-			"SinusoidalIn",
+			"SinusoidalOut",
 			16
 		],
 		[
-			"SinusoidalOut",
+			"SinusoidalInOut",
 			17
 		],
 		[
-			"SinusoidalInOut",
+			"ExponentialIn",
 			18
 		],
 		[
-			"ExponentialIn",
+			"ExponentialOut",
 			19
 		],
 		[
-			"ExponentialOut",
+			"ExponentialInOut",
 			20
 		],
 		[
-			"ExponentialInOut",
+			"CircularIn",
 			21
 		],
 		[
-			"CircularIn",
+			"CircularOut",
 			22
 		],
 		[
-			"CircularOut",
+			"CircularInOut",
 			23
 		],
 		[
-			"CircularInOut",
+			"ElasticIn",
 			24
 		],
 		[
-			"ElasticIn",
+			"ElasticOut",
 			25
 		],
 		[
-			"ElasticOut",
+			"ElasticInOut",
 			26
 		],
 		[
-			"ElasticInOut",
+			"BackIn",
 			27
 		],
 		[
-			"BackIn",
+			"BackOut",
 			28
 		],
 		[
-			"BackOut",
+			"BackInOut",
 			29
 		],
 		[
-			"BackInOut",
+			"BounceIn",
 			30
 		],
 		[
-			"BounceIn",
+			"BounceOut",
 			31
 		],
 		[
-			"BounceOut",
-			32
-		],
-		[
 			"BounceInOut",
-			33
+			32
 		]
 	]
 
