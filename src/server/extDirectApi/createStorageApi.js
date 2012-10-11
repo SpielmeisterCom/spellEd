@@ -124,6 +124,23 @@ define(
 				fs.unlink( filePath )
 			}
 
+			var getNamespaces = function( req, res, payload, next ) {
+				var params     = _.isArray( payload ) ? payload.pop() : payload,
+					searchPath = util.getPath( params.projectName ),
+					files      = flob.sync( "/library/**/*", { root: searchPath } )
+
+				var result = _.map(
+					files,
+					function( item ) {
+						if( path.extname( item ) !== '' ) return false
+
+						return _.rest( item.split( '/' ) ).join( '.' )
+					}
+				)
+
+				return _.uniq( _.without( result, false ) )
+			}
+
             return [
                 {
                     name: "create",
@@ -144,7 +161,12 @@ define(
                     name: "destroy",
                     len: 1,
                     func: destroy
-                }
+                },
+				{
+					name: "getNamespaces",
+					len: 1,
+					func: getNamespaces
+				}
 			]
         }
     }

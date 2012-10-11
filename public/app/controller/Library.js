@@ -56,6 +56,7 @@ Ext.define('Spelled.controller.Library', {
         })
 
 		this.application.on({
+			buildnamespacenodes: this.buildNamespaceNodes,
 			removeFromLibrary: this.removeFromLibrary,
 			clearstores: this.clearStore,
 			scope : this
@@ -180,7 +181,29 @@ Ext.define('Spelled.controller.Library', {
 		}
 	},
 
-	showLibrary : function( ) {
+	buildNamespaceNodes: function() {
+		var project      = this.application.getActiveProject(),
+			store        = this.getLibraryStore(),
+			rootNode     = store.getRootNode(),
+			foldersStore = this.getFoldersTreeStore(),
+			foldersRoot  = foldersStore.getRootNode()
+
+		Spelled.StorageActions.getNamespaces(
+			{ projectName: project.get('name') } ,
+			function( results ) {
+				Ext.Array.each(
+					results,
+					function( item ) {
+						store.createParentNode( rootNode,  item.split( '.' ) )
+						foldersStore.createParentNode( foldersRoot,  item.split( '.' ) )
+					},
+					store
+				)
+			}
+		)
+	},
+
+	showLibrary : function() {
 		this.getRightPanel().show()
 
 		this.getLibraryTabPanel().show()
