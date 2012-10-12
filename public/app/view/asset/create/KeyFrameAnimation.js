@@ -19,7 +19,6 @@ Ext.define('Spelled.view.asset.create.KeyFrameAnimation', {
 							xtype: 'spelledintegerfield',
 							name: 'length',
 							minValue: 1,
-							value: 1000,
 							fieldLabel: 'Animation length'
 						},
 						{

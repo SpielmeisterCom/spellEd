@@ -94,8 +94,11 @@ Ext.define('Spelled.controller.Assets', {
 			'createasset combobox[name="type"]': {
 				select: this.showAdditionalConfiguration
 			},
-			'editasset button[action="editAsset"]' : {
-				click: this.editAsset
+			'editasset field' : {
+				change: this.editAssetHelper
+			},
+			'editasset gridpanel': {
+				edit : this.editGrid
 			},
 			'keyframeanimationconfig > tool-documentation, keytoactionconfig > tool-documentation, spritesheetconfig > tool-documentation, animationassetconfig > tool-documentation, textappearanceconfig > tool-documentation': {
 				showDocumentation: this.showDocumentation
@@ -130,24 +133,43 @@ Ext.define('Spelled.controller.Assets', {
         })
 
 		this.application.on({
-			'assetbeforeclose': this.assetTabClose,
+			'assetbeforeclose': this.checkIfAssetIsDirty,
 			'removekeymapping': this.removeKeyMapping,
 			'assettabchange'  : this.assetTabChange,
 			'assetselect'     : this.showConfigHelper,
-			'assetdblclick'   : this.openAsset,
+			'assetdblclick'   : this.showEditHelper,
 			'assetcontextmenu': this.showListContextMenu,
+			savemodel         : this.globalSaveModelHelper,
 			scope: this
 		})
     },
+
+	globalSaveModelHelper: function( model ) {
+		if( model.get( 'type') === 'asset' && model.get( 'subtype' ) === 'font' ) {
+			var id = this.application.generateFileIdFromObject( model.data )
+			this.saveFontMap( id,  model.get( 'config' ) )
+		}
+	},
+
+	checkIfAssetIsDirty: function( panel ) {
+		var asset = panel.getRecord()
+
+		if( asset.dirty ) {
+			var callback = function( button ) {
+				if ( button === 'yes') panel.destroy()
+			}
+
+			this.application.dirtySaveAlert( asset, callback )
+			return false
+		} else {
+			panel.destroy()
+		}
+	},
 
 	showDomvasPreview: function( view, content ) {
 		var iframe = view.down( 'container[id="aceDomvasPreview"]' )
 
 		iframe.el.dom.contentWindow.document.body.innerHTML = content
-	},
-
-	assetTabClose: function( panel ) {
-		panel.destroy()
 	},
 
 	assetTabChange: function( tabPanel, newCard ) {
@@ -156,9 +178,13 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	removeKeyMapping: function( view, selectedRow ) {
-		var store = view.getStore()
+		var asset = view.up( 'form' ).getRecord(),
+			store = view.getStore()
+
 		if( Ext.isObject( selectedRow ) ) store.remove( selectedRow )
 		else store.removeAt( selectedRow )
+
+		if( asset ) asset.setDirty()
 	},
 
 	showKeyMappingContextMenu: function( view, row, column, index, e, options ) {
@@ -166,10 +192,13 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	addToGrid: function( grid, object ) {
-		var store = grid.getStore()
+		var asset = grid.up( 'form' ).getRecord(),
+			store = grid.getStore()
 
 		store.add( object )
 		grid.reconfigure( store )
+
+		if( asset ) asset.setDirty()
 	},
 
 	addKeyMapping: function( button ) {
@@ -194,7 +223,9 @@ Ext.define('Spelled.controller.Assets', {
 		this.application.showDocumentation( docString )
 	},
 
-	showEditHelper: function( id ) {
+	showEditHelper: function( id, node ) {
+		if( node ) id = node.getId()
+
 		var asset = this.getAssetAssetsStore().getById( id )
 		this.showEdit( asset )
 	},
@@ -465,27 +496,44 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	showEdit: function( asset ) {
-		var view = Ext.widget( 'editasset' ),
-			form = view.down( 'form' )
+		var assetEditor = this.getAssetEditor(),
+			title       = asset.getFullName(),
+			foundTab    = this.application.findActiveTabByTitle( assetEditor, title )
 
-		this.fieldRenderHelper( asset.get('subtype'), form, asset )
-		form.loadRecord( asset )
+		if( foundTab )
+			return foundTab
+
+		var view = Ext.widget( 'editasset', { title: title } )
+
+		this.fieldRenderHelper( asset.get('subtype'), view, asset )
+		view.loadRecord( asset )
 
 		//TODO: enable changing file
-		form.down('filefield').hide()
+		view.down('filefield').hide()
 
-		view.show()
+		this.addAssetPreview( view, asset )
+
+		this.application.createTab( assetEditor, view )
+	},
+
+	editAssetHelper: function( field, value, oldValue ) {
+		if( !oldValue ) return
+		this.editAsset( field )
+	},
+
+	editGrid: function( editor, e ) {
+		this.editAsset( editor.grid )
 	},
 
 	editAsset: function( button ) {
-		var form    = button.up('form').getForm(),
-			window  = button.up( 'window' ),
-			record  = form.getRecord()
+		var form   = button.up('form'),
+			record = form.getRecord()
 
-		this.saveAsset( button.up('form'), record )
+		if( record ) {
+			this.setAssetConfigFromForm( form, record )
 
-		this.application.fireEvent( 'assetchange', record )
-		window.close()
+			this.application.fireEvent( 'assetchange', record )
+		}
 	},
 
 	showConfigHelper: function( tree, node ) {
@@ -562,13 +610,9 @@ Ext.define('Spelled.controller.Assets', {
 		return keyToActionMappings
 	},
 
-	saveAsset: function( form, asset ) {
+	setAssetConfigFromForm: function( form, asset ) {
 		var values    = form.getForm().getValues(),
-			window    = form.up( 'window' ),
-			fileField = form.down( 'filefield'),
-			me        = this,
-			config    = {},
-			id      = this.application.generateFileIdFromObject( asset.data )
+			config    = {}
 
 		switch( asset.get( 'subtype' ) ) {
 			case 'font':
@@ -577,15 +621,13 @@ Ext.define('Spelled.controller.Assets', {
 				config.baseline   = result.baseline
 
 				Ext.copyTo( config, values, 'fontFamily,fontSize,fontStyle,color,outline,outlineColor,spacing' )
-
-				this.saveBase64AssetFile( id + ".png", result.imageDataUrl )
 				asset.set( 'file', asset.get( 'name' ) + ".png" )
 				break
 			case 'keyToActionMap':
-				config = this.getKeyMappings( window )
+				config = this.getKeyMappings( form )
 				break
 			case 'domvas':
-				var aceEditor = window.down( 'domvasassetconfig' ).aceEditor
+				var aceEditor = form.down( 'domvasassetconfig' ).aceEditor
 				config.html = aceEditor.getSession().getValue()
 				break
 			case 'animation':
@@ -598,16 +640,33 @@ Ext.define('Spelled.controller.Assets', {
 				Ext.copyTo( config, values, 'textureWidth,textureHeight,frameWidth,frameHeight' )
 				break
 			case 'keyFrameAnimation':
-				config = this.getKeyFrameAnimationConfig( window.down( 'keyframeanimationconfig' ) )
+				config = this.getKeyFrameAnimationConfig( form.down( 'keyframeanimationconfig' ) )
 				config.length = parseInt( values.length )
 				break
 		}
 
 		if( !Ext.isEmpty( config ) ) asset.set( 'config', config )
+	},
+
+	saveFontMap: function( id, values ) {
+		var result = this.createFontMap( values )
+		this.saveBase64AssetFile( id + ".png", result.imageDataUrl )
+	},
+
+	saveAsset: function( form, asset ) {
+		var fileField = form.down( 'filefield'),
+			window    = form.up( 'window'),
+			me        = this,
+			id        = this.application.generateFileIdFromObject( asset.data )
+
+		this.setAssetConfigFromForm( form, asset )
+
+		if( asset.get( 'subtype' ) === 'font' ) {
+			this.saveFontMap( id,  form.getForm().getValues() )
+		}
 
 		var successCallback = Ext.bind( function( result) {
 			this.successCallback( result )
-			window.close()
 		},this)
 
 		if( fileField.isVisible() && fileField.isValid() ) {
@@ -630,6 +689,8 @@ Ext.define('Spelled.controller.Assets', {
 		} else {
 			asset.save({ success: successCallback })
 		}
+
+		window.close()
 	},
 
     createAsset: function( button ) {
@@ -689,24 +750,14 @@ Ext.define('Spelled.controller.Assets', {
 		this.fieldRenderHelper( assetType, view )
     },
 
-    openAsset: function( treePanel, record ) {
-        if( !record.isLeaf() ) return
-
-        var assetEditor = this.getAssetEditor(),
-			asset       = this.getAssetAssetsStore().getById( record.getId() ),
-            title       = asset.getFullName(),
-			foundTab    = this.application.findActiveTabByTitle( assetEditor, title )
-
-        if( foundTab )
-            return foundTab
-
-		var View    = this.getAssetIframeView(),
+    addAssetPreview: function( view, asset ) {
+		var subtype = asset.get('subtype'),
 			iframe  = {
 				tag : 'iframe',
 				src: '/' + asset.getFilePath( this.application.getActiveProject().get('name') ),
 				border: '0',
 				frameborder: '0',
-				scrolling: 'no'
+				height: '80%'
 			},
 			errorTag = {
 				tag: 'h1',
@@ -714,13 +765,12 @@ Ext.define('Spelled.controller.Assets', {
 				html: 'Animation preview is not available.'
 			}
 
-		if(  asset.get('subtype') !== 'keyToActionMap' ) {
-			var view = new View( {
-				title: title,
-				autoEl: ( asset.get('subtype') === 'animation' ) ? errorTag : iframe
+		if( subtype !== 'keyToActionMap' && subtype !== 'font' ) {
+			var preview = Ext.widget( 'assetiframe', {
+				autoEl: ( subtype === 'animation' || subtype === 'keyFrameAnimation' ) ? errorTag : iframe
 			} )
 
-			this.application.createTab( assetEditor, view )
+			view.add( preview )
 		}
     },
 

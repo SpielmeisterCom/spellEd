@@ -27,7 +27,8 @@ Ext.define('Spelled.controller.Projects', {
 		'template.Components',
 		'template.Entities',
 		'template.Systems',
-		'script.Scripts'
+		'script.Scripts',
+		'asset.Assets'
 	],
 
     init: function() {
@@ -80,8 +81,10 @@ Ext.define('Spelled.controller.Projects', {
 	],
 
 	updateSaveButtonState: function() {
-		var state = this.checkIfDirty()
-		this.getSaveButton().setDisabled( !state )
+		var state  = this.checkIfDirty(),
+			button = this.getSaveButton()
+
+		if( button ) button.setDisabled( !state )
 	},
 
 	projectCloseWarning: function() {
@@ -110,12 +113,17 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
 	globalSave: function() {
+		var me = this
+
 		Ext.each(
 			this.storesForSave,
 			function( id ) {
 				Ext.getStore( id ).each(
 					function( item ) {
-						if( item.dirty === true ) item.save()
+						if( item.dirty === true ) {
+							item.save()
+							me.application.fireEvent( 'savemodel', item )
+						}
 					}
 				)
 			}

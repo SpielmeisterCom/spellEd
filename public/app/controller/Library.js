@@ -105,7 +105,7 @@ Ext.define('Spelled.controller.Library', {
 	getTabType: function( tab ) {
 		var type = tab.getXType()
 
-		if( type === 'assetiframe' ) {
+		if( type === 'assetiframe' || type === 'editasset' ) {
 			return this.TYPE_ASSET
 
 		} else if( type === 'systemtemplateedit' || type === 'componenttemplateedit' || type === 'entitytemplateedit' ) {
