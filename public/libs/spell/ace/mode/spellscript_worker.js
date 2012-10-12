@@ -68,7 +68,7 @@ var infoRe = startRegex([
 
 var SpellScriptWorker = exports.SpellScriptWorker = function(sender) {
     Mirror.call(this, sender);
-    this.setTimeout(150);
+    this.setTimeout(250);
     this.setOptions();
 };
 
