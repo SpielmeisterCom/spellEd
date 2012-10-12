@@ -1,5 +1,13 @@
 Ext.define('Spelled.controller.Components', {
     extend: 'Ext.app.Controller',
+	requires: [
+		'Spelled.view.component.Properties',
+		'Spelled.view.component.property.AssetId',
+		'Spelled.view.component.Add',
+		'Spelled.view.component.AddButton',
+		'Spelled.model.config.Component',
+		'Spelled.store.config.Components'
+	],
 
     views: [
         'component.Properties',

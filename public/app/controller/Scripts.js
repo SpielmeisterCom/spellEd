@@ -1,6 +1,12 @@
 Ext.define('Spelled.controller.Scripts', {
     extend: 'Ext.app.Controller',
-	requires: ['Spelled.model.Script'],
+	requires: [
+		'Spelled.model.Script',
+		'Spelled.view.script.Create',
+		'Spelled.view.script.FolderPicker',
+		'Spelled.view.script.Editor',
+		'Spelled.store.script.Scripts'
+	],
 
     views: [
         'script.Create',

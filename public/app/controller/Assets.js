@@ -1,6 +1,39 @@
 Ext.define('Spelled.controller.Assets', {
     extend: 'Ext.app.Controller',
 
+	requires: [
+		'Spelled.view.asset.ColorField',
+		'Spelled.view.asset.Iframe',
+		'Spelled.view.asset.Form',
+		'Spelled.view.asset.FolderPicker',
+		'Spelled.view.asset.create.Create',
+		'Spelled.view.asset.create.Texture',
+		'Spelled.view.asset.create.SpriteSheet',
+		'Spelled.view.asset.create.Animation',
+		'Spelled.view.asset.create.Font',
+		'Spelled.view.asset.create.KeyToActionMap',
+		'Spelled.view.asset.create.KeyFrameAnimation',
+		'Spelled.view.asset.edit.Edit',
+		'Spelled.view.asset.inspector.Config',
+		'Spelled.view.asset.create.Domvas',
+
+
+		'Spelled.store.asset.Types',
+		'Spelled.store.asset.Textures',
+		'Spelled.store.asset.Sounds',
+		'Spelled.store.asset.Fonts',
+		'Spelled.store.asset.SpriteSheets',
+		'Spelled.store.asset.Animations',
+		'Spelled.store.asset.ActionKeys',
+		'Spelled.store.template.component.KeyFrameComponents',
+		'Spelled.store.asset.KeyFrameAnimations',
+		'Spelled.store.asset.KeyToActionMappings',
+		'Spelled.store.asset.InterpolationFunctions',
+		'Spelled.store.asset.Assets',
+
+		'Spelled.model.Asset'
+	],
+
     views: [
 		'asset.ColorField',
         'asset.Iframe',

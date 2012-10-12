@@ -1,5 +1,23 @@
 Ext.define('Spelled.controller.Menu', {
     extend: 'Ext.app.Controller',
+	requires: [
+		'Spelled.view.menu.Menu',
+		'Spelled.view.menu.contextmenu.ScenesList',
+		'Spelled.view.menu.contextmenu.EntitiesList',
+		'Spelled.view.menu.contextmenu.EntitiesFolderList',
+		'Spelled.view.menu.contextmenu.AssetsList',
+		'Spelled.view.menu.contextmenu.ScriptsList',
+		'Spelled.view.menu.contextmenu.SceneSystemsList',
+		'Spelled.view.menu.contextmenu.TemplatesList',
+		'Spelled.view.menu.contextmenu.templatesList.Entity',
+		'Spelled.view.menu.contextmenu.ComponentTemplateAttributesList',
+		'Spelled.view.menu.contextmenu.SystemTemplateInputList',
+		'Spelled.view.menu.contextmenu.KeyToActionMapping',
+		'Spelled.view.doc.Tool',
+		'Spelled.view.ui.SpelledConsole',
+		'Spelled.view.ui.SpelledRightPanel',
+		'Spelled.view.ui.StartScreen'
+	],
 
     views: [
         'menu.Menu',

@@ -1,6 +1,9 @@
 Ext.define('Spelled.model.template.Entity', {
-    extend: 'Spelled.abstract.model.Template',
-	requires: ['proxy.direct'],
+	extend: 'Spelled.abstract.model.Template',
+	requires: [
+		'Spelled.data.writer.EntityTemplate',
+		'Spelled.data.reader.EntityTemplate'
+	],
 
 	fields: [
         "namespace",

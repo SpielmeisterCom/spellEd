@@ -1,6 +1,8 @@
 Ext.define('Spelled.store.asset.Assets', {
     extend: 'Ext.data.Store',
-
+	requires: [
+		'Spelled.model.Asset'
+	],
     model: 'Spelled.model.Asset',
 
 	listeners: {

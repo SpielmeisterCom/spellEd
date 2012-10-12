@@ -1,6 +1,13 @@
 Ext.define('Spelled.model.config.Entity', {
     extend: 'Ext.data.Model',
-	requires: ['idgen.sequential'],
+	requires: [
+		'idgen.sequential',
+		'association.belongsto',
+		'association.hasmany',
+		'Spelled.model.config.Component',
+		'Spelled.model.config.Scene',
+		'Spelled.model.template.Entity'
+	],
 
     fields: [
         'templateId',

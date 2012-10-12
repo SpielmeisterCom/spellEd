@@ -1,5 +1,13 @@
 Ext.define('Spelled.abstract.model.Template', {
-    extend: 'Ext.data.Model',
+	requires: [
+		'proxy.direct',
+		'association.belongsto',
+		'association.hasmany',
+		'Spelled.model.config.Component',
+		'Spelled.model.config.Entity'
+	],
+
+	extend: 'Ext.data.Model',
 
 	mixins: {
 		abstractModel: 'Spelled.abstract.model.Model'

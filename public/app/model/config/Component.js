@@ -1,9 +1,12 @@
 Ext.define('Spelled.model.config.Component', {
-    extend: 'Ext.data.Model',
+	extend: 'Ext.data.Model',
 
-	requires: ['idgen.uuid'],
+	requires: [
+		'idgen.uuid',
+		'association.belongsto'
+	],
 
-    fields: [
+	fields: [
         'templateId',
         { name: 'config', type: 'object', defaultValue: {} },
         { name: 'changed', type: 'boolean', defaultValue: false },

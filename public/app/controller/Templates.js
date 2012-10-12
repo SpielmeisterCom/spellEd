@@ -1,6 +1,21 @@
 Ext.define('Spelled.controller.Templates', {
     extend: 'Ext.app.Controller',
 
+	requires: [
+		'Spelled.view.template.Create',
+		'Spelled.view.template.FolderPicker',
+		'Spelled.view.template.ReadOnly',
+
+		'Spelled.model.template.Component',
+		'Spelled.model.template.Entity',
+		'Spelled.model.template.System',
+
+		'Spelled.store.template.Types',
+		'Spelled.store.template.Components',
+		'Spelled.store.template.Entities',
+		'Spelled.store.template.Systems'
+	],
+
     TEMPLATE_TYPE_COMPONENT: 'component',
 	TEMPLATE_TYPE_ENTITY   : 'entityTemplate',
 	TEMPLATE_TYPE_SYSTEM   : 'system',

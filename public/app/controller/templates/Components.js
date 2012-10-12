@@ -1,6 +1,34 @@
 Ext.define('Spelled.controller.templates.Components', {
     extend: 'Ext.app.Controller',
 
+	requires: [
+		'Spelled.view.template.component.Edit',
+		'Spelled.view.template.component.Details',
+		'Spelled.view.template.component.Attributes',
+		'Spelled.view.template.component.Property',
+		'Spelled.view.template.component.attribute.Object',
+		'Spelled.view.template.component.attribute.Vec2',
+		'Spelled.view.template.component.attribute.String',
+		'Spelled.view.template.component.attribute.Number',
+		'Spelled.view.template.component.attribute.List',
+		'Spelled.view.template.component.attribute.Integer',
+		'Spelled.view.template.component.attribute.Boolean',
+		'Spelled.view.template.component.attribute.Appearance',
+		'Spelled.view.template.component.attribute.AnimatedAppearance',
+		'Spelled.view.template.component.attribute.KeyFrameAnimation',
+		'Spelled.view.template.component.attribute.TextAppearance',
+		'Spelled.view.template.component.attribute.Sound',
+		'Spelled.view.template.component.attribute.KeyToActionMap',
+
+		'Spelled.model.template.Component',
+		'Spelled.model.template.ComponentAttribute',
+
+		'Spelled.store.template.component.Attributes',
+		'Spelled.store.template.component.AttributeTypes',
+		'Spelled.store.template.Components'
+
+	],
+
     views: [
         'template.component.Edit',
         'template.component.Details',
