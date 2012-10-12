@@ -91,6 +91,7 @@ Ext.define('Spelled.controller.Systems', {
 		)
 
 		scene.set( 'systems', result )
+		scene.setDirty()
 		this.refreshSceneSystemList( scene )
 	},
 
@@ -110,6 +111,7 @@ Ext.define('Spelled.controller.Systems', {
 		)
 
 		scene.set( 'systems', systems )
+		scene.setDirty()
 
 		this.refreshSceneSystemList( scene )
 
@@ -181,6 +183,7 @@ Ext.define('Spelled.controller.Systems', {
 		)
 
 		scene.set('systems', systems)
+		scene.setDirty()
 	},
 
 	showSystemItem: function( treePanel, record ) {

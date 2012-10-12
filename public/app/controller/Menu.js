@@ -150,9 +150,6 @@ Ext.define('Spelled.controller.Menu', {
 			'assetslistcontextmenu [action="edit"]': {
 				click: this.showEditAsset
 			},
-			'assetslistcontextmenu [action="open"]': {
-				click: this.openAsset
-			},
 
 
             'templateslistcontextmenu [action="create"]': {
@@ -381,14 +378,6 @@ Ext.define('Spelled.controller.Menu', {
 
 		if( node && node.isLeaf() ) {
 			this.application.getController( 'Assets' ).showEditHelper( node.get('id') )
-		}
-	},
-
-	openAsset: function( ) {
-		var node = this.application.getLastSelectedNode( this.getAssetsTree() )
-
-		if( node && node.isLeaf() ) {
-			this.application.getController( 'Assets' ).openAsset( this.getAssetsTree(), node )
 		}
 	},
 

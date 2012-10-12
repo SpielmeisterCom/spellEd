@@ -13,7 +13,7 @@ define(
 
 			if( asset.file ) content.file = asset.file
 			if( asset.assetId ) content.assetId = asset.assetId
-			if( _.size( content.config ) === 0 ) delete content.config
+			if( content.config && _.size( content.config ) === 0 ) delete content.config
 
 			return content
 		}
