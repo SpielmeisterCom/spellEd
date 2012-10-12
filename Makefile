@@ -30,4 +30,6 @@ deploy:
 	cp -R ../ace/lib/ace build/libs
 
 	# creating the javascript include
-	${HOME}/bin/Sencha/Cmd/3.0.0.190/sencha -debug compile -classpath=../extjs/src,public/app page -in=public/index.html -out=build/index.html
+	${HOME}/bin/Sencha/Cmd/3.0.0.190/sencha -debug \
+compile -classpath=../extjs/src,public/app \
+page -yui -in=public/index.html -out=build/index.html
