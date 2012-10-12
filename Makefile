@@ -6,8 +6,7 @@ css:
 	compass compile public/sass public/sass/ext-all-spelled.scss
 
 	#fix path to images in the generated css file
-	sed -i 's/..\/images\//..\/images\/spelled\//' public/css/ext-all-spelled.css
-	sed -i 's/..\/images\/spelled\/spelled\//..\/images\/spelled\//' public/css/ext-all-spelled.css
+	sed -i 's/..\/..\/..\/extjs\/resources\/themes\/images\/spelled\//..\/images\/spelled\//' public/css/ext-all-spelled.css
 
 	#slice fallback images for older browsers
 	PATH=${PATH} sencha slice theme -d ../extjs -c ./public/css/ext-all-spelled.css -o ./public/images/spelled -v
