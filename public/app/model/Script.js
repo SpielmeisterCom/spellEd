@@ -62,6 +62,7 @@ Ext.define('Spelled.model.Script', {
         'namespace',
         'type',
 		'path',
-		'content'
+		'content',
+	    'breakpoints'
     ]
 });

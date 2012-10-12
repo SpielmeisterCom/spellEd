@@ -35,6 +35,30 @@ Ext.define('Spelled.view.script.Editor', {
 			exec: Ext.bind( me.onAceSave, me)
 		} )
 
+		editor.on("guttermousedown", function(e){
+			var target = e.domEvent.target;
+			if (target.className.indexOf("ace_gutter-cell") == -1)
+				return;
+			if (!editor.isFocused())
+				return;
+			if (e.clientX > 25 + target.getBoundingClientRect().left)
+				return;
+
+			var row = e.getDocumentPosition().row,
+				breakpoints = e.editor.session.getBreakpoints()
+
+			if ( breakpoints[row] !== undefined ) {
+				e.editor.session.clearBreakpoint(row)
+
+			} else {
+
+				e.editor.session.setBreakpoint(row)
+			}
+
+			e.stop()
+		})
+
+		session.on( "changeBreakpoint", Ext.bind( me.onAceChangeBreakpoint, me) )
 		session.on( "change", Ext.bind( me.onAceEdit, me) )
 		session.on( "changeAnnotation", Ext.bind( me.onAceChangeAnnotation, me ) )
 		this.addEvents(
@@ -42,6 +66,14 @@ Ext.define('Spelled.view.script.Editor', {
 			'scriptvalidation',
 			'save'
 		)
+	},
+
+	onAceChangeBreakpoint: function() {
+		var session = this.aceEditor.getSession()
+		this.model.set( 'breakpoints', session.getBreakpoints() )
+
+		//trigger a scriptvalidation event here to force a reload of the script
+		this.fireEvent( 'scriptvalidation', this.model, session.getAnnotations() )
 	},
 
 	onAceChangeAnnotation: function() {

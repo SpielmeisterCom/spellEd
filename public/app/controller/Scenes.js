@@ -252,13 +252,29 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	sendScriptChangeToEngine: function( model, annotations ) {
-		if( annotations.length > 0 ) return
+		var breakpoints = model.get( 'breakpoints'),
+			lines = model.get( 'content' ).split(/\r\n|[\n\v\f\r\x85\u2028\u2029]/),
+			hasBreakpoints = undefined
+
+
+		if ( breakpoints !== undefined ) {
+			//check for active breakpoints and add the debugger statement for each breakpoint
+			for (var i=0; i<lines.length; i++) {
+				if ( breakpoints[i] !== undefined ) {
+					lines[i] = 'debugger; ' + lines[i]
+					hasBreakpoints = true
+				}
+			}
+		}
+
+		//don't send an update to the engine if we have no breakpoint enabled and active warnings/errors
+		if( !hasBreakpoints && annotations.length > 0 ) return
 
 		this.sendChangeToEngine(
 			"spelled.debug.updateScript",
 			{
 				id: model.getFullName(),
-				moduleSource: model.get( 'content' )
+				moduleSource: lines.join("\n")
 			}
 		)
 	},
