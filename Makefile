@@ -26,12 +26,9 @@ deploy:
 	# populating output with static content
 	cp -R public/css public/images build
 	cp -RL public/libs build
-	cp ../../node_modules/requirejs/require.js build/output/libs
-	cp ../../node_modules/underscore/underscore.js build/output/libs
-	cp -R ../ace/lib/ace build/output/libs
-
-	# creating the build configuration file
-	#node scripts/createJSB3Config.js public/dependencies.json > public/spellEd.jsb3
+	cp ../../node_modules/requirejs/require.js build/libs
+	cp ../../node_modules/underscore/underscore.js build/libs
+	cp -R ../ace/lib/ace build/libs
 
 	# creating the javascript include
-	${HOME}/bin/Sencha/Cmd/3.0.0.190/sencha -debug compile -classpath=../extjs/src,public/app page -in=public/index.html -out=build/index.htm
+	${HOME}/bin/Sencha/Cmd/3.0.0.190/sencha -debug compile -classpath=../extjs/src,public/app page -in=public/index.html -out=build/index.html
