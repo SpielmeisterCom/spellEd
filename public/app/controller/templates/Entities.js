@@ -1,6 +1,16 @@
 Ext.define('Spelled.controller.templates.Entities', {
     extend: 'Ext.app.Controller',
 
+	requires: [
+		'Spelled.model.template.Entity',
+		'Spelled.model.config.Entity',
+
+		'Spelled.store.template.Entities',
+
+		'Spelled.view.template.entity.Add',
+		'Spelled.view.template.entity.Edit'
+	],
+
     models: [
         'template.Entity',
 		'config.Entity'

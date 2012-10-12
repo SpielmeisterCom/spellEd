@@ -1,5 +1,14 @@
 Ext.define('Spelled.controller.Projects', {
     extend: 'Ext.app.Controller',
+	requires: [
+		'Spelled.view.project.Create',
+		'Spelled.view.project.Load',
+
+		'Spelled.store.Projects',
+
+		'Spelled.model.Project'
+
+	],
 
     views: [
         'project.Create',

@@ -3,7 +3,9 @@ Ext.define('Spelled.controller.Scenes', {
 
 	requires: [
 		'Spelled.Logger',
-		'Spelled.MessageBus'
+		'Spelled.MessageBus',
+
+		'widget.label'
 	],
 
 	models: [

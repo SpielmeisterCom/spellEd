@@ -1,5 +1,8 @@
 Ext.define('Spelled.view.ui.SpelledViewport', {
     extend: 'Ext.container.Viewport',
+	requires: [
+		'layout.border'
+	],
 
     layout: 'border',
 

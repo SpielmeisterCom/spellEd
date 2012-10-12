@@ -1,6 +1,12 @@
 Ext.define('Spelled.model.template.System', {
 	extend: 'Spelled.abstract.model.Template',
 
+	requires: [
+		'association.hasone',
+		'association.hasmany',
+		'Spelled.data.writer.SystemTemplate'
+	],
+
 	iconCls : "tree-system-icon",
 	sortOrder : 230,
 

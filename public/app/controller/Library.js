@@ -1,5 +1,13 @@
 Ext.define('Spelled.controller.Library', {
     extend: 'Ext.app.Controller',
+	requires: [
+		'Spelled.view.library.Navigator',
+		'Spelled.view.library.FolderPicker',
+		'Spelled.view.library.TreeList',
+
+		'Spelled.store.Library',
+		'Spelled.store.FoldersTree'
+	],
 
 	TYPE_ASSET    : 1,
 	TYPE_TEMPLATE : 2,

@@ -1,6 +1,16 @@
 Ext.define('Spelled.controller.Systems', {
 	extend: 'Ext.app.Controller',
 
+	requires: [
+		'Spelled.view.system.List',
+		'Spelled.view.system.Add',
+
+		'Spelled.model.template.System',
+
+		'Spelled.store.template.Systems',
+		'Spelled.store.system.Types'
+	],
+
 	views: [
 		'system.List',
 		'system.Add'

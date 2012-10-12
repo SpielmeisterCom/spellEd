@@ -1,6 +1,22 @@
 Ext.define('Spelled.controller.templates.Systems', {
 	extend: 'Ext.app.Controller',
-	requires: ['Spelled.model.Script'],
+	requires: [
+		'Spelled.view.template.system.Configuration',
+		'Spelled.view.template.system.Edit',
+		'Spelled.view.template.system.Details',
+		'Spelled.view.template.system.Input',
+		'Spelled.view.template.system.input.Add',
+		'Spelled.view.template.system.input.ComboBox',
+		'Spelled.view.script.Editor',
+
+		'Spelled.model.template.System',
+		'Spelled.model.template.SystemInputDefinition',
+		'Spelled.model.Script',
+
+		'Spelled.store.template.Systems',
+		'Spelled.store.template.SystemInputDefinitions',
+		'Spelled.store.script.Scripts'
+	],
 
 	views: [
 		'template.system.Configuration',

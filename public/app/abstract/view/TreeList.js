@@ -1,6 +1,9 @@
 Ext.define('Spelled.abstract.view.TreeList' ,{
     extend: 'Ext.tree.Panel',
-
+	requires: [
+		'widget.treecolumn',
+		'widget.actioncolumn'
+	],
     animate: false,
     animCollapse: false,
 
