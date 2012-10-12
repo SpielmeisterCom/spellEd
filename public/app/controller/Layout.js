@@ -2,7 +2,8 @@ Ext.define('Spelled.controller.Layout', {
     extend: 'Ext.app.Controller',
 	requires: [
 		'Spelled.view.layout.Split',
-		'Spelled.view.layout.Main'
+		'Spelled.view.layout.Main',
+		'layout.column'
 	],
 
     views: [
