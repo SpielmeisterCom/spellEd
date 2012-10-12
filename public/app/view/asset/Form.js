@@ -6,7 +6,6 @@ Ext.define('Spelled.view.asset.Form', {
 		anchor: '100%',
 		allowBlank: false
 	},
-	xtype: "form",
 	bodyPadding: 10,
 
 	items: [

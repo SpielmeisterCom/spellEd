@@ -69,7 +69,10 @@ require(
 var startApplication = function() {
 	Ext.application( {
 		name: 'Spelled',
-		requires: ['Spelled.*'],
+		requires: [
+			'Ext.state.CookieProvider',
+			'Spelled.*'
+		],
 
 		appFolder: 'app',
 
