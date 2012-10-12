@@ -13,12 +13,14 @@
 
 		<script type="text/javascript" src="libs/fontDetect/javascripts/swfobject.js"></script>
 
-		<script type="text/javascript" src="extjs/ext-all-debug.js"></script>
-		<script type="text/javascript" src="/api"></script>
-
+        <!-- <x-compile> -->
+        <!-- <x-bootstrap> -->
+        <script type="text/javascript" src="extjs/ext-all-debug.js"></script>
+        <script type="text/javascript" src="bootstrap.js"></script>
+        <!-- </x-bootstrap> -->
         <script type="text/javascript" src="app-configuration.js"></script>
-        <script type="text/javascript" src="app-initialize.js"></script>
         <script type="text/javascript" src="app.js"></script>
+        <!-- </x-compile> -->
 
         <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -26,9 +28,6 @@
 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-        <!-- The "create dependencies" script is only required in the development build. -->
-		<script type="text/javascript" src="createDependencies.js"></script>
     </head>
 	<body>
 		<div id="loading-mask"></div>

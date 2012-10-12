@@ -14,24 +14,24 @@ css:
 
 	cp -aR public/images/spelled-patches/* public/images/spelled/
 
+
+bootstrap:
+	${HOME}/bin/Sencha/Cmd/3.0.0.190/sencha compile -classpath=../extjs/src,public/app meta -alias -out public/bootstrap.js and meta -alt -append -out public/bootstrap.js
+
 deploy:
 	# cleaning up and creating directory tree
 	rm -rf build
-	mkdir -p build/tmp
-	mkdir -p build/output
+	mkdir build
 
 	# populating output with static content
-	cp -R public/css public/images build/output
-	cp -RL public/libs build/output
+	cp -R public/css public/images build
+	cp -RL public/libs build
 	cp ../../node_modules/requirejs/require.js build/output/libs
 	cp ../../node_modules/underscore/underscore.js build/output/libs
 	cp -R ../ace/lib/ace build/output/libs
 
-	cp deployPublic/* build/output/
-	cp public/dependencies.json build/output/
-
 	# creating the build configuration file
-	node scripts/createJSB3Config.js public/dependencies.json > public/spellEd.jsb3
+	#node scripts/createJSB3Config.js public/dependencies.json > public/spellEd.jsb3
 
 	# creating the javascript include
-	PATH=${PATH} sencha build -p public/spellEd.jsb3 -v -d build
+	${HOME}/bin/Sencha/Cmd/3.0.0.190/sencha -debug compile -classpath=../extjs/src,public/app page -in=public/index.html -out=build/index.htm
