@@ -447,6 +447,7 @@ Ext.define('Spelled.controller.Scenes', {
 		var scene = this.application.getActiveScene()
 
 		scene.set('scriptId', combo.getValue())
+		scene.setDirty()
 	},
 
 	showScenesEditor: function() {

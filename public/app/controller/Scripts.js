@@ -188,9 +188,13 @@ Ext.define('Spelled.controller.Scripts', {
 		var script = Script.create( content )
 
         if( form.isValid() ){
+			script.set( 'content', this.createModuleHeader( script.getFullName(), '' ) )
+
 			Spelled.StorageActions.create(
-				{ id: id + ".js", content: this.createModuleHeader( script.getFullName() ) },
-				function() {
+				{ id: id + ".js", content: script.get( 'content' ) },
+				function( id ) {
+					script.set( 'path', id )
+
 					script.save({
 							success: function( record ) {
 								Ext.Msg.alert('Success', 'Your Script "' + record.get( 'scriptId' ) + '" has been created.')
