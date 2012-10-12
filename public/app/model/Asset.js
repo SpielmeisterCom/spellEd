@@ -1,5 +1,6 @@
 Ext.define('Spelled.model.Asset', {
     extend: 'Ext.data.Model',
+	requires: ['proxy.direct'],
 
 	mixins: ['Spelled.abstract.model.Model'],
 

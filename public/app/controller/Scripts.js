@@ -1,5 +1,6 @@
 Ext.define('Spelled.controller.Scripts', {
     extend: 'Ext.app.Controller',
+	requires: ['Spelled.model.Script'],
 
     views: [
         'script.Create',

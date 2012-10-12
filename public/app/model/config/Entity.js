@@ -1,5 +1,6 @@
 Ext.define('Spelled.model.config.Entity', {
     extend: 'Ext.data.Model',
+	requires: ['idgen.sequential'],
 
     fields: [
         'templateId',

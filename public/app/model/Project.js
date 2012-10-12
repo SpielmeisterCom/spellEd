@@ -1,6 +1,8 @@
 Ext.define('Spelled.model.Project', {
     extend: 'Ext.data.Model',
-    proxy: {
+	requires: ['proxy.direct'],
+
+	proxy: {
         type: 'direct',
 		extraParams: {
 			type: 'project'

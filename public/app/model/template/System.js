@@ -1,5 +1,6 @@
 Ext.define('Spelled.model.template.System', {
     extend: 'Spelled.abstract.model.Template',
+	requires: ['proxy.direct'],
 
 	iconCls : "tree-system-icon",
 	sortOrder : 230,

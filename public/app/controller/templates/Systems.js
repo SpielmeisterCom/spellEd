@@ -1,5 +1,6 @@
 Ext.define('Spelled.controller.templates.Systems', {
 	extend: 'Ext.app.Controller',
+	requires: ['Spelled.model.Script'],
 
 	views: [
 		'template.system.Configuration',

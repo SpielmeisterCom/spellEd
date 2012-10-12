@@ -1,6 +1,8 @@
 Ext.define('Spelled.model.template.ComponentAttribute', {
     extend: 'Ext.data.Model',
 
+	requires: ['idgen.uuid'],
+
     fields: [
         "type",
         "name",

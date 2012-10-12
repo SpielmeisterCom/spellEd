@@ -1,5 +1,6 @@
 Ext.define('Spelled.model.template.Component', {
     extend: 'Spelled.abstract.model.Template',
+	requires: ['proxy.direct'],
 
 	iconCls : "tree-component-icon",
 	sortOrder: 210,

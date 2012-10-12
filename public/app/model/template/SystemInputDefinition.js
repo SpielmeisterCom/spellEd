@@ -1,6 +1,8 @@
 Ext.define('Spelled.model.template.SystemInputDefinition', {
     extend: 'Ext.data.Model',
 
+	requires: ['idgen.uuid'],
+
     fields: [
         "name",
         "componentId"

@@ -1,7 +1,3 @@
-//@requires Spelled.*
-//@requires Ext.direct.*
-
-
 require(
 	[
 		'requireToExt/inject',
@@ -73,6 +69,7 @@ require(
 var startApplication = function() {
 	Ext.application( {
 		name: 'Spelled',
+		requires: ['Spelled.*'],
 
 		appFolder: 'app',
 

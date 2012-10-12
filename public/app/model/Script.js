@@ -1,5 +1,6 @@
 Ext.define('Spelled.model.Script', {
     extend: 'Ext.data.Model',
+	requires: ['proxy.direct', 'Spelled.data.reader.Script', 'Spelled.data.writer.Script'],
 	mixins: ['Spelled.abstract.model.Model'],
 
 	iconCls : "tree-script-icon",
