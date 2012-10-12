@@ -619,8 +619,7 @@ Ext.define('Spelled.controller.Assets', {
     },
 
 	successCallback : function( result ) {
-		Ext.Msg.alert('Success', 'Your asset "' + result.getFullName() + '" has been uploaded.')
-		this.refreshStoresAndTreeStores( true )
+		this.refreshStoresAndTreeStores()
 	},
 
 	saveBase64AssetFile: function( filePath, content ) {
@@ -692,7 +691,7 @@ Ext.define('Spelled.controller.Assets', {
 		}
     },
 
-	refreshStoresAndTreeStores: function( force, callback ) {
+	refreshStoresAndTreeStores: function( callback ) {
 		this.refreshStores( callback )
 	},
 

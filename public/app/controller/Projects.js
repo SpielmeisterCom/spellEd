@@ -274,7 +274,6 @@ Ext.define('Spelled.controller.Projects', {
 		//Need to do a synchronous load
 		//TODO: find a solution for synchonous loading stores with proxies etc.
 		app.getController( 'Assets' ).refreshStoresAndTreeStores(
-			true,
 			Ext.bind( function() {
 					var callback = Ext.bind( function() {
 							this.projectLoadedCallback( project )
