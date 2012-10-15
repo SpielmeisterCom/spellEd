@@ -323,9 +323,7 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
 	closeAllTabsFromProject: function() {
-		var app = this.application
-
-		app.closeAllTabs( this.getLibrary() )
+		this.application.fireEvent( 'closealltabs' )
 	},
 
     getScenesList: function( project ) {

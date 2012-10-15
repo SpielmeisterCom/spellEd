@@ -25,6 +25,7 @@ Ext.define('Spelled.controller.Layout', {
         })
 
 		this.application.on( {
+			closealltabs: this.closeAllTabs,
 			scope: this
 		})
 	},
@@ -52,11 +53,16 @@ Ext.define('Spelled.controller.Layout', {
 		}
 	],
 
+	closeAllTabs: function() {
+		this.getSceneEditor().removeAll()
+		this.getSecondTabPanel().removeAll()
+	},
+
 	checkForTabChange: function( tabPanel, panel ) {
 		var secondTab   = this.getSecondTabPanel(),
 			splitLayout = secondTab.up( 'splitlayout' )
 
-		if( splitLayout.isVisible() ) {
+		if( splitLayout.isVisible() && panel.getXType() !== 'renderedscene' ) {
 			var foundTab    = this.application.findActiveTabByTitle( secondTab, panel.title )
 
 			if( !foundTab ) {
@@ -99,7 +105,7 @@ Ext.define('Spelled.controller.Layout', {
 
 		this.moveTabs( this.getSecondTabPanel(), this.getSceneEditor() )
 
-		splitLayout.insert(0, this.getSceneEditor() )
+		splitLayout.insert( 0, this.getSceneEditor() )
 		splitLayout.show()
 		this.application.fireEvent( 'reloadscene' )
 	}

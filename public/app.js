@@ -154,16 +154,6 @@ var startApplication = function() {
 			return newPanel
 		},
 
-		closeAllTabs: function( tabPanel ) {
-			if( !tabPanel ) return
-
-			tabPanel.items.each(
-				function( tab ) {
-					tab.destroy()
-				}
-			)
-		},
-
 		closeOpenedTabs: function( tabPanel, title ) {
 			tabPanel.items.each(
 				function( tab ) {
