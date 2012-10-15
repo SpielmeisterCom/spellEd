@@ -328,6 +328,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.container.VBox": [
     "layout.vbox"
   ],
+  "Spelled.view.ui.TilemapEditorIframe": [
+    "widget.tilemapeditoriframe"
+  ],
   "Spelled.store.asset.Sounds": [],
   "Ext.view.DropZone": [],
   "Ext.layout.component.Button": [
@@ -483,6 +486,12 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.window.MessageBox": [
     "widget.messagebox"
+  ],
+  "Spelled.view.template.component.attribute.Vec3": [
+    "widget.spelledvec3field"
+  ],
+  "Spelled.view.template.component.attribute.Vec4": [
+    "widget.spelledvec4field"
   ],
   "Ext.diag.layout.ContextItem": [],
   "Ext.fx.target.CompositeElementCSS": [],
@@ -861,10 +870,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.Editor": [
     "widget.editor"
   ],
-  "Ext.chart.Tip": [],
   "Ext.chart.axis.Radial": [
     "axis.radial"
   ],
+  "Ext.chart.Tip": [],
   "Spelled.view.template.entity.Edit": [
     "widget.entitytemplateedit"
   ],
@@ -1423,6 +1432,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.container.VBox": [
     "Ext.layout.VBoxLayout"
   ],
+  "Spelled.view.ui.TilemapEditorIframe": [],
   "Spelled.store.asset.Sounds": [],
   "Ext.view.DropZone": [],
   "Ext.layout.component.Button": [],
@@ -1530,6 +1540,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.store.ScenesTree": [],
   "Spelled.view.template.component.attribute.Vec2": [],
   "Ext.window.MessageBox": [],
+  "Spelled.view.template.component.attribute.Vec3": [],
+  "Spelled.view.template.component.attribute.Vec4": [],
   "Ext.diag.layout.ContextItem": [],
   "Ext.fx.target.CompositeElementCSS": [],
   "Ext.chart.series.Line": [
@@ -1818,8 +1830,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.component.Draw": [],
   "Spelled.view.library.TreeList": [],
   "Ext.Editor": [],
-  "Ext.chart.Tip": [],
   "Ext.chart.axis.Radial": [],
+  "Ext.chart.Tip": [],
   "Spelled.view.template.entity.Edit": [],
   "Ext.layout.container.Table": [
     "Ext.layout.TableLayout"

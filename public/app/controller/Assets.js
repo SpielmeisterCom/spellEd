@@ -92,6 +92,8 @@ Ext.define('Spelled.controller.Assets', {
     ],
 
     init: function() {
+	    var me = this
+
         this.control({
 			'createasset combobox[name="type"]': {
 				select: this.showAdditionalConfiguration
@@ -144,6 +146,37 @@ Ext.define('Spelled.controller.Assets', {
 			savemodel         : this.globalSaveModelHelper,
 			scope: this
 		})
+
+	    // initializing the engine message bus
+	    this.assetMessageBus = Ext.create(
+		    'Spelled.MessageBus',
+		    {
+			    handlers : {
+				    //tilemap editor initialized
+				    'wm.initialized' : function( sourceId, payload ) {
+					    me.assetMessageBus.flushQueue( sourceId )
+				    },
+
+				    //tilemap editor has changed data
+				    'wm.save' : function( sourceId, payload ) {
+					    var cmp = Ext.getCmp( sourceId ),
+						    form = cmp.up('form'),
+						    record = form.getRecord()
+
+					    record.set("wmData", payload)
+					    record.setDirty()
+
+					    me.editAsset( cmp )
+				    }
+			    }
+		    }
+	    )
+
+	    window.addEventListener(
+		    'message',
+		    Ext.bind( this.assetMessageBus.receive, this.assetMessageBus ),
+		    false
+	    )
     },
 
 	globalSaveModelHelper: function( model ) {
@@ -358,11 +391,29 @@ Ext.define('Spelled.controller.Assets', {
 				break
 			case "2dTileMap":
 				tileMapConfig.show()
+
 				if( !!asset ) {
-					var config = asset.get('config')
-					tileMapConfig.down( 'numberfield[name="width"]' ).setValue( config.width )
-					tileMapConfig.down( 'numberfield[name="tileSize"]' ).setValue( config.tileSize )
-					tileMapConfig.down( 'numberfield[name="height"]' ).setValue( config.height )
+					var config = asset.get('config'),
+						tilemapEditorIframe = form.down('tilemapeditoriframe')
+
+
+					form.getForm().setValues(
+						{
+							assetId: config.assetId,
+							width : config.width,
+							height: config.height
+						}
+					)
+
+					//load data in the tilemap editor iframe
+					this.assetMessageBus.addToQueue(
+						tilemapEditorIframe.getId(),
+						{
+							type : "wm.load",
+							payload: config.wmData
+						}
+					)
+
 				}
 				break
 			default:
@@ -658,7 +709,8 @@ Ext.define('Spelled.controller.Assets', {
 				config.length = parseInt( values.length )
 				break
 			case '2dTileMap':
-				Ext.copyTo( config, values, 'width,height,tileSize' )
+				Ext.copyTo( config, values, 'width,height' )
+				config.wmData = asset.get("wmData")
 				break
 		}
 

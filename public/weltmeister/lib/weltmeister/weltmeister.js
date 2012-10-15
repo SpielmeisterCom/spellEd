@@ -40,12 +40,25 @@ wm.Weltmeister = ig.Class.extend({
 	needsDraw: true,
 	
 	undo: null,
-	
+	iframeId: null,
+
+	getParam: function( name ) {
+		name = name.replace( /[\[]/, "\\\[" ).replace( /[\]]/, "\\\]" )
+		var regexS = '[\\?&]' + name + '=([^&#]*)'
+		var regex = new RegExp( regexS )
+		var results = regex.exec( window.location.href )
+
+		return ( results == null ? '' : results[ 1 ] )
+	},
+
 	init: function() {
 		window.focus();
 
 		ig.game = ig.editor = this;
-		
+
+
+		this.iframeId = this.getParam( 'iframeId' );
+
 		ig.system.context.textBaseline = 'top';
 		ig.system.context.font = wm.config.labels.font;
 		this.labelsStep = wm.config.labels.step;
@@ -84,13 +97,26 @@ wm.Weltmeister = ig.Class.extend({
 		
 		this.undo = new wm.Undo( wm.config.undoLevels );
 
-
-		this.load();
-
 		ig.setAnimation( this.drawIfNeeded.bind(this) );
+
+		window.addEventListener(
+			'message',
+			this.onMessageReceived.bind(this),
+			false
+		)
+
+		this.postMessage('wm.initialized')
 	},
-		
-	
+
+	onMessageReceived: function( event ) {
+
+		var data = JSON.parse( event.data );
+
+		if ( data.type == "wm.load" ) {
+			this.loadResponse( data.payload );
+		}
+	},
+
 	uikeydown: function( event ) {
 		if( event.target.type == 'text' ) {
 			return;
@@ -114,11 +140,8 @@ wm.Weltmeister = ig.Class.extend({
 	},
 	
 	setModified: function() {
-		if( !this.modified ) {
-			this.modified = true;
-
-			this.save();
-		}
+		//always end all changes to spelled
+		this.save();
 	},
 	
 	resetModified: function() {
@@ -184,85 +207,6 @@ wm.Weltmeister = ig.Class.extend({
 	
 	// -------------------------------------------------------------------------
 	// Loading
-	load: function( dialog, path ) {
-
-		var data = {
-			"layer":[{
-				"name":"new_layer_0",
-				"width":30,
-				"height":20,
-				"linkWithCollision":false,
-				"visible":1,
-				"tilesetName":"Tileset.png",
-				"repeat":false,
-				"preRender":false,
-				"distance":1,
-				"tilesize":100,
-				"foreground":true,
-				"data":[
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,23,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,25,25,25,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,25,25,25,25,25,25,25,25,25,25,25,0,0,0,0,0,0,0,0],
-					[0,0,2,2,2,2,2,2,2,10,11,12,0,0,0,0,0,0,0,0,18,17,16,2,2,2,2,2,0,0],
-					[0,0,5,5,5,5,5,5,5,13,14,15,8,8,8,8,8,8,8,8,21,20,19,5,5,5,5,5,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-				]
-			},
-			{
-				"name":"collision",
-				"width":30,
-				"height":20,
-				"linkWithCollision":false,
-				"visible":0,
-				"tilesetName":"",
-				"repeat":false,
-				"preRender":false,
-				"distance":1,
-				"tilesize":100,
-				"foreground":true,
-				"data":[
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,1,1,1,1,1,1,1,27,28,29,0,0,0,0,0,0,0,0,5,6,7,1,1,1,1,1,0,0],
-					[0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-				]
-			}
-			]
-		};
-		this.loadResponse(data);
-	},
-	
-	
 	loadResponse: function( data ) {
 		while( this.layers.length ) {
 			this.layers[0].destroy();
@@ -314,23 +258,9 @@ wm.Weltmeister = ig.Class.extend({
 			}
 		}
 		
-		
-		var dataString = JSON.stringify(data);
+		this.postMessage('wm.save', data)
+	},
 
-		console.log(dataString);
-	},
-	
-	saveResponse: function( data ) {
-		if( data.error ) {
-			alert( 'Error: ' + data.msg );
-		} else {
-			this.resetModified();
-			$.cookie( 'wmLastLevel', this.filePath );
-		}
-	},
-	
-	
-	
 	// -------------------------------------------------------------------------
 	// Layers
 	getLayerWithName: function( name ) {
@@ -601,8 +531,21 @@ wm.Weltmeister = ig.Class.extend({
 			ylabel += step;
 			ig.system.context.fillText( ylabel, 0, ty * ig.system.scale );
 		}
+	},
+
+	postMessage: function(type, payload) {
+		var message = {
+			type : type,
+			payload : payload,
+			iframeId : this.iframeId
+		}
+
+		parent.window.postMessage( JSON.stringify( message ), '*' )
 	}
-});
+
+
+
+	});
 
 
 wm.Weltmeister.getMaxWidth = function() {
