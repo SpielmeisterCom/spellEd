@@ -8,7 +8,7 @@ wm.config = {
 		'modulePath': 'lib/',
 		'entityFiles': 'lib/game/entities/*.js',
 		'levelPath': 'lib/game/levels/',
-		'outputFormat': 'module', // 'module' or 'json'
+		'outputFormat': 'json', // 'module' or 'json'
 		'prettyPrint': false
 	},
 	
