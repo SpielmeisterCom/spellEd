@@ -204,33 +204,90 @@ wm.Weltmeister = ig.Class.extend({
 		this.resize();
 	},
 	
-	
+	getTileSize: function() {
+		return 100;
+	},
+
+	getTileSetName: function() {
+		return "Tileset.png";
+	},
+
+	spellToWeltmeister: function(data, width, height) {
+		var dataCopy = [];
+		for (var x = 0; x < width; x++) {
+			for (var y = 0; y < height; y++) {
+
+				var newvar = null;
+
+				if (data[x] === undefined || data[x][y] === undefined || data[x][y] == -1) {
+					newvar = 0;
+				} else {
+					newvar = data[x][y] + 1;
+				}
+
+				if (dataCopy[x] === undefined) {
+					dataCopy[x] = [];
+				}
+
+				dataCopy[x][y] = newvar;
+			}
+		}
+
+		return dataCopy;
+	},
+
 	// -------------------------------------------------------------------------
 	// Loading
 	loadResponse: function( data ) {
+		console.log(data);
+
 		while( this.layers.length ) {
 			this.layers[0].destroy();
 			this.layers.splice( 0, 1 );
 		}
 		this.screen = {x: 0, y: 0};
 
-		for( var i=0; i < data.layer.length; i++ ) {
-			var ld = data.layer[i];
-			var newLayer = new wm.EditMap( ld.name, ld.tilesize, ld.tilesetName, !!ld.foreground );
-			newLayer.resize( ld.width, ld.height );
-			newLayer.linkWithCollision = ld.linkWithCollision;
-			newLayer.visible = false;
-			newLayer.data = ld.data;
-			newLayer.toggleVisibility();
-			this.layers.push( newLayer );
-			
-			if( ld.name == 'collision' ) {
-				this.collisionLayer = newLayer;
-			}
-			
-			this.setActiveLayer( ld.name );
+		if (!data.tileLayerData) {
+			data.tileLayerData = [];
 		}
-		
+
+		if (!data.collisionLayerData) {
+			data.collisionLayerData = [];
+		}
+
+		var tileLayerData = this.spellToWeltmeister(data.tileLayerData, data.height, data.width );
+		var collisionLayerData = this.spellToWeltmeister(data.collisionLayerData, data.height, data.width );
+
+/*
+		//create collision layer
+		var newLayer = new wm.EditMap( 'collision', this.getTileSize(), "", true );
+		newLayer.resize( data.width, data.height );
+		newLayer.data = tileLayerData;
+		newLayer.visible = false;
+		newLayer.linkWithCollision = false;
+		newLayer.toggleVisibility();
+		this.layers.push( newLayer );
+		this.collisionLayer = newLayer;
+		this.setActiveLayer( 'collision' );
+*/
+
+		//create tile layer
+		var newLayer = new wm.EditMap( 'tilemap', this.getTileSize(), this.getTileSetName(), true );
+		newLayer.resize( data.width, data.height );
+		newLayer.data = tileLayerData;
+		//newLayer.linkWith Collision = true;
+		newLayer.visible = false;
+
+		newLayer.toggleVisibility();
+		this.layers.push( newLayer );
+		this.setActiveLayer( 'tilemap' );
+
+
+
+
+
+
+
 		this.reorderLayers();
 		$('#layers').sortable('refresh');
 		
@@ -238,26 +295,28 @@ wm.Weltmeister = ig.Class.extend({
 		this.undo.clear();
 		this.draw();
 	},
-	
-	
-	
+
 	// -------------------------------------------------------------------------
 	// Saving
 	save: function( dialog, path ) {
 
 		var data = {
-			'layer': []
+			'tileLayerData': [],
+			'collisionLayerData': []
 		};
 		
 		var resources = [];
 		for( var i=0; i < this.layers.length; i++ ) {
 			var layer = this.layers[i];
-			data.layer.push( layer.getSaveData() );
-			if( layer.name != 'collision' ) {
-				resources.push( layer.tiles.path );
+
+			if (layer.name == 'collision') {
+//				data.collisionLayerData = layer.getSaveData()
+			} else {
+				data.tileLayerData = layer.getSaveData();
 			}
+
 		}
-		
+
 		this.postMessage('wm.save', data)
 	},
 
@@ -288,7 +347,7 @@ wm.Weltmeister = ig.Class.extend({
 			}
 		}).bind(this));
 		this.layers = newLayers;
-		this.setModified();
+//		this.setModified();
 		this.draw();
 	},
 	
@@ -322,6 +381,7 @@ wm.Weltmeister = ig.Class.extend({
 	// Update
 	
 	mousemove: function() {
+		window.focus();
 		if( !this.activeLayer ) {
 			return;
 		}

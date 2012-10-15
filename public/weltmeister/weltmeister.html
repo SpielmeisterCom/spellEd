@@ -15,15 +15,14 @@
         <strong>STRG+Mousemove</strong> navigates. <strong>Space</strong> selects a tile. <strong>Shift+Mouseselection</strong> copies. <strong>Mouse-Wheel</strong> zooms.
 		<input type="button" id="zoomOut" value="Zoom Out" class="button"/>
 		<input type="button" id="zoomIn" value="Zoom In" class="button"/>
-		<input type="button" id="focus" value="Focus" class="button"/>
-		<input type="button" id="toggleSidebar" value="Toggle Sidebar" title="Toggle Sidebar" class="button"/>
+		<input type="button" id="toggleSidebar" value="Toggle Sidebar" title="Toggle Sidebar" class="button" style="display:none;"/>
 	</span>
 </div>
 
 <div id="editor">
 	<canvas id="canvas"></canvas>
 	
-	<div id="menu">
+	<div id="menu" style="display:none;">
 		<div id="layerContainer">
 			<h2>Layers</h2>
 			<div id="layers">
@@ -35,7 +34,7 @@
 		</div>
 		
 		
-		<div id="layerSettings">
+		<div id="layerSettings" >
 			<h2>Layer Settings</h2>
 			<dl>
 				<dd>

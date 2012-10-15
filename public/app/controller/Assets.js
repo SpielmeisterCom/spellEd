@@ -163,10 +163,12 @@ Ext.define('Spelled.controller.Assets', {
 						    form = cmp.up('form'),
 						    record = form.getRecord()
 
-					    record.set("wmData", payload)
+					    record.set("tileLayerData", payload.tileLayerData)
+					   // record.set("collisionLayerData", payload.collisionLayerData)
 					    record.setDirty()
 
-					    me.editAsset( cmp )
++			            me.setAssetConfigFromForm( form, record )
+					    me.fireEvent( 'assetchange', record )
 				    }
 			    }
 		    }
@@ -393,8 +395,7 @@ Ext.define('Spelled.controller.Assets', {
 				tileMapConfig.show()
 
 				if( !!asset ) {
-					var config = asset.get('config'),
-						tilemapEditorIframe = form.down('tilemapeditoriframe')
+					var config = asset.get('config')
 
 
 					form.getForm().setValues(
@@ -405,20 +406,28 @@ Ext.define('Spelled.controller.Assets', {
 						}
 					)
 
-					//load data in the tilemap editor iframe
-					this.assetMessageBus.addToQueue(
-						tilemapEditorIframe.getId(),
-						{
-							type : "wm.load",
-							payload: config.wmData
-						}
-					)
+					this.updateTilemapEditorData( form, asset )
 
 				}
 				break
 			default:
 				fileUpload.show()
 		}
+	},
+
+	updateTilemapEditorData: function ( form, asset ) {
+		var config = asset.get('config'),
+			tilemapEditorIframe = form.down('tilemapeditoriframe')
+
+		//load data in the tilemap editor iframe
+		this.assetMessageBus.send(
+			tilemapEditorIframe.getId(),
+			{
+				type : "wm.load",
+				payload: config
+			}
+		)
+
 	},
 
 	renderKeyFrameAnimationComponentsTree: function( view ) {
@@ -597,6 +606,10 @@ Ext.define('Spelled.controller.Assets', {
 			this.setAssetConfigFromForm( form, record )
 
 			this.application.fireEvent( 'assetchange', record )
+
+			if (record.get("subtype") == "2dTileMap") {
+				this.updateTilemapEditorData( form, record )
+			}
 		}
 	},
 
@@ -710,7 +723,9 @@ Ext.define('Spelled.controller.Assets', {
 				break
 			case '2dTileMap':
 				Ext.copyTo( config, values, 'width,height' )
-				config.wmData = asset.get("wmData")
+				//asset.set( 'assetId', values.assetId )
+				config.tileLayerData = asset.get("tileLayerData")
+			// 	config.collisionLayerData = asset.get("collisionLayerData")
 				break
 		}
 

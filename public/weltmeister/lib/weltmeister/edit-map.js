@@ -46,20 +46,28 @@ wm.EditMap = ig.BackgroundMap.extend({
 	
 	
 	getSaveData: function() {
-		return {
-			name: this.name,
-			width: this.width,
-			height: this.height,
-			linkWithCollision: this.linkWithCollision,
-			visible: this.visible,
-			tilesetName: this.tilesetName,
-			repeat: this.repeat,
-			preRender: this.preRender,
-			distance: this.distance,
-			tilesize: this.tilesize,
-			foreground: this.foreground,
-			data: this.data
-		};
+		var dataCopy = [];
+
+		for (var x = 0; x < this.data.length; x++) {
+			for (var y = 0; y < this.data[x].length; y++) {
+
+				var newvar = null;
+
+				if (this.data[x][y] == 0) {
+					newvar = -1;
+				} else {
+					newvar = this.data[x][y] - 1;
+				}
+
+				if (dataCopy[x] === undefined) {
+					dataCopy[x] = [];
+				}
+
+				dataCopy[x][y] = newvar;
+			}
+		}
+		return dataCopy;
+
 	},
 	
 	
