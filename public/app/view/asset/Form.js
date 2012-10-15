@@ -99,6 +99,9 @@ Ext.define('Spelled.view.asset.Form', {
 		},{
 			xtype: 'keyframeanimationconfig',
 			hidden: true
+		},{
+			xtype: '2dtilemapconfig',
+			hidden: true
 		}
 	],
 

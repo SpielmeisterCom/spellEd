@@ -51,6 +51,12 @@ Ext.define('Spelled.store.asset.Types', {
 			"name":"Keyboard mapping",
 			"iconCls": "tree-asset-keytoactionmap-icon",
 			"sortOrder": 70
+		},
+		{
+			"type":"2dTileMap",
+			"name":"2d tile map",
+			"iconCls": "tree-asset-2dtilemap-icon",
+			"sortOrder": 80
 		}
     ]
 });

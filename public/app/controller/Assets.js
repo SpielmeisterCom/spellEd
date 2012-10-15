@@ -16,6 +16,7 @@ Ext.define('Spelled.controller.Assets', {
 		'Spelled.view.asset.edit.Edit',
 		'Spelled.view.asset.inspector.Config',
 		'Spelled.view.asset.create.Domvas',
+		'Spelled.view.asset.create.2dTileMap',
 
 
 		'Spelled.store.asset.Types',
@@ -46,6 +47,7 @@ Ext.define('Spelled.controller.Assets', {
 		'asset.create.Font',
 		'asset.create.KeyToActionMap',
 		'asset.create.KeyFrameAnimation',
+		'asset.create.2dTileMap',
 		'asset.edit.Edit',
 		'asset.inspector.Config',
 		'asset.create.Domvas'
@@ -238,7 +240,8 @@ Ext.define('Spelled.controller.Assets', {
 			textAssetConfig         = form.down('textappearanceconfig'),
 			keyToActionMapConfig    = form.down('keytoactionconfig'),
 			domvasassetconfig       = form.down('domvasassetconfig'),
-			keyFrameAnimationConfig = form.down('keyframeanimationconfig')
+			keyFrameAnimationConfig = form.down('keyframeanimationconfig'),
+			tileMapConfig         = form.down('2dtilemapconfig')
 		//Resetting defaults
 		domvasassetconfig.hide()
 		assetsCombo.hide()
@@ -248,6 +251,7 @@ Ext.define('Spelled.controller.Assets', {
 		keyToActionMapConfig.hide()
 		fileUpload.hide()
 		keyFrameAnimationConfig.hide()
+		tileMapConfig.hide()
 		fileUpload.reset()
 		assetsCombo.clearValue()
 
@@ -351,6 +355,15 @@ Ext.define('Spelled.controller.Assets', {
 					keyFrameAnimationConfig.keyFrameConfig = { animate: {} }
 				}
 
+				break
+			case "2dTileMap":
+				tileMapConfig.show()
+				if( !!asset ) {
+					var config = asset.get('config')
+					tileMapConfig.down( 'numberfield[name="width"]' ).setValue( config.width )
+					tileMapConfig.down( 'numberfield[name="tileSize"]' ).setValue( config.tileSize )
+					tileMapConfig.down( 'numberfield[name="height"]' ).setValue( config.height )
+				}
 				break
 			default:
 				fileUpload.show()
@@ -642,6 +655,9 @@ Ext.define('Spelled.controller.Assets', {
 			case 'keyFrameAnimation':
 				config = this.getKeyFrameAnimationConfig( form.down( 'keyframeanimationconfig' ) )
 				config.length = parseInt( values.length )
+				break
+			case '2dTileMap':
+				Ext.copyTo( config, values, 'width,height,tileSize' )
 				break
 		}
 

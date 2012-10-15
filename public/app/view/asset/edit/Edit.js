@@ -59,6 +59,9 @@ Ext.define('Spelled.view.asset.edit.Edit', {
 		},{
 			xtype: 'keyframeanimationconfig',
 			hidden: true
+		},{
+			xtype: '2dtilemapconfig',
+			hidden: true
 		}
 	]
 });

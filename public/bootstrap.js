@@ -657,6 +657,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.fx.target.Component": [],
   "Ext.util.Point": [],
   "Ext.form.field.Field": [],
+  "Spelled.view.asset.create.2dTileMap": [
+    "widget.2dtilemapconfig"
+  ],
   "Ext.form.field.Display": [
     "widget.displayfield"
   ],
@@ -1678,6 +1681,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.fx.target.Component": [],
   "Ext.util.Point": [],
   "Ext.form.field.Field": [],
+  "Spelled.view.asset.create.2dTileMap": [],
   "Ext.form.field.Display": [
     "Ext.form.DisplayField",
     "Ext.form.Display"
