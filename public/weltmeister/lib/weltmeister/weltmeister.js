@@ -10,7 +10,6 @@ ig.module(
 	'weltmeister.evented-input',
 	'weltmeister.config',
 	'weltmeister.edit-map',
-	'weltmeister.edit-entities',
 	'weltmeister.select-file-dropdown',
 	'weltmeister.modal-dialogs',
 	'weltmeister.undo'
@@ -25,7 +24,6 @@ wm.Weltmeister = ig.Class.extend({
 	},
 	
 	layers: [],
-	entities: null,
 	activeLayer: null,
 	collisionLayer: null,
 	selectedEntity: null,
@@ -82,8 +80,7 @@ wm.Weltmeister = ig.Class.extend({
 		
 		
 		this.tilesetSelectDialog = new wm.SelectFileDropdown( '#layerTileset', wm.config.api.browse, 'images' );
-		this.entities = new wm.EditEntities( $('#layerEntities') );
-		
+
 		$('#layers').sortable({
 			update: this.reorderLayers.bind(this)
 		});
@@ -139,9 +136,7 @@ wm.Weltmeister = ig.Class.extend({
 			var index = parseInt(key);
 			var name = $('#layers div.layer:nth-child('+index+') span.name').text();
 			
-			var layer = name == 'entities'
-				? this.entities
-				: this.getLayerWithName(name);
+			var layer = this.getLayerWithName(name);
 				
 			if( layer ) {
 				if( event.shiftKey ) {
@@ -268,7 +263,6 @@ wm.Weltmeister = ig.Class.extend({
 			this.layers.splice( 0, 1 );
 		}
 		this.screen = {x: 0, y: 0};
-		this.entities.clear();
 		this.fileName = 'untitled.js';
 		this.filePath = wm.config.project.levelPath + 'untitled.js';
 		this.saveDialog.setPath( this.filePath );
@@ -304,13 +298,7 @@ wm.Weltmeister = ig.Class.extend({
 			this.layers.splice( 0, 1 );
 		}
 		this.screen = {x: 0, y: 0};
-		this.entities.clear();
-		
-		for( var i=0; i < data.entities.length; i++ ) {
-			var ent = data.entities[i];
-			this.entities.spawnEntity( ent.type, ent.x, ent.y, ent.settings );
-		}
-		
+
 		for( var i=0; i < data.layer.length; i++ ) {
 			var ld = data.layer[i];
 			var newLayer = new wm.EditMap( ld.name, ld.tilesize, ld.tilesetName, !!ld.foreground );
@@ -330,8 +318,6 @@ wm.Weltmeister = ig.Class.extend({
 			
 			this.setActiveLayer( ld.name );
 		}
-		
-		this.setActiveLayer( 'entities' );
 		
 		this.reorderLayers();
 		$('#layers').sortable('refresh');
@@ -363,7 +349,6 @@ wm.Weltmeister = ig.Class.extend({
 		this.filePath = path;
 		this.fileName = path.replace(/^.*\//,'');
 		var data = {
-			'entities': this.entities.getSaveData(),
 			'layer': []
 		};
 		
@@ -382,50 +367,7 @@ wm.Weltmeister = ig.Class.extend({
 			dataString = JSONFormat( dataString );
 		}
 		
-		// Make it an ig.module instead of plain JSON?
-		if( wm.config.project.outputFormat == 'module' ) {
-			var levelModule = path
-				.replace(wm.config.project.modulePath, '')
-				.replace(/\.js$/, '')
-				.replace(/\//g, '.');
-				
-			var levelName = levelModule.replace(/(^.*\.|-)(\w)/g, function( m, s, a ) {
-				return a.toUpperCase();
-			});
-			
-			
-			var resourcesString = '';
-			if( resources.length ) {
-				resourcesString = "Level" + levelName + "Resources=[new ig.Image('" +
-					resources.join("'), new ig.Image('") +
-				"')];\n";
-			}
-			
-			// Collect all Entity Modules
-			var requires = ['impact.image'];
-			var requiresHash = {};
-			for( var i = 0; i < data.entities.length; i++ ) {
-				var ec = this.entities.entityClasses[ data.entities[i].type ];
-				if( !requiresHash[ec] ) {
-					requiresHash[ec] = true;
-					requires.push(ec);
-				}
-			}
-			
-			// include /*JSON[*/ ... /*]JSON*/ markers, so we can easily load
-			// this level as JSON again
-			dataString =
-				"ig.module( '"+levelModule+"' )\n" +
-				".requires( '"+requires.join("','")+"' )\n" +
-				".defines(function(){\n"+
-					"Level" + levelName + "=" +
-						"/*JSON[*/" + dataString + "/*]JSON*/" +
-					";\n" +
-					resourcesString +
-				"});";
-		}
-		
-		var postString = 
+		var postString =
 			'path=' + encodeURIComponent( path ) +
 			'&data=' + encodeURIComponent(dataString);
 		
@@ -470,16 +412,13 @@ wm.Weltmeister = ig.Class.extend({
 	
 	removeLayer: function() {
 		var name = this.activeLayer.name;
-		if( name == 'entities' ) {
-			return false;
-		}
+
 		this.activeLayer.destroy();
 		for( var i = 0; i < this.layers.length; i++ ) {
 			if( this.layers[i].name == name ) {
 				this.layers.splice( i, 1 );
 				this.reorderLayers();
 				$('#layers').sortable('refresh');
-				this.setActiveLayer( 'entities' );
 				return true;
 			}
 		}
@@ -503,21 +442,12 @@ wm.Weltmeister = ig.Class.extend({
 		$('#layers div.layer span.name').each((function( newIndex, span ){
 			var name = $(span).text();
 			
-			var layer = name == 'entities'
-				? this.entities
-				: this.getLayerWithName(name);
+			var layer = this.getLayerWithName(name);
 				
 			if( layer ) {
 				layer.setHotkey( newIndex+1 );
-				if( layer.name == 'entities' ) {
-					// All layers after the entity layer are not foreground
-					// layers
-					isForegroundLayer = false;
-				}
-				else {
-					layer.foreground = isForegroundLayer;
-					newLayers.unshift( layer );
-				}
+				layer.foreground = isForegroundLayer;
+				newLayers.unshift( layer );
 			}
 		}).bind(this));
 		this.layers = newLayers;
@@ -588,7 +518,7 @@ wm.Weltmeister = ig.Class.extend({
 	
 	setActiveLayer: function( name ) {
 		var previousLayer = this.activeLayer;
-		this.activeLayer = ( name == 'entities' ? this.entities : this.getLayerWithName(name) );
+		this.activeLayer = this.getLayerWithName(name);
 		if( previousLayer == this.activeLayer ) {
 			return; // nothing to do here
 		}
@@ -601,16 +531,11 @@ wm.Weltmeister = ig.Class.extend({
 		
 		$('#layerIsCollision').prop('checked', (name == 'collision') );
 		
-		if( name == 'entities' ) {
-			$('#layerSettings').fadeOut(100);
-		}
-		else {
-			this.entities.selectEntity( null );
-			this.toggleCollisionLayer();
-			$('#layerSettings')
-				.fadeOut(100,this.updateLayerSettings.bind(this))
-				.fadeIn(100);
-		}
+		this.toggleCollisionLayer();
+		$('#layerSettings')
+			.fadeOut(100,this.updateLayerSettings.bind(this))
+			.fadeIn(100);
+
 		this.draw();
 	},
 	
@@ -640,23 +565,10 @@ wm.Weltmeister = ig.Class.extend({
 			
 			else if( ig.input.state('draw') ) {
 				
-				// move/scale entity
-				if( this.activeLayer == this.entities ) {
-					var x = ig.input.mouse.x + this.screen.x;
-					var y = ig.input.mouse.y + this.screen.y;
-					this.entities.dragOnSelectedEntity( x, y );
-					this.setModified();
-				}
-				
 				// draw on map
-				else if( !this.activeLayer.isSelecting ) {
+				if( !this.activeLayer.isSelecting ) {
 					this.setTileOnCurrentLayer();
 				}
-			}
-			else if( this.activeLayer == this.entities ) {
-				var x = ig.input.mouse.x + this.screen.x;
-				var y = ig.input.mouse.y + this.screen.y;
-				this.entities.mousemove( x, y );
 			}
 		}
 		
@@ -672,32 +584,22 @@ wm.Weltmeister = ig.Class.extend({
 		
 		if( action == 'draw' ) {
 			if( this.mode == this.MODE.DEFAULT ) {
-				// select entity
-				if( this.activeLayer == this.entities ) {
-					var x = ig.input.mouse.x + this.screen.x;
-					var y = ig.input.mouse.y + this.screen.y;
-					var entity = this.entities.selectEntityAt( x, y );
-					if( entity ) {
-						this.undo.beginEntityEdit( entity );
-					}
+				if( ig.input.state('select') ) {
+					this.activeLayer.beginSelecting( ig.input.mouse.x, ig.input.mouse.y );
 				}
 				else {
-					if( ig.input.state('select') ) {
-						this.activeLayer.beginSelecting( ig.input.mouse.x, ig.input.mouse.y );
+					this.undo.beginMapDraw();
+					this.activeLayer.beginEditing();
+					if(
+						this.activeLayer.linkWithCollision &&
+						this.collisionLayer &&
+						this.collisionLayer != this.activeLayer
+					) {
+						this.collisionLayer.beginEditing();
 					}
-					else {
-						this.undo.beginMapDraw();
-						this.activeLayer.beginEditing();
-						if( 
-							this.activeLayer.linkWithCollision && 
-							this.collisionLayer && 
-							this.collisionLayer != this.activeLayer
-						) {
-							this.collisionLayer.beginEditing();
-						}
-						this.setTileOnCurrentLayer();
-					}
+					this.setTileOnCurrentLayer();
 				}
+
 			}
 			else if( this.mode == this.MODE.TILESELECT && ig.input.state('select') ) {	
 				this.activeLayer.tileSelect.beginSelecting( ig.input.mouse.x, ig.input.mouse.y );
@@ -713,33 +615,16 @@ wm.Weltmeister = ig.Class.extend({
 			return;
 		}
 		
-		if( action == 'delete' ) {
-			this.entities.deleteSelectedEntity();
-			this.setModified();
-		}
-		
-		else if( action == 'clone' ) {
-			this.entities.cloneSelectedEntity();
-			this.setModified();
-		}
-		
-		else if( action == 'grid' ) {
+		if( action == 'grid' ) {
 			wm.config.view.grid = !wm.config.view.grid;
 		}
 		
 		else if( action == 'menu' ) {
 			if( this.mode != this.MODE.TILESELECT && this.mode != this.MODE.ENTITYSELECT ) {
-				if( this.activeLayer == this.entities ) {
-					this.mode = this.MODE.ENTITYSELECT;
-					this.entities.showMenu( ig.input.mouse.x, ig.input.mouse.y );
-				}
-				else {
-					this.mode = this.MODE.TILESELECT;
-					this.activeLayer.tileSelect.setPosition( ig.input.mouse.x, ig.input.mouse.y	);
-				}
+				this.mode = this.MODE.TILESELECT;
+				this.activeLayer.tileSelect.setPosition( ig.input.mouse.x, ig.input.mouse.y	);
 			} else {
 				this.mode = this.MODE.DEFAULT;
-				this.entities.hideMenu();
 			}
 		}
 		
@@ -756,9 +641,6 @@ wm.Weltmeister = ig.Class.extend({
 			if( this.mode == this.MODE.TILESELECT ) {
 				this.activeLayer.brush = this.activeLayer.tileSelect.endSelecting( ig.input.mouse.x, ig.input.mouse.y );
 				this.mode = this.MODE.DEFAULT;
-			}
-			else if( this.activeLayer == this.entities ) {
-				this.undo.endEntityEdit();
 			}
 			else {
 				if( this.activeLayer.isSelecting ) {
@@ -846,19 +728,8 @@ wm.Weltmeister = ig.Class.extend({
 		var entitiesDrawn = false;
 		for( var i = 0; i < this.layers.length; i++ ) {
 			var layer = this.layers[i];
-			
-			// This layer is a foreground layer? -> Draw entities first!
-			if( !entitiesDrawn && layer.foreground ) {
-				entitiesDrawn = true;
-				this.entities.draw();
-			}
 			layer.draw();
 		}
-		
-		if( !entitiesDrawn ) {
-			this.entities.draw();
-		}
-		
 		
 		if( this.activeLayer ) {
 			if( this.mode == this.MODE.TILESELECT ) {
@@ -890,11 +761,6 @@ wm.Weltmeister = ig.Class.extend({
 			ylabel += step;
 			ig.system.context.fillText( ylabel, 0, ty * ig.system.scale );
 		}
-	},
-	
-	
-	getEntityByName: function( name ) {
-		return this.entities.getEntityByName( name );
 	}
 });
 
