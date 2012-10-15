@@ -239,8 +239,6 @@ wm.Weltmeister = ig.Class.extend({
 	// -------------------------------------------------------------------------
 	// Loading
 	loadResponse: function( data ) {
-		console.log(data);
-
 		while( this.layers.length ) {
 			this.layers[0].destroy();
 			this.layers.splice( 0, 1 );
