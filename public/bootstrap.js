@@ -267,9 +267,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.chart.Chart": [
     "widget.chart"
   ],
-  "Spelled.view.system.List": [
-    "widget.systemlist"
-  ],
   "Spelled.store.asset.ActionKeys": [],
   "Ext.data.Field": [
     "data.field"
@@ -1375,7 +1372,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.component.field.ComboBox": [],
   "Ext.dd.DDTarget": [],
   "Ext.chart.Chart": [],
-  "Spelled.view.system.List": [],
   "Spelled.store.asset.ActionKeys": [],
   "Ext.data.Field": [],
   "Ext.chart.series.Gauge": [],

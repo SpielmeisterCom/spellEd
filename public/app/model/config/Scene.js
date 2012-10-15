@@ -37,7 +37,7 @@ Ext.define('Spelled.model.config.Scene', {
 	},
 
 	getRenderTabTitle: function() {
-		return "Rendered: Scene"// + this.getId()
+		return "Rendered: Scene"
 	},
 
     constructor: function() {
@@ -79,7 +79,7 @@ Ext.define('Spelled.model.config.Scene', {
 					text      : "Systems",
 					id        : "showSystems",
 					iconCls   : "tree-scene-system-icon",
-					leaf      : true
+					leaf      : false
 				}
 			)
 		)

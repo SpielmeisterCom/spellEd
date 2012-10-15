@@ -54,11 +54,13 @@ Ext.define('Spelled.controller.Scenes', {
 		'ui.SpelledRendered'
 	],
 
-	TREE_ITEM_TYPE_SCENE    : 1,
-	TREE_ITEM_TYPE_ENTITY   : 2,
-	TREE_ITEM_TYPE_SYSTEM   : 3,
-	TREE_ITEM_TYPE_SCRIPT   : 4,
-	TREE_ITEM_TYPE_ENTITIES : 5,
+	TREE_ITEM_TYPE_SCENE         : 1,
+	TREE_ITEM_TYPE_ENTITY        : 2,
+	TREE_ITEM_TYPE_SYSTEM        : 3,
+	TREE_ITEM_TYPE_SCRIPT        : 4,
+	TREE_ITEM_TYPE_ENTITIES      : 5,
+	TREE_ITEM_TYPE_SYSTEM_ITEM   : 6,
+	TREE_ITEM_TYPE_SYSTEM_FOLDER : 7,
 
 	/**
 	 * Message bus used for communication with engine instances.
@@ -309,6 +311,9 @@ Ext.define('Spelled.controller.Scenes', {
 			case this.TREE_ITEM_TYPE_SCRIPT:
 				this.application.fireEvent( 'openscenescript' )
 				break
+			case this.TREE_ITEM_TYPE_SYSTEM_ITEM:
+				this.application.fireEvent( 'showSystemItem', treePanel, record )
+				break
 			default:
 				return
 		}
@@ -376,6 +381,12 @@ Ext.define('Spelled.controller.Scenes', {
 			case 'tree-entities-folder-icon':
 				type = this.TREE_ITEM_TYPE_ENTITIES
 				break
+			case 'tree-system-icon':
+				type = this.TREE_ITEM_TYPE_SYSTEM_ITEM
+				break
+			case 'tree-system-folder-icon':
+				type = this.TREE_ITEM_TYPE_SYSTEM_FOLDER
+				break
 		}
 
 		return type
@@ -392,6 +403,13 @@ Ext.define('Spelled.controller.Scenes', {
 			case this.TREE_ITEM_TYPE_SCENE:
 				this.showListContextMenu( gridView, list, node, rowIndex, e )
 				break
+			case this.TREE_ITEM_TYPE_SYSTEM_ITEM:
+				this.application.getController( 'Systems').showSceneSystemsItemListContextMenu( gridView, node, columnIndex, rowIndex, e )
+				break
+			case this.TREE_ITEM_TYPE_SYSTEM:
+			case this.TREE_ITEM_TYPE_SYSTEM_FOLDER:
+				this.application.getController( 'Systems').showSceneSystemsListContextMenu( gridView, node, columnIndex, rowIndex, e )
+				break
 			case this.TREE_ITEM_TYPE_ENTITY:
 				this.application.getController( 'Entities').showListContextMenu( gridView, node, columnIndex, rowIndex, e )
 				break
@@ -406,6 +424,8 @@ Ext.define('Spelled.controller.Scenes', {
 			case this.TREE_ITEM_TYPE_ENTITIES:
 			case this.TREE_ITEM_TYPE_ENTITY:
 			case this.TREE_ITEM_TYPE_SCENE:
+			case this.TREE_ITEM_TYPE_SYSTEM:
+			case this.TREE_ITEM_TYPE_SYSTEM_ITEM:
 				icons = Ext.DomQuery.select( '.edit-action-icon', node)
 				break
 		}
@@ -683,14 +703,16 @@ Ext.define('Spelled.controller.Scenes', {
 		var tree     = this.getScenesTree(),
 			rootNode = tree.getStore().getRootNode(),
 			project  = this.application.getActiveProject()
-			rootNode.removeAll()
+		rootNode.removeAll()
 
 		scenes.each( function( scene ) {
-			var node = scene.appendOnTreeNode( rootNode )
+			var node        = scene.appendOnTreeNode( rootNode )
+
+			this.application.getController('Systems').refreshSceneSystemList( scene )
 
 			if( project.get( 'startScene' ) == scene.getId() ) {
 				node.set( 'iconCls', 'tree-default-scene-icon' )
 			}
-		})
+		},this)
 	}
 });

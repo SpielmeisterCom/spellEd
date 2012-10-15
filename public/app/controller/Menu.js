@@ -8,6 +8,7 @@ Ext.define('Spelled.controller.Menu', {
 		'Spelled.view.menu.contextmenu.AssetsList',
 		'Spelled.view.menu.contextmenu.ScriptsList',
 		'Spelled.view.menu.contextmenu.SceneSystemsList',
+		'Spelled.view.menu.contextmenu.SceneSystemsItemList',
 		'Spelled.view.menu.contextmenu.TemplatesList',
 		'Spelled.view.menu.contextmenu.templatesList.Entity',
 		'Spelled.view.menu.contextmenu.ComponentTemplateAttributesList',
@@ -27,6 +28,7 @@ Ext.define('Spelled.controller.Menu', {
         'menu.contextmenu.AssetsList',
         'menu.contextmenu.ScriptsList',
 		'menu.contextmenu.SceneSystemsList',
+		'menu.contextmenu.SceneSystemsItemList',
         'menu.contextmenu.TemplatesList',
 		'menu.contextmenu.templatesList.Entity',
         'menu.contextmenu.ComponentTemplateAttributesList',
@@ -103,16 +105,16 @@ Ext.define('Spelled.controller.Menu', {
 			},
 
 
-			'scenesystemslistcontextmenu [action="remove"]': {
+			'scenesystemsitemlistcontextmenu [action="remove"]': {
 				click: this.removeSystemFromScene
 			},
-			'scenesystemslistcontextmenu [action="moveUp"]': {
+			'scenesystemsitemlistcontextmenu [action="moveUp"]': {
 				click: this.moveSystemNodeUp
 			},
-			'scenesystemslistcontextmenu [action="moveDown"]': {
+			'scenesystemsitemlistcontextmenu [action="moveDown"]': {
 				click: this.moveSystemNodeDown
 			},
-			'scenesystemslistcontextmenu [action="open"]': {
+			'scenesystemsitemlistcontextmenu [action="open"]': {
 				click: this.showSceneSystem
 			},
 
@@ -237,6 +239,13 @@ Ext.define('Spelled.controller.Menu', {
 
         return view
     },
+
+	showSceneSystemsItemListContextMenu: function( e ) {
+		this.createAndShowView(
+			this.getMenuContextmenuSceneSystemsItemListView(),
+			e
+		)
+	},
 
 	showSceneSystemsListContextMenu: function( e ) {
 		this.createAndShowView(
@@ -396,14 +405,14 @@ Ext.define('Spelled.controller.Menu', {
 	},
 
 	showSceneSystem: function() {
-		var treePanel = this.getRightPanel().down( 'systemlist' ),
+		var treePanel = this.getScenesTree(),
 			node      = this.application.getLastSelectedNode( treePanel )
 
 		this.application.getController( 'Systems' ).showSystemItem( treePanel, node )
 	},
 
 	removeSystemFromScene: function() {
-		var node = this.application.getLastSelectedNode( this.getRightPanel().down( 'systemlist' ) )
+		var node = this.application.getLastSelectedNode( this.getScenesTree() )
 
 		if( node && node.isLeaf() && !node.isRoot() ) {
 			this.application.getController( 'Systems' ).removeSceneSystem( node.get('text') )
@@ -412,7 +421,7 @@ Ext.define('Spelled.controller.Menu', {
 	},
 
 	moveSystemNodeUp: function() {
-		var node = this.application.getLastSelectedNode( this.getRightPanel().down( 'systemlist' )  )
+		var node = this.application.getLastSelectedNode( this.getScenesTree() )
 
 		if( node && !node.parentNode.isRoot() ) {
 			this.application.getController( 'Systems' ).moveSystemNodeUp( node )
@@ -420,7 +429,7 @@ Ext.define('Spelled.controller.Menu', {
 	},
 
 	moveSystemNodeDown: function() {
-		var node = this.application.getLastSelectedNode( this.getRightPanel().down( 'systemlist' )  )
+		var node = this.application.getLastSelectedNode( this.getScenesTree() )
 
 		if( node && !node.parentNode.isRoot() ) {
 			this.application.getController( 'Systems' ).moveSystemNodeDown( node )

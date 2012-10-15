@@ -2,7 +2,6 @@ Ext.define('Spelled.controller.Systems', {
 	extend: 'Ext.app.Controller',
 
 	requires: [
-		'Spelled.view.system.List',
 		'Spelled.view.system.Add',
 
 		'Spelled.model.template.System',
@@ -12,7 +11,6 @@ Ext.define('Spelled.controller.Systems', {
 	],
 
 	views: [
-		'system.List',
 		'system.Add'
 	],
 
@@ -27,8 +25,8 @@ Ext.define('Spelled.controller.Systems', {
 
 	refs: [
 		{
-			ref : 'RightPanel',
-			selector: '#RightPanel'
+			ref : 'ScenesTree',
+			selector: '#ScenesTree'
 		},
 		{
 			ref : 'LibraryEditor',
@@ -42,37 +40,37 @@ Ext.define('Spelled.controller.Systems', {
 
 	init: function() {
 		this.control({
-			'systemlist': {
-				itemdblclick  : this.showSystemItem,
-				itemcontextmenu: this.showSceneSystemsListContextMenu,
-				editclick   :   this.showSceneSystemsListContextMenu,
-				itemmouseenter: this.application.showActionsOnLeaf,
-				itemmouseleave: this.application.hideActions
-			},
-			'systemlist > treeview': {
-				drop: this.updateSceneSystems
-			},
-		    'systemlist [action="showAddSystem"]': {
-				click: this.showAddSystem
-			},
 			'addsystem button[action="addSystems"]': {
 				click: this.addSystems
+			},
+			'scenesystemslistcontextmenu [action="showAddSystem"]': {
+				click: this.showAddSystem
 			}
 		})
+
+		this.application.on({
+				showsystemitem: this.showSystemItem,
+				scope: this
+			}
+		)
 	},
 
 	moveSystemNodeDown: function( node ) {
 		if( node.nextSibling ) {
 			node.parentNode.insertBefore( node.nextSibling, node )
-			this.updateSceneSystems( null, null, node )
+			this.updateSceneSystems( null, node )
 		}
 	},
 
 	moveSystemNodeUp: function( node ) {
 		if( node.previousSibling ) {
 			node.parentNode.insertBefore( node, node.previousSibling )
-			this.updateSceneSystems( null, null, node )
+			this.updateSceneSystems( null, node )
 		}
+	},
+
+	showSceneSystemsItemListContextMenu: function( view, record, item, index, e, options ) {
+		this.application.getController('Menu').showSceneSystemsItemListContextMenu( e )
 	},
 
 	showSceneSystemsListContextMenu: function( view, record, item, index, e, options ) {
@@ -161,9 +159,9 @@ Ext.define('Spelled.controller.Systems', {
 		view.show()
 	},
 
-	updateSceneSystems: function( node, data, model ) {
+	updateSceneSystems: function( node, model ) {
 		var getRootNode = function( node ) {
-			if( node.isRoot() ) return node
+			if( node.get( 'text' ) === "Systems" ) return node
 			else return getRootNode( node.parentNode )
 		}
 
@@ -194,15 +192,11 @@ Ext.define('Spelled.controller.Systems', {
 	},
 
 	refreshSceneSystemList: function( scene ) {
-		var contentPanel = this.getRightPanel(),
-			View     = this.getSystemListView(),
-			tree     = new View(),
-			rootNode = tree.getStore().getRootNode(),
+		var tree     = this.getScenesTree(),
+			rootNode = tree.getStore().getRootNode().findChild( 'id', scene.getId() ).findChild( 'text', 'Systems' ),
 			me       = this
 
-		contentPanel.removeAll()
 		rootNode.removeAll()
-
 		rootNode.set( 'allowDrop', false )
 
 		Ext.Object.each(
@@ -246,7 +240,5 @@ Ext.define('Spelled.controller.Systems', {
 
 			}
 		)
-
-		contentPanel.add( tree )
 	}
 });
