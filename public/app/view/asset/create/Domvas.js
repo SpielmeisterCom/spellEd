@@ -11,7 +11,7 @@ Ext.define('Spelled.view.asset.create.Domvas', {
 			layout:'column',
 			items: [
 				{
-					id: 'aceDomvasContainer',
+					name: 'aceDomvasContainer',
 					columnWidth: 0.5,
 					height: 350
 				},
@@ -25,7 +25,7 @@ Ext.define('Spelled.view.asset.create.Domvas', {
 							width: 'null'
 						},
 						{
-							id: 'aceDomvasPreview',
+							name: 'aceDomvasPreview',
 							xtype: 'container',
 							margin: '0 0 0 270',
 							autoEl : {

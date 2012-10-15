@@ -167,7 +167,7 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	showDomvasPreview: function( view, content ) {
-		var iframe = view.down( 'container[id="aceDomvasPreview"]' )
+		var iframe = view.down( 'container[name="aceDomvasPreview"]' )
 
 		iframe.el.dom.contentWindow.document.body.innerHTML = content
 	},
@@ -256,7 +256,7 @@ Ext.define('Spelled.controller.Assets', {
 			case "domvas":
 				domvasassetconfig.show()
 
-				var aceContainer = domvasassetconfig.down( 'container[id="aceDomvasContainer"]' ),
+				var aceContainer = domvasassetconfig.down( 'container[name="aceDomvasContainer"]' ),
 					Mode         = Ext.amdModules.aceModeHtml.Mode,
 					editor       = Ext.amdModules.ace.edit( aceContainer.id ),
 					session      = editor.getSession()
