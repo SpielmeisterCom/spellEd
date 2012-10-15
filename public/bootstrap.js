@@ -167,6 +167,9 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.componenttemplateattributeslist"
   ],
   "Ext.util.Animate": [],
+  "Spelled.view.menu.contextmenu.SceneSystemsItemList": [
+    "widget.scenesystemsitemlistcontextmenu"
+  ],
   "Spelled.view.asset.create.KeyToActionMap": [
     "widget.keytoactionconfig"
   ],
@@ -855,10 +858,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.Editor": [
     "widget.editor"
   ],
+  "Ext.chart.Tip": [],
   "Ext.chart.axis.Radial": [
     "axis.radial"
   ],
-  "Ext.chart.Tip": [],
   "Spelled.view.template.entity.Edit": [
     "widget.entitytemplateedit"
   ],
@@ -1145,7 +1148,6 @@ Ext.ClassManager.addNameAliasMappings({
     "selection.rowmodel"
   ],
   "Spelled.view.asset.Form": [
-    "widget.form",
     "widget.assetform"
   ],
   "Ext.layout.ContextItem": [],
@@ -1300,6 +1302,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.template.component.attribute.Number": [],
   "Spelled.view.template.component.Attributes": [],
   "Ext.util.Animate": [],
+  "Spelled.view.menu.contextmenu.SceneSystemsItemList": [],
   "Spelled.view.asset.create.KeyToActionMap": [],
   "Ext.form.field.Date": [
     "Ext.form.DateField",
@@ -1811,8 +1814,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.component.Draw": [],
   "Spelled.view.library.TreeList": [],
   "Ext.Editor": [],
-  "Ext.chart.axis.Radial": [],
   "Ext.chart.Tip": [],
+  "Ext.chart.axis.Radial": [],
   "Spelled.view.template.entity.Edit": [],
   "Ext.layout.container.Table": [
     "Ext.layout.TableLayout"
