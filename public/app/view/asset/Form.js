@@ -2,6 +2,10 @@ Ext.define('Spelled.view.asset.Form', {
 	extend: 'Ext.form.Panel',
 	alias: 'widget.assetform',
 
+	requires: [
+		'Ext.form.field.File'
+	],
+
 	defaults: {
 		anchor: '100%',
 		allowBlank: false

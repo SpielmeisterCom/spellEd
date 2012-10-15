@@ -2,6 +2,10 @@ Ext.define('Spelled.view.library.TreeList' ,{
     extend: 'Spelled.abstract.view.TreeList',
     alias : 'widget.librarytreelist',
 
+	requires: [
+		'Ext.container.ButtonGroup'
+	],
+
 	title: "Library - Navigator",
 	header: false,
 

@@ -765,9 +765,9 @@ Ext.define('Spelled.controller.Assets', {
 				html: 'Animation preview is not available.'
 			}
 
-		if( subtype !== 'keyToActionMap' && subtype !== 'font' ) {
+		if( subtype !== 'keyToActionMap' && subtype !== 'font' && subtype !== 'keyFrameAnimation' ) {
 			var preview = Ext.widget( 'assetiframe', {
-				autoEl: ( subtype === 'animation' || subtype === 'keyFrameAnimation' ) ? errorTag : iframe
+				autoEl: ( subtype === 'animation' ) ? errorTag : iframe
 			} )
 
 			view.add( preview )
