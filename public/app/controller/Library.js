@@ -40,6 +40,10 @@ Ext.define('Spelled.controller.Library', {
 		{
 			ref : 'RightPanel',
 			selector: '#RightPanel'
+		},
+		{
+			ref: 'LibraryTree',
+			selector: '#LibraryTree'
 		}
     ],
 
@@ -48,15 +52,13 @@ Ext.define('Spelled.controller.Library', {
 			'librarynavigator': {
 				activate: this.showLibrary
 			},
-			'sceneeditor,#SecondTabPanel': {
-				tabchange: this.dispatchLibraryTabChange
-			},
 			'sceneeditor tab,#SecondTabPanel tab': {
 				beforeclose: this.dispatchLibraryTabBeforeClose
 			},
 			'librarytreelist': {
 				editclick       : this.dispatchLibraryNodeContextMenu,
 				itemcontextmenu : this.dispatchLibraryNodeContextMenu,
+				select          : this.dispatchLibraryNodeSelect,
 				itemdblclick    : this.dispatchLibraryNodeDoubleClick,
 				itemmouseenter  : this.application.showActionsOnLeaf,
 				itemmouseleave  : this.application.hideActions
@@ -118,24 +120,6 @@ Ext.define('Spelled.controller.Library', {
 		return type
 	},
 
-	dispatchLibraryTabChange: function( tabPanel, newCard ) {
-		this.getRightPanel().removeAll()
-		switch( this.getTabType( newCard ) ) {
-			case this.TYPE_ASSET:
-				this.application.fireEvent( 'assettabchange', tabPanel, newCard )
-				break
-			case this.TYPE_TEMPLATE:
-				this.application.fireEvent( 'templatetabchange', tabPanel, newCard )
-				break
-			case this.TYPE_SCRIPT:
-				this.application.fireEvent( 'scripttabchange', tabPanel, newCard )
-				break
-			default:
-				this.application.fireEvent( 'scenetabchange' )
-		}
-
-	},
-
 	dispatchLibraryTabBeforeClose: function( tab ) {
 		var panel = this.application.findTabByTitle( tab.ownerCt.tabPanel, tab.text )
 		if( !panel ) return true
@@ -173,12 +157,26 @@ Ext.define('Spelled.controller.Library', {
 
 	},
 
+	dispatchLibraryNodeSelect: function( tree, node ) {
+
+		switch( this.getNodeType( node ) ) {
+			case this.TYPE_ASSET:
+				this.application.fireEvent( 'assetselect', tree, node )
+				break
+			case this.TYPE_TEMPLATE:
+				this.application.fireEvent( 'templateselect', tree, node )
+				break
+			case this.TYPE_SCRIPT:
+				this.application.fireEvent( 'scriptselect', tree, node )
+				break
+		}
+	},
+
 	dispatchLibraryNodeDoubleClick: function( tree, node ) {
 
 		switch( this.getNodeType( node ) ) {
 			case this.TYPE_ASSET:
 				this.application.fireEvent( 'assetdblclick', tree, node )
-				this.application.fireEvent( 'assetselect', tree, node )
 				break
 			case this.TYPE_TEMPLATE:
 				this.application.fireEvent( 'templatedblclick', tree, node )
@@ -212,7 +210,13 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	showLibrary : function() {
+		var tree = this.getLibraryTree(),
+			node = this.application.getLastSelectedNode( tree )
+
 		this.getRightPanel().show()
+		this.getRightPanel().removeAll()
+
+		if( node ) this.dispatchLibraryNodeSelect( tree, node )
 
 		this.getLibraryTabPanel().show()
 	}

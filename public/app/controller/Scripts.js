@@ -53,7 +53,6 @@ Ext.define('Spelled.controller.Scripts', {
         this.control({
 			'scripteditor': {
 				save: this.globalSaveHelper,
-				activate: this.refreshAceEditorContent,
 				render:   this.addAceEditor
 			},
             'librarytreelist [action="showCreateScript"]' : {
@@ -125,9 +124,7 @@ Ext.define('Spelled.controller.Scripts', {
 		var SpellScriptMode = Ext.amdModules.aceModeSpellScript.Mode
 		panel.aceEditor.getSession().setMode( new SpellScriptMode() )
 		panel.aceEditor.setTheme( Ext.amdModules.aceThemePastelOnDark )
-	},
 
-	refreshAceEditorContent: function( panel ) {
 		panel.refreshContent()
 	},
 

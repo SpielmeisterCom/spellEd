@@ -576,6 +576,7 @@ Ext.define('Spelled.controller.Assets', {
 				break
 			case 'appearance':
 				view.docString = '#!/guide/asset_type_2d_static_appearance'
+				view.add( { xtype: 'image', margin: 20, src: '/' + asset.getFilePath( this.application.getActiveProject().get('name') )} )
 				break
 			case 'text':
 				view.docString = '#!/guide/asset_type_text_appearance'

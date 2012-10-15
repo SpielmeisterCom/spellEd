@@ -67,9 +67,6 @@ Ext.define('Spelled.controller.templates.Systems', {
 					if( tab.getXType() === 'scripteditor' && tab.template ) tab.template.setDirty()
 				},this)
 			},
-			'systemtemplateedit': {
-				activate: Ext.bind( function( tab ) { this.refreshSystemConfiguration( tab.template ) }, this)
-			},
 			'systemtemplateinputlist': {
 				edit:            this.dirtyHelper,
 				editclick:       this.showInputListContextMenu,

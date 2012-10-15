@@ -458,6 +458,10 @@ Ext.define('Spelled.controller.Scenes', {
 					this.application.getController('Systems').refreshSceneSystemList( scene )
 				}
 				break
+			case this.TREE_ITEM_TYPE_SYSTEM_ITEM:
+				var template = Ext.getStore( 'template.Systems' ).getByTemplateId( record.get( 'text' ) )
+				if( template ) this.application.fireEvent( 'showsystemtemplateconfig', template )
+				break
 			case this.TREE_ITEM_TYPE_SCRIPT:
 				var scene = this.getConfigScenesStore().getById( record.parentNode.getId() )
 				if( scene ) {
@@ -487,8 +491,13 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	showScenesEditor: function() {
+		var tree = this.getScenesTree(),
+			node = this.application.getLastSelectedNode( tree )
 
 		this.getRightPanel().show()
+		this.getRightPanel().removeAll()
+
+		if( node ) this.dispatchTreeClick( tree, node )
 
 		this.getSceneEditor().show()
 	},

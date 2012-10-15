@@ -71,9 +71,9 @@ Ext.define('Spelled.controller.Templates', {
 
 		this.application.on({
 			templatecontextmenu: this.showTemplatesContextMenu,
-			templatedblclick:    this.openTemplate,
+			templatedblclick   : this.openTemplate,
+			templateselect     : this.showConfig,
 			templatebeforeclose: this.checkIfTemplateIsDirty,
-			templatetabchange:  this.openTabTemplate,
 			scope: this
 		})
     },
@@ -97,7 +97,6 @@ Ext.define('Spelled.controller.Templates', {
 
 	closeTemplateTab: function( panel ) {
 		panel.destroy()
-		this.getRightPanel().removeAll()
 	},
 
 	addDisabledTemplateHeader: function( view ) {
@@ -105,18 +104,6 @@ Ext.define('Spelled.controller.Templates', {
 				xtype: 'readonlytemplateheader'
 			}
 		)
-	},
-
-	openTabTemplate: function( tabPanel, newCard ) {
-		var tree = this.getTemplatesTree(),
-			node = tree.getRootNode().findChild( 'id', newCard.template.getId(), true )
-
-		tree.expandPath( node.getPath() )
-		tree.getSelectionModel().select( node )
-
-		this.getRightPanel().removeAll()
-
-		this.showConfig( tree, node )
 	},
 
 	showConfig: function( treeGrid, record ) {
@@ -132,8 +119,7 @@ Ext.define('Spelled.controller.Templates', {
 			case this.TEMPLATE_TYPE_SYSTEM:
 				this.getRightPanel().removeAll()
 				var template = this.getTemplateSystemsStore().getById( record.getId() )
-				if( !template ) return
-				this.application.fireEvent( 'showsystemtemplateconfig', template )
+				if( template ) this.application.fireEvent( 'showsystemtemplateconfig', template )
 				break
 			default:
 				return
