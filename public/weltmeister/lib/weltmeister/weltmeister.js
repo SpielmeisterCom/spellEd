@@ -19,15 +19,13 @@ ig.module(
 wm.Weltmeister = ig.Class.extend({	
 	MODE: {
 		DRAW: 1,
-		TILESELECT: 2,
-		ENTITYSELECT: 4
+		TILESELECT: 2
 	},
 	
 	layers: [],
 	activeLayer: null,
 	collisionLayer: null,
-	selectedEntity: null,
-	
+
 	screen: {x: 0, y: 0},
 	_rscreen: {x: 0, y: 0},
 	mouseLast: {x: -1, y: -1},
@@ -59,27 +57,9 @@ wm.Weltmeister = ig.Class.extend({
 			
 		
 		// Dialogs
-		this.loadDialog = new wm.ModalDialogPathSelect( 'Load Level', 'Load', 'scripts' );
-		this.loadDialog.onOk = this.load.bind(this);
-		this.loadDialog.setPath( wm.config.project.levelPath );
-		$('#levelLoad').bind( 'click', this.showLoadDialog.bind(this) );
-		$('#levelNew').bind( 'click', this.showNewDialog.bind(this) );
-		
-		this.saveDialog = new wm.ModalDialogPathSelect( 'Save Level', 'Save', 'scripts' );
-		this.saveDialog.onOk = this.save.bind(this);
-		this.saveDialog.setPath( wm.config.project.levelPath );
-		$('#levelSaveAs').bind( 'click', this.saveDialog.open.bind(this.saveDialog) );
-		$('#levelSave').bind( 'click', this.saveQuick.bind(this) );
-		
 		this.loseChangesDialog = new wm.ModalDialog( 'Lose all changes?' );
-		
-		this.deleteLayerDialog = new wm.ModalDialog( 'Delete Layer? NO UNDO!' );
-		this.deleteLayerDialog.onOk = this.removeLayer.bind(this);
-		
+
 		this.mode = this.MODE.DEFAULT;
-		
-		
-		this.tilesetSelectDialog = new wm.SelectFileDropdown( '#layerTileset', wm.config.api.browse, 'images' );
 
 		$('#layers').sortable({
 			update: this.reorderLayers.bind(this)
@@ -98,14 +78,7 @@ wm.Weltmeister = ig.Class.extend({
 		
 		$(window).resize( this.resize.bind(this) );
 		$(window).bind( 'keydown', this.uikeydown.bind(this) );
-		$(window).bind( 'beforeunload', this.confirmClose.bind(this) );
-	
-		$('#buttonAddLayer').bind( 'click', this.addLayer.bind(this) );
-		$('#buttonRemoveLayer').bind( 'click', this.deleteLayerDialog.open.bind(this.deleteLayerDialog) );
-		$('#buttonSaveLayerSettings').bind( 'click', this.saveLayerSettings.bind(this) );
-		$('#reloadImages').bind( 'click', ig.Image.reloadCache );
-		$('#layerIsCollision').bind( 'change', this.toggleCollisionLayer.bind(this) );
-		
+
 		$('input#toggleSidebar').click(function() {
 			$('div#menu').slideToggle('fast');
 			$('input#toggleSidebar').toggleClass('active');
@@ -113,15 +86,10 @@ wm.Weltmeister = ig.Class.extend({
 		
 		
 		this.undo = new wm.Undo( wm.config.undoLevels );
-		
-		
-		if( wm.config.loadLastLevel ) {
-			var path = $.cookie('wmLastLevel');
-			if( path ) {
-				this.load( null, path )
-			}
-		}
-		
+
+
+		this.load();
+
 		ig.setAnimation( this.drawIfNeeded.bind(this) );
 	},
 		
@@ -148,53 +116,17 @@ wm.Weltmeister = ig.Class.extend({
 		}
 	},
 	
-	
-	showLoadDialog: function() {
-		if( this.modified ) {
-			this.loseChangesDialog.onOk = this.loadDialog.open.bind(this.loadDialog);
-			this.loseChangesDialog.open();
-		} else {
-			this.loadDialog.open();
-		}
-	},
-	
-	showNewDialog: function() {
-		if( this.modified ) {
-			this.loseChangesDialog.onOk = this.loadNew.bind(this);
-			this.loseChangesDialog.open();
-		} else {
-			this.loadNew();
-		}
-	},
-	
 	setModified: function() {
 		if( !this.modified ) {
 			this.modified = true;
-			this.setWindowTitle();
+
+			this.save();
 		}
 	},
 	
 	resetModified: function() {
 		this.modified = false;
-		this.setWindowTitle();
 	},
-	
-	setWindowTitle: function() {
-		document.title = this.fileName + (this.modified ? ' * ' : ' - ') + 'Weltmeister';
-		$('span.headerTitle').text(this.fileName);
-		$('span.unsavedTitle').text(this.modified ? '*' : '');
-	},
-	
-	
-	confirmClose: function( event ) {
-		var rv = undefined;
-		if( this.modified && wm.config.askBeforeClose ) {
-			rv = 'There are some unsaved changes. Leave anyway?';
-		}
-		event.returnValue = rv;
-		return rv;
-	},
-	
 	
 	resize: function() {
 		ig.system.resize(
@@ -255,44 +187,14 @@ wm.Weltmeister = ig.Class.extend({
 	
 	// -------------------------------------------------------------------------
 	// Loading
-	
-	loadNew: function() {
-		$.cookie( 'wmLastLevel', null );
-		while( this.layers.length ) {
-			this.layers[0].destroy();
-			this.layers.splice( 0, 1 );
-		}
-		this.screen = {x: 0, y: 0};
-		this.fileName = 'untitled.js';
-		this.filePath = wm.config.project.levelPath + 'untitled.js';
-		this.saveDialog.setPath( this.filePath );
-		this.resetModified();
-		this.draw();
-	},
-	
-	
 	load: function( dialog, path ) {
-		this.filePath = path;
-		this.saveDialog.setPath( path );
-		this.fileName = path.replace(/^.*\//,'');
-		
-		var req = $.ajax({
-			url:( path + '?nocache=' + Math.random() ), 
-			dataType: 'text',
-			async:false,
-			success: this.loadResponse.bind(this),
-			error: function() { $.cookie( 'wmLastLevel', null ); }
-		});
+
+		var data = {"layer":[{"name":"new_layer_0","width":30,"height":20,"linkWithCollision":false,"visible":1,"tilesetName":"Tileset.png","repeat":false,"preRender":false,"distance":1,"tilesize":100,"foreground":true,"data":[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,23,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,25,25,25,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,25,25,25,25,25,25,25,25,25,25,25,0,0,0,0,0,0,0,0],[0,0,2,2,2,2,2,2,2,10,11,12,0,0,0,0,0,0,0,0,18,17,16,2,2,2,2,2,0,0],[0,0,5,5,5,5,5,5,5,13,14,15,8,8,8,8,8,8,8,8,21,20,19,5,5,5,5,5,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]},{"name":"collision","width":30,"height":20,"linkWithCollision":false,"visible":0,"tilesetName":"","repeat":false,"preRender":false,"distance":1,"tilesize":100,"foreground":true,"data":[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,1,1,1,1,1,1,1,27,28,29,0,0,0,0,0,0,0,0,5,6,7,1,1,1,1,1,0,0],[0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]}]};
+		this.loadResponse(data);
 	},
 	
 	
 	loadResponse: function( data ) {
-		$.cookie( 'wmLastLevel', this.filePath );
-		
-		// extract JSON from a module's JS
-		var jsonMatch = data.match( /\/\*JSON\[\*\/([\s\S]*?)\/\*\]JSON\*\// );
-		data = JSON.parse( jsonMatch ? jsonMatch[1] : data );
-		
 		while( this.layers.length ) {
 			this.layers[0].destroy();
 			this.layers.splice( 0, 1 );
@@ -304,10 +206,7 @@ wm.Weltmeister = ig.Class.extend({
 			var newLayer = new wm.EditMap( ld.name, ld.tilesize, ld.tilesetName, !!ld.foreground );
 			newLayer.resize( ld.width, ld.height );
 			newLayer.linkWithCollision = ld.linkWithCollision;
-			newLayer.repeat = ld.repeat;
-			newLayer.preRender = !!ld.preRender;
-			newLayer.distance = ld.distance;
-			newLayer.visible = !ld.visible;
+			newLayer.visible = false;
 			newLayer.data = ld.data;
 			newLayer.toggleVisibility();
 			this.layers.push( newLayer );
@@ -331,23 +230,8 @@ wm.Weltmeister = ig.Class.extend({
 	
 	// -------------------------------------------------------------------------
 	// Saving
-	
-	saveQuick: function() {
-		if( this.fileName == 'untitled.js' ) {
-			this.saveDialog.open();
-		}
-		else {
-			this.save( null, this.filePath );
-		}
-	},
-	
 	save: function( dialog, path ) {
-		if( !path.match(/\.js$/) ) {
-			path += '.js';
-		}
-		
-		this.filePath = path;
-		this.fileName = path.replace(/^.*\//,'');
+
 		var data = {
 			'layer': []
 		};
@@ -363,22 +247,8 @@ wm.Weltmeister = ig.Class.extend({
 		
 		
 		var dataString = JSON.stringify(data);
-		if( wm.config.project.prettyPrint ) {
-			dataString = JSONFormat( dataString );
-		}
-		
-		var postString =
-			'path=' + encodeURIComponent( path ) +
-			'&data=' + encodeURIComponent(dataString);
-		
-		var req = $.ajax({
-			url: wm.config.api.save,
-			type: 'POST',
-			dataType: 'json',
-			async: false,
-			data: postString,
-			success:this.saveResponse.bind(this)
-		});
+
+		console.log(dataString);
 	},
 	
 	saveResponse: function( data ) {
@@ -394,38 +264,6 @@ wm.Weltmeister = ig.Class.extend({
 	
 	// -------------------------------------------------------------------------
 	// Layers
-	
-	addLayer: function() {
-		var name = 'new_layer_' + this.layers.length;
-		var newLayer = new wm.EditMap( name, wm.config.layerDefaults.tilesize );
-		newLayer.resize( wm.config.layerDefaults.width, wm.config.layerDefaults.height );
-		newLayer.setScreenPos( this.screen.x, this.screen.y );
-		this.layers.push( newLayer );
-		this.setActiveLayer( name );
-		this.updateLayerSettings();
-		
-		this.reorderLayers();
-		
-		$('#layers').sortable('refresh');
-	},
-	
-	
-	removeLayer: function() {
-		var name = this.activeLayer.name;
-
-		this.activeLayer.destroy();
-		for( var i = 0; i < this.layers.length; i++ ) {
-			if( this.layers[i].name == name ) {
-				this.layers.splice( i, 1 );
-				this.reorderLayers();
-				$('#layers').sortable('refresh');
-				return true;
-			}
-		}
-		return false;
-	},
-	
-	
 	getLayerWithName: function( name ) {
 		for( var i = 0; i < this.layers.length; i++ ) {
 			if( this.layers[i].name == name ) {
@@ -457,64 +295,8 @@ wm.Weltmeister = ig.Class.extend({
 	
 	
 	updateLayerSettings: function( ) {
-		$('#layerName').val( this.activeLayer.name );
-		$('#layerTileset').val( this.activeLayer.tilesetName );
-		$('#layerTilesize').val( this.activeLayer.tilesize );
-		$('#layerWidth').val( this.activeLayer.width );
-		$('#layerHeight').val( this.activeLayer.height );
-		$('#layerPreRender').prop( 'checked', this.activeLayer.preRender );
-		$('#layerRepeat').prop( 'checked', this.activeLayer.repeat );
 		$('#layerLinkWithCollision').prop( 'checked', this.activeLayer.linkWithCollision );
-		$('#layerDistance').val( this.activeLayer.distance );
 	},
-	
-	
-	saveLayerSettings: function() {
-		var isCollision = $('#layerIsCollision').prop('checked');
-		
-		var newName = $('#layerName').val();
-		var newWidth = Math.floor($('#layerWidth').val());
-		var newHeight = Math.floor($('#layerHeight').val());
-		
-		if( newWidth != this.activeLayer.width || newHeight != this.activeLayer.height ) {
-			this.activeLayer.resize( newWidth, newHeight );
-		}
-		this.activeLayer.tilesize = Math.floor($('#layerTilesize').val());
-		
-		if( isCollision ) {
-			newName = 'collision';
-			this.activeLayer.linkWithCollision = false;
-			this.activeLayer.distance = 1;
-			this.activeLayer.repeat = false;
-			this.activeLayer.setCollisionTileset();
-		}
-		else {
-			var newTilesetName = $('#layerTileset').val();
-			if( newTilesetName != this.activeLayer.tilesetName ) {
-				this.activeLayer.setTileset( newTilesetName );
-			}
-			this.activeLayer.linkWithCollision = $('#layerLinkWithCollision').prop('checked');
-			this.activeLayer.distance = $('#layerDistance').val();
-			this.activeLayer.repeat = $('#layerRepeat').prop('checked');
-			this.activeLayer.preRender = $('#layerPreRender').prop('checked');
-		}
-		
-		
-		if( newName == 'collision' ) {
-			// is collision layer
-			this.collisionLayer = this.activeLayer;
-		} 
-		else if( this.activeLayer.name == 'collision' ) {
-			// was collision layer, but is no more
-			this.collisionLayer = null;
-		}
-		
-
-		this.activeLayer.setName( newName );
-		this.setModified();
-		this.draw();
-	},
-	
 	
 	setActiveLayer: function( name ) {
 		var previousLayer = this.activeLayer;
@@ -529,9 +311,6 @@ wm.Weltmeister = ig.Class.extend({
 		this.activeLayer.setActive( true );
 		this.mode = this.MODE.DEFAULT;
 		
-		$('#layerIsCollision').prop('checked', (name == 'collision') );
-		
-		this.toggleCollisionLayer();
 		$('#layerSettings')
 			.fadeOut(100,this.updateLayerSettings.bind(this))
 			.fadeIn(100);
@@ -539,15 +318,7 @@ wm.Weltmeister = ig.Class.extend({
 		this.draw();
 	},
 	
-	
-	toggleCollisionLayer: function( ev ) {
-		var isCollision = $('#layerIsCollision').prop('checked');
-		$('#layerLinkWithCollision,#layerDistance,#layerPreRender,#layerRepeat,#layerName,#layerTileset')
-			.attr('disabled', isCollision );
-	},
-	
-	
-	
+
 	// -------------------------------------------------------------------------
 	// Update
 	
@@ -620,7 +391,7 @@ wm.Weltmeister = ig.Class.extend({
 		}
 		
 		else if( action == 'menu' ) {
-			if( this.mode != this.MODE.TILESELECT && this.mode != this.MODE.ENTITYSELECT ) {
+			if( this.mode != this.MODE.TILESELECT ) {
 				this.mode = this.MODE.TILESELECT;
 				this.activeLayer.tileSelect.setPosition( ig.input.mouse.x, ig.input.mouse.y	);
 			} else {

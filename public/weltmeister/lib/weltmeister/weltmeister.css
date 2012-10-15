@@ -104,17 +104,7 @@ input.button:active {
 	background-color: rgba(255,255,255,0.3);
 }
 
-input.text#layerName {
-	width:140px;
-}
-
-input.text#layerTileset {
-	width:138px;
-}
-
 input#levelSaveAs { margin-right: 10px; }
-input#levelLoad { margin-right: 10px; }
-input#reloadImages {margin-right: 10px;}
 
 input:disabled {
 	background-color: #555;
@@ -152,23 +142,6 @@ input:disabled {
 	max-height: 200px;
 	overflow: auto;
 }
-
-#layerButtons div.button#buttonAddLayer {
-	position:absolute;
-	right: 0px;
-	top:-5px;
-	cursor: pointer;
-	padding: 10px;
-	color:rgba(255,255,255,0.5);
-	font-weight: bold;
-	font-size:110%;
-	margin-left:1px;
-	-webkit-transition: 0.1s linear;
-	-webkit-font-smoothing: none;
-	z-index:10;
-}
-#layerButtons div.button#buttonAddLayer:hover { color:rgba(255,255,255,1);}
-#layerButtons div.button#buttonAddLayer:active { color:rgba(255,255,255,1); text-shadow:none;}
 
 .layer {
 	padding: 6px 4px;
@@ -229,92 +202,6 @@ h3#entityClass {
 	border-bottom: 1px solid rgba(255,255,255,0.2);
 	padding: 5px;
 	padding-left: 10px;
-}
-
-#entitySettings {
-	background-color: rgba(0,0,0,0.95);
-	margin-top: 1px;
-	display: none;
-}
-
-#entityDefinitions {
-	max-height: 220px;
-	overflow: auto;
-}
-
-div.entityDefinition {
-	color: #aaa;
-	padding: 2px 0;
-	border-bottom: 1px solid rgba(255,255,255,0.2);
-	cursor: pointer;
-}
-
-div.entityDefinition:hover {
-	background-color: rgba(255,255,255,0.1);
-}
-
-div.entityDefinition .key {
-	width: 50%;
-	display: block;
-	float: left;
-	margin: 0 0px 0 0;
-	padding: 0;
-	text-align: right;
-	color: #fff;
-	overflow: hidden;
-}
-
-div.entityDefinition .value {
-	padding: 0 0 0 2px;
-	color: #fff;
-}
-
-dl#entityDefinitionInput {
-	padding: 8px 0;
-}
-
-dl#entityDefinitionInput dt {
-	width: 40px;
-	display: block;
-	float: left;
-	margin: 0 4px 0 0;
-	padding: 4px 0 0 0;
-	text-align: right;
-}
-
-dl#entityDefinitionInput dd {
-	display: block;
-	margin: 0;
-	padding: 2px 0;
-}
-
-#entityKey, #entityValue {
-}
-
-#entityMenu {
-	background-color: rgba(0,0,0,0.9);
-	display: none;
-	position: absolute;
-	min-width: 100px;
-	max-height:300px;
-	overflow-y: scroll;
-	z-index: 1000;
-}
-
-#entityMenu div {
-	padding: 3px;
-	padding-left: 8px;
-	color: #fff;
-	cursor: pointer;
-	border-top: 1px solid rgba(255,255,255,0);
-	border-bottom: 1px solid rgba(255,255,255,0);
-	-webkit-transition: 0.1s linear;
-}
-
-#entityMenu div:hover {
-	background-color: rgba(255,255,255,0.2);
-	border-top: 1px solid rgba(255,255,255,0.2);
-	border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
 /* --- Dialogs ------------------------------------------------------------------ */
@@ -406,25 +293,6 @@ input.modalDialogPath:focus {
 	background: -webkit-gradient(linear, left bottom, left top, color-stop(0,#000000), color-stop(1,#2e3033));
 	background: -moz-linear-gradient(center bottom, #000000 0%, #2e3033 100%);
 	background: -o-linear-gradient(#2e3033, #000000);
-}
-
-#headerMenu span.headerTitle {
-	display:inline-block;
-	font-weight:bold;
-	font-size:200%;
-	padding-left:20px;
-	padding-top:7px;
-	color:rgba(0,0,0,0.1);
-	text-shadow:0px -1px 0px rgba(255,255,255,0.4);
-}
-
-#headerMenu span.unsavedTitle {
-	display:inline-block;
-	font-weight:bold;
-	font-size:240%;
-	padding-left:0px;
-	color:#cc0000;
-	text-shadow:0px 1px 1px rgba(0,0,0,0.1);
 }
 
 #headerMenu span.headerFloat {
