@@ -17,6 +17,7 @@ Ext.define('Spelled.view.asset.create.2dTileMap', {
 				},
 				{
 					xtype: "assetidproperty",
+					name: 'tileMapAssetId',
 					queryMode: 'remote',
 					store: store,
 					allowBlank: true,

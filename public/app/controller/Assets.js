@@ -396,17 +396,15 @@ Ext.define('Spelled.controller.Assets', {
 				if( !!asset ) {
 					var config = asset.get('config')
 
-
 					form.getForm().setValues(
 						{
-							assetId: asset.get('assetId'),
+							tileMapAssetId: asset.get('assetId'),
 							width : config.width,
 							height: config.height
 						}
 					)
 
 					this.updateTilemapEditorData( form, asset )
-
 				}
 
 				assetsCombo.show()
@@ -724,7 +722,7 @@ Ext.define('Spelled.controller.Assets', {
 				config.length = parseInt( values.length )
 				break
 			case '2dTileMap':
-				asset.set( 'assetId', values.assetId )
+				asset.set( 'assetId', values.tileMapAssetId )
 				Ext.copyTo( config, values, 'width,height' )
 				config.tileLayerData = asset.get("tileLayerData")
 			// 	config.collisionLayerData = asset.get("collisionLayerData")
