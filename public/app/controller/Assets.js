@@ -392,7 +392,6 @@ Ext.define('Spelled.controller.Assets', {
 
 				break
 			case "2dTileMap":
-				tileMapConfig.show()
 
 				if( !!asset ) {
 					var config = asset.get('config')
@@ -400,7 +399,7 @@ Ext.define('Spelled.controller.Assets', {
 
 					form.getForm().setValues(
 						{
-							assetId: config.assetId,
+							assetId: asset.get('assetId'),
 							width : config.width,
 							height: config.height
 						}
@@ -409,6 +408,9 @@ Ext.define('Spelled.controller.Assets', {
 					this.updateTilemapEditorData( form, asset )
 
 				}
+
+				assetsCombo.show()
+				tileMapConfig.show()
 				break
 			default:
 				fileUpload.show()
