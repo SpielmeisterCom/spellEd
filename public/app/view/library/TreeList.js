@@ -57,12 +57,12 @@ Ext.define('Spelled.view.library.TreeList' ,{
 //								type: 'domvas',
 //								icon: 'images/icons/asset-2dstatic.png'
 //							},
-							{
+							/*{
 								text: "2d tile map",
 								action: "showCreateAsset",
 								type: '2dTileMap',
 								icon: 'images/icons/asset-2dtilemap.gif'
-							},
+							},*/
 							{
 								text: "Font",
 								action: "showCreateAsset",

@@ -417,17 +417,33 @@ Ext.define('Spelled.controller.Assets', {
 
 	updateTilemapEditorData: function ( form, asset ) {
 		var config = asset.get('config'),
-			tilemapEditorIframe = form.down('tilemapeditoriframe')
+			tilemapEditorIframe = form.down('tilemapeditoriframe'),
+			assetsStore = this.getAssetAssetsStore(),
+			spriteSheetFullName = asset.get('assetId'),
+			spriteSheetAsset = null
 
-		//load data in the tilemap editor iframe
-		this.assetMessageBus.send(
-			tilemapEditorIframe.getId(),
-			{
-				type : "wm.load",
-				payload: config
-			}
-		)
 
+		var index = assetsStore.findBy( function( record ) {
+			return ( 'spriteSheet:' + record.getFullName() === spriteSheetFullName )
+		})
+
+		if( index > -1 ) {
+			spriteSheetAsset = assetsStore.getAt( index )
+
+			var wmConfig = Ext.copyTo({}, spriteSheetAsset.get('config'), 'frameHeight,frameWidth')
+			Ext.copyTo(wmConfig, config, 'width,height,tileLayerData')
+
+			wmConfig.path = spriteSheetAsset.getFilePath( this.application.getActiveProject().get( 'name' ) )
+
+			//load data in the tilemap editor iframe
+			this.assetMessageBus.send(
+				tilemapEditorIframe.getId(),
+				{
+					type : "wm.load",
+					payload: wmConfig
+				}
+			)
+		}
 	},
 
 	renderKeyFrameAnimationComponentsTree: function( view ) {

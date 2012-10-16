@@ -219,7 +219,7 @@ wm.Weltmeister = ig.Class.extend({
 
 				var newvar = null;
 
-				if (data[x] === undefined || data[x][y] === undefined || data[x][y] == -1) {
+				if (data[x] === undefined || data[x][y] === undefined || data[x][y] === null) {
 					newvar = 0;
 				} else {
 					newvar = data[x][y] + 1;
@@ -268,9 +268,8 @@ wm.Weltmeister = ig.Class.extend({
 		this.collisionLayer = newLayer;
 		this.setActiveLayer( 'collision' );
 */
-
 		//create tile layer
-		var newLayer = new wm.EditMap( 'tilemap', this.getTileSize(), this.getTileSetName(), true );
+		var newLayer = new wm.EditMap( 'tilemap', parseInt(data.frameWidth, 10), '../' + data.path, true );
 		newLayer.resize( data.width, data.height );
 		newLayer.data = tileLayerData;
 		//newLayer.linkWith Collision = true;

@@ -54,7 +54,7 @@ wm.EditMap = ig.BackgroundMap.extend({
 				var newvar = null;
 
 				if (this.data[x][y] == 0) {
-					newvar = -1;
+					newvar = null;
 				} else {
 					newvar = this.data[x][y] - 1;
 				}
