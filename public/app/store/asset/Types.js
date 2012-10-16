@@ -54,7 +54,7 @@ Ext.define('Spelled.store.asset.Types', {
 		},
 		{
 			"type":"2dTileMap",
-			"name":"2d tile map",
+			"name":"2d Tilemap",
 			"iconCls": "tree-asset-2dtilemap-icon",
 			"sortOrder": 80
 		}

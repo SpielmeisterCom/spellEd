@@ -63,6 +63,10 @@ Ext.define('Spelled.store.template.component.AttributeTypes', {
 		{
 			"type":"spelledkeyframeanimationfield",
 			"name":"assetId:keyFrameAnimation"
-		}
+		},
+		{
+			"type":"spelledtilemapfield",
+			"name":"assetId:2dTileMap"
+		},
 	]
 });

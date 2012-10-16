@@ -1,7 +1,6 @@
-/**
- * Created with JetBrains PhpStorm.
- * User: julian
- * Date: 10/16/12
- * Time: 6:00 PM
- * To change this template use File | Settings | File Templates.
- */
+Ext.define('Spelled.view.template.component.attribute.TileMap', {
+	extend: 'Spelled.view.component.property.AssetId',
+	alias : 'widget.spelledtilemapfield',
+
+	store: 'asset.TileMaps'
+});
