@@ -722,8 +722,8 @@ Ext.define('Spelled.controller.Assets', {
 				config.length = parseInt( values.length )
 				break
 			case '2dTileMap':
+				asset.set( 'assetId', values.assetId )
 				Ext.copyTo( config, values, 'width,height' )
-				//asset.set( 'assetId', values.assetId )
 				config.tileLayerData = asset.get("tileLayerData")
 			// 	config.collisionLayerData = asset.get("collisionLayerData")
 				break
@@ -849,7 +849,7 @@ Ext.define('Spelled.controller.Assets', {
 				html: 'Animation preview is not available.'
 			}
 
-		if( subtype !== 'keyToActionMap' && subtype !== 'font' && subtype !== 'keyFrameAnimation' ) {
+		if( subtype !== 'keyToActionMap' && subtype !== 'font' && subtype !== 'keyFrameAnimation' && subtype !== '2dTileMap') {
 			var preview = Ext.widget( 'assetiframe', {
 				autoEl: ( subtype === 'animation' ) ? errorTag : iframe
 			} )
