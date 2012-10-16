@@ -85,7 +85,6 @@ wm.Weltmeister = ig.Class.extend({
 
 		var me = this;
 
-		$('#focus').bind( 'click', function() { window.focus(); } );
 		$('#zoomIn').bind( 'click', function() { me.keyup('zoomin') } );
 		$('#zoomOut').bind( 'click', function() { me.keyup('zoomout') } );
 
