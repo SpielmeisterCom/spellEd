@@ -16,11 +16,13 @@ Ext.define('Spelled.data.reader.Project', {
 			result.records,
 			function( record ) {
 				record.getScenes().removeAll()
+				var scenes = []
 
-				var scenes = Ext.Array.map(
+				Ext.Array.each(
 					record.raw.scenes,
 					function( sceneId ) {
-						return Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', sceneId )
+						var scene = Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', sceneId )
+						if( scene ) scenes.push( scene )
 					}
 				)
 
