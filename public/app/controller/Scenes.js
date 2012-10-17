@@ -611,6 +611,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		content.id = this.application.generateFileIdFromObject( content ) + '.json'
 		var scene = new Model( content )
+		scene.set( 'content', this.createInitialSceneScriptContent( scene ) )
 
 		store.add( scene )
 		project.getScenes().add( scene )
@@ -801,5 +802,13 @@ Ext.define('Spelled.controller.Scenes', {
 				node.set( 'iconCls', 'tree-default-scene-icon' )
 			}
 		},this)
+	},
+
+	createInitialSceneScriptContent: function( scene ) {
+		var parts = [
+			"return "
+		]
+
+		return this.application.getController( 'Scripts' ).createModuleHeader( scene.getFullName(), parts.join( '\n\t\t' ) )
 	}
 });
