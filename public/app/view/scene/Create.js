@@ -19,7 +19,14 @@ Ext.define('Spelled.view.scene.Create' ,{
 					vtype: 'alphanum',
                     anchor: '100%',
                     allowBlank:false
-                }
+                },
+				{
+					xtype: "libraryfolderpicker",
+					name: 'namespace',
+					fieldLabel: 'Namespace',
+					displayField: 'text',
+					valueField: 'id'
+				}
             ],
             buttons: [
                 {

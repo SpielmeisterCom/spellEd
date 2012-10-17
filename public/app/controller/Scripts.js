@@ -98,27 +98,7 @@ Ext.define('Spelled.controller.Scripts', {
 		this.application.fireEvent( 'globalsave' )
 	},
 
-	openSceneScript: function(  ) {
-		var sceneScriptView = this.getRightPanel().down( 'scenescript' )
-
-		if( sceneScriptView ) {
-			var scriptId = sceneScriptView.down( 'combo' ).getValue(),
-				script   = this.getScriptScriptsStore().findRecord( 'scriptId', scriptId ),
-				tree     = this.getScriptsTree(),
-				node     = tree.getRootNode().findChild( 'id', script.getId(), true )
-
-			this.getNavigator().setActiveTab( this.getLibrary() )
-
-			if( node ) {
-				tree.expandPath( node.getPath() )
-				tree.getSelectionModel().select( node )
-			}
-
-			this.openScript( script.getId() )
-		}
-	},
-
-	saveScriptInPanel: function( panel ) {
+		saveScriptInPanel: function( panel ) {
 		var model = panel.model
 		if( model.dirty ) model.save()
 	},

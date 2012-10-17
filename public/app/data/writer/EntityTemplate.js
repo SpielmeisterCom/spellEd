@@ -1,20 +1,9 @@
 Ext.define('Spelled.data.writer.EntityTemplate', {
-    extend: 'Ext.data.writer.Json',
+    extend: 'Spelled.data.writer.Writer',
 	alias: 'writer.entityTemplate',
 
 	write: function( request ) {
-		var operation = request.operation,
-			records   = operation.records || [],
-			len       = records.length,
-			i         = 0,
-			data      = []
-
-		for (; i < len; i++) {
-			var record = this.getRecordData( records[i], operation ),
-				entity = Ext.amdModules.entityTemplateConverter.toEngineFormat( record )
-
-			data.push( { id: record.id, content: entity } )
-		}
+		var data = this.convertRequest( request,  Ext.amdModules.entityTemplateConverter.toEngineFormat )
 
 		return this.writeRecords( request, data )
 	}

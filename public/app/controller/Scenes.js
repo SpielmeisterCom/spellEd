@@ -247,9 +247,6 @@ Ext.define('Spelled.controller.Scenes', {
 			'scenesnavigator': {
 				activate: me.showScenesEditor
 			},
-			'scenescript combobox[name="scriptId"]' : {
-				select: this.setSceneScript
-			},
 			'scripteditor': {
 				reloadscene: this.reloadSceneKeyEvent,
 				toggle: this.renderedSceneToggleButton,
@@ -260,6 +257,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		this.application.on({
 			clearstores: this.clearScenesStore,
+			scenescriptbeforeclose: this.checkIfSceneScriptIsDirty,
 			reloadscene: this.reloadSceneKeyEvent,
 			scenetabchange: this.showScenesEditor,
 			systemchange: this.sendSystemChangeToEngine,
@@ -358,7 +356,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		switch( this.getClickedTreeItemType( record ) ) {
 			case this.TREE_ITEM_TYPE_SCRIPT:
-				this.application.fireEvent( 'openscenescript' )
+				this.openSceneScript()
 				break
 			case this.TREE_ITEM_TYPE_SYSTEM_ITEM:
 				this.application.fireEvent( 'showSystemItem', treePanel, record )
@@ -384,6 +382,41 @@ Ext.define('Spelled.controller.Scenes', {
 
 		if( sceneTab && !sceneEditor.isHidden() )
 			this.activateFullscreen( sceneTab.down( 'button' ) )
+	},
+
+	openSceneScript: function(){
+		var sceneEditor = this.getSceneEditor(),
+			scene       = this.application.getActiveScene(),
+			title       = scene.getFullName(),
+			foundTab    = this.application.findActiveTabByTitle( sceneEditor, title )
+
+		if( foundTab )
+			return foundTab
+
+		var view = Ext.widget( 'scenescriptedit', {
+			title: title,
+			model: scene
+		} )
+
+		this.application.createTab( sceneEditor, view )
+	},
+
+	checkIfSceneScriptIsDirty: function( panel ) {
+		var scene = panel.model
+
+		if( scene.dirty ) {
+			var callback = function( button ) {
+				if ( button === 'yes') {
+					scene.revertScript()
+					panel.destroy()
+				}
+			}
+
+			this.application.dirtySaveAlert( null, callback )
+			return false
+		} else {
+			panel.destroy()
+		}
 	},
 
 	reloadSceneKeyEvent: function( keyCode, e ) {
@@ -416,10 +449,10 @@ Ext.define('Spelled.controller.Scenes', {
 		var project = this.application.getActiveProject(),
 			tree    = this.getScenesTree()
 
-		project.set( 'startScene', scene.get( 'name' ) )
+		project.set( 'startScene', scene.getFullName() )
 
 		tree.getRootNode().eachChild( function( child ) {
-			if( child.getId() === scene.get( 'name' ) ) {
+			if( child.getId() === scene.getId() ) {
 				child.set( 'iconCls', "tree-default-scene-icon" )
 			} else {
 				child.set( 'iconCls', "tree-scene-icon" )
@@ -533,28 +566,9 @@ Ext.define('Spelled.controller.Scenes', {
 				var scene = this.getConfigScenesStore().getById( record.parentNode.getId() )
 				if( scene ) {
 					this.application.setActiveScene( scene )
-					this.refreshSceneScriptCombobox( scene )
 				}
 				break
 		}
-	},
-
-	refreshSceneScriptCombobox: function( scene ) {
-		var contentPanel = this.getRightPanel(),
-			View = this.getSceneScriptView(),
-			view = new View(),
-			combobox = view.down( 'combobox' )
-
-		combobox.select( scene.get('scriptId') )
-
-		contentPanel.add( view )
-	},
-
-	setSceneScript: function( combo, records ) {
-		var scene = this.application.getActiveScene()
-
-		scene.set('scriptId', combo.getValue())
-		scene.setDirty()
 	},
 
 	showScenesEditor: function() {
@@ -590,7 +604,13 @@ Ext.define('Spelled.controller.Scenes', {
 		var project = this.application.getActiveProject(),
 			Model   = this.getConfigSceneModel(),
 			store   = this.getConfigScenesStore(),
-			scene   = new Model( values )
+			content = {
+				name: values.name,
+				namespace: ( values.namespace === 'root' ) ? '' : values.namespace.substring( 5 )
+			}
+
+		content.id = this.application.generateFileIdFromObject( content ) + '.json'
+		var scene = new Model( content )
 
 		store.add( scene )
 		project.getScenes().add( scene )
@@ -598,6 +618,8 @@ Ext.define('Spelled.controller.Scenes', {
 		this.initScene( scene )
 
 		scene.appendOnTreeNode( this.getScenesTree().getRootNode() )
+		scene.save()
+
 		return scene
 	},
 
@@ -633,7 +655,7 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	reloadScene: function( button ) {
-		var panel   = button.up( 'renderedscene' ),
+		var panel   = button.up( 'panel' ),
 			project = this.application.getActiveProject(),
 			iframe  = panel.down( 'spellediframe' ),
 			sceneId = iframe.sceneId
@@ -644,14 +666,11 @@ Ext.define('Spelled.controller.Scenes', {
 			'spellediframe',
 			{
 				projectName : project.get('name'),
-				sceneId : sceneId,
-				hidden: true
+				sceneId : sceneId
 			}
 		)
 
 		panel.add( newIframe )
-
-		if( !this.getProgressBar() ) panel.add( { xtype: 'spellprogressbar'} )
 
 		this.engineMessageBus.send(
 			newIframe.getId(),
@@ -660,18 +679,6 @@ Ext.define('Spelled.controller.Scenes', {
 				payload : Ext.amdModules.createProjectInEngineFormat( project )
 			}
 		)
-	},
-
-	updateRenderProgress: function( value ) {
-		var progressBar = this.getProgressBar(),
-			panel       = progressBar.up( 'renderedscene' )
-
-		progressBar.updateProgress( value )
-
-		if( value === 1 && panel ){
-			panel.remove( progressBar )
-			panel.down( 'spellediframe').show()
-		}
 	},
 
 	toggleGrid: function( button, state ) {
@@ -708,10 +715,11 @@ Ext.define('Spelled.controller.Scenes', {
 		)
 	},
 
-	activateFullscreen: function( button ) {
+	activateFullscreen: function( button, state ) {
 		var tab      = button.up( 'renderedscene').down( 'spellediframe'),
 			dom      = tab.el.dom,
 			prefixes = ["moz", "webkit", "ms", "o", ""],
+			docEl    = document.documentElement,
 			fullScreenFunctionAvailable = false
 
 		Ext.each(prefixes, function( prefix ) {
@@ -785,11 +793,11 @@ Ext.define('Spelled.controller.Scenes', {
 		rootNode.removeAll()
 
 		scenes.each( function( scene ) {
-			var node        = scene.appendOnTreeNode( rootNode )
+			var node = scene.appendOnTreeNode( rootNode )
 
 			this.application.getController('Systems').refreshSceneSystemList( scene )
 
-			if( project.get( 'startScene' ) == scene.getId() ) {
+			if( project.get( 'startScene' ) == scene.getFullName() ) {
 				node.set( 'iconCls', 'tree-default-scene-icon' )
 			}
 		},this)

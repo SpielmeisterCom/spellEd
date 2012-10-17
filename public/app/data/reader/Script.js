@@ -1,4 +1,4 @@
 Ext.define('Spelled.data.reader.Script', {
-    extend: 'Ext.data.reader.Json',
+    extend: 'Spelled.data.reader.Reader',
 	alias: 'reader.script'
 });

@@ -1,20 +1,15 @@
 Ext.define('Spelled.data.writer.Script', {
-    extend: 'Ext.data.writer.Json',
+    extend: 'Spelled.data.writer.Writer',
 	alias: 'writer.script',
 
 	write: function( request ) {
-		var operation = request.operation,
-			records   = operation.records || [],
-			self      = this
+		var records = request.operation.records || [],
+			data    = this.convertRequest( request,  Ext.amdModules.scriptConverter.toEngineFormat )
 
-		var data = _.map(
+		_.each(
 			records,
 			function( record ) {
-				var script = Ext.copyTo({}, self.getRecordData( record, operation ), 'version,type')
-
 				Spelled.StorageActions.update( { id: record.get('path'), content: record.get( 'content' ) } )
-
-				return { id: record.getId(), content: script }
 			}
 		)
 

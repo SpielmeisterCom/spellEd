@@ -1,30 +1,31 @@
 Ext.define('Spelled.data.reader.Project', {
-    extend: 'Ext.data.reader.Json',
+    extend: 'Spelled.data.reader.Reader',
 	alias: 'reader.project',
 
 	read: function( response ) {
-		var data
+		var result = this.convertResponse( response, Ext.amdModules.projectConverter.toEditorFormat )
 
-		if( Ext.isArray( response ) ) {
-			var tmpResponse = []
-			Ext.Array.each(
-				response,
-				function( item ) {
-					tmpResponse.push( Ext.amdModules.projectConverter.toEditorFormat( item, { omitScenes: true } ) )
-				},
-				this
-			)
+		if( !Ext.isArray(response) ) this.convertProjectScenes( result )
 
-			data = this.readRecords( tmpResponse)
+		return result
+	},
 
-		} else {
-			response = Ext.amdModules.projectConverter.toEditorFormat( response )
+	convertProjectScenes: function( result ) {
 
-			if (response) {
-				data = response.responseText ? this.getResponseData(response) : this.readRecords(response);
+		Ext.Array.each(
+			result.records,
+			function( record ) {
+				record.getScenes().removeAll()
+
+				var scenes = Ext.Array.map(
+					record.raw.scenes,
+					function( sceneId ) {
+						return Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', sceneId )
+					}
+				)
+
+				record.getScenes().add( scenes )
 			}
-		}
-
-		return data || this.nullResultSet;
+		)
 	}
 });

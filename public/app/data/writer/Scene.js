@@ -1,10 +1,10 @@
-Ext.define('Spelled.data.writer.SystemTemplate', {
+Ext.define('Spelled.data.writer.Scene', {
     extend: 'Spelled.data.writer.Writer',
-	alias: 'writer.systemTemplate',
+	alias: 'writer.scene',
 
 	write: function( request ) {
 		var records = request.operation.records || [],
-			data    = this.convertRequest( request,  Ext.amdModules.systemConverter.toEngineFormat )
+			data    = this.convertRequest( request,  Ext.amdModules.sceneConverter.toEngineFormat )
 
 		_.each(
 			records,

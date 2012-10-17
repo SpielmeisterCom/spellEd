@@ -1,16 +1,23 @@
 Ext.define('Spelled.model.config.Scene', {
     extend: 'Ext.data.Model',
+	requires: [
+		'proxy.direct',
+		'Spelled.data.reader.Scene',
+		'Spelled.data.writer.Scene'
+	],
+	mixins: [ 'Spelled.abstract.model.Model' ],
+
+	iconCls : "tree-scene-icon",
 
     fields: [
+		{ name: 'type', type: 'string', defaultValue: 'scene' },
         'name',
-		{ name: 'scriptId', type: 'string', defaultValue: "spell.scene.default" },
+		'namespace',
 		{ name: 'showGrid', type: 'boolean', defaultValue: false },
 		{ name: 'aspectRatio', type: 'number', defaultValue: 0 },
 		{ name: 'showTitleSafe', type: 'boolean', defaultValue: false },
 		{ name: 'systems', type: 'object', defaultValue: { update: [], render: [ 'spell.system.keyInput', 'spell.system.render' ] } }
     ],
-
-    idProperty: 'name',
 
 	associations: [{
 		model:"Spelled.model.Project",
@@ -24,6 +31,60 @@ Ext.define('Spelled.model.config.Scene', {
         associationKey: 'entities',
         name :  'getEntities'
     },
+
+	proxy: {
+		type: 'direct',
+		extraParams: {
+			type: 'scene'
+		},
+		api: {
+			create:  Spelled.StorageActions.create,
+			read:    Spelled.StorageActions.read,
+			update:  Spelled.StorageActions.update,
+			destroy: Spelled.StorageActions.destroy
+		},
+		reader: 'scene',
+		writer: 'scene'
+	},
+
+	destroy: function( options ) {
+		Spelled.StorageActions.destroy({ id: this.getAccordingJSFileName() } )
+
+		this.callParent( options )
+	},
+
+	getFullName: function() {
+		return this.get( 'sceneId' )
+	},
+
+	listeners: {
+		idchanged: function() {
+			Spelled.StorageActions.read( { id: this.getAccordingJSFileName() },
+				function( result ) {
+					this.data.path = this.getAccordingJSFileName()
+					this.data.content = result
+				},
+				this
+			)
+
+		}
+	},
+
+	revertScript: function() {
+		Spelled.StorageActions.read( { id: this.getAccordingJSFileName() },
+			function( result ) {
+				this.data.content = result
+			},
+			this
+		)
+	},
+
+	constructor: function() {
+		var params = arguments[0] || arguments[2]
+		this.callParent( arguments )
+		this.set( 'sceneId', this.generateIdentifier( params ))
+		this.setId( params.id )
+	},
 
 	setDirty: function() {
 		this.getProject().setDirty()
@@ -40,17 +101,10 @@ Ext.define('Spelled.model.config.Scene', {
 		return "Rendered: Scene"
 	},
 
-    constructor: function() {
-        this.callParent(arguments)
-
-		if( !!this.raw )
-        	Ext.getStore( 'config.Scenes' ).add( this )
-    },
-
 	appendOnTreeNode: function( node ) {
 		var sceneNode = node.appendChild(
 			node.createNode( {
-					text      : 'Scene "' + this.getId() + '"',
+					text      : 'Scene "' + this.getFullName() + '"',
 					id        : this.getId(),
 					iconCls   : "tree-scene-icon",
 					leaf      : false

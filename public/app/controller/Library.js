@@ -10,9 +10,10 @@ Ext.define('Spelled.controller.Library', {
 		'Spelled.store.FoldersTree'
 	],
 
-	TYPE_ASSET    : 1,
-	TYPE_TEMPLATE : 2,
-	TYPE_SCRIPT   : 3,
+	TYPE_ASSET        : 1,
+	TYPE_TEMPLATE     : 2,
+	TYPE_SCRIPT       : 3,
+	TYPE_SCENE_SCRIPT : 4,
 
     views: [
         'library.Navigator',
@@ -116,8 +117,9 @@ Ext.define('Spelled.controller.Library', {
 
 		} else if( type === 'scripteditor' ) {
 			return this.TYPE_SCRIPT
+		} else if( type === 'scenescriptedit' ) {
+			return this.TYPE_SCENE_SCRIPT
 		}
-
 		return type
 	},
 
@@ -134,6 +136,8 @@ Ext.define('Spelled.controller.Library', {
 				break
 			case this.TYPE_SCRIPT:
 				this.application.fireEvent( 'scriptbeforeclose', panel )
+			case this.TYPE_SCENE_SCRIPT:
+				this.application.fireEvent( 'scenescriptbeforeclose', panel )
 				break
 		}
 

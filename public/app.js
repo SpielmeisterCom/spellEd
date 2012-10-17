@@ -10,6 +10,8 @@ require(
 		'spell/editor/createProjectInEngineFormat',
 		'spell/editor/converter/asset',
 		'spell/editor/converter/project',
+		'spell/editor/converter/scene',
+		'spell/editor/converter/script',
 		'spell/editor/converter/component',
 		'spell/editor/converter/system',
 		'spell/editor/converter/entity',
@@ -30,6 +32,8 @@ require(
 		createProjectInEngineFormat,
 		assetConverter,
 		projectConverter,
+		sceneConverter,
+		scriptConverter,
 		componentConverter,
 		systemConverter,
 		entityConverter,
@@ -54,6 +58,8 @@ require(
 			'createProjectInEngineFormat' : createProjectInEngineFormat,
 			'createFontGenerator'         : createFontGenerator,
 			'componentConverter'          : componentConverter,
+			'sceneConverter'              : sceneConverter,
+			'scriptConverter'             : scriptConverter,
 			'systemConverter'             : systemConverter,
 			'entityConverter'             : entityConverter,
 			'entityTemplateConverter'     : entityTemplateConverter,
@@ -98,7 +104,8 @@ var startApplication = function() {
 			'template.Components',
 			'template.Systems',
 			'asset.Assets',
-			'script.Scripts'
+			'script.Scripts',
+			'config.Scenes'
 		],
 
 		refs: [
@@ -248,7 +255,7 @@ var startApplication = function() {
 				'You have unsaved changes',
 				'Do you really want to close this tab?<br/>Your changes will be discarded.',
 				function( button ) {
-					if ( button === 'yes') {
+					if ( button === 'yes' && Ext.isObject( model ) ) {
 						this.fireEvent( 'revertModel', model )
 					}
 

@@ -1,13 +1,9 @@
 define(
 	'spell/editor/converter/project',
 	[
-		'spell/editor/converter/entity',
-
 		'underscore'
 	],
 	function(
-		entityConverter,
-
 		_
 	) {
 		'use strict'
@@ -17,24 +13,14 @@ define(
 		 * This function creates a project in the spell engine format. It requires the project in the editor format as input.
 		 *
 		 * @param {Object} project
-		 * @param {Object} config
 		 */
-		var toEngineFormat = function( project, config ) {
-			var result = _.pick( project, 'version','config', 'startScene', 'scenes', 'assetIds', 'templateIds', 'type' )
+		var toEngineFormat = function( project ) {
+			var result = _.pick( project, 'version', 'config', 'startScene', 'assetIds', 'templateIds', 'type' )
 
 			result.scenes = _.map(
 				project.getScenes,
-				function( sceneEditorFormat ) {
-					var scene = _.pick( sceneEditorFormat, 'name', 'scriptId', 'systems' )
-
-					scene.entities = _.map(
-						sceneEditorFormat.getEntities,
-						function( entityEditorFormat ) {
-							return entityConverter.toEngineFormat( entityEditorFormat, config )
-						}
-					)
-
-					return scene
+				function( scene ) {
+					return ( !scene.namespace ) ? scene.name : scene.namespace + "." + scene.name
 				}
 			)
 
@@ -46,29 +32,8 @@ define(
 		 *
 		 * @param {Object} project
 		 */
-		var toEditorFormat = function( project, config ) {
-			var result     = _.pick( project, 'config', 'name', 'startScene', 'assetIds', 'templateIds', 'id', 'type'),
-				omitScenes = config && config.omitScenes
-
-			if( omitScenes ) return result
-
-			result.scenes = _.map(
-				project.scenes,
-				function( sceneEngineFormat ) {
-					var scene = _.pick( sceneEngineFormat, 'name', 'scriptId', 'systems' )
-
-					scene.entities = _.map(
-						sceneEngineFormat.entities,
-						function( entity ) {
-							return entityConverter.toEditorFormat( entity )
-						}
-					)
-
-					return scene
-				}
-			)
-
-			return result
+		var toEditorFormat = function( project ) {
+			return _.pick( project, 'config', 'name', 'startScene', 'assetIds', 'templateIds', 'id', 'type', 'scenes')
 		}
 
 		return {

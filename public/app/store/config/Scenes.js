@@ -3,7 +3,9 @@ Ext.define('Spelled.store.config.Scenes', {
 	requires: ['Spelled.model.config.Scene'],
 
 	model: 'Spelled.model.config.Scene',
-    proxy: {
-        type: 'memory'
-    }
+	listeners: {
+		load: function( me, records, successful ) {
+			Ext.getStore( 'Library' ).generateNodesFromRecords( records )
+		}
+	}
 });

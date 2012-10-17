@@ -28,7 +28,8 @@ Ext.define('Spelled.controller.Projects', {
 		'template.Entities',
 		'template.Systems',
 		'script.Scripts',
-		'asset.Assets'
+		'asset.Assets',
+		'config.Scenes'
 	],
 
     init: function() {
@@ -171,7 +172,7 @@ Ext.define('Spelled.controller.Projects', {
         view.show()
     },
 
-    createProject: function ( button, event, record ) {
+    createProject: function ( button ) {
         var window = button.up('window'),
             form   = window.down('form'),
             values = form.getValues(),
@@ -267,18 +268,23 @@ Ext.define('Spelled.controller.Projects', {
 		this.prepareStores( projectName )
 		this.closeAllTabsFromProject()
 
-		Project.load(
-			record.getId(),
-			{
-				scope: this,
-				success: function( project ) {
-					this.onProjectLoaded( project )
+		Ext.getStore( 'config.Scenes' ).load({
+			callback: function() {
+				Project.load(
+					record.getId(),
+					{
+						scope: this,
+						success: function( project ) {
+							this.onProjectLoaded( project )
 
-					if( !!callback )
-						Ext.callback( callback( project ) )
-				}
-			}
-		)
+							if( !!callback )
+								Ext.callback( callback( project ) )
+						}
+					}
+				)
+			},
+			scope: this
+		})
 	},
 
 	onProjectLoaded: function( project ) {
@@ -310,9 +316,10 @@ Ext.define('Spelled.controller.Projects', {
 		this.getScenesList( project )
 		this.getNavigator().setActiveTab( this.getScenes() )
 
-		var tree       = this.getScenesTree(),
-			startScene = project.getScenes().getById( project.get( 'startScene' ) ),
-			node       = tree.getRootNode().findChild( 'id', startScene.get( 'name' ), true )
+		var tree         = this.getScenesTree(),
+			startSceneId = project.get( 'startScene' ),
+			startScene   = project.getScenes().findRecord( 'sceneId', startSceneId ),
+			node         = tree.getRootNode().findChild( 'id', startScene.getId(), true )
 
 		tree.getSelectionModel().select( node )
 		tree.expandPath( node.getPath() )
@@ -327,6 +334,6 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
     getScenesList: function( project ) {
-        this.application.getController('Scenes').showScenesList( project.getScenes() )
+	    this.application.getController('Scenes').showScenesList( project.getScenes() )
     }
 });
