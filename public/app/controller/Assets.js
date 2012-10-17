@@ -31,6 +31,7 @@ Ext.define('Spelled.controller.Assets', {
 		'Spelled.store.asset.KeyToActionMappings',
 		'Spelled.store.asset.InterpolationFunctions',
 		'Spelled.store.asset.Assets',
+		'Spelled.store.asset.Tilemaps',
 
 		'Spelled.model.Asset'
 	],
@@ -65,6 +66,7 @@ Ext.define('Spelled.controller.Assets', {
 		'asset.KeyFrameAnimations',
 		'asset.KeyToActionMappings',
 		'asset.InterpolationFunctions',
+	    'asset.Tilemaps',
 		'asset.Assets'
     ],
 

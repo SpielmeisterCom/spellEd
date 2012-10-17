@@ -733,9 +733,13 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.grid.column.Action": [
     "widget.actioncolumn"
   ],
+  "Spelled.view.template.component.attribute.Tilemap": [
+    "widget.spelledtilemapfield"
+  ],
   "Spelled.view.menu.contextmenu.ScriptsList": [
     "widget.scriptslistcontextmenu"
   ],
+  "Spelled.store.asset.Tilemaps": [],
   "Ext.layout.component.field.Trigger": [
     "layout.triggerfield"
   ],
@@ -1736,7 +1740,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.grid.column.Action": [
     "Ext.grid.ActionColumn"
   ],
+  "Spelled.view.template.component.attribute.Tilemap": [],
   "Spelled.view.menu.contextmenu.ScriptsList": [],
+  "Spelled.store.asset.Tilemaps": [],
   "Ext.layout.component.field.Trigger": [],
   "Spelled.controller.Scenes": [],
   "Ext.layout.component.field.FieldContainer": [],

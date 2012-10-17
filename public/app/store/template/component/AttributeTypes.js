@@ -67,6 +67,6 @@ Ext.define('Spelled.store.template.component.AttributeTypes', {
 		{
 			"type":"spelledtilemapfield",
 			"name":"assetId:2dTileMap"
-		},
+		}
 	]
 });
