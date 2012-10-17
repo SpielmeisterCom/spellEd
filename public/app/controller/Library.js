@@ -136,6 +136,7 @@ Ext.define('Spelled.controller.Library', {
 				break
 			case this.TYPE_SCRIPT:
 				this.application.fireEvent( 'scriptbeforeclose', panel )
+				break
 			case this.TYPE_SCENE_SCRIPT:
 				this.application.fireEvent( 'scenescriptbeforeclose', panel )
 				break
