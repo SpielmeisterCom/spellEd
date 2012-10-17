@@ -63,7 +63,41 @@ Ext.define('Spelled.controller.Entities', {
 				showTemplateEntity: this.showTemplateEntity
 			}
         })
+
+		this.application.on({
+			showentityremovealert: this.showEntityRemoveAlert,
+			removeentity         : this.removeEntity,
+			scope: this
+		})
     },
+
+	removeEntity: function( entity ) {
+		Ext.Msg.confirm(
+			'Remove '+ entity.get('name'),
+			'Should the Entity: "' + entity.get('name') + '" be removed?',
+			function( button ) {
+				if ( button === 'yes' ) {
+					if( entity ) {
+						entity.getOwner().setDirty()
+						this.deleteEntity( entity )
+						var node = this.application.getLastSelectedNode( this.getScenesTree() ),
+							parentNode = node.parentNode
+
+						node.remove()
+
+						if( !parentNode.hasChildNodes() ) {
+							parentNode.set( 'leaf', true )
+						}
+					}
+				}
+			},
+			this
+		)
+	},
+
+	showEntityRemoveAlert: function( entity ) {
+		Ext.Msg.alert( "Can not remove: '" + entity.get( 'name' ) + "'", "Is linked to a entityTemplate: '" + entity.getOwner().get( 'name' ) + "'" )
+	},
 
 	showTemplateEntity: function( entityTemplateId ) {
 		var entityTemplate = this.getTemplateEntitiesStore().getById( entityTemplateId ),
@@ -137,6 +171,8 @@ Ext.define('Spelled.controller.Entities', {
 		} else {
 			record.getEntity().getChildren().add( record )
 		}
+
+		record.getOwner().setDirty()
 
 		record.set( 'name', values.name )
 

@@ -143,9 +143,12 @@ Ext.define('Spelled.controller.templates.Entities', {
 			owner     = ( entity.hasEntity() ) ? entity.getEntity() : template,
 			ownerNode = node.parentNode
 
+		if( !entity.isRemovable() ) return this.application.fireEvent( 'showentityremovealert', entity )
+
 		owner.getChildren().remove( entity )
 		Ext.getStore( 'config.Entities' ).remove( entity )
-		template.save()
+		template.setDirty()
+
 		node.remove()
 
 		if( !ownerNode.hasChildNodes() ) {
