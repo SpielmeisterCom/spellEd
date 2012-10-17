@@ -806,7 +806,12 @@ Ext.define('Spelled.controller.Scenes', {
 
 	createInitialSceneScriptContent: function( scene ) {
 		var parts = [
-			"return "
+			"return {",
+			"	init : function( spell, sceneConfig ) {",
+			"		spell.EntityManager.createEntities( sceneConfig.entities )",
+			"	},",
+			"	destroy : function( spell, sceneConfig ) {}",
+			"}"
 		]
 
 		return this.application.getController( 'Scripts' ).createModuleHeader( scene.getFullName(), parts.join( '\n\t\t' ) )
