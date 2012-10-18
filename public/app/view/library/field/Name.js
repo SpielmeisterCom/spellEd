@@ -29,7 +29,7 @@ Ext.define('Spelled.view.library.field.Name', {
 
 		var found = this.checkTreeNode( rootNode, parts )
 
-		if( found ) return "This identifier is already given! Use another name or delete the existing item."
+		if( found ) return "This identifier is already in use! Use another name or delete the existing item."
 		else return true
 	}
 })
