@@ -216,7 +216,7 @@ Ext.define('Spelled.controller.Library', {
 		this.getRightPanel().show()
 		this.getRightPanel().removeAll()
 
-		if( node ) this.dispatchLibraryNodeSelect( tree, node )
+		if( node && tree.getRootNode().isAncestor( node ) ) this.dispatchLibraryNodeSelect( tree, node )
 
 		this.getLibraryTabPanel().show()
 	}
