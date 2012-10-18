@@ -45,7 +45,7 @@ Ext.define('Spelled.model.template.System', {
 	destroy: function( options ) {
 		Spelled.StorageActions.destroy({ id: this.getAccordingJSFileName() } )
 
-		this.callParent( options )
+		this.callParent( arguments )
 	},
 
 	listeners: {

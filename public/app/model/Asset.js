@@ -38,7 +38,7 @@ Ext.define('Spelled.model.Asset', {
 	destroy: function( options ) {
 		if( this.get( 'file' ) ) Spelled.StorageActions.destroy({ id: this.getAbsoluteFilePath() } )
 
-		this.callParent( options )
+		this.callParent( arguments )
 	},
 
 	getKeyFrameFromComponentAttribute: function( componentId, attributeName ) {

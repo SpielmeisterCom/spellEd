@@ -29,7 +29,7 @@ Ext.define('Spelled.model.Script', {
 	destroy: function( options ) {
 		Spelled.StorageActions.destroy({ id: this.getAccordingJSFileName() } )
 
-		this.callParent( options )
+		this.callParent( arguments )
 	},
 
 	listeners: {
