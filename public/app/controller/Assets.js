@@ -169,7 +169,7 @@ Ext.define('Spelled.controller.Assets', {
 					   // record.set("collisionLayerData", payload.collisionLayerData)
 					    record.setDirty()
 
-+			            me.setAssetConfigFromForm( form, record )
+			            me.setAssetConfigFromForm( form, record )
 					    me.fireEvent( 'assetchange', record )
 				    }
 			    }

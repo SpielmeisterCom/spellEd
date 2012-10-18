@@ -34,12 +34,6 @@ Ext.define('Spelled.view.asset.inspector.Config', {
 				{
 					xtype: "displayfield",
 					readOnly: true,
-					name: 'file',
-					fieldLabel: 'File'
-				},
-				{
-					xtype: "displayfield",
-					readOnly: true,
 					name: 'namespace',
 					fieldLabel: 'Namespace'
 				},

@@ -27,7 +27,7 @@ Ext.define('Spelled.view.script.Create' ,{
                     valueField: 'id'
                 },
                 {
-                    xtype: "textfield",
+                    xtype: "spellednamefield",
                     name: 'name',
                     fieldLabel: 'Name',
 					vtype: 'alphanum'

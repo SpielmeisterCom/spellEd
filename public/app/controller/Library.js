@@ -4,6 +4,7 @@ Ext.define('Spelled.controller.Library', {
 		'Spelled.view.library.Navigator',
 		'Spelled.view.library.FolderPicker',
 		'Spelled.view.library.TreeList',
+		'Spelled.view.library.field.Name',
 
 		'Spelled.store.Library',
 		'Spelled.store.FoldersTree'

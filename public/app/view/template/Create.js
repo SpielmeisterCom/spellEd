@@ -40,7 +40,7 @@ Ext.define('Spelled.view.template.Create', {
                     valueField: 'id'
                 },
                 {
-                    xtype: "textfield",
+                    xtype: "spellednamefield",
                     name: 'name',
                     fieldLabel: 'Name',
 					vtype: 'alphanum'

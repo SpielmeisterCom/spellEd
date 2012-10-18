@@ -31,7 +31,7 @@ Ext.define('Spelled.view.asset.Form', {
 			}
 		},
 		{
-			xtype: "textfield",
+			xtype: "spellednamefield",
 			name: 'name',
 			fieldLabel: 'Name',
 			vtype: 'alphanum'

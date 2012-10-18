@@ -718,6 +718,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.chart.series.Column": [
     "series.column"
   ],
+  "Spelled.view.library.field.Name": [
+    "widget.spellednamefield"
+  ],
   "Ext.data.SequentialIdGenerator": [
     "idgen.sequential"
   ],
@@ -874,10 +877,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.Editor": [
     "widget.editor"
   ],
+  "Ext.chart.Tip": [],
   "Ext.chart.axis.Radial": [
     "axis.radial"
   ],
-  "Ext.chart.Tip": [],
   "Spelled.view.template.entity.Edit": [
     "widget.entitytemplateedit"
   ],
@@ -1731,6 +1734,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.chart.ColumnChart",
     "Ext.chart.StackedColumnChart"
   ],
+  "Spelled.view.library.field.Name": [],
   "Ext.data.SequentialIdGenerator": [],
   "Spelled.view.template.component.Property": [],
   "Ext.grid.header.Container": [],
@@ -1836,8 +1840,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.component.Draw": [],
   "Spelled.view.library.TreeList": [],
   "Ext.Editor": [],
-  "Ext.chart.axis.Radial": [],
   "Ext.chart.Tip": [],
+  "Ext.chart.axis.Radial": [],
   "Spelled.view.template.entity.Edit": [],
   "Ext.layout.container.Table": [
     "Ext.layout.TableLayout"
