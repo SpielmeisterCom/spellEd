@@ -35,6 +35,42 @@ Ext.define('Spelled.view.script.Editor', {
 			exec: Ext.bind( me.onAceSave, me)
 		} )
 
+		editor.commands.addCommand( {
+			name: 'reloadScene',
+			bindKey: {
+				win: 'Ctrl-M',
+				mac: 'Command-M'
+			},
+			exec: Ext.bind( me.onReloadScene, me)
+		} )
+
+		editor.commands.addCommand( {
+			name: 'toggleGrid',
+			bindKey: {
+				win: 'Ctrl-B',
+				mac: 'Command-B'
+			},
+			exec: Ext.bind( me.onToggleGrid, me)
+		} )
+
+		editor.commands.addCommand( {
+			name: 'toggleTitleSaveArea',
+			bindKey: {
+				win: 'Ctrl-I',
+				mac: 'Command-I'
+			},
+			exec: Ext.bind( me.onToggleTitleSaveArea, me)
+		} )
+
+		editor.commands.addCommand( {
+			name: 'fullSize',
+			bindKey: {
+				win: 'Ctrl-U',
+				mac: 'Command-U'
+			},
+			exec: Ext.bind( me.onFullSize, me)
+		} )
+
 		editor.on("guttermousedown", function(e){
 			var target = e.domEvent.target;
 			if (target.className.indexOf("ace_gutter-cell") == -1)
@@ -84,6 +120,22 @@ Ext.define('Spelled.view.script.Editor', {
 
 	onAceSave: function() {
 		this.fireEvent( "save" )
+	},
+
+	onReloadScene: function() {
+		this.fireEvent( "reloadscene" )
+	},
+
+	onToggleGrid: function() {
+		this.fireEvent( "toggle", 'toggleGrid' )
+	},
+
+	onToggleTitleSaveArea: function() {
+		this.fireEvent( "toggle", 'toggleTitleSafe' )
+	},
+
+	onFullSize: function() {
+		this.fireEvent( "fullscreen" )
 	},
 
 	onAceEdit: function( e ) {

@@ -117,6 +117,43 @@ Ext.define('Spelled.controller.Scenes', {
 			}
 		)
 
+
+		// Keymapping for toggle titleSafe
+		Spelled.KeyMap.addBinding(
+			{
+				key: Ext.EventObject.I,
+				ctrl: true,
+				scope: this,
+				fn: function( keyCode, e ) {
+					e.stopEvent()
+					this.renderedSceneToggleButton( 'toggleTitleSafe' )
+				}
+			}
+		)
+
+		// Keymapping for toggle grid
+		Spelled.KeyMap.addBinding(
+			{
+				key: Ext.EventObject.B,
+				ctrl: true,
+				scope: this,
+				fn: function( keyCode, e ) {
+					e.stopEvent()
+					this.renderedSceneToggleButton( 'toggleGrid' )
+				}
+			}
+		)
+
+		// Keymapping for fullscreen
+		Spelled.KeyMap.addBinding(
+			{
+				key: Ext.EventObject.U,
+				ctrl: true,
+				scope: this,
+				fn: this.fullScreenKeyEvent
+			}
+		)
+
 		// initializing the engine message bus
 		this.engineMessageBus = Ext.create(
 			'Spelled.MessageBus',
@@ -205,6 +242,9 @@ Ext.define('Spelled.controller.Scenes', {
 				select: this.setSceneScript
 			},
 			'scripteditor': {
+				reloadscene: this.reloadSceneKeyEvent,
+				toggle: this.renderedSceneToggleButton,
+				fullscreen: this.fullScreenKeyEvent,
 				scriptvalidation: this.sendScriptChangeToEngine
 			}
 		})
@@ -287,7 +327,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 	changeAspectRatio: function( field, newValue, oldValue ) {
 		var sceneEditor = this.getSceneEditor(),
-			scene = this.application.getActiveScene(),
+			scene       = this.application.getActiveScene(),
 			iframe      = sceneEditor.getActiveTab().down( 'spellediframe' )
 
 		scene.set( 'aspectRatio', newValue )
@@ -317,6 +357,24 @@ Ext.define('Spelled.controller.Scenes', {
 			default:
 				return
 		}
+	},
+
+	renderedSceneToggleButton: function( action ) {
+		var sceneEditor = this.getSceneEditor(),
+			sceneTab    = sceneEditor.items.first(),
+			button      = sceneTab.down( 'toolbar button[action="' + action + '"]' )
+
+		if( sceneTab && !sceneEditor.isHidden() && button) button.toggle()
+	},
+
+	fullScreenKeyEvent: function( keyCode, e ) {
+		var sceneEditor = this.getSceneEditor(),
+			sceneTab    = sceneEditor.items.first()
+
+		if( e )	e.stopEvent()
+
+		if( sceneTab && !sceneEditor.isHidden() )
+			this.activateFullscreen( sceneTab.down( 'button' ) )
 	},
 
 	reloadSceneKeyEvent: function( keyCode, e ) {
@@ -626,11 +684,10 @@ Ext.define('Spelled.controller.Scenes', {
 		)
 	},
 
-	activateFullscreen: function( button, state ) {
+	activateFullscreen: function( button ) {
 		var tab      = button.up( 'renderedscene').down( 'spellediframe'),
 			dom      = tab.el.dom,
 			prefixes = ["moz", "webkit", "ms", "o", ""],
-			docEl    = document.documentElement,
 			fullScreenFunctionAvailable = false
 
 		Ext.each(prefixes, function( prefix ) {
