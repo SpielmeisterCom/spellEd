@@ -176,6 +176,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.form.field.Date": [
     "widget.datefield"
   ],
+  "Spelled.view.scene.ProgressBar": [
+    "widget.spellprogressbar"
+  ],
   "Ext.Component": [
     "widget.component",
     "widget.box"
@@ -1327,6 +1330,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.form.DateField",
     "Ext.form.Date"
   ],
+  "Spelled.view.scene.ProgressBar": [],
   "Ext.Component": [],
   "Spelled.view.template.system.Details": [],
   "Spelled.view.scene.TreeList": [],

@@ -4,6 +4,7 @@ Ext.define('Spelled.controller.Scenes', {
 	requires: [
 		'Spelled.Logger',
 		'Spelled.MessageBus',
+		'Spelled.view.scene.ProgressBar',
 
 		'widget.label'
 	],
@@ -42,6 +43,10 @@ Ext.define('Spelled.controller.Scenes', {
 		{
 			ref : 'Scenes',
 			selector: '#Scenes'
+		},
+		{
+			ref : 'ProgressBar',
+			selector: 'spellprogressbar'
 		}
 	],
 
@@ -51,7 +56,8 @@ Ext.define('Spelled.controller.Scenes', {
 		'scene.Create',
 		'scene.Editor',
 		'scene.Script',
-		'ui.SpelledRendered'
+		'ui.SpelledRendered',
+		'scene.ProgressBar'
 	],
 
 	TREE_ITEM_TYPE_SCENE         : 1,
@@ -191,6 +197,9 @@ Ext.define('Spelled.controller.Scenes', {
 					},
 					'spell.debug.consoleMessage' : function( sourceId, payload ) {
 						Spelled.Logger.log( payload.level, payload.text )
+					},
+					'spell.loadingProgress' : function( sourceId, payload ) {
+						me.updateRenderProgress( payload )
 					}
 				}
 			}
@@ -624,7 +633,7 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	reloadScene: function( button ) {
-		var panel   = button.up( 'panel' ),
+		var panel   = button.up( 'renderedscene' ),
 			project = this.application.getActiveProject(),
 			iframe  = panel.down( 'spellediframe' ),
 			sceneId = iframe.sceneId
@@ -635,11 +644,12 @@ Ext.define('Spelled.controller.Scenes', {
 			'spellediframe',
 			{
 				projectName : project.get('name'),
-				sceneId : sceneId
+				sceneId : sceneId,
+				hidden: true
 			}
 		)
 
-		panel.add( newIframe )
+		panel.add( [ newIframe, { xtype: 'spellprogressbar'} ] )
 
 		this.engineMessageBus.send(
 			newIframe.getId(),
@@ -648,6 +658,18 @@ Ext.define('Spelled.controller.Scenes', {
 				payload : Ext.amdModules.createProjectInEngineFormat( project )
 			}
 		)
+	},
+
+	updateRenderProgress: function( value ) {
+		var progressBar = this.getProgressBar(),
+			panel       = progressBar.up( 'renderedscene' )
+
+		progressBar.updateProgress( value )
+
+		if( value === 1 && panel ){
+			panel.remove( progressBar )
+			panel.down( 'spellediframe').show()
+		}
 	},
 
 	toggleGrid: function( button, state ) {
@@ -735,34 +757,23 @@ Ext.define('Spelled.controller.Scenes', {
 
 	renderScene: function( scene ) {
 		var sceneEditor = this.getSceneEditor(),
-			title       = scene.getRenderTabTitle()
+			title       = scene.getRenderTabTitle(),
+			tab         = this.application.findActiveTabByTitle( sceneEditor, title )
 
-		var foundTab = this.application.findActiveTabByTitle( sceneEditor, title )
+		if( !tab ) {
+			var project = this.application.getActiveProject(),
+				newTab  = this.createSpellTab(
+					title,
+					project.get( 'name' ),
+					scene.getId(),
+					scene.get( 'showGrid' )
+				)
 
-		if( foundTab ) {
-			this.setDefaultScene( scene )
-			this.reloadScene( foundTab.down( 'button' ) )
-			return foundTab
+			tab = this.application.createTab( sceneEditor, newTab )
 		}
 
-		var project = this.application.getActiveProject()
-
-		var tab = this.createSpellTab(
-			title,
-			project.get( 'name' ),
-			scene.getId(),
-			scene.get( 'showGrid' )
-		)
-
-		this.application.createTab( sceneEditor, tab )
-
-		this.engineMessageBus.send(
-			tab.down( 'spellediframe' ).getId(),
-			{
-				type : 'spelled.debug.executeRuntimeModule',
-				payload : Ext.amdModules.createProjectInEngineFormat( project )
-			}
-		)
+		this.setDefaultScene( scene )
+		this.reloadScene( tab.down( 'button' ) )
 	},
 
 	showScenesList: function( scenes ) {
