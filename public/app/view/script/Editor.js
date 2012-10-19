@@ -15,8 +15,15 @@ Ext.define('Spelled.view.script.Editor', {
 			this.startEdit()
 		}
 
+		this.reRenderAce()
+	},
+
+	reRenderAce: function() {
+		var editor = this.aceEditor
+
 		editor.scrollPageDown()
 		editor.scrollToRow( 0 )
+		editor.resize()
 	},
 
 	startEdit: function() {

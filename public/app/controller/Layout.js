@@ -83,10 +83,16 @@ Ext.define('Spelled.controller.Layout', {
 				if( panel.getXType() != 'renderedscene' ){
 					destinationTab.insert( null, panel )
 					destinationTab.setActiveTab( panel )
+					this.specialChecks( panel )
 				}
-			}
+			},
+			this
 		)
 		destinationTab.remove( fakePanel )
+	},
+
+	specialChecks: function( panel ) {
+		if( panel.reRenderAce ) panel.reRenderAce()
 	},
 
 	changeToMainLayout: function() {

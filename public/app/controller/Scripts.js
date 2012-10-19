@@ -52,7 +52,8 @@ Ext.define('Spelled.controller.Scripts', {
     init: function() {
         this.control({
 			'scripteditor': {
-				save: this.globalSaveHelper,
+				activate: this.reRenderAce,
+				save:     this.globalSaveHelper,
 				render:   this.addAceEditor
 			},
             'librarytreelist [action="showCreateScript"]' : {
@@ -73,6 +74,10 @@ Ext.define('Spelled.controller.Scripts', {
 			}
 		)
     },
+
+	reRenderAce: function( panel ) {
+		panel.reRenderAce()
+	},
 
 	checkIfScriptIsDirty: function( panel ) {
 		var script = panel.model

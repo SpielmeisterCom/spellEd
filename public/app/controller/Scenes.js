@@ -649,7 +649,9 @@ Ext.define('Spelled.controller.Scenes', {
 			}
 		)
 
-		panel.add( [ newIframe, { xtype: 'spellprogressbar'} ] )
+		panel.add( newIframe )
+
+		if( !this.getProgressBar() ) panel.add( { xtype: 'spellprogressbar'} )
 
 		this.engineMessageBus.send(
 			newIframe.getId(),
