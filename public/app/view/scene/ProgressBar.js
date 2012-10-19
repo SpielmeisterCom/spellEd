@@ -17,7 +17,7 @@ Ext.define('Spelled.view.scene.ProgressBar' ,{
     items: [{
 		width: 350,
 		xtype: 'progressbar',
-		text: 'Rendering...',
+		text: 'Loading...',
 		value: 0
 	}],
 
