@@ -195,18 +195,20 @@ Ext.define('Spelled.controller.templates.Components', {
 			matchFieldWidth: true
 		}
 
-		if( attribute.get( 'values' ) ) {
+		if( attributeType.get('type') === 'spelledenumfield') {
 			propertyView.add({
 				xtype: 'spelledlistfield',
 				name: 'values',
 				allowBlank: false,
 				fieldLabel: 'Values',
 				listeners: {
-					change: function( value ) {
-						var combobox = this.up( 'componenttemplateproperty' ).down( attributeType.get('type') )
+					change: function( field ) {
+						var value    = field.getValue(),
+							combobox = this.up( 'componenttemplateproperty' ).down( attributeType.get('type') ),
+							store    = ( Ext.isString( value ) ) ? value.split(',') : []
 
 						if( value ) {
-							combobox.bindStore( attribute.get( 'values' ) )
+							combobox.bindStore( store )
 						}
 					}
 				}

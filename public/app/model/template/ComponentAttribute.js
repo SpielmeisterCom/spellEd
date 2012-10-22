@@ -6,7 +6,7 @@ Ext.define('Spelled.model.template.ComponentAttribute', {
     fields: [
         "type",
         "name",
-		"values",
+		{ name: 'values', type: 'array', defaultValue: [] },
 		"default"
     ],
 
