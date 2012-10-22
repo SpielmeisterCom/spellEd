@@ -65,7 +65,6 @@ Ext.define('Spelled.controller.Scripts', {
         })
 
 		this.application.on( {
-				openscenescript   : this.openSceneScript,
 				scriptdblclick    : this.openScriptHelper,
 				scriptbeforeclose : this.checkIfScriptIsDirty,
 				scriptcontextmenu : this.showListContextMenu,

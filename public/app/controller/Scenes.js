@@ -667,11 +667,12 @@ Ext.define('Spelled.controller.Scenes', {
 			'spellediframe',
 			{
 				projectName : project.get('name'),
-				sceneId : sceneId
+				sceneId : sceneId,
+				hidden: true
 			}
 		)
 
-		panel.add( newIframe )
+		panel.add( [ newIframe, { xtype: 'spellprogressbar'} ] )
 
 		this.engineMessageBus.send(
 			newIframe.getId(),
@@ -680,6 +681,18 @@ Ext.define('Spelled.controller.Scenes', {
 				payload : Ext.amdModules.createProjectInEngineFormat( project )
 			}
 		)
+	},
+
+	updateRenderProgress: function( value ) {
+		var progressBar = this.getProgressBar(),
+			panel       = progressBar.up( 'renderedscene' )
+
+		progressBar.updateProgress( value )
+
+		if( value === 1 && panel ){
+			panel.remove( progressBar )
+			panel.down( 'spellediframe').show()
+		}
 	},
 
 	toggleGrid: function( button, state ) {
