@@ -9,11 +9,11 @@ Ext.define('Spelled.view.scene.TreeList' ,{
     animCollapse: false,
     store : 'ScenesTree',
 
-//	viewConfig: {
-//		plugins: {
-//			ptype: 'treeviewdragdrop'
-//		}
-//	},
+	viewConfig: {
+		plugins: {
+			ptype: 'scenetreedragdrop'
+		}
+	},
 
     rootVisible: false,
 
