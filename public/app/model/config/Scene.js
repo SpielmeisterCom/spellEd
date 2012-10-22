@@ -98,7 +98,7 @@ Ext.define('Spelled.model.config.Scene', {
 	},
 
 	getRenderTabTitle: function() {
-		return "Rendered: Scene"
+		return "Scene"
 	},
 
 	appendOnTreeNode: function( node ) {
