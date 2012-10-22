@@ -22,8 +22,7 @@ Ext.define('Spelled.model.Project', {
     },
 
 	save: function() {
-		this.syncAssetIds()
-		this.syncTemplateIds()
+		this.syncLibraryIds()
 
 		this.callParent( arguments )
 	},
@@ -40,17 +39,14 @@ Ext.define('Spelled.model.Project', {
 		return array
 	},
 
-	syncAssetIds: function() {
-		this.set( 'assetIds', this.getStoreIds( Ext.getStore( 'asset.Assets' ) ) )
-	},
-
-	syncTemplateIds: function() {
+	syncLibraryIds: function() {
 		var result = []
 
-		this.set( 'templateIds', result.concat(
+		this.set( 'libraryIds', result.concat(
 			this.getStoreIds( Ext.getStore( 'template.Components' ) ),
 			this.getStoreIds( Ext.getStore( 'template.Entities' ) ),
-			this.getStoreIds( Ext.getStore( 'template.Systems' ) )
+			this.getStoreIds( Ext.getStore( 'template.Systems' ) ),
+			this.getStoreIds( Ext.getStore( 'asset.Assets' ) )
 		))
 	},
 

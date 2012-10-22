@@ -9,8 +9,7 @@ define(
 		'use strict'
 
 		return function( project ) {
-			project.syncAssetIds()
-			project.syncTemplateIds()
+			project.syncLibraryIds()
 
 			return projectConverter.toEngineFormat(
 				project.getProxy().getWriter().getRecordData( project ),
