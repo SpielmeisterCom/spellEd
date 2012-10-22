@@ -46,7 +46,8 @@ Ext.define('Spelled.model.Project', {
 			this.getStoreIds( Ext.getStore( 'template.Components' ) ),
 			this.getStoreIds( Ext.getStore( 'template.Entities' ) ),
 			this.getStoreIds( Ext.getStore( 'template.Systems' ) ),
-			this.getStoreIds( Ext.getStore( 'asset.Assets' ) )
+			this.getStoreIds( Ext.getStore( 'asset.Assets' ) ),
+			this.getStoreIds( Ext.getStore( 'config.Scenes' ) )
 		))
 	},
 
