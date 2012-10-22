@@ -29,6 +29,7 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.tab"
   ],
   "Spelled.controller.Menu": [],
+  "Spelled.view.scene.plugin.SceneTreeDropZone": [],
   "Ext.button.Button": [
     "widget.button"
   ],
@@ -159,6 +160,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.util.Renderable": [],
   "Spelled.model.Script": [],
   "Ext.util.Bindable": [],
+  "Spelled.data.writer.Scene": [
+    "writer.scene"
+  ],
   "Ext.data.SortTypes": [],
   "Spelled.view.template.component.attribute.Number": [
     "widget.spellednumberfield"
@@ -176,6 +180,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.form.field.Date": [
     "widget.datefield"
   ],
+  "Spelled.data.writer.Writer": [],
   "Spelled.view.scene.ProgressBar": [
     "widget.spellprogressbar"
   ],
@@ -196,6 +201,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.data.writer.Asset": [
     "writer.asset"
+  ],
+  "Spelled.data.reader.Component": [
+    "reader.component"
   ],
   "Spelled.view.layout.Main": [
     "widget.mainlayout"
@@ -250,9 +258,13 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.menu.Manager": [],
   "Ext.util.KeyMap": [],
   "Ext.data.Batch": [],
+  "Spelled.data.reader.Reader": [],
   "Ext.resizer.Handle": [],
   "Spelled.store.config.Scenes": [],
   "Ext.util.ElementContainer": [],
+  "Spelled.view.scene.plugin.TreeViewDragDrop": [
+    "plugin.scenetreedragdrop"
+  ],
   "Ext.grid.feature.Grouping": [
     "feature.grouping"
   ],
@@ -523,7 +535,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.form.Basic": [],
   "Ext.Action": [],
   "Spelled.view.scene.Script": [
-    "widget.scenescript"
+    "widget.scenescriptedit"
   ],
   "Spelled.view.project.Create": [
     "widget.createproject"
@@ -656,6 +668,7 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.tbfill"
   ],
   "Ext.data.proxy.WebStorage": [],
+  "Spelled.view.scene.plugin.SceneTreeDragZone": [],
   "Ext.util.Floating": [],
   "Ext.form.action.DirectSubmit": [
     "formaction.directsubmit"
@@ -690,9 +703,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.data.DirectStore": [
     "store.direct"
   ],
-  "Spelled.abstract.plugin.TreeViewDragDrop": [
-    "plugin.treeviewnodedragdrop"
-  ],
+  "Spelled.abstract.plugin.TreeViewDragDrop": [],
   "Spelled.view.template.component.attribute.Object": [
     "widget.spelledobjectfield"
   ],
@@ -792,6 +803,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.form.field.Number": [
     "widget.numberfield"
   ],
+  "Spelled.view.template.component.attribute.Enum": [
+    "widget.spelledenumfield"
+  ],
   "Ext.data.proxy.Direct": [
     "proxy.direct"
   ],
@@ -886,6 +900,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.template.entity.Edit": [
     "widget.entitytemplateedit"
+  ],
+  "Spelled.data.reader.Scene": [
+    "reader.scene"
   ],
   "Ext.layout.container.Table": [
     "layout.table"
@@ -1205,6 +1222,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.script.Editor": [],
   "Ext.tab.Tab": [],
   "Spelled.controller.Menu": [],
+  "Spelled.view.scene.plugin.SceneTreeDropZone": [],
   "Ext.button.Button": [
     "Ext.Button"
   ],
@@ -1320,6 +1338,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.util.Renderable": [],
   "Spelled.model.Script": [],
   "Ext.util.Bindable": [],
+  "Spelled.data.writer.Scene": [],
   "Ext.data.SortTypes": [],
   "Spelled.view.template.component.attribute.Number": [],
   "Spelled.view.template.component.Attributes": [],
@@ -1330,6 +1349,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.form.DateField",
     "Ext.form.Date"
   ],
+  "Spelled.data.writer.Writer": [],
   "Spelled.view.scene.ProgressBar": [],
   "Ext.Component": [],
   "Spelled.view.template.system.Details": [],
@@ -1340,6 +1360,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.ui.SpelledViewport": [],
   "Spelled.view.template.system.input.ComboBox": [],
   "Spelled.data.writer.Asset": [],
+  "Spelled.data.reader.Component": [],
   "Spelled.view.layout.Main": [],
   "Ext.fx.target.CompositeSprite": [],
   "Ext.menu.DatePicker": [],
@@ -1385,9 +1406,11 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.KeyMap"
   ],
   "Ext.data.Batch": [],
+  "Spelled.data.reader.Reader": [],
   "Ext.resizer.Handle": [],
   "Spelled.store.config.Scenes": [],
   "Ext.util.ElementContainer": [],
+  "Spelled.view.scene.plugin.TreeViewDragDrop": [],
   "Ext.grid.feature.Grouping": [],
   "Ext.tab.Panel": [
     "Ext.TabPanel"
@@ -1693,6 +1716,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.data.proxy.WebStorage": [
     "Ext.data.WebStorageProxy"
   ],
+  "Spelled.view.scene.plugin.SceneTreeDragZone": [],
   "Ext.util.Floating": [],
   "Ext.form.action.DirectSubmit": [
     "Ext.form.Action.DirectSubmit"
@@ -1791,6 +1815,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.form.NumberField",
     "Ext.form.Number"
   ],
+  "Spelled.view.template.component.attribute.Enum": [],
   "Ext.data.proxy.Direct": [
     "Ext.data.DirectProxy"
   ],
@@ -1847,6 +1872,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.chart.Tip": [],
   "Ext.chart.axis.Radial": [],
   "Spelled.view.template.entity.Edit": [],
+  "Spelled.data.reader.Scene": [],
   "Ext.layout.container.Table": [
     "Ext.layout.TableLayout"
   ],
