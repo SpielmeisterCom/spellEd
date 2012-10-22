@@ -33,6 +33,10 @@ Ext.define('Spelled.store.template.component.AttributeTypes', {
 			"name":"list"
 		},
 		{
+			"type":"spelledenumfield",
+			"name":"enum"
+		},
+		{
 			"type":"spelledintegerfield",
 			"name":"integer"
 		},

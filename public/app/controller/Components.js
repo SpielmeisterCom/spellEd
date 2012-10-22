@@ -284,7 +284,8 @@ Ext.define('Spelled.controller.Components', {
 		return {
 			type: attributeType.get('type'),
 			value: this.convertValueForGrid( value ),
-			componentValue: value
+			componentValue: value,
+			values : attribute.get('values')
 		}
 	},
 

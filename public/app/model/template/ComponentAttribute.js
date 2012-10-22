@@ -6,7 +6,8 @@ Ext.define('Spelled.model.template.ComponentAttribute', {
     fields: [
         "type",
         "name",
-        "default"
+		"values",
+		"default"
     ],
 
     idgen: 'uuid',

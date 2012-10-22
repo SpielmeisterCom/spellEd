@@ -22,6 +22,7 @@ Ext.define('Spelled.controller.templates.Components', {
 		'Spelled.view.template.component.attribute.Sound',
 		'Spelled.view.template.component.attribute.KeyToActionMap',
 		'Spelled.view.template.component.attribute.Tilemap',
+		'Spelled.view.template.component.attribute.Enum',
 
 		'Spelled.model.template.Component',
 		'Spelled.model.template.ComponentAttribute',
@@ -52,7 +53,8 @@ Ext.define('Spelled.controller.templates.Components', {
 		'template.component.attribute.TextAppearance',
 		'template.component.attribute.Sound',
 		'template.component.attribute.KeyToActionMap',
-	    'template.component.attribute.Tilemap'
+	    'template.component.attribute.Tilemap',
+		'template.component.attribute.Enum'
     ],
 
     models: [
@@ -183,13 +185,37 @@ Ext.define('Spelled.controller.templates.Components', {
 		var attributeType = this.getTemplateComponentAttributeTypesStore().findRecord( 'name', attribute.get('type') )
 
 		if( propertyView.down('[name="default"]') ) propertyView.remove( propertyView.down('[name="default"]') )
+		if( propertyView.down('[name="values"]') ) propertyView.remove( propertyView.down('[name="values"]') )
 
-		propertyView.add({
+		var defaultValueField = {
 			xtype: attributeType.get('type'),
 			name: 'default',
 			allowBlank:false,
-			fieldLabel: 'Default value'
-		})
+			fieldLabel: 'Default value',
+			matchFieldWidth: true
+		}
+
+		if( attribute.get( 'values' ) ) {
+			propertyView.add({
+				xtype: 'spelledlistfield',
+				name: 'values',
+				allowBlank: false,
+				fieldLabel: 'Values',
+				listeners: {
+					change: function( value ) {
+						var combobox = this.up( 'componenttemplateproperty' ).down( attributeType.get('type') )
+
+						if( value ) {
+							combobox.bindStore( attribute.get( 'values' ) )
+						}
+					}
+				}
+			})
+
+			defaultValueField.store = attribute.get( 'values' )
+		}
+
+		propertyView.add( defaultValueField )
 
 		propertyView.showConfig()
         propertyView.getForm().loadRecord( attribute )

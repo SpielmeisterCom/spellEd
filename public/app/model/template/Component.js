@@ -3,7 +3,8 @@ Ext.define('Spelled.model.template.Component', {
 
 	requires: [
 		'association.hasmany',
-		'Spelled.data.writer.ComponentTemplate'
+		'Spelled.data.writer.ComponentTemplate',
+		'Spelled.data.reader.Component'
 	],
 
 	iconCls : "tree-component-icon",
@@ -34,9 +35,8 @@ Ext.define('Spelled.model.template.Component', {
 			update:  Spelled.StorageActions.update,
 			destroy: Spelled.StorageActions.destroy
 		},
-		writer: {
-			type: 'componentTemplate'
-		}
+		writer: 'componentTemplate',
+		reader: 'component'
 	},
 
 	getAttributeByName: function( name ) {

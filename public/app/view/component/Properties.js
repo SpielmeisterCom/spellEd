@@ -45,9 +45,12 @@ Ext.define('Spelled.view.component.Properties', {
 	},
 
 	addCustomEditor: function( key, attribute ) {
-		var value = attribute.value,
-			type  = attribute.type,
+		var value  = attribute.value,
+			type   = attribute.type,
+			values = attribute.values,
 			cellEditorConfig = { field: { xtype: type, value: value, initialValue: attribute.initialValue } }
+
+		if( Ext.isArray( values ) && values.length > 0 ) cellEditorConfig.field.store = values
 
 		this.customEditors[ key ] = new Ext.grid.CellEditor( cellEditorConfig )
 	}
