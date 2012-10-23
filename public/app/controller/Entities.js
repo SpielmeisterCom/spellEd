@@ -79,12 +79,16 @@ Ext.define('Spelled.controller.Entities', {
 			target = store.getById( targetId ),
 			entity = store.getById( entityId )
 
-		delete entity[ 'Spelled.model.config.EntityBelongsToInstance' ]
-		delete entity[ 'Spelled.model.template.EntityBelongsToInstance' ]
-		delete entity[ 'Spelled.model.config.SceneBelongsToInstance' ]
+		if( dropPosition === "append" ) {
+			delete entity[ 'Spelled.model.config.EntityBelongsToInstance' ]
+			delete entity[ 'Spelled.model.template.EntityBelongsToInstance' ]
+			delete entity[ 'Spelled.model.config.SceneBelongsToInstance' ]
+			entity.setEntity( target )
+			target.getChildren().add( entity )
+			target.setDirty()
+			console.log( target.dirty )
+		}
 
-		entity.setEntity( target )
-		target.getChildren().add( entity )
 	},
 
 	removeEntity: function( entity ) {
