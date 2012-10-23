@@ -38,7 +38,11 @@ define(
 		 * @param {Object} scene
 		 */
 		var toEditorFormat = function( scene ) {
-			var result = _.clone( scene )
+			var result = {
+				name: scene.name,
+				namespace: scene.namespace,
+				systems: scene.systems
+			}
 
 			result.entities = _.map(
 				scene.entities,
