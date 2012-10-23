@@ -39,6 +39,7 @@ define(
 		 */
 		var toEditorFormat = function( scene ) {
 			var result = {
+				id: scene.id,
 				name: scene.name,
 				namespace: scene.namespace,
 				systems: scene.systems
