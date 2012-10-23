@@ -55,9 +55,28 @@ define(
 			return result
 		}
 
+		/**
+		 * This function creates a scene in the spell runtime module format. It requires the scene in the editor format as input.
+		 *
+		 * @param {Object} scene
+		 */
+		var toRuntimeModuleFormat = function( scene ) {
+			var result = _.pick( scene, 'name', 'namespace', 'version', 'type', 'systems' )
+
+			result.entities = _.map(
+				scene.getEntities,
+				function( entityEditorFormat ) {
+					return entityConverter.toEngineFormat( entityEditorFormat, { includeEntityIds: true } )
+				}
+			)
+
+			return result
+		}
+
 		return {
 			toEngineFormat : toEngineFormat,
-			toEditorFormat : toEditorFormat
+			toEditorFormat : toEditorFormat,
+			toRuntimeModuleFormat: toRuntimeModuleFormat
 		}
 	}
 )

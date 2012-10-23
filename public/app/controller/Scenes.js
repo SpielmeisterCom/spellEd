@@ -469,11 +469,11 @@ Ext.define('Spelled.controller.Scenes', {
 
 		switch( this.getTreeItemType( record ) ){
 			case this.TREE_ITEM_TYPE_SYSTEM_ITEM:
-				this.application.fireEvent( 'movescenesystem', record.getId(), overModel.getId(), dropPosition )
+				this.application.fireEvent( 'movescenesystem', overModel.getId(), record.getId(), dropPosition )
 				break
 			case this.TREE_ITEM_TYPE_ENTITIES:
 			case this.TREE_ITEM_TYPE_ENTITY:
-				this.application.fireEvent( 'movesceneentity', record.getId(), overModel.getId(), dropPosition  )
+				this.application.fireEvent( 'movesceneentity', overModel.getId(), record.getId(), dropPosition  )
 				break
 		}
 	},
@@ -699,7 +699,7 @@ Ext.define('Spelled.controller.Scenes', {
 				type : 'spelled.debug.startRuntimeModule',
 				payload : {
 					runtimeModule: Ext.amdModules.createProjectInEngineFormat( project ),
-					scene: Ext.amdModules.sceneConverter.toEngineFormat( scene.getData( true ), { includeEntityIds: true })
+					scene: Ext.amdModules.sceneConverter.toRuntimeModuleFormat( scene.getData( true ) )
 				}
 			}
 		)
