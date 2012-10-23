@@ -473,7 +473,7 @@ Ext.define('Spelled.controller.Menu', {
 	showCreateEntity: function( ) {
 		var node             = this.application.getLastSelectedNode( this.getScenesTree() ),
 			scenesController = this.application.getController('Scenes'),
-			type             = scenesController.getClickedTreeItemType( node)
+			type             = scenesController.getTreeItemType( node)
 
 		var owner = ( type === scenesController.TREE_ITEM_TYPE_ENTITIES ) ?
 			Ext.getStore( 'config.Scenes' ).getById( node.parentNode.getId() )

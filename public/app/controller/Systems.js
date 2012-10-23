@@ -49,10 +49,15 @@ Ext.define('Spelled.controller.Systems', {
 		})
 
 		this.application.on({
-				showsystemitem: this.showSystemItem,
+				showsystemitem  : this.showSystemItem,
+				movescenesystem : this.moveSystem,
 				scope: this
 			}
 		)
+	},
+
+	moveSystem: function( targetId, systemId ) {
+		console.log( systemId + " -> " + targetId )
 	},
 
 	moveSystemNodeDown: function( node ) {

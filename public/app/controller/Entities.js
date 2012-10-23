@@ -68,9 +68,24 @@ Ext.define('Spelled.controller.Entities', {
 			showentityinfo       : this.showEntityInfo,
 			showentityremovealert: this.showEntityRemoveAlert,
 			removeentity         : this.removeEntity,
+			movesceneentity      : this.moveEntity,
 			scope: this
 		})
     },
+
+	moveEntity: function( targetId, entityId, dropPosition ) {
+		console.log( entityId + " -> " + targetId + ": " + dropPosition)
+		var store  = this.getConfigEntitiesStore(),
+			target = store.getById( targetId ),
+			entity = store.getById( entityId )
+
+		delete entity[ 'Spelled.model.config.EntityBelongsToInstance' ]
+		delete entity[ 'Spelled.model.template.EntityBelongsToInstance' ]
+		delete entity[ 'Spelled.model.config.SceneBelongsToInstance' ]
+
+		entity.setEntity( target )
+		target.getChildren().add( entity )
+	},
 
 	removeEntity: function( entity ) {
 		Ext.Msg.confirm(
@@ -192,7 +207,11 @@ Ext.define('Spelled.controller.Entities', {
 
 		var node = this.application.getLastSelectedNode( this.getScenesTree() )
 		node.set( 'leaf', false )
-		this.getScenesTree().selectPath( node.appendChild( record.createTreeNode( node )).getPath() )
+
+		var entityNode = record.createTreeNode( node )
+		this.getScenesTree().selectPath( node.appendChild( entityNode ).getPath() )
+
+		entityNode.expand( true, function() { entityNode.collapse( true ) } )
 
 		window.close()
     },

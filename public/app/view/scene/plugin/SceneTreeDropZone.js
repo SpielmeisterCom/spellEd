@@ -7,23 +7,19 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 		var view           = this.view,
 			draggedRecords = data.records,
 			targetNode     = view.getRecord(node),
-			targetNodeType = targetNode.get( 'iconCls' ),
 			record         = draggedRecords[0],
-			recordType     = record.get( 'iconCls' ),
 			valid          = false
 
 
-		switch( recordType ) {
+		switch( record.get( 'iconCls' ) ) {
 			case 'tree-system-icon':
 				valid = this.checkSystemDrag( targetNode, position )
 				break
 			case 'tree-scene-entity-icon':
 			case 'tree-scene-entity-readonly-icon':
-				valid = this.checkEntityDrag(  targetNode, position  )
+				valid = this.checkEntityDrag(  targetNode  )
 				break
 		}
-console.log( targetNode )
-console.log( "dragt: " + record.get( 'iconCls' ) + " -> " +targetNode.get( 'iconCls' ) )
 
 		if (Ext.Array.contains(draggedRecords, targetNode)) valid = false
 
@@ -41,10 +37,8 @@ console.log( "dragt: " + record.get( 'iconCls' ) + " -> " +targetNode.get( 'icon
 		return false
 	},
 
-	checkEntityDrag: function( targetNode, position ) {
-		var targetNodeType = targetNode.get( 'iconCls' ),
-			parentNode     = targetNode.parentNode,
-			parentNodeType = parentNode.get( 'iconCls' )
+	checkEntityDrag: function( targetNode ) {
+		var targetNodeType = targetNode.get( 'iconCls' )
 
 		if( targetNodeType === 'tree-scene-entity-icon' || targetNodeType === 'tree-scene-entity-readonly-icon' ) return true
 

@@ -228,6 +228,10 @@ Ext.define('Spelled.controller.Scenes', {
 			'renderedscene > toolbar button[action="fullscreen"]': {
 				click: me.activateFullscreen
 			},
+
+			'scenetreelist > treeview': {
+				drop : me.dispatchTreeNodeDrop
+			},
 			'scenetreelist': {
 				itemdblclick   : me.dispatchTreeDblClick,
 				select         : me.dispatchTreeClick,
@@ -354,7 +358,7 @@ Ext.define('Spelled.controller.Scenes', {
 		//TODO: refactor to listen on itemclicks even if its selected.
 		this.dispatchTreeClick( treePanel, record  )
 
-		switch( this.getClickedTreeItemType( record ) ) {
+		switch( this.getTreeItemType( record ) ) {
 			case this.TREE_ITEM_TYPE_SCRIPT:
 				this.openSceneScript()
 				break
@@ -442,7 +446,7 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	checkIfTreeColumnIsEditable: function( editor, e ) {
-		return ( this.getClickedTreeItemType( e.record ) === this.TREE_ITEM_TYPE_ENTITY )
+		return ( this.getTreeItemType( e.record ) === this.TREE_ITEM_TYPE_ENTITY )
 	},
 
 	setDefaultScene: function( scene ) {
@@ -460,7 +464,21 @@ Ext.define('Spelled.controller.Scenes', {
 		})
 	},
 
-	getClickedTreeItemType: function( record ) {
+	dispatchTreeNodeDrop: function(  node, data, overModel, dropPosition ) {
+		var record = data.records[ 0 ]
+
+		switch( this.getTreeItemType( record ) ){
+			case this.TREE_ITEM_TYPE_SYSTEM_ITEM:
+				this.application.fireEvent( 'movescenesystem', record.getId(), overModel.getId(), dropPosition )
+				break
+			case this.TREE_ITEM_TYPE_ENTITIES:
+			case this.TREE_ITEM_TYPE_ENTITY:
+				this.application.fireEvent( 'movesceneentity', record.getId(), overModel.getId(), dropPosition  )
+				break
+		}
+	},
+
+	getTreeItemType: function( record ) {
 		var type = undefined
 
 		switch( record.get('iconCls') ) {
@@ -496,7 +514,7 @@ Ext.define('Spelled.controller.Scenes', {
 		var node = gridView.getRecord( gridView.findTargetByEvent(e) )
 		e.stopEvent()
 
-		switch( this.getClickedTreeItemType( node ) ) {
+		switch( this.getTreeItemType( node ) ) {
 			case this.TREE_ITEM_TYPE_ENTITIES:
 				this.application.getController( 'Entities').showEntitiesFolderListContextMenu( gridView, node, columnIndex, rowIndex, e )
 				break
@@ -520,7 +538,7 @@ Ext.define('Spelled.controller.Scenes', {
 		var icons  = undefined,
 			record = view.getRecord( node )
 
-		switch( this.getClickedTreeItemType( record ) ) {
+		switch( this.getTreeItemType( record ) ) {
 			case this.TREE_ITEM_TYPE_ENTITIES:
 			case this.TREE_ITEM_TYPE_ENTITY:
 			case this.TREE_ITEM_TYPE_SCENE:
@@ -536,7 +554,7 @@ Ext.define('Spelled.controller.Scenes', {
 	dispatchTreeClick: function( treePanel, record ) {
 		this.getRightPanel().removeAll()
 
-		switch( this.getClickedTreeItemType( record ) ) {
+		switch( this.getTreeItemType( record ) ) {
 			case this.TREE_ITEM_TYPE_SCENE:
 				this.getRightPanel().add( { xtype: 'label' , docString : '#!/guide/concepts_scenes'} )
 
@@ -818,6 +836,8 @@ Ext.define('Spelled.controller.Scenes', {
 			if( project.get( 'startScene' ) == scene.getFullName() ) {
 				node.set( 'iconCls', 'tree-default-scene-icon' )
 			}
+
+			node.expand( true, function() { node.collapse( true ) } )
 		},this)
 	},
 
