@@ -7,6 +7,9 @@ Ext.define('Spelled.view.scene.plugin.TreeViewDragDrop' ,{
 		'Spelled.view.scene.plugin.SceneTreeDropZone'
 	],
 
+	expandDelay: 250,
+	nodeHighlightOnRepair: false,
+
 	onViewRender : function(view) {
 		var me = this,
 			scrollEl;

@@ -549,7 +549,7 @@ Ext.define('Spelled.controller.Scenes', {
 				this.getRightPanel().add( { xtype: 'label' , docString : '#!/guide/concepts_entities_components'} )
 				break
 			case this.TREE_ITEM_TYPE_ENTITY:
-				this.application.getController('Entities').showEntityInfo( record.getId() )
+				this.application.fireEvent( 'showentityinfo', record.getId() )
 				break
 			case this.TREE_ITEM_TYPE_SYSTEM:
 				var scene = this.getConfigScenesStore().getById( record.parentNode.getId() )

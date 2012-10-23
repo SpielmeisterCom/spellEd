@@ -354,7 +354,6 @@ Ext.define('Spelled.controller.Components', {
 					{
 						type : 'spelled.debug.updateComponent',
 						payload : {
-							scene       : activeScene.get( 'name' ),
 							entityId    : component.getEntity().getId(),
 							componentId : component.get( 'templateId' ),
 							config      : componentConfig

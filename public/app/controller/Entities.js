@@ -65,6 +65,7 @@ Ext.define('Spelled.controller.Entities', {
         })
 
 		this.application.on({
+			showentityinfo       : this.showEntityInfo,
 			showentityremovealert: this.showEntityRemoveAlert,
 			removeentity         : this.removeEntity,
 			scope: this
