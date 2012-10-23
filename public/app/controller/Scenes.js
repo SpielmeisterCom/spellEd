@@ -659,7 +659,8 @@ Ext.define('Spelled.controller.Scenes', {
 		var panel   = button.up( 'panel' ),
 			project = this.application.getActiveProject(),
 			iframe  = panel.down( 'spellediframe' ),
-			sceneId = iframe.sceneId
+			sceneId = iframe.sceneId,
+			scene   = this.getConfigScenesStore().getById( sceneId )
 
 		iframe.destroy()
 
@@ -677,8 +678,11 @@ Ext.define('Spelled.controller.Scenes', {
 		this.engineMessageBus.send(
 			newIframe.getId(),
 			{
-				type : 'spelled.debug.executeRuntimeModule',
-				payload : Ext.amdModules.createProjectInEngineFormat( project )
+				type : 'spelled.debug.startRuntimeModule',
+				payload : {
+					runtimeModule: Ext.amdModules.createProjectInEngineFormat( project ),
+					scene: Ext.amdModules.sceneConverter.toEngineFormat( scene.getData( true ), { includeEntityIds: true })
+				}
 			}
 		)
 	},
