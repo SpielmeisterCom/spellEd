@@ -5,12 +5,14 @@ Ext.define('Spelled.controller.templates.Systems', {
 		'Spelled.view.template.system.Edit',
 		'Spelled.view.template.system.Details',
 		'Spelled.view.template.system.Input',
+		'Spelled.view.template.system.config.Items',
 		'Spelled.view.template.system.input.Add',
 		'Spelled.view.template.system.input.ComboBox',
 		'Spelled.view.script.Editor',
 
 		'Spelled.model.template.System',
 		'Spelled.model.template.SystemInputDefinition',
+		'Spelled.model.template.SystemConfigItem',
 		'Spelled.model.Script',
 
 		'Spelled.store.template.Systems',
@@ -25,12 +27,14 @@ Ext.define('Spelled.controller.templates.Systems', {
 		'template.system.Input',
 		'template.system.input.Add',
 		'template.system.input.ComboBox',
+		'template.system.config.Items',
 		'script.Editor'
 	],
 
 	models: [
 		'template.System',
 		'template.SystemInputDefinition',
+		'template.SystemConfigItem',
 		'Script'
 	],
 
@@ -210,12 +214,13 @@ Ext.define('Spelled.controller.templates.Systems', {
     },
 
 	prepareConfigurationView: function( view, systemTemplate ) {
-		var form      = view.down( 'systemtemplatedetails' ),
-			inputView = view.down( 'systemtemplateinputlist' ),
-			config    = systemTemplate.get( 'config' )
+		var form       = view.down( 'systemtemplatedetails' ),
+			inputView  = view.down( 'systemtemplateinputlist' ),
+			configView = view.down( 'systemtemplateconfig' ),
+			config     = systemTemplate.get( 'config' )
 
 		form.loadRecord( systemTemplate )
-		form.getForm().setValues( { tmpName: systemTemplate.getFullName(), active: config.active } )
+		form.getForm().setValues( { tmpName: systemTemplate.getFullName() } )
 
 		if( systemTemplate.isReadonly() ) {
 			view.disable()
@@ -242,7 +247,7 @@ Ext.define('Spelled.controller.templates.Systems', {
                 template: systemTemplate
             }
         )
-
+console.log( systemTemplate.getConfig() )
         var tab = this.application.createTab( templateEditor, editView )
 
 		this.prepareConfigurationView( configurationView, systemTemplate )

@@ -24,13 +24,6 @@ Ext.define('Spelled.view.template.system.Details', {
 					fieldLabel: 'Name',
 					name: 'tmpName',
 					anchor: '100%'
-				},
-				{
-					xtype: 'checkbox',
-					fieldLabel: 'Active',
-					name: 'active',
-					anchor: '100%',
-					handler: Ext.bind( this.onConfigChange, this )
 				}
 			]
 		})

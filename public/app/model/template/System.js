@@ -13,19 +13,26 @@ Ext.define('Spelled.model.template.System', {
     fields: [
         "namespace",
         "name",
-		{ name: "config", type: "object", defaultValue: { active: true } }
+		{ name: "config", type: "object" }
     ],
 
-    hasOne: {
-        model: 'Spelled.model.Script',
-        foreignKey: 'templateId'
-    },
-
-    hasMany: {
-        model: 'Spelled.model.template.SystemInputDefinition',
-        associationKey: 'input',
-        name :  'getInput'
-    },
+	associations: [
+		{
+			type: 'hasOne',
+			model: 'Spelled.model.Script',
+			foreignKey: 'templateId'
+		},{
+			type: 'hasMany',
+			model: 'Spelled.model.template.SystemInputDefinition',
+			associationKey: 'input',
+			name :  'getInput'
+		},{
+			type: 'hasMany',
+			model: 'Spelled.model.template.SystemConfigItem',
+			associationKey: 'config',
+			name :  'getConfig'
+		}
+	],
 
     proxy: {
         type: 'direct',
@@ -61,6 +68,17 @@ Ext.define('Spelled.model.template.System', {
 			)
 
 		}
+	},
+
+	getConfigForScene: function() {
+		var config = {}
+		this.getConfig().each(
+			function( item ) {
+				config[ item.get( 'name' ) ] = item.get( 'default' )
+			}
+		)
+
+		return config
 	},
 
 	constructor: function() {

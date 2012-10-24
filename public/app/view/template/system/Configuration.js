@@ -13,6 +13,10 @@ Ext.define('Spelled.view.template.system.Configuration', {
 			flex: 1
 		},
 		{
+			xtype: 'systemtemplateconfigitems',
+			flex: 2
+		},
+		{
 			xtype: 'systemtemplateinputlist',
 			flex: 2
 		}
