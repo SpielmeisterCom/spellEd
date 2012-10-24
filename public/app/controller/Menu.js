@@ -415,7 +415,7 @@ Ext.define('Spelled.controller.Menu', {
 		var node = this.application.getLastSelectedNode( this.getScenesTree() )
 
 		if( node && node.isLeaf() && !node.isRoot() ) {
-			this.application.getController( 'Systems' ).removeSceneSystem( node.get('text') )
+			this.application.getController( 'Systems' ).removeSceneSystem( node.get('text'), node.parentNode.get( 'text' ) )
 			node.remove()
 		}
 	},

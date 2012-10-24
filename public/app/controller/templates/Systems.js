@@ -79,6 +79,10 @@ Ext.define('Spelled.controller.templates.Systems', {
 				click: this.showInputListContextMenu
 			},
 
+			'systemtemplatedetails': {
+				configchange: this.updateSystemConfig
+			},
+
 			'systemtemplateinputlist [action="showAddInput"]' : {
 				click: this.showAddInput
 			},
@@ -95,6 +99,15 @@ Ext.define('Spelled.controller.templates.Systems', {
 			globalsave: this.saveAllSystemScriptsInTabs,
 			scope: this
 		})
+	},
+
+	updateSystemConfig: function( system, configFieldName, value ) {
+		var config = system.get( 'config' )
+
+		if( config[ configFieldName ] !== value ) {
+			config[ configFieldName ] = value
+			system.setDirty()
+		}
 	},
 
 	saveAllSystemScriptsInTabs: function() {
@@ -198,10 +211,11 @@ Ext.define('Spelled.controller.templates.Systems', {
 
 	prepareConfigurationView: function( view, systemTemplate ) {
 		var form      = view.down( 'systemtemplatedetails' ),
-			inputView = view.down( 'systemtemplateinputlist' )
+			inputView = view.down( 'systemtemplateinputlist' ),
+			config    = systemTemplate.get( 'config' )
 
 		form.loadRecord( systemTemplate )
-		form.getForm().setValues( { tmpName: systemTemplate.getFullName() } )
+		form.getForm().setValues( { tmpName: systemTemplate.getFullName(), active: config.active } )
 
 		if( systemTemplate.isReadonly() ) {
 			view.disable()

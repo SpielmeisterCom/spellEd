@@ -84,7 +84,7 @@ Ext.define('Spelled.controller.Scenes', {
 				ctrl: true,
 				scope: this,
 				handler: function( keycode, event) {
-					this.application.activateTabByEvent( this.getScenes(), event )
+					me.application.activateTabByEvent( me.getScenes(), event )
 				}
 			}
 		)
@@ -95,7 +95,7 @@ Ext.define('Spelled.controller.Scenes', {
 				ctrl: true,
 				scope: this,
 				handler: function( keycode, event) {
-					this.application.activateTabByEvent( this.getLibrary(), event )
+					me.application.activateTabByEvent( me.getLibrary(), event )
 				}
 			}
 		)
@@ -118,7 +118,7 @@ Ext.define('Spelled.controller.Scenes', {
 				scope: this,
 				fn: function( keyCode, e ) {
 					e.stopEvent()
-					this.application.fireEvent( 'globalsave' )
+					me.application.fireEvent( 'globalsave' )
 				}
 			}
 		)
@@ -132,7 +132,7 @@ Ext.define('Spelled.controller.Scenes', {
 				scope: this,
 				fn: function( keyCode, e ) {
 					e.stopEvent()
-					this.renderedSceneToggleButton( 'toggleTitleSafe' )
+					me.renderedSceneToggleButton( 'toggleTitleSafe' )
 				}
 			}
 		)
@@ -145,7 +145,7 @@ Ext.define('Spelled.controller.Scenes', {
 				scope: this,
 				fn: function( keyCode, e ) {
 					e.stopEvent()
-					this.renderedSceneToggleButton( 'toggleGrid' )
+					me.renderedSceneToggleButton( 'toggleGrid' )
 				}
 			}
 		)

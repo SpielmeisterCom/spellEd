@@ -45,6 +45,9 @@ Ext.define('Spelled.controller.Systems', {
 			},
 			'scenesystemslistcontextmenu [action="showAddSystem"]': {
 				click: this.showAddSystem
+			},
+			'scenetreelist': {
+				checkchange: this.updateSceneSystems
 			}
 		})
 
@@ -82,18 +85,17 @@ Ext.define('Spelled.controller.Systems', {
 		this.application.getController('Menu').showSceneSystemsListContextMenu( e )
 	},
 
-	removeSceneSystem: function( systemId ) {
-		var scene    = this.application.getActiveScene()
+	removeSceneSystem: function( systemId, folder ) {
+		var scene    = this.application.getActiveScene(),
+			systems  = scene.get('systems')[ folder ]
 
-		var result = {}
-		Ext.Object.each(
-			scene.get('systems'),
-			function( key, values ) {
-				result[ key ] = Ext.Array.remove( values, systemId )
+		Ext.Array.each(
+			systems,
+			function( item ) {
+				if( item.id === systemId ) Ext.Array.remove( systems, item )
 			}
 		)
 
-		scene.set( 'systems', result )
 		scene.setDirty()
 		this.refreshSceneSystemList( scene )
 	},
@@ -104,12 +106,14 @@ Ext.define('Spelled.controller.Systems', {
 			tree    = window.down('treepanel'),
 			records = tree.getView().getChecked(),
 			scene   = this.application.getActiveScene(),
-			systems = scene.get('systems')
+			systems = scene.get('systems'),
+			store   = this.getTemplateSystemsStore()
 
 		Ext.each(
 			records,
 			function( record ) {
-				systems[ values.type ].push( record.get('text') )
+				var system = store.findRecord( 'templateId', record.get('text') )
+				systems[ values.type ].push( {id: record.get('text'), config: system.get( 'config' ) } )
 			}
 		)
 
@@ -170,8 +174,8 @@ Ext.define('Spelled.controller.Systems', {
 			else return getRootNode( node.parentNode )
 		}
 
-		var parent = getRootNode( node ) ,
-			scene  = this.application.getActiveScene()
+		var parent   = getRootNode( node ),
+			scene    = this.application.getActiveScene()
 
 		var systems = {}
 		parent.eachChild(
@@ -179,7 +183,7 @@ Ext.define('Spelled.controller.Systems', {
 				systems[ folder.get('text') ] = []
 				folder.eachChild(
 					function( leaf ){
-						systems[ folder.get('text') ].push( leaf.get('text') )
+						systems[ folder.get('text') ].push( { id: leaf.get('text'), config: leaf.systemConfig } )
 					}
 				)
 			}
@@ -221,23 +225,24 @@ Ext.define('Spelled.controller.Systems', {
 
 				Ext.each(
 					value,
-					function( systemId ) {
-
-						var systemTemplate =  Ext.getStore('template.Systems').getByTemplateId( systemId )
-
+					function( system ) {
+						var systemTemplate =  Ext.getStore('template.Systems').getByTemplateId( system.id )
 						if( systemTemplate ) {
-							node.appendChild(
-								node.createNode( {
-										text         : systemTemplate.getFullName(),
-										cls		     : me.application.getController('Templates').TEMPLATE_TYPE_SYSTEM,
-										leaf         : true,
-										allowDrop    : false,
-										allowDrag    : true,
-										id           : systemTemplate.getId(),
-										iconCls      : "tree-system-icon"
-									}
-								)
+							var newNode = node.createNode( {
+									text         : systemTemplate.getFullName(),
+									cls		     : me.application.getController('Templates').TEMPLATE_TYPE_SYSTEM,
+									checked      : system.config.active,
+									config       : system.config,
+									leaf         : true,
+									allowDrop    : false,
+									allowDrag    : true,
+									id           : systemTemplate.getId(),
+									iconCls      : "tree-system-icon"
+								}
 							)
+
+							newNode.systemConfig = system.config
+							node.appendChild( newNode )
 						}
 					}
 				)

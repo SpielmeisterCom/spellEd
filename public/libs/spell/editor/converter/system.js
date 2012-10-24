@@ -16,7 +16,7 @@ define(
 		 * @return {*}
 		 */
 		var toEngineFormat = function( system ) {
-			var result = _.pick( system , 'version','type' )
+			var result = _.pick( system , 'version', 'type', 'config' )
 
 			result.input = _.map(
 				system.getInput,

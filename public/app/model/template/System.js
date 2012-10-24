@@ -12,7 +12,8 @@ Ext.define('Spelled.model.template.System', {
 
     fields: [
         "namespace",
-        "name"
+        "name",
+		{ name: "config", type: "object", defaultValue: { active: true } }
     ],
 
     hasOne: {
