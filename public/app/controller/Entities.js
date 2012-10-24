@@ -74,21 +74,29 @@ Ext.define('Spelled.controller.Entities', {
     },
 
 	moveEntity: function( targetId, entityId, dropPosition ) {
-		console.log( entityId + " -> " + targetId + ": " + dropPosition)
-		var store  = this.getConfigEntitiesStore(),
-			target = store.getById( targetId ),
-			entity = store.getById( entityId )
+		var store       = this.getConfigEntitiesStore(),
+			target      = store.getById( targetId ),
+			entity      = store.getById( entityId ),
+			owner       = entity.getOwner(),
+			targetOwner = target.getOwner(),
+			entities    = ( entity.hasScene() ) ? owner.getEntities() : owner.getChildren()
+
+		entities.remove( entity )
+		delete entity[ 'Spelled.model.config.EntityBelongsToInstance' ]
+		delete entity[ 'Spelled.model.template.EntityBelongsToInstance' ]
+		delete entity[ 'Spelled.model.config.SceneBelongsToInstance' ]
 
 		if( dropPosition === "append" ) {
-			delete entity[ 'Spelled.model.config.EntityBelongsToInstance' ]
-			delete entity[ 'Spelled.model.template.EntityBelongsToInstance' ]
-			delete entity[ 'Spelled.model.config.SceneBelongsToInstance' ]
 			entity.setEntity( target )
 			target.getChildren().add( entity )
-			target.setDirty()
-			console.log( target.dirty )
+		} else {
+			var offset         = ( dropPosition === 'after' ) ? 1 : 0,
+				targetEntities = ( target.hasScene() ) ? targetOwner.getEntities() : targetOwner.getChildren()
+
+			targetEntities.insert( targetEntities.indexOf( target ) + offset, entity )
 		}
 
+		target.setDirty()
 	},
 
 	removeEntity: function( entity ) {

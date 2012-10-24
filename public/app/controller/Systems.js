@@ -56,21 +56,21 @@ Ext.define('Spelled.controller.Systems', {
 		)
 	},
 
-	moveSystem: function( targetId, systemId ) {
-		console.log( systemId + " -> " + targetId )
+	moveSystem: function( node ) {
+		this.updateSceneSystems( node )
 	},
 
 	moveSystemNodeDown: function( node ) {
 		if( node.nextSibling ) {
 			node.parentNode.insertBefore( node.nextSibling, node )
-			this.updateSceneSystems( null, node )
+			this.updateSceneSystems( node )
 		}
 	},
 
 	moveSystemNodeUp: function( node ) {
 		if( node.previousSibling ) {
 			node.parentNode.insertBefore( node, node.previousSibling )
-			this.updateSceneSystems( null, node )
+			this.updateSceneSystems( node )
 		}
 	},
 
@@ -164,13 +164,13 @@ Ext.define('Spelled.controller.Systems', {
 		view.show()
 	},
 
-	updateSceneSystems: function( node, model ) {
+	updateSceneSystems: function( node ) {
 		var getRootNode = function( node ) {
 			if( node.get( 'text' ) === "Systems" ) return node
 			else return getRootNode( node.parentNode )
 		}
 
-		var parent = getRootNode( model ) ,
+		var parent = getRootNode( node ) ,
 			scene  = this.application.getActiveScene()
 
 		var systems = {}

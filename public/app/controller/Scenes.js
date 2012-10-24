@@ -469,7 +469,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		switch( this.getTreeItemType( record ) ){
 			case this.TREE_ITEM_TYPE_SYSTEM_ITEM:
-				this.application.fireEvent( 'movescenesystem', overModel.getId(), record.getId(), dropPosition )
+				this.application.fireEvent( 'movescenesystem', record )
 				break
 			case this.TREE_ITEM_TYPE_ENTITIES:
 			case this.TREE_ITEM_TYPE_ENTITY:
