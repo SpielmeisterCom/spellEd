@@ -118,7 +118,7 @@ Ext.define('Spelled.controller.Systems', {
 					systemConfig = { id: record.get('text'), config: system.get( 'config' ) }
 
 				systems[ values.type ].push( systemConfig )
-				this.application.fireEvent( 'systemaddtoscene', systemConfig, record.get('text'), systems[ values.type ].length - 1 )
+				this.application.fireEvent( 'systemaddtoscene', systemConfig, values.type, systems[ values.type ].length - 1 )
 			},
 			this
 		)
