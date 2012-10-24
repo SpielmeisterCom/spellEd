@@ -45,9 +45,6 @@ Ext.define('Spelled.controller.Systems', {
 			},
 			'scenesystemslistcontextmenu [action="showAddSystem"]': {
 				click: this.showAddSystem
-			},
-			'scenetreelist': {
-				checkchange: this.updateSceneSystems
 			}
 		})
 
@@ -92,8 +89,13 @@ Ext.define('Spelled.controller.Systems', {
 		Ext.Array.each(
 			systems,
 			function( item ) {
-				if( item.id === systemId ) Ext.Array.remove( systems, item )
-			}
+				if( item.id === systemId ) {
+					Ext.Array.remove( systems, item )
+					this.application.fireEvent( 'systemremovefromscene', item.id, folder )
+					return false
+				}
+			},
+			this
 		)
 
 		scene.setDirty()
@@ -112,9 +114,13 @@ Ext.define('Spelled.controller.Systems', {
 		Ext.each(
 			records,
 			function( record ) {
-				var system = store.findRecord( 'templateId', record.get('text') )
-				systems[ values.type ].push( {id: record.get('text'), config: system.get( 'config' ) } )
-			}
+				var system       = store.findRecord( 'templateId', record.get('text') ),
+					systemConfig = { id: record.get('text'), config: system.get( 'config' ) }
+
+				systems[ values.type ].push( systemConfig )
+				this.application.fireEvent( 'systemaddtoscene', systemConfig, record.get('text'), systems[ values.type ].length - 1 )
+			},
+			this
 		)
 
 		scene.set( 'systems', systems )
@@ -128,15 +134,20 @@ Ext.define('Spelled.controller.Systems', {
 	showAddSystem: function( ) {
 		var View = this.getSystemAddView(),
 			view = new View(),
-			availableSystemsView  = view.down( 'treepanel' ),
+			availableSystemsView = view.down( 'treepanel' ),
 			templateSystemsStore = Ext.getStore( 'template.Systems' ),
-			scene    			  = this.application.getActiveScene()
+			scene    			 = this.application.getActiveScene()
 
 		var assignedSystems = []
 		Ext.Object.each(
 			scene.get('systems'),
 			function( key, value ) {
-				assignedSystems = Ext.Array.merge( assignedSystems, value )
+				Ext.Array.each(
+					value,
+					function( item ) {
+						assignedSystems.push( item.id )
+					}
+				)
 			}
 		)
 
@@ -231,7 +242,6 @@ Ext.define('Spelled.controller.Systems', {
 							var newNode = node.createNode( {
 									text         : systemTemplate.getFullName(),
 									cls		     : me.application.getController('Templates').TEMPLATE_TYPE_SYSTEM,
-									checked      : system.config.active,
 									config       : system.config,
 									leaf         : true,
 									allowDrop    : false,

@@ -230,7 +230,8 @@ Ext.define('Spelled.controller.Scenes', {
 			},
 
 			'scenetreelist > treeview': {
-				drop : me.dispatchTreeNodeDrop
+				drop : me.dispatchTreeNodeDrop,
+				beforedrop: me.dispatchTreeNodeBeforeDrop
 			},
 			'scenetreelist': {
 				itemdblclick   : me.dispatchTreeDblClick,
@@ -265,6 +266,9 @@ Ext.define('Spelled.controller.Scenes', {
 			reloadscene: this.reloadSceneKeyEvent,
 			scenetabchange: this.showScenesEditor,
 			systemchange: this.sendSystemChangeToEngine,
+			systemaddtoscene: this.sendSystemAddToSceneToEngine,
+			systemmove: this.sendSystemMoveToEngine,
+			systemremovefromscene: this.sendSystemRemoveFromSceneToEngine,
 			assetchange: this.sendAssetChangeToEngine,
 			scope: this
 		})
@@ -295,11 +299,74 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	sendSystemChangeToEngine: function( model ) {
-		var definition = model.getData( true )
+		var definition   = model.getData( true ),
+			startScene   = this.application.getActiveProject().get( 'startScene' ),
+			scene        = this.getConfigScenesStore().findRecord( 'sceneId', startScene ),
+			systemConfig = false,
+			executionGroupId = false
+
+		Ext.Object.each(
+			scene.get( 'systems' ),
+			function( key, value ) {
+
+				executionGroupId = key
+				Ext.Array.each(
+					value,
+					function( system ) {
+						if( system.id === model.get( 'templateId' ) ) {
+							systemConfig = system.config
+							return false
+						}
+					}
+				)
+
+				if( systemConfig ) return false
+			}
+		)
+
+		if( !systemConfig ) return
+
 		this.sendChangeToEngine(
-			"spelled.debug.updateSystem",
+			"spelled.debug.system.update",
 			{
-				definition: Ext.amdModules.systemConverter.toEngineFormat( definition )
+				executionGroupId: executionGroupId,
+				definition: Ext.amdModules.systemConverter.toEngineFormat( definition ),
+				systemConfig: systemConfig,
+				systemId: model.getFullName()
+			}
+		)
+	},
+
+	sendSystemAddToSceneToEngine: function( system, executionGroupId, index ) {
+		this.sendChangeToEngine(
+			"spelled.debug.system.add",
+			{
+				executionGroupId: executionGroupId,
+				systemConfig: system.config,
+				index: index,
+				systemId: system.id
+			}
+		)
+	},
+
+	sendSystemRemoveFromSceneToEngine: function( id, executionGroupId ) {
+		this.sendChangeToEngine(
+			"spelled.debug.system.remove",
+			{
+				executionGroupId: executionGroupId,
+				systemId: id
+			}
+		)
+	},
+
+	sendSystemMoveToEngine: function( id, srcExecutionGroupId, dstExecutionGroupId, index ) {
+		this.sendChangeToEngine(
+			"spelled.debug.system.remove",
+			{
+				srcExecutionGroupId: srcExecutionGroupId,
+				dstExecutionGroupId: dstExecutionGroupId,
+				dstIndex: index,
+				systemId: id
 			}
 		)
 	},
@@ -474,6 +541,36 @@ Ext.define('Spelled.controller.Scenes', {
 			case this.TREE_ITEM_TYPE_ENTITIES:
 			case this.TREE_ITEM_TYPE_ENTITY:
 				this.application.fireEvent( 'movesceneentity', overModel.getId(), record.getId(), dropPosition  )
+				break
+		}
+	},
+
+	dispatchTreeNodeBeforeDrop: function( node, data, overModel, dropPosition ) {
+		var record = data.records[ 0 ]
+
+		switch( this.getTreeItemType( record ) ){
+			case this.TREE_ITEM_TYPE_SYSTEM_ITEM:
+				var dstExecutionGroupId = overModel.parentNode.get( 'text' ),
+					srcExecutionGroupId = record.parentNode.get( 'text' ),
+					index               = overModel.get( 'index' )
+
+				if( dropPosition === 'append' ) {
+					dstExecutionGroupId = overModel.get( 'text' )
+					index = overModel.childNodes.length
+				} else {
+					index = ( dropPosition === 'after' ) ? index + 1 : index
+				}
+
+				this.sendChangeToEngine(
+					"spelled.debug.system.move",
+					{
+						dstExecutionGroupId: dstExecutionGroupId,
+						srcExecutionGroupId: srcExecutionGroupId,
+						dstIndex: index,
+						systemId: record.get( 'text' )
+					}
+				)
+
 				break
 		}
 	},
