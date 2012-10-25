@@ -5,8 +5,6 @@ Ext.define('Spelled.view.scene.TreeList' ,{
 	title: "Scene - Navigator",
 	header: false,
 
-    animate: false,
-    animCollapse: false,
     store : 'ScenesTree',
 
 	viewConfig: {
