@@ -91,7 +91,11 @@ Ext.define('Spelled.controller.Entities', {
 			target.getChildren().add( entity )
 		} else {
 			var offset         = ( dropPosition === 'after' ) ? 1 : 0,
-				targetEntities = ( target.hasScene() ) ? targetOwner.getEntities() : targetOwner.getChildren()
+				hasScene       = target.hasScene(),
+				targetEntities = ( hasScene ) ? targetOwner.getEntities() : targetOwner.getChildren()
+
+			if( hasScene ) entity.setScene( targetOwner )
+			else entity.setEntity( targetOwner )
 
 			targetEntities.insert( targetEntities.indexOf( target ) + offset, entity )
 		}
