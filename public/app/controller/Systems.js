@@ -242,7 +242,7 @@ Ext.define('Spelled.controller.Systems', {
 							var newNode = node.createNode( {
 									text         : systemTemplate.getFullName(),
 									cls		     : me.application.getController('Templates').TEMPLATE_TYPE_SYSTEM,
-									config       : system.config,
+									config       : Ext.Object.merge( system.config, systemTemplate.getConfigForScene(), system.config ),
 									leaf         : true,
 									allowDrop    : false,
 									allowDrag    : true,
