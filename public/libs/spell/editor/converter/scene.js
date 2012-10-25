@@ -20,7 +20,12 @@ define(
 		 * @param {Object} config
 		 */
 		var toEngineFormat = function( scene, config ) {
-			var result = _.pick( scene, 'version', 'type', 'systems' )
+			var attributes       = [ 'version', 'type', 'systems' ],
+				includeNamespace = config && !!config.includeNamespace
+
+			if( includeNamespace ) attributes = _.union( attributes, [ 'name', 'namespace' ] )
+
+			var result = _.pick( scene, attributes )
 
 			result.entities = _.map(
 				scene.getEntities,
@@ -55,28 +60,9 @@ define(
 			return result
 		}
 
-		/**
-		 * This function creates a scene in the spell runtime module format. It requires the scene in the editor format as input.
-		 *
-		 * @param {Object} scene
-		 */
-		var toRuntimeModuleFormat = function( scene ) {
-			var result = _.pick( scene, 'name', 'namespace', 'version', 'type', 'systems' )
-
-			result.entities = _.map(
-				scene.getEntities,
-				function( entityEditorFormat ) {
-					return entityConverter.toEngineFormat( entityEditorFormat, { includeEntityIds: true } )
-				}
-			)
-
-			return result
-		}
-
 		return {
 			toEngineFormat : toEngineFormat,
-			toEditorFormat : toEditorFormat,
-			toRuntimeModuleFormat: toRuntimeModuleFormat
+			toEditorFormat : toEditorFormat
 		}
 	}
 )

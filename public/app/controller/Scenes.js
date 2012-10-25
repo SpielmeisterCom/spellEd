@@ -330,7 +330,7 @@ Ext.define('Spelled.controller.Scenes', {
 			"spelled.debug.system.update",
 			{
 				executionGroupId: executionGroupId,
-				definition: Ext.amdModules.systemConverter.toEngineFormat( definition ),
+				definition: Ext.amdModules.systemConverter.toEngineFormat( definition, { includeNamespace: true } ),
 				systemConfig: systemConfig,
 				systemId: model.getFullName()
 			}
@@ -796,7 +796,7 @@ Ext.define('Spelled.controller.Scenes', {
 				type : 'spelled.debug.startRuntimeModule',
 				payload : {
 					runtimeModule: Ext.amdModules.createProjectInEngineFormat( project ),
-					scene: Ext.amdModules.sceneConverter.toRuntimeModuleFormat( scene.getData( true ) )
+					scene: Ext.amdModules.sceneConverter.toEngineFormat( scene.getData( true ), { includeNamespace: true, includeEntityIds: true } )
 				}
 			}
 		)
