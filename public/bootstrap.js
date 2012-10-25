@@ -704,7 +704,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.data.DirectStore": [
     "store.direct"
   ],
-  "Spelled.abstract.plugin.TreeViewDragDrop": [],
   "Spelled.view.template.component.attribute.Object": [
     "widget.spelledobjectfield"
   ],
@@ -1103,7 +1102,6 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.state.Provider": [],
   "Spelled.model.Asset": [],
-  "Spelled.abstract.plugin.ViewDragZone": [],
   "Spelled.abstract.validator.General": [],
   "Spelled.store.asset.Animations": [],
   "Ext.layout.container.Editor": [
@@ -1746,7 +1744,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.template.component.attribute.Sound": [],
   "Ext.layout.component.field.Text": [],
   "Ext.data.DirectStore": [],
-  "Spelled.abstract.plugin.TreeViewDragDrop": [],
   "Spelled.view.template.component.attribute.Object": [],
   "Spelled.view.ui.SpelledRightPanel": [],
   "Spelled.store.AspectRatios": [],
@@ -2006,7 +2003,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.view.TableLayout": [],
   "Ext.state.Provider": [],
   "Spelled.model.Asset": [],
-  "Spelled.abstract.plugin.ViewDragZone": [],
   "Spelled.abstract.validator.General": [],
   "Spelled.store.asset.Animations": [],
   "Ext.layout.container.Editor": [],

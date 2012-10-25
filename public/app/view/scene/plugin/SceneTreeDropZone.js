@@ -6,24 +6,33 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 
 		var view           = this.view,
 			draggedRecords = data.records,
-			targetNode     = view.getRecord(node),
-			record         = draggedRecords[0],
+			targetNode     = view.getRecord( node ),
 			valid          = false
 
 
-		switch( record.get( 'iconCls' ) ) {
-			case 'tree-system-icon':
-				valid = this.checkSystemDrag( targetNode, position )
-				break
-			case 'tree-scene-entity-icon':
-			case 'tree-scene-entity-readonly-icon':
-				valid = this.checkEntityDrag(  targetNode  )
-				break
-		}
+		Ext.Array.each(
+			draggedRecords,
+			function( record ) {
+				switch( record.get( 'iconCls' ) ) {
+					case 'tree-system-icon':
+						valid = this.checkSystemDrag( targetNode, position )
+						break
+					case 'tree-scene-entity-icon':
+					case 'tree-scene-entity-readonly-icon':
+						valid = this.checkEntityDrag(  targetNode  )
+						break
+				}
+
+				if( !valid ) return false
+			},
+			this
+		)
 
 		if (Ext.Array.contains(draggedRecords, targetNode)) valid = false
 
-		return ( valid ) ? view.fireEvent( 'nodedragover', targetNode, position, data, e) : false
+		if( !valid ) return false
+
+		return view.fireEvent('nodedragover', targetNode, position, data, e) !== false
 	},
 
 	checkSystemDrag: function( targetNode, position ) {

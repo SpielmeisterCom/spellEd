@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.scene.plugin.TreeViewDragDrop' ,{
-    extend: 'Spelled.abstract.plugin.TreeViewDragDrop',
+    extend: 'Ext.tree.plugin.TreeViewDragDrop',
 	alias: 'plugin.scenetreedragdrop',
 
 	requires: [

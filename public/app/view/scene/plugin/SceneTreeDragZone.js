@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.scene.plugin.SceneTreeDragZone' ,{
-    extend: 'Spelled.abstract.plugin.ViewDragZone',
+    extend: 'Ext.tree.ViewDragZone',
 
 	animRepair: false,
 
