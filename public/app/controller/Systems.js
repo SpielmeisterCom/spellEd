@@ -239,10 +239,12 @@ Ext.define('Spelled.controller.Systems', {
 					function( system ) {
 						var systemTemplate =  Ext.getStore('template.Systems').getByTemplateId( system.id )
 						if( systemTemplate ) {
+							var config = Ext.Object.merge( {}, systemTemplate.getConfigForScene(), system.config )
+
 							var newNode = node.createNode( {
 									text         : systemTemplate.getFullName(),
 									cls		     : me.application.getController('Templates').TEMPLATE_TYPE_SYSTEM,
-									config       : Ext.Object.merge( system.config, systemTemplate.getConfigForScene(), system.config ),
+									config       : config,
 									leaf         : true,
 									allowDrop    : false,
 									allowDrag    : true,
@@ -251,13 +253,12 @@ Ext.define('Spelled.controller.Systems', {
 								}
 							)
 
+							system.config = config
 							newNode.systemConfig = system.config
 							node.appendChild( newNode )
 						}
 					}
 				)
-
-
 			}
 		)
 	}
