@@ -29,9 +29,5 @@ Ext.define('Spelled.view.template.system.Details', {
 		})
 
 		this.callParent(arguments)
-	},
-
-	onConfigChange: function( field, newValue ) {
-		this.fireEvent( 'configchange', this.getForm().getRecord(), field.getName(), newValue )
 	}
 });

@@ -1,20 +1,37 @@
 Ext.define('Spelled.view.template.system.config.Items' ,{
     extend: 'Ext.panel.Panel',
-    alias : 'widget.systemtemplateconfigitems',
+    alias : 'widget.systemconfig',
 
-    title: 'Default configuration',
+    title: 'Scene system configuration',
 	margins: '0 0 5 0',
 	frame: true,
+	flex: 2,
 
 	initComponent: function() {
-		var me = this;
+		Ext.applyIf( this, {
+			items: [
+				{
+					xtype: 'propertygrid',
+					source: {},
+					listeners: {
+						propertychange: Ext.bind( this.onPropertyChange, this )
+					}
+				}
+			],
+			tools: [{
+				xtype: 'tool-documentation',
+				docString: "#!/guide/concepts_systems"
+			}]
+		})
 
-		me.tools = [{
-			xtype: 'tool-documentation',
-			docString: "#!/guide/concepts_systems"
-		}]
+		this.callParent( arguments )
+	},
 
-		me.callParent( arguments )
+	onPropertyChange: function( source, recordId, value, oldValue ) {
+		this.fireEvent( 'configchange', this.up('systemtemplateconfiguration').down('systemtemplatedetails').getForm().getRecord(), source, recordId, value, oldValue )
+	},
+
+	setSystemSceneConfig: function( config ) {
+		this.down( 'propertygrid' ).setSource( config )
 	}
-
 })

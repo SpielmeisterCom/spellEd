@@ -175,6 +175,8 @@ Ext.define('Spelled.controller.Library', {
 			case this.TYPE_SCRIPT:
 				this.application.fireEvent( 'scriptselect', tree, node )
 				break
+			default:
+				this.getRightPanel().removeAll()
 		}
 	},
 

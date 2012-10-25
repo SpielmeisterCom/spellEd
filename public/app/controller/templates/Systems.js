@@ -60,6 +60,18 @@ Ext.define('Spelled.controller.templates.Systems', {
 		{
 			ref : 'SecondTabPanel',
 			selector: '#SecondTabPanel'
+		},
+		{
+			ref : 'Navigator',
+			selector: '#Navigator'
+		},
+		{
+			ref : 'Scenes',
+			selector: '#Scenes'
+		},
+		{
+			ref : 'ScenesTree',
+			selector: '#ScenesTree'
 		}
 	],
 
@@ -83,8 +95,8 @@ Ext.define('Spelled.controller.templates.Systems', {
 				click: this.showInputListContextMenu
 			},
 
-			'systemtemplatedetails': {
-				configchange: this.updateSystemConfig
+			'systemconfig': {
+				configchange: this.updateSceneSystemConfig
 			},
 
 			'systemtemplateinputlist [action="showAddInput"]' : {
@@ -105,13 +117,9 @@ Ext.define('Spelled.controller.templates.Systems', {
 		})
 	},
 
-	updateSystemConfig: function( system, configFieldName, value ) {
-		var config = system.get( 'config' )
-
-		if( config[ configFieldName ] !== value ) {
-			config[ configFieldName ] = value
-			system.setDirty()
-		}
+	updateSceneSystemConfig: function( system, source, recordId, value, oldValue ) {
+		this.application.fireEvent( 'systemchange', system )
+		this.application.getActiveScene().setDirty()
 	},
 
 	saveAllSystemScriptsInTabs: function() {
@@ -215,15 +223,21 @@ Ext.define('Spelled.controller.templates.Systems', {
 
 	prepareConfigurationView: function( view, systemTemplate ) {
 		var form       = view.down( 'systemtemplatedetails' ),
-			inputView  = view.down( 'systemtemplateinputlist' ),
-			configView = view.down( 'systemtemplateconfig' ),
-			config     = systemTemplate.get( 'config' )
+			inputView  = view.down( 'systemtemplateinputlist' )
 
 		form.loadRecord( systemTemplate )
 		form.getForm().setValues( { tmpName: systemTemplate.getFullName() } )
 
+		if( this.getNavigator().getActiveTab() === this.getScenes() ) {
+			var configView = Ext.widget( 'systemconfig' ),
+				node       = this.application.getLastSelectedNode( this.getScenesTree() )
+
+			configView.setSystemSceneConfig( node.systemConfig )
+			view.insert( 1, configView )
+		}
+
 		if( systemTemplate.isReadonly() ) {
-			view.disable()
+			inputView.disable()
 			this.application.getController( 'Templates' ).addDisabledTemplateHeader( view )
 		}
 		inputView.reconfigure( systemTemplate.getInput() )
@@ -247,7 +261,7 @@ Ext.define('Spelled.controller.templates.Systems', {
                 template: systemTemplate
             }
         )
-console.log( systemTemplate.getConfig() )
+
         var tab = this.application.createTab( templateEditor, editView )
 
 		this.prepareConfigurationView( configurationView, systemTemplate )
