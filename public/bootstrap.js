@@ -116,6 +116,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.asset.create.SpriteSheet": [
     "widget.spritesheetconfig"
   ],
+  "Spelled.model.template.SystemConfigItem": [],
   "Ext.tab.Bar": [
     "widget.tabbar"
   ],
@@ -782,6 +783,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.chart.theme.Theme": [],
   "Ext.util.ClickRepeater": [],
+  "Spelled.view.template.system.config.Items": [
+    "widget.systemconfig"
+  ],
   "Ext.form.field.Spinner": [
     "widget.spinnerfield"
   ],
@@ -1100,6 +1104,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.state.Provider": [],
   "Spelled.model.Asset": [],
   "Spelled.abstract.plugin.ViewDragZone": [],
+  "Spelled.abstract.validator.General": [],
   "Spelled.store.asset.Animations": [],
   "Ext.layout.container.Editor": [
     "layout.editor"
@@ -1310,6 +1315,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.layout.component.BoundList": [],
   "Spelled.view.asset.create.SpriteSheet": [],
+  "Spelled.model.template.SystemConfigItem": [],
   "Ext.tab.Bar": [],
   "Ext.app.Application": [],
   "Spelled.store.template.Entities": [],
@@ -1792,6 +1798,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.chart.theme.Theme": [],
   "Ext.util.ClickRepeater": [],
+  "Spelled.view.template.system.config.Items": [],
   "Ext.form.field.Spinner": [
     "Ext.form.Spinner"
   ],
@@ -2000,6 +2007,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.state.Provider": [],
   "Spelled.model.Asset": [],
   "Spelled.abstract.plugin.ViewDragZone": [],
+  "Spelled.abstract.validator.General": [],
   "Spelled.store.asset.Animations": [],
   "Ext.layout.container.Editor": [],
   "Ext.data.Errors": [],

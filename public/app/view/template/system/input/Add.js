@@ -27,9 +27,15 @@ Ext.define('Spelled.view.template.system.input.Add' ,{
 
             items: [
                 {
-                    xtype: 'textfield',
+                    xtype: 'spelledtextfield',
                     name: "name",
-                    fieldLabel: 'Local alias'
+                    fieldLabel: 'Local alias',
+					vtype: 'alphanum',
+					validator: function( value ) {
+						if( value == "config" ) return "Usage of a reserved name"
+						if( this.isJavaScriptCompliant( value ) ) return true
+						return "Usage of invalid characters"
+					}
                 },
                 {
 					flex:1,
