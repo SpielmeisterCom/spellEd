@@ -170,7 +170,7 @@ Ext.define('Spelled.controller.Assets', {
 					    record.setDirty()
 
 			            me.setAssetConfigFromForm( form, record )
-					    me.fireEvent( 'assetchange', record )
+					    me.application.fireEvent( 'assetchange', record )
 				    }
 			    }
 		    }
