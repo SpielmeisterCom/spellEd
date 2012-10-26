@@ -820,10 +820,22 @@ Ext.define('Spelled.controller.Scenes', {
 				type : 'spelled.debug.startRuntimeModule',
 				payload : {
 					runtimeModule: Ext.amdModules.createProjectInEngineFormat( project ),
-					scene: Ext.amdModules.sceneConverter.toEngineFormat( scene.getData( true ), { includeNamespace: true, includeEntityIds: true } )
+					cacheContent: this.generateSceneCacheContent( scene )
 				}
 			}
 		)
+	},
+
+	generateSceneCacheContent: function( scene, withScript ) {
+		var relativeName = scene.getFullName().replace( /\./g, "/" ),
+			toBeCached = [{
+				content : Ext.amdModules.sceneConverter.toEngineFormat( scene.getData( true ), { includeNamespace: true, includeEntityIds: true } ),
+				filePath : relativeName + ".json"
+			}]
+
+		if( withScript && !!withScript ) toBeCached.push( { content : scene.get( 'content' ), filePath : relativeName + ".js" } )
+
+		return Ext.amdModules.createCacheContent( toBeCached )
 	},
 
 	updateRenderProgress: function( value ) {

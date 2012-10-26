@@ -75,8 +75,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 		var project       = this.application.getActiveProject(),
 			sceneConfig   = { name: "dummyScene", namespace: '' },
 			tmpProjectCfg = Ext.amdModules.projectConverter.toEngineFormat( project.getData( true ) ),
-			scene         = this.application.getController( 'Scenes' ).prepareSceneObject( sceneConfig ),
-			relativeName  = scene.getFullName().replace( ".", "/" )
+			scene         = this.application.getController( 'Scenes' ).prepareSceneObject( sceneConfig )
 
 		scene.getEntities().add( { name: "preview", templateId: entityTemplate.getFullName() } )
 
@@ -86,18 +85,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 
 		return {
 			runtimeModule: tmpProjectCfg,
-			cacheContent: Ext.amdModules.createCacheContent(
-				[
-					{
-						content : Ext.amdModules.sceneConverter.toEngineFormat( scene.getData( true ), { includeNamespace: true, includeEntityIds: true } ),
-						filePath : relativeName + ".json"
-					},
-					{
-						content : scene.get( 'content' ),
-						filePath : relativeName + ".js"
-					}
-				]
-			)
+			cacheContent: this.application.getController( 'Scenes' ).generateSceneCacheContent( scene, true )
 		}
 	},
 
