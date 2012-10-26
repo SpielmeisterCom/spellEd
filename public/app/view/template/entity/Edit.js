@@ -3,18 +3,24 @@ Ext.define('Spelled.view.template.entity.Edit', {
     alias : 'widget.entitytemplateedit',
     closable: true,
 
-    layout: {
-        align: 'stretch',
-        type: 'vbox'
-    },
-
     items: [
         {
+			name: 'entityPreviewContainer',
+			width : '100%',
+			height: '100%',
 			xtype: 'container',
-			autoEl:{
-				tag: 'h1',
-				cls: "no-animation-text",
-				html: 'Entity preview is not available.'
+			autoEl : {
+				tag : 'iframe',
+				border: '0',
+				frameborder: '0',
+				scrolling: 'no'
+			},
+
+			afterRender: function() {
+				var owner = this.up('entitytemplateedit')
+
+				this.el.dom.src = '/' + owner.projectName + '/public/spellEdShim.html?iframeId='+this.id
+				this.focus()
 			}
 		}
 	]

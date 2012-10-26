@@ -16,6 +16,7 @@ require(
 		'spell/editor/converter/system',
 		'spell/editor/converter/entity',
 		'spell/editor/converter/entityTemplate',
+		'spell/editor/createCacheContent',
 		'spell/editor/createFontGenerator',
 		'spell/editor/systemFontDetector',
 
@@ -38,6 +39,7 @@ require(
 		systemConverter,
 		entityConverter,
 		entityTemplateConverter,
+		createCacheContent,
 		createFontGenerator,
 		systemFontDetector,
 
@@ -56,6 +58,7 @@ require(
 			'aceThemePastelOnDark'        : aceThemePastelOnDark,
 			'assetConverter'              : assetConverter,
 			'createProjectInEngineFormat' : createProjectInEngineFormat,
+			'createCacheContent'          : createCacheContent,
 			'createFontGenerator'         : createFontGenerator,
 			'componentConverter'          : componentConverter,
 			'sceneConverter'              : sceneConverter,

@@ -51,15 +51,58 @@ Ext.define('Spelled.controller.templates.Entities', {
     },
 
 	openTemplate: function( entityTemplate ) {
-		var templateEditor = this.getTemplateEditor()
+		var templateEditor = this.getTemplateEditor(),
+			project        = this.application.getActiveProject()
 
 		var editView = Ext.widget( 'entitytemplateedit',  {
 				title    : entityTemplate.getFullName(),
-				template : entityTemplate
+				template : entityTemplate,
+				projectName : project.get( 'name' )
 			}
 		)
 
 		this.application.createTab( templateEditor, editView )
+		this.application.getController( 'Scenes').engineMessageBus.send(
+			editView.down( 'container[name="entityPreviewContainer"]').getId(),
+			{
+				type : 'spelled.debug.startRuntimeModule',
+				payload : this.createEntityTemplatePreviewItem( entityTemplate )
+			}
+		)
+	},
+
+	createEntityTemplatePreviewItem: function( entityTemplate ) {
+		var project         = this.application.getActiveProject(),
+			sceneConfig     =  { name: "dummyScene", namespace: '' },
+			tmpProjectCfg   = Ext.amdModules.projectConverter.toEngineFormat( project.getData( true ) ),
+			sceneController = this.application.getController( 'Scenes' )
+
+		sceneConfig.id = this.application.generateFileIdFromObject( sceneConfig ) + ".json"
+		var scene = Ext.create( 'Spelled.model.config.Scene', sceneConfig )
+		scene.set( 'content', sceneController.createInitialSceneScriptContent( scene ) )
+
+		sceneController.initScene( scene )
+		scene.getEntities().add( { name: "preview", templateId: entityTemplate.getFullName() } )
+
+		tmpProjectCfg.startScene = scene.getFullName()
+		tmpProjectCfg.scenes     = [ tmpProjectCfg.startScene ]
+		tmpProjectCfg.libraryIds.push( tmpProjectCfg.startScene )
+
+		return {
+			runtimeModule: tmpProjectCfg,
+			cacheContent: Ext.amdModules.createCacheContent(
+				[
+					{
+						content : Ext.amdModules.sceneConverter.toEngineFormat( scene.getData( true ), { includeNamespace: true, includeEntityIds: true } ),
+						filePath : scene.getFullName().replace( ".", "/" ) + ".json"
+					},
+					{
+						content : scene.get( 'content' ),
+						filePath : scene.getFullName().replace( ".", "/" ) + ".js"
+					}
+				]
+			)
+		}
 	},
 
 	getOwnerNode: function( node ) {
