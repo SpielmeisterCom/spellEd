@@ -72,16 +72,12 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
 	createEntityTemplatePreviewItem: function( entityTemplate ) {
-		var project         = this.application.getActiveProject(),
-			sceneConfig     =  { name: "dummyScene", namespace: '' },
-			tmpProjectCfg   = Ext.amdModules.projectConverter.toEngineFormat( project.getData( true ) ),
-			sceneController = this.application.getController( 'Scenes' )
+		var project       = this.application.getActiveProject(),
+			sceneConfig   = { name: "dummyScene", namespace: '' },
+			tmpProjectCfg = Ext.amdModules.projectConverter.toEngineFormat( project.getData( true ) ),
+			scene         = this.application.getController( 'Scenes' ).prepareSceneObject( sceneConfig ),
+			relativeName  = scene.getFullName().replace( ".", "/" )
 
-		sceneConfig.id = this.application.generateFileIdFromObject( sceneConfig ) + ".json"
-		var scene = Ext.create( 'Spelled.model.config.Scene', sceneConfig )
-		scene.set( 'content', sceneController.createInitialSceneScriptContent( scene ) )
-
-		sceneController.initScene( scene )
 		scene.getEntities().add( { name: "preview", templateId: entityTemplate.getFullName() } )
 
 		tmpProjectCfg.startScene = scene.getFullName()
@@ -94,11 +90,11 @@ Ext.define('Spelled.controller.templates.Entities', {
 				[
 					{
 						content : Ext.amdModules.sceneConverter.toEngineFormat( scene.getData( true ), { includeNamespace: true, includeEntityIds: true } ),
-						filePath : scene.getFullName().replace( ".", "/" ) + ".json"
+						filePath : relativeName + ".json"
 					},
 					{
 						content : scene.get( 'content' ),
-						filePath : scene.getFullName().replace( ".", "/" ) + ".js"
+						filePath : relativeName + ".js"
 					}
 				]
 			)

@@ -587,6 +587,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.container.Form": [
     "layout.form"
   ],
+  "Spelled.store.system.Defaults": [],
   "Ext.chart.MaskLayer": [],
   "Spelled.view.layout.Split": [
     "widget.splitlayout"
@@ -1642,6 +1643,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.container.Form": [
     "Ext.layout.FormLayout"
   ],
+  "Spelled.store.system.Defaults": [],
   "Ext.chart.MaskLayer": [],
   "Spelled.view.layout.Split": [],
   "Ext.util.Observable": [],
