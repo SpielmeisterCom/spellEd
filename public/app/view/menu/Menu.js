@@ -22,7 +22,11 @@ Ext.define('Spelled.view.menu.Menu', {
 							},{
 								text   : 'Load',
 								tooltip: 'Load a existing Spell-Project',
-								action: 'showloadProject'
+								action: 'showLoadProject'
+							},{
+								text   : 'Settings',
+								tooltip: 'Edit the project settings',
+								action: 'showProjectSettings'
 							}]
 
 						}

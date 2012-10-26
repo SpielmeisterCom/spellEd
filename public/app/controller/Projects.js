@@ -3,6 +3,7 @@ Ext.define('Spelled.controller.Projects', {
 	requires: [
 		'Spelled.view.project.Create',
 		'Spelled.view.project.Load',
+		'Spelled.view.project.Settings',
 
 		'Spelled.store.Projects',
 
@@ -12,7 +13,8 @@ Ext.define('Spelled.controller.Projects', {
 
     views: [
         'project.Create',
-        'project.Load'
+        'project.Load',
+		'project.Settings'
     ],
 
     stores: [
@@ -43,17 +45,42 @@ Ext.define('Spelled.controller.Projects', {
 		Ext.EventManager.on( window, 'unload', this.projectCloseWarning, this)
 
         this.control({
+			'spelledmenu [action="showCreateProject"]': {
+				click: this.showCreateProject
+			},
+			'projectsettings [action="setProjectSettings"]': {
+				click: this.setProjectSettings
+			},
+			'spelledmenu [action="showLoadProject"]': {
+				click: this.showLoadProject
+			},
+			'spelledmenu [action="showProjectSettings"]': {
+				click: this.showProjectSettings
+			},
             'createproject button[action="createProject"]': {
                 click: this.createProject
             },
             'loadproject button[action="loadProject"]': {
                 click: this.loadProjectAction
-            }
+            },
+			'startscreen button[action="showCreateProject"]': {
+				click: function( button ) {
+					button.up('window').close()
+					this.showCreateProject()
+				}
+			},
+			'startscreen button[action="showLoadProject"]': {
+				click: function( button ) {
+					button.up('window').close()
+					this.showLoadProject()
+				}
+			}
         })
 
 		this.application.on( {
-			'globalsave': this.globalSave,
-			'revertmodel': this.revertModel,
+			'exportproject': this.exportActiveProject,
+			'globalsave'   : this.globalSave,
+			'revertmodel'  : this.revertModel,
 			scope: this
 		})
 	},
@@ -80,6 +107,24 @@ Ext.define('Spelled.controller.Projects', {
 			selector: 'spelledmenu button[action="saveProject"]'
 		}
 	],
+
+	setProjectSettings: function( button ) {
+		var window  = button.up( 'window' ),
+			form    = window.down( 'form' ),
+			project = form.getRecord(),
+			values  = form.getValues(),
+			config  = {}
+
+		config.screenSize = [
+			values.screenSizeX,
+			values.screenSizeY
+		]
+
+		project.set( 'config', config )
+		project.setDirty()
+
+		window.close()
+	},
 
 	updateSaveButtonState: function() {
 		var state  = this.checkIfDirty(),
@@ -158,6 +203,20 @@ Ext.define('Spelled.controller.Projects', {
 		} catch( e ) {
 			Ext.state.Manager.clear( 'projectName' )
 			Ext.create( 'Spelled.view.ui.StartScreen' ).show()
+		}
+	},
+
+	showProjectSettings: function() {
+		var project = this.application.getActiveProject()
+
+		if( project ) {
+			var view = Ext.widget( 'projectsettings' ),
+				config = project.get( 'config' ),
+				form = view.down( 'form' )
+
+
+			form.loadRecord( project )
+			form.getForm().setValues( { screenSizeX: config.screenSize[0], screenSizeY: config.screenSize[1] } )
 		}
 	},
 

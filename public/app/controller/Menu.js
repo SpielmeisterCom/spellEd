@@ -88,12 +88,7 @@ Ext.define('Spelled.controller.Menu', {
 			'#RightPanel > header > tool-documentation': {
 				showDocumentation: this.showDocumentation
 			},
-            'spelledmenu [action="showCreateProject"]': {
-                click: this.showCreateProject
-            },
-            'spelledmenu [action="showloadProject"]': {
-                click: this.showLoadProject
-            },
+
             'spelledmenu [action="saveProject"]': {
                 click: this.saveProject
             },
@@ -117,20 +112,6 @@ Ext.define('Spelled.controller.Menu', {
 			'scenesystemsitemlistcontextmenu [action="open"]': {
 				click: this.showSceneSystem
 			},
-
-
-			'startscreen button[action="showCreateProject"]': {
-                click: function( button ) {
-                    button.up('window').close()
-                    this.showCreateProject()
-                }
-            },
-            'startscreen button[action="showLoadProject"]': {
-                click: function( button ) {
-                    button.up('window').close()
-                    this.showLoadProject()
-                }
-            },
 
 
             'systemtemplateinputcontextmenu [action="remove"]': {
@@ -524,19 +505,11 @@ Ext.define('Spelled.controller.Menu', {
         }
     },
 
-    showCreateProject: function() {
-        this.application.getController('Projects').showCreateProject()
-    },
-
-    showLoadProject: function() {
-        this.application.getController('Projects').showLoadProject()
-    },
-
     saveProject: function() {
         this.application.fireEvent( 'globalsave' )
     },
 
 	exportProject: function() {
-		this.application.getController('Projects').exportActiveProject()
+		this.application.fireEvent( 'exportproject' )
 	}
 });
