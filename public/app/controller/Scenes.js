@@ -5,6 +5,7 @@ Ext.define('Spelled.controller.Scenes', {
 		'Spelled.Logger',
 		'Spelled.MessageBus',
 		'Spelled.view.scene.ProgressBar',
+		'Spelled.store.system.Defaults',
 
 		'widget.label'
 	],
@@ -16,7 +17,8 @@ Ext.define('Spelled.controller.Scenes', {
 	stores: [
 		'AspectRatios',
 		'ScenesTree',
-		'config.Scenes'
+		'config.Scenes',
+		'system.Defaults'
 	],
 
 	refs: [
@@ -715,23 +717,30 @@ Ext.define('Spelled.controller.Scenes', {
 		window.close()
 	},
 
+	prepareSceneObject: function( config ) {
+		var Model   = this.getConfigSceneModel()
+
+		config.id = this.application.generateFileIdFromObject( config ) + '.json'
+
+		var scene = new Model( config )
+		scene.set( 'content', this.createInitialSceneScriptContent( scene ) )
+		this.initScene( scene )
+
+		return scene
+	},
+
 	createScene: function( values ) {
 		var project = this.application.getActiveProject(),
-			Model   = this.getConfigSceneModel(),
 			store   = this.getConfigScenesStore(),
 			content = {
 				name: values.name,
 				namespace: ( values.namespace === 'root' ) ? '' : values.namespace.substring( 5 )
-			}
-
-		content.id = this.application.generateFileIdFromObject( content ) + '.json'
-		var scene = new Model( content )
-		scene.set( 'content', this.createInitialSceneScriptContent( scene ) )
+			},
+			scene   = this.prepareSceneObject( content )
 
 		store.add( scene )
 		project.getScenes().add( scene )
 		scene.setProject( project )
-		this.initScene( scene )
 
 		scene.appendOnTreeNode( this.getScenesTree().getRootNode() )
 		scene.save()
@@ -740,6 +749,10 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	initScene: function( scene ) {
+		var defaultSystems = this.getSystemDefaultsStore(),
+			systemStore    = Ext.getStore( 'template.Systems' ),
+			systems        = Ext.clone( scene.get( 'systems' ) )
+
 		var entity = scene.getEntities().add( {
 			name: 'camera',
 			templateId: 'spell.entity.2d.graphics.camera'
@@ -752,6 +765,17 @@ Ext.define('Spelled.controller.Scenes', {
 				"active": true
 			}
 		} )[0]
+
+		defaultSystems.each(
+			function( item ) {
+				var system       = systemStore.getByTemplateId( item.get('systemId') ),
+					systemConfig = { id: system.getFullName(), config: system.getConfigForScene() }
+
+				systems[ item.get('executionGroupId') ].push( systemConfig )
+			}
+		)
+
+		scene.set( 'systems', systems )
 
 		cameraComponent.setEntity( entity )
 		entity.setScene( scene )
