@@ -1,6 +1,8 @@
 Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
     extend: 'Ext.tree.ViewDropZone',
 
+	nodeOverCls: 'dragged-node-highlight',
+
 	isValidDropPoint : function(node, position, dragZone, e, data) {
 		if (!node || !data.item || !data.records) return false
 
@@ -33,6 +35,16 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 		if( !valid ) return false
 
 		return view.fireEvent('nodedragover', targetNode, position, data, e) !== false
+	},
+
+	onNodeEnter: function( nodeData, source, e, data ) {
+		var el = Ext.fly( nodeData )
+		if(el) el.addCls( this.nodeOverCls )
+	},
+
+	onNodeOut: function( nodeData, source, e, data ) {
+		var el = Ext.fly( nodeData )
+		if(el) el.removeCls( this.nodeOverCls )
 	},
 
 	checkSystemDrag: function( targetNode, position ) {

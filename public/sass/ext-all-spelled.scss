@@ -56,6 +56,12 @@ $grid-row-cell-focus-background-color: $color_selected;
 $grid-row-cell-over-background-gradient: 'flat';
 $grid-row-cell-focus-background-gradient: 'flat';
 
+//For tree nodes dragging in scenes-navigator
+.dragged-node-highlight .x-grid-cell,
+.dragged-node-highlight .x-grid-rowwrap-div {
+  background-color: $color_selected;
+}
+
 //buttons
 $button-default-base-color: $color2;
 $button-default-base-color-over: darken($color2,5);
