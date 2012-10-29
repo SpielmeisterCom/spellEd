@@ -56,12 +56,6 @@ $grid-row-cell-focus-background-color: $color_selected;
 $grid-row-cell-over-background-gradient: 'flat';
 $grid-row-cell-focus-background-gradient: 'flat';
 
-//For tree nodes dragging in scenes-navigator
-.dragged-node-highlight .x-grid-cell,
-.dragged-node-highlight .x-grid-rowwrap-div {
-  background-color: $color_selected;
-}
-
 //buttons
 $button-default-base-color: $color2;
 $button-default-base-color-over: darken($color2,5);
@@ -233,4 +227,16 @@ $btn-group-header-color: #fff;
 @import 'compass';
 @import 'ext4/default/all';
 
+//manual overides
 
+//For tree nodes dragging in scenes-navigator
+.dragged-node-highlight .x-grid-cell,
+.dragged-node-highlight .x-grid-rowwrap-div {
+  background-color: $color_selected;
+}
+
+.x-tree-ddindicator {
+  height: 1px;
+  border-width: 1px 0px 0px;
+  border-style: dotted;
+  border-color: $color_selected; }

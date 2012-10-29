@@ -37,14 +37,27 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 		return view.fireEvent('nodedragover', targetNode, position, data, e) !== false
 	},
 
-	onNodeEnter: function( nodeData, source, e, data ) {
-		var el = Ext.fly( nodeData )
-		if(el) el.addCls( this.nodeOverCls )
-	},
 
 	onNodeOut: function( nodeData, source, e, data ) {
 		var el = Ext.fly( nodeData )
-		if(el) el.removeCls( this.nodeOverCls )
+		if( el && el.hasCls( this.nodeOverCls ) ) el.removeCls( this.nodeOverCls )
+	},
+
+	onNodeOver: function( nodeData, source, e, data ) {
+		var result =  this.callParent(arguments);
+
+		var el = Ext.fly( nodeData )
+
+		if (result == 'x-tree-drop-ok-append' && el) {
+
+			//mark the currently targeted node as active
+			if (!el.hasCls( this.nodeOverCls ) ) el.addCls( this.nodeOverCls )
+
+		} else {
+			el.removeCls( this.nodeOverCls )
+		}
+
+		return result
 	},
 
 	checkSystemDrag: function( targetNode, position ) {

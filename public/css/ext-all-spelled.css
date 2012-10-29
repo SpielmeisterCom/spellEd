@@ -9898,3 +9898,15 @@ svg, vml {
   .x-html BDO[DIR="rtl"] {
     direction: rtl;
     unicode-bidi: bidi-override; }
+
+/* line 234, ../sass/ext-all-spelled.scss */
+.dragged-node-highlight .x-grid-cell,
+.dragged-node-highlight .x-grid-rowwrap-div {
+  background-color: #9a9a9a; }
+
+/* line 238, ../sass/ext-all-spelled.scss */
+.x-tree-ddindicator {
+  height: 1px;
+  border-width: 1px 0px 0px;
+  border-style: dotted;
+  border-color: #9a9a9a; }
