@@ -276,10 +276,22 @@ Ext.define('Spelled.model.config.Entity', {
 			)
 		}
 
+
+		var iconCls = ""
+		if ( !this.isRemovable() ) {
+			iconCls = "tree-scene-entity-readonly-icon"
+		} else {
+			if (this.isAnonymous()) {
+				iconCls = "tree-scene-entity-icon"
+			} else {
+				iconCls = "tree-scene-entity-linked-icon"
+			}
+		}
+
 		var entityNode = node.createNode( {
 				text      : this.get('name'),
 				id        : this.getId(),
-				iconCls   : ( this.isRemovable() && this.isAnonymous() ) ? "tree-scene-entity-icon" : "tree-scene-entity-readonly-icon",
+				iconCls   : iconCls,
 				leaf      : false
 			}
 		)

@@ -20,6 +20,7 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 						valid = this.checkSystemDrag( targetNode, position )
 						break
 					case 'tree-scene-entity-icon':
+					case 'tree-scene-entity-linked-icon':
 					case 'tree-scene-entity-readonly-icon':
 						valid = this.checkEntityDrag(  targetNode  )
 						break
@@ -74,7 +75,7 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 	checkEntityDrag: function( targetNode ) {
 		var targetNodeType = targetNode.get( 'iconCls' )
 
-		if( targetNodeType === 'tree-scene-entity-icon' || targetNodeType === 'tree-scene-entity-readonly-icon' ) return true
+		if( targetNodeType === 'tree-scene-entity-icon' || targetNodeType === 'tree-scene-entity-linked-icon' || targetNodeType === 'tree-scene-entity-readonly-icon' ) return true
 
 		return false
 	}

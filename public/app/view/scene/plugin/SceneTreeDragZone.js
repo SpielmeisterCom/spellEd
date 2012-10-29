@@ -9,6 +9,7 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDragZone' ,{
 				record.set( 'allowDrag', true )
 				break
 			case 'tree-scene-entity-icon':
+			case 'tree-scene-entity-linked-icon':
 			case 'tree-scene-entity-readonly-icon':
 				record.set( 'allowDrag', this.checkEntityNodeIfDraggable( record ) )
 				break
