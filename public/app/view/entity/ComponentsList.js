@@ -15,7 +15,12 @@ Ext.define('Spelled.view.entity.ComponentsList' ,{
 	sortByTitle: function() {
 		this.items.items = this.items.items.sort(
 			function( a, b ) {
-				return ( a.title > b.title )
+				if( !a.componentConfigId ) return -1
+
+				var titleA = Ext.util.Format.stripTags(a.title),
+					titleB = Ext.util.Format.stripTags(b.title)
+
+				return ( titleA > titleB )
 			}
 		)
 	}

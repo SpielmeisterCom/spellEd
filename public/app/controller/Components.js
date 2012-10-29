@@ -159,6 +159,27 @@ Ext.define('Spelled.controller.Components', {
 			}
 		)
 
+		var sortHelper = function( model1, model2, field ) {
+			var model1SortOrder = model1.get( field ),
+				model2SortOrder = model2.get( field )
+
+			if( !model2SortOrder && model1SortOrder ) return -1
+			if( !model1SortOrder && model2SortOrder ) return 1
+			if ( model1SortOrder === model2SortOrder) return 0
+
+			return model1SortOrder < model2SortOrder ? -1 : 1
+		}
+
+		notAssignedComponents.sortBy(
+			function( item1, item2 ) {
+				var result = sortHelper( item1, item2, 'title' )
+
+				if( result === 0 ) {
+					return sortHelper( item1, item2, 'templateId' )
+				} else return result
+			}
+		)
+
 		this.appendComponentsAttributesOnTreeNode( rootNode, notAssignedComponents )
 
 		rootNode.eachChild(
