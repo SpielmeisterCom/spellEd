@@ -195,15 +195,22 @@ Ext.define('Spelled.controller.Projects', {
 
 	loadLastProject: function() {
 		// loading default project
-		var projectName = Ext.state.Manager.get( 'projectName' ) || 'spellReferenceProject'
+		var projectName = Ext.state.Manager.get( 'projectName' )
 
-		try {
-			this.loadProject( projectName )
+		if ( projectName ) {
+			try {
+				this.loadProject( projectName )
 
-		} catch( e ) {
+			} catch( e ) {
+				Ext.state.Manager.clear( 'projectName' )
+				Ext.create( 'Spelled.view.ui.StartScreen' ).show()
+			}
+
+		} else {
 			Ext.state.Manager.clear( 'projectName' )
 			Ext.create( 'Spelled.view.ui.StartScreen' ).show()
 		}
+
 	},
 
 	showProjectSettings: function() {
