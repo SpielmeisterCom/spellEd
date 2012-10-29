@@ -66,12 +66,35 @@ Ext.define('Spelled.controller.Entities', {
 
 		this.application.on({
 			showentityinfo       : this.showEntityInfo,
+			cloneconfigentity    : this.cloneEntityConfig,
 			showentityremovealert: this.showEntityRemoveAlert,
 			removeentity         : this.removeEntity,
 			movesceneentity      : this.moveEntity,
 			scope: this
 		})
     },
+
+	cloneEntityConfig: function( id, node ) {
+		var entity     = this.getConfigEntitiesStore().getById( id ),
+			owner      = entity.getOwner(),
+			clone      = entity.clone(),
+			clonedNode = clone.createTreeNode(node),
+			ownerStore = undefined
+
+		if( entity.hasScene() ) {
+			ownerStore = owner.getEntities()
+			clone.setScene( owner )
+		} else {
+			ownerStore = owner.getChildren()
+			clone.setEntity( owner )
+		}
+
+		ownerStore.insert( ownerStore.indexOf( entity ) + 1, clone )
+
+		node.parentNode.insertBefore( clonedNode, node.nextSibling )
+		clonedNode.expand( true, function(){this.collapse(true)})
+		clone.setDirty()
+	},
 
 	moveEntity: function( targetId, entityId, dropPosition ) {
 		var store       = this.getConfigEntitiesStore(),

@@ -22,9 +22,14 @@ Ext.define('Spelled.view.menu.contextmenu.EntitiesList', {
 			action: 'rename'
 		},
 		{
+			icon: 'images/icons/entity-clone.png',
+			text: 'Clone this entity',
+			action: 'clone'
+		},
+		{
 			icon: 'images/icons/entity-delete.png',
             text: 'Remove',
             action: 'remove'
-        }
+		}
     ]
 });

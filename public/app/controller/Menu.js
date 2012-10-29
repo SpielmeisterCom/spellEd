@@ -169,6 +169,9 @@ Ext.define('Spelled.controller.Menu', {
 			'entitieslistcontextmenu [action="rename"]': {
 				click: this.showRenameEntity
 			},
+			'entitieslistcontextmenu [action="clone"]': {
+				click: this.cloneEntity
+			},
 
 
 			'entitiesfolderlistcontextmenu [action="create"]': {
@@ -467,6 +470,11 @@ Ext.define('Spelled.controller.Menu', {
 	showRenameEntity: function( ) {
 		var node = this.application.getLastSelectedNode( this.getScenesTree() )
 		this.application.getController( 'Scenes' ).triggerRenameEntityEvent( node )
+	},
+
+	cloneEntity: function( ) {
+		var node = this.application.getLastSelectedNode( this.getScenesTree() )
+		this.application.fireEvent( 'cloneconfigentity', node.getId(), node )
 	},
 
     removeEntity: function( item ) {
