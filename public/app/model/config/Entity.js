@@ -55,12 +55,18 @@ Ext.define('Spelled.model.config.Entity', {
 	],
 
 	clone: function( internal ) {
-		var cloneConfig  = Ext.amdModules.entityConverter.toEditorFormat( Ext.amdModules.entityConverter.toEngineFormat(this.getData( true )) )
+		var cloneConfig = Ext.amdModules.entityConverter.toEditorFormat( Ext.amdModules.entityConverter.toEngineFormat(this.getData( true )) )
 
 		if( !internal ) cloneConfig.name = this.get('name') + "_copy"
 
 		var copy = Ext.create( this.$className, cloneConfig )
-		copy.getComponents().add( cloneConfig.components )
+
+		Ext.Array.each(
+			copy.getComponents().add( cloneConfig.components ),
+			function( component ) {
+				component.setEntity( copy )
+			}
+		)
 
 		this.getChildren().each(
 			function( child ) {
@@ -72,6 +78,7 @@ Ext.define('Spelled.model.config.Entity', {
 			this
 		)
 
+		copy.checkForComponentChanges()
 		return copy
 	},
 
