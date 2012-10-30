@@ -20,7 +20,7 @@ define(
 		 * @param {Object} config
 		 */
 		var toEngineFormat = function( scene, config ) {
-			var attributes       = [ 'version', 'type', 'systems' ],
+			var attributes       = [ 'version', 'type', 'libraryIds', 'systems' ],
 				includeNamespace = config && !!config.includeNamespace
 
 			if( includeNamespace ) attributes = _.union( attributes, [ 'name', 'namespace' ] )
@@ -45,6 +45,7 @@ define(
 		var toEditorFormat = function( scene ) {
 			var result = {
 				id: scene.id,
+				libraryIds: scene.libraryIds,
 				name: scene.name,
 				namespace: scene.namespace,
 				systems: scene.systems

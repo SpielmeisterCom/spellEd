@@ -13,6 +13,7 @@ Ext.define('Spelled.model.config.Scene', {
 		{ name: 'type', type: 'string', defaultValue: 'scene' },
         'name',
 		'namespace',
+		'libraryIds',
 		{ name: 'showGrid', type: 'boolean', defaultValue: false },
 		{ name: 'aspectRatio', type: 'number', defaultValue: 0 },
 		{ name: 'showTitleSafe', type: 'boolean', defaultValue: false },
