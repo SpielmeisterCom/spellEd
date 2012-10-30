@@ -9910,3 +9910,7 @@ svg, vml {
   border-width: 1px 0px 0px;
   border-style: dotted;
   border-color: #9a9a9a; }
+
+/* line 244, ../sass/ext-all-spelled.scss */
+.x-form-file-wrap .x-form-text {
+  color: #fff; }

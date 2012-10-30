@@ -240,3 +240,7 @@ $btn-group-header-color: #fff;
   border-width: 1px 0px 0px;
   border-style: dotted;
   border-color: $color_selected; }
+
+//text color in the file upload form tag should be white
+.x-form-file-wrap .x-form-text {
+  color: #fff; }
