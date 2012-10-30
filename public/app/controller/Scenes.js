@@ -845,7 +845,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		progressBar.updateProgress( value )
 
-		if( value === 1 && panel ){
+		if( value >= 1 && panel ){
 			panel.remove( progressBar )
 			panel.down( 'spellediframe').show()
 		}
