@@ -385,11 +385,13 @@ Ext.define('Spelled.controller.Projects', {
 		var tree         = this.getScenesTree(),
 			startSceneId = project.get( 'startScene' ),
 			startScene   = project.getScenes().findRecord( 'sceneId', startSceneId ),
-			node         = tree.getRootNode().findChild( 'id', startScene.getId(), true )
+			rootNode     = tree.getRootNode(),
+			node         = rootNode.findChild( 'id', startScene.getId(), true )
 
 		tree.getSelectionModel().select( node )
-		tree.expandPath( node.getPath() )
 
+		rootNode.expand()
+		node.expand()
 		node.expandChildren()
 
 		this.application.getController( 'Scenes' ).renderScene( startScene )
