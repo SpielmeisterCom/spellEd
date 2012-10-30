@@ -981,7 +981,7 @@ Ext.define('Spelled.controller.Scenes', {
 		var parts = [
 			"return {",
 			"	init : function( spell, sceneConfig ) {",
-			"		spell.EntityManager.createEntities( sceneConfig.entities )",
+			"		spell.entityManager.createEntities( sceneConfig.entities )",
 			"	},",
 			"	destroy : function( spell, sceneConfig ) {}",
 			"}"
