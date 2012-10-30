@@ -58,6 +58,35 @@ Ext.define('Spelled.model.config.Scene', {
 		return this.get( 'sceneId' )
 	},
 
+	save: function() {
+		this.syncLibraryIds()
+
+		this.callParent( arguments )
+	},
+
+	getStoreIds: function( store ) {
+		var array = []
+		store.each(
+			function( asset ) {
+				array.push( asset.getFullName() )
+			},
+			this
+		)
+
+		return array
+	},
+
+	syncLibraryIds: function() {
+		var result = []
+
+		this.set( 'libraryIds', result.concat(
+			this.getStoreIds( Ext.getStore( 'template.Components' ) ),
+			this.getStoreIds( Ext.getStore( 'template.Entities' ) ),
+			this.getStoreIds( Ext.getStore( 'template.Systems' ) ),
+			this.getStoreIds( Ext.getStore( 'asset.Assets' ) )
+		))
+	},
+
 	listeners: {
 		idchanged: function() {
 			Spelled.StorageActions.read( { id: this.getAccordingJSFileName() },
