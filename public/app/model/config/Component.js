@@ -57,7 +57,7 @@ Ext.define('Spelled.model.config.Component', {
 		return template
 	},
 
-	getTemplateConfig: function() {
+	getTemplateConfig: function( noMerge ) {
 		var templateComponent = this.getTemplate(),
 			templateConfig    = templateComponent.getConfig()
 
@@ -69,7 +69,7 @@ Ext.define('Spelled.model.config.Component', {
 			}
 		)
 
-		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && !Ext.isEmpty( this.getEntity().get('templateId' ) ) ) {
+		if( !noMerge && this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && !Ext.isEmpty( this.getEntity().get('templateId' ) ) ) {
 			var templateEntity          = Ext.getStore( 'template.Entities').getByTemplateId( this.getEntity().get('templateId' )),
 				templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', this.get('templateId') )
 

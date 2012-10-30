@@ -202,6 +202,7 @@ Ext.define('Spelled.controller.Menu', {
 
 		this.application.on({
 			'showkeymappingcontextmenu': this.showKeyToActionMappingContextMenu,
+			showcontextmenu: this.createAndShowView,
 			scope: this
 		})
     },

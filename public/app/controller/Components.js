@@ -6,14 +6,16 @@ Ext.define('Spelled.controller.Components', {
 		'Spelled.view.component.Add',
 		'Spelled.view.component.AddButton',
 		'Spelled.model.config.Component',
-		'Spelled.store.config.Components'
+		'Spelled.store.config.Components',
+		'Spelled.view.component.property.Defaults'
 	],
 
     views: [
         'component.Properties',
 		'component.property.AssetId',
 		'component.Add',
-		'component.AddButton'
+		'component.AddButton',
+		'component.property.Defaults'
     ],
 
     models: [
@@ -42,6 +44,7 @@ Ext.define('Spelled.controller.Components', {
 				editproperty: this.previewAttributeChange
 			},
 			'componentproperties': {
+				propertycontextmenu: this.showRevertToDefaultsContextmenu,
 				edit: this.editProperty,
 				canceledit: this.cancelPropertyEdit,
 				beforeclose: this.confirmDelete
@@ -57,9 +60,49 @@ Ext.define('Spelled.controller.Components', {
 			},
 			'addcomponent button[action="addComponent"]': {
 				click : this.addComponent
+			},
+			'componentpropertydefaultscontextmenu [action="toComponentDefaults"]': {
+				click: this.revertComponent
+			},
+			'componentpropertydefaultscontextmenu [action="toEntityDefaults"]': {
+				click: this.revertComponent
 			}
-
 		})
+	},
+
+	revertComponent: function( button, event ) {
+		var menu         = button.up( 'menu' ),
+			propertyGrid = menu.ownerView,
+			store        = propertyGrid.getStore(),
+			componentId  = propertyGrid.componentConfigId,
+			component    = this.getConfigComponentsStore().getById( componentId ),
+			config       = ( button.action === 'toEntityDefaults' ) ?
+					Ext.Object.merge( {}, component.getTemplateConfig(), component.getTemplateCompositeConfig() )
+				:
+					Ext.Object.merge( {}, component.getTemplateConfig(true) )
+
+		Ext.iterate(
+			this.transformConfigForGrid( component, config ),
+			function( key, value ) {
+				var record = store.findRecord( 'name', key )
+				record.set( value )
+				propertyGrid.fireEvent( 'edit', propertyGrid, { grid: propertyGrid, record: record } )
+				this.sendComponentUpdate( component, key, value.value )
+			},
+			this
+		)
+	},
+
+	showRevertToDefaultsContextmenu: function( propertyView, event ) {
+		var contextmenu = this.application.getController( 'Menu' ).createAndShowView( this.getComponentPropertyDefaultsView(), event, propertyView)
+
+		if( propertyView.isAdditional === false ) {
+			contextmenu.add({
+				icon: 'images/icons/revert.png',
+				text: 'Reset to entity defaults',
+				action: 'toEntityDefaults'
+			})
+		}
 	},
 
 	cancelPropertyEdit: function( editor, e ) {
@@ -310,18 +353,27 @@ Ext.define('Spelled.controller.Components', {
 		}
 	},
 
+	transformConfigForGrid: function( component, config ) {
+		var template        = component.getTemplate(),
+			convertedConfig = {}
+
+		Ext.iterate(
+			config,
+			function( key, value ) {
+				convertedConfig[ key ] = this.createPropertyFromAttribute( template.getAttributeByName( key ), key, value )
+			},
+			this
+		)
+
+		return convertedConfig
+	},
+
 	createConfigGridView: function( component ) {
-        var config   = {},
+        var config   = this.transformConfigForGrid( component, component.getConfigMergedWithTemplateConfig() ),
 			template = component.getTemplate(),
 			title    = ( Ext.isEmpty( template.get('title') ) ) ? component.get('templateId') : template.get('title')
 
-        Ext.iterate(
-            component.getConfigMergedWithTemplateConfig(),
-            function( key, value ) {
-				config[ key ] = this.createPropertyFromAttribute( template.getAttributeByName( key ), key, value )
-            },
-            this
-        )
+
 
 		var icon     = ( Ext.isEmpty( template.get('icon') ) )? "" : "style='background: url(" + template.get('icon') +") no-repeat;'",
 			iconClass   = ( component.get('additional') ) ? "component-icon" : "linked-component-icon",
@@ -350,15 +402,20 @@ Ext.define('Spelled.controller.Components', {
 	},
 
 	previewAttributeChange: function( field, newValue, oldValue ) {
-		var activeScene       = this.application.getActiveScene(),
-			sceneController   = this.application.getController( 'Scenes'),
-			sceneEditor       = this.getSceneEditor(),
-			view              = field.up('componentproperties')
+		var view              = field.up('componentproperties')
 		//Workaround because of the bad control-query in this controller
 		if( !view ) return
 
-		var	component         = this.getConfigComponentsStore().getById( view.componentConfigId ),
-			name              = view.getSelectionModel().getLastSelected().get('name')
+		var	component = this.getConfigComponentsStore().getById( view.componentConfigId ),
+			name      = view.getSelectionModel().getLastSelected().get('name')
+
+		this.sendComponentUpdate( component, name, newValue )
+	},
+
+	sendComponentUpdate: function( component, name, value ) {
+		var activeScene       = this.application.getActiveScene(),
+			sceneController   = this.application.getController( 'Scenes'),
+			sceneEditor       = this.getSceneEditor()
 
 		if ( this.getComponentScene( component ) != activeScene ) return
 
@@ -368,7 +425,7 @@ Ext.define('Spelled.controller.Components', {
 			if( activeSceneTab && activeSceneTab.isVisible() ) {
 				var componentConfig = {}
 
-				componentConfig[ name ] = Ext.decode( newValue, true ) || newValue
+				componentConfig[ name ] = Ext.decode( value, true ) || value
 
 				sceneController.engineMessageBus.send(
 					activeSceneTab.down( 'spellediframe' ).getId(),

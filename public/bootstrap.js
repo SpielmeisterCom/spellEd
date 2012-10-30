@@ -14,6 +14,12 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.direct.JsonProvider": [
     "direct.jsonprovider"
   ],
+  "Spelled.view.project.Settings": [
+    "widget.projectsettings"
+  ],
+  "Spelled.view.component.property.Defaults": [
+    "widget.componentpropertydefaultscontextmenu"
+  ],
   "Ext.tree.Panel": [
     "widget.treepanel"
   ],
@@ -1211,6 +1217,8 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.controller.Scripts": [],
   "Ext.direct.JsonProvider": [],
+  "Spelled.view.project.Settings": [],
+  "Spelled.view.component.property.Defaults": [],
   "Ext.tree.Panel": [
     "Ext.tree.TreePanel",
     "Ext.TreePanel"

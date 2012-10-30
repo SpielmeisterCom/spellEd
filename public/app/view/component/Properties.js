@@ -15,9 +15,16 @@ Ext.define('Spelled.view.component.Properties', {
 	initComponent: function() {
 		var me = this
 
-		me.tools = [{
-			xtype: 'tool-documentation'
-		}]
+		me.tools = [
+			{
+				type: 'gear',
+				qtip: 'Reset values',
+				handler: Ext.bind( me.onGearClick, me )
+			},
+			{
+				xtype: 'tool-documentation'
+			}
+		]
 
 		this.customEditors = {}
 		Ext.Object.each( this.source,
@@ -30,6 +37,10 @@ Ext.define('Spelled.view.component.Properties', {
 		if( this.isAdditional === true ) this.closable = true
 
 		this.callParent()
+	},
+
+	onGearClick: function( event ) {
+		this.fireEvent( 'propertycontextmenu', this, event )
 	},
 
 	formatSource: function() {
