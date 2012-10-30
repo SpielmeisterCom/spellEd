@@ -225,7 +225,6 @@ Ext.define('Spelled.controller.Systems', {
 				var node = rootNode.createNode( {
 					text      : key,
 					id        : key,
-					expanded  : true,
 					leaf      : false,
 					allowDrop : true,
 					allowDrag : false,

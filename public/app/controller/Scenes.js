@@ -971,8 +971,9 @@ Ext.define('Spelled.controller.Scenes', {
 				node.set( 'iconCls', 'tree-default-scene-icon' )
 			}
 
-			node.expand( true, function() { node.collapse( true ) } )
 		},this)
+
+		rootNode.expand( true, function() { rootNode.collapse( true ) } )
 	},
 
 	createInitialSceneScriptContent: function( scene ) {
