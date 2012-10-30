@@ -390,6 +390,8 @@ Ext.define('Spelled.controller.Projects', {
 		tree.getSelectionModel().select( node )
 		tree.expandPath( node.getPath() )
 
+		node.expandChildren()
+
 		this.application.getController( 'Scenes' ).renderScene( startScene )
 		this.application.fireEvent( 'buildnamespacenodes' )
 		project.unDirty()
