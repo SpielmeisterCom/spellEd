@@ -21,43 +21,12 @@ Ext.define('Spelled.model.Project', {
 		writer: 'project'
     },
 
-	save: function() {
-		this.syncLibraryIds()
-
-		this.callParent( arguments )
-	},
-
-	getStoreIds: function( store ) {
-		var array = []
-		store.each(
-			function( asset ) {
-				array.push( asset.getFullName() )
-			},
-			this
-		)
-
-		return array
-	},
-
-	syncLibraryIds: function() {
-		var result = []
-
-		this.set( 'libraryIds', result.concat(
-			this.getStoreIds( Ext.getStore( 'template.Components' ) ),
-			this.getStoreIds( Ext.getStore( 'template.Entities' ) ),
-			this.getStoreIds( Ext.getStore( 'template.Systems' ) ),
-			this.getStoreIds( Ext.getStore( 'asset.Assets' ) ),
-			this.getStoreIds( Ext.getStore( 'config.Scenes' ) )
-		))
-	},
-
     fields: [
 		{ name: 'type', type: 'string', defaultValue: 'project' },
         'name',
         'startScene',
 		{ name: 'config', type: 'object', defaultValue: {} },
-		{ name: 'assetIds', type: 'array', defaultValue: [] },
-		{ name: 'libraryIds', type: 'array', defaultValue: [] }
+		{ name: 'assetIds', type: 'array', defaultValue: [] }
 	],
 
     hasMany: {

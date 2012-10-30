@@ -953,6 +953,7 @@ Ext.define('Spelled.controller.Scenes', {
 		}
 
 		this.setDefaultScene( scene )
+		scene.syncLibraryIds()
 		this.reloadScene( tab.down( 'button' ) )
 	},
 
