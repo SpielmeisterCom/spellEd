@@ -4,7 +4,7 @@ Ext.define('Spelled.view.component.property.Defaults', {
 
     items: [
         {
-			icon: 'images/icons/revert.png',
+			icon: 'images/icons/revert-component.png',
             text: 'Reset to component defaults',
             action: 'toComponentDefaults'
         }
