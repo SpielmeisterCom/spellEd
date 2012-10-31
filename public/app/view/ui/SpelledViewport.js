@@ -22,7 +22,7 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                 },
                 {
 					id: "Navigator",
-                    title: "Project - Navigator",
+					defaultTitle: "ProjectName",
                     xtype: 'tabpanel',
                     tabPosition: 'bottom',
                     region:'west',
