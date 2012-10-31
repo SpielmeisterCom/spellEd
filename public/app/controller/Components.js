@@ -99,7 +99,7 @@ Ext.define('Spelled.controller.Components', {
 		if( propertyView.isAdditional === false ) {
 			contextmenu.add({
 				icon: 'images/icons/revert.png',
-				text: 'Reset to entity defaults',
+				text: 'Reset to template defaults',
 				action: 'toEntityDefaults'
 			})
 		}
