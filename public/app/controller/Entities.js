@@ -8,6 +8,7 @@ Ext.define('Spelled.controller.Entities', {
 		'Spelled.store.config.Entities',
 		'Spelled.store.template.Entities',
 		'Spelled.view.entity.Create',
+		'Spelled.view.entity.Convert',
 		'Spelled.view.entity.ComponentsList',
 		'Spelled.view.entity.HasTemplateHeader'
 	],
@@ -24,6 +25,7 @@ Ext.define('Spelled.controller.Entities', {
 
     views: [
         'entity.Create',
+		'entity.Convert',
 		'entity.ComponentsList',
 		'entity.HasTemplateHeader'
     ],
@@ -61,18 +63,42 @@ Ext.define('Spelled.controller.Entities', {
 			},
 			'entityhastemplateheader tool[type="search"]': {
 				showTemplateEntity: this.showTemplateEntity
+			},
+			'entitieslistcontextmenu [action="showConvertEntity"]': {
+				click: this.showConvertEntity
 			}
         })
 
 		this.application.on({
-			showentityinfo       : this.showEntityInfo,
-			cloneconfigentity    : this.cloneEntityConfig,
-			showentityremovealert: this.showEntityRemoveAlert,
-			removeentity         : this.removeEntity,
-			movesceneentity      : this.moveEntity,
+			refreshentitynode      : this.refreshEntitynode,
+			showentityinfo         : this.showEntityInfo,
+			cloneconfigentity      : this.cloneEntityConfig,
+			showentityremovealert  : this.showEntityRemoveAlert,
+			removeentity           : this.removeEntity,
+			movesceneentity        : this.moveEntity,
 			scope: this
 		})
     },
+
+	refreshEntitynode: function( id ) {
+		var tree     = this.getScenesTree(),
+			rootNode = tree.getRootNode(),
+			node     = rootNode.findChild( 'id', id, true ),
+			parent   = node.parentNode,
+			index    = parent.indexOf( node ),
+			entity   = this.getConfigEntitiesStore().getById( id )
+
+		node.remove( true )
+
+		parent.insertChild( index, entity.createTreeNode( parent ) )
+	},
+
+	showConvertEntity: function() {
+		var node   = this.application.getLastSelectedNode( this.getScenesTree() ),
+			view   = Ext.widget( 'convertentity' )
+
+		view.down('form').getForm().setValues( { type:'entityTemplate', owner: node.getId() } )
+	},
 
 	cloneEntityConfig: function( id, node ) {
 		var entity     = this.getConfigEntitiesStore().getById( id ),

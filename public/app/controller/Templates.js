@@ -306,10 +306,14 @@ Ext.define('Spelled.controller.Templates', {
 				model.set( 'content', this.application.getController( 'templates.Systems' ).createSystemScaffolding( model.getFullName(), model.get( 'name' ) ) )
 			}
 
+			if( values.owner ) this.convertEntity( values.owner, model )
+
 			model.save({
 				success: function( result ) {
 					Ext.Msg.alert('Success', 'Your Template "' + result.get( 'templateId' ) + '" has been created.')
-					this.refreshStores()
+
+					//Needed for template conversion
+					this.loadTemplateStores( Ext.bind( function() { if( values.owner ) this.application.fireEvent( 'refreshentitynode', values.owner ) }, this) )
 
 					window.close()
 				},
@@ -317,6 +321,25 @@ Ext.define('Spelled.controller.Templates', {
 			})
 		}
     },
+
+	convertEntity: function( entityId, template ) {
+		var entity   = Ext.getStore( 'config.Entities' ).getById( entityId ),
+			data     = entity.getData( true ),
+			children = []
+
+		entity.getChildren().each(
+			function( child ) {
+				children.push( child.clone( true ) )
+			}
+		)
+
+		template.getComponents().add( data.getComponents )
+		template.getChildren().add( children )
+
+		entity.set( 'templateId', template.getFullName() )
+		entity.resetConfig()
+		entity.setDirty()
+	},
 
     loadTemplateStores: function( callback ) {
 		var finished = 0,

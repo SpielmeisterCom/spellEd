@@ -54,6 +54,12 @@ Ext.define('Spelled.model.config.Entity', {
 		}
 	],
 
+	resetConfig: function() {
+		this.set( 'config', {} )
+		this.getComponents().removeAll()
+		this.getChildren().removeAll()
+	},
+
 	clone: function( internal ) {
 		var cloneConfig = Ext.amdModules.entityConverter.toEditorFormat( Ext.amdModules.entityConverter.toEngineFormat(this.getData( true )) )
 
