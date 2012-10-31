@@ -813,7 +813,9 @@ Ext.define('Spelled.controller.Scenes', {
 			}
 		)
 
-		panel.add( [ newIframe, { xtype: 'spellprogressbar'} ] )
+		panel.add( newIframe )
+
+		if( !panel.down( 'spellprogressbar' ) ) panel.add( { xtype: 'spellprogressbar'} )
 
 		this.engineMessageBus.send(
 			newIframe.getId(),
@@ -840,8 +842,11 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	updateRenderProgress: function( value ) {
-		var progressBar = this.getProgressBar(),
-			panel       = progressBar.up( 'renderedscene' )
+		var progressBar = this.getProgressBar()
+
+		if( !progressBar ) return
+
+		var panel = progressBar.up( 'renderedscene' )
 
 		progressBar.updateProgress( value )
 
