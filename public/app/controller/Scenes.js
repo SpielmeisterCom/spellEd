@@ -173,7 +173,7 @@ Ext.define('Spelled.controller.Scenes', {
 						me.engineMessageBus.send(
 							sourceId,
 							{
-								type : "spelled.debug.drawCoordinateGrid",
+								type : "spelled.debug.settings.drawCoordinateGrid",
 								payload : me.application.getActiveScene().get( 'showGrid' )
 							}
 						)
@@ -181,7 +181,7 @@ Ext.define('Spelled.controller.Scenes', {
 						me.engineMessageBus.send(
 							sourceId,
 							{
-								type : "spelled.debug.simulateScreenAspectRatio",
+								type : "spelled.debug.settings.simulateScreenAspectRatio",
 								payload : {
 									aspectRatio:  me.application.getActiveScene().get( 'aspectRatio' )
 								}
@@ -191,7 +191,7 @@ Ext.define('Spelled.controller.Scenes', {
 						me.engineMessageBus.send(
 							sourceId,
 							{
-								type : "spelled.debug.drawTitleSafeOutline",
+								type : "spelled.debug.settings.drawTitleSafeOutline",
 								payload : me.application.getActiveScene().get( 'showTitleSafe' )
 							}
 						)
@@ -415,7 +415,7 @@ Ext.define('Spelled.controller.Scenes', {
 		this.engineMessageBus.send(
 			iframe.getId(),
 			{
-				type : 'spelled.debug.simulateScreenAspectRatio',
+				type : 'spelled.debug.settings.simulateScreenAspectRatio',
 				payload : {
 					aspectRatio: newValue
 				}
@@ -866,7 +866,7 @@ Ext.define('Spelled.controller.Scenes', {
 			this.engineMessageBus.send(
 				tab.getId(),
 				{
-					type : "spelled.debug.drawCoordinateGrid",
+					type : "spelled.debug.settings.drawCoordinateGrid",
 					payload : state
 				}
 			)
@@ -884,7 +884,7 @@ Ext.define('Spelled.controller.Scenes', {
 		this.engineMessageBus.send(
 			tab.getId(),
 			{
-				type : 'spelled.debug.drawTitleSafeOutline',
+				type : 'spelled.debug.settings.drawTitleSafeOutline',
 				payload : state
 			}
 		)
