@@ -394,6 +394,9 @@ Ext.define('Spelled.controller.Projects', {
 		node.expand()
 		node.expandChildren()
 
+		this.getNavigator().defaultTitle = project.get( 'name' )
+		this.getScenes().changeTitle()
+
 		this.application.getController( 'Scenes' ).renderScene( startScene )
 		this.application.fireEvent( 'buildnamespacenodes' )
 		project.unDirty()

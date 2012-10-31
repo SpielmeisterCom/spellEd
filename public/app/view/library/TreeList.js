@@ -6,9 +6,6 @@ Ext.define('Spelled.view.library.TreeList' ,{
 		'Ext.container.ButtonGroup'
 	],
 
-	title: "Library - Navigator",
-	header: false,
-
     animate: false,
     animCollapse: false,
     store : 'Library',

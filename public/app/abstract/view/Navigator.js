@@ -19,11 +19,10 @@ Ext.define('Spelled.abstract.view.Navigator' ,{
     },
 
 	changeTitle: function() {
-		var treePanel = this.down( 'treepanel' ),
-			tabPanel  = this.up( 'tabpanel' )
+		var tabPanel  = this.up( 'tabpanel' )
 
-		if( treePanel && tabPanel ) {
-			tabPanel.setTitle( treePanel.title )
+		if( tabPanel ) {
+			tabPanel.setTitle( tabPanel.defaultTitle + " > " + this.title )
 		}
 	}
 })
