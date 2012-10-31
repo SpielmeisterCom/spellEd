@@ -837,6 +837,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.template.component.attribute.List": [
     "widget.spelledlistfield"
   ],
+  "Spelled.view.entity.Convert": [
+    "widget.convertentity"
+  ],
   "Spelled.MessageBus": [],
   "Spelled.store.Library": [],
   "Ext.form.field.Radio": [
@@ -1842,6 +1845,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.template.component.Details": [],
   "Spelled.view.template.component.attribute.List": [],
+  "Spelled.view.entity.Convert": [],
   "Spelled.MessageBus": [],
   "Spelled.store.Library": [],
   "Ext.form.field.Radio": [
