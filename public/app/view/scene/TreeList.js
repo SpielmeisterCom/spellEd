@@ -2,6 +2,8 @@ Ext.define('Spelled.view.scene.TreeList' ,{
     extend: 'Spelled.abstract.view.TreeList',
     alias : 'widget.scenetreelist',
 
+	requires: ['Spelled.view.scene.plugin.CellEditing'],
+
     store : 'ScenesTree',
 
 	viewConfig: {
@@ -21,19 +23,20 @@ Ext.define('Spelled.view.scene.TreeList' ,{
 	],
 
 	initComponent: function() {
-		var me = this,
-			cellEditor = Ext.create('Ext.grid.plugin.CellEditing', {
-				clicksToEdit: 4,
-				pluginId:'renameEntityPlugin'
-			})
+		var me         = this,
+			cellEditor = Ext.create( 'Spelled.view.scene.plugin.CellEditing' )
 
 		Ext.applyIf( me, {
-				plugins:[
-					cellEditor
-				],
+				plugins:[ cellEditor ],
 				listeners: {
 					afterrender: function() {
 						cellEditor.removeManagedListener( cellEditor.view, 'celldblclick' )
+					},
+					validateedit: function( editor, e ) {
+						if( !cellEditor.isConfigEntityCompliant( e.value ) ){
+							Ext.MessageBox.alert( 'Error', "Usage of invalid characters. No: '.' or '/' allowed" )
+							return false
+						}
 					}
 				}
 			}

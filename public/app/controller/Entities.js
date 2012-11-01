@@ -273,11 +273,12 @@ Ext.define('Spelled.controller.Entities', {
 		var node = this.application.getLastSelectedNode( this.getScenesTree() )
 		node.set( 'leaf', false )
 
-		var entityNode = record.createTreeNode( node )
-		this.getScenesTree().selectPath( node.appendChild( entityNode ).getPath() )
+		var entityNode = record.createTreeNode( node ),
+			newNode    = node.appendChild( entityNode ).getPath()
 
 		entityNode.expand( true, function() { entityNode.collapse( true ) } )
 
+		this.getScenesTree().selectPath( newNode )
 		window.close()
     },
 

@@ -12,12 +12,15 @@ Ext.define('Spelled.view.entity.Create' ,{
             xtype: 'form',
             items: [
                 {
-                    xtype: 'textfield',
+                    xtype: 'spelledtextfield',
                     name: 'name',
-					vtype: 'alphanum',
                     fieldLabel: 'Name',
                     anchor: '100%',
-                    allowBlank:false
+                    allowBlank:false,
+					validator: function( value ) {
+						if( this.isConfigEntityCompliant( value ) ) return true
+						else return "Usage of invalid characters. No: '.' or '/' allowed"
+					}
                 },
 				{
 					xtype: 'hiddenfield',
