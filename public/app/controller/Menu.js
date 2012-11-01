@@ -282,6 +282,12 @@ Ext.define('Spelled.controller.Menu', {
             e
         )
 
+		if( !entity.isRemovable() ) {
+			view.remove( view.down( '[action="showConvertEntity"]' ) )
+			view.remove( view.down( '[action="rename"]' ) )
+			view.remove( view.down( '[action="remove"]' ) )
+		}
+
         view.setEntity( entity )
     },
 
@@ -293,7 +299,7 @@ Ext.define('Spelled.controller.Menu', {
 	},
 
     showScenesListContextMenu: function( e ) {
-        this.createAndShowView(
+        return this.createAndShowView(
             this.getMenuContextmenuScenesListView(),
             e
         )

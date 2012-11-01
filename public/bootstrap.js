@@ -1107,6 +1107,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.selection.CellModel": [
     "selection.cellmodel"
   ],
+  "Spelled.view.scene.plugin.CellEditing": [
+    "plugin.renameentityplugin"
+  ],
   "Ext.view.TableLayout": [
     "layout.tableview"
   ],
@@ -2014,6 +2017,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.dd.ScrollManager": [],
   "Ext.chart.Mask": [],
   "Ext.selection.CellModel": [],
+  "Spelled.view.scene.plugin.CellEditing": [],
   "Ext.view.TableLayout": [],
   "Ext.state.Provider": [],
   "Spelled.model.Asset": [],
