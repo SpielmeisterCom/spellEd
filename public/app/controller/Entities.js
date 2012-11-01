@@ -90,7 +90,9 @@ Ext.define('Spelled.controller.Entities', {
 
 		node.remove( true )
 
-		parent.insertChild( index, entity.createTreeNode( parent ) )
+		var newNode = entity.createTreeNode( parent )
+		parent.insertChild( index, newNode )
+		tree.selectPath( newNode.getPath() )
 	},
 
 	showConvertEntity: function() {
