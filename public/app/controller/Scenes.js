@@ -236,12 +236,14 @@ Ext.define('Spelled.controller.Scenes', {
 				beforedrop: me.dispatchTreeNodeBeforeDrop
 			},
 			'scenetreelist': {
+				iteminsert     : me.expandAndClose,
+				itemappend     : me.expandAndClose,
 				itemdblclick   : me.dispatchTreeDblClick,
 				select         : me.dispatchTreeClick,
 				beforeedit     : me.checkIfTreeColumnIsEditable,
 				edit           : me.changeEntityName,
 				itemcontextmenu: me.dispatchTreeListContextMenu,
-				editclick    :   me.dispatchTreeListContextMenu,
+				editclick      : me.dispatchTreeListContextMenu,
 				itemmouseenter : me.dispatchMouseEnterTree,
 				itemmouseleave : me.application.hideActions
 			},
@@ -274,6 +276,10 @@ Ext.define('Spelled.controller.Scenes', {
 			assetchange: this.sendAssetChangeToEngine,
 			scope: this
 		})
+	},
+
+	expandAndClose: function( tree, node, refNode ) {
+		node.expand( true, function() { node.collapse( true ) } )
 	},
 
 	getSpelledIframe: function() {
@@ -978,8 +984,6 @@ Ext.define('Spelled.controller.Scenes', {
 			}
 
 		},this)
-
-		rootNode.expand( true, function() { rootNode.collapse( true ) } )
 	},
 
 	createInitialSceneScriptContent: function( scene ) {

@@ -178,8 +178,6 @@ Ext.define('Spelled.model.config.Scene', {
 			)
 		)
 
-		sceneNode.expand( true, function() { sceneNode.collapse( true ) } )
-
 		return sceneNode
 	}
 });

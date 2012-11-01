@@ -120,7 +120,6 @@ Ext.define('Spelled.controller.Entities', {
 		ownerStore.insert( ownerStore.indexOf( entity ) + 1, clone )
 
 		node.parentNode.insertBefore( clonedNode, node.nextSibling )
-		clonedNode.expand( true, function(){this.collapse(true)})
 		clone.setDirty()
 	},
 
@@ -277,8 +276,6 @@ Ext.define('Spelled.controller.Entities', {
 
 		var entityNode = record.createTreeNode( node ),
 			newNode    = node.appendChild( entityNode ).getPath()
-
-		entityNode.expand( true, function() { entityNode.collapse( true ) } )
 
 		this.getScenesTree().selectPath( newNode )
 		window.close()
