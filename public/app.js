@@ -268,11 +268,18 @@ var startApplication = function() {
 			)
 		},
 
-		launch: function() {
-			var me = this
-
-			//load configuration from global CONFIGURATION variable that is defined in app-initialize
-			me.configuration = Ext.app.CONFIGURATION
+		init: function() {
+			Ext.Direct.on('exception', function( response ) {
+				if( !Ext.Msg.isVisible() ) {
+					Ext.Msg.show({
+						buttons: Ext.Msg.OK,
+						title: 'Critical Error',
+						msg: "Could not execute '" + response.transaction.action +"."+ response.transaction.method +
+							"': <br/><br/>"+ response.xhr.responseText,
+						icon: Ext.MessageBox.ERROR
+					})
+				}
+			})
 
 			Ext.override(
 				Ext.data.proxy.Direct,
@@ -290,18 +297,22 @@ var startApplication = function() {
 				}
 			)
 
-			Ext.Direct.on('exception', function( response ) {
-				if( !Ext.Msg.isVisible() ) {
-					Ext.Msg.show({
-						buttons: Ext.Msg.OK,
-						title: 'Critical Error',
-						msg: "Could not execute '" + response.transaction.action +"."+ response.transaction.method +
-							"': <br/><br/>"+ response.xhr.responseText,
-						icon: Ext.MessageBox.ERROR
-					})
-				}
-			})
+			//load configuration from global CONFIGURATION variable that is defined in app-initialize
+			this.configuration = Ext.app.CONFIGURATION
 
+			/**
+			 * Message bus used for communication with engine instances.
+			 */
+			this.engineMessageBus = Ext.create( 'Spelled.MessageBus' )
+
+			window.addEventListener(
+				'message',
+				Ext.bind( this.engineMessageBus.receive, this.engineMessageBus ),
+				false
+			)
+		},
+
+		launch: function() {
 			var loadingComplete = function() {
 				Ext.get('loading').remove()
 				Ext.get('loading-mask').fadeOut( {
@@ -313,6 +324,10 @@ var startApplication = function() {
 				Ext.state.Manager.setProvider( stateProvider )
 				this.getController( 'Projects').loadLastProject()
 			}
+
+			this.engineMessageBus.addHandler( {'spell.debug.consoleMessage' : function( sourceId, payload ) {
+				Spelled.Logger.log( payload.level, payload.text )
+			}} )
 
 			Ext.getStore( 'Projects' ).load({
 				callback: loadingComplete,

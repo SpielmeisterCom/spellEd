@@ -8,6 +8,11 @@ Ext.define(
 			this.initConfig( options )
 		},
 
+		addHandler: function( handlers ) {
+			if( !Ext.isObject(handlers) ) throw "No valid message handler"
+			this.handlers = Ext.Object.merge( {}, this.handlers, handlers )
+		},
+
 		config : {
 			handlers : {},
 			queue : {}

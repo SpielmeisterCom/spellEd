@@ -412,7 +412,6 @@ Ext.define('Spelled.controller.Components', {
 
 	sendComponentUpdate: function( component, name, value ) {
 		var activeScene       = this.application.getActiveScene(),
-			sceneController   = this.application.getController( 'Scenes'),
 			sceneEditor       = this.getSceneEditor()
 
 		if ( this.getComponentScene( component ) != activeScene ) return
@@ -425,7 +424,7 @@ Ext.define('Spelled.controller.Components', {
 
 				componentConfig[ name ] = Ext.decode( value, true ) || value
 
-				sceneController.engineMessageBus.send(
+				this.application.engineMessageBus.send(
 					activeSceneTab.down( 'spellediframe' ).getId(),
 					{
 						type : 'spelled.debug.component.update',

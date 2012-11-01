@@ -70,14 +70,9 @@ Ext.define('Spelled.controller.Scenes', {
 	TREE_ITEM_TYPE_SYSTEM_ITEM   : 6,
 	TREE_ITEM_TYPE_SYSTEM_FOLDER : 7,
 
-	/**
-	 * Message bus used for communication with engine instances.
-	 */
-	engineMessageBus : undefined,
-
-
 	init: function() {
-		var me = this
+		var me               = this,
+			engineMessageBus = me.application.engineMessageBus
 
 		//Show Scenes on ctrl+1
 		Spelled.KeyMap = new Ext.util.KeyMap( document,
@@ -162,57 +157,43 @@ Ext.define('Spelled.controller.Scenes', {
 			}
 		)
 
-		// initializing the engine message bus
-		this.engineMessageBus = Ext.create(
-			'Spelled.MessageBus',
+		engineMessageBus.addHandler(
 			{
-				handlers : {
-					'spell.initialized' : function( sourceId, payload ) {
-						me.engineMessageBus.flushQueue( sourceId )
+				'spell.initialized' : function( sourceId, payload ) {
+					engineMessageBus.flushQueue( sourceId )
 
-						me.engineMessageBus.send(
-							sourceId,
-							{
-								type : "spelled.debug.settings.drawCoordinateGrid",
-								payload : me.application.getActiveScene().get( 'showGrid' )
+					engineMessageBus.send(
+						sourceId,
+						{
+							type : "spelled.debug.settings.drawCoordinateGrid",
+							payload : me.application.getActiveScene().get( 'showGrid' )
+						}
+					)
+
+					engineMessageBus.send(
+						sourceId,
+						{
+							type : "spelled.debug.settings.simulateScreenAspectRatio",
+							payload : {
+								aspectRatio:  me.application.getActiveScene().get( 'aspectRatio' )
 							}
-						)
+						}
+					)
 
-						me.engineMessageBus.send(
-							sourceId,
-							{
-								type : "spelled.debug.settings.simulateScreenAspectRatio",
-								payload : {
-									aspectRatio:  me.application.getActiveScene().get( 'aspectRatio' )
-								}
-							}
-						)
+					engineMessageBus.send(
+						sourceId,
+						{
+							type : "spelled.debug.settings.drawTitleSafeOutline",
+							payload : me.application.getActiveScene().get( 'showTitleSafe' )
+						}
+					)
 
-						me.engineMessageBus.send(
-							sourceId,
-							{
-								type : "spelled.debug.settings.drawTitleSafeOutline",
-								payload : me.application.getActiveScene().get( 'showTitleSafe' )
-							}
-						)
-
-					},
-					'spell.debug.consoleMessage' : function( sourceId, payload ) {
-						Spelled.Logger.log( payload.level, payload.text )
-					},
-					'spell.loadingProgress' : function( sourceId, payload ) {
-						me.updateRenderProgress( payload )
-					}
+				},
+				'spell.loadingProgress' : function( sourceId, payload ) {
+					me.updateRenderProgress( payload )
 				}
 			}
 		)
-
-		window.addEventListener(
-			'message',
-			Ext.bind( this.engineMessageBus.receive, this.engineMessageBus ),
-			false
-		)
-
 
 		this.control({
 			'renderedscene > toolbar combobox[name="aspectRatioSelector"]': {
@@ -297,7 +278,7 @@ Ext.define('Spelled.controller.Scenes', {
 	sendChangeToEngine: function( type, payload ) {
 		var iframe     = this.getSpelledIframe()
 
-		this.engineMessageBus.send(
+		this.application.engineMessageBus.send(
 			iframe.getId(),
 			{
 				type : type,
@@ -418,7 +399,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		scene.set( 'aspectRatio', newValue )
 
-		this.engineMessageBus.send(
+		this.application.engineMessageBus.send(
 			iframe.getId(),
 			{
 				type : 'spelled.debug.settings.simulateScreenAspectRatio',
@@ -823,7 +804,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		if( !panel.down( 'spellprogressbar' ) ) panel.add( { xtype: 'spellprogressbar'} )
 
-		this.engineMessageBus.send(
+		this.application.engineMessageBus.send(
 			newIframe.getId(),
 			{
 				type : 'spelled.debug.runtimeModule.start',
@@ -869,7 +850,7 @@ Ext.define('Spelled.controller.Scenes', {
 		if( tab ) {
 			scene.set( 'showGrid', state )
 
-			this.engineMessageBus.send(
+			this.application.engineMessageBus.send(
 				tab.getId(),
 				{
 					type : "spelled.debug.settings.drawCoordinateGrid",
@@ -887,7 +868,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		scene.set( 'showTitleSafe', state )
 
-		this.engineMessageBus.send(
+		this.application.engineMessageBus.send(
 			tab.getId(),
 			{
 				type : 'spelled.debug.settings.drawTitleSafeOutline',

@@ -62,7 +62,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 		)
 
 		this.application.createTab( templateEditor, editView )
-		this.application.getController( 'Scenes').engineMessageBus.send(
+		this.application.engineMessageBus.send(
 			editView.down( 'container[name="entityPreviewContainer"]').getId(),
 			{
 				type : 'spelled.debug.startRuntimeModule',
