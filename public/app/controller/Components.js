@@ -428,7 +428,7 @@ Ext.define('Spelled.controller.Components', {
 				sceneController.engineMessageBus.send(
 					activeSceneTab.down( 'spellediframe' ).getId(),
 					{
-						type : 'spelled.debug.updateComponent',
+						type : 'spelled.debug.component.update',
 						payload : {
 							entityId    : component.getEntity().getId(),
 							componentId : component.get( 'templateId' ),

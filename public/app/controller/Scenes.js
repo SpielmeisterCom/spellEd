@@ -285,7 +285,7 @@ Ext.define('Spelled.controller.Scenes', {
 			payload = Ext.amdModules.assetConverter.toEngineFormat( data )
 
 		Ext.copyTo( payload, data, 'name,namespace' )
-		this.sendChangeToEngine( "spelled.debug.updateAsset", { definition: payload } )
+		this.sendChangeToEngine( "spelled.debug.library.updateAsset", { definition: payload } )
 	},
 
 	sendChangeToEngine: function( type, payload ) {
@@ -393,7 +393,7 @@ Ext.define('Spelled.controller.Scenes', {
 		if( !hasBreakpoints && annotations.length > 0 ) return
 
 		this.sendChangeToEngine(
-			"spelled.debug.updateScript",
+			"spelled.debug.library.updateScript",
 			{
 				id: model.getFullName(),
 				moduleSource: lines.join("\n")
@@ -820,7 +820,7 @@ Ext.define('Spelled.controller.Scenes', {
 		this.engineMessageBus.send(
 			newIframe.getId(),
 			{
-				type : 'spelled.debug.startRuntimeModule',
+				type : 'spelled.debug.runtimeModule.start',
 				payload : {
 					runtimeModule: Ext.amdModules.createProjectInEngineFormat( project ),
 					cacheContent: this.generateSceneCacheContent( scene )
