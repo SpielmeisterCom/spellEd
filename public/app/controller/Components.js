@@ -166,6 +166,8 @@ Ext.define('Spelled.controller.Components', {
 			component = store.getById( panel.componentConfigId ),
 			entity    = component.getEntity()
 
+		this.application.fireEvent( 'sendtoEngine', 'spelled.debug.component.remove' ,{ entityId: entity.getId(), componentId: component.get( 'templateId' ) } )
+
 		entity.getComponents().remove( component )
 		entity.setDirty()
 		store.remove( component )
@@ -295,8 +297,11 @@ Ext.define('Spelled.controller.Components', {
 					configComponent.setEntity( entity )
 
 					entity.getComponents().add( configComponent )
+
+					this.sendAddComponentToEngine( configComponent )
 				}
-			}
+			},
+			this
 		)
 
 		if( entity.modelName === "Spelled.model.template.Entity" || entity.isTemplateComposite() )
@@ -305,6 +310,12 @@ Ext.define('Spelled.controller.Components', {
 			this.application.getController('Entities').showComponentsList( entity )
 
 		window.close()
+	},
+
+	sendAddComponentToEngine: function( component ) {
+		var entity = component.getEntity()
+
+		this.application.fireEvent( 'sendtoEngine', 'spelled.debug.component.add' ,{ entityId: entity.getId(), componentId: component.get( 'templateId' ) } )
 	},
 
 	editProperty: function( editor, e ) {

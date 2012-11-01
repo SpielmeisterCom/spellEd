@@ -49,6 +49,10 @@ Ext.define('Spelled.controller.Scenes', {
 		{
 			ref : 'ProgressBar',
 			selector: 'spellprogressbar'
+		},
+		{
+			ref: 'SpelledIframe',
+			selector: 'spellediframe'
 		}
 	],
 
@@ -255,16 +259,13 @@ Ext.define('Spelled.controller.Scenes', {
 			systemmove: this.sendSystemMoveToEngine,
 			systemremovefromscene: this.sendSystemRemoveFromSceneToEngine,
 			assetchange: this.sendAssetChangeToEngine,
+			sendtoEngine: this.sendChangeToEngine,
 			scope: this
 		})
 	},
 
 	expandAndClose: function( tree, node, refNode ) {
 		node.expand( true, function() { node.collapse( true ) } )
-	},
-
-	getSpelledIframe: function() {
-		return this.getSceneEditor().down( 'spellediframe' )
 	},
 
 	sendAssetChangeToEngine: function( asset ) {
