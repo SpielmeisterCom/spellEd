@@ -58,12 +58,5 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 		]
 
 		me.callParent( arguments )
-	},
-
-	syncButtons: function( scene ){
-		this.down( '[action="toggleGrid"]' ).toggle( scene.get( 'showGrid' ) )
-		this.down( '[action="toggleTitleSafe"]' ).toggle( scene.get( 'showTitleSafe' ) )
-		this.down( '[action="toggleTitleSafe"]' ).toggle( scene.get( 'showTitleSafe' ) )
-		this.down( '[name="aspectRatioSelector"]' ).setValue( scene.get( 'aspectRatio' ) )
 	}
-});
+})

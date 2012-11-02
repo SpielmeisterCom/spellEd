@@ -53,6 +53,10 @@ Ext.define('Spelled.controller.Scenes', {
 		{
 			ref: 'SpelledIframe',
 			selector: 'spellediframe'
+		},
+		{
+			ref: 'RenderedScene',
+			selector: 'renderedscene'
 		}
 	],
 
@@ -164,7 +168,7 @@ Ext.define('Spelled.controller.Scenes', {
 		engineMessageBus.addHandler(
 			{
 				'spell.initialized' : function( sourceId, payload ) {
-					var scene = me.application.getActiveScene()
+					var renderedSceneTab = me.getRenderedScene()
 
 					engineMessageBus.flushQueue( sourceId )
 
@@ -172,7 +176,7 @@ Ext.define('Spelled.controller.Scenes', {
 						sourceId,
 						{
 							type : "spelled.debug.settings.drawCoordinateGrid",
-							payload : scene.get( 'showGrid' )
+							payload : renderedSceneTab.down( '[action="toggleGrid"]' ).pressed
 						}
 					)
 
@@ -181,7 +185,7 @@ Ext.define('Spelled.controller.Scenes', {
 						{
 							type : "spelled.debug.settings.simulateScreenAspectRatio",
 							payload : {
-								aspectRatio : scene.get( 'aspectRatio' )
+								aspectRatio : renderedSceneTab.down( '[name="aspectRatioSelector"]' ).getValue()
 							}
 						}
 					)
@@ -190,7 +194,7 @@ Ext.define('Spelled.controller.Scenes', {
 						sourceId,
 						{
 							type : "spelled.debug.settings.drawTitleSafeOutline",
-							payload : scene.get( 'showTitleSafe' )
+							payload : renderedSceneTab.down( '[action="toggleTitleSafe"]' ).pressed
 						}
 					)
 
@@ -358,11 +362,7 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	changeAspectRatio: function( field, newValue, oldValue ) {
-		var sceneEditor = this.getSceneEditor(),
-			scene       = this.application.getActiveScene(),
-			iframe      = sceneEditor.getActiveTab().down( 'spellediframe' )
-
-		scene.set( 'aspectRatio', newValue )
+		var iframe      = this.getSpelledIframe()
 
 		this.application.engineMessageBus.send(
 			iframe.getId(),
@@ -752,8 +752,6 @@ Ext.define('Spelled.controller.Scenes', {
 			}
 		)
 
-		panel.syncButtons( scene )
-
 		if( !panel.down( 'spellprogressbar' ) ) panel.add( { xtype: 'spellprogressbar'} )
 
 		this.application.engineMessageBus.send(
@@ -796,12 +794,9 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	toggleGrid: function( button, state ) {
-		var tab   = button.up( 'renderedscene').down( 'spellediframe' ),
-			scene = this.application.getActiveScene()
+		var tab   = button.up( 'renderedscene').down( 'spellediframe' )
 
 		if( tab ) {
-			scene.set( 'showGrid', state )
-
 			this.application.engineMessageBus.send(
 				tab.getId(),
 				{
@@ -813,12 +808,9 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	toggleTitleSafe: function( button, state ) {
-		var tab   = button.up( 'renderedscene' ).down( 'spellediframe' ),
-			scene = this.application.getActiveScene()
+		var tab   = button.up( 'renderedscene' ).down( 'spellediframe' )
 
 		if( !tab ) return
-
-		scene.set( 'showTitleSafe', state )
 
 		this.application.engineMessageBus.send(
 			tab.getId(),
@@ -833,7 +825,6 @@ Ext.define('Spelled.controller.Scenes', {
 		var tab      = button.up( 'renderedscene').down( 'spellediframe'),
 			dom      = tab.el.dom,
 			prefixes = ["moz", "webkit", "ms", "o", ""],
-			docEl    = document.documentElement,
 			fullScreenFunctionAvailable = false
 
 		Ext.each(prefixes, function( prefix ) {

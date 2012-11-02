@@ -14,9 +14,6 @@ Ext.define('Spelled.model.config.Scene', {
         'name',
 		'namespace',
 		'libraryIds',
-		{ name: 'showGrid', type: 'boolean', defaultValue: false, persist: false },
-		{ name: 'aspectRatio', type: 'number', defaultValue: 0, persist: false },
-		{ name: 'showTitleSafe', type: 'boolean', defaultValue: false, persist: false },
 		{ name: 'systems', type: 'object', defaultValue: { update: [], render: [] } }
     ],
 
