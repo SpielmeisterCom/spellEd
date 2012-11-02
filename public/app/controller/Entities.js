@@ -66,10 +66,14 @@ Ext.define('Spelled.controller.Entities', {
 			},
 			'entitieslistcontextmenu [action="showConvertEntity"]': {
 				click: this.showConvertEntity
+			},
+			'scenetreelist': {
+				edit: this.changeEntityName
 			}
         })
 
 		this.application.on({
+			triggerrenamingentity  : this.triggerRenameEntityEvent,
 			refreshentitynode      : this.refreshEntitynode,
 			showentityinfo         : this.showEntityInfo,
 			cloneconfigentity      : this.cloneEntityConfig,
@@ -79,6 +83,28 @@ Ext.define('Spelled.controller.Entities', {
 			scope: this
 		})
     },
+
+	triggerRenameEntityEvent: function( node ) {
+		var cellEditor = this.getScenesTree().getPlugin( 'renameEntityPlugin' )
+		cellEditor.startEdit( node, 0 )
+	},
+
+	changeEntityName: function( editor, e ) {
+		var entity = this.getConfigEntitiesStore().getById( e.record.getId() )
+
+		entity.set( 'name', e.record.get('text') )
+
+		this.application.fireEvent(
+			'sendtoEngine',
+			'spelled.debug.component.update' , {
+				entityId    : entity.getId(),
+				componentId : 'spell.component.name',
+				config      : { value: entity.get( 'name' ) }
+			}
+		)
+
+		e.record.commit()
+	},
 
 	refreshEntitynode: function( id ) {
 		var tree     = this.getScenesTree(),
@@ -103,7 +129,8 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
 	cloneEntityConfig: function( id, node ) {
-		var entity     = this.getConfigEntitiesStore().getById( id ),
+		var store      = this.getConfigEntitiesStore(),
+			entity     = store.getById( id ),
 			owner      = entity.getOwner(),
 			clone      = entity.clone(),
 			clonedNode = clone.createTreeNode(node),
@@ -121,6 +148,13 @@ Ext.define('Spelled.controller.Entities', {
 
 		node.parentNode.insertBefore( clonedNode, node.nextSibling )
 		clone.setDirty()
+		store.add( clone )
+
+		this.sendCreateMessage( clone )
+	},
+
+	sendCreateMessage: function( entity ) {
+		this.application.fireEvent( 'sendtoEngine',	'spelled.debug.entity.create', { entityConfig: entity.getMessageData() } )
 	},
 
 	moveEntity: function( targetId, entityId, dropPosition ) {
@@ -150,6 +184,8 @@ Ext.define('Spelled.controller.Entities', {
 			targetEntities.insert( targetEntities.indexOf( target ) + offset, entity )
 		}
 
+		this.application.fireEvent( 'sendtoEngine',	'spelled.debug.entity.changeParent', { entityId: entityId, parentId: targetId } )
+
 		target.setDirty()
 	},
 
@@ -160,6 +196,8 @@ Ext.define('Spelled.controller.Entities', {
 			function( button ) {
 				if ( button === 'yes' ) {
 					if( entity ) {
+						this.application.fireEvent( 'sendtoEngine',	'spelled.debug.entity.remove', { entityId: entity.getId() } )
+
 						entity.getOwner().setDirty()
 						this.deleteEntity( entity )
 						var node = this.application.getLastSelectedNode( this.getScenesTree() ),
@@ -258,6 +296,9 @@ Ext.define('Spelled.controller.Entities', {
 
 		record.set( 'name', values.name )
 
+		this.getConfigEntitiesStore().add( record )
+		this.sendCreateMessage( record )
+
 		return record
 	},
 
@@ -265,11 +306,9 @@ Ext.define('Spelled.controller.Entities', {
         var window = button.up('window'),
             form   = window.down('form'),
             record = form.getRecord(),
-            values = form.getValues(),
-			store  = this.getConfigEntitiesStore()
+            values = form.getValues()
 
 		record = this.createEntityHelper( record, values )
-		store.add( record )
 
 		var node = this.application.getLastSelectedNode( this.getScenesTree() )
 		node.set( 'leaf', false )

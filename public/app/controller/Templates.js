@@ -306,7 +306,7 @@ Ext.define('Spelled.controller.Templates', {
 				model.set( 'content', this.application.getController( 'templates.Systems' ).createSystemScaffolding( model.getFullName(), model.get( 'name' ) ) )
 			}
 
-			if( values.owner ) this.convertEntity( values.owner, model )
+			if( values.owner ) this.application.getController( 'templates.Entities' ).convertEntity( values.owner, model )
 
 			model.save({
 				success: function( result ) {
@@ -321,25 +321,6 @@ Ext.define('Spelled.controller.Templates', {
 			})
 		}
     },
-
-	convertEntity: function( entityId, template ) {
-		var entity   = Ext.getStore( 'config.Entities' ).getById( entityId ),
-			data     = entity.getData( true ),
-			children = []
-
-		entity.getChildren().each(
-			function( child ) {
-				children.push( child.clone( true ) )
-			}
-		)
-
-		template.getComponents().add( data.getComponents )
-		template.getChildren().add( children )
-
-		entity.set( 'templateId', template.getFullName() )
-		entity.resetConfig()
-		entity.setDirty()
-	},
 
     loadTemplateStores: function( callback ) {
 		var finished = 0,

@@ -71,6 +71,25 @@ Ext.define('Spelled.controller.templates.Entities', {
 		)
 	},
 
+	convertEntity: function( entityId, template ) {
+		var entity   = Ext.getStore( 'config.Entities' ).getById( entityId ),
+			data     = entity.getData( true ),
+			children = []
+
+		entity.getChildren().each(
+			function( child ) {
+				children.push( child.clone( true ) )
+			}
+		)
+
+		template.getComponents().add( data.getComponents )
+		template.getChildren().add( children )
+
+		entity.set( 'templateId', template.getFullName() )
+		entity.resetConfig()
+		entity.setDirty()
+	},
+
 	createEntityTemplatePreviewItem: function( entityTemplate ) {
 		var project       = this.application.getActiveProject(),
 			sceneConfig   = { name: "dummyScene", namespace: '' },
@@ -114,7 +133,6 @@ Ext.define('Spelled.controller.templates.Entities', {
 			node   = me.application.getLastSelectedNode( me.getTemplatesTree() )
 
 		record = this.application.getController( 'Entities' ).createEntityHelper( record, values )
-		Ext.getStore( 'config.Entities' ).add( record )
 
 		record.getOwner().save( {
 			callback: function() {

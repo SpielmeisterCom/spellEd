@@ -435,15 +435,12 @@ Ext.define('Spelled.controller.Components', {
 
 				componentConfig[ name ] = Ext.decode( value, true ) || value
 
-				this.application.engineMessageBus.send(
-					activeSceneTab.down( 'spellediframe' ).getId(),
-					{
-						type : 'spelled.debug.component.update',
-						payload : {
-							entityId    : component.getEntity().getId(),
-							componentId : component.get( 'templateId' ),
-							config      : componentConfig
-						}
+				this.application.fireEvent(
+					'sendtoEngine',
+					'spelled.debug.component.update' , {
+						entityId    : component.getEntity().getId(),
+						componentId : component.get( 'templateId' ),
+						config      : componentConfig
 					}
 				)
 			}

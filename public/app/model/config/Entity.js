@@ -54,6 +54,14 @@ Ext.define('Spelled.model.config.Entity', {
 		}
 	],
 
+	getMessageData: function() {
+		var data = Ext.amdModules.entityConverter.toEngineFormat( this.getData(true), { includeEntityIds: true } )
+
+		if( this.hasEntity() ) data.parentId = this.getEntity().getId()
+
+		return data
+	},
+
 	resetConfig: function() {
 		this.set( 'config', {} )
 		this.getComponents().removeAll()

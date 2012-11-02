@@ -476,7 +476,7 @@ Ext.define('Spelled.controller.Menu', {
 
 	showRenameEntity: function( ) {
 		var node = this.application.getLastSelectedNode( this.getScenesTree() )
-		this.application.getController( 'Scenes' ).triggerRenameEntityEvent( node )
+		this.application.fireEvent( 'triggerrenamingentity', node )
 	},
 
 	cloneEntity: function( ) {

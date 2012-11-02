@@ -226,7 +226,6 @@ Ext.define('Spelled.controller.Scenes', {
 				itemdblclick   : me.dispatchTreeDblClick,
 				select         : me.dispatchTreeClick,
 				beforeedit     : me.checkIfTreeColumnIsEditable,
-				edit           : me.changeEntityName,
 				itemcontextmenu: me.dispatchTreeListContextMenu,
 				editclick      : me.dispatchTreeListContextMenu,
 				itemmouseenter : me.dispatchMouseEnterTree,
@@ -488,18 +487,6 @@ Ext.define('Spelled.controller.Scenes', {
 
 		if( sceneTab && !sceneEditor.isHidden() )
 			this.reloadScene( sceneTab.down( 'button' ) )
-	},
-
-	triggerRenameEntityEvent: function( node ) {
-		var cellEditor = this.getScenesTree().getPlugin( 'renameEntityPlugin' )
-		cellEditor.startEdit( node, 0 )
-	},
-
-	changeEntityName: function( editor, e ) {
-		var entity = Ext.getStore( 'config.Entities' ).getById( e.record.getId() )
-
-		entity.set( 'name', e.record.get('text') )
-		e.record.commit()
 	},
 
 	checkIfTreeColumnIsEditable: function( editor, e ) {
