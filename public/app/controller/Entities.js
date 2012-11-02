@@ -95,7 +95,7 @@ Ext.define('Spelled.controller.Entities', {
 		entity.set( 'name', e.record.get('text') )
 
 		this.application.fireEvent(
-			'sendtoEngine',
+			'sendToEngine',
 			'spelled.debug.component.update' , {
 				entityId    : entity.getId(),
 				componentId : 'spell.component.name',
@@ -154,7 +154,7 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
 	sendCreateMessage: function( entity ) {
-		this.application.fireEvent( 'sendtoEngine',	'spelled.debug.entity.create', { entityConfig: entity.getMessageData() } )
+		this.application.fireEvent( 'sendToEngine',	'spelled.debug.entity.create', { entityConfig: entity.getMessageData() } )
 	},
 
 	moveEntity: function( targetId, entityId, dropPosition ) {
@@ -184,7 +184,7 @@ Ext.define('Spelled.controller.Entities', {
 			targetEntities.insert( targetEntities.indexOf( target ) + offset, entity )
 		}
 
-		this.application.fireEvent( 'sendtoEngine', 'spelled.debug.entity.reassign', {
+		this.application.fireEvent( 'sendToEngine', 'spelled.debug.entity.reassign', {
 			entityId: entity.getId(),
 			parentEntityId: ( entity.hasEntity() ) ? entity.getEntity().getId() : undefined
 		} )
@@ -199,7 +199,7 @@ Ext.define('Spelled.controller.Entities', {
 			function( button ) {
 				if ( button === 'yes' ) {
 					if( entity ) {
-						this.application.fireEvent( 'sendtoEngine',	'spelled.debug.entity.remove', { entityId: entity.getId() } )
+						this.application.fireEvent( 'sendToEngine',	'spelled.debug.entity.remove', { entityId: entity.getId() } )
 
 						entity.getOwner().setDirty()
 						this.deleteEntity( entity )

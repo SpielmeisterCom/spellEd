@@ -164,13 +164,15 @@ Ext.define('Spelled.controller.Scenes', {
 		engineMessageBus.addHandler(
 			{
 				'spell.initialized' : function( sourceId, payload ) {
+					var scene = me.application.getActiveScene()
+
 					engineMessageBus.flushQueue( sourceId )
 
 					engineMessageBus.send(
 						sourceId,
 						{
 							type : "spelled.debug.settings.drawCoordinateGrid",
-							payload : me.application.getActiveScene().get( 'showGrid' )
+							payload : scene.get( 'showGrid' )
 						}
 					)
 
@@ -179,7 +181,7 @@ Ext.define('Spelled.controller.Scenes', {
 						{
 							type : "spelled.debug.settings.simulateScreenAspectRatio",
 							payload : {
-								aspectRatio:  me.application.getActiveScene().get( 'aspectRatio' )
+								aspectRatio : scene.get( 'aspectRatio' )
 							}
 						}
 					)
@@ -188,7 +190,7 @@ Ext.define('Spelled.controller.Scenes', {
 						sourceId,
 						{
 							type : "spelled.debug.settings.drawTitleSafeOutline",
-							payload : me.application.getActiveScene().get( 'showTitleSafe' )
+							payload : scene.get( 'showTitleSafe' )
 						}
 					)
 
@@ -254,11 +256,8 @@ Ext.define('Spelled.controller.Scenes', {
 			reloadscene: this.reloadSceneKeyEvent,
 			scenetabchange: this.showScenesEditor,
 			systemchange: this.sendSystemChangeToEngine,
-			systemaddtoscene: this.sendSystemAddToSceneToEngine,
-			systemmove: this.sendSystemMoveToEngine,
-			systemremovefromscene: this.sendSystemRemoveFromSceneToEngine,
 			assetchange: this.sendAssetChangeToEngine,
-			sendtoEngine: this.sendChangeToEngine,
+			sendToEngine: this.sendChangeToEngine,
 			scope: this
 		})
 	},
@@ -322,40 +321,6 @@ Ext.define('Spelled.controller.Scenes', {
 				definition: Ext.amdModules.systemConverter.toEngineFormat( definition, { includeNamespace: true } ),
 				systemConfig: systemConfig,
 				systemId: model.getFullName()
-			}
-		)
-	},
-
-	sendSystemAddToSceneToEngine: function( system, executionGroupId, index ) {
-		this.sendChangeToEngine(
-			"spelled.debug.system.add",
-			{
-				executionGroupId: executionGroupId,
-				systemConfig: system.config,
-				index: index,
-				systemId: system.id
-			}
-		)
-	},
-
-	sendSystemRemoveFromSceneToEngine: function( id, executionGroupId ) {
-		this.sendChangeToEngine(
-			"spelled.debug.system.remove",
-			{
-				executionGroupId: executionGroupId,
-				systemId: id
-			}
-		)
-	},
-
-	sendSystemMoveToEngine: function( id, srcExecutionGroupId, dstExecutionGroupId, index ) {
-		this.sendChangeToEngine(
-			"spelled.debug.system.remove",
-			{
-				srcExecutionGroupId: srcExecutionGroupId,
-				dstExecutionGroupId: dstExecutionGroupId,
-				dstIndex: index,
-				systemId: id
 			}
 		)
 	},
@@ -774,21 +739,20 @@ Ext.define('Spelled.controller.Scenes', {
 		var panel   = button.up( 'panel' ),
 			project = this.application.getActiveProject(),
 			iframe  = panel.down( 'spellediframe' ),
-			sceneId = iframe.sceneId,
-			scene   = this.getConfigScenesStore().getById( sceneId )
+			scene   = this.getConfigScenesStore().findRecord( 'sceneId', project.get( 'startScene' ) )
 
 		iframe.destroy()
 
-		var newIframe = Ext.widget(
-			'spellediframe',
+		var newIframe = panel.add(
 			{
+				xtype: 'spellediframe',
 				projectName : project.get('name'),
-				sceneId : sceneId,
+				sceneId : scene.getId(),
 				hidden: true
 			}
 		)
 
-		panel.add( newIframe )
+		panel.syncButtons( scene )
 
 		if( !panel.down( 'spellprogressbar' ) ) panel.add( { xtype: 'spellprogressbar'} )
 
@@ -893,12 +857,11 @@ Ext.define('Spelled.controller.Scenes', {
 		}
 	},
 
-	createSpellTab: function( title, projectName, sceneId, showGrid ) {
+	createSpellTab: function( title, projectName, sceneId ) {
 		var tab = Ext.widget(
 			'renderedscene',
 			{
-				title : title,
-				showGrid : showGrid
+				title : title
 			}
 		)
 
@@ -925,8 +888,7 @@ Ext.define('Spelled.controller.Scenes', {
 				newTab  = this.createSpellTab(
 					title,
 					project.get( 'name' ),
-					scene.getId(),
-					scene.get( 'showGrid' )
+					scene.getId()
 				)
 
 			tab = this.application.createTab( sceneEditor, newTab )

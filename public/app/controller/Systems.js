@@ -91,7 +91,7 @@ Ext.define('Spelled.controller.Systems', {
 			function( item ) {
 				if( item.id === systemId ) {
 					Ext.Array.remove( systems, item )
-					this.application.fireEvent( 'systemremovefromscene', item.id, folder )
+					this.sendSystemRemoveFromSceneToEngine( item.id, folder )
 					return false
 				}
 			},
@@ -100,6 +100,28 @@ Ext.define('Spelled.controller.Systems', {
 
 		scene.setDirty()
 		this.refreshSceneSystemList( scene )
+	},
+
+	sendSystemAddToSceneToEngine: function( system, executionGroupId, index ) {
+		this.application.fireEvent( "sendToEngine",
+			"spelled.debug.system.add",
+			{
+				executionGroupId: executionGroupId,
+				systemConfig: system.config,
+				index: index,
+				systemId: system.id
+			}
+		)
+	},
+
+	sendSystemRemoveFromSceneToEngine: function( id, executionGroupId ) {
+		this.application.fireEvent( "sendToEngine",
+			"spelled.debug.system.remove",
+			{
+				executionGroupId: executionGroupId,
+				systemId: id
+			}
+		)
 	},
 
 	addSystems: function( button ) {
@@ -118,7 +140,7 @@ Ext.define('Spelled.controller.Systems', {
 					systemConfig = { id: record.get('text'), config: system.getConfigForScene() }
 
 				systems[ values.type ].push( systemConfig )
-				this.application.fireEvent( 'systemaddtoscene', systemConfig, values.type, systems[ values.type ].length - 1 )
+				this.sendSystemAddToSceneToEngine( systemConfig, values.type, systems[ values.type ].length - 1 )
 			},
 			this
 		)

@@ -27,7 +27,6 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				iconCls: 'grid-icon',
 				action: "toggleGrid",
 				enableToggle: true,
-				pressed: me.showGrid,
 				tooltip: {
 					text: 'Shows the world coordinate grid overlay',
 					title: 'Show Grid (CTRL+G/CMD+G)'
@@ -37,7 +36,6 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				iconCls: 'camera-marker-icon',
 				action: 'toggleTitleSafe',
 				enableToggle: true,
-				pressed: me.showTitleSafe,
 				tooltip: {
 					text: 'Highlights the title safe area of the currently selected camera',
 					title: 'Show Title Safe Area (CTRL+C/CMD+C)'
@@ -60,5 +58,12 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 		]
 
 		me.callParent( arguments )
+	},
+
+	syncButtons: function( scene ){
+		this.down( '[action="toggleGrid"]' ).toggle( scene.get( 'showGrid' ) )
+		this.down( '[action="toggleTitleSafe"]' ).toggle( scene.get( 'showTitleSafe' ) )
+		this.down( '[action="toggleTitleSafe"]' ).toggle( scene.get( 'showTitleSafe' ) )
+		this.down( '[name="aspectRatioSelector"]' ).setValue( scene.get( 'aspectRatio' ) )
 	}
 });
