@@ -184,7 +184,10 @@ Ext.define('Spelled.controller.Entities', {
 			targetEntities.insert( targetEntities.indexOf( target ) + offset, entity )
 		}
 
-		this.application.fireEvent( 'sendtoEngine',	'spelled.debug.entity.changeParent', { entityId: entityId, parentId: targetId } )
+		this.application.fireEvent( 'sendtoEngine', 'spelled.debug.entity.reassign', {
+			entityId: entity.getId(),
+			parentEntityId: ( entity.hasEntity() ) ? entity.getEntity().getId() : undefined
+		} )
 
 		target.setDirty()
 	},
