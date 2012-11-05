@@ -17,7 +17,7 @@ Ext.define('Spelled.store.system.Defaults', {
 			executionGroupId: 'render'
 		},
 		{
-			systemId: 'spell.system.box2D',
+			systemId: 'spell.system.physics',
 			executionGroupId: 'render'
 		}
     ]
