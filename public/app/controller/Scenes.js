@@ -52,7 +52,7 @@ Ext.define('Spelled.controller.Scenes', {
 		},
 		{
 			ref: 'SpelledIframe',
-			selector: 'spellediframe'
+			selector: 'renderedscene > spellediframe'
 		},
 		{
 			ref: 'RenderedScene',
@@ -128,7 +128,6 @@ Ext.define('Spelled.controller.Scenes', {
 			}
 		)
 
-
 		// Keymapping for toggle titleSafe
 		Spelled.KeyMap.addBinding(
 			{
@@ -168,36 +167,7 @@ Ext.define('Spelled.controller.Scenes', {
 		engineMessageBus.addHandler(
 			{
 				'spell.initialized' : function( sourceId, payload ) {
-					var renderedSceneTab = me.getRenderedScene()
-
 					engineMessageBus.flushQueue( sourceId )
-
-					engineMessageBus.send(
-						sourceId,
-						{
-							type : "spelled.debug.settings.drawCoordinateGrid",
-							payload : renderedSceneTab.down( '[action="toggleGrid"]' ).pressed
-						}
-					)
-
-					engineMessageBus.send(
-						sourceId,
-						{
-							type : "spelled.debug.settings.simulateScreenAspectRatio",
-							payload : {
-								aspectRatio : renderedSceneTab.down( '[name="aspectRatioSelector"]' ).getValue()
-							}
-						}
-					)
-
-					engineMessageBus.send(
-						sourceId,
-						{
-							type : "spelled.debug.settings.drawTitleSafeOutline",
-							payload : renderedSceneTab.down( '[action="toggleTitleSafe"]' ).pressed
-						}
-					)
-
 				},
 				'spell.loadingProgress' : function( sourceId, payload ) {
 					me.updateRenderProgress( payload )
@@ -217,6 +187,9 @@ Ext.define('Spelled.controller.Scenes', {
 			},
 			'renderedscene > toolbar button[action="toggleTitleSafe"]': {
 				toggle: me.toggleTitleSafe
+			},
+			'renderedscene > toolbar button[action="toggleDevCam"]': {
+				toggle: me.toggleDevCam
 			},
 			'renderedscene > toolbar button[action="fullscreen"]': {
 				click: me.activateFullscreen
@@ -279,15 +252,9 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	sendChangeToEngine: function( type, payload ) {
-		var iframe     = this.getSpelledIframe()
+		var iframe = this.getSpelledIframe()
 
-		this.application.engineMessageBus.send(
-			iframe.getId(),
-			{
-				type : type,
-				payload : payload
-			}
-		)
+		this.application.engineMessageBus.send( iframe.getId(), { type : type, payload : payload } )
 	},
 
 	sendSystemChangeToEngine: function( model ) {
@@ -348,13 +315,7 @@ Ext.define('Spelled.controller.Scenes', {
 		//don't send an update to the engine if we have no breakpoint enabled and active warnings/errors
 		if( !hasBreakpoints && annotations.length > 0 ) return
 
-		this.sendChangeToEngine(
-			"spelled.debug.library.updateScript",
-			{
-				id: model.getFullName(),
-				moduleSource: lines.join("\n")
-			}
-		)
+		this.sendChangeToEngine( "spelled.debug.library.updateScript", { id: model.getFullName(), moduleSource: lines.join("\n") } )
 	},
 
 	clearScenesStore: function() {
@@ -362,17 +323,7 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	changeAspectRatio: function( field, newValue, oldValue ) {
-		var iframe      = this.getSpelledIframe()
-
-		this.application.engineMessageBus.send(
-			iframe.getId(),
-			{
-				type : 'spelled.debug.settings.simulateScreenAspectRatio',
-				payload : {
-					aspectRatio: newValue
-				}
-			}
-		)
+		this.sendChangeToEngine( 'spelled.debug.settings.simulateScreenAspectRatio', { aspectRatio: newValue } )
 	},
 
 	dispatchTreeDblClick: function( treePanel, record ) {
@@ -450,8 +401,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		if( e )	e.stopEvent()
 
-		if( sceneTab && !sceneEditor.isHidden() )
-			this.reloadScene( sceneTab.down( 'button' ) )
+		if( sceneTab && !sceneEditor.isHidden() ) this.reloadScene( sceneTab.down( 'button' ) )
 	},
 
 	checkIfTreeColumnIsEditable: function( editor, e ) {
@@ -743,7 +693,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		iframe.destroy()
 
-		var newIframe = panel.add(
+		panel.add(
 			{
 				xtype: 'spellediframe',
 				projectName : project.get('name'),
@@ -754,15 +704,26 @@ Ext.define('Spelled.controller.Scenes', {
 
 		if( !panel.down( 'spellprogressbar' ) ) panel.add( { xtype: 'spellprogressbar'} )
 
-		this.application.engineMessageBus.send(
-			newIframe.getId(),
-			{
-				type : 'spelled.debug.runtimeModule.start',
-				payload : {
-					runtimeModule: Ext.amdModules.createProjectInEngineFormat( project ),
-					cacheContent: this.generateSceneCacheContent( scene )
-				}
+		this.sendChangeToEngine(
+			'spelled.debug.runtimeModule.start', {
+				runtimeModule: Ext.amdModules.createProjectInEngineFormat( project ),
+				cacheContent: this.generateSceneCacheContent( scene )
 			}
+		)
+
+		this.sendChangeToEngine(
+			'spelled.debug.settings.drawCoordinateGrid',
+			panel.down( '[action="toggleGrid"]' ).pressed
+		)
+
+		this.sendChangeToEngine(
+			'spelled.debug.settings.simulateScreenAspectRatio',
+			{ aspectRatio : panel.down( '[name="aspectRatioSelector"]' ).getValue() }
+		)
+
+		this.sendChangeToEngine(
+			'spelled.debug.settings.drawTitleSafeOutline',
+			panel.down( '[action="toggleTitleSafe"]' ).pressed
 		)
 	},
 
@@ -793,36 +754,20 @@ Ext.define('Spelled.controller.Scenes', {
 		}
 	},
 
-	toggleGrid: function( button, state ) {
-		var tab   = button.up( 'renderedscene').down( 'spellediframe' )
+	toggleDevCam: function( button, state ) {
+		this.sendChangeToEngine( "spelled.debug.settings.drawCoordinateGrid", state )
+	},
 
-		if( tab ) {
-			this.application.engineMessageBus.send(
-				tab.getId(),
-				{
-					type : "spelled.debug.settings.drawCoordinateGrid",
-					payload : state
-				}
-			)
-		}
+	toggleGrid: function( button, state ) {
+		this.sendChangeToEngine( "spelled.debug.settings.drawCoordinateGrid", state )
 	},
 
 	toggleTitleSafe: function( button, state ) {
-		var tab   = button.up( 'renderedscene' ).down( 'spellediframe' )
-
-		if( !tab ) return
-
-		this.application.engineMessageBus.send(
-			tab.getId(),
-			{
-				type : 'spelled.debug.settings.drawTitleSafeOutline',
-				payload : state
-			}
-		)
+		this.sendChangeToEngine( "spelled.debug.settings.drawTitleSafeOutline", state )
 	},
 
 	activateFullscreen: function( button, state ) {
-		var tab      = button.up( 'renderedscene').down( 'spellediframe'),
+		var tab      = this.getSpelledIframe(),
 			dom      = tab.el.dom,
 			prefixes = ["moz", "webkit", "ms", "o", ""],
 			fullScreenFunctionAvailable = false
@@ -849,22 +794,9 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	createSpellTab: function( title, projectName, sceneId ) {
-		var tab = Ext.widget(
-			'renderedscene',
-			{
-				title : title
-			}
-		)
+		var tab = Ext.widget( 'renderedscene', { title : title } )
 
-		var iframe = Ext.widget(
-			'spellediframe',
-			{
-				projectName : projectName,
-				sceneId : sceneId
-			}
-		)
-
-		tab.add( iframe )
+		tab.add( Ext.widget( 'spellediframe', { projectName : projectName, sceneId : sceneId } ) )
 
 		return tab
 	},
@@ -920,4 +852,4 @@ Ext.define('Spelled.controller.Scenes', {
 
 		return this.application.getController( 'Scripts' ).createModuleHeader( scene.getFullName(), parts.join( '\n\t\t' ) )
 	}
-});
+})

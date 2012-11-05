@@ -42,6 +42,15 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				}
 			},
 			{
+				iconCls: 'development-camera-icon',
+				action: 'toggleDevCam',
+				enableToggle: true,
+				tooltip: {
+					text: 'Activates the development camera',
+					title: 'Activate development camera'
+				}
+			},
+			{
 				name: 'aspectRatioSelector',
 				width: 400,
 				editable: false,
