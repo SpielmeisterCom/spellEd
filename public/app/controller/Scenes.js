@@ -751,11 +751,36 @@ Ext.define('Spelled.controller.Scenes', {
 		if( value >= 1 && panel ){
 			panel.remove( progressBar )
 			panel.down( 'spellediframe').show()
+
+			this.setSceneDevelopmentEnvironment()
 		}
 	},
 
+	setSceneDevelopmentEnvironment: function() {
+		var cameraState = this.getRenderedScene().down( '[action="toggleDevCam"]' ).pressed
+
+		this.sendChangeToEngine(
+			"spelled.debug.system.add",
+			{
+				executionGroupId: 'render',
+				systemConfig: { active: cameraState },
+				systemId: 'spell.system.debug.camera'
+			}
+		)
+	},
+
 	toggleDevCam: function( button, state ) {
-		this.sendChangeToEngine( "spelled.debug.settings.drawCoordinateGrid", state )
+		var system = Ext.getStore( 'template.Systems' ).getByTemplateId( 'spell.system.debug.camera' )
+
+		this.sendChangeToEngine(
+			"spelled.debug.system.update",
+			{
+				executionGroupId: 'render',
+				definition: Ext.amdModules.systemConverter.toEngineFormat( system.getData(), { includeNamespace: true } ),
+				systemConfig: { active: state },
+				systemId: system.getFullName()
+			}
+		)
 	},
 
 	toggleGrid: function( button, state ) {
