@@ -100,6 +100,7 @@ Ext.define('Spelled.model.config.Component', {
 			function( templateComponent ) {
 				if( templateComponent.get('templateId') === this.get( 'templateId' ) ) {
 					component = templateComponent
+					this.set( 'additional', false )
 					return false
 				}
 			},
