@@ -142,6 +142,10 @@
     background-image:  url( '../images/icons/keyboard.png' ) !important;
 }
 
+.development-camera-icon {
+    background-image:  url( '../images/icons/camera-lock.png' ) !important;
+}
+
 .doc-tool {
     width: 100%;
     text-align: right;
