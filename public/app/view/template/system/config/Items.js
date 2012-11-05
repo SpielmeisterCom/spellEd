@@ -2,6 +2,8 @@ Ext.define('Spelled.view.template.system.config.Items' ,{
     extend: 'Ext.panel.Panel',
     alias : 'widget.systemconfig',
 
+	requires: [ 'Spelled.Converter' ],
+
     title: 'Scene system configuration',
 	margins: '0 0 5 0',
 	frame: true,
@@ -28,10 +30,18 @@ Ext.define('Spelled.view.template.system.config.Items' ,{
 	},
 
 	onPropertyChange: function( source, recordId, value, oldValue ) {
-		this.fireEvent( 'configchange', this.up('systemtemplateconfiguration').down('systemtemplatedetails').getForm().getRecord(), source, recordId, value, oldValue )
+		var system = this.up('systemtemplateconfiguration').down('systemtemplatedetails').getForm().getRecord()
+		this.originalConfig[ recordId ] = Spelled.Converter.decodeFieldValue( value )
+
+		this.fireEvent( 'configchange', system, source, recordId, value, oldValue )
 	},
 
 	setSystemSceneConfig: function( config ) {
-		this.down( 'propertygrid' ).setSource( config )
+		this.originalConfig = config
+
+		var tmp = Ext.clone( config )
+		Ext.iterate( tmp, function( key, value ) { tmp[ key ] = Spelled.Converter.convertValueForGrid( value ) } )
+
+		this.down( 'propertygrid' ).setSource( tmp )
 	}
 })

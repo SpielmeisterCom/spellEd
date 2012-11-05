@@ -550,7 +550,7 @@ Ext.define('Spelled.controller.Assets', {
 					function( item ) {
 						var converted = Ext.clone( item )
 						if( !converted.interpolation ) converted.interpolation = "Linear"
-						converted.value = this.application.getController( 'Components' ).convertValueForGrid( item.value )
+						converted.value = Spelled.Converter.convertValueForGrid( item.value )
 						return converted
 					},
 					this

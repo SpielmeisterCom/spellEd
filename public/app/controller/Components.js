@@ -7,7 +7,8 @@ Ext.define('Spelled.controller.Components', {
 		'Spelled.view.component.AddButton',
 		'Spelled.model.config.Component',
 		'Spelled.store.config.Components',
-		'Spelled.view.component.property.Defaults'
+		'Spelled.view.component.property.Defaults',
+		'Spelled.Converter'
 	],
 
     views: [
@@ -324,7 +325,7 @@ Ext.define('Spelled.controller.Components', {
 			component         = this.getConfigComponentsStore().getById( componentConfigId ),
 			config            = Ext.Object.merge( {}, component.get('config') ),
 			defaultConfig     = component.getConfigMergedWithTemplateConfig(),
-			value             = Ext.decode( record.get( 'value'), true ) || record.get( 'value'),
+			value             = Spelled.Converter.decodeFieldValue( record.get( 'value') ),
 			name              = record.get('name'),
 			entity            = component.getEntity()
 
@@ -342,23 +343,13 @@ Ext.define('Spelled.controller.Components', {
 		}
 	},
 
-	convertValueForGrid: function( value ) {
-		if( Ext.isArray( value ) === true ) {
-			return "[" + value.toString() + "]"
-		} else if( Ext.isObject( value ) ) {
-			return Ext.encode( value )
-		} else {
-		    return value
-		}
-	},
-
 	createPropertyFromAttribute: function ( attribute, name, value ) {
 		var typeName      = attribute.get( 'type' ),
 			attributeType = this.getStore( 'template.component.AttributeTypes' ).findRecord( 'name', typeName )
 
 		return {
 			type: attributeType.get('type'),
-			value: this.convertValueForGrid( value ),
+			value: Spelled.Converter.convertValueForGrid( value ),
 			componentValue: value,
 			values : attribute.get('values')
 		}

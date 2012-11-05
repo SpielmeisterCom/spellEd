@@ -456,6 +456,7 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.renderedscene"
   ],
   "Spelled.controller.Entities": [],
+  "Spelled.Converter": [],
   "Ext.data.XmlStore": [
     "store.xml"
   ],
@@ -1560,6 +1561,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.ui.SpelledRendered": [],
   "Spelled.controller.Entities": [],
+  "Spelled.Converter": [],
   "Ext.data.XmlStore": [],
   "Ext.grid.ViewDropZone": [],
   "Spelled.view.scene.Editor": [],
