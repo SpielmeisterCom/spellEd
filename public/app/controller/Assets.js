@@ -759,11 +759,12 @@ Ext.define('Spelled.controller.Assets', {
 		var fileField = form.down( 'filefield'),
 			window    = form.up( 'window'),
 			me        = this,
-			id        = this.application.generateFileIdFromObject( asset.data )
+			id        = this.application.generateFileIdFromObject( asset.data ),
+			type      = asset.get( 'subtype' )
 
 		this.setAssetConfigFromForm( form, asset )
 
-		if( asset.get( 'subtype' ) === 'font' ) {
+		if( type === 'font' ) {
 			this.saveFontMap( id,  form.getForm().getValues() )
 		}
 
@@ -822,7 +823,7 @@ Ext.define('Spelled.controller.Assets', {
 		Spelled.StorageActions.create( {
 			id: filePath,
 			encoding: 'base64',
-			content: content.replace(/^data:image\/\w+;base64,/, "")
+			content: content.replace(/^data:[A-Za-z0-9\/]*;base64,/, "")
 		})
 	},
 
