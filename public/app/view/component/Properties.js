@@ -18,7 +18,6 @@ Ext.define('Spelled.view.component.Properties', {
 		me.tools = [
 			{
 				type: 'gear',
-				qtip: 'Reset values',
 				handler: Ext.bind( me.onGearClick, me )
 			},
 			{
@@ -33,8 +32,6 @@ Ext.define('Spelled.view.component.Properties', {
 		)
 
 		this.formatSource()
-
-		if( this.isAdditional === true ) this.closable = true
 
 		this.callParent()
 	},

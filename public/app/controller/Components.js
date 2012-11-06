@@ -7,7 +7,7 @@ Ext.define('Spelled.controller.Components', {
 		'Spelled.view.component.AddButton',
 		'Spelled.model.config.Component',
 		'Spelled.store.config.Components',
-		'Spelled.view.component.property.Defaults',
+		'Spelled.view.component.property.Contextmenu',
 		'Spelled.Converter'
 	],
 
@@ -16,7 +16,7 @@ Ext.define('Spelled.controller.Components', {
 		'component.property.AssetId',
 		'component.Add',
 		'component.AddButton',
-		'component.property.Defaults'
+		'component.property.Contextmenu'
     ],
 
     models: [
@@ -45,10 +45,9 @@ Ext.define('Spelled.controller.Components', {
 				editproperty: this.previewAttributeChange
 			},
 			'componentproperties': {
-				propertycontextmenu: this.showRevertToDefaultsContextmenu,
+				propertycontextmenu: this.showComponentContextmenu,
 				edit: this.editProperty,
-				canceledit: this.cancelPropertyEdit,
-				beforeclose: this.confirmDelete
+				canceledit: this.cancelPropertyEdit
 			},
 			'componentproperties tool-documentation': {
 				showDocumentation: this.showDocumentation
@@ -62,11 +61,14 @@ Ext.define('Spelled.controller.Components', {
 			'addcomponent button[action="addComponent"]': {
 				click : this.addComponent
 			},
-			'componentpropertydefaultscontextmenu [action="toComponentDefaults"]': {
+			'componentpropertycontextmenu [action="toComponentDefaults"]': {
 				click: this.revertComponent
 			},
-			'componentpropertydefaultscontextmenu [action="toEntityDefaults"]': {
+			'componentpropertycontextmenu [action="toEntityDefaults"]': {
 				click: this.revertComponent
+			},
+			'componentpropertycontextmenu [action="removeComponent"]': {
+				click: this.confirmDelete
 			}
 		})
 	},
@@ -94,15 +96,13 @@ Ext.define('Spelled.controller.Components', {
 		)
 	},
 
-	showRevertToDefaultsContextmenu: function( propertyView, event ) {
-		var contextmenu = this.application.getController( 'Menu' ).createAndShowView( this.getComponentPropertyDefaultsView(), event, propertyView)
+	showComponentContextmenu: function( propertyView, event ) {
+		var contextmenu = this.application.getController( 'Menu' ).createAndShowView( this.getComponentPropertyContextmenuView(), event, propertyView)
 
 		if( propertyView.isAdditional === false ) {
-			contextmenu.add({
-				icon: 'images/icons/revert-template.png',
-				text: 'Reset to template defaults',
-				action: 'toEntityDefaults'
-			})
+			contextmenu.down( '[action="toEntityDefaults"]' ).setVisible(true)
+		} else {
+			contextmenu.down( '[action="removeComponent"]' ).setVisible(true)
 		}
 	},
 
@@ -139,8 +139,9 @@ Ext.define('Spelled.controller.Components', {
 		}
 	},
 
-	confirmDelete: function( panel ) {
-		var title = panel.title
+	confirmDelete: function( button ) {
+		var panel = button.up( 'componentpropertycontextmenu' ).ownerView,
+			title = panel.title
 
 		if( !!panel.removeAllowed )
 			return true

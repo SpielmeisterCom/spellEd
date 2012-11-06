@@ -17,9 +17,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.project.Settings": [
     "widget.projectsettings"
   ],
-  "Spelled.view.component.property.Defaults": [
-    "widget.componentpropertydefaultscontextmenu"
-  ],
   "Ext.tree.Panel": [
     "widget.treepanel"
   ],
@@ -439,6 +436,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.form.field.Time": [
     "widget.timefield"
+  ],
+  "Spelled.view.component.property.Contextmenu": [
+    "widget.componentpropertycontextmenu"
   ],
   "Ext.fx.CubicBezier": [],
   "Ext.button.Cycle": [
@@ -1225,7 +1225,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.controller.Scripts": [],
   "Ext.direct.JsonProvider": [],
   "Spelled.view.project.Settings": [],
-  "Spelled.view.component.property.Defaults": [],
   "Ext.tree.Panel": [
     "Ext.tree.TreePanel",
     "Ext.TreePanel"
@@ -1549,6 +1548,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.form.TimeField",
     "Ext.form.Time"
   ],
+  "Spelled.view.component.property.Contextmenu": [],
   "Ext.fx.CubicBezier": [],
   "Ext.button.Cycle": [
     "Ext.CycleButton"
