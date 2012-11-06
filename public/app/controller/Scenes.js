@@ -776,7 +776,7 @@ Ext.define('Spelled.controller.Scenes', {
 			"spelled.debug.system.update",
 			{
 				executionGroupId: 'render',
-				definition: Ext.amdModules.systemConverter.toEngineFormat( system.getData(), { includeNamespace: true } ),
+				definition: Ext.amdModules.systemConverter.toEngineFormat( system.getData( true ), { includeNamespace: true } ),
 				systemConfig: { active: state },
 				systemId: system.getFullName()
 			}
