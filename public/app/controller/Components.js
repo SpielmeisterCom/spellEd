@@ -69,8 +69,18 @@ Ext.define('Spelled.controller.Components', {
 			},
 			'componentpropertycontextmenu [action="removeComponent"]': {
 				click: this.confirmDelete
+			},
+			'componentpropertycontextmenu [action="copyComponentIdentifier"]': {
+				click: this.copyComponentIdentifier
 			}
 		})
+	},
+
+	copyComponentIdentifier: function( button ) {
+		var propertyGrid = button.up( 'menu' ).ownerView,
+			component    = this.getConfigComponentsStore().getById( propertyGrid.componentConfigId )
+
+		window.prompt ("Copy identifier to clipboard: Ctrl+C, Enter",  component.get( 'templateId' ) )
 	},
 
 	revertComponent: function( button, event ) {
