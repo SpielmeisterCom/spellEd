@@ -181,7 +181,7 @@ Ext.define('Spelled.controller.Systems', {
 
 		templateSystemsStore.each(
 			function( template ) {
-				if( !Ext.Array.contains( assignedSystems, template.getFullName() ) ) {
+				if( !template.get( 'engineInternal' ) && !Ext.Array.contains( assignedSystems, template.getFullName() ) ) {
 					rootNode.appendChild(
 						rootNode.createNode ( {
 							text      : template.getFullName(),
