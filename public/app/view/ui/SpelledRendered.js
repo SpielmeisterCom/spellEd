@@ -46,7 +46,7 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				action: 'toggleDevCam',
 				enableToggle: true,
 				tooltip: {
-					text: 'When activated: use STRG/CMD + mouse-move to drag the camera and mouse-wheel up/down to zoom in/zoom out. If the scene view lost it\'s focus, left click in the scene to restore the focus.',
+					text: 'When activated: use mouse-drag to drag the camera and mouse-wheel up/down to zoom in/zoom out. If the scene view lost it\'s focus, left click in the scene to restore the focus.',
 					title: 'Activate development camera'
 				}
 			},
