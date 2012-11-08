@@ -4,7 +4,8 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
     closable: false,
 
 	initComponent: function() {
-		var me = this
+		var me           = this,
+			dismissDelay = 1000000 //should be 0, this is a workaround because there is a bug in ext
 
 		me.tbar = [
 			{
@@ -12,7 +13,8 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				action: "reloadScene",
 				tooltip: {
 					text:'Reload and render scene (CTRL+R/CMD+R)',
-					title:'Reload'
+					title:'Reload',
+					dismissDelay: dismissDelay
 				}
 			},
 			{
@@ -20,7 +22,8 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				action: "fullscreen",
 				tooltip: {
 					text:'Render the current scene in fullscreen',
-					title:'Activate Fullscreen (CTRL+F/CMD+F)'
+					title:'Activate Fullscreen (CTRL+F/CMD+F)',
+					dismissDelay: dismissDelay
 				}
 			},
 			{
@@ -29,7 +32,8 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				enableToggle: true,
 				tooltip: {
 					text: 'Shows the world coordinate grid overlay',
-					title: 'Show Grid (CTRL+G/CMD+G)'
+					title: 'Show Grid (CTRL+G/CMD+G)',
+					dismissDelay: dismissDelay
 				}
 			},
 			{
@@ -38,7 +42,8 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				enableToggle: true,
 				tooltip: {
 					text: 'Highlights the title safe area of the currently selected camera',
-					title: 'Show Title Safe Area (CTRL+C/CMD+C)'
+					title: 'Show Title Safe Area (CTRL+C/CMD+C)',
+					dismissDelay: dismissDelay
 				}
 			},
 			{
@@ -47,7 +52,8 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				enableToggle: true,
 				tooltip: {
 					text: 'When activated: use mouse-drag to drag the camera and mouse-wheel up/down to zoom in/zoom out. If the scene view lost it\'s focus, left click in the scene to restore the focus.',
-					title: 'Activate development camera'
+					title: 'Activate development camera',
+					dismissDelay: dismissDelay
 				}
 			},
 			{
