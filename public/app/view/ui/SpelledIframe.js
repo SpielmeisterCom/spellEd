@@ -13,6 +13,10 @@ Ext.define('Spelled.view.ui.SpelledIframe', {
 
     afterRender: function() {
         this.el.dom.src = '/' + this.projectName + '/public/spellEdShim.html?iframeId='+this.id
-		this.focus()
+	},
+
+	focus: function() {
+		this.up( 'panel' ).focus()
+		this.callParent( arguments )
 	}
 })

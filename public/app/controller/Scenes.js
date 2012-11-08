@@ -759,6 +759,8 @@ Ext.define('Spelled.controller.Scenes', {
 	setSceneDevelopmentEnvironment: function() {
 		var cameraState = this.getRenderedScene().down( '[action="toggleDevCam"]' ).pressed
 
+		this.getSpelledIframe().focus()
+
 		this.sendChangeToEngine(
 			"spelled.debug.system.add",
 			{
@@ -782,14 +784,17 @@ Ext.define('Spelled.controller.Scenes', {
 				systemId: system.getFullName()
 			}
 		)
+		this.getSpelledIframe().focus()
 	},
 
 	toggleGrid: function( button, state ) {
 		this.sendChangeToEngine( "spelled.debug.settings.drawCoordinateGrid", state )
+		this.getSpelledIframe().focus()
 	},
 
 	toggleTitleSafe: function( button, state ) {
 		this.sendChangeToEngine( "spelled.debug.settings.drawTitleSafeOutline", state )
+		this.getSpelledIframe().focus()
 	},
 
 	activateFullscreen: function( button, state ) {
