@@ -19,6 +19,10 @@ Ext.define('Spelled.store.system.Defaults', {
 		{
 			systemId: 'spell.system.physics',
 			executionGroupId: 'render'
+		},
+		{
+			systemId: 'spell.system.audio',
+			executionGroupId: 'render'
 		}
     ]
 });
