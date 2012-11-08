@@ -764,7 +764,8 @@ Ext.define('Spelled.controller.Scenes', {
 			{
 				executionGroupId: 'render',
 				systemConfig: { active: cameraState },
-				systemId: 'spell.system.debug.camera'
+				systemId: 'spell.system.debug.camera',
+				index: 999
 			}
 		)
 	},
