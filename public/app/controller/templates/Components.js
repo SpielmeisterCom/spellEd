@@ -129,8 +129,7 @@ Ext.define('Spelled.controller.templates.Components', {
             'Spelled.model.template.ComponentAttribute',
             {
                 type: "string",
-                name: "newAttribute",
-                "default": "defaultValue"
+                name: "newAttribute"
             }
         )
 
@@ -217,10 +216,12 @@ Ext.define('Spelled.controller.templates.Components', {
 			defaultValueField.store = attribute.get( 'values' )
 		}
 
-		propertyView.add( defaultValueField )
+		var field = propertyView.add( defaultValueField )
 
 		propertyView.showConfig()
         propertyView.getForm().loadRecord( attribute )
+
+		if( field.isValid() ) attribute.set( 'default', field.getValue() )
     },
 
     openTemplate: function( componentTemplate ) {
