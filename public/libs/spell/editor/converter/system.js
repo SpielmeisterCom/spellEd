@@ -16,7 +16,7 @@ define(
 		 * @return {*}
 		 */
 		var toEngineFormat = function( system, config ) {
-			var attributes       = [ 'version','type' ],
+			var attributes       = [ 'version', 'type' ],
 				includeNamespace = config && !!config.includeNamespace
 
 			if( includeNamespace ) attributes = _.union( attributes, [ 'name', 'namespace' ] )
@@ -27,6 +27,13 @@ define(
 				system.getInput,
 				function( input ) {
 					return _.pick( input, 'name','componentId')
+				}
+			)
+
+			result.config = _.map(
+				system.getConfig,
+				function( input ) {
+					return _.pick( input, 'name','type', 'default', 'doc' )
 				}
 			)
 

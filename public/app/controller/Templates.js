@@ -304,6 +304,13 @@ Ext.define('Spelled.controller.Templates', {
 
 			if( values.type === this.TEMPLATE_TYPE_SYSTEM ) {
 				model.set( 'content', this.application.getController( 'templates.Systems' ).createSystemScaffolding( model.getFullName(), model.get( 'name' ) ) )
+
+				model.getConfig().add( {
+					"name": "active",
+					"type": "boolean",
+					"default": true,
+					"doc": "if active is false the system will be skipped during processing"
+				} )
 			}
 
 			if( values.owner ) this.application.getController( 'templates.Entities' ).convertEntity( values.owner, model )
