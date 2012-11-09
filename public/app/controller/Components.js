@@ -74,6 +74,11 @@ Ext.define('Spelled.controller.Components', {
 				click: this.copyComponentIdentifier
 			}
 		})
+
+		this.application.on({
+			componentpropertygridupdate: this.refreshComponentPropertyGridValues,
+			scope: this
+		})
 	},
 
 	copyComponentIdentifier: function( button ) {
@@ -85,22 +90,27 @@ Ext.define('Spelled.controller.Components', {
 
 	revertComponent: function( button, event ) {
 		var menu         = button.up( 'menu' ),
-			propertyGrid = menu.ownerView,
-			store        = propertyGrid.getStore(),
-			componentId  = propertyGrid.componentConfigId,
-			component    = this.getConfigComponentsStore().getById( componentId ),
+			component    = this.getConfigComponentsStore().getById( menu.ownerView.componentConfigId ),
 			config       = ( button.action === 'toEntityDefaults' ) ?
 					Ext.Object.merge( {}, component.getTemplateConfig(), component.getTemplateCompositeConfig() )
 				:
 					Ext.Object.merge( {}, component.getTemplateConfig(true) )
 
+		this.refreshComponentPropertyGridValues( component, config, true )
+	},
+
+	refreshComponentPropertyGridValues: function( component, newConfig, sendToEngine ) {
+		var componentsList = this.getRightPanel().down( 'entitycomponentslist' ),
+			propertyGrid   = componentsList.child( 'componentproperties[componentConfigId='+ component.getId() +']'),
+			store          = propertyGrid.getStore()
+
 		Ext.iterate(
-			this.transformConfigForGrid( component, config ),
+			this.transformConfigForGrid( component, newConfig ),
 			function( key, value ) {
 				var record = store.findRecord( 'name', key )
 				record.set( value )
 				propertyGrid.fireEvent( 'edit', propertyGrid, { grid: propertyGrid, record: record } )
-				this.sendComponentUpdate( component, key, value.value )
+				if( sendToEngine ) this.sendComponentUpdate( component, key, value.value )
 			},
 			this
 		)

@@ -54,6 +54,9 @@ Ext.define('Spelled.controller.Entities', {
 	],
 
     init: function() {
+		var me               = this,
+			engineMessageBus = me.application.engineMessageBus
+
         this.control({
             'createentity button[action="createEntity"]' : {
                 click: this.createEntity
@@ -74,7 +77,7 @@ Ext.define('Spelled.controller.Entities', {
 
 		this.application.on({
 			triggerrenamingentity  : this.triggerRenameEntityEvent,
-			refreshentitynode      : this.refreshEntitynode,
+			refreshentitynode      : this.refreshEntityNode,
 			showentityinfo         : this.showEntityInfo,
 			cloneconfigentity      : this.cloneEntityConfig,
 			showentityremovealert  : this.showEntityRemoveAlert,
@@ -82,7 +85,38 @@ Ext.define('Spelled.controller.Entities', {
 			movesceneentity        : this.moveEntity,
 			scope: this
 		})
+
+		engineMessageBus.addHandler(
+			{
+				'spelled.entity.update' : function( sourceId, payload ) {
+					var id          = payload.id,
+						componentId = payload.componentId,
+						config      = payload.config
+
+					me.updateEntityComponent( id, componentId, config )
+				}
+			}
+		)
     },
+
+	updateEntityComponent:function( id, componentId, config ){
+		var entity           = this.getConfigEntitiesStore().getById( id ),
+			component        = entity.getComponentByTemplateId( componentId ),
+			componentConfig  = component.get( 'config' ),
+			tree             = this.getScenesTree(),
+			lastSelectedNode = this.application.getLastSelectedNode( tree )
+
+		Ext.Object.each(
+			config,
+			function( key, value ) {
+				componentConfig[ key ] = value
+			}
+		)
+
+		entity.setDirty()
+
+		if( lastSelectedNode.getId() === id ) this.application.fireEvent( 'componentpropertygridupdate', component, componentConfig, false )
+	},
 
 	triggerRenameEntityEvent: function( node ) {
 		var cellEditor = this.getScenesTree().getPlugin( 'renameEntityPlugin' )
@@ -106,7 +140,7 @@ Ext.define('Spelled.controller.Entities', {
 		e.record.commit()
 	},
 
-	refreshEntitynode: function( id ) {
+	refreshEntityNode: function( id ) {
 		var tree     = this.getScenesTree(),
 			rootNode = tree.getRootNode(),
 			node     = rootNode.findChild( 'id', id, true ),
