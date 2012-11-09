@@ -166,10 +166,10 @@ Ext.define('Spelled.controller.Scenes', {
 
 		engineMessageBus.addHandler(
 			{
-				'spell.initialized' : function( sourceId, payload ) {
+				'spelled.initialized' : function( sourceId, payload ) {
 					engineMessageBus.flushQueue( sourceId )
 				},
-				'spell.loadingProgress' : function( sourceId, payload ) {
+				'spelled.loadingProgress' : function( sourceId, payload ) {
 					me.updateRenderProgress( payload )
 				}
 			}
@@ -248,13 +248,13 @@ Ext.define('Spelled.controller.Scenes', {
 			payload = Ext.amdModules.assetConverter.toEngineFormat( data )
 
 		Ext.copyTo( payload, data, 'name,namespace' )
-		this.sendChangeToEngine( "spelled.debug.library.updateAsset", { definition: payload } )
+		this.sendChangeToEngine( "library.updateAsset", { definition: payload } )
 	},
 
 	sendChangeToEngine: function( type, payload ) {
 		var iframe = this.getSpelledIframe()
 
-		this.application.engineMessageBus.send( iframe.getId(), { type : type, payload : payload } )
+		this.application.engineMessageBus.send( iframe.getId(), { type : 'spelled.debug.' + type, payload : payload } )
 	},
 
 	sendSystemChangeToEngine: function( model ) {
@@ -286,7 +286,7 @@ Ext.define('Spelled.controller.Scenes', {
 		if( !systemConfig ) return
 
 		this.sendChangeToEngine(
-			"spelled.debug.system.update",
+			"system.update",
 			{
 				executionGroupId: executionGroupId,
 				definition: Ext.amdModules.systemConverter.toEngineFormat( definition, { includeNamespace: true } ),
@@ -315,7 +315,7 @@ Ext.define('Spelled.controller.Scenes', {
 		//don't send an update to the engine if we have no breakpoint enabled and active warnings/errors
 		if( !hasBreakpoints && annotations.length > 0 ) return
 
-		this.sendChangeToEngine( "spelled.debug.library.updateScript", { id: model.getFullName(), moduleSource: lines.join("\n") } )
+		this.sendChangeToEngine( "library.updateScript", { id: model.getFullName(), moduleSource: lines.join("\n") } )
 	},
 
 	clearScenesStore: function() {
@@ -323,7 +323,7 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	changeAspectRatio: function( field, newValue, oldValue ) {
-		this.sendChangeToEngine( 'spelled.debug.settings.simulateScreenAspectRatio', { aspectRatio: newValue } )
+		this.sendChangeToEngine( 'settings.simulateScreenAspectRatio', { aspectRatio: newValue } )
 	},
 
 	dispatchTreeDblClick: function( treePanel, record ) {
@@ -454,7 +454,7 @@ Ext.define('Spelled.controller.Scenes', {
 				}
 
 				this.sendChangeToEngine(
-					"spelled.debug.system.move",
+					"system.move",
 					{
 						dstExecutionGroupId: dstExecutionGroupId,
 						srcExecutionGroupId: srcExecutionGroupId,
@@ -705,24 +705,24 @@ Ext.define('Spelled.controller.Scenes', {
 		if( !panel.down( 'spellprogressbar' ) ) panel.add( { xtype: 'spellprogressbar'} )
 
 		this.sendChangeToEngine(
-			'spelled.debug.runtimeModule.start', {
+			'runtimeModule.start', {
 				runtimeModule: Ext.amdModules.createProjectInEngineFormat( project ),
 				cacheContent: this.generateSceneCacheContent( scene )
 			}
 		)
 
 		this.sendChangeToEngine(
-			'spelled.debug.settings.drawCoordinateGrid',
+			'settings.drawCoordinateGrid',
 			panel.down( '[action="toggleGrid"]' ).pressed
 		)
 
 		this.sendChangeToEngine(
-			'spelled.debug.settings.simulateScreenAspectRatio',
+			'settings.simulateScreenAspectRatio',
 			{ aspectRatio : panel.down( '[name="aspectRatioSelector"]' ).getValue() }
 		)
 
 		this.sendChangeToEngine(
-			'spelled.debug.settings.drawTitleSafeOutline',
+			'settings.drawTitleSafeOutline',
 			panel.down( '[action="toggleTitleSafe"]' ).pressed
 		)
 	},
@@ -762,7 +762,7 @@ Ext.define('Spelled.controller.Scenes', {
 		this.getSpelledIframe().focus()
 
 		this.sendChangeToEngine(
-			"spelled.debug.system.add",
+			"system.add",
 			{
 				executionGroupId: 'render',
 				systemConfig: { active: cameraState },
@@ -776,7 +776,7 @@ Ext.define('Spelled.controller.Scenes', {
 		var system = Ext.getStore( 'template.Systems' ).getByTemplateId( 'spell.system.debug.camera' )
 
 		this.sendChangeToEngine(
-			"spelled.debug.system.update",
+			"system.update",
 			{
 				executionGroupId: 'render',
 				definition: Ext.amdModules.systemConverter.toEngineFormat( system.getData( true ), { includeNamespace: true } ),
@@ -788,12 +788,12 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	toggleGrid: function( button, state ) {
-		this.sendChangeToEngine( "spelled.debug.settings.drawCoordinateGrid", state )
+		this.sendChangeToEngine( "settings.drawCoordinateGrid", state )
 		this.getSpelledIframe().focus()
 	},
 
 	toggleTitleSafe: function( button, state ) {
-		this.sendChangeToEngine( "spelled.debug.settings.drawTitleSafeOutline", state )
+		this.sendChangeToEngine( "settings.drawTitleSafeOutline", state )
 		this.getSpelledIframe().focus()
 	},
 

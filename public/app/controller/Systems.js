@@ -104,7 +104,7 @@ Ext.define('Spelled.controller.Systems', {
 
 	sendSystemAddToSceneToEngine: function( system, executionGroupId, index ) {
 		this.application.fireEvent( "sendToEngine",
-			"spelled.debug.system.add",
+			"system.add",
 			{
 				executionGroupId: executionGroupId,
 				systemConfig: system.config,
@@ -116,7 +116,7 @@ Ext.define('Spelled.controller.Systems', {
 
 	sendSystemRemoveFromSceneToEngine: function( id, executionGroupId ) {
 		this.application.fireEvent( "sendToEngine",
-			"spelled.debug.system.remove",
+			"system.remove",
 			{
 				executionGroupId: executionGroupId,
 				systemId: id

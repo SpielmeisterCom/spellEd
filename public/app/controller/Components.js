@@ -178,7 +178,7 @@ Ext.define('Spelled.controller.Components', {
 			component = store.getById( panel.componentConfigId ),
 			entity    = component.getEntity()
 
-		this.application.fireEvent( 'sendToEngine', 'spelled.debug.component.remove' ,{ entityId: entity.getId(), componentId: component.get( 'templateId' ) } )
+		this.application.fireEvent( 'sendToEngine', 'component.remove' ,{ entityId: entity.getId(), componentId: component.get( 'templateId' ) } )
 
 		entity.getComponents().remove( component )
 		entity.setDirty()
@@ -327,7 +327,7 @@ Ext.define('Spelled.controller.Components', {
 	sendAddComponentToEngine: function( component ) {
 		var entity = component.getEntity()
 
-		this.application.fireEvent( 'sendToEngine', 'spelled.debug.component.add' ,{ entityId: entity.getId(), componentId: component.get( 'templateId' ) } )
+		this.application.fireEvent( 'sendToEngine', 'component.add' ,{ entityId: entity.getId(), componentId: component.get( 'templateId' ) } )
 	},
 
 	editProperty: function( editor, e ) {
@@ -439,7 +439,7 @@ Ext.define('Spelled.controller.Components', {
 
 				this.application.fireEvent(
 					'sendToEngine',
-					'spelled.debug.component.update' , {
+					'component.update' , {
 						entityId    : component.getEntity().getId(),
 						componentId : component.get( 'templateId' ),
 						config      : componentConfig
