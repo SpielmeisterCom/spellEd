@@ -6,6 +6,7 @@ Ext.define('Spelled.controller.Scenes', {
 		'Spelled.MessageBus',
 		'Spelled.view.scene.ProgressBar',
 		'Spelled.store.system.Defaults',
+		'Spelled.store.system.EditMode',
 
 		'widget.label'
 	],
@@ -18,7 +19,8 @@ Ext.define('Spelled.controller.Scenes', {
 		'AspectRatios',
 		'ScenesTree',
 		'config.Scenes',
-		'system.Defaults'
+		'system.Defaults',
+		'system.EditMode'
 	],
 
 	refs: [
@@ -191,6 +193,9 @@ Ext.define('Spelled.controller.Scenes', {
 			'renderedscene > toolbar button[action="toggleDevCam"]': {
 				toggle: me.toggleDevCam
 			},
+			'renderedscene > toolbar button[action="toggleEdit"]': {
+				toggle: me.toggleEditScene
+			},
 			'renderedscene > toolbar button[action="fullscreen"]': {
 				click: me.activateFullscreen
 			},
@@ -258,8 +263,7 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	sendSystemChangeToEngine: function( model ) {
-		var definition   = model.getData( true ),
-			startScene   = this.application.getActiveProject().get( 'startScene' ),
+		var startScene   = this.application.getActiveProject().get( 'startScene' ),
 			scene        = this.getConfigScenesStore().findRecord( 'sceneId', startScene ),
 			systemConfig = false,
 			executionGroupId = false
@@ -285,15 +289,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		if( !systemConfig ) return
 
-		this.sendChangeToEngine(
-			"system.update",
-			{
-				executionGroupId: executionGroupId,
-				definition: Ext.amdModules.systemConverter.toEngineFormat( definition, { includeNamespace: true } ),
-				systemConfig: systemConfig,
-				systemId: model.getFullName()
-			}
-		)
+		this.application.fireEvent( 'updatescenesystem', executionGroupId, model, systemConfig )
 	},
 
 	sendScriptChangeToEngine: function( model, annotations ) {
@@ -775,15 +771,45 @@ Ext.define('Spelled.controller.Scenes', {
 	toggleDevCam: function( button, state ) {
 		var system = Ext.getStore( 'template.Systems' ).getByTemplateId( 'spell.system.debug.camera' )
 
-		this.sendChangeToEngine(
-			"system.update",
-			{
-				executionGroupId: 'render',
-				definition: Ext.amdModules.systemConverter.toEngineFormat( system.getData( true ), { includeNamespace: true } ),
-				systemConfig: { active: state },
-				systemId: system.getFullName()
-			}
-		)
+		this.application.fireEvent( 'updatescenesystem', 'render', system, { active: state } )
+
+		this.getSpelledIframe().focus()
+	},
+
+	toggleEditScene: function( button, state ) {
+		var spelledIframe   = this.getSpelledIframe(),
+			scene           = this.getConfigScenesStore().getById( spelledIframe.sceneId ),
+			systemsStore    = Ext.getStore( 'template.Systems' ),
+			editModeSystems = this.getSystemEditModeStore()
+
+
+		if( scene ) {
+			Ext.Object.each(
+				scene.get( 'systems' ),
+				function( key, value ){
+					Ext.Array.each(
+						value,
+						function( sceneSystem ) {
+							var system       = systemsStore.getByTemplateId( sceneSystem.id ),
+								systemConfig = Ext.merge( {}, system.getConfigForScene(), { active: !state } ),
+								editSystem   = editModeSystems.findRecord( 'systemId', sceneSystem.id )
+
+							if( editSystem ) {
+								if( state )
+									systemConfig = Ext.merge( systemConfig, editSystem.get( 'systemConfig' ) )
+								else
+									systemConfig.active = sceneSystem.config.active
+							}
+
+							this.application.fireEvent( 'updatescenesystem', key, system, systemConfig )
+						},
+						this
+					)
+				},
+				this
+			)
+		}
+
 		this.getSpelledIframe().focus()
 	},
 

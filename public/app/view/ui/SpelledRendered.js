@@ -18,6 +18,16 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				}
 			},
 			{
+				iconCls: 'edit-mode-icon',
+				action: "toggleEdit",
+				enableToggle: true,
+				tooltip: {
+					text: 'Pauses the scene for editing',
+					title: 'Play/Pause',
+					dismissDelay: dismissDelay
+				}
+			},
+			{
 				iconCls: 'fullscreen-icon',
 				action: "fullscreen",
 				tooltip: {

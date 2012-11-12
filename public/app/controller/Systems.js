@@ -49,8 +49,9 @@ Ext.define('Spelled.controller.Systems', {
 		})
 
 		this.application.on({
-				showsystemitem  : this.showSystemItem,
-				movescenesystem : this.moveSystem,
+				showsystemitem    : this.showSystemItem,
+				updatescenesystem : this.sendSystemUpdateFromSceneToEngine,
+				movescenesystem   : this.moveSystem,
 				scope: this
 			}
 		)
@@ -110,6 +111,18 @@ Ext.define('Spelled.controller.Systems', {
 				systemConfig: system.config,
 				index: index,
 				systemId: system.id
+			}
+		)
+	},
+
+	sendSystemUpdateFromSceneToEngine: function( executionGroupId, system, systemConfig ) {
+		this.application.fireEvent( "sendToEngine",
+			"system.update",
+			{
+				executionGroupId: executionGroupId,
+				definition: Ext.amdModules.systemConverter.toEngineFormat( system.getData( true ), { includeNamespace: true } ),
+				systemConfig: systemConfig,
+				systemId: system.getFullName()
 			}
 		)
 	},

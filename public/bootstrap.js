@@ -296,6 +296,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.chart.series.Gauge": [
     "series.gauge"
   ],
+  "Spelled.store.system.EditMode": [],
   "Ext.data.StoreManager": [],
   "Ext.data.IdGenerator": [],
   "Ext.tip.QuickTipManager": [],
@@ -1443,6 +1444,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.store.asset.ActionKeys": [],
   "Ext.data.Field": [],
   "Ext.chart.series.Gauge": [],
+  "Spelled.store.system.EditMode": [],
   "Ext.data.StoreManager": [
     "Ext.StoreMgr",
     "Ext.data.StoreMgr",
