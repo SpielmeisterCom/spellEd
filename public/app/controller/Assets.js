@@ -874,28 +874,58 @@ Ext.define('Spelled.controller.Assets', {
     },
 
     addAssetPreview: function( view, asset ) {
-		var subtype = asset.get('subtype'),
+		var project = this.application.getActiveProject(),
 			iframe  = {
 				tag : 'iframe',
 				src: '/' + asset.getFilePath( this.application.getActiveProject().get('name') ),
 				border: '0',
 				frameborder: '0',
 				height: '80%'
-			},
-			errorTag = {
-				tag: 'h1',
-				cls: "no-animation-text",
-				html: 'Animation preview is not available.'
 			}
 
-		if( subtype !== 'keyToActionMap' && subtype !== 'font' && subtype !== 'keyFrameAnimation' && subtype !== '2dTileMap') {
-			var preview = Ext.widget( 'assetiframe', {
-				autoEl: ( subtype === 'animation' ) ? errorTag : iframe
-			} )
+		switch( asset.get('subtype') ) {
+			case 'appearance':
+				view.add( Ext.widget( 'assetiframe', { autoEl: iframe } ) )
+				break
+			case 'animation':
+				var preview = Ext.widget( 'assetiframe', {
+					autoEl: iframe,
+					afterRender: function() {
+						this.el.dom.src = '/' + project.get( 'name' ) + '/public/spellEdShim.html?iframeId=' + this.id
+					}
+				})
 
-			view.add( preview )
+				this.animationPreviewHelper( preview, asset )
+
+				view.add( preview )
+				break
 		}
     },
+
+	animationPreviewHelper: function( container, asset ) {
+		var entityConfig = Ext.create( 'Spelled.model.config.Entity', { name: "asset" })
+
+		entityConfig.getComponents().add( [{
+				templateId: "spell.component.2d.graphics.animatedAppearance",
+				config:{ assetId: asset.get( 'internalAssetId' ) } }
+			,{ templateId: "spell.component.2d.transform" }
+			,{ templateId: "spell.component.visualObject" }
+		])
+
+		entityConfig.getComponents().each(
+			function( component ) {
+				component.set( 'additional', true )
+			}
+		)
+
+		this.application.engineMessageBus.send(
+			container.getId(),
+			{
+				type : 'spelled.debug.runtimeModule.start',
+				payload : this.application.getController( 'templates.Entities' ).createEntityPreviewItem( entityConfig )
+			}
+		)
+	},
 
 	refreshStoresAndTreeStores: function( callback ) {
 		this.refreshStores( callback )

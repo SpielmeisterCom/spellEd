@@ -91,12 +91,22 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
 	createEntityTemplatePreviewItem: function( entityTemplate ) {
+		return this.createEntityPreviewItem( { name: "preview", templateId: entityTemplate.getFullName() } )
+	},
+
+	createEntityPreviewItem: function( entityConfig ) {
 		var project       = this.application.getActiveProject(),
-			sceneConfig   = { name: "dummyScene", namespace: '' },
+			sceneConfig   = {
+				name: "dummyScene", namespace: '',
+				systems: {
+					update: [],
+					render: [ { id: 'spell.system.debug.camera', config: { active: true } } ]
+				}
+			},
 			tmpProjectCfg = Ext.amdModules.projectConverter.toEngineFormat( project.getData( true ) ),
 			scene         = this.application.getController( 'Scenes' ).prepareSceneObject( sceneConfig )
 
-		scene.getEntities().add( { name: "preview", templateId: entityTemplate.getFullName() } )
+		scene.getEntities().add( entityConfig )
 
 		tmpProjectCfg.startScene = scene.getFullName()
 		tmpProjectCfg.scenes     = [ tmpProjectCfg.startScene ]
