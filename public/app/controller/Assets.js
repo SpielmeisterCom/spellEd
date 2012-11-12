@@ -176,12 +176,32 @@ Ext.define('Spelled.controller.Assets', {
 		    }
 	    )
 
+		this.application.engineMessageBus.addHandler(
+			{
+				'spelled.asset.update' : function( sourceId, payload ) {
+					var assetId     = payload.id,
+						config      = payload.config
+
+					me.updateAsset( assetId, config )
+				}
+			}
+		)
+
 	    window.addEventListener(
 		    'message',
 		    Ext.bind( this.assetMessageBus.receive, this.assetMessageBus ),
 		    false
 	    )
     },
+
+	updateAsset: function( assetId, config ) {
+		var asset = this.getAssetAssetsStore().findRecord( 'myAssetId', assetId )
+
+		if( asset ) {
+			asset.set( 'config', config )
+			this.application.fireEvent( 'assetchange', asset )
+		}
+	},
 
 	globalSaveModelHelper: function( model ) {
 		if( model.get( 'type') === 'asset' && model.get( 'subtype' ) === 'font' ) {
