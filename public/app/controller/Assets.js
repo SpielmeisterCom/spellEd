@@ -878,26 +878,15 @@ Ext.define('Spelled.controller.Assets', {
     },
 
     addAssetPreview: function( view, asset ) {
-		var project = this.application.getActiveProject(),
-			iframe  = {
-				tag : 'iframe',
-				src: '/' + asset.getFilePath( this.application.getActiveProject().get('name') ),
-				border: '0',
-				frameborder: '0',
-				height: '80%'
-			}
+		var project = this.application.getActiveProject()
 
 		switch( asset.get('subtype') ) {
 			case 'appearance':
-				view.add( Ext.widget( 'assetiframe', { autoEl: iframe } ) )
+				view.add( Ext.widget( 'assetiframe', { src: '/' + asset.getFilePath( project.get('name') ) } ) )
 				break
+            case 'keyFrameAnimation':
 			case 'animation':
-				var preview = Ext.widget( 'assetiframe', {
-					autoEl: iframe,
-					afterRender: function() {
-						this.el.dom.src = '/' + project.get( 'name' ) + '/public/spellEdShim.html?iframeId=' + this.id
-					}
-				})
+				var preview = Ext.widget( 'assetiframe', { src: '/' + project.get( 'name' ) + '/public/spellEdShim.html' } )
 
 				this.animationPreviewHelper( preview, asset )
 
@@ -909,12 +898,26 @@ Ext.define('Spelled.controller.Assets', {
 	animationPreviewHelper: function( container, asset ) {
 		var entityConfig = Ext.create( 'Spelled.model.config.Entity', { name: "asset" })
 
-		entityConfig.getComponents().add( [{
-				templateId: "spell.component.2d.graphics.animatedAppearance",
-				config:{ assetId: asset.get( 'internalAssetId' ) } }
-			,{ templateId: "spell.component.2d.transform" }
-			,{ templateId: "spell.component.visualObject" }
+		entityConfig.getComponents().add( [
+            { templateId: "spell.component.2d.transform" },
+            { templateId: "spell.component.visualObject" }
 		])
+
+        if( asset.get('subtype') === 'keyFrameAnimation' ){
+            entityConfig.getComponents().add([
+                {
+                    templateId: "spell.component.animation.keyFrameAnimation",
+                    config:{ assetId: asset.get( 'internalAssetId' ) }
+                },{
+                    templateId: 'spell.component.2d.graphics.appearance'
+                }
+            ])
+        } else {
+            entityConfig.getComponents().add({
+                templateId: "spell.component.2d.graphics.animatedAppearance",
+                config:{ assetId: asset.get( 'internalAssetId' ) } }
+            )
+        }
 
 		entityConfig.getComponents().each(
 			function( component ) {

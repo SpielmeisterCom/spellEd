@@ -28,9 +28,10 @@ Ext.define(
 		},
 
 		sendMessageToEngine : function( targetId, message ) {
-			var cmp = Ext.getCmp( targetId )
+			var cmp    = Ext.getCmp( targetId ),
+                target = ( cmp && cmp.el.dom.contentWindow ) ? cmp.el.dom.contentWindow : cmp.el.dom.firstChild.contentWindow
 
-			if( cmp ) cmp.el.dom.contentWindow.postMessage( Ext.encode( message ), '*' )
+			if( target ) target.postMessage( Ext.encode( message ), '*' )
 		},
 
 		isReadyToReceive : function( targetId ) {
