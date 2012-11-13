@@ -645,6 +645,10 @@ Ext.define('Spelled.controller.Assets', {
 
 			this.application.fireEvent( 'assetchange', record )
 
+            var iframe = button.up( 'editasset' ).down( 'assetiframe' )
+            if( iframe)
+                this.application.sendChange( iframe.getId(), "library.updateAsset", { definition: record.toSpellEngineMessageFormat() } )
+
 			if (record.get("subtype") == "2dTileMap") {
 				this.updateTilemapEditorData( form, record )
 			}

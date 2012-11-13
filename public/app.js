@@ -125,6 +125,10 @@ var startApplication = function() {
 		project: undefined,
 		scene: undefined,
 
+        sendChange: function( target, type, payload ) {
+            this.engineMessageBus.send( target, { type : 'spelled.debug.' + type, payload : payload } )
+        },
+
 		generateFileIdFromObject: function( object ) {
 			return this.getActiveProject().get('name') + "/library/" + (( object.namespace.length > 0 ) ? object.namespace.replace( /\./g, "/" ) +"/"+ object.name : object.name)
 		},

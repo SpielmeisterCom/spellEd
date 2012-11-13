@@ -249,17 +249,22 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	sendAssetChangeToEngine: function( asset ) {
-		var data    = asset.getData(),
-			payload = Ext.amdModules.assetConverter.toEngineFormat( data )
-
-		Ext.copyTo( payload, data, 'name,namespace' )
-		this.sendChangeToEngine( "library.updateAsset", { definition: payload } )
+		this.sendChangeToEngine( "library.updateAsset", { definition: asset.toSpellEngineMessageFormat() } )
 	},
 
+    /**
+     * Wrapper for sending changes only to the rendered scene.
+     *
+     * For sending changes to a different target, for example the asset preview use:
+     * this.application.sendChange()
+     *
+     * @param type
+     * @param payload
+     */
 	sendChangeToEngine: function( type, payload ) {
 		var iframe = this.getSpelledIframe()
 
-		this.application.engineMessageBus.send( iframe.getId(), { type : 'spelled.debug.' + type, payload : payload } )
+        this.application.sendChange( iframe.getId(), type, payload )
 	},
 
 	sendSystemChangeToEngine: function( model ) {

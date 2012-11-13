@@ -90,5 +90,14 @@ Ext.define('Spelled.model.Asset', {
 
     getFilePath: function( projectName ) {
 		return projectName + "/library/" + this.get( 'namespace').split( "." ).join( "/" ) + "/" + this.get( 'file' )
+    },
+
+    toSpellEngineMessageFormat: function() {
+        var data    = this.getData(),
+            payload = Ext.amdModules.assetConverter.toEngineFormat( data )
+
+        Ext.copyTo( payload, data, 'name,namespace' )
+
+        return payload
     }
 });
