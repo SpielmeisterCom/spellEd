@@ -18,16 +18,6 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				}
 			},
 			{
-				iconCls: 'edit-mode-icon',
-				action: "toggleEdit",
-				enableToggle: true,
-				tooltip: {
-					text: 'Pauses the scene for editing',
-					title: 'Play/Pause',
-					dismissDelay: dismissDelay
-				}
-			},
-			{
 				iconCls: 'fullscreen-icon',
 				action: "fullscreen",
 				tooltip: {
@@ -57,12 +47,22 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				}
 			},
 			{
-				iconCls: 'development-camera-icon',
+				iconCls: 'pause-icon',
+				action: "toggleEdit",
+				enableToggle: true,
+				tooltip: {
+					text: 'Pauses the scene for editing',
+					title: 'Pause',
+					dismissDelay: dismissDelay
+				}
+			},
+			{
+				iconCls: 'edit-icon',
 				action: 'toggleDevCam',
 				enableToggle: true,
 				tooltip: {
 					text: 'When activated: use mouse-drag to drag the camera and mouse-wheel up/down to zoom in/zoom out. If the scene view lost it\'s focus, left click in the scene to restore the focus.',
-					title: 'Activate development camera',
+					title: 'Activate development mode',
 					dismissDelay: dismissDelay
 				}
 			},

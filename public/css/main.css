@@ -126,6 +126,10 @@
     background-image:  url( '../images/icons/arrow_out.png' ) !important;
 }
 
+.pause-icon {
+    background-image:  url( '../images/icons/pause.png' ) !important;
+}
+
 .documentation-icon {
     background-image:  url( '../images/icons/information.png' ) !important;
 }
@@ -142,8 +146,8 @@
     background-image:  url( '../images/icons/keyboard.png' ) !important;
 }
 
-.development-camera-icon {
-    background-image:  url( '../images/icons/camera-lock.png' ) !important;
+.edit-icon {
+    background-image:  url( '../images/icons/edit-mode.png' ) !important;
 }
 
 .doc-tool {
