@@ -29,6 +29,10 @@ Ext.define('Spelled.store.template.component.AttributeTypes', {
 			"name":"vec4"
 		},
 		{
+			"type":"spelledmat3field",
+			"name":"mat3"
+		},
+		{
 			"type":"spelledlistfield",
 			"name":"list"
 		},
