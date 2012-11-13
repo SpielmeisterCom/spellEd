@@ -30,9 +30,8 @@ Ext.define('Spelled.view.asset.Iframe', {
     },
 
     initEvents : function() {
-        var me = this,
-            iframeEl = me.iframeEl.dom,
-            frameEl = me.getFrame();
+        var me = this
+
         me.callParent();
         me.iframeEl.on('load', me.onLoad, me);
     },
