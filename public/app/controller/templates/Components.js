@@ -20,6 +20,7 @@ Ext.define('Spelled.controller.templates.Components', {
 		'Spelled.view.template.component.attribute.KeyFrameAnimation',
 		'Spelled.view.template.component.attribute.TextAppearance',
 		'Spelled.view.template.component.attribute.Sound',
+        'Spelled.view.template.component.attribute.Script',
 		'Spelled.view.template.component.attribute.KeyToActionMap',
 		'Spelled.view.template.component.attribute.Tilemap',
 		'Spelled.view.template.component.attribute.Enum',
@@ -52,6 +53,7 @@ Ext.define('Spelled.controller.templates.Components', {
 		'template.component.attribute.KeyFrameAnimation',
 		'template.component.attribute.TextAppearance',
 		'template.component.attribute.Sound',
+        'template.component.attribute.Script',
 		'template.component.attribute.KeyToActionMap',
 	    'template.component.attribute.Tilemap',
 		'template.component.attribute.Enum'

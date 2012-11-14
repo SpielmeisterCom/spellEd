@@ -92,6 +92,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.util.Offset": [],
   "Ext.dom.Element": [],
+  "Spelled.view.template.component.attribute.Script": [
+    "widget.spelledscript"
+  ],
   "Ext.view.DragZone": [],
   "Ext.util.KeyNav": [],
   "Spelled.model.template.System": [],
@@ -1303,6 +1306,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.Element",
     "Ext.core.Element"
   ],
+  "Spelled.view.template.component.attribute.Script": [],
   "Ext.view.DragZone": [],
   "Ext.util.KeyNav": [
     "Ext.KeyNav"

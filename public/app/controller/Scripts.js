@@ -132,13 +132,13 @@ Ext.define('Spelled.controller.Scripts', {
 			script       = this.getScriptScriptsStore().getById( scriptId )
 
 		if( script ) {
-			var foundTab = this.application.findActiveTabByTitle( scriptEditor, script.get( 'scriptId' ) )
+			var foundTab = this.application.findActiveTabByTitle( scriptEditor, script.getFullName() )
 
 			if( foundTab )
 				return foundTab
 
 			var view = Ext.widget( 'scripteditor', {
-				title: script.get('scriptId'),
+				title: script.getFullName(),
 				model: script
 			} )
 
@@ -178,8 +178,8 @@ Ext.define('Spelled.controller.Scripts', {
 
 					script.save({
 							success: function( record ) {
-								Ext.Msg.alert('Success', 'Your Script "' + record.get( 'scriptId' ) + '" has been created.')
-								me.refreshStores()
+								Ext.Msg.alert('Success', 'Your Script "' + record.getFullName() + '" has been created.')
+                                me.getScriptScriptsStore().add( record )
 
 								window.close()
 							}

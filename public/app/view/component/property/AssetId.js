@@ -5,6 +5,8 @@ Ext.define('Spelled.view.component.property.AssetId', {
 
 	listeners: {
 		focus: function() {
+            if( !this.getStore() ) return
+
 			var store   = this.getStore(),
 				filters = store.filters.items
 
@@ -20,6 +22,8 @@ Ext.define('Spelled.view.component.property.AssetId', {
 	},
 
 	validator: function( value ) {
+        if( !this.getStore() ) return false
+
 		var record = this.getStore().findRecord( 'myAssetId', value, 0, false, false, true )
 		if( record ) return true
 		else return "No such asset"
