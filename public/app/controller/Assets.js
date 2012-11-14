@@ -28,6 +28,7 @@ Ext.define('Spelled.controller.Assets', {
 		'Spelled.store.asset.ActionKeys',
 		'Spelled.store.template.component.KeyFrameComponents',
 		'Spelled.store.asset.KeyFrameAnimations',
+        'Spelled.store.asset.KeyFrameAnimationPreviews',
 		'Spelled.store.asset.KeyToActionMappings',
 		'Spelled.store.asset.InterpolationFunctions',
 		'Spelled.store.asset.Assets',
@@ -64,6 +65,7 @@ Ext.define('Spelled.controller.Assets', {
 		'asset.ActionKeys',
 		'template.component.KeyFrameComponents',
 		'asset.KeyFrameAnimations',
+        'asset.KeyFrameAnimationPreviews',
 		'asset.KeyToActionMappings',
 		'asset.InterpolationFunctions',
 	    'asset.Tilemaps',
@@ -133,6 +135,9 @@ Ext.define('Spelled.controller.Assets', {
 			'keyframeanimationconfig treepanel': {
 				select : this.showKeyFramesFromAttribute
 			},
+            'keyframeanimationconfig': {
+                refreshAssetPreview: this.refreshAssetPreview
+            },
 			'domvasassetconfig': {
 				domvasedit: this.showDomvasPreview
 			}
@@ -192,6 +197,10 @@ Ext.define('Spelled.controller.Assets', {
 		    Ext.bind( this.assetMessageBus.receive, this.assetMessageBus ),
 		    false
 	    )
+    },
+
+    refreshAssetPreview: function( iframe, asset ) {
+        this.animationPreviewHelper( iframe, asset )
     },
 
 	updateAsset: function( assetId, config ) {
@@ -406,6 +415,7 @@ Ext.define('Spelled.controller.Assets', {
 				if( !!asset ) {
 					var config = asset.get('config')
 					keyFrameAnimationConfig.down( 'numberfield[name="length"]' ).setValue( config.length )
+                    keyFrameAnimationConfig.down( 'assetidproperty').setValue( asset.get( 'assetId' ) )
 					keyFrameAnimationConfig.asset = asset
 					keyFrameAnimationConfig.keyFrameConfig = Ext.clone( config )
 				} else {
@@ -760,6 +770,7 @@ Ext.define('Spelled.controller.Assets', {
 				Ext.copyTo( config, values, 'textureWidth,textureHeight,frameWidth,frameHeight' )
 				break
 			case 'keyFrameAnimation':
+                asset.set( 'assetId', values.assetId )
 				config = this.getKeyFrameAnimationConfig( form.down( 'keyframeanimationconfig' ) )
 				config.length = parseInt( values.length )
 				break
@@ -896,30 +907,45 @@ Ext.define('Spelled.controller.Assets', {
     },
 
 	animationPreviewHelper: function( container, asset ) {
-		var entityConfig = Ext.create( 'Spelled.model.config.Entity', { name: "asset" })
+		var entityConfig = Ext.create( 'Spelled.model.config.Entity', { name: "asset" }),
+            components   = entityConfig.getComponents()
 
-		entityConfig.getComponents().add( [
+        components.add( [
             { templateId: "spell.component.2d.transform" },
             { templateId: "spell.component.visualObject" }
 		])
 
         if( asset.get('subtype') === 'keyFrameAnimation' ){
-            entityConfig.getComponents().add([
-                {
-                    templateId: "spell.component.animation.keyFrameAnimation",
-                    config:{ assetId: asset.get( 'internalAssetId' ) }
-                },{
-                    templateId: 'spell.component.2d.graphics.appearance'
+            var previewAsset = this.getAssetAssetsStore().findRecord( 'internalAssetId', asset.get( 'assetId' )),
+                componentId  = 'spell.component.2d.graphics.appearance',
+                config       = {}
+
+            if( previewAsset ) {
+                switch( previewAsset.get( 'subtype' ) ) {
+                    case 'animation':
+                        componentId   = 'spell.component.2d.graphics.animatedAppearance'
+                        break
                 }
-            ])
+
+                config.assetId = previewAsset.get( 'internalAssetId' )
+            }
+
+            components.add([{
+                templateId: "spell.component.animation.keyFrameAnimation",
+                config:{ assetId: asset.get( 'internalAssetId' ) }
+            },{
+                templateId: componentId,
+                config: config
+            }])
+
         } else {
-            entityConfig.getComponents().add({
+            components.add({
                 templateId: "spell.component.2d.graphics.animatedAppearance",
                 config:{ assetId: asset.get( 'internalAssetId' ) } }
             )
         }
 
-		entityConfig.getComponents().each(
+        components.each(
 			function( component ) {
 				component.set( 'additional', true )
 			}

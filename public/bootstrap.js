@@ -425,6 +425,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.container.CheckboxGroup": [
     "layout.checkboxgroup"
   ],
+  "Spelled.store.asset.KeyFrameAnimationPreviews": [],
   "Ext.panel.Header": [
     "widget.header"
   ],
@@ -912,10 +913,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.Editor": [
     "widget.editor"
   ],
+  "Ext.chart.Tip": [],
   "Ext.chart.axis.Radial": [
     "axis.radial"
   ],
-  "Ext.chart.Tip": [],
   "Spelled.view.template.entity.Edit": [
     "widget.entitytemplateedit"
   ],
@@ -1545,6 +1546,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.draw.engine.Vml": [],
   "Spelled.data.writer.ComponentTemplate": [],
   "Ext.layout.container.CheckboxGroup": [],
+  "Spelled.store.asset.KeyFrameAnimationPreviews": [],
   "Ext.panel.Header": [],
   "Spelled.view.menu.contextmenu.templatesList.Entity": [],
   "Spelled.view.asset.create.Create": [],
@@ -1898,8 +1900,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.component.Draw": [],
   "Spelled.view.library.TreeList": [],
   "Ext.Editor": [],
-  "Ext.chart.axis.Radial": [],
   "Ext.chart.Tip": [],
+  "Ext.chart.axis.Radial": [],
   "Spelled.view.template.entity.Edit": [],
   "Spelled.data.reader.Scene": [],
   "Ext.layout.container.Table": [

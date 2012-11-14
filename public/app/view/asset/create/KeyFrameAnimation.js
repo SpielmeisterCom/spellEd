@@ -3,7 +3,10 @@ Ext.define('Spelled.view.asset.create.KeyFrameAnimation', {
     alias: 'widget.keyframeanimationconfig',
 
 	initComponent: function() {
-		var me = this
+		var me    = this,
+            store = Ext.getStore( 'asset.KeyFrameAnimationPreviews' )
+
+        store.load()
 
 		Ext.applyIf( me, {
 			items: [
@@ -15,6 +18,15 @@ Ext.define('Spelled.view.asset.create.KeyFrameAnimation', {
 				{
 					border: null,
 					items:[
+                        {
+                            xtype: 'assetidproperty',
+                            queryMode: 'remote',
+                            store: store,
+                            fieldLabel: 'Preview asset',
+                            listeners: {
+                                select: Ext.bind( me.onSelectAsset, this )
+                            }
+                        },
 						{
 							xtype: 'spelledintegerfield',
 							name: 'length',
@@ -22,7 +34,6 @@ Ext.define('Spelled.view.asset.create.KeyFrameAnimation', {
 							fieldLabel: 'Animation length'
 						},
 						{
-//							columnWidth: 0.5,
 							xtype: 'treepanel',
 							title: 'Choose a component attribute',
 							rootVisible: false
@@ -31,7 +42,6 @@ Ext.define('Spelled.view.asset.create.KeyFrameAnimation', {
 							listeners: {
 								edit: me.sortGridByTimeColumn
 							},
-//							columnWidth: 0.5,
 							hidden: true,
 							xtype: 'gridpanel',
 							enableColumnHide: false,
@@ -104,6 +114,12 @@ Ext.define('Spelled.view.asset.create.KeyFrameAnimation', {
 
 		me.callParent()
 	},
+
+    onSelectAsset: function() {
+        var record = this.up( 'form').getForm().getRecord()
+
+        this.fireEvent( 'refreshAssetPreview', this.up('editasset').down( 'assetiframe' ) , record )
+    },
 
 	sortGridByTimeColumn: function( editor, e) {
 		e.record.store.sort()
