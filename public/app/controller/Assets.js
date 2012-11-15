@@ -136,7 +136,7 @@ Ext.define('Spelled.controller.Assets', {
 				select : this.showKeyFramesFromAttribute
 			},
             'keyframeanimationconfig': {
-                refreshAssetPreview: this.refreshAssetPreview
+				refreshassetpreview: this.refreshAssetPreview
             },
 			'domvasassetconfig': {
 				domvasedit: this.showDomvasPreview
@@ -199,7 +199,8 @@ Ext.define('Spelled.controller.Assets', {
 	    )
     },
 
-    refreshAssetPreview: function( iframe, asset ) {
+    refreshAssetPreview: function( iframe, asset, value ) {
+		asset.set( 'assetId', value )
         this.animationPreviewHelper( iframe, asset )
     },
 
