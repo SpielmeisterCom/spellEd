@@ -46,6 +46,7 @@ Ext.define('Spelled.model.template.Component', {
     appendOnTreeNode: function( node ) {
 
         this.getAttributes().each( function( attribute ) {
+			if( attribute.isEngineInternal() ) return
             node.appendChild(
                 node.createNode ( {
                     text      : attribute.get('name'),

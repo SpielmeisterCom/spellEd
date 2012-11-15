@@ -6,6 +6,7 @@ Ext.define('Spelled.model.template.ComponentAttribute', {
     fields: [
         "type",
         "name",
+		{ name: 'engineInternal', type: 'boolean', defaultValue: false },
 		{ name: 'values', type: 'array', defaultValue: [] },
 		{ name: 'default', type: 'array', defaultValue: "defaultValue" }
     ],
@@ -17,6 +18,10 @@ Ext.define('Spelled.model.template.ComponentAttribute', {
         type:"belongsTo",
 		getterName: 'getComponent'
     }],
+
+	isEngineInternal: function() {
+		return this.get( 'engineInternal' ) === true
+	},
 
 	setDirty: function() {
 		this.getComponent().setDirty()

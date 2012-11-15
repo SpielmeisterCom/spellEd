@@ -20,6 +20,11 @@ Ext.define('Spelled.view.template.component.Property', {
             fieldLabel: 'Name',
             allowBlank:false
         },
+		{
+			xtype: 'spelledbooleanfield',
+			name: 'engineInternal',
+			fieldLabel: 'Engine internal'
+		},
         {
             xtype: 'combobox',
 			editable: false,

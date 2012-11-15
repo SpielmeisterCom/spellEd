@@ -383,7 +383,8 @@ Ext.define('Spelled.controller.Components', {
 		Ext.iterate(
 			config,
 			function( key, value ) {
-				convertedConfig[ key ] = this.createPropertyFromAttribute( template.getAttributeByName( key ), key, value )
+				var attribute = template.getAttributeByName( key )
+				if( !attribute.isEngineInternal() ) convertedConfig[ key ] = this.createPropertyFromAttribute( template.getAttributeByName( key ), key, value )
 			},
 			this
 		)
