@@ -894,6 +894,7 @@ Ext.define('Spelled.controller.Assets', {
 
 		switch( asset.get('subtype') ) {
 			case 'appearance':
+			case 'spriteSheet':
 				view.add( Ext.widget( 'assetiframe', { src: '/' + asset.getFilePath( project.get('name') ) } ) )
 				break
             case 'keyFrameAnimation':
