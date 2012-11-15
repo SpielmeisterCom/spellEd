@@ -498,8 +498,7 @@ Ext.define('Spelled.controller.Menu', {
         var scene = this.application.getActiveScene()
 
         if( scene ) {
-            this.application.getController( 'Scenes').deleteScene( scene )
-			this.application.removeSelectedNode( this.getScenesTree() )
+			this.application.fireEvent( 'deletescene', scene )
         }
     },
 

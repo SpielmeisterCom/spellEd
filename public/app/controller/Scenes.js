@@ -233,6 +233,7 @@ Ext.define('Spelled.controller.Scenes', {
 		})
 
 		this.application.on({
+			deletescene: this.deleteScene,
 			clearstores: this.clearScenesStore,
 			scenescriptbeforeclose: this.checkIfSceneScriptIsDirty,
 			reloadscene: this.reloadSceneKeyEvent,
@@ -635,6 +636,7 @@ Ext.define('Spelled.controller.Scenes', {
 		scene.setProject( project )
 
 		scene.appendOnTreeNode( this.getScenesTree().getRootNode() )
+		project.setDirty()
 		scene.save()
 
 		return scene
@@ -679,11 +681,22 @@ Ext.define('Spelled.controller.Scenes', {
 
 	deleteScene: function( scene ) {
 		var project     = this.application.getActiveProject(),
-			scenes      = project.getScenes(),
-			sceneEditor = this.getSceneEditor()
+			scenes      = project.getScenes()
 
-		scenes.remove( scene )
-		this.application.closeOpenedTabs( sceneEditor, scene.getRenderTabTitle() )
+		if( scenes.count() > 1 ) {
+			scenes.remove( scene )
+
+			if( scene.getFullName() === project.get( 'startScene' ) && scenes.first() ) {
+				this.setDefaultScene( scenes.first() )
+				this.reloadSceneKeyEvent()
+			}
+
+			project.setDirty()
+
+			this.application.removeSelectedNode( this.getScenesTree() )
+		} else {
+			Ext.Msg.alert( "Can't remove this scene", "You must at least have one scene in a project." )
+		}
 	},
 
 	reloadScene: function( button ) {
@@ -851,7 +864,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		if (!fullScreenFunctionAvailable) {
 			//inform the user if this function is not available
-			window.alert('Sorry, the fullscreen function is not yet supported in your browser. Try using another browser.')
+			Ext.Msg.alert( 'Not supported', 'Sorry, the fullscreen function is not yet supported in your browser. Try using another browser.')
 		}
 	},
 

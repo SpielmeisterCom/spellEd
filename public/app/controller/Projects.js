@@ -207,10 +207,14 @@ Ext.define('Spelled.controller.Projects', {
 			}
 
 		} else {
-			Ext.state.Manager.clear( 'projectName' )
-			Ext.create( 'Spelled.view.ui.StartScreen' ).show()
+			this.showStartScreen()
 		}
 
+	},
+
+	showStartScreen: function() {
+		Ext.state.Manager.clear( 'projectName' )
+		Ext.create( 'Spelled.view.ui.StartScreen' ).show()
 	},
 
 	showProjectSettings: function() {
@@ -260,9 +264,9 @@ Ext.define('Spelled.controller.Projects', {
 		var callback = Ext.bind(
 			function( project ) {
 				var sceneController = this.application.getController( 'Scenes' ),
-					scene = sceneController.createScene( { name: 'Scene1' } )
+					scene = sceneController.createScene( { name: 'Scene1', namespace: 'root' } )
 
-				project.set('startScene', scene.getId() )
+				project.set('startScene', scene.getFullName() )
 				project.save()
 			},
 			this
@@ -330,6 +334,8 @@ Ext.define('Spelled.controller.Projects', {
     loadProject: function( projectName, callback ) {
 		var Project = this.getProjectModel(),
 			record  = this.getProjectsStore().findRecord( 'name', projectName )
+
+		if( !record ) return this.showStartScreen()
 
 		this.prepareStores( projectName )
 		this.closeAllTabsFromProject()

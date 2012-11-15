@@ -90,6 +90,7 @@ Ext.define('Spelled.model.config.Scene', {
 				function( result ) {
 					this.data.path = this.getAccordingJSFileName()
 					this.data.content = result
+					this.unDirty()
 				},
 				this
 			)
