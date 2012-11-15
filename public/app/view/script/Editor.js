@@ -7,6 +7,12 @@ Ext.define('Spelled.view.script.Editor', {
 
     model : undefined,
 
+	listeners: {
+		resize: function() {
+			this.reRenderAce()
+		}
+	},
+
 	refreshContent: function() {
 		var editor = this.aceEditor
 
@@ -20,9 +26,6 @@ Ext.define('Spelled.view.script.Editor', {
 
 	reRenderAce: function() {
 		var editor = this.aceEditor
-
-		editor.scrollPageDown()
-		editor.scrollToRow( 0 )
 		editor.resize()
 	},
 
