@@ -17,7 +17,7 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 			function( record ) {
 				switch( record.get( 'iconCls' ) ) {
 					case 'tree-system-icon':
-						valid = this.checkSystemDrag( targetNode, position )
+						valid = this.checkSystemDrag( targetNode, position, record )
 						break
 					case 'tree-scene-entity-icon':
 					case 'tree-scene-entity-linked-icon':
@@ -61,10 +61,19 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 		return result
 	},
 
-	checkSystemDrag: function( targetNode, position ) {
+	getSceneId: function( node ) {
+		var type = node.get( 'iconCls' )
+
+		if( type === 'tree-scene-icon' || type === 'tree-default-scene-icon' ) return node.getId()
+		else return this.getSceneId( node.parentNode )
+	},
+
+	checkSystemDrag: function( targetNode, position, draggedNode ) {
 		var targetNodeType = targetNode.get( 'iconCls' ),
 			parentNode     = targetNode.parentNode,
 			parentNodeType = parentNode.get( 'iconCls' )
+
+		if( this.getSceneId( targetNode ) !== this.getSceneId( draggedNode ) ) return false
 
 		if( targetNodeType === 'tree-system-icon' && parentNodeType === 'tree-system-folder-icon' ) return true
 		if( targetNodeType === 'tree-system-folder-icon' && position === 'append' ) return true
