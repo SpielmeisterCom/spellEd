@@ -13,8 +13,8 @@ Ext.define('Spelled.view.template.system.config.Items' ,{
 		Ext.applyIf( this, {
 			items: [
 				{
-					xtype: 'propertygrid',
-					source: {},
+					xtype: 'defaultpropertygrid',
+					source: this.formatSystemSceneConfig( this.source ),
 					listeners: {
 						propertychange: Ext.bind( this.onPropertyChange, this )
 					}
@@ -36,12 +36,22 @@ Ext.define('Spelled.view.template.system.config.Items' ,{
 		this.fireEvent( 'configchange', system, source, recordId, value, oldValue )
 	},
 
-	setSystemSceneConfig: function( config ) {
+	formatSystemSceneConfig: function( config ) {
+		var knownTypes = Ext.getStore( 'template.component.AttributeTypes' )
 		this.originalConfig = config
 
 		var tmp = Ext.clone( config )
-		Ext.iterate( tmp, function( key, value ) { tmp[ key ] = Spelled.Converter.convertValueForGrid( value ) } )
+		Ext.iterate( tmp, function( key, value ) {
+			var type  = Ext.typeOf( value ),
+				xtype = knownTypes.findRecord( 'name', type )
 
-		this.down( 'propertygrid' ).setSource( tmp )
+			tmp[ key ] = {
+				type: ( xtype ) ? xtype.get( 'type' ) : 'spelledtextfield',
+				value: Spelled.Converter.convertValueForGrid( value ),
+				initialValue: value
+			}
+		})
+
+		return tmp
 	}
 })

@@ -13,5 +13,17 @@ Ext.define('Spelled.Converter' ,{
 
 	decodeFieldValue: function( value ) {
 		return Ext.decode( value, true ) || value
+	},
+
+	formatPropertyGridSource: function( source ) {
+		var newSource = {}
+		Ext.Object.each( source,
+			function( key, attribute ) {
+				newSource[ key ] = attribute.value
+			},
+			this
+		)
+
+		return newSource
 	}
 })

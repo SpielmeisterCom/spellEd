@@ -229,10 +229,9 @@ Ext.define('Spelled.controller.templates.Systems', {
 		form.getForm().setValues( { tmpName: systemTemplate.getFullName() } )
 
 		if( this.getNavigator().getActiveTab() === this.getScenes() ) {
-			var configView = Ext.widget( 'systemconfig' ),
-				node       = this.application.getLastSelectedNode( this.getScenesTree() )
+			var node       = this.application.getLastSelectedNode( this.getScenesTree() ),
+				configView = Ext.widget( 'systemconfig', { source: node.systemConfig } )
 
-			configView.setSystemSceneConfig( node.systemConfig )
 			view.insert( 1, configView )
 		}
 

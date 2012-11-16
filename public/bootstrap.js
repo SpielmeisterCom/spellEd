@@ -223,6 +223,9 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.pickerfield"
   ],
   "Ext.fx.Animator": [],
+  "Spelled.abstract.grid.property.Grid": [
+    "widget.defaultpropertygrid"
+  ],
   "Ext.Ajax": [],
   "Spelled.view.scene.Navigator": [
     "widget.scenesnavigator"
@@ -1396,6 +1399,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.form.Picker"
   ],
   "Ext.fx.Animator": [],
+  "Spelled.abstract.grid.property.Grid": [],
   "Ext.Ajax": [],
   "Spelled.view.scene.Navigator": [],
   "Ext.layout.component.Dock": [

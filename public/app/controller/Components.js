@@ -8,6 +8,7 @@ Ext.define('Spelled.controller.Components', {
 		'Spelled.model.config.Component',
 		'Spelled.store.config.Components',
 		'Spelled.view.component.property.Contextmenu',
+		'Spelled.abstract.grid.property.Grid',
 		'Spelled.Converter'
 	],
 
