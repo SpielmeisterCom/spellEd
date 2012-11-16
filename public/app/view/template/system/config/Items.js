@@ -16,7 +16,8 @@ Ext.define('Spelled.view.template.system.config.Items' ,{
 					xtype: 'defaultpropertygrid',
 					source: this.formatSystemSceneConfig( this.source ),
 					listeners: {
-						propertychange: Ext.bind( this.onPropertyChange, this )
+						propertychange: Ext.bind( this.onPropertyChange, this ),
+						editproperty: Ext.bind( this.propertyChangeHelper, this )
 					}
 				}
 			],
@@ -27,6 +28,12 @@ Ext.define('Spelled.view.template.system.config.Items' ,{
 		})
 
 		this.callParent( arguments )
+	},
+
+	propertyChangeHelper: function( field, value, oldValue ) {
+		var source = this.down('defaultpropertygrid').getSource()
+
+		this.onPropertyChange( source, field.ownerCt.editorId, value, oldValue )
 	},
 
 	onPropertyChange: function( source, recordId, value, oldValue ) {
