@@ -196,9 +196,15 @@ Ext.define('Spelled.controller.Entities', {
 			entity      = store.getById( entityId ),
 			owner       = entity.getOwner(),
 			targetOwner = target.getOwner(),
-			entities    = ( entity.hasScene() ) ? owner.getEntities() : owner.getChildren()
+			entities    = ( entity.hasScene() ) ? owner.getEntities() : owner.getChildren(),
+			renderedScene = this.application.getRenderedScene(),
+			targetScene = this.application.getLastSelectedScene(),
+			fromScene   = entity.getOwningScene()
 
 		entities.remove( entity )
+		fromScene.setDirty()
+		targetScene.setDirty()
+
 		delete entity[ 'Spelled.model.config.EntityBelongsToInstance' ]
 		delete entity[ 'Spelled.model.template.EntityBelongsToInstance' ]
 		delete entity[ 'Spelled.model.config.SceneBelongsToInstance' ]
@@ -217,10 +223,18 @@ Ext.define('Spelled.controller.Entities', {
 			targetEntities.insert( targetEntities.indexOf( target ) + offset, entity )
 		}
 
-		this.sendEntityEventToEngine( 'entity.reassign', {
-			entityId: entity.getId(),
-			parentEntityId: ( entity.hasEntity() ) ? entity.getEntity().getId() : undefined
-		} )
+		if( fromScene == targetScene && renderedScene == targetScene ) {
+			this.sendEntityEventToEngine( 'entity.reassign', {
+				entityId: entity.getId(),
+				parentEntityId: ( entity.hasEntity() ) ? entity.getEntity().getId() : undefined
+			} )
+
+		} else if( renderedScene == targetScene ) {
+			this.sendCreateMessage( entity )
+
+		} else if( renderedScene === fromScene ) {
+			this.application.fireEvent( 'sendToEngine', 'entity.remove', { entityId: entity.getId() } )
+		}
 
 		target.setDirty()
 	},

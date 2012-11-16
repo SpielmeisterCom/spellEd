@@ -248,6 +248,11 @@ Ext.define('Spelled.model.config.Entity', {
         )
     },
 
+	getOwningScene: function() {
+		if( this.hasScene() ) return this.getScene()
+		else return this.getOwner().getOwningScene()
+	},
+
     constructor: function() {
         this.callParent(arguments)
 
