@@ -15,7 +15,14 @@
 
         <!-- <x-compile> -->
         <!-- <x-bootstrap> -->
-        <script type="text/javascript" src="extjs/ext-dev.js"></script>
+        <script type="text/javascript">
+            if( navigator.appName === 'Microsoft Internet Explorer' ) {
+                document.write( '<script type="text/javascript" src="extjs/ext-all.js"><\/script>' )
+            } else {
+                document.write( '<script type="text/javascript" src="extjs/ext-dev.js"><\/script>' )
+            }
+        </script>
+
         <script type="text/javascript" src="bootstrap.js"></script>
         <!-- </x-bootstrap> -->
         <script type="text/javascript" src="app-configuration.js"></script>
