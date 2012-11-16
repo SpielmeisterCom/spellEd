@@ -435,7 +435,7 @@ Ext.define('Spelled.controller.Components', {
 	},
 
 	sendComponentUpdate: function( component, name, value ) {
-		var activeScene       = this.application.getActiveScene(),
+		var activeScene       = this.application.getRenderedScene(),
 			sceneEditor       = this.getSceneEditor()
 
 		if ( this.getComponentScene( component ) != activeScene ) return

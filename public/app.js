@@ -119,11 +119,15 @@ var startApplication = function() {
 			{
 				ref: 'RightPanel',
 				selector: '#RightPanel'
+			},
+			{
+				ref: 'ScenesTree',
+				selector: '#ScenesTree'
 			}
 		],
 
 		project: undefined,
-		scene: undefined,
+		renderedScene: undefined,
 
         sendChange: function( target, type, payload ) {
             this.engineMessageBus.send( target, { type : 'spelled.debug.' + type, payload : payload } )
@@ -240,12 +244,29 @@ var startApplication = function() {
 			this.project = project
 		},
 
-		getActiveScene: function() {
-			return this.scene
+		getRenderedScene: function() {
+			return this.renderedScene
 		},
 
-		setActiveScene: function( scene ) {
-			this.scene = scene
+		setRenderedScene: function( scene ) {
+			this.renderedScene = scene
+		},
+
+		isRenderedSceneLastSelectedScene: function() {
+			return this.getLastSelectedScene() === this.getRenderedScene()
+		},
+
+		getLastSelectedScene: function() {
+			var sceneController = this.getController( 'Scenes' ),
+				getScenesNode = function( node ) {
+					var parentNode = node.parentNode
+
+					if( !parentNode || sceneController.getTreeItemType( node ) === sceneController.TREE_ITEM_TYPE_SCENE ) return node
+					else return getScenesNode( parentNode )
+				},
+				scenesNode = getScenesNode( this.getLastSelectedNode( this.getScenesTree() ) )
+
+			return Ext.getStore( 'config.Scenes' ).getById( scenesNode.getId() )
 		},
 
 		setExtraParamOnProxies: function( name, value ) {

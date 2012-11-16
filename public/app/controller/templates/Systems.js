@@ -119,7 +119,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 
 	updateSceneSystemConfig: function( system, source, recordId, value, oldValue ) {
 		this.application.fireEvent( 'systemchange', system )
-		this.application.getActiveScene().setDirty()
+		this.application.getLastSelectedScene().setDirty()
 	},
 
 	saveAllSystemScriptsInTabs: function() {

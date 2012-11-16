@@ -84,7 +84,7 @@ Ext.define('Spelled.controller.Systems', {
 	},
 
 	removeSceneSystem: function( systemId, folder ) {
-		var scene    = this.application.getActiveScene(),
+		var scene    = this.application.getLastSelectedScene(),
 			systems  = scene.get('systems')[ folder ]
 
 		Ext.Array.each(
@@ -104,6 +104,8 @@ Ext.define('Spelled.controller.Systems', {
 	},
 
 	sendSystemAddToSceneToEngine: function( system, executionGroupId, index ) {
+		if( !this.application.isRenderedSceneLastSelectedScene() ) return
+
 		this.application.fireEvent( "sendToEngine",
 			"system.add",
 			{
@@ -128,6 +130,8 @@ Ext.define('Spelled.controller.Systems', {
 	},
 
 	sendSystemRemoveFromSceneToEngine: function( id, executionGroupId ) {
+		if( !this.application.isRenderedSceneLastSelectedScene() ) return
+
 		this.application.fireEvent( "sendToEngine",
 			"system.remove",
 			{
@@ -142,7 +146,7 @@ Ext.define('Spelled.controller.Systems', {
 			values  = window.down('form').getForm().getValues(),
 			tree    = window.down('treepanel'),
 			records = tree.getView().getChecked(),
-			scene   = this.application.getActiveScene(),
+			scene   = this.application.getLastSelectedScene(),
 			systems = scene.get('systems'),
 			store   = this.getTemplateSystemsStore()
 
@@ -171,7 +175,7 @@ Ext.define('Spelled.controller.Systems', {
 			view = new View(),
 			availableSystemsView = view.down( 'treepanel' ),
 			templateSystemsStore = Ext.getStore( 'template.Systems' ),
-			scene    			 = this.application.getActiveScene()
+			scene    			 = this.application.getLastSelectedScene()
 
 		var assignedSystems = []
 		Ext.Object.each(
@@ -221,7 +225,7 @@ Ext.define('Spelled.controller.Systems', {
 		}
 
 		var parent   = getRootNode( node ),
-			scene    = this.application.getActiveScene()
+			scene    = this.application.getLastSelectedScene()
 
 		var systems = {}
 		parent.eachChild(

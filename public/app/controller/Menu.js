@@ -495,7 +495,7 @@ Ext.define('Spelled.controller.Menu', {
     },
 
     removeScene: function( ) {
-        var scene = this.application.getActiveScene()
+		var scene = this.application.getLastSelectedScene()
 
         if( scene ) {
 			this.application.fireEvent( 'deletescene', scene )
@@ -504,7 +504,7 @@ Ext.define('Spelled.controller.Menu', {
 
 
 	setDefaultScene: function() {
-		var scene = this.application.getActiveScene()
+		var scene = this.application.getLastSelectedScene()
 
 		if( scene ) {
 			this.application.getController( 'Scenes' ).setDefaultScene( scene )
@@ -512,7 +512,7 @@ Ext.define('Spelled.controller.Menu', {
 	},
 
     renderScene: function( ) {
-        var scene = this.application.getActiveScene()
+		var scene = this.application.getLastSelectedScene()
 
         if( scene ) {
             this.application.getController( 'Scenes' ).renderScene( scene )

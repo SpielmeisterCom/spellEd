@@ -128,8 +128,7 @@ Ext.define('Spelled.controller.Entities', {
 
 		entity.set( 'name', e.record.get('text') )
 
-		this.application.fireEvent(
-			'sendToEngine',
+		this.sendEntityEventToEngine(
 			'component.update' , {
 				entityId    : entity.getId(),
 				componentId : 'spell.component.name',
@@ -188,7 +187,7 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
 	sendCreateMessage: function( entity ) {
-		this.application.fireEvent( 'sendToEngine',	'entity.create', { entityConfig: entity.getMessageData() } )
+		this.sendEntityEventToEngine( 'entity.create', { entityConfig: entity.getMessageData() } )
 	},
 
 	moveEntity: function( targetId, entityId, dropPosition ) {
@@ -218,12 +217,16 @@ Ext.define('Spelled.controller.Entities', {
 			targetEntities.insert( targetEntities.indexOf( target ) + offset, entity )
 		}
 
-		this.application.fireEvent( 'sendToEngine', 'entity.reassign', {
+		this.sendEntityEventToEngine( 'entity.reassign', {
 			entityId: entity.getId(),
 			parentEntityId: ( entity.hasEntity() ) ? entity.getEntity().getId() : undefined
 		} )
 
 		target.setDirty()
+	},
+
+	sendEntityEventToEngine: function( type, payload ) {
+		if( this.application.isRenderedSceneLastSelectedScene() ) this.application.fireEvent( 'sendToEngine', type, payload )
 	},
 
 	removeEntity: function( entity ) {
@@ -233,7 +236,7 @@ Ext.define('Spelled.controller.Entities', {
 			function( button ) {
 				if ( button === 'yes' ) {
 					if( entity ) {
-						this.application.fireEvent( 'sendToEngine',	'entity.remove', { entityId: entity.getId() } )
+						this.sendEntityEventToEngine( 'entity.remove', { entityId: entity.getId() } )
 
 						entity.getOwner().setDirty()
 						this.deleteEntity( entity )

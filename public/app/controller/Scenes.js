@@ -364,7 +364,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 	openSceneScript: function(){
 		var sceneEditor = this.getSceneEditor(),
-			scene       = this.application.getActiveScene(),
+			scene       = this.application.getLastSelectedScene(),
 			title       = scene.getFullName(),
 			foundTab    = this.application.findActiveTabByTitle( sceneEditor, title )
 
@@ -549,11 +549,6 @@ Ext.define('Spelled.controller.Scenes', {
 		switch( this.getTreeItemType( record ) ) {
 			case this.TREE_ITEM_TYPE_SCENE:
 				this.getRightPanel().add( { xtype: 'label' , docString : '#!/guide/concepts_scenes'} )
-
-				var scene = this.getConfigScenesStore().getById( record.getId() )
-				if( scene ) {
-					this.application.setActiveScene( scene )
-				}
 				break
 			case this.TREE_ITEM_TYPE_ENTITIES:
 				this.getRightPanel().add( { xtype: 'label' , docString : '#!/guide/concepts_entities_components'} )
@@ -562,9 +557,8 @@ Ext.define('Spelled.controller.Scenes', {
 				this.application.fireEvent( 'showentityinfo', record.getId() )
 				break
 			case this.TREE_ITEM_TYPE_SYSTEM:
-				var scene = this.getConfigScenesStore().getById( record.parentNode.getId() )
+				var scene = this.application.getLastSelectedScene()
 				if( scene ) {
-					this.application.setActiveScene( scene )
 					this.application.getController('Systems').refreshSceneSystemList( scene )
 				}
 				break
@@ -573,10 +567,6 @@ Ext.define('Spelled.controller.Scenes', {
 				if( template ) this.application.fireEvent( 'showsystemtemplateconfig', template )
 				break
 			case this.TREE_ITEM_TYPE_SCRIPT:
-				var scene = this.getConfigScenesStore().getById( record.parentNode.getId() )
-				if( scene ) {
-					this.application.setActiveScene( scene )
-				}
 				break
 		}
 	},
@@ -706,6 +696,8 @@ Ext.define('Spelled.controller.Scenes', {
 			scene   = this.getConfigScenesStore().findRecord( 'sceneId', project.get( 'startScene' ) )
 
 		iframe.destroy()
+
+		this.application.setRenderedScene( scene )
 
 		panel.add(
 			{
@@ -892,6 +884,7 @@ Ext.define('Spelled.controller.Scenes', {
 			tab = this.application.createTab( sceneEditor, newTab )
 		}
 
+		this.application.setRenderedScene( scene )
 		this.setDefaultScene( scene )
 		scene.syncLibraryIds()
 		this.reloadScene( tab.down( 'button' ) )
