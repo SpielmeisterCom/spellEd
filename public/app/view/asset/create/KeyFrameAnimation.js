@@ -117,7 +117,7 @@ Ext.define('Spelled.view.asset.create.KeyFrameAnimation', {
 
     onSelectAsset: function( combobox ) {
         var asset = this.up( 'form').getForm().getRecord()
-        this.fireEvent( 'refreshassetpreview', this.up('editasset').down( 'assetiframe' ) , asset, combobox.getValue() )
+        if( asset ) this.fireEvent( 'refreshassetpreview', this.up('form').down( 'assetiframe' ) , asset, combobox.getValue() )
     },
 
 	sortGridByTimeColumn: function( editor, e) {

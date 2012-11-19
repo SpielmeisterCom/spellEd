@@ -576,6 +576,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.template.system.input.Add": [
     "widget.addinputtotemplate"
   ],
+  "Spelled.view.library.folder.Create": [
+    "widget.createlibraryfolder"
+  ],
   "Ext.data.reader.Xml": [
     "reader.xml"
   ],
@@ -650,6 +653,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.chart.Highlight": [],
   "Ext.state.Manager": [],
+  "Spelled.view.asset.create.Sound": [
+    "widget.soundasset"
+  ],
   "Ext.util.Inflector": [],
   "Ext.grid.Panel": [
     "widget.gridpanel",
@@ -984,6 +990,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.layout.component.Component": [],
   "Ext.util.ProtoElement": [],
+  "Spelled.view.asset.create.FileField": [
+    "widget.assetfilefield"
+  ],
   "Ext.direct.Manager": [],
   "Spelled.view.component.Add": [
     "widget.addcomponent"
@@ -1650,6 +1659,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.form.Text"
   ],
   "Spelled.view.template.system.input.Add": [],
+  "Spelled.view.library.folder.Create": [],
   "Ext.data.reader.Xml": [
     "Ext.data.XmlReader"
   ],
@@ -1718,6 +1728,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.chart.Highlight": [],
   "Ext.state.Manager": [],
+  "Spelled.view.asset.create.Sound": [],
   "Ext.util.Inflector": [],
   "Ext.grid.Panel": [
     "Ext.list.ListView",
@@ -1950,6 +1961,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.grid.feature.Summary": [],
   "Ext.layout.component.Component": [],
   "Ext.util.ProtoElement": [],
+  "Spelled.view.asset.create.FileField": [],
   "Ext.direct.Manager": [],
   "Spelled.view.component.Add": [],
   "Ext.data.proxy.Proxy": [

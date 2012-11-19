@@ -3,107 +3,44 @@ Ext.define('Spelled.view.asset.Form', {
 	alias: 'widget.assetform',
 
 	requires: [
-		'Ext.form.field.File'
+		'Ext.form.FieldSet'
 	],
-
-	defaults: {
-		anchor: '100%',
-		allowBlank: false
-	},
-	bodyPadding: 10,
 
 	items: [
 		{
-			xtype: "combo",
-			name: 'type',
-			editable: false,
-			emptyText: '-- Select Type --',
-			store: 'asset.Types',
-			queryMode: 'local',
-			fieldLabel: "Type",
-			displayField: 'name',
-			valueField: 'type',
-			listeners: {
-				'change': function() {
-					this.up('form').down('combobox[name="assetId"]').reset()
-					this.up('form').down('filefield').reset()
-				}
-			}
-		},
-		{
-			xtype: "spellednamefield",
-			name: 'name',
-			fieldLabel: 'Name',
-			vtype: 'alphanum'
-		},
-		{
-			xtype: "assetfolderpicker",
-			name: 'namespace',
-			fieldLabel: 'Namespace',
-			displayField: 'text',
-			valueField: 'id'
-		},
-		{
-			xtype: 'filefield',
-			allowBlank: true,
-			name: 'asset',
-			fieldLabel: 'File',
-			labelWidth: 50,
-			msgTarget: 'side',
-			buttonText: 'Select a File...',
-			listeners: {
-				'show': function( file ) {
-					var domElement = document.querySelector('input[type="file"]')
-
-					if( domElement && !domElement.onChange ) {
-						domElement.addEventListener( 'change',
-							function(event) {
-								file.fileRawInput = event.target.files[0]
-							},
-							false
-						)
-					}
-				},
-				'change': function( cmp, value) {
-					if( value )
-						this.up('form').down('combobox[name="assetId"]').reset()
-				}
+			xtype: 'fieldset',
+			border: false,
+			defaults: {
+				anchor: '100%',
+				allowBlank: false
 			},
-			validator: function( value ) {
-				if( !this.isVisible( true ) ) return true
+			bodyPadding: 10,
 
-				var file = this.up('form').down('combobox[name="assetId"]').getValue()
-				if( ( !file && !value ) )
-					return "You need to select a new File"
-				else
-					return true
-			}
-		},
-		{
-			xtype: 'menuseparator'
-		},{
-			xtype: 'spritesheetconfig',
-			hidden: true
-		},{
-			xtype: 'animationassetconfig',
-			hidden: true
-		},{
-			xtype: 'textappearanceconfig',
-			hidden: true
-		},{
-			xtype: 'keytoactionconfig',
-			hidden: true
-		},{
-			xtype: 'domvasassetconfig',
-			hidden: true
-		},{
-			xtype: 'keyframeanimationconfig',
-			hidden: true
-		},{
-			xtype: '2dtilemapconfig',
-			hidden: true
+			items: [
+				{
+					xtype: "hidden",
+					name: 'type'
+				},
+				{
+					xtype: "spellednamefield",
+					name: 'name',
+					fieldLabel: 'Name',
+					vtype: 'alphanum'
+				},
+				{
+					xtype: "assetfolderpicker",
+					name: 'namespace',
+					fieldLabel: 'Namespace',
+					displayField: 'text',
+					valueField: 'id'
+				},
+				{
+					xtype: 'menuseparator'
+				}
+			]
 		}
 	],
+
 
 	buttons: [
 		{

@@ -20,6 +20,19 @@ Ext.define('Spelled.view.library.TreeList' ,{
 				items: [
 					{
 						xtype: 'buttongroup',
+						title: 'Library',
+						columns: 1,
+
+						items: [
+							{
+								text: "Create folder",
+								action: "showCreateFolder",
+								icon: 'images/icons/library-folder.png'
+							}
+						]
+					},
+					{
+						xtype: 'buttongroup',
 						title: 'Asset',
 						columns: 1,
 
@@ -54,12 +67,12 @@ Ext.define('Spelled.view.library.TreeList' ,{
 //								type: 'domvas',
 //								icon: 'images/icons/asset-2dstatic.png'
 //							},
-							/*{
+							{
 								text: "2d tile map",
 								action: "showCreateAsset",
 								type: '2dTileMap',
 								icon: 'images/icons/asset-2dtilemap.gif'
-							},*/
+							},
 							{
 								text: "Font",
 								action: "showCreateAsset",

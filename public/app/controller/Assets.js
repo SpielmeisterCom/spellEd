@@ -17,6 +17,8 @@ Ext.define('Spelled.controller.Assets', {
 		'Spelled.view.asset.inspector.Config',
 		'Spelled.view.asset.create.Domvas',
 		'Spelled.view.asset.create.2dTileMap',
+		'Spelled.view.asset.create.FileField',
+		'Spelled.view.asset.create.Sound',
 
 
 		'Spelled.store.asset.Types',
@@ -50,9 +52,11 @@ Ext.define('Spelled.controller.Assets', {
 		'asset.create.KeyToActionMap',
 		'asset.create.KeyFrameAnimation',
 		'asset.create.2dTileMap',
+		'asset.create.Sound',
 		'asset.edit.Edit',
 		'asset.inspector.Config',
-		'asset.create.Domvas'
+		'asset.create.Domvas',
+		'asset.create.FileField'
     ],
 
     stores: [
@@ -99,16 +103,13 @@ Ext.define('Spelled.controller.Assets', {
 	    var me = this
 
         this.control({
-			'createasset combobox[name="type"]': {
-				select: this.showAdditionalConfiguration
-			},
 			'editasset field' : {
 				change: this.editAssetHelper
 			},
 			'editasset gridpanel': {
 				edit : this.editGrid
 			},
-			'keyframeanimationconfig > tool-documentation, keytoactionconfig > tool-documentation, spritesheetconfig > tool-documentation, animationassetconfig > tool-documentation, textappearanceconfig > tool-documentation': {
+			'assetform tool-documentation, editasset tool-documentation': {
 				showDocumentation: this.showDocumentation
 			},
             'librarytreelist button[action="showCreateAsset"]' : {
@@ -299,30 +300,7 @@ Ext.define('Spelled.controller.Assets', {
 		this.showEdit( asset )
 	},
 
-	fieldRenderHelper: function( type, form, asset ) {
-		var assetsCombo = form.down('combobox[name="assetId"]'),
-			fileUpload  = form.down('filefield[name="asset"]'),
-			spriteSheetConfig       = form.down('spritesheetconfig'),
-			animationAssetConfig    = form.down('animationassetconfig'),
-			textAssetConfig         = form.down('textappearanceconfig'),
-			keyToActionMapConfig    = form.down('keytoactionconfig'),
-			domvasassetconfig       = form.down('domvasassetconfig'),
-			keyFrameAnimationConfig = form.down('keyframeanimationconfig'),
-			tileMapConfig         = form.down('2dtilemapconfig')
-		//Resetting defaults
-		domvasassetconfig.hide()
-		assetsCombo.hide()
-		spriteSheetConfig.hide()
-		animationAssetConfig.hide()
-		textAssetConfig.hide()
-		keyToActionMapConfig.hide()
-		fileUpload.hide()
-		keyFrameAnimationConfig.hide()
-		tileMapConfig.hide()
-		fileUpload.reset()
-		assetsCombo.clearValue()
-
-
+	fieldRenderHelper: function( type, fieldSet, asset ) {
 		switch( type ) {
 			case "domvas":
 				domvasassetconfig.show()
@@ -343,109 +321,140 @@ Ext.define('Spelled.controller.Assets', {
 				domvasassetconfig.startEdit()
 				break
 			case "animation":
-				if( !!asset ) {
-					form.getForm().setValues(
-						{
-							assetId  : asset.get( 'assetId' ),
-							duration : asset.get('config').duration,
-							frameIds : asset.get('config').frameIds
-						}
-					)
-				}
-
-				assetsCombo.show()
-				animationAssetConfig.show()
+				this.addAnimationForm( fieldSet, asset )
 				break
 			case "font":
-				this.refreshFontPreview( assetsCombo )
-
-				if( !!asset ) {
-					form.getForm().setValues(
-						{
-							spacing      : asset.get('config').spacing,
-							fontFamily   : asset.get('config').fontFamily,
-							fontSize     : asset.get('config').fontSize,
-							fontStyle    : asset.get('config').fontStyle,
-							color        : asset.get('config').color,
-							outline      : asset.get('config').outline,
-							outlineColor : asset.get('config').outlineColor
-						}
-					)
-				}
-
-				textAssetConfig.show()
+				this.addFontForm( fieldSet, asset )
 				break
 			case "spriteSheet":
-				if( !!asset ) {
-					form.getForm().setValues(
-						{
-							textureWidth  : asset.get('config').textureWidth,
-							textureHeight : asset.get('config').textureHeight,
-							frameWidth    : asset.get('config').frameWidth,
-							frameHeight   : asset.get('config').frameHeight
-						}
-					)
-				}
-
-				spriteSheetConfig.show()
-				fileUpload.show()
+				this.addSpriteSheetForm( fieldSet, asset )
 				break
 			case "keyToActionMap":
-				keyToActionMapConfig.show()
-				if( !!asset ) {
-					var grid   = keyToActionMapConfig.down('gridpanel'),
-						store  = grid.getStore(),
-						config = asset.get('config')
-
-					store.removeAll()
-					Ext.Object.each(
-						config,
-						function( key, value, myself ) {
-							store.add( { key: key, action: value } )
-						}
-					)
-
-					keyToActionMapConfig.down('gridpanel').reconfigure( store )
-				}
-
+				this.addKeyToActionMapForm( fieldSet, asset )
 				break
 			case "keyFrameAnimation":
-				this.renderKeyFrameAnimationComponentsTree( keyFrameAnimationConfig )
-				keyFrameAnimationConfig.show()
-
-				if( !!asset ) {
-					var config = asset.get('config')
-					keyFrameAnimationConfig.down( 'numberfield[name="length"]' ).setValue( config.length )
-                    keyFrameAnimationConfig.down( 'assetidproperty').setValue( asset.get( 'assetId' ) )
-					keyFrameAnimationConfig.asset = asset
-					keyFrameAnimationConfig.keyFrameConfig = Ext.clone( config )
-				} else {
-					keyFrameAnimationConfig.keyFrameConfig = { animate: {} }
-				}
-
+				this.addKeyFrameAnimationForm( fieldSet, asset )
 				break
 			case "2dTileMap":
-
-				if( !!asset ) {
-					var config = asset.get('config')
-
-					form.getForm().setValues(
-						{
-							tileMapAssetId: asset.get('assetId'),
-							width : config.width,
-							height: config.height
-						}
-					)
-
-					this.updateTilemapEditorData( form, asset )
-				}
-
-				assetsCombo.show()
-				tileMapConfig.show()
+				this.add2dTileMapForm( fieldSet, asset )
 				break
-			default:
-				fileUpload.show()
+			case 'appearance':
+				this.addTextureForm( fieldSet, asset )
+				break
+			case 'sound':
+				this.addSoundForm( fieldSet, asset )
+				break
 		}
+	},
+
+	add2dTileMapForm: function( fieldSet, asset ) {
+		fieldSet.add( { xtype: '2dtilemapconfig' } )
+
+		if( !!asset ) {
+			var config = asset.get('config')
+
+			fieldSet.getForm().setValues(
+				{
+					tileMapAssetId: asset.get('assetId'),
+					width : config.width,
+					height: config.height
+				}
+			)
+
+			this.updateTilemapEditorData( fieldSet, asset )
+		}
+	},
+
+	addKeyToActionMapForm: function( fieldSet, asset ) {
+		var keyToActionMapConfig = fieldSet.add( { xtype: 'keytoactionconfig' } )
+
+		if( !!asset ) {
+			var grid   = keyToActionMapConfig.down('gridpanel'),
+				store  = grid.getStore(),
+				config = asset.get('config')
+
+			store.removeAll()
+			Ext.Object.each(
+				config,
+				function( key, value, myself ) {
+					store.add( { key: key, action: value } )
+				}
+			)
+
+			keyToActionMapConfig.down('gridpanel').reconfigure( store )
+		}
+	},
+
+	addSoundForm: function( fieldSet, asset ) {
+		fieldSet.add( { xtype: 'soundasset' } )
+	},
+
+	addFontForm: function( fieldSet, asset ) {
+		fieldSet.add( { xtype: 'textappearanceconfig' } )
+
+		this.refreshFontPreview( fieldSet.down( 'combobox[name="fontFamily"]' ) )
+
+		if( !!asset ) {
+			fieldSet.getForm().setValues(
+				{
+					spacing      : asset.get('config').spacing,
+					fontFamily   : asset.get('config').fontFamily,
+					fontSize     : asset.get('config').fontSize,
+					fontStyle    : asset.get('config').fontStyle,
+					color        : asset.get('config').color,
+					outline      : asset.get('config').outline,
+					outlineColor : asset.get('config').outlineColor
+				}
+			)
+		}
+	},
+
+	addKeyFrameAnimationForm: function( fieldSet, asset ) {
+		var keyFrameAnimationConfig = fieldSet.add( { xtype: 'keyframeanimationconfig' } )
+		this.renderKeyFrameAnimationComponentsTree( keyFrameAnimationConfig )
+
+		if( !!asset ) {
+			var config = asset.get('config')
+			keyFrameAnimationConfig.down( 'numberfield[name="length"]' ).setValue( config.length )
+			keyFrameAnimationConfig.down( 'assetidproperty').setValue( asset.get( 'assetId' ) )
+			keyFrameAnimationConfig.asset = asset
+			keyFrameAnimationConfig.keyFrameConfig = Ext.clone( config )
+		} else {
+			keyFrameAnimationConfig.keyFrameConfig = { animate: {} }
+		}
+	},
+
+	addAnimationForm: function( fieldSet, asset ) {
+		fieldSet.add( { xtype: 'animationassetconfig' } )
+
+		if( !!asset ) {
+			fieldSet.getForm().setValues(
+				{
+					assetId  : asset.get( 'assetId' ),
+					duration : asset.get('config').duration,
+					frameIds : asset.get('config').frameIds
+				}
+			)
+		}
+	},
+
+	addSpriteSheetForm: function( fieldSet, asset ) {
+		fieldSet.add( {xtype: 'spritesheetconfig' } )
+
+		if( !!asset ) {
+			fieldSet.getForm().setValues(
+				{
+					textureWidth  : asset.get('config').textureWidth,
+					textureHeight : asset.get('config').textureHeight,
+					frameWidth    : asset.get('config').frameWidth,
+					frameHeight   : asset.get('config').frameHeight
+				}
+			)
+		}
+	},
+
+	addTextureForm: function( fieldSet, asset ) {
+		fieldSet.add( { xtype: 'textureasset' } )
 	},
 
 	updateTilemapEditorData: function ( form, asset ) {
@@ -631,7 +640,7 @@ Ext.define('Spelled.controller.Assets', {
 		view.loadRecord( asset )
 
 		//TODO: enable changing file
-		view.down('filefield').hide()
+		if( view.down('filefield') ) view.down('filefield').hide()
 
 		this.addAssetPreview( view, asset )
 
@@ -704,12 +713,6 @@ Ext.define('Spelled.controller.Assets', {
 		}
 
 		inspectorPanel.add( view )
-	},
-
-	showAdditionalConfiguration: function( combo ) {
-		var form = combo.up('form')
-
-		this.fieldRenderHelper( combo.getValue(), form )
 	},
 
     showListContextMenu: function( view, record, item, index, e, options ) {
@@ -792,7 +795,7 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	saveAsset: function( form, asset ) {
-		var fileField = form.down( 'filefield'),
+		var fileField = form.down( 'assetfilefield'),
 			window    = form.up( 'window'),
 			me        = this,
 			id        = this.application.generateFileIdFromObject( asset.data ),
@@ -808,7 +811,7 @@ Ext.define('Spelled.controller.Assets', {
 			this.successCallback( result )
 		},this)
 
-		if( fileField.isVisible() && fileField.isValid() ) {
+		if( fileField && fileField.isValid() ) {
 			var reader = new FileReader(),
 				file   = fileField.fileRawInput
 
@@ -879,14 +882,14 @@ Ext.define('Spelled.controller.Assets', {
 
     showCreateAsset: function( button ) {
         var view        = Ext.widget( 'createasset' ),
-			assetsCombo = view.down('combobox[name="type"]'),
+			assetsCombo = view.down('hidden[name="type"]'),
 			assetType   = button.type
-
-		view.show()
 
 		assetsCombo.setValue( assetType )
 
-		this.fieldRenderHelper( assetType, view )
+		this.fieldRenderHelper( assetType, view.down( 'fieldset' ) )
+
+		view.show()
     },
 
     addAssetPreview: function( view, asset ) {

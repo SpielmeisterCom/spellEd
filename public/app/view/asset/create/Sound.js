@@ -1,6 +1,6 @@
-Ext.define('Spelled.view.asset.create.Texture', {
+Ext.define('Spelled.view.asset.create.Sound', {
     extend: 'Ext.container.Container',
-    alias: 'widget.textureasset',
+    alias: 'widget.soundasset',
 
 	requires: [
 		'Ext.form.field.File'
@@ -9,7 +9,7 @@ Ext.define('Spelled.view.asset.create.Texture', {
 	items: [
 		{
 			xtype: 'tool-documentation',
-			docString: "#!/guide/asset_type_2d_static_appearance",
+			docString: "#!/guide/asset_type_sound",
 			width: 'null'
 		},
 		{

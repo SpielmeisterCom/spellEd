@@ -13,6 +13,9 @@ Ext.define('Spelled.view.asset.create.SpriteSheet', {
 					width: 'null'
 				},
 				{
+					xtype: 'assetfilefield'
+				},
+				{
 					xtype: "numberfield",
 					name: 'textureWidth',
 					minValue: 0,

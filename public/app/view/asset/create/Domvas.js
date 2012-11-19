@@ -11,6 +11,35 @@ Ext.define('Spelled.view.asset.create.Domvas', {
 			layout:'column',
 			items: [
 				{
+					xtype: 'filefield',
+					allowBlank: true,
+					name: 'asset',
+					fieldLabel: 'File',
+					labelWidth: 50,
+					msgTarget: 'side',
+					buttonText: 'Select a File...',
+					listeners: {
+						'show': function( file ) {
+							var domElement = document.querySelector('input[type="file"]')
+
+							if( domElement && !domElement.onChange ) {
+								domElement.addEventListener( 'change',
+									function(event) {
+										file.fileRawInput = event.target.files[0]
+									},
+									false
+								)
+							}
+						}
+					},
+					validator: function( value ) {
+						if( !value )
+							return "You need to select a new File"
+						else
+							return true
+					}
+				},
+				{
 					name: 'aceDomvasContainer',
 					columnWidth: 0.5,
 					height: 350
