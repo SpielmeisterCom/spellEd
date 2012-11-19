@@ -1,7 +1,7 @@
 Ext.define('Spelled.view.asset.ColorField', {
 	extend: 'Ext.form.field.Trigger',
 	alias: 'widget.colorfield',
-	requires: ['Ext.form.field.VTypes', 'Ext.layout.component.field.Text'],
+	requires: ['Ext.form.field.VTypes', 'Ext.layout.component.field.Text', 'Ext.menu.ColorPicker'],
 
 	lengthText: "Color hex values must be either 3 or 6 characters.",
 	blankText: "Must have a hexidecimal value in the format ABCDEF.",

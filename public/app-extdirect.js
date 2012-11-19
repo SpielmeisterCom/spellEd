@@ -7,6 +7,7 @@ Ext.require('Ext.direct.*', function() {
 			"actions":{
 				"StorageActions":[
 					{"name":"create","len":1},
+					{"name":"createNamespaceFolder","len":1},
 					{"name":"read","len":1},
 					{"name":"update","len":1},
 					{"name":"destroy","len":1},

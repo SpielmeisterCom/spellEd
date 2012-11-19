@@ -5,6 +5,7 @@ Ext.define('Spelled.controller.Library', {
 		'Spelled.view.library.FolderPicker',
 		'Spelled.view.library.TreeList',
 		'Spelled.view.library.field.Name',
+		'Spelled.view.library.folder.Create',
 
 		'Spelled.store.Library',
 		'Spelled.store.FoldersTree'
@@ -18,7 +19,8 @@ Ext.define('Spelled.controller.Library', {
     views: [
         'library.Navigator',
 		'library.FolderPicker',
-		'library.TreeList'
+		'library.TreeList',
+		'library.folder.Create'
     ],
 
     stores: [
@@ -57,6 +59,12 @@ Ext.define('Spelled.controller.Library', {
 			'sceneeditor tab,#SecondTabPanel tab': {
 				beforeclose: this.dispatchLibraryTabBeforeClose
 			},
+			'librarytreelist button[action="showCreateFolder"]' : {
+				click: this.showCreateFolder
+			},
+			'createlibraryfolder button[action="createFolder"]': {
+				click: this.createFolderHelper
+			},
 			'librarytreelist': {
 				editclick       : this.dispatchLibraryNodeContextMenu,
 				itemcontextmenu : this.dispatchLibraryNodeContextMenu,
@@ -74,6 +82,36 @@ Ext.define('Spelled.controller.Library', {
 			scope : this
 		})
     },
+
+	createFolder: function( path ) {
+		var project = this.application.getActiveProject()
+
+		Spelled.StorageActions.createNamespaceFolder(
+			{ projectName: project.get( 'name' ), path: path },
+			{
+				callback: function(){ this.buildNamespaceNodes() },
+				scope: this
+			}
+		)
+	},
+
+	showLibraryFolderContextMenu: function( node, e ) {
+
+	},
+
+	createFolderHelper: function( button ) {
+		var form   = button.up( 'form' ),
+			window = form.up( 'window' ),
+			values =  form.getForm().getValues()
+
+		this.createFolder( values.path )
+
+		window.close()
+	},
+
+	showCreateFolder: function() {
+		Ext.widget( 'createlibraryfolder' )
+	},
 
 	clearStore: function() {
 		this.getLibraryStore().getRootNode().removeAll()
@@ -159,8 +197,9 @@ Ext.define('Spelled.controller.Library', {
 			case this.TYPE_SCRIPT:
 				this.application.fireEvent( 'scriptcontextmenu', view, record, item, index, e, options )
 				break
+			default:
+				this.showLibraryFolderContextMenu( node, e )
 		}
-
 	},
 
 	dispatchLibraryNodeSelect: function( tree, node ) {

@@ -1,5 +1,11 @@
 Ext.define('Spelled.abstract.validator.General' ,{
 
+	isNamespaceCompliant: function( value ) {
+		var rgxp = /^[0-9\.aA-zZ]*$/g
+
+		return rgxp.test( value )
+	},
+
 	isConfigEntityCompliant: function( value ) {
 		var rqxp = /([\/\.])/g
 		return !rqxp.test( value )

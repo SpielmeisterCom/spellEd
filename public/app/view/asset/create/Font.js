@@ -2,10 +2,6 @@ Ext.define('Spelled.view.asset.create.Font', {
     extend: 'Ext.container.Container',
     alias: 'widget.textappearanceconfig',
 
-	requires: [
-		'Ext.menu.ColorPicker'
-	],
-
 	initComponent: function() {
 	    var me = this
 

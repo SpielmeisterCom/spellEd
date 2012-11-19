@@ -22,7 +22,6 @@ Ext.define('Spelled.view.library.TreeList' ,{
 						xtype: 'buttongroup',
 						title: 'Library',
 						columns: 1,
-
 						items: [
 							{
 								text: "Create folder",

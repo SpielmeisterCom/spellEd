@@ -126,19 +126,61 @@ define(
 
 			var getNamespaces = function( req, res, payload, next ) {
 				var params     = _.isArray( payload ) ? payload.pop() : payload,
-					searchPath = util.getPath( params.projectName ),
-					files      = flob.sync( "/library/**/*", { root: searchPath } )
+//					files      = flob.sync( "/library/**/*", { root: searchPath } ),
+					readDir    = fs.readdirSync,
+					fsStat     = fs.statSync,
+					join       = path.join,
+					searchPath = util.getPath( join( params.projectName, "library" ) ),
+					files      = [],
+					sep        = path.sep
+
+				var searchFiles = function( dirFiles, parentPath ) {
+					_.each(
+						dirFiles,
+						function( file ){
+							var filePath = join( parentPath, file ),
+								stat     = fsStat( filePath )
+
+							if( stat.isDirectory() ) {
+								files.push( filePath.substr( filePath.indexOf( searchPath ) + searchPath.length ) )
+								searchFiles( readDir( filePath ), filePath )
+							}
+						}
+					)
+				}
+
+				searchFiles( readDir( searchPath ), searchPath )
 
 				var result = _.map(
 					files,
 					function( item ) {
-						if( path.extname( item ) !== '' ) return false
-
-						return _.rest( item.split( '/' ) ).join( '.' )
+						return _.rest( item.split( sep ) ).join( '.' )
 					}
 				)
 
 				return _.uniq( _.without( result, false ) )
+			}
+
+			var createNamespaceFolder = function( req, res, payload, next ) {
+				var params      = _.isArray( payload ) ? payload.pop() : payload,
+					projectPath = util.getPath( path.join( params.projectName, 'library' ) ),
+					namespace   = params.path,
+					exists      = fs.existsSync
+
+				if( namespace ) {
+					var parts = namespace.split( '.' ),
+						tmp   = projectPath
+
+					_.each(
+						parts,
+						function( part ) {
+							tmp = path.join( tmp, part )
+							if( !exists( tmp ) ) {
+								fs.mkdirSync( tmp )
+							}
+						}
+					)
+				}
 			}
 
             return [
@@ -147,6 +189,11 @@ define(
                     len: 1,
                     func: create
                 },
+				{
+					name: "createNamespaceFolder",
+					len: 1,
+					func: createNamespaceFolder
+				},
                 {
                     name: "read",
                     len: 1,
