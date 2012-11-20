@@ -29,22 +29,22 @@ Ext.define('Spelled.view.template.Create', {
                     xtype: "hiddenfield",
                     name: 'type'
                 },
+				{
+					xtype: "spellednamefield",
+					name: 'name',
+					fieldLabel: 'Name',
+					vtype: 'alphanum',
+					validator: function( value ) {
+						if( this.isJavaScriptCompliant( value ) ) return this.__proto__.validator( value )
+						return "Usage of invalid characters"
+					}
+				},
                 {
                     xtype: "templatefolderpicker",
                     name: 'namespace',
                     fieldLabel: 'Import into',
                     displayField: 'text',
                     valueField: 'id'
-                },
-                {
-                    xtype: "spellednamefield",
-                    name: 'name',
-                    fieldLabel: 'Name',
-					vtype: 'alphanum',
-					validator: function( value ) {
-						if( this.isJavaScriptCompliant( value ) ) return this.__proto__.validator( value )
-						return "Usage of invalid characters"
-					}
                 }
             ],
 
