@@ -352,7 +352,7 @@ Ext.define('Spelled.controller.Components', {
 			entity            = component.getEntity()
 
 		if( config[ name ] != value ) {
-			config[ name ] = value
+			config[ name ] = value || ""
 
 			if( config[ name ] == defaultConfig[ name ] ) {
 				delete config[ name ]
