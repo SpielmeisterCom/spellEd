@@ -111,7 +111,7 @@ Ext.define('Spelled.controller.templates.Components', {
 		if( Ext.isDefined( record.data[ field.getName() ] ) && newValue != record.get( field.getName()) ){
 			record.setDirty()
 
-			if( values.default ) values.default = Spelled.Converter.decodeFieldValue( values.default )
+			if( values['default'] ) values['default'] = Spelled.Converter.decodeFieldValue( values['default'] )
 
 			record.set( values )
 			if( tab ) this.refreshComponentTemplateAttributesList( tab )
