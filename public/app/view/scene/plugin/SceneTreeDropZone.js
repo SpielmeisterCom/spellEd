@@ -22,7 +22,7 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 					case 'tree-scene-entity-icon':
 					case 'tree-scene-entity-linked-icon':
 					case 'tree-scene-entity-readonly-icon':
-						valid = this.checkEntityDrag(  targetNode  )
+						valid = this.checkEntityDrag(  targetNode, position  )
 						break
 				}
 
@@ -81,11 +81,12 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 		return false
 	},
 
-	checkEntityDrag: function( targetNode ) {
+	checkEntityDrag: function( targetNode, position ) {
 		var targetNodeType = targetNode.get( 'iconCls' )
 
-		if( targetNodeType === 'tree-scene-entity-icon' || targetNodeType === 'tree-scene-entity-linked-icon' || targetNodeType === 'tree-scene-entity-readonly-icon' ) return true
-
-		return false
+		return ( targetNodeType === 'tree-scene-entity-icon'
+			|| targetNodeType === 'tree-scene-entity-linked-icon'
+			|| targetNodeType === 'tree-scene-entity-readonly-icon'
+			|| ( targetNodeType === 'tree-entities-folder-icon' && position === 'append' ) )
 	}
 })

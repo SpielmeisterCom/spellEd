@@ -190,16 +190,24 @@ Ext.define('Spelled.controller.Entities', {
 		this.sendEntityEventToEngine( 'entity.create', { entityConfig: entity.getMessageData() } )
 	},
 
+	isSceneTarget: function( targetId ) {
+		var node   = this.getScenesTree().getStore().getById( targetId ),
+			scenes = this.application.getController( 'Scenes' )
+
+		return scenes.getTreeItemType( node ) === scenes.TREE_ITEM_TYPE_ENTITIES
+	},
+
 	moveEntity: function( targetId, entityId, dropPosition ) {
-		var store       = this.getConfigEntitiesStore(),
-			target      = store.getById( targetId ),
-			entity      = store.getById( entityId ),
-			owner       = entity.getOwner(),
-			targetOwner = target.getOwner(),
-			entities    = ( entity.hasScene() ) ? owner.getEntities() : owner.getChildren(),
+		var store         = this.getConfigEntitiesStore(),
+			isSceneTarget = this.isSceneTarget( targetId ),
+			target        = ( isSceneTarget ) ? null : store.getById( targetId ),
+			entity        = store.getById( entityId ),
+			owner         = entity.getOwner(),
+			targetOwner   = ( isSceneTarget ) ? null : target.getOwner(),
+			entities      = ( entity.hasScene() ) ? owner.getEntities() : owner.getChildren(),
 			renderedScene = this.application.getRenderedScene(),
-			targetScene = this.application.getLastSelectedScene(),
-			fromScene   = entity.getOwningScene()
+			targetScene   = this.application.getLastSelectedScene(),
+			fromScene     = entity.getOwningScene()
 
 		entities.remove( entity )
 		fromScene.setDirty()
@@ -209,7 +217,12 @@ Ext.define('Spelled.controller.Entities', {
 		delete entity[ 'Spelled.model.template.EntityBelongsToInstance' ]
 		delete entity[ 'Spelled.model.config.SceneBelongsToInstance' ]
 
-		if( dropPosition === "append" ) {
+		if( isSceneTarget ) {
+			target = this.getStore( 'config.Scenes' ).getById( this.getScenesTree().getStore().getById( targetId ).parentNode.getId() )
+
+			target.getEntities().add( entity )
+			entity.setScene( target )
+		} else if( dropPosition === "append" ) {
 			entity.setEntity( target )
 			target.getChildren().add( entity )
 		} else {
@@ -254,14 +267,9 @@ Ext.define('Spelled.controller.Entities', {
 
 						entity.getOwner().setDirty()
 						this.deleteEntity( entity )
-						var node = this.application.getLastSelectedNode( this.getScenesTree() ),
-							parentNode = node.parentNode
+						var node = this.application.getLastSelectedNode( this.getScenesTree() )
 
 						node.remove()
-
-						if( !parentNode.hasChildNodes() ) {
-							parentNode.set( 'leaf', true )
-						}
 					}
 				}
 			},

@@ -143,7 +143,7 @@ Ext.define('Spelled.model.config.Scene', {
 		var entitiesNode = sceneNode.appendChild(
 			node.createNode( {
 					text      : "Entities",
-					id        : "entities",
+					id        : this.getId() + "_entities",
 					iconCls   : "tree-entities-folder-icon",
 					leaf      : false
 				}
@@ -159,7 +159,7 @@ Ext.define('Spelled.model.config.Scene', {
 		sceneNode.appendChild(
 			node.createNode( {
 					text      : "Systems",
-					id        : "showSystems",
+					id        : this.getId() + "_showSystems",
 					iconCls   : "tree-scene-system-icon",
 					leaf      : false
 				}
@@ -169,7 +169,7 @@ Ext.define('Spelled.model.config.Scene', {
 		sceneNode.appendChild(
 			node.createNode( {
 					text      : "Script",
-					id        : "showScript",
+					id        : this.getId() + "_showScript",
 					iconCls   : "tree-scene-script-icon",
 					leaf      : true
 				}
