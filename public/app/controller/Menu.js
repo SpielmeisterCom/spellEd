@@ -495,11 +495,19 @@ Ext.define('Spelled.controller.Menu', {
     },
 
     removeScene: function( ) {
-		var scene = this.application.getLastSelectedScene()
+		var scene = this.application.getLastSelectedScene(),
+			name  = scene.get( 'name' )
 
-        if( scene ) {
-			this.application.fireEvent( 'deletescene', scene )
-        }
+		Ext.Msg.confirm(
+			'Remove '+ name,
+			'Should the Scene: "' + name + '" be removed?',
+			function( button ) {
+				if ( button === 'yes' ) {
+					this.application.fireEvent( 'deletescene', scene )
+				}
+			},
+			this
+		)
     },
 
 
