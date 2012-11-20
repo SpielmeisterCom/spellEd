@@ -112,7 +112,7 @@ Ext.define('Spelled.controller.Assets', {
 			'assetform tool-documentation, editasset tool-documentation': {
 				showDocumentation: this.showDocumentation
 			},
-            'librarytreelist button[action="showCreateAsset"]' : {
+            'librarymenu button[action="showCreateAsset"]' : {
                 click: this.showCreateAsset
             },
             'createasset button[action="createAsset"]' : {
@@ -890,6 +890,10 @@ Ext.define('Spelled.controller.Assets', {
 		this.fieldRenderHelper( assetType, view.down( 'fieldset' ) )
 
 		view.show()
+
+		if( button.up( 'librarycontextmenu' ) ) {
+			this.application.fireEvent( 'selectnamespace', view, button.up( 'librarycontextmenu' ).ownerView )
+		}
     },
 
     addAssetPreview: function( view, asset ) {

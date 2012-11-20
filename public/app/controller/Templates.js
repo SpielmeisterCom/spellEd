@@ -61,7 +61,7 @@ Ext.define('Spelled.controller.Templates', {
 
     init: function() {
         this.control({
-			'librarytreelist button[action="showCreateTemplate"]': {
+			'librarymenu button[action="showCreateTemplate"]': {
 				click: this.showCreateTemplate
 			},
             'createtemplate button[action="createTemplate"]' : {
@@ -171,6 +171,10 @@ Ext.define('Spelled.controller.Templates', {
 		combo.setValue( button.type )
 
         view.show()
+
+		if( button.up( 'librarycontextmenu' ) ) {
+			this.application.fireEvent( 'selectnamespace', view, button.up( 'librarycontextmenu' ).ownerView )
+		}
     },
 
     openTemplate: function( treeGrid, record ) {

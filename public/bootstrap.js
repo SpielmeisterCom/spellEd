@@ -7,6 +7,9 @@ Ext.ClassManager.addNameAliasMappings({
     "layout.autocomponent"
   ],
   "Ext.grid.property.Store": [],
+  "Spelled.view.library.menu.Context": [
+    "widget.librarycontextmenu"
+  ],
   "Ext.layout.container.Box": [
     "layout.box"
   ],
@@ -465,6 +468,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ModelManager": [],
   "Spelled.view.ui.SpelledRendered": [
     "widget.renderedscene"
+  ],
+  "Spelled.view.library.menu.Buttons": [
+    "widget.librarymenu"
   ],
   "Spelled.controller.Entities": [],
   "Spelled.Converter": [],
@@ -1239,6 +1245,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.grid.property.Store": [
     "Ext.grid.PropertyStore"
   ],
+  "Spelled.view.library.menu.Context": [],
   "Ext.layout.container.Box": [
     "Ext.layout.BoxLayout"
   ],
@@ -1585,6 +1592,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.ModelMgr"
   ],
   "Spelled.view.ui.SpelledRendered": [],
+  "Spelled.view.library.menu.Buttons": [],
   "Spelled.controller.Entities": [],
   "Spelled.Converter": [],
   "Ext.data.XmlStore": [],

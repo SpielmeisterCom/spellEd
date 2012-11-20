@@ -19,18 +19,18 @@ Ext.define('Spelled.view.script.Create' ,{
             bodyPadding: 10,
 
             items: [
+				{
+					xtype: "spellednamefield",
+					name: 'name',
+					fieldLabel: 'Name',
+					vtype: 'alphanum'
+				},
                 {
                     xtype: "scriptfolderpicker",
                     name: 'folder',
                     fieldLabel: 'Import into',
                     displayField: 'text',
                     valueField: 'id'
-                },
-                {
-                    xtype: "spellednamefield",
-                    name: 'name',
-                    fieldLabel: 'Name',
-					vtype: 'alphanum'
                 }
             ],
             buttons: [

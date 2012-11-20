@@ -6,6 +6,8 @@ Ext.define('Spelled.controller.Library', {
 		'Spelled.view.library.TreeList',
 		'Spelled.view.library.field.Name',
 		'Spelled.view.library.folder.Create',
+		'Spelled.view.library.menu.Buttons',
+		'Spelled.view.library.menu.Context',
 
 		'Spelled.store.Library',
 		'Spelled.store.FoldersTree'
@@ -20,7 +22,9 @@ Ext.define('Spelled.controller.Library', {
         'library.Navigator',
 		'library.FolderPicker',
 		'library.TreeList',
-		'library.folder.Create'
+		'library.folder.Create',
+		'library.menu.Buttons',
+		'library.menu.Context'
     ],
 
     stores: [
@@ -59,7 +63,7 @@ Ext.define('Spelled.controller.Library', {
 			'sceneeditor tab,#SecondTabPanel tab': {
 				beforeclose: this.dispatchLibraryTabBeforeClose
 			},
-			'librarytreelist button[action="showCreateFolder"]' : {
+			'librarymenu button[action="showCreateFolder"]' : {
 				click: this.showCreateFolder
 			},
 			'createlibraryfolder button[action="createFolder"]': {
@@ -76,12 +80,17 @@ Ext.define('Spelled.controller.Library', {
         })
 
 		this.application.on({
+			selectnamespace   : this.selectLibraryNamespace,
 			buildnamespacenodes: this.buildNamespaceNodes,
 			removeFromLibrary: this.removeFromLibrary,
 			clearstores: this.clearStore,
 			scope : this
 		})
     },
+
+	selectLibraryNamespace: function( view, namespace) {
+		view.down( 'libraryfolderpicker' ).setValue( 'root.' + namespace )
+	},
 
 	createFolder: function( path ) {
 		var project = this.application.getActiveProject()
@@ -95,8 +104,20 @@ Ext.define('Spelled.controller.Library', {
 		)
 	},
 
-	showLibraryFolderContextMenu: function( node, e ) {
+	getNamespaceFromNode: function( startNode ) {
+		var parts = []
 
+		var getNamespace = function( text, node ) {
+			parts.unshift( text )
+
+			return ( !node.parentNode ) ? parts.join( "." ) : getNamespace( node.get( 'text' ), node.parentNode )
+		}
+
+		return getNamespace( startNode.get( 'text' ), startNode.parentNode )
+	},
+
+	showLibraryFolderContextMenu: function( node, e ) {
+		this.application.getController( 'Menu' ).createAndShowView( this.getLibraryMenuContextView(), e, this.getNamespaceFromNode( node ) )
 	},
 
 	createFolderHelper: function( button ) {
@@ -109,8 +130,11 @@ Ext.define('Spelled.controller.Library', {
 		window.close()
 	},
 
-	showCreateFolder: function() {
-		Ext.widget( 'createlibraryfolder' )
+	showCreateFolder: function( button ) {
+		var contextMenu = button.up( 'librarycontextmenu' ),
+			view        = Ext.widget( 'createlibraryfolder' )
+
+		if( contextMenu ) view.down( 'textfield[name="path"]' ).setValue( contextMenu.ownerView )
 	},
 
 	clearStore: function() {

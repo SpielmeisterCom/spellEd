@@ -5,6 +5,7 @@ Ext.define('Spelled.view.library.folder.Create', {
 	mixins: [ 'Spelled.abstract.validator.General' ],
 
 	autoShow: true,
+	modal: true,
 
     title: "Create a new library namespace",
 

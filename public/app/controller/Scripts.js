@@ -56,7 +56,7 @@ Ext.define('Spelled.controller.Scripts', {
 				save:     this.globalSaveHelper,
 				render:   this.addAceEditor
 			},
-            'librarytreelist [action="showCreateScript"]' : {
+            'librarymenu [action="showCreateScript"]' : {
                 click: this.showCreateScript
             },
             'createscript button[action="createScript"]' : {
@@ -146,10 +146,14 @@ Ext.define('Spelled.controller.Scripts', {
 		}
 	},
 
-    showCreateScript: function() {
+    showCreateScript: function( button ) {
         var View = this.getScriptCreateView()
         var view = new View( )
         view.show()
+
+		if( button.up( 'librarycontextmenu' ) ) {
+			this.application.fireEvent( 'selectnamespace', view, button.up( 'librarycontextmenu' ).ownerView )
+		}
     },
 
     createScript: function( button ) {
