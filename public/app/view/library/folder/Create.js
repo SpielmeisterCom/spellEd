@@ -29,12 +29,19 @@ Ext.define('Spelled.view.library.folder.Create', {
 					{
 						xtype: 'textfield',
 
-						fieldLabel: 'Namespace',
+						fieldLabel: 'Name',
 						validator: function( value ) {
 							if( me.isNamespaceCompliant( value ) ) return true
 							else return "Illegal character used. Only alphanumeric values and '.' allowed"
 						},
 						name: 'path'
+					},
+					{
+						xtype: "libraryfolderpicker",
+						name: 'namespace',
+						fieldLabel: 'Create into',
+						displayField: 'text',
+						valueField: 'id'
 					}
 				],
 				buttons: [

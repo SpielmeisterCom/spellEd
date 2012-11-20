@@ -127,9 +127,13 @@ Ext.define('Spelled.controller.Library', {
 	createFolderHelper: function( button ) {
 		var form   = button.up( 'form' ),
 			window = form.up( 'window' ),
-			values =  form.getForm().getValues()
+			values = form.getForm().getValues(),
+			parts  = values.namespace.split( '.' )
 
-		this.createFolder( values.path )
+		parts.shift()
+		parts.push( values.path )
+
+		this.createFolder( parts.join( '.' ) )
 
 		window.close()
 	},
@@ -138,7 +142,9 @@ Ext.define('Spelled.controller.Library', {
 		var contextMenu = button.up( 'librarycontextmenu' ),
 			view        = Ext.widget( 'createlibraryfolder' )
 
-		if( contextMenu ) view.down( 'textfield[name="path"]' ).setValue( contextMenu.ownerView )
+		if( contextMenu ) {
+			this.application.fireEvent( 'selectnamespace', view, button.up( 'librarycontextmenu' ).ownerView )
+		}
 	},
 
 	clearStore: function() {

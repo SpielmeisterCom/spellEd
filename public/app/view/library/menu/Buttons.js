@@ -15,7 +15,7 @@ Ext.define('Spelled.view.library.menu.Buttons' ,{
 				{
 					text: "Create namespace",
 					action: "showCreateFolder",
-					icon: 'images/icons/library-folder.png'
+					icon: 'images/spelled/tree/folder.gif'
 				}
 			]
 		},
