@@ -104,20 +104,24 @@ Ext.define('Spelled.controller.Library', {
 		)
 	},
 
-	getNamespaceFromNode: function( startNode ) {
+	getNamespacesFromNode: function( startNode ) {
 		var parts = []
 
 		var getNamespace = function( text, node ) {
 			parts.unshift( text )
 
-			return ( !node.parentNode ) ? parts.join( "." ) : getNamespace( node.get( 'text' ), node.parentNode )
+			return ( !node.parentNode ) ? parts : getNamespace( node.get( 'text' ), node.parentNode )
 		}
 
 		return getNamespace( startNode.get( 'text' ), startNode.parentNode )
 	},
 
 	showLibraryFolderContextMenu: function( node, e ) {
-		this.application.getController( 'Menu' ).createAndShowView( this.getLibraryMenuContextView(), e, this.getNamespaceFromNode( node ) )
+		var namespaces = this.getNamespacesFromNode( node )
+
+		if( namespaces[0] === 'spell' ) return
+
+		this.application.getController( 'Menu' ).createAndShowView( this.getLibraryMenuContextView(), e, namespaces.join( '.' ))
 	},
 
 	createFolderHelper: function( button ) {
