@@ -28,10 +28,11 @@ Ext.define('Spelled.view.entity.Create' ,{
 				},
 				{
                     xtype: 'combobox',
+					matchFieldWidth : false,
                     store: 'template.Entities',
 
                     valueField: 'id',
-                    displayField:'name',
+                    displayField:'templateId',
                     queryMode: 'local',
                     forceSelection: true,
 
