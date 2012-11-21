@@ -385,7 +385,7 @@ Ext.define('Spelled.controller.Components', {
 			config,
 			function( key, value ) {
 				var attribute = template.getAttributeByName( key )
-				if( !attribute.isEngineInternal() ) convertedConfig[ key ] = this.createPropertyFromAttribute( template.getAttributeByName( key ), key, value )
+				if( attribute && !attribute.isEngineInternal() ) convertedConfig[ key ] = this.createPropertyFromAttribute( template.getAttributeByName( key ), key, value )
 			},
 			this
 		)
