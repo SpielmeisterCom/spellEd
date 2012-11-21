@@ -145,12 +145,9 @@ Ext.define('Spelled.controller.templates.Components', {
     },
 
     removeComponentTemplate: function( id ) {
-        var ComponentTemplate = this.getTemplateComponentModel()
+        var component = this.getTemplateComponentsStore().getById( id )
 
-        ComponentTemplate.load( id, {
-            scope: this,
-            success: this.application.getController('Templates').removeTemplateCallback
-        })
+        this.application.getController('Templates').removeTemplateCallback( component )
     },
 
     removeComponentAttribute: function( tabPanel, id ) {

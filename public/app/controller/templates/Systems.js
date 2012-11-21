@@ -213,12 +213,9 @@ Ext.define('Spelled.controller.templates.Systems', {
     },
 
     removeSystemTemplate: function( id ) {
-        var SystemTemplate = this.getTemplateSystemModel()
+        var system = this.getTemplateSystemsStore().getById( id )
 
-        SystemTemplate.load( id, {
-            scope: this,
-            success: this.application.getController('Templates').removeTemplateCallback
-        })
+		this.application.getController('Templates').removeTemplateCallback( system )
     },
 
 	prepareConfigurationView: function( view, systemTemplate ) {

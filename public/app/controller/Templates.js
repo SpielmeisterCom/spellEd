@@ -251,10 +251,13 @@ Ext.define('Spelled.controller.Templates', {
     },
 
 	checkForReferences: function( template ) {
-		var found = false
+		var found    = false,
+			union    = Ext.Array.union,
+			each     = Ext.each,
+			getStore = Ext.getStore
 
 		var checkFunc = function( storeId ) {
-			var store  = Ext.getStore( storeId )
+			var store  = getStore( storeId )
 
 			store.each(
 				function( item ) {
@@ -266,12 +269,26 @@ Ext.define('Spelled.controller.Templates', {
 			)
 		}
 
-		Ext.each(
+		each(
 			[
 				'config.Components',
 				'config.Entities'
 			],
 			checkFunc
+		)
+
+		getStore( 'config.Scenes' ).each(
+			function( scene ) {
+				var systems = scene.get( 'systems' ),
+					items   = union( systems.render, systems.update )
+
+				each( items, function( system ) {
+					if( system.id === template.getFullName() ) {
+						found = true
+						return false
+					}
+				})
+			}
 		)
 
 		return found

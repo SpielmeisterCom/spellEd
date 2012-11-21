@@ -263,7 +263,8 @@ Ext.define('Spelled.controller.Systems', {
 	refreshSceneSystemList: function( scene ) {
 		var tree     = this.getScenesTree(),
 			rootNode = tree.getStore().getRootNode().findChild( 'id', scene.getId() ).findChild( 'text', 'Systems' ),
-			me       = this
+			me       = this,
+			each     = Ext.each
 
 		rootNode.removeAll()
 		rootNode.set( 'allowDrop', false )
@@ -278,13 +279,14 @@ Ext.define('Spelled.controller.Systems', {
 					allowDrop : true,
 					allowDrag : false,
 					iconCls   : "tree-system-folder-icon"
-				} )
+				}),
+					missing  = []
 
 				rootNode.appendChild( node )
 
-				Ext.each(
+				each(
 					value,
-					function( system ) {
+					function( system, index, mySelf ) {
 						var systemTemplate =  Ext.getStore('template.Systems').getByTemplateId( system.id )
 						if( systemTemplate ) {
 							var config = Ext.Object.merge( {}, systemTemplate.getConfigForScene(), system.config )
@@ -304,7 +306,17 @@ Ext.define('Spelled.controller.Systems', {
 							system.config = config
 							newNode.systemConfig = system.config
 							node.appendChild( newNode )
+						} else {
+							missing.push( system )
 						}
+					}
+				)
+
+				each(
+					missing,
+					function( item ) {
+						Ext.Msg.alert( 'Missing system', "The system '" + item.id + "' could not be found and has been removed from the scene." )
+						Ext.Array.remove( value, item )
 					}
 				)
 			}
