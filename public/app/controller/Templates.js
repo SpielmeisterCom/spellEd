@@ -172,9 +172,7 @@ Ext.define('Spelled.controller.Templates', {
 
         view.show()
 
-		if( button.up( 'librarycontextmenu' ) ) {
-			this.application.fireEvent( 'selectnamespace', view, button.up( 'librarycontextmenu' ).ownerView )
-		}
+		this.application.fireEvent( 'selectnamespacefrombutton', view, button )
     },
 
     openTemplate: function( treeGrid, record ) {

@@ -891,9 +891,7 @@ Ext.define('Spelled.controller.Assets', {
 
 		view.show()
 
-		if( button.up( 'librarycontextmenu' ) ) {
-			this.application.fireEvent( 'selectnamespace', view, button.up( 'librarycontextmenu' ).ownerView )
-		}
+		this.application.fireEvent( 'selectnamespacefrombutton', view, button )
     },
 
     addAssetPreview: function( view, asset ) {

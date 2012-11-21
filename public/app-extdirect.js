@@ -11,7 +11,8 @@ Ext.require('Ext.direct.*', function() {
 					{"name":"read","len":1},
 					{"name":"update","len":1},
 					{"name":"destroy","len":1},
-					{"name":"getNamespaces","len":1}
+					{"name":"getNamespaces","len":1},
+					{"name":"deleteFolder","len":1}
 				],
 
 				"SpellBuildActions":[

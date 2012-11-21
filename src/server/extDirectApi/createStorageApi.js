@@ -183,6 +183,37 @@ define(
 				}
 			}
 
+			var rmDir = function( dirPath ) {
+				var files = fs.readdirSync( dirPath )
+
+				_.each(
+					files,
+					function( file ) {
+						var filePath = dirPath + '/' + file
+
+						if ( fs.statSync( filePath ).isFile() )
+							fs.unlinkSync( filePath )
+						else
+							rmDir( filePath )
+					}
+				)
+
+				fs.rmdirSync( dirPath )
+			}
+
+			var deleteFolder = function( req, res, payload, next ) {
+				var params      = _.isArray( payload ) ? payload.pop() : payload,
+					projectPath = util.getPath( path.join( params.projectName, 'library' ) ),
+					namespace   = params.namespace
+
+				if( namespace ) {
+					var parts      = namespace.split( '.' ),
+						folderPath = path.join( projectPath, parts.join( path.sep ) )
+
+					rmDir( folderPath )
+				}
+			}
+
             return [
                 {
                     name: "create",
@@ -213,6 +244,11 @@ define(
 					name: "getNamespaces",
 					len: 1,
 					func: getNamespaces
+				},
+				{
+					name: "deleteFolder",
+					len: 1,
+					func: deleteFolder
 				}
 			]
         }

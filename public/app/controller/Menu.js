@@ -199,7 +199,7 @@ Ext.define('Spelled.controller.Menu', {
         })
 
 		this.application.on({
-			'showkeymappingcontextmenu': this.showKeyToActionMappingContextMenu,
+			showkeymappingcontextmenu: this.showKeyToActionMappingContextMenu,
 			showcontextmenu: this.createAndShowView,
 			scope: this
 		})
@@ -229,7 +229,6 @@ Ext.define('Spelled.controller.Menu', {
 			e
 		)
 	},
-
 
     showScriptsListContextMenu: function( e ) {
         this.createAndShowView(
@@ -339,7 +338,7 @@ Ext.define('Spelled.controller.Menu', {
 			controller = this.application.getController('Templates')
 
         if( node ) {
-			this.application.fireEvent( 'removeFromLibrary', node, Ext.bind( controller.deleteTemplateAction, controller ) )
+			this.application.fireEvent( 'removefromlibrary', node, Ext.bind( controller.deleteTemplateAction, controller ) )
 		}
     },
 
@@ -348,7 +347,7 @@ Ext.define('Spelled.controller.Menu', {
 			me   = this
 
         if( node && node.isLeaf() ) {
-			this.application.fireEvent( 'removeFromLibrary', node,
+			this.application.fireEvent( 'removefromlibrary', node,
 				function(){
 					me.application.getController( 'Scripts' ).removeScript( node.get('id') )
 					node.remove()
@@ -378,7 +377,7 @@ Ext.define('Spelled.controller.Menu', {
 			me   = this
 
 		if( node && node.isLeaf() ) {
-			this.application.fireEvent( 'removeFromLibrary', node,
+			this.application.fireEvent( 'removefromlibrary', node,
 				function(){
 					me.application.getController( 'Assets' ).removeAsset( node.get('id') )
 					node.remove()

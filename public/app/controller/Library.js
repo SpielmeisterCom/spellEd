@@ -76,20 +76,40 @@ Ext.define('Spelled.controller.Library', {
 				itemdblclick    : this.dispatchLibraryNodeDoubleClick,
 				itemmouseenter  : this.application.showActionsOnLeaf,
 				itemmouseleave  : this.application.hideActions
+			},
+			'librarycontextmenu [action="deleteFolder"]': {
+				click: this.removeFolder
 			}
         })
 
 		this.application.on({
-			selectnamespace   : this.selectLibraryNamespace,
+			selectnamespacefrombutton : this.selectLibraryNamespace,
 			buildnamespacenodes: this.buildNamespaceNodes,
-			removeFromLibrary: this.removeFromLibrary,
+			removefromlibrary: this.removeFromLibrary,
 			clearstores: this.clearStore,
 			scope : this
 		})
     },
 
-	selectLibraryNamespace: function( view, namespace) {
-		view.down( 'libraryfolderpicker' ).setValue( 'root.' + namespace )
+	removeFolder: function() {
+		var node      = this.application.getLastSelectedNode( this.getLibraryTree() ),
+			project   = this.application.getActiveProject(),
+			namespace = node.getId().split('.')
+
+		namespace.shift()
+
+		Spelled.StorageActions.deleteFolder(
+			{ projectName: project.get( 'name' ), namespace: namespace.join('.') },
+			{ callback: function( arg1, response, success ){ if( success ) node.remove() } }
+		)
+	},
+
+	selectLibraryNamespace: function( view, button ) {
+		var contextMenu = button.up( 'librarycontextmenu' )
+
+		if( !contextMenu || !contextMenu.ownerView ) return
+
+		view.down( 'libraryfolderpicker' ).setValue( contextMenu.ownerView.namespace )
 	},
 
 	createFolder: function( path ) {
@@ -104,24 +124,19 @@ Ext.define('Spelled.controller.Library', {
 		)
 	},
 
-	getNamespacesFromNode: function( startNode ) {
-		var parts = []
-
-		var getNamespace = function( text, node ) {
-			parts.unshift( text )
-
-			return ( !node.parentNode ) ? parts : getNamespace( node.get( 'text' ), node.parentNode )
-		}
-
-		return getNamespace( startNode.get( 'text' ), startNode.parentNode )
+	hasLibraryItems: function( node ) {
+		return node.findChildBy( function( node ) { return ( node.get( 'cls') != "folder" ) }, this, true )
 	},
 
 	showLibraryFolderContextMenu: function( node, e ) {
-		var namespaces = this.getNamespacesFromNode( node )
+		var namespace = node.getId(),
+			parts     = namespace.split( '.' )
 
-		if( namespaces[0] === 'spell' ) return
+		if( parts[1] === 'spell' ) return
 
-		this.application.getController( 'Menu' ).createAndShowView( this.getLibraryMenuContextView(), e, namespaces.join( '.' ))
+		var view = this.application.getController( 'Menu' ).createAndShowView( this.getLibraryMenuContextView(), e, { namespace: namespace } )
+
+		if( !this.hasLibraryItems( node ) ) view.down( '[action="deleteFolder"]' ).setVisible(true)
 	},
 
 	createFolderHelper: function( button ) {
@@ -139,12 +154,9 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	showCreateFolder: function( button ) {
-		var contextMenu = button.up( 'librarycontextmenu' ),
-			view        = Ext.widget( 'createlibraryfolder' )
+		var view        = Ext.widget( 'createlibraryfolder' )
 
-		if( contextMenu ) {
-			this.application.fireEvent( 'selectnamespace', view, button.up( 'librarycontextmenu' ).ownerView )
-		}
+		this.application.fireEvent( 'selectnamespacefrombutton', view, button )
 	},
 
 	clearStore: function() {

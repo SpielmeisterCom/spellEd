@@ -147,13 +147,12 @@ Ext.define('Spelled.controller.Scripts', {
 	},
 
     showCreateScript: function( button ) {
-        var View = this.getScriptCreateView()
-        var view = new View( )
+        var View        = this.getScriptCreateView(),
+			view        = new View()
+
         view.show()
 
-		if( button.up( 'librarycontextmenu' ) ) {
-			this.application.fireEvent( 'selectnamespace', view, button.up( 'librarycontextmenu' ).ownerView )
-		}
+		this.application.fireEvent( 'selectnamespacefrombutton', view, button )
     },
 
     createScript: function( button ) {
