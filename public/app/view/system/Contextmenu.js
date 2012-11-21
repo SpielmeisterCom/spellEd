@@ -1,4 +1,4 @@
-Ext.define('Spelled.view.menu.contextmenu.SceneSystemsList', {
+Ext.define('Spelled.view.system.ContextMenu', {
     extend: 'Ext.menu.Menu',
     alias : 'widget.scenesystemslistcontextmenu',
 

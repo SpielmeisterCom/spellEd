@@ -3,6 +3,7 @@ Ext.define('Spelled.controller.Systems', {
 
 	requires: [
 		'Spelled.view.system.Add',
+		'Spelled.view.system.ContextMenu',
 
 		'Spelled.model.template.System',
 
@@ -11,7 +12,8 @@ Ext.define('Spelled.controller.Systems', {
 	],
 
 	views: [
-		'system.Add'
+		'system.Add',
+		'system.ContextMenu'
 	],
 
 	models: [
@@ -49,6 +51,7 @@ Ext.define('Spelled.controller.Systems', {
 		})
 
 		this.application.on({
+				showscenesystemslistcontextmenu : this.showSceneSystemsListContextMenu,
 				showsystemitem    : this.showSystemItem,
 				updatescenesystem : this.sendSystemUpdateFromSceneToEngine,
 				movescenesystem   : this.moveSystem,
@@ -79,8 +82,12 @@ Ext.define('Spelled.controller.Systems', {
 		this.application.getController('Menu').showSceneSystemsItemListContextMenu( e )
 	},
 
-	showSceneSystemsListContextMenu: function( view, record, item, index, e, options ) {
-		this.application.getController('Menu').showSceneSystemsListContextMenu( e )
+	showSceneSystemsListContextMenu: function( e, node ) {
+		this.application.fireEvent( 'showcontextmenu',
+			this.getSystemContextMenuView(),
+			e,
+			node
+		)
 	},
 
 	removeSceneSystem: function( systemId, folder ) {
@@ -170,12 +177,15 @@ Ext.define('Spelled.controller.Systems', {
 		window.close()
 	},
 
-	showAddSystem: function( ) {
-		var View = this.getSystemAddView(),
-			view = new View(),
+	showAddSystem: function( button ) {
+		var renderGroupNode      = button.up( 'scenesystemslistcontextmenu').ownerView,
+			View                 = this.getSystemAddView(),
+			view                 = new View(),
 			availableSystemsView = view.down( 'treepanel' ),
 			templateSystemsStore = Ext.getStore( 'template.Systems' ),
 			scene    			 = this.application.getLastSelectedScene()
+
+		if( renderGroupNode ) view.down( 'combobox' ).setValue( renderGroupNode.getId() )
 
 		var assignedSystems = []
 		Ext.Object.each(

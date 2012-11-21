@@ -7,7 +7,6 @@ Ext.define('Spelled.controller.Menu', {
 		'Spelled.view.menu.contextmenu.EntitiesFolderList',
 		'Spelled.view.menu.contextmenu.AssetsList',
 		'Spelled.view.menu.contextmenu.ScriptsList',
-		'Spelled.view.menu.contextmenu.SceneSystemsList',
 		'Spelled.view.menu.contextmenu.SceneSystemsItemList',
 		'Spelled.view.menu.contextmenu.TemplatesList',
 		'Spelled.view.menu.contextmenu.templatesList.Entity',
@@ -27,7 +26,6 @@ Ext.define('Spelled.controller.Menu', {
 		'menu.contextmenu.EntitiesFolderList',
         'menu.contextmenu.AssetsList',
         'menu.contextmenu.ScriptsList',
-		'menu.contextmenu.SceneSystemsList',
 		'menu.contextmenu.SceneSystemsItemList',
         'menu.contextmenu.TemplatesList',
 		'menu.contextmenu.templatesList.Entity',
@@ -232,12 +230,6 @@ Ext.define('Spelled.controller.Menu', {
 		)
 	},
 
-	showSceneSystemsListContextMenu: function( e ) {
-		this.createAndShowView(
-			this.getMenuContextmenuSceneSystemsListView(),
-			e
-		)
-	},
 
     showScriptsListContextMenu: function( e ) {
         this.createAndShowView(

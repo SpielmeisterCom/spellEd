@@ -1009,9 +1009,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.menu.CheckItem": [
     "widget.menucheckitem"
   ],
-  "Spelled.view.menu.contextmenu.SceneSystemsList": [
-    "widget.scenesystemslistcontextmenu"
-  ],
   "Spelled.view.asset.Iframe": [
     "widget.assetiframe"
   ],
@@ -1179,6 +1176,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.AbstractManager": [],
   "Ext.chart.series.Radar": [
     "series.radar"
+  ],
+  "Spelled.view.system.ContextMenu": [
+    "widget.scenesystemslistcontextmenu"
   ],
   "Spelled.view.entity.Create": [
     "widget.createentity"
@@ -1977,7 +1977,6 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.data.Proxy"
   ],
   "Ext.menu.CheckItem": [],
-  "Spelled.view.menu.contextmenu.SceneSystemsList": [],
   "Spelled.view.asset.Iframe": [],
   "Ext.dom.AbstractElement": [],
   "Spelled.view.component.Properties": [],
@@ -2085,6 +2084,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.menu.contextmenu.ComponentTemplateAttributesList": [],
   "Ext.AbstractManager": [],
   "Ext.chart.series.Radar": [],
+  "Spelled.view.system.ContextMenu": [],
   "Spelled.view.entity.Create": [],
   "Ext.grid.property.Property": [
     "Ext.PropGridProperty"

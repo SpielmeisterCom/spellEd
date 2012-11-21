@@ -517,8 +517,10 @@ Ext.define('Spelled.controller.Scenes', {
 				this.application.getController( 'Systems').showSceneSystemsItemListContextMenu( gridView, node, columnIndex, rowIndex, e )
 				break
 			case this.TREE_ITEM_TYPE_SYSTEM:
+				this.application.fireEvent( 'showscenesystemslistcontextmenu', e, null )
+				break
 			case this.TREE_ITEM_TYPE_SYSTEM_FOLDER:
-				this.application.getController( 'Systems').showSceneSystemsListContextMenu( gridView, node, columnIndex, rowIndex, e )
+				this.application.fireEvent( 'showscenesystemslistcontextmenu', e, node )
 				break
 			case this.TREE_ITEM_TYPE_ENTITY:
 				this.application.getController( 'Entities').showListContextMenu( gridView, node, columnIndex, rowIndex, e )
