@@ -3,11 +3,6 @@ Ext.define('Spelled.view.menu.contextmenu.templatesList.Entity', {
     alias : 'widget.templateslistentitycontextmenu',
 
     items: [
-        {
-			icon: 'images/icons/add.png',
-            text: 'Create a new template',
-            action: 'create'
-        },
 		{
 			icon: 'images/icons/entity-add.png',
 			text: 'Add a new Entity to this Entity-Template',

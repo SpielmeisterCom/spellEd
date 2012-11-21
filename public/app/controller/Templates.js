@@ -164,8 +164,8 @@ Ext.define('Spelled.controller.Templates', {
     },
 
     showCreateTemplate: function( button ) {
-        var View = this.getTemplateCreateView(),
-        	view = new View(),
+        var View  = this.getTemplateCreateView(),
+        	view  = new View(),
 			combo = view.down('hiddenfield[name="type"]')
 
 		combo.setValue( button.type )
