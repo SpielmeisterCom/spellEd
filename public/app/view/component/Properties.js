@@ -25,7 +25,32 @@ Ext.define('Spelled.view.component.Properties', {
 			}
 		]
 
+		this.attachDeepLink()
+
 		this.callParent(arguments)
+	},
+
+	checkIfDeepLinkClick: function( grid, td, cellIndex, record, tr, rowIndex, e ) {
+		var name = record.get( 'name'),
+			link = this.propertyDeepLinked[ name ]
+
+		if( cellIndex === 0 && link ){
+			this.fireEvent( 'propertydeeplinkclick', name, link, record )
+		}
+	},
+
+	attachDeepLink: function() {
+		var propertyNames = this.propertyNames = {}
+
+		this.addEvents( 'propertydeeplinkclick' )
+		this.addListener( 'cellclick', this.checkIfDeepLinkClick, this )
+
+		Ext.Object.each(
+			this.propertyDeepLinked,
+			function( key, value ) {
+				propertyNames[ key ] = key + " <img src='/images/icons/component_physics_force.png' class='linkedProperty'/>"
+			}
+		)
 	},
 
 	onGearClick: function( event ) {

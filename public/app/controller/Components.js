@@ -9,6 +9,7 @@ Ext.define('Spelled.controller.Components', {
 		'Spelled.store.config.Components',
 		'Spelled.view.component.property.Contextmenu',
 		'Spelled.abstract.grid.property.Grid',
+		'Spelled.store.property.Mappings',
 		'Spelled.Converter'
 	],
 
@@ -25,7 +26,8 @@ Ext.define('Spelled.controller.Components', {
     ],
 
     stores: [
-       'config.Components'
+       'config.Components',
+		'property.Mappings'
     ],
 
 	refs: [
@@ -36,6 +38,9 @@ Ext.define('Spelled.controller.Components', {
 		{
 			ref : 'SceneEditor',
 			selector: '#SceneEditor'
+		},{
+			ref : 'LibraryTree',
+			selector: '#LibraryTree'
 		}
 	],
 
@@ -373,7 +378,7 @@ Ext.define('Spelled.controller.Components', {
 			type: attributeType.get('type'),
 			value: Spelled.Converter.convertValueForGrid( value ),
 			componentValue: value,
-			values : attribute.get('values')
+			values: attribute.get('values')
 		}
 	},
 
@@ -393,22 +398,40 @@ Ext.define('Spelled.controller.Components', {
 		return convertedConfig
 	},
 
+	generatePropertyDeepLinkConfig: function( properties ) {
+		var config = {},
+			store  = this.getPropertyMappingsStore()
+
+		Ext.Object.each(
+			properties,
+			function( key, value ){
+				var record = store.findRecord( 'name', value.type )
+
+				if( record ) { config[ key ] = record }
+			}
+		)
+
+		return config
+	},
+
 	createConfigGridView: function( component ) {
         var config   = this.transformConfigForGrid( component, component.getConfigMergedWithTemplateConfig() ),
 			template = component.getTemplate(),
 			title    = ( Ext.isEmpty( template.get('title') ) ) ? component.get('templateId') : template.get('title')
 
-		var icon     = ( Ext.isEmpty( template.get('icon') ) )? "" : "style='background: url(" + template.get('icon') +") no-repeat;'",
+		var icon        = ( Ext.isEmpty( template.get('icon') ) )? "" : "style='background: url(" + template.get('icon') +") no-repeat;'",
 			iconClass   = ( component.get('additional') ) ? "component-icon" : "linked-component-icon",
 			linkedImage = ( !component.get('additional') && !Ext.isEmpty( template.get('icon') ) ) ? "<img src='/images/icons/link.png' style='margin-left: -18px;'/>" : "<span/>"
 
 		return Ext.widget(
 			'componentproperties',
 			{
+				manageHeight: false,
 				title: "<span class='"+ iconClass +"' "+ icon +">" + linkedImage +"</span> <span>" + title +"</span>",
 				isAdditional: component.get('additional'),
 				source: config,
-				componentConfigId: component.getId()
+				componentConfigId: component.getId(),
+				propertyDeepLinked: this.generatePropertyDeepLinkConfig( config )
 			}
 		)
     },

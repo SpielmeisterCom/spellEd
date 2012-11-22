@@ -52,11 +52,18 @@ Ext.define('Spelled.controller.Library', {
 		{
 			ref: 'LibraryTree',
 			selector: '#LibraryTree'
+		},
+		{
+			ref: 'Library',
+			selector: '#Library'
 		}
     ],
 
     init: function() {
         this.control({
+			'componentproperties' :{
+				propertydeeplinkclick: this.deepLinkComponentProperty
+			},
 			'librarynavigator': {
 				activate: this.showLibrary
 			},
@@ -83,13 +90,43 @@ Ext.define('Spelled.controller.Library', {
         })
 
 		this.application.on({
-			selectnamespacefrombutton : this.selectLibraryNamespace,
-			buildnamespacenodes: this.buildNamespaceNodes,
+			selectnamespacefrombutton  : this.selectLibraryNamespace,
+			buildnamespacenodes        : this.buildNamespaceNodes,
 			removefromlibrary: this.removeFromLibrary,
 			clearstores: this.clearStore,
-			scope : this
+			scope: this
 		})
     },
+
+	deepLinkComponentProperty: function( name, propertyMapping, property ) {
+		var tree    = this.getLibraryTree(),
+			store   = tree.getStore(),
+			value   = property.get( 'value'),
+			record  = undefined
+
+		switch( propertyMapping.get( 'target' ) ) {
+			case 'asset':
+				record = this.getStore( 'asset.Assets' ).findRecord( 'internalAssetId', value )
+				break
+			case 'script':
+				var scriptId = value.split( ':').pop()
+				record = this.getStore( 'script.Scripts' ).findRecord( 'scriptId', scriptId )
+				break
+		}
+
+		var node = store.getById( record.getId() )
+
+		if( node ) {
+			this.getNavigator().setActiveTab( this.getLibrary() )
+
+			if( node ) {
+				tree.selectPath( node.getPath() )
+				tree.getSelectionModel().deselectAll()
+				tree.getSelectionModel().select( node )
+				this.dispatchLibraryNodeDoubleClick( tree, node )
+			}
+		}
+	},
 
 	removeFolder: function() {
 		var node      = this.application.getLastSelectedNode( this.getLibraryTree() ),
@@ -154,7 +191,7 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	showCreateFolder: function( button ) {
-		var view        = Ext.widget( 'createlibraryfolder' )
+		var view = Ext.widget( 'createlibraryfolder' )
 
 		this.application.fireEvent( 'selectnamespacefrombutton', view, button )
 	},

@@ -1160,6 +1160,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.data.reader.Project": [
     "reader.project"
   ],
+  "Spelled.store.property.Mappings": [],
   "Spelled.abstract.writer.JsonWriter": [],
   "Spelled.store.template.SystemInputDefinitions": [],
   "Ext.draw.engine.Svg": [],
@@ -2071,6 +2072,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.grid.NumberColumn"
   ],
   "Spelled.data.reader.Project": [],
+  "Spelled.store.property.Mappings": [],
   "Spelled.abstract.writer.JsonWriter": [],
   "Spelled.store.template.SystemInputDefinitions": [],
   "Ext.draw.engine.Svg": [],
