@@ -167,6 +167,7 @@
 
 .linkedProperty {
     height: 12px;
+    cursor: pointer;
 }
 
 #SpelledConsole {
