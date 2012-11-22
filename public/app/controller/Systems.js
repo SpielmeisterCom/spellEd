@@ -315,8 +315,9 @@ Ext.define('Spelled.controller.Systems', {
 				each(
 					missing,
 					function( item ) {
-						Ext.Msg.alert( 'Missing system', "The system '" + item.id + "' could not be found and has been removed from the scene." )
+						Ext.Msg.alert( 'Missing system', "The system '" + item.id + "' could not be found and has been removed from scene: '" + scene.getFullName() +"'" )
 						Ext.Array.remove( value, item )
+						scene.setDirty()
 					}
 				)
 			}

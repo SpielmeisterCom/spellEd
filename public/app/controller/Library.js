@@ -117,14 +117,7 @@ Ext.define('Spelled.controller.Library', {
 		var node = store.getById( record.getId() )
 
 		if( node ) {
-			this.getNavigator().setActiveTab( this.getLibrary() )
-
-			if( node ) {
-				tree.selectPath( node.getPath() )
-				tree.getSelectionModel().deselectAll()
-				tree.getSelectionModel().select( node )
-				this.dispatchLibraryNodeDoubleClick( tree, node )
-			}
+			this.dispatchLibraryNodeDoubleClick( tree, node )
 		}
 	},
 
