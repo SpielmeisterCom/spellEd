@@ -133,6 +133,12 @@ var startApplication = function() {
             this.engineMessageBus.send( target, { type : 'spelled.debug.' + type, payload : payload } )
         },
 
+		selectNode: function( tree, node ) {
+			tree.selectPath( node.getPath() )
+			tree.getSelectionModel().deselectAll()
+			tree.getSelectionModel().select( node )
+		},
+
 		generateFileIdFromObject: function( object ) {
 			return this.getActiveProject().get('name') + "/library/" + (( object.namespace.length > 0 ) ? object.namespace.replace( /\./g, "/" ) +"/"+ object.name : object.name)
 		},

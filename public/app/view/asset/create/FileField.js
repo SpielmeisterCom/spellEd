@@ -8,11 +8,12 @@ Ext.define('Spelled.view.asset.create.FileField', {
 	buttonText: 'Select a File...',
 	listeners: {
 		render: function( file ) {
-			var domElement = document.querySelector('input[type="file"]')
+			var domElement = file.getEl().dom.querySelector('input[type="file"]')
 			if( domElement && !domElement.onChange ) {
 				domElement.addEventListener( 'change',
 					function(event) {
 						file.fileRawInput = event.target.files[0]
+						file.fireEvent( 'filechanged', file )
 					},
 					false
 				)
@@ -24,5 +25,11 @@ Ext.define('Spelled.view.asset.create.FileField', {
 			return "You need to select a new File"
 		else
 			return true
+	},
+
+	initComponent: function() {
+		this.addEvents( 'filechanged' )
+
+		this.callParent( arguments )
 	}
 })

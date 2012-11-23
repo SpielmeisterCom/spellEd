@@ -106,6 +106,9 @@ Ext.define('Spelled.controller.Assets', {
 			'editasset field' : {
 				change: this.editAssetHelper
 			},
+			'editasset filefield': {
+				filechanged: this.updateAssetFile
+			},
 			'editasset gridpanel': {
 				edit : this.editGrid
 			},
@@ -199,6 +202,26 @@ Ext.define('Spelled.controller.Assets', {
 		    false
 	    )
     },
+
+	updateAssetFile: function( fileField ) {
+		var form  = fileField.up( 'form' ),
+			asset = form.getForm().getRecord(),
+			me    = this,
+			tree  = this.getNavigator()
+
+		var callback = function() {
+			var iframe = fileField.up( 'panel' ).down( 'assetiframe' ),
+				node   = me.application.getLastSelectedNode( tree )
+
+			if( node.getId() === asset.getId() ) {
+				me.application.selectNode( tree, node )
+			}
+
+			iframe.load()
+		}
+
+		this.saveFileUploadFromAsset( fileField, asset, callback )
+	},
 
     refreshAssetPreview: function( iframe, asset, value ) {
 		asset.set( 'assetId', value )
@@ -639,8 +662,6 @@ Ext.define('Spelled.controller.Assets', {
 		this.fieldRenderHelper( asset.get('subtype'), view, asset )
 		view.loadRecord( asset )
 
-		//TODO: enable changing file
-		if( view.down('filefield') ) view.down('filefield').hide()
 
 		this.addAssetPreview( view, asset )
 
@@ -795,9 +816,8 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	saveAsset: function( form, asset ) {
-		var fileField = form.down( 'assetfilefield'),
-			window    = form.up( 'window'),
-			me        = this,
+		var fileField = form.down( 'assetfilefield' ),
+			window    = form.up( 'window' ),
 			id        = this.application.generateFileIdFromObject( asset.data ),
 			type      = asset.get( 'subtype' )
 
@@ -812,27 +832,32 @@ Ext.define('Spelled.controller.Assets', {
 		},this)
 
 		if( fileField && fileField.isValid() ) {
-			var reader = new FileReader(),
-				file   = fileField.fileRawInput
-
-			// Closure to capture the file information.
-			reader.onload = (function(theFile) {
-				return function( e ) {
-					var result    = e.target.result,
-						extension = "." + theFile.type.split( "/").pop()
-
-					me.saveBase64AssetFile( id + extension, result )
-					asset.set( 'file', asset.get( 'name' ) + extension )
-					asset.save({ success: successCallback })
-				};
-			})( file )
-
-			reader.readAsDataURL( file )
+			this.saveFileUploadFromAsset( fileField, asset, successCallback )
 		} else {
 			asset.save({ success: successCallback })
 		}
 
 		window.close()
+	},
+
+	saveFileUploadFromAsset: function( fileField, asset, callback ) {
+		var me     = this,
+			id     = this.application.generateFileIdFromObject( asset.data ),
+			reader = new FileReader(),
+			file   = fileField.fileRawInput
+
+		// Closure to capture the file information.
+		reader.onload = (function(theFile) {
+			return function( e ) {
+				var result    = e.target.result,
+					extension = "." + theFile.type.split( "/").pop()
+
+				me.saveBase64AssetFile( id + extension, result )
+				asset.set( 'file', asset.get( 'name' ) + extension )
+				asset.save({ success: callback })
+			}
+		})( file )
+		reader.readAsDataURL( file )
 	},
 
     createAsset: function( button ) {

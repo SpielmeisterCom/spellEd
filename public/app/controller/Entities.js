@@ -290,9 +290,7 @@ Ext.define('Spelled.controller.Entities', {
 			this.getNavigator().setActiveTab( this.getLibrary() )
 
 			if( node ) {
-				tree.selectPath( node.getPath() )
-				tree.getSelectionModel().deselectAll()
-				tree.getSelectionModel().select( node )
+				this.application.selectNode( tree, node )
 				this.application.fireEvent( 'templatedblclick', this.getNavigator(), node )
 			}
 		}
