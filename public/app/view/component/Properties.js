@@ -48,7 +48,7 @@ Ext.define('Spelled.view.component.Properties', {
 		Ext.Object.each(
 			this.propertyDeepLinked,
 			function( key, value ) {
-				propertyNames[ key ] = key + " <img src='/images/icons/component_physics_force.png' class='linkedProperty'/>"
+				propertyNames[ key ] = key + " <img src='/images/icons/deep_link.png' class='linkedProperty'/>"
 			}
 		)
 	},
