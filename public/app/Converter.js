@@ -25,13 +25,5 @@ Ext.define('Spelled.Converter' ,{
 		)
 
 		return newSource
-	},
-
-	isEqual: function( value1, value2 ) {
-		if( Ext.isArray( value1 ) ) {
-			return Ext.Array.difference( value1, value2).length === 0
-		}
-
-		return value1 == value2
 	}
 })

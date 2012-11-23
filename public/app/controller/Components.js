@@ -10,7 +10,8 @@ Ext.define('Spelled.controller.Components', {
 		'Spelled.view.component.property.Contextmenu',
 		'Spelled.abstract.grid.property.Grid',
 		'Spelled.store.property.Mappings',
-		'Spelled.Converter'
+		'Spelled.Converter',
+		'Spelled.Compare'
 	],
 
     views: [
@@ -358,7 +359,7 @@ Ext.define('Spelled.controller.Components', {
 
 		if( config[ name ] != value ) {
 
-			if( value === null || Spelled.Converter.isEqual( value, defaultConfig[ name ] ) ) {
+			if( value === null || Spelled.Compare.isEqual( value, defaultConfig[ name ] ) ) {
 				delete config[ name ]
 			} else {
 				config[ name ] = value
