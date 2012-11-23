@@ -1227,6 +1227,7 @@ Ext.ClassManager.addNameAliasMappings({
     "layout.hbox"
   ],
   "Ext.resizer.Resizer": [],
+  "Spelled.Compare": [],
   "Ext.selection.RowModel": [
     "selection.rowmodel"
   ],
@@ -2123,6 +2124,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.resizer.Resizer": [
     "Ext.Resizable"
   ],
+  "Spelled.Compare": [],
   "Ext.selection.RowModel": [],
   "Spelled.view.asset.Form": [],
   "Ext.layout.ContextItem": [],
