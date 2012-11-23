@@ -351,16 +351,17 @@ Ext.define('Spelled.controller.Components', {
 			record            = e.record,
 			component         = this.getConfigComponentsStore().getById( componentConfigId ),
 			config            = Ext.Object.merge( {}, component.get('config') ),
-			defaultConfig     = component.getConfigMergedWithTemplateConfig(),
+			defaultConfig     = Ext.Object.merge( {}, component.getTemplateConfig(), component.getTemplateCompositeConfig() ),
 			value             = Spelled.Converter.decodeFieldValue( record.get( 'value') ),
 			name              = record.get('name'),
 			entity            = component.getEntity()
 
 		if( config[ name ] != value ) {
-			config[ name ] = value || ""
 
-			if( config[ name ] == defaultConfig[ name ] ) {
+			if( value === null || Spelled.Converter.isEqual( value, defaultConfig[ name ] ) ) {
 				delete config[ name ]
+			} else {
+				config[ name ] = value
 			}
 
 			component.set( 'config', config)
