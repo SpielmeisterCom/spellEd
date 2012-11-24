@@ -213,7 +213,7 @@ Ext.define('Spelled.controller.Assets', {
 			var iframe = fileField.up( 'panel' ).down( 'assetiframe' ),
 				node   = me.application.getLastSelectedNode( tree )
 
-			if( node.getId() === asset.getId() ) {
+			if( tree.isVisible() && node && node.getId() === asset.getId() ) {
 				me.application.selectNode( tree, node )
 			}
 
