@@ -772,10 +772,10 @@ Ext.define('Spelled.controller.Scenes', {
 		this.sendChangeToEngine(
 			"system.add",
 			{
-				executionGroupId: 'render',
+				executionGroupId: 'update',
 				systemConfig: { active: cameraState },
 				systemId: 'spell.system.debug.camera',
-				index: 999
+				index: 0
 			}
 		)
 	},
@@ -783,7 +783,7 @@ Ext.define('Spelled.controller.Scenes', {
 	toggleDevCam: function( button, state ) {
 		var system = Ext.getStore( 'template.Systems' ).getByTemplateId( 'spell.system.debug.camera' )
 
-		this.application.fireEvent( 'updatescenesystem', 'render', system, { active: state } )
+		this.application.fireEvent( 'updatescenesystem', 'update', system, { active: state } )
 
 		this.getSpelledIframe().focus()
 	},
