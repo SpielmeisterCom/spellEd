@@ -470,7 +470,8 @@ Ext.define('Spelled.controller.Assets', {
 					textureWidth  : asset.get('config').textureWidth,
 					textureHeight : asset.get('config').textureHeight,
 					frameWidth    : asset.get('config').frameWidth,
-					frameHeight   : asset.get('config').frameHeight
+					frameHeight   : asset.get('config').frameHeight,
+					innerPadding  : asset.get('config').innerPadding
 				}
 			)
 		}
@@ -792,7 +793,11 @@ Ext.define('Spelled.controller.Assets', {
 				config.frameIds = values.frameIds.split( "," )
 				break
 			case 'spriteSheet':
-				Ext.copyTo( config, values, 'textureWidth,textureHeight,frameWidth,frameHeight' )
+				config.textureWidth     = parseInt( values.textureWidth, 10 )
+				config.textureHeight    = parseInt( values.textureHeight, 10 )
+				config.frameWidth       = parseInt( values.frameWidth, 10 )
+				config.frameHeight      = parseInt( values.frameHeight, 10 )
+				config.innerPadding      = parseInt( values.innerPadding, 10 )
 				break
 			case 'keyFrameAnimation':
                 asset.set( 'assetId', values.assetId )

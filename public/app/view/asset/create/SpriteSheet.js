@@ -38,6 +38,12 @@ Ext.define('Spelled.view.asset.create.SpriteSheet', {
 					name: 'frameHeight',
 					minValue: 0,
 					fieldLabel: 'Frame Height'
+				},
+				{
+					xtype: "numberfield",
+					name: 'innerPadding',
+					minValue: 0,
+					fieldLabel: 'Inner Padding'
 				}
 			]
 		})
