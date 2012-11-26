@@ -5,6 +5,11 @@ Ext.define('Spelled.store.property.Mappings', {
 
 	data : [
 		{
+			"name"  : "spelledspritesheetfield",
+			"target": "asset",
+			"type"  : "libraryLink"
+		},
+		{
 			"name"  : "spelledanimatedappearancefield",
 			"target": "asset",
 			"type"  : "libraryLink"

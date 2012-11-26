@@ -53,6 +53,10 @@ Ext.define('Spelled.store.template.component.AttributeTypes', {
 			"name":"assetId:animation"
 		},
 		{
+			"type":"spelledspritesheetfield",
+			"name":"assetId:spriteSheet"
+		},
+		{
 			"type":"spelledappearancefield",
 			"name":"assetId:appearance"
 		},

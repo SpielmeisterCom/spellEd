@@ -798,6 +798,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.chart.Shape": [],
   "Ext.panel.DD": [],
   "Ext.container.AbstractContainer": [],
+  "Spelled.view.template.component.attribute.SpriteSheet": [
+    "widget.spelledspritesheetfield"
+  ],
   "Ext.data.ArrayStore": [
     "store.array"
   ],
@@ -931,10 +934,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.Editor": [
     "widget.editor"
   ],
-  "Ext.chart.Tip": [],
   "Ext.chart.axis.Radial": [
     "axis.radial"
   ],
+  "Ext.chart.Tip": [],
   "Spelled.view.template.entity.Edit": [
     "widget.entitytemplateedit"
   ],
@@ -1839,6 +1842,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.chart.Shape": [],
   "Ext.panel.DD": [],
   "Ext.container.AbstractContainer": [],
+  "Spelled.view.template.component.attribute.SpriteSheet": [],
   "Ext.data.ArrayStore": [],
   "Ext.window.Window": [
     "Ext.Window"
@@ -1929,8 +1933,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.component.Draw": [],
   "Spelled.view.library.TreeList": [],
   "Ext.Editor": [],
-  "Ext.chart.Tip": [],
   "Ext.chart.axis.Radial": [],
+  "Ext.chart.Tip": [],
   "Spelled.view.template.entity.Edit": [],
   "Spelled.data.reader.Scene": [],
   "Ext.layout.container.Table": [
