@@ -69,16 +69,22 @@ Ext.define('Spelled.model.config.Entity', {
 	},
 
 	clone: function( internal ) {
+		this.mergeWithTemplateConfig()
+
 		var cloneConfig = Ext.amdModules.entityConverter.toEditorFormat( Ext.amdModules.entityConverter.toEngineFormat(this.getData( true )) )
 
 		if( !internal ) cloneConfig.name = this.get('name') + "_copy"
 
 		var copy = Ext.create( this.$className, cloneConfig )
 
-		Ext.Array.each(
-			copy.getComponents().add( cloneConfig.components ),
+		this.getComponents().each(
 			function( component ) {
-				component.setEntity( copy )
+				var cmp = component.copy()
+				cmp.set( 'config', component.getConfigMergedWithTemplateConfig() )
+				copy.getComponents().add( cmp )
+				cmp.setEntity( copy )
+
+				cmp.stripRedundantData()
 			}
 		)
 
@@ -189,7 +195,7 @@ Ext.define('Spelled.model.config.Entity', {
     },
 
 	isAnonymous: function() {
-		return ( Ext.isEmpty(this.get('templateId')) )
+		return Ext.isEmpty( this.get('templateId') )
 	},
 
 	getEntityTemplate: function() {

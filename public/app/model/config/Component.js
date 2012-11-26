@@ -23,6 +23,20 @@ Ext.define('Spelled.model.config.Component', {
 		}
 	],
 
+	stripRedundantData: function() {
+		var config = this.get( 'config' )
+
+		Ext.Object.each(
+			Ext.Object.merge( this.getTemplateConfig(), this.getTemplateCompositeConfig() ),
+			function( key, value ) {
+				//TODO: strip engine internals?
+				if( Spelled.Compare.isEqual( value, config[ key ] ) ) {
+					delete config[ key ]
+				}
+			}
+		)
+	},
+
 	setEntity: function( entity ) {
 		this[ 'Spelled.model.config.EntityBelongsToInstance' ] = entity
 	},
