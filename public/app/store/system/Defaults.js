@@ -5,6 +5,18 @@ Ext.define('Spelled.store.system.Defaults', {
 
     data : [
 		{
+			systemId: 'spell.system.processKeyInput',
+			executionGroupId: 'update'
+		},
+		{
+			systemId: 'spell.system.cameraMover',
+			executionGroupId: 'update'
+		},
+		{
+			systemId: 'spell.system.clearKeyInput',
+			executionGroupId: 'update'
+		},
+		{
 			systemId: 'spell.system.keyFrameAnimation',
 			executionGroupId: 'render'
 		},
