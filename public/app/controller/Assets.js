@@ -221,6 +221,8 @@ Ext.define('Spelled.controller.Assets', {
 		}
 
 		this.saveFileUploadFromAsset( fileField, asset, callback )
+
+		fileField.clearFileUpload()
 	},
 
     refreshAssetPreview: function( iframe, asset, value ) {

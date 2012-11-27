@@ -7,19 +7,43 @@ Ext.define('Spelled.view.asset.create.FileField', {
 	msgTarget: 'side',
 	buttonText: 'Select a File...',
 	listeners: {
-		render: function( file ) {
-			var domElement = file.getEl().dom.querySelector('input[type="file"]')
-			if( domElement && !domElement.onChange ) {
-				domElement.addEventListener( 'change',
-					function(event) {
-						file.fileRawInput = event.target.files[0]
-						file.fireEvent( 'filechanged', file )
-					},
-					false
-				)
-			}
+		render: function() {
+			this.addChangeEventToFileField( this.getDomFileUploadElement() )
 		}
 	},
+
+	addChangeEventToFileField: function( domElement ) {
+		var me = this
+
+		if( domElement && !domElement.onChange ) {
+			domElement.addEventListener( 'change',
+				function(event) {
+					me.fileRawInput = event.target.files[0]
+					me.fireEvent( 'filechanged', me )
+				}
+			)
+		}
+	},
+
+	getDomFileUploadElement: function() {
+		return this.getEl().dom.querySelector('input[type="file"]')
+	},
+
+	clearFileUpload: function() {
+		var fileField = this.getDomFileUploadElement(),
+			parentNod = fileField.parentNode,
+			tmpForm   = document.createElement("form")
+
+		parentNod.replaceChild( tmpForm, fileField )
+		tmpForm.appendChild( fileField )
+		tmpForm.reset()
+
+		parentNod.replaceChild( fileField, tmpForm )
+
+		this.reset()
+		this.addChangeEventToFileField( this.getDomFileUploadElement() )
+	},
+
 	validator: function( value ) {
 		if( !value )
 			return "You need to select a new File"
