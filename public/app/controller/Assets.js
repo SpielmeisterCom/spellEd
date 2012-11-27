@@ -672,7 +672,7 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	editAssetHelper: function( field, value, oldValue ) {
-		if( !oldValue ) return
+		if( Ext.isEmpty( oldValue ) ) return
 		this.editAsset( field )
 	},
 
