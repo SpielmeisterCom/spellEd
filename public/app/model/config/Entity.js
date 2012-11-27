@@ -81,10 +81,11 @@ Ext.define('Spelled.model.config.Entity', {
 		)
 	},
 
-	clone: function( internal ) {
+	clone: function( internal, removable ) {
 		this.mergeWithTemplateConfig()
 
 		var cloneConfig = Ext.amdModules.entityConverter.toEditorFormat( Ext.amdModules.entityConverter.toEngineFormat(this.getData( true )) )
+		cloneConfig.removable = !!removable
 
 		if( !internal ) cloneConfig.name = this.get('name') + "_copy"
 
@@ -94,7 +95,7 @@ Ext.define('Spelled.model.config.Entity', {
 
 		this.getChildren().each(
 			function( child ) {
-				var childClone = child.clone( true )
+				var childClone = child.clone( true, removable )
 
 				copy.getChildren().add( childClone )
 				childClone.setEntity( copy )
@@ -275,11 +276,7 @@ Ext.define('Spelled.model.config.Entity', {
 	},
 
 	copyTemplateEntity: function() {
-		var copy = Ext.create( 'Spelled.model.config.Entity', {
-			templateId: this.get('templateId'),
-			name : this.get('name'),
-			removable : false
-		})
+		var copy = this.clone( true, false )
 		Ext.getStore( 'config.Entities' ).add( copy )
 		return copy
 	},
