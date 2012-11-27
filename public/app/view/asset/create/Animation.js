@@ -25,6 +25,7 @@ Ext.define('Spelled.view.asset.create.Animation', {
 						},
 						{
 							hidden: !this.edit,
+							padding: 5,
 							xtype: "tool",
 							type: 'search',
 							handler: Ext.bind( me.clickedDeepLink, me )
