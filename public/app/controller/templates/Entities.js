@@ -73,7 +73,6 @@ Ext.define('Spelled.controller.templates.Entities', {
 
 	convertEntity: function( entityId, template ) {
 		var entity   = Ext.getStore( 'config.Entities' ).getById( entityId ),
-			data     = entity.getData( true ),
 			children = []
 
 		entity.getChildren().each(
@@ -82,7 +81,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 			}
 		)
 
-		template.getComponents().add( data.getComponents )
+		entity.copyComponentsToEntity( template )
 		template.getChildren().add( children )
 
 		entity.set( 'templateId', template.getFullName() )

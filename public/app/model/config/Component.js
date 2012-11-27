@@ -24,10 +24,10 @@ Ext.define('Spelled.model.config.Component', {
 	],
 
 	stripRedundantData: function() {
-		var config = this.get( 'config' )
+		var config  = this.get( 'config' )
 
 		Ext.Object.each(
-			Ext.Object.merge( this.getTemplateConfig(), this.getTemplateCompositeConfig() ),
+			Ext.Object.merge( this.getTemplateConfig(true), this.getTemplateCompositeConfig() ),
 			function( key, value ) {
 				//TODO: strip engine internals?
 				if( Spelled.Compare.isEqual( value, config[ key ] ) ) {
@@ -79,7 +79,7 @@ Ext.define('Spelled.model.config.Component', {
 		Ext.Object.each(
 			templateConfig,
 			function( key, value ) {
-				config[ key ] = value.get('default')
+				config[ key ] = Ext.clone( value.get('default') )
 			}
 		)
 
