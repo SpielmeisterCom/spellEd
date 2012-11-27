@@ -3,5 +3,10 @@ Ext.define('Spelled.view.asset.edit.Edit', {
 	alias  : 'widget.editasset',
 	closable: true,
 
+	fieldDefaults: {
+		labelWidth: 150,
+		anchor: '100%'
+	},
+
 	items: []
 });

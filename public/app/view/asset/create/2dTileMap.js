@@ -2,6 +2,8 @@ Ext.define('Spelled.view.asset.create.2dTileMap', {
 	extend: 'Ext.container.Container',
 	alias: 'widget.2dtilemapconfig',
 
+	mixins: [ 'Spelled.abstract.field.AssetId' ],
+
 	initComponent: function() {
 		var me    = this
 
@@ -13,11 +15,23 @@ Ext.define('Spelled.view.asset.create.2dTileMap', {
 					width: 'null'
 				},
 				{
-					xtype: "assetidproperty",
-					name: 'tileMapAssetId',
-					store: 'asset.SpriteSheets',
-					allowBlank: true,
-					fieldLabel: "From existing Sprite Sheet"
+					xtype: 'fieldcontainer',
+					fieldLabel: "From existing Sprite Sheet",
+					layout: 'column',
+					items: [
+						{
+							xtype: "assetidproperty",
+							name : 'tileMapAssetId',
+							allowBlank: true,
+							store: 'asset.SpriteSheets'
+						},
+						{
+							hidden: !this.edit,
+							xtype: "tool",
+							type: 'search',
+							handler: Ext.bind( me.clickedDeepLink, me )
+						}
+					]
 				},
 				{
 					xtype: 'numberfield',

@@ -406,6 +406,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.form.Label": [
     "widget.label"
   ],
+  "Spelled.abstract.field.AssetId": [],
   "Ext.view.BoundListKeyNav": [],
   "Ext.data.writer.Writer": [
     "writer.base"
@@ -934,10 +935,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.Editor": [
     "widget.editor"
   ],
+  "Ext.chart.Tip": [],
   "Ext.chart.axis.Radial": [
     "axis.radial"
   ],
-  "Ext.chart.Tip": [],
   "Spelled.view.template.entity.Edit": [
     "widget.entitytemplateedit"
   ],
@@ -1556,6 +1557,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.data.AjaxProxy"
   ],
   "Ext.form.Label": [],
+  "Spelled.abstract.field.AssetId": [],
   "Ext.view.BoundListKeyNav": [],
   "Ext.data.writer.Writer": [
     "Ext.data.DataWriter",
@@ -1933,8 +1935,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.component.Draw": [],
   "Spelled.view.library.TreeList": [],
   "Ext.Editor": [],
-  "Ext.chart.axis.Radial": [],
   "Ext.chart.Tip": [],
+  "Ext.chart.axis.Radial": [],
   "Spelled.view.template.entity.Edit": [],
   "Spelled.data.reader.Scene": [],
   "Ext.layout.container.Table": [

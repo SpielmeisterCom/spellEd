@@ -19,6 +19,7 @@ Ext.define('Spelled.controller.Assets', {
 		'Spelled.view.asset.create.2dTileMap',
 		'Spelled.view.asset.create.FileField',
 		'Spelled.view.asset.create.Sound',
+		'Spelled.abstract.field.AssetId',
 
 
 		'Spelled.store.asset.Types',
@@ -103,6 +104,9 @@ Ext.define('Spelled.controller.Assets', {
 	    var me = this
 
         this.control({
+			'editasset': {
+				assetdeeplink: this.assetDeepLink
+			},
 			'editasset field' : {
 				change: this.editAssetHelper
 			},
@@ -202,6 +206,17 @@ Ext.define('Spelled.controller.Assets', {
 		    false
 	    )
     },
+
+	assetDeepLink: function( internalAssetId ) {
+		var record = this.getAssetAssetsStore().findRecord( 'internalAssetId', internalAssetId ),
+			tree   = this.getNavigator()
+
+		if( record ) {
+			var node = tree.getStore().getById( record.getId() )
+
+			if( node ) this.application.fireEvent( 'assetdblclick', tree, node )
+		}
+	},
 
 	updateAssetFile: function( fileField ) {
 		var form  = fileField.up( 'form' ),
@@ -373,7 +388,7 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	add2dTileMapForm: function( fieldSet, asset ) {
-		fieldSet.add( { xtype: '2dtilemapconfig' } )
+		fieldSet.add( { xtype: '2dtilemapconfig', edit: !!asset } )
 
 		if( !!asset ) {
 			var config = asset.get('config')
@@ -450,7 +465,7 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	addAnimationForm: function( fieldSet, asset ) {
-		fieldSet.add( { xtype: 'animationassetconfig' } )
+		fieldSet.add( { xtype: 'animationassetconfig', edit: !!asset } )
 
 		if( !!asset ) {
 			fieldSet.getForm().setValues(
