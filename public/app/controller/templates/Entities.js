@@ -97,7 +97,8 @@ Ext.define('Spelled.controller.templates.Entities', {
 				name: "dummyScene", namespace: '',
 				systems: {
 					update: [
-						{ id: 'spell.system.debug.camera', config: { active: true } }
+						{ id: 'spell.system.debug.camera', config: { active: true } },
+						{ id: 'spell.system.clearKeyInput', config: { active: true } }
 					],
 					render: []
 				}

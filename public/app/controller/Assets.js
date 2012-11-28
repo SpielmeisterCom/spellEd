@@ -1015,8 +1015,7 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	tileMapPreviewHelper: function( container, asset, entity ) {
-		var components = entity.getComponents(),
-			messages   = []
+		var components = entity.getComponents()
 
 		components.add({
 				templateId: "spell.component.2d.graphics.tilemap",
@@ -1026,32 +1025,21 @@ Ext.define('Spelled.controller.Assets', {
 		this.initSpellEngineAssetIFrame( container, entity )
 
 		var cameraSystem = Ext.getStore( 'template.Systems').getByTemplateId( 'spell.system.debug.camera' )
-		messages.push({
-			type: "system.update",
-			payload: {
-				executionGroupId: 'update',
-				definition: Ext.amdModules.systemConverter.toEngineFormat( cameraSystem.getData( true ), { includeNamespace: true } ),
-				systemConfig: {
-					active: true,
-					selectedEntityId:   entity.get( 'id' ),
-					deactivatedPlugins: ['entityMover']
-				},
-				systemId: cameraSystem.getFullName()
+		this.messageBus[ container.getId() ] = [
+			{
+				type: "system.update",
+				payload: {
+					executionGroupId: 'update',
+					definition: Ext.amdModules.systemConverter.toEngineFormat( cameraSystem.getData( true ), { includeNamespace: true } ),
+					systemConfig: {
+						active: true,
+						selectedEntityId:   entity.get( 'id' ),
+						deactivatedPlugins: ['entityMover']
+					},
+					systemId: cameraSystem.getFullName()
+				}
 			}
-		})
-
-		var clearKeyInputSystem = Ext.getStore( 'template.Systems').getByTemplateId( 'spell.system.clearKeyInput' )
-		messages.push({
-			type: "system.add",
-			payload: {
-				index: 1,
-				executionGroupId: 'update',
-				systemConfig: { active: true },
-				systemId: clearKeyInputSystem.getFullName()
-			}
-		})
-
-		this.messageBus[ container.getId() ] = messages
+		]
 	},
 
 	initSpellEngineAssetIFrame: function( container, entity ) {
