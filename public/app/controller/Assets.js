@@ -158,6 +158,10 @@ Ext.define('Spelled.controller.Assets', {
 			}
         })
 
+		this.application.engineMessageBus.addHandler( {
+			'spelled.debug.library.updateAsset' : Ext.bind( this.handleUpdateAssetMessage, this )
+		})
+
 		this.application.on({
 			'assetbeforeclose': this.checkIfAssetIsDirty,
 			'removekeymapping': this.removeKeyMapping,
@@ -169,6 +173,14 @@ Ext.define('Spelled.controller.Assets', {
 			scope: this
 		})
     },
+
+	handleUpdateAssetMessage: function( iFrameId, payload ) {
+		var asset = this.getAssetAssetsStore().findRecord( 'internalAssetId', payload.id )
+
+		if( asset ) {
+			this.updateAsset( asset.get( 'myAssetId' ), payload.config )
+		}
+	},
 
 	assetDeepLink: function( internalAssetId ) {
 		var record = this.getAssetAssetsStore().findRecord( 'internalAssetId', internalAssetId ),
@@ -359,8 +371,8 @@ Ext.define('Spelled.controller.Assets', {
 			fieldSet.getForm().setValues(
 				{
 					tileMapAssetId: asset.get('assetId'),
-					width : config.width,
-					height: config.height
+					width : config['width'],
+					height: config['height']
 				}
 			)
 		}
@@ -791,9 +803,9 @@ Ext.define('Spelled.controller.Assets', {
 	getMergedTileMapDataDimensions: function( asset, config ) {
 		var data = asset.get( 'config').tileLayerData || []
 
-		for( var y = 0; y < config.height; y++ ){
+		for( var y = 0; y < config['height']; y++ ) {
 			data[y]    = data[ y ] || []
-			for( var x = 0; x < config.width; x++ ) {
+			for( var x = 0; x < config['width']; x++ ) {
 				data[y][x] = data[ y ] [ x ] || null
 			}
 		}
