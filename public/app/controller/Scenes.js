@@ -173,6 +173,9 @@ Ext.define('Spelled.controller.Scenes', {
 				},
 				'spelled.loadingProgress' : function( sourceId, payload ) {
 					me.updateRenderProgress( sourceId, payload )
+				},
+				'spelled.debug.entity.select': function( sourceId, payload ) {
+					me.selectEntityTreeItem( payload.id )
 				}
 			}
 		)
@@ -243,6 +246,13 @@ Ext.define('Spelled.controller.Scenes', {
 			sendToEngine: this.sendChangeToEngine,
 			scope: this
 		})
+	},
+
+	selectEntityTreeItem: function( entityId ) {
+		var tree = this.getScenesTree(),
+			node = tree.getStore().getNodeById( entityId )
+
+		if( node ) this.dispatchTreeClick( tree, node )
 	},
 
 	expandAndClose: function( tree, node, refNode ) {
