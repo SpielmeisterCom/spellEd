@@ -92,12 +92,17 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
 	createEntityPreviewItem: function( entityConfig, editMode ) {
+		console.log ( entityConfig )
 		var project       = this.application.getActiveProject(),
 			sceneConfig   = {
 				name: "dummyScene", namespace: '',
 				systems: {
 					update: [
-						{ id: 'spell.system.debug.camera', config: { active: true } },
+						{ id: 'spell.system.debug.camera', config: {
+							active:             true,
+							selectedEntityId:   entityConfig.get( 'id' ),
+							deactivatedPlugins: ['entityMove']
+						} },
 						{ id: 'spell.system.clearKeyInput', config: { active: !!editMode } }
 					],
 					render: []
