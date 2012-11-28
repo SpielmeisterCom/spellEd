@@ -1,6 +1,15 @@
 Ext.define('Spelled.controller.Assets', {
     extend: 'Ext.app.Controller',
 
+	TYPE_TILE_MAP: '2dTileMap',
+	TYPE_APPEARANCE: 'appearance',
+	TYPE_SPRITE_SHEET: 'spriteSheet',
+	TYPE_ANIMATION: 'animation',
+	TYPE_KEY_FRAME_ANIMATION: 'keyFrameAnimation',
+	TYPE_FONT: 'font',
+	TYPE_SOUND: 'sound',
+	TYPE_KEY_TO_ACTION: 'keyToActionMap',
+
 	requires: [
 		'Spelled.view.asset.ColorField',
 		'Spelled.view.asset.Iframe',
@@ -101,8 +110,6 @@ Ext.define('Spelled.controller.Assets', {
     ],
 
     init: function() {
-	    var me = this
-
         this.control({
 			'editasset': {
 				assetdeeplink: this.assetDeepLink
@@ -161,50 +168,6 @@ Ext.define('Spelled.controller.Assets', {
 			savemodel         : this.globalSaveModelHelper,
 			scope: this
 		})
-
-	    // initializing the engine message bus
-	    this.assetMessageBus = Ext.create(
-		    'Spelled.MessageBus',
-		    {
-			    handlers : {
-				    //tilemap editor initialized
-				    'wm.initialized' : function( sourceId, payload ) {
-					    me.assetMessageBus.flushQueue( sourceId )
-				    },
-
-				    //tilemap editor has changed data
-				    'wm.save' : function( sourceId, payload ) {
-					    var cmp = Ext.getCmp( sourceId ),
-						    form = cmp.up('form'),
-						    record = form.getRecord()
-
-					    record.set("tileLayerData", payload.tileLayerData)
-					   // record.set("collisionLayerData", payload.collisionLayerData)
-					    record.setDirty()
-
-			            me.setAssetConfigFromForm( form, record )
-					    me.application.fireEvent( 'assetchange', record )
-				    }
-			    }
-		    }
-	    )
-
-		this.application.engineMessageBus.addHandler(
-			{
-				'spelled.asset.update' : function( sourceId, payload ) {
-					var assetId     = payload.id,
-						config      = payload.config
-
-					me.updateAsset( assetId, config )
-				}
-			}
-		)
-
-	    window.addEventListener(
-		    'message',
-		    Ext.bind( this.assetMessageBus.receive, this.assetMessageBus ),
-		    false
-	    )
     },
 
 	assetDeepLink: function( internalAssetId ) {
@@ -360,28 +323,28 @@ Ext.define('Spelled.controller.Assets', {
 
 				domvasassetconfig.startEdit()
 				break
-			case "animation":
+			case this.TYPE_ANIMATION:
 				this.addAnimationForm( fieldSet, asset )
 				break
-			case "font":
+			case this.TYPE_FONT:
 				this.addFontForm( fieldSet, asset )
 				break
-			case "spriteSheet":
+			case this.TYPE_SPRITE_SHEET:
 				this.addSpriteSheetForm( fieldSet, asset )
 				break
-			case "keyToActionMap":
+			case this.TYPE_KEY_TO_ACTION:
 				this.addKeyToActionMapForm( fieldSet, asset )
 				break
-			case "keyFrameAnimation":
+			case this.TYPE_KEY_FRAME_ANIMATION:
 				this.addKeyFrameAnimationForm( fieldSet, asset )
 				break
-			case "2dTileMap":
+			case this.TYPE_TILE_MAP:
 				this.add2dTileMapForm( fieldSet, asset )
 				break
-			case 'appearance':
+			case this.TYPE_APPEARANCE:
 				this.addTextureForm( fieldSet, asset )
 				break
-			case 'sound':
+			case this.TYPE_SOUND:
 				this.addSoundForm( fieldSet, asset )
 				break
 		}
@@ -400,8 +363,6 @@ Ext.define('Spelled.controller.Assets', {
 					height: config.height
 				}
 			)
-
-			this.updateTilemapEditorData( fieldSet, asset )
 		}
 	},
 
@@ -496,37 +457,6 @@ Ext.define('Spelled.controller.Assets', {
 
 	addTextureForm: function( fieldSet, asset ) {
 		fieldSet.add( { xtype: 'textureasset' } )
-	},
-
-	updateTilemapEditorData: function ( form, asset ) {
-		var config = asset.get('config'),
-			tilemapEditorIframe = form.down('tilemapeditoriframe'),
-			assetsStore = this.getAssetAssetsStore(),
-			spriteSheetFullName = asset.get('assetId'),
-			spriteSheetAsset = null
-
-
-		var index = assetsStore.findBy( function( record ) {
-			return ( 'spriteSheet:' + record.getFullName() === spriteSheetFullName )
-		})
-
-		if( index > -1 ) {
-			spriteSheetAsset = assetsStore.getAt( index )
-
-			var wmConfig = Ext.copyTo({}, spriteSheetAsset.get('config'), 'frameHeight,frameWidth')
-			Ext.copyTo(wmConfig, config, 'width,height,tileLayerData')
-
-			wmConfig.path = spriteSheetAsset.getFilePath( this.application.getActiveProject().get( 'name' ) )
-
-			//load data in the tilemap editor iframe
-			this.assetMessageBus.send(
-				tilemapEditorIframe.getId(),
-				{
-					type : "wm.load",
-					payload: wmConfig
-				}
-			)
-		}
 	},
 
 	renderKeyFrameAnimationComponentsTree: function( view ) {
@@ -697,20 +627,16 @@ Ext.define('Spelled.controller.Assets', {
 
 	editAsset: function( button ) {
 		var form   = button.up('form'),
-			record = form.getRecord()
+			record = form.getRecord(),
+			iframe = button.up( 'editasset' ).down( 'assetiframe' )
 
 		if( record ) {
 			this.setAssetConfigFromForm( form, record )
 
 			this.application.fireEvent( 'assetchange', record )
 
-            var iframe = button.up( 'editasset' ).down( 'assetiframe' )
             if( iframe)
-                this.application.sendChange( iframe.getId(), "library.updateAsset", { definition: record.toSpellEngineMessageFormat() } )
-
-			if (record.get("subtype") == "2dTileMap") {
-				this.updateTilemapEditorData( form, record )
-			}
+				this.application.sendChange( iframe.getId(), "library.updateAsset", { definition: record.toSpellEngineMessageFormat() } )
 		}
 	},
 
@@ -732,21 +658,22 @@ Ext.define('Spelled.controller.Assets', {
 		view.loadRecord( asset )
 
 		inspectorPanel.setTitle( 'Asset information of "' + asset.get('name') +'"' )
+		//TODO: refactor
 		switch( asset.get('subtype') ) {
-			case 'animation':
+			case this.TYPE_ANIMATION:
 				view.docString = '#!/guide/asset_type_2d_animated_appearance'
 				break
-			case 'spriteSheet':
+			case this.TYPE_SPRITE_SHEET:
 				view.docString = '#!/guide/asset_type_sprite_sheet'
 				break
-			case 'appearance':
+			case this.TYPE_APPEARANCE:
 				view.docString = '#!/guide/asset_type_2d_static_appearance'
 				view.add( { xtype: 'image', margin: 20, src: '/' + asset.getFilePath( this.application.getActiveProject().get('name') )} )
 				break
-			case 'text':
+			case this.TYPE_FONT:
 				view.docString = '#!/guide/asset_type_text_appearance'
 				break
-			case 'keyToActionMap':
+			case this.TYPE_KEY_TO_ACTION:
 				view.docString = '#!/guide/asset_type_key_to_action_map'
 				break
 		}
@@ -788,7 +715,7 @@ Ext.define('Spelled.controller.Assets', {
 			config    = {}
 
 		switch( asset.get( 'subtype' ) ) {
-			case 'font':
+			case this.TYPE_FONT:
 				var result = this.createFontMap( values )
 				config.charset    = result.charset
 				config.baseline   = result.baseline
@@ -796,36 +723,35 @@ Ext.define('Spelled.controller.Assets', {
 				Ext.copyTo( config, values, 'fontFamily,fontSize,fontStyle,color,outline,outlineColor,spacing' )
 				asset.set( 'file', asset.get( 'name' ) + ".png" )
 				break
-			case 'keyToActionMap':
+			case this.TYPE_KEY_TO_ACTION:
 				config = this.getKeyMappings( form )
 				break
 			case 'domvas':
 				var aceEditor = form.down( 'domvasassetconfig' ).aceEditor
 				config.html = aceEditor.getSession().getValue()
 				break
-			case 'animation':
+			case this.TYPE_ANIMATION:
 				asset.set( 'assetId', values.assetId )
 				config.type     = values.animationType
 				config.duration = values.duration
 				config.frameIds = values.frameIds.split( "," )
 				break
-			case 'spriteSheet':
+			case this.TYPE_SPRITE_SHEET:
 				config.textureWidth     = parseInt( values.textureWidth, 10 )
 				config.textureHeight    = parseInt( values.textureHeight, 10 )
 				config.frameWidth       = parseInt( values.frameWidth, 10 )
 				config.frameHeight      = parseInt( values.frameHeight, 10 )
 				config.innerPadding      = parseInt( values.innerPadding, 10 )
 				break
-			case 'keyFrameAnimation':
+			case this.TYPE_KEY_FRAME_ANIMATION:
                 asset.set( 'assetId', values.assetId )
 				config = this.getKeyFrameAnimationConfig( form.down( 'keyframeanimationconfig' ) )
 				config.length = parseInt( values.length )
 				break
-			case '2dTileMap':
+			case this.TYPE_TILE_MAP:
 				asset.set( 'assetId', values.tileMapAssetId )
 				Ext.copyTo( config, values, 'width,height' )
-				config.tileLayerData = asset.get("tileLayerData")
-			// 	config.collisionLayerData = asset.get("collisionLayerData")
+				config.tileLayerData = this.getMergedTileMapDataDimensions( asset, config )
 				break
 		}
 
@@ -845,7 +771,7 @@ Ext.define('Spelled.controller.Assets', {
 
 		this.setAssetConfigFromForm( form, asset )
 
-		if( type === 'font' ) {
+		if( type === this.TYPE_FONT ) {
 			this.saveFontMap( id,  form.getForm().getValues() )
 		}
 
@@ -860,6 +786,19 @@ Ext.define('Spelled.controller.Assets', {
 		}
 
 		window.close()
+	},
+
+	getMergedTileMapDataDimensions: function( asset, config ) {
+		var data = asset.get( 'config').tileLayerData || []
+
+		for( var y = 0; y < config.height; y++ ){
+			data[y]    = data[ y ] || []
+			for( var x = 0; x < config.width; x++ ) {
+				data[y][x] = data[ y ] [ x ] || null
+			}
+		}
+
+		return data
 	},
 
 	saveFileUploadFromAsset: function( fileField, asset, callback ) {
@@ -942,41 +881,47 @@ Ext.define('Spelled.controller.Assets', {
     },
 
     addAssetPreview: function( view, asset ) {
-		var project = this.application.getActiveProject()
+		var project      = this.application.getActiveProject(),
+			entityConfig = Ext.create( 'Spelled.model.config.Entity', { name: "asset" }),
+			components   = entityConfig.getComponents(),
+			subType      = asset.get('subtype')
 
-		switch( asset.get('subtype') ) {
-			case 'appearance':
-			case 'spriteSheet':
-				view.add( Ext.widget( 'assetiframe', { src: '/' + asset.getFilePath( project.get('name') ) } ) )
+		components.add( [
+			{ templateId: "spell.component.2d.transform" },
+			{ templateId: "spell.component.visualObject" }
+		])
+
+		switch( subType ) {
+			case this.TYPE_APPEARANCE:
+			case this.TYPE_SPRITE_SHEET:
+				view.add( { xtype: 'assetiframe', src: '/' + asset.getFilePath( project.get('name') ) } )
 				break
-            case 'keyFrameAnimation':
-			case 'animation':
+            case this.TYPE_KEY_FRAME_ANIMATION:
+			case this.TYPE_ANIMATION:
+			case this.TYPE_TILE_MAP:
 				var preview = Ext.widget( 'assetiframe', { src: '/' + project.get( 'name' ) + '/public/spellEdShim.html' } )
 
-				this.animationPreviewHelper( preview, asset )
+				if( subType === this.TYPE_TILE_MAP )
+					this.tileMapPreviewHelper( preview, asset, entityConfig )
+				else
+					this.animationPreviewHelper( preview, asset, entityConfig )
 
 				view.add( preview )
 				break
 		}
     },
 
-	animationPreviewHelper: function( container, asset ) {
-		var entityConfig = Ext.create( 'Spelled.model.config.Entity', { name: "asset" }),
-            components   = entityConfig.getComponents()
+	animationPreviewHelper: function( container, asset, entity ) {
+		var components = entity.getComponents()
 
-        components.add( [
-            { templateId: "spell.component.2d.transform" },
-            { templateId: "spell.component.visualObject" }
-		])
-
-        if( asset.get('subtype') === 'keyFrameAnimation' ){
+        if( asset.get('subtype') === this.TYPE_KEY_FRAME_ANIMATION ){
             var previewAsset = this.getAssetAssetsStore().findRecord( 'internalAssetId', asset.get( 'assetId' )),
                 componentId  = 'spell.component.2d.graphics.appearance',
                 config       = {}
 
             if( previewAsset ) {
                 switch( previewAsset.get( 'subtype' ) ) {
-                    case 'animation':
+                    case this.TYPE_ANIMATION:
                         componentId   = 'spell.component.2d.graphics.animatedAppearance'
                         break
                 }
@@ -999,7 +944,22 @@ Ext.define('Spelled.controller.Assets', {
             )
         }
 
-        components.each(
+		this.initSpellEngineAssetIFrame( container, entity )
+	},
+
+	tileMapPreviewHelper: function( container, asset, entity ) {
+		var components = entity.getComponents()
+
+		components.add({
+				templateId: "spell.component.2d.graphics.tilemap",
+				config:{ assetId: asset.get( 'internalAssetId' ) } }
+		)
+
+		this.initSpellEngineAssetIFrame( container, entity )
+	},
+
+	initSpellEngineAssetIFrame: function( container, entity ) {
+		entity.getComponents().each(
 			function( component ) {
 				component.set( 'additional', true )
 			}

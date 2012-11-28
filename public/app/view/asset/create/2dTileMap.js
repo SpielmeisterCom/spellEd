@@ -43,9 +43,6 @@ Ext.define('Spelled.view.asset.create.2dTileMap', {
 					xtype: 'numberfield',
 					fieldLabel: 'Height',
 					name: 'height'
-				}, {
-					name: 'tilemapeditoriframe',
-					xtype: 'tilemapeditoriframe'
 				}
 			]
 		})
