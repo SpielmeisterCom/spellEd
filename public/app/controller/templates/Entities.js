@@ -62,12 +62,10 @@ Ext.define('Spelled.controller.templates.Entities', {
 		)
 
 		this.application.createTab( templateEditor, editView )
-		this.application.engineMessageBus.send(
+		this.application.sendDebugMessage(
 			editView.down( 'container[name="entityPreviewContainer"]').getId(),
-			{
-				type : 'spell.debug.runtimeModule.start',
-				payload : this.createEntityTemplatePreviewItem( entityTemplate )
-			}
+			'runtimeModule.start',
+			this.createEntityTemplatePreviewItem( entityTemplate )
 		)
 	},
 
@@ -93,13 +91,16 @@ Ext.define('Spelled.controller.templates.Entities', {
 		return this.createEntityPreviewItem( { name: "preview", templateId: entityTemplate.getFullName() } )
 	},
 
-	createEntityPreviewItem: function( entityConfig ) {
+	createEntityPreviewItem: function( entityConfig, editMode ) {
 		var project       = this.application.getActiveProject(),
 			sceneConfig   = {
 				name: "dummyScene", namespace: '',
 				systems: {
-					update: [],
-					render: [ { id: 'spell.system.debug.camera', config: { active: true } } ]
+					update: [
+						{ id: 'spell.system.debug.camera', config: { active: true } },
+						{ id: 'spell.system.clearKeyInput', config: { active: !!editMode } }
+					],
+					render: []
 				}
 			},
 			tmpProjectCfg = Ext.amdModules.projectConverter.toEngineFormat( project.getData( true ) ),

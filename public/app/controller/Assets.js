@@ -955,22 +955,20 @@ Ext.define('Spelled.controller.Assets', {
 				config:{ assetId: asset.get( 'internalAssetId' ) } }
 		)
 
-		this.initSpellEngineAssetIFrame( container, entity )
+		this.initSpellEngineAssetIFrame( container, entity, true )
 	},
 
-	initSpellEngineAssetIFrame: function( container, entity ) {
+	initSpellEngineAssetIFrame: function( container, entity, editMode ) {
 		entity.getComponents().each(
 			function( component ) {
 				component.set( 'additional', true )
 			}
 		)
 
-		this.application.engineMessageBus.send(
+		this.application.sendDebugMessage(
 			container.getId(),
-			{
-				type : 'spell.debug.runtimeModule.start',
-				payload : this.application.getController( 'templates.Entities' ).createEntityPreviewItem( entityConfig )
-			}
+			'runtimeModule.start',
+			this.application.getController( 'templates.Entities' ).createEntityPreviewItem( entity, editMode )
 		)
 	},
 

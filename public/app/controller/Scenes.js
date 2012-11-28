@@ -257,7 +257,7 @@ Ext.define('Spelled.controller.Scenes', {
      * Wrapper for sending changes only to the rendered scene.
      *
      * For sending changes to a different target, for example the asset preview use:
-     * this.application.sendChange()
+     * this.application.sendDebugMessage()
      *
      * @param type
      * @param payload
@@ -265,7 +265,7 @@ Ext.define('Spelled.controller.Scenes', {
 	sendChangeToEngine: function( type, payload ) {
 		var iframe = this.getSpelledIframe()
 
-        this.application.sendChange( iframe.getId(), type, payload )
+        this.application.sendDebugMessage( iframe.getId(), type, payload )
 	},
 
 	sendSystemChangeToEngine: function( model ) {
