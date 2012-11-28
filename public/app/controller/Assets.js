@@ -169,7 +169,7 @@ Ext.define('Spelled.controller.Assets', {
 			'assetselect'     : this.showConfigHelper,
 			'assetdblclick'   : this.showEditHelper,
 			'assetcontextmenu': this.showListContextMenu,
-			savemodel         : this.globalSaveModelHelper,
+			savemodel         : this.postProcessAsset,
 			scope: this
 		})
     },
@@ -229,10 +229,15 @@ Ext.define('Spelled.controller.Assets', {
 		}
 	},
 
-	globalSaveModelHelper: function( model ) {
-		if( model.get( 'type') === 'asset' && model.get( 'subtype' ) === 'font' ) {
+	postProcessAsset: function( model ) {
+		if( model.get( 'type') === 'asset' && model.get( 'subtype' ) === this.TYPE_FONT ) {
 			var id = this.application.generateFileIdFromObject( model.data )
 			this.saveFontMap( id,  model.get( 'config' ) )
+		}
+
+		//TODO: remove this workaround for tilemaps
+		if( model.get( 'type') === 'asset' && model.get( 'subtype' ) === this.TYPE_TILE_MAP ) {
+			this.sliceTileMapData( model )
 		}
 	},
 
@@ -803,19 +808,31 @@ Ext.define('Spelled.controller.Assets', {
 	getMergedTileMapDataDimensions: function( asset, config ) {
 		var data   = asset.get( 'config').tileLayerData || [],
 			height = config['height'],
-			width  = config['width'],
-			slice  = Ext.Array.slice
+			width  = config['width']
 
 		for( var y = 0; y < height; y++ ) {
-
-			data[y] = ( data[ y ] ) ? slice( data[y], 0, width )  : []
+			data[y] = data[ y ] || []
 			for( var x = 0; x < width; x++ ) {
 				data[y][x] = data[ y ] [ x ] || null
 			}
 		}
 
-		data = slice( data, 0, height )
 		return data
+	},
+
+	sliceTileMapData: function( asset ) {
+		var config = asset.get( 'config'),
+			data   = config.tileLayerData,
+			height = config['height'],
+			width  = config['width'],
+			slice  = Ext.Array.slice
+
+		for( var y = 0; y < height; y++ ) {
+			data[y] = slice( data[y], 0, width )
+		}
+
+		config.tileLayerData = slice( data, 0, height )
+		asset.save()
 	},
 
 	saveFileUploadFromAsset: function( fileField, asset, callback ) {
