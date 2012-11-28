@@ -801,15 +801,20 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	getMergedTileMapDataDimensions: function( asset, config ) {
-		var data = asset.get( 'config').tileLayerData || []
+		var data   = asset.get( 'config').tileLayerData || [],
+			height = config['height'],
+			width  = config['width'],
+			slice  = Ext.Array.slice
 
-		for( var y = 0; y < config['height']; y++ ) {
-			data[y]    = data[ y ] || []
-			for( var x = 0; x < config['width']; x++ ) {
+		for( var y = 0; y < height; y++ ) {
+
+			data[y] = ( data[ y ] ) ? slice( data[y], 0, width )  : []
+			for( var x = 0; x < width; x++ ) {
 				data[y][x] = data[ y ] [ x ] || null
 			}
 		}
 
+		data = slice( data, 0, height )
 		return data
 	},
 
