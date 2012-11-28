@@ -1008,7 +1008,7 @@ Ext.define('Spelled.controller.Assets', {
 		this.application.engineMessageBus.send(
 			container.getId(),
 			{
-				type : 'spelled.debug.runtimeModule.start',
+				type : 'spell.debug.runtimeModule.start',
 				payload : this.application.getController( 'templates.Entities' ).createEntityPreviewItem( entityConfig )
 			}
 		)

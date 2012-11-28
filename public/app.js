@@ -130,7 +130,7 @@ var startApplication = function() {
 		renderedScene: undefined,
 
         sendChange: function( target, type, payload ) {
-            this.engineMessageBus.send( target, { type : 'spelled.debug.' + type, payload : payload } )
+            this.engineMessageBus.send( target, { type : 'spell.debug.' + type, payload : payload } )
         },
 
 		selectNode: function( tree, node ) {

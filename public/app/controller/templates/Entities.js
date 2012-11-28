@@ -65,7 +65,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 		this.application.engineMessageBus.send(
 			editView.down( 'container[name="entityPreviewContainer"]').getId(),
 			{
-				type : 'spelled.debug.runtimeModule.start',
+				type : 'spell.debug.runtimeModule.start',
 				payload : this.createEntityTemplatePreviewItem( entityTemplate )
 			}
 		)
