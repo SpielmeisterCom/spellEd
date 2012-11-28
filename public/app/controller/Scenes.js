@@ -215,7 +215,7 @@ Ext.define('Spelled.controller.Scenes', {
 				itemmouseenter : me.dispatchMouseEnterTree,
 				itemmouseleave : me.application.hideActions
 			},
-			'scenetreelist button[action="showCreateScene"]': {
+			'scenetreelist [action="showCreateScene"]': {
 				click: me.showCreateScene
 			},
 			'createscene button[action="createScene"]' : {

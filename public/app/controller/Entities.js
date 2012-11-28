@@ -72,6 +72,9 @@ Ext.define('Spelled.controller.Entities', {
 			},
 			'scenetreelist': {
 				edit: this.changeEntityName
+			},
+			'scenetreelist [action="showCreateEntity"]': {
+				click: me.showCreateEntityHelper
 			}
         })
 
@@ -98,6 +101,11 @@ Ext.define('Spelled.controller.Entities', {
 			}
 		)
     },
+
+	showCreateEntityHelper: function() {
+		var scene = this.application.getRenderedScene()
+		this.showCreateEntity( scene )
+	},
 
 	updateEntityComponent:function( id, componentId, config ){
 		var entity           = this.getConfigEntitiesStore().getById( id ),
@@ -312,15 +320,17 @@ Ext.define('Spelled.controller.Entities', {
         var CreateView  = this.getEntityCreateView(),
         	createView  = new CreateView(),
 			EntityModel = this.getConfigEntityModel(),
-			newEntity   = new EntityModel()
-
+			newEntity   = new EntityModel(),
+			sceneCombo  = createView.down( 'combobox[name="scene"]' )
 
         createView.down('form').loadRecord( newEntity )
 
 		if( owner.modelName === newEntity.modelName ) {
 			newEntity.setEntity( owner )
+			sceneCombo.hide()
 		} else {
 			newEntity.setScene( owner )
+			sceneCombo.setValue( owner.getFullName() )
 		}
 
         createView.show()
@@ -366,11 +376,16 @@ Ext.define('Spelled.controller.Entities', {
         var window = button.up('window'),
             form   = window.down('form'),
             record = form.getRecord(),
-            values = form.getValues()
+            values = form.getValues(),
+			scene  = Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', values.scene )
 
 		record = this.createEntityHelper( record, values )
 
-		var node = this.application.getLastSelectedNode( this.getScenesTree() )
+		if( scene ) record.setScene( scene )
+
+		var node = ( values.owner ) ? this.application.getLastSelectedNode( this.getScenesTree() )
+			: this.getScenesTree().getStore().getNodeById( scene.getId() + "_entities" )
+
 		node.set( 'leaf', false )
 
 		var entityNode = record.createTreeNode( node ),

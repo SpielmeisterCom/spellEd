@@ -26,6 +26,17 @@ Ext.define('Spelled.view.system.Add' ,{
 			},
 
             items: [
+				{
+					xtype: 'combobox',
+					name: 'scene',
+					displayField: 'sceneId',
+					matchFieldWidth : false,
+					fieldLabel: 'Select scene',
+					emptyText: " -- Select a scene --",
+					store: 'config.Scenes',
+					anchor: '100%',
+					allowBlank: false
+				},
                 {
 					xtype: 'combobox',
 					store: 'system.Types',
