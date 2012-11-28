@@ -85,7 +85,7 @@ Ext.define('Spelled.model.config.Entity', {
 		this.mergeWithTemplateConfig()
 
 		var cloneConfig = Ext.amdModules.entityConverter.toEditorFormat( Ext.amdModules.entityConverter.toEngineFormat(this.getData( true )) )
-		cloneConfig.removable = !!removable
+		cloneConfig.removable = ( Ext.isDefined( removable ) ) ? !!removable : true
 
 		if( !internal ) cloneConfig.name = this.get('name') + "_copy"
 
