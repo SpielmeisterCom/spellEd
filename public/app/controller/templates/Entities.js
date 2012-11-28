@@ -91,19 +91,13 @@ Ext.define('Spelled.controller.templates.Entities', {
 		return this.createEntityPreviewItem( { name: "preview", templateId: entityTemplate.getFullName() } )
 	},
 
-	createEntityPreviewItem: function( entityConfig, editMode ) {
-		console.log ( entityConfig )
+	createEntityPreviewItem: function( entityConfig ) {
 		var project       = this.application.getActiveProject(),
 			sceneConfig   = {
 				name: "dummyScene", namespace: '',
 				systems: {
 					update: [
-						{ id: 'spell.system.debug.camera', config: {
-							active:             true,
-							selectedEntityId:   entityConfig.get( 'id' ),
-							deactivatedPlugins: ['entityMove']
-						} },
-						{ id: 'spell.system.clearKeyInput', config: { active: !!editMode } }
+						{ id: 'spell.system.debug.camera', config: { active: true } }
 					],
 					render: []
 				}

@@ -172,7 +172,7 @@ Ext.define('Spelled.controller.Scenes', {
 					engineMessageBus.flushQueue( sourceId )
 				},
 				'spelled.loadingProgress' : function( sourceId, payload ) {
-					me.updateRenderProgress( payload )
+					me.updateRenderProgress( sourceId, payload )
 				}
 			}
 		)
@@ -747,7 +747,9 @@ Ext.define('Spelled.controller.Scenes', {
 		return Ext.amdModules.createCacheContent( toBeCached )
 	},
 
-	updateRenderProgress: function( value ) {
+	updateRenderProgress: function( targetId, value ) {
+		if( value >= 1 ) this.application.fireEvent( 'spellfinishedloading', targetId )
+
 		var progressBar = this.getProgressBar()
 
 		if( !progressBar ) return
