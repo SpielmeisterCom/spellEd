@@ -241,8 +241,26 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
     refreshAssetPreview: function( iframe, asset, value ) {
+		var entityConfig = iframe.up( 'editasset' ).entity,
+			componentId  = undefined
+
 		asset.set( 'assetId', value )
-        this.animationPreviewHelper( iframe, asset )
+
+		switch( asset.get( 'subtype' ) ) {
+			case this.TYPE_KEY_FRAME_ANIMATION:
+				componentId = "spell.component.2d.graphics.animatedAppearance"
+				break
+		}
+
+		this.application.sendDebugMessage(
+			iframe.getId(),
+			"component.update",
+			{
+				entityId    : entityConfig.getId(),
+				componentId : componentId,
+				config      : { assetId: asset.get( 'assetId' ) }
+			}
+		)
     },
 
 	updateAsset: function( assetId, config ) {
@@ -945,6 +963,8 @@ Ext.define('Spelled.controller.Assets', {
 			entityConfig = Ext.create( 'Spelled.model.config.Entity', { name: "asset" }),
 			components   = entityConfig.getComponents(),
 			subType      = asset.get('subtype')
+
+		view.entity = entityConfig
 
 		components.add( [
 			{ templateId: "spell.component.2d.transform" },
