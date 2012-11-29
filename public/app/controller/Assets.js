@@ -241,23 +241,16 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
     refreshAssetPreview: function( iframe, asset, value ) {
-		var entityConfig = iframe.up( 'editasset' ).entity,
-			componentId  = undefined
+		var entityConfig = iframe.up( 'editasset' ).entity
 
 		asset.set( 'assetId', value )
-
-		switch( asset.get( 'subtype' ) ) {
-			case this.TYPE_KEY_FRAME_ANIMATION:
-				componentId = "spell.component.2d.graphics.animatedAppearance"
-				break
-		}
 
 		this.application.sendDebugMessage(
 			iframe.getId(),
 			"component.update",
 			{
 				entityId    : entityConfig.getId(),
-				componentId : componentId,
+				componentId : "spell.component.2d.graphics.animatedAppearance",
 				config      : { assetId: asset.get( 'assetId' ) }
 			}
 		)
