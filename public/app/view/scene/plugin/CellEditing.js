@@ -1,6 +1,6 @@
 Ext.define('Spelled.view.scene.plugin.CellEditing' ,{
     extend: 'Ext.grid.plugin.CellEditing',
-	alias: 'plugin.renameentityplugin',
+	alias: 'plugin.renameplugin',
 
 	mixins: [ 'Spelled.abstract.validator.General' ],
 
@@ -38,12 +38,12 @@ Ext.define('Spelled.view.scene.plugin.CellEditing' ,{
 				sm.setCurrentPosition(sm.getCurrentPosition());
 			}
 			grid.getView().getEl(activeColumn).focus();
-			me.fireEvent('edit', me, context);
+			me.fireEvent('edit', me, context, value, startValue);
 			me.editing = false;
 		}
 	},
 	clicksToEdit: 4,
-	pluginId:'renameEntityPlugin'
+	pluginId:'renamePlugin'
 })
 
 
