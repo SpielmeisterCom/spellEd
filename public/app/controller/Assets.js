@@ -401,8 +401,8 @@ Ext.define('Spelled.controller.Assets', {
 			fieldSet.getForm().setValues(
 				{
 					tileMapAssetId: asset.get('assetId'),
-					width : config['width'],
-					height: config['height']
+					width : parseInt( config['width'], 10 ),
+					height: parseInt( config['height'], 10 )
 				}
 			)
 		}
@@ -792,7 +792,8 @@ Ext.define('Spelled.controller.Assets', {
 				break
 			case this.TYPE_TILE_MAP:
 				asset.set( 'assetId', values.tileMapAssetId )
-				Ext.copyTo( config, values, 'width,height' )
+				config['width']  = parseInt( values.width, 10 )
+				config['height'] = parseInt( values.height, 10 )
 				config.tileLayerData = this.getMergedTileMapDataDimensions( asset, config )
 				break
 		}
