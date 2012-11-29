@@ -775,7 +775,7 @@ Ext.define('Spelled.controller.Assets', {
 				config.textureHeight    = parseInt( values.textureHeight, 10 )
 				config.frameWidth       = parseInt( values.frameWidth, 10 )
 				config.frameHeight      = parseInt( values.frameHeight, 10 )
-				config.innerPadding      = parseInt( values.innerPadding, 10 )
+				config.innerPadding     = parseInt( values.innerPadding, 10 )
 				break
 			case this.TYPE_KEY_FRAME_ANIMATION:
                 asset.set( 'assetId', values.assetId )
