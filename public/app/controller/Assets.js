@@ -241,8 +241,19 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
     refreshAssetPreview: function( iframe, asset, value ) {
+		var entityConfig = iframe.up( 'editasset' ).entity
+
 		asset.set( 'assetId', value )
-        this.animationPreviewHelper( iframe, asset )
+
+		this.application.sendDebugMessage(
+			iframe.getId(),
+			"component.update",
+			{
+				entityId    : entityConfig.getId(),
+				componentId : "spell.component.2d.graphics.animatedAppearance",
+				config      : { assetId: asset.get( 'assetId' ) }
+			}
+		)
     },
 
 	updateAsset: function( assetId, config ) {
@@ -401,8 +412,8 @@ Ext.define('Spelled.controller.Assets', {
 			fieldSet.getForm().setValues(
 				{
 					tileMapAssetId: asset.get('assetId'),
-					width : config['width'],
-					height: config['height']
+					width : parseInt( config['width'], 10 ),
+					height: parseInt( config['height'], 10 )
 				}
 			)
 		}
@@ -792,7 +803,8 @@ Ext.define('Spelled.controller.Assets', {
 				break
 			case this.TYPE_TILE_MAP:
 				asset.set( 'assetId', values.tileMapAssetId )
-				Ext.copyTo( config, values, 'width,height' )
+				config['width']  = parseInt( values.width, 10 )
+				config['height'] = parseInt( values.height, 10 )
 				config.tileLayerData = this.getMergedTileMapDataDimensions( asset, config )
 				break
 		}
@@ -944,6 +956,8 @@ Ext.define('Spelled.controller.Assets', {
 			entityConfig = Ext.create( 'Spelled.model.config.Entity', { name: "asset" }),
 			components   = entityConfig.getComponents(),
 			subType      = asset.get('subtype')
+
+		view.entity = entityConfig
 
 		components.add( [
 			{ templateId: "spell.component.2d.transform" },
