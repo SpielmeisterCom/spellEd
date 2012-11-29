@@ -385,7 +385,7 @@ Ext.define('Spelled.controller.Entities', {
 		if( scene ) record.setScene( scene )
 
 		var node = ( values.owner ) ? this.application.getLastSelectedNode( this.getScenesTree() )
-			: this.getScenesTree().getStore().getNodeById( scene.getId() + "_entities" )
+			: this.getScenesTree().getStore().getNodeById( ( scene ) ? scene.getId() + "_entities" : record.getEntity().getId() )
 
 		node.set( 'leaf', false )
 
