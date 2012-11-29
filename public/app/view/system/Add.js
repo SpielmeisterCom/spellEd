@@ -65,6 +65,14 @@ Ext.define('Spelled.view.system.Add' ,{
                 }
             ]
         }
-    ]
+    ],
+
+	setExecutionGroup: function( value ) {
+		this.down( 'combobox[name="type"]' ).setValue( value )
+	},
+
+	setScene: function( scene ) {
+		this.down( 'combobox[name="scene"]' ).setValue( scene.get( 'sceneId' ) )
+	}
 
 });

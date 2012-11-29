@@ -45,7 +45,10 @@ Ext.define('Spelled.controller.Systems', {
 			'addsystem button[action="addSystems"]': {
 				click: this.addSystems
 			},
-			'scenesystemslistcontextmenu [action="showAddSystem"]': {
+			'addsystem combobox[name="scene"]': {
+				change: this.refreshAvailableSystemsFromScene
+			},
+			'scenesystemslistcontextmenu [action="showAddSystem"],scenetreelist [action="showAddSystem"]': {
 				click: this.showAddSystem
 			}
 		})
@@ -178,16 +181,25 @@ Ext.define('Spelled.controller.Systems', {
 	},
 
 	showAddSystem: function( button ) {
-		var renderGroupNode      = button.up( 'scenesystemslistcontextmenu').ownerView,
+		var contextMenu          = button.up( 'scenesystemslistcontextmenu'),
 			View                 = this.getSystemAddView(),
 			view                 = new View(),
-			availableSystemsView = view.down( 'treepanel' ),
-			templateSystemsStore = Ext.getStore( 'template.Systems' ),
 			scene    			 = this.application.getLastSelectedScene()
 
-		if( renderGroupNode ) view.down( 'combobox' ).setValue( renderGroupNode.getId() )
+		if( contextMenu && contextMenu.ownerView )
+			view.setExecutionGroup( contextMenu.ownerView.getId() )
 
-		var assignedSystems = []
+		view.setScene( scene )
+
+		view.show()
+	},
+
+	refreshAvailableSystemsFromScene: function( combobox, sceneId ){
+		var availableSystemsView = combobox.up( 'addsystem' ).down( 'treepanel' ),
+			templateSystemsStore = Ext.getStore( 'template.Systems' ),
+			scene    			 = Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', sceneId ),
+			assignedSystems      = []
+
 		Ext.Object.each(
 			scene.get('systems'),
 			function( key, value ) {
@@ -224,8 +236,6 @@ Ext.define('Spelled.controller.Systems', {
 			},
 			this
 		)
-
-		view.show()
 	},
 
 	updateSceneSystems: function( node ) {
