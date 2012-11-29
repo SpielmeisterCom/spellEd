@@ -8,6 +8,11 @@ Ext.define('Spelled.view.menu.contextmenu.AssetsList', {
 			text: 'Edit',
 			action: 'edit'
 		},
+		{
+			icon: 'imaged/icons/rename.png',
+			text: 'Rename',
+			action: 'rename'
+		},
         {
 			icon: 'images/icons/delete.png',
             text: 'Remove',

@@ -77,6 +77,7 @@ Ext.define('Spelled.controller.Library', {
 				click: this.createFolderHelper
 			},
 			'librarytreelist': {
+				edit            : this.dispatchLibraryNodeRename,
 				editclick       : this.dispatchLibraryNodeContextMenu,
 				itemcontextmenu : this.dispatchLibraryNodeContextMenu,
 				select          : this.dispatchLibraryNodeSelect,
@@ -86,6 +87,9 @@ Ext.define('Spelled.controller.Library', {
 			},
 			'librarycontextmenu [action="deleteFolder"]': {
 				click: this.removeFolder
+			},
+			'assetslistcontextmenu [action="rename"]': {
+				click: this.showRenameLibraryItem
 			}
         })
 
@@ -97,6 +101,27 @@ Ext.define('Spelled.controller.Library', {
 			scope: this
 		})
     },
+
+	dispatchLibraryNodeRename: function( editor, e, newName, oldName ) {
+		var node = e.record
+
+		switch( this.getNodeType( node ) ) {
+			case this.TYPE_ASSET:
+				var asset = Ext.getStore( 'asset.Assets' ).getById( node.getId() )
+				this.application.fireEvent( 'renameasset', asset, newName, oldName )
+				break
+		}
+
+		node.commit()
+	},
+
+	showRenameLibraryItem: function( ) {
+		var tree       = this.getLibraryTree(),
+			node       = this.application.getLastSelectedNode( tree ),
+			cellEditor = tree.getPlugin( 'renamePlugin' )
+
+		cellEditor.startEdit( node, 0 )
+	},
 
 	deepLinkComponentProperty: function( name, propertyMapping, property ) {
 		var tree    = this.getLibraryTree(),

@@ -172,10 +172,18 @@ Ext.define('Spelled.controller.Assets', {
 			'assetselect'     : this.showConfigHelper,
 			'assetdblclick'   : this.showEditHelper,
 			'assetcontextmenu': this.showListContextMenu,
-			savemodel         : this.postProcessAsset,
+			'savemodel'       : this.postProcessAsset,
+			'renameasset'     : this.renameAsset,
 			scope: this
 		})
     },
+
+	renameAsset: function( asset, newName, oldName ) {
+		if( Spelled.Compare.isEqual( newName, oldName ) ) return
+
+
+
+	},
 
 	sendAssetPreviewMessages: function( targetId ) {
 		if( !this.messageBus[ targetId ] ) return
