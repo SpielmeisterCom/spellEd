@@ -135,6 +135,7 @@ Ext.define('Spelled.controller.Entities', {
 		var entity = this.getConfigEntitiesStore().getById( e.record.getId() )
 
 		entity.set( 'name', e.record.get('text') )
+		entity.setDirty()
 
 		this.sendEntityEventToEngine(
 			'component.update' , {
