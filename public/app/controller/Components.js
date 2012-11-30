@@ -320,7 +320,8 @@ Ext.define('Spelled.controller.Components', {
 				if( componentTemplate ) {
 					var configComponent = new Model( {
 						templateId : componentTemplate.getFullName(),
-						additional: true
+						additional: true,
+						config: {}
 					})
 
 					configComponent.setEntity( entity )
