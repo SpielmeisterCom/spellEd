@@ -62,6 +62,20 @@ Ext.define('Spelled.model.config.Entity', {
 		return data
 	},
 
+	stripRedundantData: function() {
+		this.getComponents().each(
+			function( component ) {
+				component.stripRedundantData()
+			}
+		)
+
+		this.getChildren().each(
+			function( entity ) {
+				entity.stripRedundantData()
+			}
+		)
+	},
+
 	resetConfig: function() {
 		this.set( 'config', {} )
 		this.getComponents().removeAll()
@@ -72,7 +86,8 @@ Ext.define('Spelled.model.config.Entity', {
 		this.getComponents().each(
 			function( component ) {
 				var cmp = Ext.create( 'Spelled.model.config.Component', {
-					templateId: component.get('templateId')
+					templateId: component.get( 'templateId' ),
+					additional: component.get( 'additional' )
 				})
 
 				cmp.set( 'config', component.getConfigMergedWithTemplateConfig() )
@@ -304,32 +319,37 @@ Ext.define('Spelled.model.config.Entity', {
 		return ( this.get('removable') === true )
 	},
 
-	createTreeNode: function( node ) {
-		var entityTemplate = this.getEntityTemplate(),
-			children       = this.getChildren(),
-			me             = this
+	mergeChildren: function( sourceEntity ) {
+		var children = this.getChildren()
 
-		if( entityTemplate ) {
-			entityTemplate.getChildren().each(
-				function( entity ) {
-					var index = children.findBy( function( item ) {
-						return ( item.get('templateId') === entity.get('templateId') && item.get('name') === entity.get('name') )
-					})
+		sourceEntity.getChildren().each(
+			function( entity ) {
+				var child = undefined,
+					index = children.findBy( function( item ) {
+					return ( item.get('templateId') === entity.get('templateId') && item.get('name') === entity.get('name') )
+				})
 
-					if( index > -1 ) {
-						children.getAt( index ).set( 'removable', false )
-						return
-					}
-
-					var copy = entity.copyTemplateEntity()
-					copy.setEntity( me )
-					children.add( copy )
+				if( index > -1 ) {
+					child = children.getAt( index )
+					child.mergeEntityTemplateWithTemplateConfig( entity )
+					child.set( 'removable', false )
+				} else {
+					child = entity.copyTemplateEntity()
+					child.setEntity( this )
+					children.add( child )
 				}
-			)
-		}
 
+				child.mergeChildren( entity )
+			},
+			this
+		)
+	},
 
+	createTreeNode: function( node ) {
 		var iconCls = ""
+
+		if( !this.isAnonymous() ) this.mergeChildren( this.getEntityTemplate() )
+
 		if ( !this.isRemovable() ) {
 			iconCls = "tree-scene-entity-readonly-icon"
 		} else {
@@ -348,7 +368,7 @@ Ext.define('Spelled.model.config.Entity', {
 			}
 		)
 
-		children.each(
+		this.getChildren().each(
 			function( entity ) {
 				entityNode.appendChild(
 					entity.createTreeNode( entityNode )

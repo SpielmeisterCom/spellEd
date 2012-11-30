@@ -58,6 +58,12 @@ Ext.define('Spelled.model.config.Scene', {
 	save: function() {
 		this.syncLibraryIds()
 
+		this.getEntities().each(
+			function( entity ) {
+				entity.stripRedundantData()
+			}
+		)
+
 		this.callParent( arguments )
 	},
 
