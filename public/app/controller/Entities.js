@@ -347,7 +347,7 @@ Ext.define('Spelled.controller.Entities', {
 
 					var newComponent = Ext.create( 'Spelled.model.config.Component', {
 						templateId: component.get('templateId'),
-						config: component.get('config')
+						config: Ext.clone( component.get('config') )
 					} )
 
 					newComponent.setEntity( record )
