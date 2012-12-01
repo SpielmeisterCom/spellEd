@@ -168,15 +168,15 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
 	showEntityCompositeComponentsListHelper: function( node ) {
-		var templateEntity = this.getTemplateEntitiesStore().getById( this.getOwnerNode( node ).getId()  )
+		var templateEntity = this.getTemplateEntitiesStore().getById( this.getOwnerNode( node ).getId() ),
+            entity         = Ext.getStore( 'config.Entities' ).getById( node.getId() )
 
-		var entity = templateEntity.getChild( node.get('text') )
-		node.set('id', entity.getId())
-
-		entity.set( 'isTemplateComposite' , true )
-		entity.setOwnerEntity( templateEntity )
+        templateEntity.mergeChildrenComponentsConfig()
 
 		if( entity ) {
+            entity.set( 'isTemplateComposite' , true )
+            entity.setOwnerEntity( templateEntity )
+
 			if( !entity.isAnonymous() ) entity.mergeWithTemplateConfig()
 
 			this.showEntityTemplateComponentsList( entity )

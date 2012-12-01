@@ -59,7 +59,7 @@ Ext.define('Spelled.model.template.Entity', {
 	getChild: function( id ) {
 
 		var helperFunction = function( entity ) {
-			var child = entity.getChildren().findRecord( 'name', id )
+			var child = entity.getChildren().findRecord( 'id', id )
 
 			if( !child ) {
 				entity.getChildren().each(
@@ -100,7 +100,6 @@ Ext.define('Spelled.model.template.Entity', {
 			var markAsComposites = function( compositeNode ) {
 				compositeNode.set( 'cls', 'templateEntityComposite' )
 				compositeNode.set( 'qtitle', me.sortOrder )
-				compositeNode.set( 'id', entityNode.get('id') + compositeNode.get('text') )
 
 				compositeNode.eachChild( function( item ) {
 					markAsComposites( item )
