@@ -193,10 +193,11 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
 	removeEntityCompositeNode: function( node ) {
-        var entity    = Ext.getStore( 'config.Entities' ).getById( node.getId() ),
-			template  = entity.getOwner(),
-			owner     = ( entity.hasEntity() ) ? entity.getEntity() : template,
-			ownerNode = node.parentNode
+        var entity     = Ext.getStore( 'config.Entities' ).getById( node.getId() ),
+			template   = entity.getOwner(),
+			owner      = ( entity.hasEntity() ) ? entity.getEntity() : template,
+            parentNode = node.parentNode,
+			ownerNode  = this.getOwnerNode( node )
 
 		if( !entity.isRemovable() ) return this.application.fireEvent( 'showentityremovealert', entity )
 
@@ -208,8 +209,9 @@ Ext.define('Spelled.controller.templates.Entities', {
 
 		if( !ownerNode.hasChildNodes() ) {
 			ownerNode.set( 'cls', this.application.getController('Templates').TEMPLATE_TYPE_ENTITY )
-			this.getTemplatesTree().selectPath( ownerNode.getPath() )
 		}
+
+        this.getTemplatesTree().selectPath( parentNode.getPath() )
 	},
 
     removeEntityTemplate: function( id ) {
