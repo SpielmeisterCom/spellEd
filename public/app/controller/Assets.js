@@ -770,10 +770,12 @@ Ext.define('Spelled.controller.Assets', {
 		switch( asset.get( 'subtype' ) ) {
 			case this.TYPE_FONT:
 				var result = this.createFontMap( values )
-				config.charset    = result.charset
-				config.baseline   = result.baseline
-
-				Ext.copyTo( config, values, 'fontFamily,fontSize,fontStyle,color,outline,outlineColor,spacing' )
+				config.charset  = result.charset
+				config.baseline = parseInt( result.baseline, 10 )
+				Ext.copyTo( config, values, 'fontFamily,fontStyle,color,outlineColor' )
+                config.spacing  = parseInt( values.spacing, 10 )
+                config.outline  = parseInt( values.outline, 10 )
+                config.fontSize = parseInt( values.fontSize, 10 )
 				asset.set( 'file', asset.get( 'name' ) + ".png" )
 				break
 			case this.TYPE_KEY_TO_ACTION:
