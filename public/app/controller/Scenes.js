@@ -176,6 +176,9 @@ Ext.define('Spelled.controller.Scenes', {
 				},
 				'spelled.debug.entity.select': function( sourceId, payload ) {
 					me.selectEntityTreeItem( payload.id )
+				},
+				'spelled.debug.entity.clone': function ( sourceId, payload ) {
+					me.cloneEntity( payload.id )
 				}
 			}
 		)
@@ -253,6 +256,16 @@ Ext.define('Spelled.controller.Scenes', {
 			node = tree.getStore().getNodeById( entityId )
 
 		if( node ) this.dispatchTreeClick( tree, node )
+	},
+
+	cloneEntity: function( entityId ) {
+		var tree = this.getScenesTree(),
+			node = tree.getStore().getNodeById( entityId )
+
+		if( node ) {
+			this.application.fireEvent( 'cloneconfigentity', node.getId(), node )
+		}
+
 	},
 
 	expandAndClose: function( tree, node, refNode ) {
