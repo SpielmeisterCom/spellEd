@@ -131,8 +131,18 @@ Ext.define('Spelled.model.config.Component', {
 
 		//Only merge with enityconfig, if it is really linked to a entity
 		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && !Ext.isEmpty( this.getEntity().get('templateId' ) ) ) {
-			var templateEntity          = Ext.getStore( 'template.Entities').getByTemplateId( this.getEntity().get('templateId' )),
-				templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', this.get('templateId') )
+			var templateId              = this.getEntity().get('templateId'),
+				templateEntity          = Ext.getStore( 'template.Entities').getByTemplateId( templateId )
+
+			if( !templateEntity ) {
+				var message = "The entity template '" + templateId + "' could not be found. Cannot continue loading; please fix this problem manually."
+
+				Ext.Msg.alert( 'Missing entity template', message )
+
+				throw message
+			}
+
+			var	templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', this.get('templateId') )
 
 			if( !templateEntityComponent || templateEntity.modelName === this.getEntity().modelName ) {
 				this.set('additional', true)
