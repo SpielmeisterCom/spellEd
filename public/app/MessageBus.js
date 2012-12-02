@@ -28,8 +28,13 @@ Ext.define(
 		},
 
 		sendMessageToEngine : function( targetId, message ) {
-			var cmp    = Ext.getCmp( targetId ),
-                target = ( cmp && cmp.el.dom.contentWindow ) ? cmp.el.dom.contentWindow : cmp.getWin()
+			var cmp    = Ext.getCmp( targetId )
+
+			if( !cmp ) {
+				Ext.Msg.alert( 'Missing engine link', 'Could not locate a running SpellCore instance in the window with the id ' + targetId + '. Instant preview features will not be available.' )
+			}
+
+            var target = ( cmp && cmp.el.dom.contentWindow ) ? cmp.el.dom.contentWindow : cmp.getWin()
 
 			if( target ) target.postMessage( Ext.encode( message ), '*' )
 		},
