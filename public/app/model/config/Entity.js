@@ -104,8 +104,13 @@ Ext.define('Spelled.model.config.Entity', {
 			var found = this.getEntity().getChildren().findRecord( 'name', name )
 
 			if( found )	{
-				var parts = name.split( "_"),
-					index = ( parts.length > 2 ) ? parseInt( parts.pop(), 10 ) + 1 : 1
+				var parts    = name.split( "_"),
+					lastPart = parts.pop(),
+					counter  = parseInt( lastPart, 10),
+					valid    = Ext.isNumber( counter ),
+					index    = valid ? counter + 1 : 1
+
+				if( !valid ) parts.push( lastPart )
 
 				parts.push( index )
 				return this.generateCloneName( parts.join( "_" ) )
@@ -121,7 +126,12 @@ Ext.define('Spelled.model.config.Entity', {
 		var cloneConfig = Ext.amdModules.entityConverter.toEditorFormat( Ext.amdModules.entityConverter.toEngineFormat(this.getData( true )) )
 		cloneConfig.removable = ( Ext.isDefined( removable ) ) ? !!removable : true
 
-		if( !internal ) cloneConfig.name = this.get( 'name' ) + "_copy" //this.generateCloneName(  )
+		if( !internal ) {
+			var rqxp = /_copy_/g,
+				name = this.get( 'name' )
+
+			cloneConfig.name = this.generateCloneName( rqxp.test( name ) ? name : name + "_copy_1" )
+		}
 
 		var copy = Ext.create( this.$className, cloneConfig )
 
