@@ -35,7 +35,9 @@ Ext.define('Spelled.view.template.Create', {
 					fieldLabel: 'Name',
 					vtype: 'alphanum',
 					validator: function( value ) {
-						if( this.isJavaScriptCompliant( value ) ) return this.__proto__.validator( value )
+						var namespace = this.up( 'form' ).down( 'templatefolderpicker' )
+
+						if( this.isJavaScriptCompliant( value ) ) return this.__proto__.validator( value, namespace )
 						return "Usage of invalid characters"
 					}
 				},

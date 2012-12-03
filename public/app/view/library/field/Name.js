@@ -20,10 +20,10 @@ Ext.define('Spelled.view.library.field.Name', {
 		}
 	},
 
-	validator: function( value ) {
+	validator: function( value, field ) {
 		var rootNode  = Ext.getStore( 'Library' ).getRootNode(),
 			form      = this.up( 'form'),
-			namespace = ( form ) ? form.down( 'libraryfolderpicker' ) : undefined,
+			namespace = ( form ) ? form.down( 'libraryfolderpicker' ) : field,
 			parts     = [ value.toString() ]
 
 		if( namespace && namespace.getValue() ) {
