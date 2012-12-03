@@ -57,26 +57,26 @@ Ext.define('Spelled.controller.Entities', {
 		var me               = this,
 			engineMessageBus = me.application.engineMessageBus
 
-        this.control({
-            'createentity button[action="createEntity"]' : {
-                click: this.createEntity
-            },
-            'entiteslist': {
-                itemcontextmenu: this.showListContextMenu
-			},
-			'entityhastemplateheader tool[type="search"]': {
-				showTemplateEntity: this.showTemplateEntity
-			},
-			'entitieslistcontextmenu [action="showConvertEntity"]': {
-				click: this.showConvertEntity
-			},
-			'scenetreelist': {
-				edit: this.changeEntityName
-			},
-			'scenetreelist [action="showCreateEntity"]': {
-				click: me.showCreateEntityHelper
-			}
-        })
+	    this.control({
+		    'createentity button[action="createEntity"]' : {
+			    click: this.createEntity
+		    },
+		    'entiteslist': {
+			    itemcontextmenu: this.showListContextMenu
+		    },
+		    'entityhastemplateheader tool[type="search"]': {
+			    showTemplateEntity: this.showTemplateEntity
+		    },
+		    'entitieslistcontextmenu [action="showConvertEntity"]': {
+			    click: this.showConvertEntity
+		    },
+		    'scenetreelist': {
+			    edit: this.changeEntityName
+		    },
+		    'scenetreelist [action="showCreateEntity"]': {
+			    click: me.showCreateEntityHelper
+		    }
+	    })
 
 		this.application.on({
 			triggerrenamingentity  : this.triggerRenameEntityEvent,
@@ -97,9 +97,21 @@ Ext.define('Spelled.controller.Entities', {
 						config      = payload.config
 
 					me.updateEntityComponent( id, componentId, config )
+				},
+				'spelled.debug.entity.clone': function ( sourceId, payload ) {
+					me.cloneEntity( payload.id )
 				}
 			}
 		)
+    },
+
+    cloneEntity: function( entityId ) {
+        var tree = this.getScenesTree(),
+            node = tree.getStore().getNodeById( entityId )
+
+        if( node ) {
+            this.cloneEntityConfig( node.getId(), node )
+        }
     },
 
 	showCreateEntityHelper: function() {
