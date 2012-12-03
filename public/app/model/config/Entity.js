@@ -121,7 +121,7 @@ Ext.define('Spelled.model.config.Entity', {
 		var cloneConfig = Ext.amdModules.entityConverter.toEditorFormat( Ext.amdModules.entityConverter.toEngineFormat(this.getData( true )) )
 		cloneConfig.removable = ( Ext.isDefined( removable ) ) ? !!removable : true
 
-		if( !internal ) cloneConfig.name = this.generateCloneName( this.get( 'name' ) + "_copy" )
+		if( !internal ) cloneConfig.name = this.get( 'name' ) + "_copy" //this.generateCloneName(  )
 
 		var copy = Ext.create( this.$className, cloneConfig )
 
