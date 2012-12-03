@@ -276,13 +276,14 @@ Ext.define('Spelled.controller.Systems', {
 			me       = this,
 			each     = Ext.each
 
-		rootNode.removeAll()
 		rootNode.set( 'allowDrop', false )
 
 		Ext.Object.each(
 			scene.get('systems'),
 			function( key, value ) {
-				var node = rootNode.createNode( {
+
+				var exists = rootNode.findChild( 'text', key ),
+					node   = ( exists ) ? exists : rootNode.createNode( {
 					text      : key,
 					id        : key,
 					leaf      : false,
@@ -292,16 +293,17 @@ Ext.define('Spelled.controller.Systems', {
 				}),
 					missing  = []
 
-				rootNode.appendChild( node )
+				if( !exists ) rootNode.appendChild( node )
 
 				each(
 					value,
 					function( system, index, mySelf ) {
 						var systemTemplate =  Ext.getStore('template.Systems').getByTemplateId( system.id )
 						if( systemTemplate ) {
-							var config = Ext.Object.merge( {}, systemTemplate.getConfigForScene(), system.config )
+							var config    = Ext.Object.merge( {}, systemTemplate.getConfigForScene(), system.config ),
+								hasSystem = node.findChild( 'text', systemTemplate.getFullName() )
 
-							var newNode = node.createNode( {
+							var newNode = ( hasSystem) ? hasSystem : node.createNode( {
 									text         : systemTemplate.getFullName(),
 									cls		     : me.application.getController('Templates').TEMPLATE_TYPE_SYSTEM,
 									config       : config,
@@ -315,7 +317,8 @@ Ext.define('Spelled.controller.Systems', {
 
 							system.config = config
 							newNode.systemConfig = system.config
-							node.appendChild( newNode )
+
+							if( !hasSystem ) node.appendChild( newNode )
 						} else {
 							missing.push( system )
 						}
