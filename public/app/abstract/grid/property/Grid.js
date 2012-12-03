@@ -5,7 +5,7 @@ Ext.define('Spelled.abstract.grid.property.Grid', {
 	addCustomEditor: function( key, attribute ) {
 		var value  = attribute.value,
 			type   = attribute.type,
-			values = attribute.values,
+			values = ( attribute.values && Ext.isString( attribute.values ) ) ? attribute.values.split(',') : attribute.values,
 			cellEditorConfig = { field: { xtype: type, value: value, initialValue: attribute.initialValue } }
 
 		if( Ext.isArray( values ) && values.length > 0 ) cellEditorConfig.field.store = values
