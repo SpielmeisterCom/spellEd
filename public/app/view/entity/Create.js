@@ -41,6 +41,13 @@ Ext.define('Spelled.view.entity.Create' ,{
 					matchFieldWidth : false,
                     store: 'template.Entities',
 
+					listeners: {
+						beforequery: function(qe){
+							qe.query = new RegExp(qe.query, 'i')
+							qe.forceAll = true
+						}
+					},
+
                     valueField: 'id',
                     displayField:'templateId',
                     queryMode: 'local',
