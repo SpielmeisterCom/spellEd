@@ -270,7 +270,7 @@ Ext.define('Spelled.model.config.Entity', {
 		} else if( this.hasEntity() ) {
 			var owner = this.getOwner()
 
-			if( owner && !owner.isAnonymous() ) {
+			if( owner && owner.isAnonymous && !owner.isAnonymous() ) {
 				var ownerTemplate = owner.getEntityTemplate(),
 					entity        = ownerTemplate.getChildren().findRecord( 'name', this.get('name') )
 

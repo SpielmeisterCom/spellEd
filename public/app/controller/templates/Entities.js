@@ -144,18 +144,13 @@ Ext.define('Spelled.controller.templates.Entities', {
 
 		record = this.application.getController( 'Entities' ).createEntityHelper( record, values )
 
-		record.getOwner().save( {
-			callback: function() {
-				node.set( 'leaf', false )
-				var entityNode = record.createTreeNode( node )
-				entityNode.set( 'cls', me.application.getController('Templates').TYPE_ENTITY_COMPOSITE )
+		node.set( 'leaf', false )
+		var entityNode = record.createTreeNode( node )
+		entityNode.set( 'cls', me.application.getController('Templates').TYPE_ENTITY_COMPOSITE )
 
-				me.getTemplatesTree().selectPath( node.appendChild( entityNode ).getPath() )
+		me.getTemplatesTree().selectPath( node.appendChild( entityNode ).getPath() )
 
-				window.close()
-			}
-		})
-
+		window.close()
 	},
 
 	showEntityTemplateComponentsListHelper: function( id ) {

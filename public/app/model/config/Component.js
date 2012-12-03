@@ -99,10 +99,13 @@ Ext.define('Spelled.model.config.Component', {
 		var componentEntity    = this.getEntity()
 
 		if( !componentEntity.hasEntity || !componentEntity.hasEntity() ) return {}
-		var owner = componentEntity.getOwner()
+
+		var owner         = componentEntity.getOwner(),
+			ownerIsEntity = owner.getEntityTemplate
+
 		if( owner.isAnonymous && owner.isAnonymous() ) return {}
 
-		var	tmp    = ( owner.getEntityTemplate ) ? owner.getEntityTemplate() : owner,
+		var	tmp    = ( ownerIsEntity ) ? owner.getEntityTemplate() : owner,
 			entity = tmp.getChildren().findRecord( 'name', componentEntity.get('name') )
 
 		if( !entity ) return {}
@@ -114,14 +117,14 @@ Ext.define('Spelled.model.config.Component', {
 			function( templateComponent ) {
 				if( templateComponent.get('templateId') === this.get( 'templateId' ) ) {
 					component = templateComponent
-					this.set( 'additional', false )
+					if( ownerIsEntity ) this.set( 'additional', false )
 					return false
 				}
 			},
 			this
 		)
 
-		return ( component ) ? component.get( 'config' ) : {}
+		return ( component ) ? Ext.clone( component.get( 'config' ) ) : {}
 	},
 
     getConfigMergedWithTemplateConfig: function( ) {
@@ -131,8 +134,8 @@ Ext.define('Spelled.model.config.Component', {
 
 		//Only merge with enityconfig, if it is really linked to a entity
 		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && !Ext.isEmpty( this.getEntity().get('templateId' ) ) ) {
-			var templateId              = this.getEntity().get('templateId'),
-				templateEntity          = Ext.getStore( 'template.Entities').getByTemplateId( templateId )
+			var templateId     = this.getEntity().get('templateId'),
+				templateEntity = Ext.getStore( 'template.Entities').getByTemplateId( templateId )
 
 			if( !templateEntity ) {
 				var message = "The entity template '" + templateId + "' could not be found. Cannot continue loading; please fix this problem manually."
