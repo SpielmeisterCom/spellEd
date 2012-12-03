@@ -99,19 +99,18 @@ Ext.define('Spelled.controller.Entities', {
 					me.updateEntityComponent( id, componentId, config )
 				},
 				'spelled.debug.entity.clone': function ( sourceId, payload ) {
-					me.cloneEntity( payload.id )
+					var tree = me.getScenesTree(),
+						node = tree.getStore().getNodeById( payload.id )
+
+					if( node ) me.cloneEntityConfig( node.getId(), node )
+				},
+				'spelled.debug.entity.remove': function ( sourceId, payload ) {
+					var entity = me.getConfigEntitiesStore().getById( payload.id )
+
+					if( entity ) me.removeEntity( entity )
 				}
 			}
 		)
-    },
-
-    cloneEntity: function( entityId ) {
-        var tree = this.getScenesTree(),
-            node = tree.getStore().getNodeById( entityId )
-
-        if( node ) {
-            this.cloneEntityConfig( node.getId(), node )
-        }
     },
 
 	showCreateEntityHelper: function() {
@@ -288,7 +287,7 @@ Ext.define('Spelled.controller.Entities', {
 
 						entity.getOwner().setDirty()
 						this.deleteEntity( entity )
-						var node = this.application.getLastSelectedNode( this.getScenesTree() )
+						var node = this.getScenesTree().getStore().getNodeById( entity.getId() )
 
 						node.remove()
 					}
