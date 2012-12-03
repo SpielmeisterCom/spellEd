@@ -357,9 +357,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.container.VBox": [
     "layout.vbox"
   ],
-  "Spelled.view.ui.TilemapEditorIframe": [
-    "widget.tilemapeditoriframe"
-  ],
   "Spelled.store.asset.Sounds": [],
   "Ext.view.DropZone": [],
   "Ext.layout.component.Button": [
@@ -1136,7 +1133,7 @@ Ext.ClassManager.addNameAliasMappings({
     "selection.cellmodel"
   ],
   "Spelled.view.scene.plugin.CellEditing": [
-    "plugin.renameentityplugin"
+    "plugin.renameplugin"
   ],
   "Ext.view.TableLayout": [
     "layout.tableview"
@@ -1521,7 +1518,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.container.VBox": [
     "Ext.layout.VBoxLayout"
   ],
-  "Spelled.view.ui.TilemapEditorIframe": [],
   "Spelled.store.asset.Sounds": [],
   "Ext.view.DropZone": [],
   "Ext.layout.component.Button": [],
