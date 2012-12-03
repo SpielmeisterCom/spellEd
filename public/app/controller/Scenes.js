@@ -722,6 +722,8 @@ Ext.define('Spelled.controller.Scenes', {
 
 		iframe.destroy()
 
+		scene.syncLibraryIds()
+
 		this.application.setRenderedScene( scene )
 
 		panel.add(
@@ -913,7 +915,6 @@ Ext.define('Spelled.controller.Scenes', {
 
 		this.application.setRenderedScene( scene )
 		this.setDefaultScene( scene )
-		scene.syncLibraryIds()
 		this.reloadScene( tab.down( 'button' ) )
 	},
 
