@@ -90,12 +90,16 @@ Ext.define('Spelled.model.config.Component', {
 	getTemplateConfig: function() {
 		var config = {}
 
-		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && !this.getEntity().isAnonymous() ) {
-			var templateEntityComponent = this.getEntity().getEntityTemplate().getComponents().findRecord( 'templateId', this.get('templateId') )
+		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && !Ext.isEmpty( this.getEntity().get('templateId' ) )  ) {
+			var templateEntity = Ext.getStore( 'template.Entities' ).getById( this.getEntity().get('templateId' ) )
 
-			if( templateEntityComponent ) {
-				config = Ext.Object.merge( config, templateEntityComponent.get('config') )
-				this.set( 'additional', false )
+			if( templateEntity ){
+				var templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', this.get('templateId') )
+
+				if( templateEntityComponent ) {
+					config = Ext.Object.merge( config, templateEntityComponent.get('config') )
+					this.set( 'additional', false )
+				}
 			}
 		} else {
 			config = Ext.Object.merge( config, this.getTemplateCompositeConfig() )
