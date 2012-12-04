@@ -61,7 +61,15 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				action: 'toggleDevCam',
 				enableToggle: true,
 				tooltip: {
-					text: 'When activated: use mouse-drag to drag the camera and mouse-wheel up/down to zoom in/zoom out. If the scene view lost it\'s focus, left click in the scene to restore the focus.',
+					text: 'When activated the following input bindings will be available:<ul>'
+					+ '<li><strong>right-mouse-drag</strong> to drag the camera</li>'
+					+ '<li><strong>mouse-wheel up/down</strong> to zoom in/zoom out</li>'
+					+ '<li><strong>left-mouse-click</strong> to select entity</li>'
+					+ '<li><strong>tab key</strong> to toggle between differenct entities that matches for the cursorposition</li>'
+					+ '<li><strong>left-mouse-drag</strong> to move an entity</li>'
+					+ '<li><strong>crtl + left-mouse-drag</strong> to clone and move an entity</li>'
+					+ '<li><strong>delete or backspace key</strong> to remove the selected entity</li>'
+					+ '</ul><strong>If the scene view lost it\'s focus, left click in the scene to restore the focus.</strong>',
 					title: 'Activate development mode',
 					dismissDelay: dismissDelay
 				}
