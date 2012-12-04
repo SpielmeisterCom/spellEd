@@ -277,24 +277,31 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
 	removeEntity: function( entity ) {
-		Ext.Msg.confirm(
-			'Remove '+ entity.get('name'),
-			'Do you really want to remove the entity "' + entity.get('name') + '"?',
-			function( button ) {
-				if ( button === 'yes' ) {
-					if( entity ) {
-						this.sendEntityEventToEngine( 'entity.remove', { entityId: entity.getId() } )
+		if( !entity.isRemovable() ) {
+			Ext.Msg.alert(
+				"Remove not allowed",
+				"The entity '" + entity.get('name') + "' is locked to a template and can't be removed!"
+			)
+		} else {
+			Ext.Msg.confirm(
+				'Remove '+ entity.get('name'),
+				'Do you really want to remove the entity "' + entity.get('name') + '"?',
+				function( button ) {
+					if ( button === 'yes' ) {
+						if( entity ) {
+							this.sendEntityEventToEngine( 'entity.remove', { entityId: entity.getId() } )
 
-						entity.getOwner().setDirty()
-						this.deleteEntity( entity )
-						var node = this.getScenesTree().getStore().getNodeById( entity.getId() )
+							entity.getOwner().setDirty()
+							this.deleteEntity( entity )
+							var node = this.getScenesTree().getStore().getNodeById( entity.getId() )
 
-						node.remove()
+							node.remove()
+						}
 					}
-				}
-			},
-			this
-		)
+				},
+				this
+			)
+		}
 	},
 
 	showEntityRemoveAlert: function( entity ) {
