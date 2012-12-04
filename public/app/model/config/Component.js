@@ -105,8 +105,8 @@ Ext.define('Spelled.model.config.Component', {
 	getTemplateConfig: function() {
 		var config = {}
 
-		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && !Ext.isEmpty( this.getEntity().get('templateId' ) )  ) {
-			var templateEntity = Ext.getStore( 'template.Entities' ).getById( this.getEntity().get('templateId' ) )
+		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && this.getEntity().isRemovable && !Ext.isEmpty( this.getEntity().get('templateId' ) )  ) {
+			var templateEntity = Ext.getStore( 'template.Entities' ).getByTemplateId( this.getEntity().get('templateId' ) )
 
 			if( templateEntity ){
 				var templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', this.get('templateId') )
