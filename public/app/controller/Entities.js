@@ -279,7 +279,7 @@ Ext.define('Spelled.controller.Entities', {
 	removeEntity: function( entity ) {
 		Ext.Msg.confirm(
 			'Remove '+ entity.get('name'),
-			'Should the Entity: "' + entity.get('name') + '" be removed?',
+			'Do you really want to remove the entity "' + entity.get('name') + '"?',
 			function( button ) {
 				if ( button === 'yes' ) {
 					if( entity ) {
