@@ -34,6 +34,14 @@ Ext.define('Spelled.model.config.Component', {
 				}
 			}
 		)
+
+		var componentTemplateConfig = this.getComponentTemplateConfig()
+		Ext.Object.each(
+			config,
+			function( key ) {
+				if( !componentTemplateConfig.hasOwnProperty( key ) ) delete config[ key ]
+			}
+		)
 	},
 
 	getEntity: function() {
