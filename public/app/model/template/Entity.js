@@ -2,8 +2,11 @@ Ext.define('Spelled.model.template.Entity', {
 	extend: 'Spelled.abstract.model.Template',
 	requires: [
 		'Spelled.data.writer.EntityTemplate',
-		'Spelled.data.reader.EntityTemplate'
+		'Spelled.data.reader.EntityTemplate',
+		'Spelled.abstract.model.Entity'
 	],
+
+	mixins: [ 'Spelled.abstract.model.Entity' ],
 
 	fields: [
         "namespace",
@@ -81,11 +84,7 @@ Ext.define('Spelled.model.template.Entity', {
 	},
 
 	mergeChildrenComponentsConfig: function() {
-		this.getChildren().each(
-			function( entity ){
-				entity.checkForComponentChanges()
-			}
-		)
+		this.checkForComponentChanges()
 	},
 
 	createTreeNode: function( node ) {

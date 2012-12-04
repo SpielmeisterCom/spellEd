@@ -18,8 +18,7 @@ Ext.define('Spelled.model.config.Component', {
 	associations: [
 		{
 			type: 'belongsTo',
-			model: 'Spelled.model.config.Entity',
-			getterName: 'getEntity'
+			model: 'Spelled.model.config.Entity'
 		}
 	],
 
@@ -35,6 +34,14 @@ Ext.define('Spelled.model.config.Component', {
 				}
 			}
 		)
+	},
+
+	getEntity: function() {
+		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) ) {
+			return this[ 'Spelled.model.config.EntityBelongsToInstance' ]
+		} else {
+			return Ext.getStore( 'template.Entities' ).getById( this.get( 'spelled.model.template.entity_id' ) )
+		}
 	},
 
 	setEntity: function( entity ) {

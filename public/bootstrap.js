@@ -1176,6 +1176,7 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.componenttemplateattributescontextmenu"
   ],
   "Ext.AbstractManager": [],
+  "Spelled.abstract.model.Entity": [],
   "Ext.chart.series.Radar": [
     "series.radar"
   ],
@@ -2088,6 +2089,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.menu.contextmenu.ComponentTemplateAttributesList": [],
   "Ext.AbstractManager": [],
+  "Spelled.abstract.model.Entity": [],
   "Ext.chart.series.Radar": [],
   "Spelled.view.system.ContextMenu": [],
   "Spelled.view.entity.Create": [],

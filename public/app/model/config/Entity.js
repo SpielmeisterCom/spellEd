@@ -6,8 +6,11 @@ Ext.define('Spelled.model.config.Entity', {
 		'association.hasmany',
 		'Spelled.model.config.Component',
 		'Spelled.model.config.Scene',
-		'Spelled.model.template.Entity'
+		'Spelled.model.template.Entity',
+		'Spelled.abstract.model.Entity'
 	],
+
+	mixins: [ 'Spelled.abstract.model.Entity' ],
 
     fields: [
         'templateId',
@@ -149,16 +152,6 @@ Ext.define('Spelled.model.config.Entity', {
 
 		copy.checkForComponentChanges()
 		return copy
-	},
-
-	checkForComponentChanges : function() {
-		this.getComponents().each(
-			function( component ) {
-				component.markChanges()
-			}
-		)
-
-		this.getChildren().each( function( entity ) { entity.checkForComponentChanges() } )
 	},
 
 	prepareAssociatedData: function() {
