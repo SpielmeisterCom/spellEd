@@ -1067,12 +1067,6 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	initSpellEngineAssetIFrame: function( container, entity ) {
-		entity.getComponents().each(
-			function( component ) {
-				component.set( 'additional', true )
-			}
-		)
-
 		this.application.sendDebugMessage(
 			container.getId(),
 			'runtimeModule.start',

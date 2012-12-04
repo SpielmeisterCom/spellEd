@@ -99,9 +99,9 @@ Ext.define('Spelled.controller.Components', {
 		var menu         = button.up( 'menu' ),
 			component    = this.getConfigComponentsStore().getById( menu.ownerView.componentConfigId ),
 			config       = ( button.action === 'toEntityDefaults' ) ?
-					Ext.Object.merge( {}, component.getTemplateConfig(), component.getTemplateCompositeConfig() )
+					Ext.Object.merge( {}, component.getTemplateConfig() )
 				:
-					Ext.Object.merge( {}, component.getTemplateConfig(true) )
+					Ext.Object.merge( {}, component.getComponentTemplateConfig() )
 
 		this.refreshComponentPropertyGridValues( component, config, true )
 	},
@@ -320,7 +320,6 @@ Ext.define('Spelled.controller.Components', {
 				if( componentTemplate ) {
 					var configComponent = new Model( {
 						templateId : componentTemplate.getFullName(),
-						additional: true,
 						config: {}
 					})
 
@@ -353,7 +352,7 @@ Ext.define('Spelled.controller.Components', {
 			record            = e.record,
 			component         = this.getConfigComponentsStore().getById( componentConfigId ),
 			config            = Ext.Object.merge( {}, component.get('config') ),
-			defaultConfig     = Ext.Object.merge( {}, component.getTemplateConfig(true), component.getTemplateCompositeConfig() ),
+			defaultConfig     = Ext.Object.merge( {}, component.getComponentTemplateConfig(), component.getTemplateConfig() ),
 			value             = Spelled.Converter.decodeFieldValue( record.get( 'value') ),
 			name              = record.get('name'),
 			entity            = component.getEntity()

@@ -10,7 +10,7 @@ Ext.define('Spelled.model.config.Component', {
         'templateId',
         { name: 'config', type: 'object', defaultValue: {} },
         { name: 'changed', type: 'boolean', defaultValue: false },
-		{ name: 'additional', type: 'boolean', defaultValue: false }
+		{ name: 'additional', type: 'boolean', defaultValue: true }
     ],
 
     idgen: 'uuid',
@@ -27,7 +27,7 @@ Ext.define('Spelled.model.config.Component', {
 		var config  = this.get( 'config' )
 
 		Ext.Object.each(
-			Ext.Object.merge( this.getTemplateConfig(true), this.getTemplateCompositeConfig() ),
+			Ext.Object.merge( {}, this.getComponentTemplateConfig(), this.getTemplateConfig() ),
 			function( key, value ) {
 				//TODO: strip engine internals?
 				if( Spelled.Compare.isEqual( value, config[ key ] ) ) {
@@ -58,6 +58,7 @@ Ext.define('Spelled.model.config.Component', {
 	},
 
 	markChanges: function() {
+		this.stripRedundantData()
 		if( !Ext.isEmpty( this.get('config') ) ) this.set( 'changed', true)
 	},
 
@@ -71,7 +72,7 @@ Ext.define('Spelled.model.config.Component', {
 		return template
 	},
 
-	getTemplateConfig: function( noMerge ) {
+	getComponentTemplateConfig: function() {
 		var templateComponent = this.getTemplate(),
 			templateConfig    = templateComponent.getConfig()
 
@@ -83,30 +84,69 @@ Ext.define('Spelled.model.config.Component', {
 			}
 		)
 
-		if( !noMerge && this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && !Ext.isEmpty( this.getEntity().get('templateId' ) ) ) {
-			var templateEntity          = Ext.getStore( 'template.Entities').getByTemplateId( this.getEntity().get('templateId' )),
-				templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', this.get('templateId') )
+		return config
+	},
+
+	getTemplateConfig: function() {
+		var config = {}
+
+		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && !this.getEntity().isAnonymous() ) {
+			var templateEntityComponent = this.getEntity().getEntityTemplate().getComponents().findRecord( 'templateId', this.get('templateId') )
 
 			if( templateEntityComponent ) {
 				config = Ext.Object.merge( config, templateEntityComponent.get('config') )
+				this.set( 'additional', false )
 			}
+		} else {
+			config = Ext.Object.merge( config, this.getTemplateCompositeConfig() )
 		}
 
 		return config
 	},
 
 	getTemplateCompositeConfig: function() {
-		var componentEntity    = this.getEntity()
+		var componentEntity = this.getEntity(),
+			parents         = [],
+			config          = {}
 
 		if( !componentEntity.hasEntity || !componentEntity.hasEntity() ) return {}
 
 		var owner         = componentEntity.getOwner(),
-			ownerIsEntity = owner.getEntityTemplate
+			ownerIsEntity = !!owner.hasEntity
 
-		if( owner.isAnonymous && owner.isAnonymous() ) return {}
+		if( owner.isAnonymous && owner.isAnonymous() && owner.removable === true ) return {}
 
-		var	tmp    = ( ownerIsEntity ) ? owner.getEntityTemplate() : owner,
-			entity = tmp.getChildren().findRecord( 'name', componentEntity.get('name') )
+		var getTemplate = function( entity ) {
+			var template = ( !entity.isAnonymous()  ) ? entity.getEntityTemplate() : undefined
+
+			if( template || !entity.hasEntity()  ) {
+				parents.push( componentEntity.get('name') )
+				return template
+			} else {
+				parents.push( entity.get( 'name' ) )
+				return getTemplate( entity.getEntity() )
+			}
+		}
+
+		var	template = ( ownerIsEntity ) ? getTemplate( owner ) : owner
+
+		if( !template ) return {}
+
+		var findNeededEntity = function( source, parents ) {
+
+			if( parents.length === 0 ) return source
+			var name = parents.shift()
+
+			var child = source.getChildren().findRecord( 'name', name )
+
+			if( child ) {
+				return findNeededEntity( child, parents )
+			} else {
+				return undefined
+			}
+		}
+
+		var entity = findNeededEntity( template, parents )
 
 		if( !entity ) return {}
 
@@ -117,45 +157,23 @@ Ext.define('Spelled.model.config.Component', {
 			function( templateComponent ) {
 				if( templateComponent.get('templateId') === this.get( 'templateId' ) ) {
 					component = templateComponent
-					if( ownerIsEntity ) this.set( 'additional', false )
 					return false
 				}
 			},
 			this
 		)
 
-		return ( component ) ? Ext.clone( component.get( 'config' ) ) : {}
+		if( component ) {
+			config = Ext.Object.merge( config, component.get( 'config' ) )
+			this.set( 'additional', false )
+		}
+		return config
 	},
 
     getConfigMergedWithTemplateConfig: function( ) {
-        this.markChanges()
-
 		var config = {}
 
-		//Only merge with enityconfig, if it is really linked to a entity
-		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && !Ext.isEmpty( this.getEntity().get('templateId' ) ) ) {
-			var templateId     = this.getEntity().get('templateId'),
-				templateEntity = Ext.getStore( 'template.Entities').getByTemplateId( templateId )
-
-			if( !templateEntity ) {
-				var message = "The entity template '" + templateId + "' could not be found. Cannot continue loading; please fix this problem manually."
-
-				Ext.Msg.alert( 'Missing entity template', message )
-
-				throw message
-			}
-
-			var	templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', this.get('templateId') )
-
-			if( !templateEntityComponent || templateEntity.modelName === this.getEntity().modelName ) {
-				this.set('additional', true)
-			}
-
-		} else {
-			this.set('additional', true)
-		}
-
-		config = Ext.Object.merge( config, this.getTemplateConfig(), this.getTemplateCompositeConfig(), this.get('config') )
+		config = Ext.Object.merge( config, this.getComponentTemplateConfig(), this.getTemplateConfig(), this.get('config') )
 
 		//TODO: Warum ist trim in der config durch den merge
         delete config.trim

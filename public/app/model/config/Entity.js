@@ -154,7 +154,7 @@ Ext.define('Spelled.model.config.Entity', {
 	checkForComponentChanges : function() {
 		this.getComponents().each(
 			function( component ) {
-				component.getConfigMergedWithTemplateConfig()
+				component.markChanges()
 			}
 		)
 
