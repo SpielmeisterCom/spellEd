@@ -3,7 +3,8 @@ Ext.define('Spelled.model.config.Component', {
 
 	requires: [
 		'idgen.uuid',
-		'association.belongsto'
+		'association.belongsto',
+		'Spelled.EntityHelper'
 	],
 
 	fields: [
@@ -135,37 +136,11 @@ Ext.define('Spelled.model.config.Component', {
 
 		if( owner.isAnonymous && owner.isAnonymous() && owner.removable === true ) return {}
 
-		var getTemplate = function( entity ) {
-			var template = ( !entity.isAnonymous()  ) ? entity.getEntityTemplate() : undefined
+		var	rootOwner = ( ownerIsEntity ) ? Spelled.EntityHelper.getRootOwnerFromChildren( componentEntity.get( 'name' ), owner, parents ) : owner
 
-			if( template || !entity.hasEntity()  ) {
-				parents.push( componentEntity.get('name') )
-				return template
-			} else {
-				parents.push( entity.get( 'name' ) )
-				return getTemplate( entity.getEntity() )
-			}
-		}
+		if( !rootOwner ) return {}
 
-		var	template = ( ownerIsEntity ) ? getTemplate( owner ) : owner
-
-		if( !template ) return {}
-
-		var findNeededEntity = function( source, parents ) {
-
-			if( parents.length === 0 ) return source
-			var name = parents.shift()
-
-			var child = source.getChildren().findRecord( 'name', name )
-
-			if( child ) {
-				return findNeededEntity( child, parents )
-			} else {
-				return undefined
-			}
-		}
-
-		var entity = findNeededEntity( template, parents )
+		var entity = Spelled.EntityHelper.findNeededEntity( rootOwner.getEntityTemplate(), parents )
 
 		if( !entity ) return {}
 

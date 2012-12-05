@@ -291,6 +291,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.component.Body": [
     "layout.body"
   ],
+  "Spelled.EntityHelper": [],
   "Ext.layout.component.field.ComboBox": [
     "layout.combobox"
   ],
@@ -1470,6 +1471,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.menu.contextmenu.KeyToActionMapping": [],
   "Ext.layout.Context": [],
   "Ext.layout.component.Body": [],
+  "Spelled.EntityHelper": [],
   "Ext.layout.component.field.ComboBox": [],
   "Ext.dd.DDTarget": [],
   "Ext.chart.Chart": [],

@@ -131,20 +131,22 @@ Ext.define('Spelled.controller.Templates', {
     deleteTemplateAction: function( node ) {
         if( !node ) return
 
+		var id = node.get('id')
+
         switch( node.get('cls') ) {
             case this.TEMPLATE_TYPE_COMPONENT:
 				if( !node.isLeaf() ) return
-				this.application.getController('templates.Components').removeComponentTemplate( node.get('id') )
+				this.application.getController('templates.Components').removeComponentTemplate( id )
                 break
             case this.TEMPLATE_TYPE_ENTITY:
-                this.application.getController('templates.Entities').showRemoveEntityTemplateReferences( node.get('id') )
+                this.application.getController('templates.Entities').showRemoveEntityTemplateReferences( id )
                 break
 			case this.TYPE_ENTITY_COMPOSITE:
-				this.application.getController('templates.Entities').removeEntityCompositeNode( node )
+				this.application.getController('templates.Entities').showRemoveEntityCompositeReferences( id )
 				break
             case this.TEMPLATE_TYPE_SYSTEM:
 				if( !node.isLeaf() ) return
-                this.application.getController('templates.Systems').removeSystemTemplate( node.get('id') )
+                this.application.getController('templates.Systems').removeSystemTemplate( id )
                 break
             default:
                 return

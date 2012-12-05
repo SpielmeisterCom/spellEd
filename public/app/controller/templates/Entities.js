@@ -187,6 +187,94 @@ Ext.define('Spelled.controller.templates.Entities', {
 		}
 	},
 
+	showRemoveEntityCompositeReferences: function( id ) {
+		var entity = Ext.getStore( 'config.Entities' ).getById( id )
+
+		if( entity ) {
+			this.confirmDeleteReference(
+				Ext.bind(
+					function( button ) {
+						if( button != "cancel" ) {
+							this.removeEntityCompositeHelper( entity, button === 'yes' )
+						}
+					},
+					this
+				)
+			)
+		}
+	},
+
+	showRemoveEntityTemplateReferences: function( id ) {
+		var entity = this.getTemplateEntitiesStore().getById( id )
+
+		if( entity ) {
+			this.confirmDeleteReference(
+				Ext.bind(
+					function( button ) {
+						if( button != "cancel" ) this.removeEntityTemplate( entity, button === 'yes' )
+					},
+					this
+				)
+			)
+		}
+	},
+
+	removeEntityCompositeHelper: function( entity, copyIntoReferences ) {
+		var node      = this.getTemplatesTree().getStore().getNodeById( entity.getId() ),
+			ownerNode = this.getOwnerNode( node ),
+			template  = this.getTemplateEntitiesStore().getById( ownerNode.getId()),
+			store     = Ext.getStore( 'config.Entities' ),
+			entities  = store.query( 'templateId', template.getFullName() )
+
+		if( copyIntoReferences ) {
+			entities.each(
+				function( item ) {
+					this.convertEntityCompositeFromConfigEntity( item, entity )
+				},
+				this
+			)
+		} else {
+			entities.each(
+				function( item ) {
+					this.removeEntityCompositeFromConfigEntity( item, entity )
+				},
+				this
+			)
+		}
+
+		this.removeEntityCompositeNode( node )
+	},
+
+	convertEntityCompositeFromConfigEntity: function( entity, composite ) {
+		var parents         = [],
+			owner           = Spelled.EntityHelper.getRootOwnerFromChildren( composite.get( 'name' ), entity, parents ),
+			entityToConvert = Spelled.EntityHelper.findNeededEntity( owner, parents )
+
+		entityToConvert.set( 'templateId', composite.get( 'templateId' ) )
+		entityToConvert.set( 'removable', true )
+		entityToConvert.setDirty()
+
+		entityToConvert.mergeEntityTemplateWithTemplateConfig( composite )
+
+		composite.getComponents().each(
+			function( component ) {
+				var cmp = entityToConvert.getComponentByTemplateId( component.get( 'templateId' ) )
+				cmp.set( 'config', cmp.getConfigMergedWithTemplateConfig() )
+				cmp.set( 'additional', true )
+			}
+		)
+
+		this.application.fireEvent( 'updateentitynode', entityToConvert )
+	},
+
+	removeEntityCompositeFromConfigEntity: function( entity, composite ){
+		var parents            = [],
+			owner              = Spelled.EntityHelper.getRootOwnerFromChildren( composite.get( 'name' ), entity, parents ),
+			entityToRemove     = Spelled.EntityHelper.findNeededEntity( owner, parents )
+
+		this.application.getController( 'Entities' ).removeEntityHelper( entityToRemove )
+	},
+
 	removeEntityCompositeNode: function( node ) {
         var entity     = Ext.getStore( 'config.Entities' ).getById( node.getId() ),
 			template   = entity.getOwner(),
@@ -234,18 +322,14 @@ Ext.define('Spelled.controller.templates.Entities', {
 		this.application.fireEvent( 'templateremove', entityTemplate )
 	},
 
-	showRemoveEntityTemplateReferences: function( id ) {
-		var entity = this.getTemplateEntitiesStore().getById( id )
-
-		if( entity ) {
-			Ext.Msg.confirm(
-				'What should happen to the References?',
-				'Should the editor make a copy in all referenced entities? Choose "no" if all references should be removed.',
-				function( button ) {
-					if( button != "cancel" ) this.removeEntityTemplate( entity, button === 'yes' )
-				},
-				this
-			)
-		}
-    }
+	confirmDeleteReference: function( callback ) {
+		Ext.Msg.confirm(
+			'What should happen to the References?',
+			'Should the editor make a copy in all referenced entities? Choose "no" if all references should be removed.',
+			function( button ) {
+				if( button != "cancel" ) callback( button )
+			},
+			this
+		)
+	}
 });
