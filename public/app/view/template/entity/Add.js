@@ -25,9 +25,17 @@ Ext.define('Spelled.view.template.entity.Add' ,{
 				{
                     xtype: 'combobox',
                     store: 'template.Entities',
+					matchFieldWidth : false,
+
+					listeners: {
+						beforequery: function(qe){
+							qe.query = new RegExp(qe.query, 'i')
+							qe.forceAll = true
+						}
+					},
 
                     valueField: 'id',
-                    displayField:'name',
+                    displayField:'templateId',
                     queryMode: 'local',
                     forceSelection: true,
 
