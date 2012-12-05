@@ -74,6 +74,7 @@ Ext.define('Spelled.controller.Templates', {
 			templatedblclick   : this.openTemplate,
 			templateselect     : this.showConfig,
 			templatebeforeclose: this.checkIfTemplateIsDirty,
+			templateremove     : this.removeTemplateCallback,
 			scope: this
 		})
     },
@@ -136,7 +137,7 @@ Ext.define('Spelled.controller.Templates', {
 				this.application.getController('templates.Components').removeComponentTemplate( node.get('id') )
                 break
             case this.TEMPLATE_TYPE_ENTITY:
-                this.application.getController('templates.Entities').removeEntityTemplate( node.get('id') )
+                this.application.getController('templates.Entities').showRemoveEntityTemplateReferences( node.get('id') )
                 break
 			case this.TYPE_ENTITY_COMPOSITE:
 				this.application.getController('templates.Entities').removeEntityCompositeNode( node )

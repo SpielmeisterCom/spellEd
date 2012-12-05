@@ -79,6 +79,46 @@ Ext.define('Spelled.model.config.Entity', {
 		)
 	},
 
+	convertToAnonymousEntity: function() {
+		var template   = this.getEntityTemplate(),
+			components = this.getComponents(),
+			children   = this.getChildren()
+
+		this.set( 'templateId', '' )
+		this.set( 'removable', true )
+
+		template.getComponents().each(
+			function( component ) {
+				var componentId = component.get( 'templateId' ),
+					cmp         = components.findRecord( 'templateId', componentId ) || Ext.create( 'Spelled.model.config.Component', {
+						templateId: component.get( 'templateId' )
+					})
+
+				cmp.set( 'additional', true )
+				cmp.set( 'config', Ext.Object.merge( {}, component.getConfigMergedWithTemplateConfig(), cmp.get( 'config' ) ) )
+
+				this.getComponents().add( cmp )
+				cmp.setEntity( this )
+
+				cmp.stripRedundantData()
+			},
+			this
+		)
+
+		template.getChildren().each(
+			function( item ) {
+				var child = this.getChildren().findRecord( 'name', item.get( 'name' ) ) || item.clone( true )
+
+				child.convertToAnonymousEntity()
+
+				children.add( child )
+			},
+			this
+		)
+
+		this.setDirty()
+	},
+
 	resetConfig: function() {
 		this.set( 'config', {} )
 		this.getComponents().removeAll()

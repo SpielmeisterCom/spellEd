@@ -79,6 +79,7 @@ Ext.define('Spelled.controller.Entities', {
 	    })
 
 		this.application.on({
+			updateentitynode       : this.updateEntityNode,
 			triggerrenamingentity  : this.triggerRenameEntityEvent,
 			refreshentitynode      : this.refreshEntityNode,
 			showentityinfo         : this.showEntityInfo,
@@ -112,6 +113,19 @@ Ext.define('Spelled.controller.Entities', {
 			}
 		)
     },
+
+	updateEntityNode: function( entity ) {
+		var node = this.getScenesTree().getStore().getNodeById( entity.getId() )
+
+		if( node ) {
+			var parent = node.parentNode
+
+			node.removeAll()
+			node.remove()
+
+			parent.appendChild( entity.createTreeNode( parent ) )
+		}
+	},
 
 	showCreateEntityHelper: function() {
 		var scene = this.application.getRenderedScene()
@@ -276,6 +290,16 @@ Ext.define('Spelled.controller.Entities', {
 		if( this.application.isRenderedSceneLastSelectedScene() ) this.application.fireEvent( 'sendToEngine', type, payload )
 	},
 
+	removeEntityHelper: function( entity ) {
+		this.sendEntityEventToEngine( 'entity.remove', { entityId: entity.getId() } )
+
+		entity.getOwner().setDirty()
+		this.deleteEntity( entity )
+		var node = this.getScenesTree().getStore().getNodeById( entity.getId() )
+
+		node.remove()
+	},
+
 	removeEntity: function( entity ) {
 		if( !entity.isRemovable() ) {
 			Ext.Msg.alert(
@@ -289,13 +313,7 @@ Ext.define('Spelled.controller.Entities', {
 				function( button ) {
 					if ( button === 'yes' ) {
 						if( entity ) {
-							this.sendEntityEventToEngine( 'entity.remove', { entityId: entity.getId() } )
-
-							entity.getOwner().setDirty()
-							this.deleteEntity( entity )
-							var node = this.getScenesTree().getStore().getNodeById( entity.getId() )
-
-							node.remove()
+							this.removeEntityHelper( entity )
 						}
 					}
 				},

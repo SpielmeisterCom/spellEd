@@ -209,9 +209,43 @@ Ext.define('Spelled.controller.templates.Entities', {
         this.getTemplatesTree().selectPath( parentNode.getPath() )
 	},
 
-    removeEntityTemplate: function( id ) {
+	removeEntityTemplate: function( entityTemplate, copyIntoReferences ) {
+		var store              = Ext.getStore( 'config.Entities' ),
+			entities           = store.query( 'templateId', entityTemplate.getFullName() ),
+			entitiesController = this.application.getController( 'Entities' )
+
+		if( !copyIntoReferences ) {
+			entities.each(
+				function( entity ) {
+					entitiesController.removeEntityHelper( entity )
+				},
+				this
+			)
+		} else {
+			entities.each(
+				function( entity ) {
+					entity.convertToAnonymousEntity()
+					this.fireEvent( 'updateentitynode', entity )
+				},
+				this.application
+			)
+		}
+
+		this.application.fireEvent( 'templateremove', entityTemplate )
+	},
+
+	showRemoveEntityTemplateReferences: function( id ) {
 		var entity = this.getTemplateEntitiesStore().getById( id )
 
-		if( entity ) this.application.getController('Templates').removeTemplateCallback( entity )
+		if( entity ) {
+			Ext.Msg.confirm(
+				'What should happen to the References?',
+				'Should the editor make a copy in all referenced entities? Choose "no" if all references should be removed.',
+				function( button ) {
+					if( button != "cancel" ) this.removeEntityTemplate( entity, button === 'yes' )
+				},
+				this
+			)
+		}
     }
 });
