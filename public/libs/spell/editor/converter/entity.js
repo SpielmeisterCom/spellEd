@@ -47,7 +47,7 @@ define(
 				function( memo, entityChildren ) {
 					var result = toEngineFormat( entityChildren, config )
 
-					if( !includeEntityIds && !_.has( result, "config" ) && !_.has( result, "children" ) ) return memo
+					if( !entityChildren.removable && !includeEntityIds && !_.has( result, "config" ) && !_.has( result, "children" ) ) return memo
 
 					return memo.concat( result )
 				},
