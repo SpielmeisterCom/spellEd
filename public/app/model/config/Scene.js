@@ -90,6 +90,14 @@ Ext.define('Spelled.model.config.Scene', {
 		))
 	},
 
+	checkForComponentChanges: function() {
+		this.getEntities().each(
+			function( entity ) {
+				entity.checkForComponentChanges()
+			}
+		)
+	},
+
 	listeners: {
 		idchanged: function() {
 			Spelled.StorageActions.read( { id: this.getAccordingJSFileName() },

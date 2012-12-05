@@ -710,6 +710,7 @@ Ext.define('Spelled.controller.Scenes', {
 		iframe.destroy()
 
 		scene.syncLibraryIds()
+		scene.checkForComponentChanges()
 
 		this.application.setRenderedScene( scene )
 

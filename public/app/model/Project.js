@@ -43,11 +43,7 @@ Ext.define('Spelled.model.Project', {
 	checkForComponentChanges: function() {
 		this.getScenes().each(
 			function( scene ) {
-				scene.getEntities().each(
-					function( entity ) {
-						entity.checkForComponentChanges()
-					}
-				)
+				scene.checkForComponentChanges()
 			}
 		)
 	}
