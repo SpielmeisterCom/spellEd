@@ -165,7 +165,7 @@ Ext.define('Spelled.controller.Entities', {
 		this.sendEntityEventToEngine(
 			'component.update' , {
 				entityId    : entity.getId(),
-				componentId : 'spell.component.metadata',
+				componentId : 'spell.component.entityMetaData',
 				config      : { name: entity.get( 'name' ) }
 			}
 		)
