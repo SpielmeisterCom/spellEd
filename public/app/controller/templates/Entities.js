@@ -191,16 +191,20 @@ Ext.define('Spelled.controller.templates.Entities', {
 		var entity = Ext.getStore( 'config.Entities' ).getById( id )
 
 		if( entity ) {
-			this.confirmDeleteReference(
-				Ext.bind(
-					function( button ) {
-						if( button != "cancel" ) {
-							this.removeEntityCompositeHelper( entity, button === 'yes' )
-						}
-					},
-					this
+			if( this.application.getController( 'Templates' ).checkForReferences( entity ) ) {
+				this.confirmDeleteReference(
+					Ext.bind(
+						function( button ) {
+							if( button != "cancel" ) {
+								this.removeEntityCompositeHelper( entity, button === 'yes' )
+							}
+						},
+						this
+					)
 				)
-			)
+			} else {
+				this.removeEntityCompositeHelper( entity, false )
+			}
 		}
 	},
 
@@ -208,14 +212,18 @@ Ext.define('Spelled.controller.templates.Entities', {
 		var entity = this.getTemplateEntitiesStore().getById( id )
 
 		if( entity ) {
-			this.confirmDeleteReference(
-				Ext.bind(
-					function( button ) {
-						if( button != "cancel" ) this.removeEntityTemplate( entity, button === 'yes' )
-					},
-					this
+			if( this.application.getController( 'Templates' ).checkForReferences( entity ) ) {
+				this.confirmDeleteReference(
+					Ext.bind(
+						function( button ) {
+							if( button != "cancel" ) this.removeEntityTemplate( entity, button === 'yes' )
+						},
+						this
+					)
 				)
-			)
+			} else {
+				this.removeEntityTemplate( entity, false )
+			}
 		}
 	},
 
