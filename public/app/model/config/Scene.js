@@ -80,8 +80,15 @@ Ext.define('Spelled.model.config.Scene', {
 	},
 
 	syncLibraryIds: function() {
-		var result = this.get( 'libraryIds' ) || [],
-			stores = [
+		var result = []
+
+		if( Ext.isArray( this.get( 'libraryIds' ) ) ) {
+			result = this.get( 'libraryIds' )
+		} else {
+			this.set( 'libraryIds', result )
+		}
+
+		var stores = [
 				'template.Components',
 				'template.Entities',
 				'template.Systems',
