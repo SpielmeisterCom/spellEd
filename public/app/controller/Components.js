@@ -369,6 +369,8 @@ Ext.define('Spelled.controller.Components', {
 			component.setChanged()
 
 			entity.setDirty()
+
+			this.sendUpdateToAllEntitiesOnTemplateComponent( component, name, value )
 		}
 	},
 
@@ -460,7 +462,31 @@ Ext.define('Spelled.controller.Components', {
 		this.sendComponentUpdate( component, name, newValue )
 	},
 
-	sendComponentUpdate: function( component, name, value ) {
+	sendUpdateToAllEntitiesOnTemplateComponent: function( component, name, value ) {
+		var componentOwner = component.getEntity(),
+			componentName  = componentOwner.get( 'name' ),
+			entityTemplate = Spelled.EntityHelper.getRootOwnerFromComponent( component )
+
+		if( entityTemplate ) {
+			var entities = Ext.getStore( 'config.Entities' ).query( 'templateId', entityTemplate.getFullName() )
+
+			entities.each(
+				function( entity ) {
+					var parents = [],
+						owner   = Spelled.EntityHelper.getRootOwnerFromChildren( componentName, componentOwner, parents ),
+						needed  = Spelled.EntityHelper.findNeededEntity( entity, parents )
+
+					if( needed && ( needed.hasScene() || needed.hasEntity() ) ) {
+						var cmp = needed.getComponentByTemplateId( component.get( 'templateId' ) )
+						this.sendComponentUpdate( cmp, name, value, true )
+					}
+				},
+				this
+			)
+		}
+	},
+
+	sendComponentUpdate: function( component, name, value, merge ) {
 		var activeScene       = this.application.getRenderedScene(),
 			sceneEditor       = this.getSceneEditor()
 
@@ -472,7 +498,10 @@ Ext.define('Spelled.controller.Components', {
 			if( activeSceneTab && activeSceneTab.isVisible() ) {
 				var componentConfig = {}
 
-				componentConfig[ name ] = Ext.decode( value, true ) || value
+				if( merge )
+					componentConfig[ name ] = component.getConfigMergedWithTemplateConfig()[ name ]
+				else
+					componentConfig[ name ] = Ext.decode( value, true ) || value
 
 				this.application.fireEvent(
 					'sendToEngine',
