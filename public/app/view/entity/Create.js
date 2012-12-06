@@ -6,6 +6,8 @@ Ext.define('Spelled.view.entity.Create' ,{
     modal : true,
 	layout: 'fit',
 
+	width: 500,
+
     items: [
         {
             bodyPadding: 10,
@@ -25,7 +27,16 @@ Ext.define('Spelled.view.entity.Create' ,{
 				{
 					xtype: 'combobox',
 					name: 'scene',
+					queryMode: 'local',
 					displayField: 'sceneId',
+
+					listeners: {
+						beforequery: function(qe){
+							qe.query = new RegExp(qe.query, 'i')
+							qe.forceAll = true
+						}
+					},
+
 					matchFieldWidth : false,
 					fieldLabel: 'Scene',
 					emptyText: " -- Select a scene --",
