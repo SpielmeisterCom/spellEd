@@ -374,6 +374,8 @@ Ext.define('Spelled.controller.Entities', {
     },
 
 	createEntityHelper: function( record, values ) {
+		Ext.getStore( 'template.Entities' ).clearFilter( true )
+
 		if( !Ext.isEmpty( values.templateId ) ) {
 			var entityTemplate = this.getTemplateEntitiesStore().getById( values.templateId )
 			record.set( 'templateId', entityTemplate.getFullName() )
