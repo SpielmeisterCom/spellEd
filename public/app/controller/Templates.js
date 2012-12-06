@@ -337,6 +337,8 @@ Ext.define('Spelled.controller.Templates', {
 
 			if( values.owner ) this.application.getController( 'templates.Entities' ).convertEntity( values.owner, model )
 
+			this.application.getActiveProject().setDirty()
+
 			model.save({
 				success: function( result ) {
 					Ext.Msg.alert('Success', 'Your Template "' + result.get( 'templateId' ) + '" has been created.')
