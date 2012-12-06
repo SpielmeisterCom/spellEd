@@ -140,7 +140,8 @@ Ext.define('Spelled.model.config.Component', {
 
 		if( !rootOwner ) return {}
 
-		var entity = Spelled.EntityHelper.findNeededEntity( rootOwner.getEntityTemplate(), parents )
+		var template = Ext.getStore( 'template.Entities' ).getByTemplateId( rootOwner.get('templateId') ),
+			entity   = Spelled.EntityHelper.findNeededEntity( template, parents )
 
 		if( !entity ) return {}
 
