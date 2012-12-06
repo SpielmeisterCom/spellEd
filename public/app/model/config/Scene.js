@@ -67,27 +67,37 @@ Ext.define('Spelled.model.config.Scene', {
 		this.callParent( arguments )
 	},
 
-	getStoreIds: function( store ) {
-		var array = []
+	mergeStoreIds: function( result, store ) {
+		var	contains = Ext.Array.contains
+
 		store.each(
 			function( asset ) {
-				array.push( asset.getFullName() )
+				var name = asset.getFullName()
+				if( !contains( result, name ) ) result.push( asset.getFullName() )
 			},
 			this
 		)
-
-		return array
 	},
 
 	syncLibraryIds: function() {
-		var result = []
+		var result = this.get( 'libraryIds' ) || [],
+			stores = [
+				'template.Components',
+				'template.Entities',
+				'template.Systems',
+				'asset.Assets'
+			],
+			getStore = Ext.getStore,
+			merge    = this.mergeStoreIds
 
-		this.set( 'libraryIds', result.concat(
-			this.getStoreIds( Ext.getStore( 'template.Components' ) ),
-			this.getStoreIds( Ext.getStore( 'template.Entities' ) ),
-			this.getStoreIds( Ext.getStore( 'template.Systems' ) ),
-			this.getStoreIds( Ext.getStore( 'asset.Assets' ) )
-		))
+		Ext.Array.each(
+			stores,
+			function( item ) {
+				var store = getStore( item )
+				store.clearFilter( true )
+				merge( result, store )
+			}
+		)
 	},
 
 	checkForComponentChanges: function() {
