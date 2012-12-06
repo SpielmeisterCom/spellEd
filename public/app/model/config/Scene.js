@@ -156,7 +156,7 @@ Ext.define('Spelled.model.config.Scene', {
 	appendOnTreeNode: function( node ) {
 		var sceneNode = node.appendChild(
 			node.createNode( {
-					text      : 'Scene "' + this.getFullName() + '"',
+					text      : this.getFullName(),
 					id        : this.getId(),
 					iconCls   : "tree-scene-icon",
 					leaf      : false
