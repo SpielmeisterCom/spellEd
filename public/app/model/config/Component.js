@@ -117,9 +117,9 @@ Ext.define('Spelled.model.config.Component', {
 					this.set( 'additional', false )
 				}
 			}
-		} else {
-			config = Ext.Object.merge( config, this.getTemplateCompositeConfig() )
 		}
+
+		config = Ext.Object.merge( config, this.getTemplateCompositeConfig() )
 
 		return config
 	},
