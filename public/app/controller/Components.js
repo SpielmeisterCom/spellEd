@@ -477,6 +477,7 @@ Ext.define('Spelled.controller.Components', {
 						needed  = Spelled.EntityHelper.findNeededEntity( entity, parents )
 
 					if( needed && ( needed.hasScene() || needed.hasEntity() ) ) {
+						needed.mergeWithTemplateConfig()
 						var cmp = needed.getComponentByTemplateId( component.get( 'templateId' ) )
 						this.sendComponentUpdate( cmp, name, value, true )
 					}
