@@ -15,7 +15,7 @@ Ext.define( 'Spelled.EntityHelper', {
 
 	getRootTemplateEntityFromEntity: function( entity ) {
 		if( entity.hasOwnerEntity && entity.hasOwnerEntity() ) return entity.getOwnerEntity()
-		else if( entity.hasEntity && entity.hasEntity() ) return Spelled.EntityHelper.getRootEntityFromEntity( entity.getEntity() )
+		else if( entity.hasEntity && entity.hasEntity() ) return this.getRootTemplateEntityFromEntity( entity.getEntity() )
 		else if( entity.get( 'type' ) === "entityTemplate" ) {
 			return Ext.getStore( 'template.Entities' ).getByTemplateId( entity.get( 'templateId' ) )
 		}
@@ -24,7 +24,7 @@ Ext.define( 'Spelled.EntityHelper', {
 	},
 
 	getRootTemplateOwnerFromComponent: function( component ) {
-		return Spelled.EntityHelper.getRootTemplateEntityFromEntity( component.getEntity() )
+		return this.getRootTemplateEntityFromEntity( component.getEntity() )
 	},
 
 	getRootEntityOwnerFromEntity: function( entity, parents ) {
@@ -33,7 +33,7 @@ Ext.define( 'Spelled.EntityHelper', {
 		if( !entity.hasEntity ) return false
 
 		parents.unshift( name )
-		return ( entity.hasEntity() ) ? Spelled.EntityHelper.getRootEntityOwnerFromEntity( entity.getEntity(), parents ) : entity
+		return ( entity.hasEntity() ) ? this.getRootEntityOwnerFromEntity( entity.getEntity(), parents ) : entity
 	},
 
 	findNeededEntity: function( source, parents ) {
@@ -45,7 +45,7 @@ Ext.define( 'Spelled.EntityHelper', {
 		var child = source.getChildren().findRecord( 'name', name )
 
 		if( child ) {
-			return Spelled.EntityHelper.findNeededEntity( child, parents )
+			return this.findNeededEntity( child, parents )
 		} else {
 			return undefined
 		}
@@ -59,7 +59,7 @@ Ext.define( 'Spelled.EntityHelper', {
 			return entity
 		} else {
 			parents.push( entity.get( 'name' ) )
-			return Spelled.EntityHelper.getRootOwnerFromChildren( name, entity.getEntity(), parents )
+			return this.getRootOwnerFromChildren( name, entity.getEntity(), parents )
 		}
 	}
 })
