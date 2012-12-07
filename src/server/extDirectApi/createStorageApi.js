@@ -74,8 +74,7 @@ define(
 							}
 
 						} catch( e ) {
-							console.error( "Could not parse JSON file: " + filePath )
-							return false
+							throw  "Could not parse JSON file: '" + path.relative( searchPath, filePath  ) + "' <br/> " + e
 						}
 					}
 				)

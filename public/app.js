@@ -303,7 +303,7 @@ var startApplication = function() {
 			Ext.Direct.on('exception', function( response ) {
 				if( !Ext.Msg.isVisible() ) {
 					Ext.Msg.show({
-						buttons: Ext.Msg.OK,
+						closable: false,
 						title: 'Critical Error',
 						msg: "Could not execute '" + response.transaction.action +"."+ response.transaction.method +
 							"': <br/><br/>"+ response.xhr.responseText,
