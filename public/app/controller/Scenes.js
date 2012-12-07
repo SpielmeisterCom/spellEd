@@ -428,8 +428,12 @@ Ext.define('Spelled.controller.Scenes', {
 
 		tree.getRootNode().eachChild( function( child ) {
 			if( child.getId() === scene.getId() ) {
+				child.set( 'leaf', false )
+				child.expand()
 				child.set( 'iconCls', "tree-default-scene-icon" )
 			} else {
+				child.collapse( true )
+				child.set( 'leaf', true )
 				child.set( 'iconCls', "tree-scene-icon" )
 			}
 		})
@@ -918,6 +922,7 @@ Ext.define('Spelled.controller.Scenes', {
 			this.application.getController('Systems').refreshSceneSystemList( scene )
 
 			if( project.get( 'startScene' ) == scene.getFullName() ) {
+				node.set( 'leaf', false )
 				node.set( 'iconCls', 'tree-default-scene-icon' )
 			}
 

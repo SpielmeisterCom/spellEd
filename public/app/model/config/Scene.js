@@ -166,7 +166,7 @@ Ext.define('Spelled.model.config.Scene', {
 					text      : this.getFullName(),
 					id        : this.getId(),
 					iconCls   : "tree-scene-icon",
-					leaf      : false
+					leaf      : true
 				}
 			)
 		)
