@@ -464,8 +464,7 @@ Ext.define('Spelled.controller.Components', {
 
 	sendUpdateToAllEntitiesOnTemplateComponent: function( component, name, value ) {
 		var componentOwner = component.getEntity(),
-			componentName  = componentOwner.get( 'name' ),
-			entityTemplate = Spelled.EntityHelper.getRootOwnerFromComponent( component )
+			entityTemplate = Spelled.EntityHelper.getRootTemplateOwnerFromComponent( component )
 
 		if( entityTemplate ) {
 			var entities = Ext.getStore( 'config.Entities' ).query( 'templateId', entityTemplate.getFullName() )
@@ -473,7 +472,7 @@ Ext.define('Spelled.controller.Components', {
 			entities.each(
 				function( entity ) {
 					var parents = [],
-						owner   = Spelled.EntityHelper.getRootOwnerFromChildren( componentName, componentOwner, parents ),
+						owner   = Spelled.EntityHelper.getRootEntityOwnerFromEntity( componentOwner, parents ),
 						needed  = Spelled.EntityHelper.findNeededEntity( entity, parents )
 
 					if( needed && ( needed.hasScene() || needed.hasEntity() ) ) {

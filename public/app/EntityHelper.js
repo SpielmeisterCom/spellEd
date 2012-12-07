@@ -1,7 +1,7 @@
 Ext.define( 'Spelled.EntityHelper', {
 	singleton: true,
 
-	getRootEntityFromEntity: function( entity ) {
+	getRootTemplateEntityFromEntity: function( entity ) {
 		if( entity.hasOwnerEntity && entity.hasOwnerEntity() ) return entity.getOwnerEntity()
 		else if( entity.hasEntity && entity.hasEntity() ) return this.getRootEntityFromEntity( entity.getEntity() )
 		else if( entity.get( 'type' ) === "entityTemplate" ) {
@@ -11,8 +11,17 @@ Ext.define( 'Spelled.EntityHelper', {
 		return false
 	},
 
-	getRootOwnerFromComponent: function( component ) {
-		return this.getRootEntityFromEntity( component.getEntity() )
+	getRootTemplateOwnerFromComponent: function( component ) {
+		return this.getRootTemplateEntityFromEntity( component.getEntity() )
+	},
+
+	getRootEntityOwnerFromEntity: function( entity, parents ) {
+		var name = entity.get( 'name' )
+
+		if( !entity.hasEntity ) return false
+
+		parents.unshift( name )
+		return ( entity.hasEntity() ) ? this.getRootEntityOwnerFromEntity( entity.getEntity(), parents ) : entity
 	},
 
 	findNeededEntity: function( source, parents ) {
