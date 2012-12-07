@@ -11,7 +11,9 @@ Ext.define('Spelled.Converter' ,{
 		}
 	},
 
-	decodeFieldValue: function( value ) {
+	decodeFieldValue: function( value, type ) {
+		if( type && type === 'string' ) return value
+
 		return Ext.decode( value, true ) || value
 	},
 

@@ -353,9 +353,9 @@ Ext.define('Spelled.controller.Components', {
 			component         = this.getConfigComponentsStore().getById( componentConfigId ),
 			config            = Ext.Object.merge( {}, component.get('config') ),
 			defaultConfig     = Ext.Object.merge( {}, component.getComponentTemplateConfig(), component.getTemplateConfig() ),
-			value             = Spelled.Converter.decodeFieldValue( record.get( 'value') ),
 			name              = record.get('name'),
-			entity            = component.getEntity()
+			entity            = component.getEntity(),
+			value             = Spelled.Converter.decodeFieldValue( record.get( 'value'), component.getAttributeByName( name ).get( 'type' ) )
 
 		if( !Spelled.Compare.isEqual( value, config[ name ] ) ) {
 
@@ -501,7 +501,7 @@ Ext.define('Spelled.controller.Components', {
 				if( merge )
 					componentConfig[ name ] = component.getConfigMergedWithTemplateConfig()[ name ]
 				else
-					componentConfig[ name ] = Ext.decode( value, true ) || value
+					componentConfig[ name ] = Spelled.Converter.decodeFieldValue( value, component.getAttributeByName( name ).get( 'type' ) )
 
 				this.application.fireEvent(
 					'sendToEngine',

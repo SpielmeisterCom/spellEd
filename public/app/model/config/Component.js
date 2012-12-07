@@ -23,6 +23,10 @@ Ext.define('Spelled.model.config.Component', {
 		}
 	],
 
+	getAttributeByName: function( name ) {
+		return this.getTemplate().getAttributeByName( name )
+	},
+
 	stripRedundantData: function() {
 		var config  = this.get( 'config' )
 
