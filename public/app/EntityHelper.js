@@ -1,6 +1,18 @@
 Ext.define( 'Spelled.EntityHelper', {
 	singleton: true,
 
+	missingTemplateError: function( model ) {
+		Ext.Msg.confirm(
+			'Error', 'The Template "' + model.get('templateId') + '" could not be found. Should the reference to this template be removed?',
+			function( button ) {
+				if( button === "yes" ) {
+					model.set( 'templateId', '' )
+					model.setDirty()
+				}
+			}
+		)
+	},
+
 	getRootTemplateEntityFromEntity: function( entity ) {
 		if( entity.hasOwnerEntity && entity.hasOwnerEntity() ) return entity.getOwnerEntity()
 		else if( entity.hasEntity && entity.hasEntity() ) return this.getRootEntityFromEntity( entity.getEntity() )

@@ -281,7 +281,11 @@ Ext.define('Spelled.model.config.Entity', {
 	},
 
 	getEntityTemplate: function() {
-		return Ext.getStore( 'template.Entities' ).getByTemplateId( this.get('templateId'))
+		var template = Ext.getStore( 'template.Entities' ).getByTemplateId( this.get('templateId') )
+
+		if( !template ) Spelled.EntityHelper.missingTemplateError( this )
+
+		return template
 	},
 
 	hasScene: function() {
@@ -366,27 +370,29 @@ Ext.define('Spelled.model.config.Entity', {
 	mergeChildren: function( sourceEntity ) {
 		var children = this.getChildren()
 
-		sourceEntity.getChildren().each(
-			function( entity ) {
-				var child = undefined,
-					index = children.findBy( function( item ) {
-					return ( item.get('templateId') === entity.get('templateId') && item.get('name') === entity.get('name') )
-				})
+		if( sourceEntity ) {
+			sourceEntity.getChildren().each(
+				function( entity ) {
+					var child = undefined,
+						index = children.findBy( function( item ) {
+							return ( item.get('templateId') === entity.get('templateId') && item.get('name') === entity.get('name') )
+						})
 
-				if( index > -1 ) {
-					child = children.getAt( index )
-					child.mergeEntityTemplateWithTemplateConfig( entity )
-					child.set( 'removable', false )
-				} else {
-					child = entity.copyTemplateEntity()
-					child.setEntity( this )
-					children.add( child )
-				}
+					if( index > -1 ) {
+						child = children.getAt( index )
+						child.mergeEntityTemplateWithTemplateConfig( entity )
+						child.set( 'removable', false )
+					} else {
+						child = entity.copyTemplateEntity()
+						child.setEntity( this )
+						children.add( child )
+					}
 
-				child.mergeChildren( entity )
-			},
-			this
-		)
+					child.mergeChildren( entity )
+				},
+				this
+			)
+		}
 	},
 
 	createTreeNode: function( node ) {
