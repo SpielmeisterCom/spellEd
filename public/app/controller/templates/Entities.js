@@ -188,10 +188,11 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
 	showRemoveEntityCompositeReferences: function( id ) {
-		var entity = Ext.getStore( 'config.Entities' ).getById( id )
+		var entity   = Ext.getStore( 'config.Entities' ).getById( id ),
+			template = Spelled.EntityHelper.getRootTemplateEntityFromEntity( entity )
 
 		if( entity ) {
-			if( this.application.getController( 'Templates' ).checkForReferences( entity ) ) {
+			if( this.application.getController( 'Templates' ).checkForReferences( template ) ) {
 				this.confirmDeleteReference(
 					Ext.bind(
 						function( button ) {
