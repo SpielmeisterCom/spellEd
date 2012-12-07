@@ -349,6 +349,10 @@ Ext.define('Spelled.controller.Scenes', {
 			case this.TREE_ITEM_TYPE_SYSTEM_ITEM:
 				this.application.fireEvent( 'showSystemItem', treePanel, record )
 				break
+			case this.TREE_ITEM_TYPE_SCENE:
+				var scene = this.application.getLastSelectedScene()
+				if( scene.getFullName() !== this.application.getActiveProject().get( 'startScene' ) ) this.renderScene( scene )
+				break
 			default:
 				return
 		}
