@@ -419,7 +419,7 @@ define(
 				color        : 'fff',
 				outlineColor : '000',
 				firstChar    : 32,
-				lastChar     : 127
+				lastChar     : 255
 			},
 
 			create : function( settings, debug ) {
