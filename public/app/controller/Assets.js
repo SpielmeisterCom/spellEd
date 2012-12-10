@@ -451,7 +451,8 @@ Ext.define('Spelled.controller.Assets', {
 		if( !!asset ) {
 			fieldSet.getForm().setValues(
 				{
-					spacing      : asset.get('config').spacing,
+					hSpacing     : asset.get('config').hSpacing,
+					vSpacing     : asset.get('config').vSpacing,
 					fontFamily   : asset.get('config').fontFamily,
 					fontSize     : asset.get('config').fontSize,
 					fontStyle    : asset.get('config').fontStyle,
@@ -745,7 +746,8 @@ Ext.define('Spelled.controller.Assets', {
 			font         : values.fontFamily,
 			size         : parseInt( values.fontSize ),
 			style        : values.fontStyle,
-			spacing      : parseInt( values.spacing ),
+			hSpacing     : parseInt( values.hSpacing ),
+			vSpacing     : parseInt( values.vSpacing ),
 			color        : values.color,
 			outlineColor : values.outlineColor,
 			outline      : parseInt( values.outline )
@@ -773,9 +775,10 @@ Ext.define('Spelled.controller.Assets', {
 				config.charset  = result.charset
 				config.baseline = parseInt( result.baseline, 10 )
 				Ext.copyTo( config, values, 'fontFamily,fontStyle,color,outlineColor' )
-                config.spacing  = parseInt( values.spacing, 10 )
-                config.outline  = parseInt( values.outline, 10 )
-                config.fontSize = parseInt( values.fontSize, 10 )
+                config.vSpacing  = parseInt( values.vSpacing, 10 )
+				config.hSpacing  = parseInt( values.hSpacing, 10 )
+                config.outline   = parseInt( values.outline, 10 )
+                config.fontSize  = parseInt( values.fontSize, 10 )
 				asset.set( 'file', asset.get( 'name' ) + ".png" )
 				break
 			case this.TYPE_KEY_TO_ACTION:

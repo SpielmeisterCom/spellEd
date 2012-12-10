@@ -39,15 +39,16 @@ define(
 			drawRect( context, dx - 1, dy - 1, width + 2, height + 2 )
 		}
 
-		var drawDebugGrid = function( context, spacing, charInfos ) {
-			// draw spacing
-			var doubledSpacing = spacing * 2
+		var drawDebugGrid = function( context, hSpacing, vSpacing, charInfos ) {
+			// draw hSpacing
+			var doubledhSpacing = hSpacing * 2,
+				doubledvSpacing = vSpacing * 2
 			context.fillStyle = '#090'
 
 			_.each(
 				charInfos,
 				function( charInfo ) {
-					drawBoundingRect( context, charInfo.x - spacing, charInfo.y, charInfo.width + doubledSpacing, charInfo.height )
+					drawBoundingRect( context, charInfo.x - hSpacing, charInfo.y - vSpacing, charInfo.width + doubledhSpacing, charInfo.height + doubledvSpacing )
 				}
 			)
 
@@ -96,9 +97,10 @@ define(
 			context.textBaseline = 'top'
 		}
 
-		var createCharInfos = function( context, charSet, outline, size, spacing ) {
+		var createCharInfos = function( context, charSet, outline, size, hSpacing, vSpacing ) {
 			var doubledOutline = outline * 2,
-				doubledSpacing = spacing * 2
+				doubledhSpacing = hSpacing * 2,
+				doubledvSpacing = vSpacing * 2
 
 			return _.reduce(
 				charSet,
@@ -112,31 +114,39 @@ define(
 						width  : width,
 						height : height,
 						x      : memo.offsetX,
-						y      : 0
+						y      : memo.offsetY
 					} )
 
-					memo.offsetX += width + doubledSpacing
+					memo.offsetX += width + doubledhSpacing
+					memo.offsetY += height + doubledvSpacing
 
 					return memo
 				},
 				{
 					charInfos : [],
-					offsetX : spacing
+					offsetX : hSpacing,
+					offsetY : vSpacing
 				}
 			).charInfos
 		}
 
-		var createTiledCharInfos = function( charInfos, textureWidth, actualHeight, filteringGap, spacing ) {
-			var doubledSpacing = spacing * 2
+		var createTiledCharInfos = function( charInfos, textureWidth, actualHeight, filteringGap, hSpacing, vSpacing ) {
+			var doubledhSpacing = hSpacing * 2,
+				doubledvSpacing = vSpacing * 2
 
 			return _.reduce(
 				charInfos,
 				function( memo, charInfo ) {
-					var charWidthWithSpacing = charInfo.width + doubledSpacing
+					var charWidthWithhSpacing  = charInfo.width + doubledhSpacing,
+						charHeightWithvSpacing = charInfo.height + doubledvSpacing
 
-					if( memo.offsetX + charWidthWithSpacing > textureWidth ) {
-						memo.offsetX = spacing
+					if( memo.offsetX + charWidthWithhSpacing > textureWidth ) {
+						memo.offsetX = hSpacing
 						memo.rowIndex += 1
+					}
+
+					if( memo.offsetY + charHeightWithvSpacing > actualHeight ) {
+						memo.offsetY = vSpacing
 					}
 
 					memo.charInfos.push( {
@@ -144,28 +154,30 @@ define(
 						width  : charInfo.width,
 						height : actualHeight,
 						x      : memo.offsetX,
-						y      : memo.rowIndex * ( actualHeight + filteringGap )
+						y      : memo.rowIndex * ( actualHeight + memo.offsetY + filteringGap )
 					} )
 
-					memo.offsetX += charWidthWithSpacing
+					memo.offsetX += charWidthWithhSpacing
+					memo.offsetY += charHeightWithvSpacing
 
 					return memo
 				},
 				{
 					charInfos : [],
-					offsetX   : spacing,
+					offsetX   : hSpacing,
+					offsetY   : vSpacing,
 					rowIndex  : 0
 				}
 			).charInfos
 		}
 
-		var createTotalWidth = function( charInfos, spacing ) {
+		var createTotalWidth = function( charInfos, hSpacing ) {
 			var last = _.last( charInfos )
 
-			return last.x + last.width + spacing
+			return last.x + last.width + hSpacing
 		}
 
-		var renderCharSet = function( context, charInfos, color, outlineColor, outline, spacing, offsetY ) {
+		var renderCharSet = function( context, charInfos, color, outlineColor, outline, offsetY ) {
 			context.fillStyle   = normalizeColor( color )
 			context.strokeStyle = normalizeColor( outlineColor )
 			context.lineWidth   = outline
@@ -230,7 +242,7 @@ define(
 				}
 		}
 
-		var createBaseline = function( charInfos, imageData, spacing ) {
+		var createBaseline = function( charInfos, imageData, hSpacing ) {
 			var data      = imageData.data,
 				width     = imageData.width,
 				height    = imageData.height
@@ -239,8 +251,8 @@ define(
 				charInfos,
 				function( memo, charInfo ) {
 					var baseline = height,
-						fromX    = charInfo.x - spacing,
-						untilX   = charInfo.x + charInfo.width + spacing
+						fromX    = charInfo.x - hSpacing,
+						untilX   = charInfo.x + charInfo.width + hSpacing
 
 					for( var x = fromX; x < untilX; x++ ) {
 						for( var y = 0; y < height / 2; y++ ) {
@@ -304,31 +316,31 @@ define(
 			return Math.log( n ) / Math.log( 2 )
 		}
 
-		var computeDimensions = function( charInfos, textureWidth, textureHeight, actualHeight, filteringGap, spacing ) {
-			var doubledSpacing = spacing * 2
+		var computeDimensions = function( charInfos, textureWidth, textureHeight, actualHeight, filteringGap, hSpacing ) {
+			var doubledhSpacing = hSpacing * 2
 
 			var fitsInDimensions = _.reduce(
 				charInfos,
 				function( memo, charInfo ) {
-					var charWidthWithSpacing = charInfo.width + doubledSpacing,
+					var charWidthWithhSpacing = charInfo.width + doubledhSpacing,
 						maxY = memo.rowIndex * ( actualHeight + filteringGap ) + actualHeight
 
 					if( maxY >= textureHeight ) {
 						memo.fits = false
 					}
 
-					if( memo.offsetX + charWidthWithSpacing > textureWidth ) {
-						memo.offsetX = spacing
+					if( memo.offsetX + charWidthWithhSpacing > textureWidth ) {
+						memo.offsetX = hSpacing
 						memo.rowIndex += 1
 					}
 
-					memo.offsetX += charWidthWithSpacing
+					memo.offsetX += charWidthWithhSpacing
 
 					return memo
 				},
 				{
 					fits     : true,
-					offsetX  : spacing,
+					offsetX  : hSpacing,
 					rowIndex : 0
 				}
 			).fits
@@ -350,7 +362,7 @@ define(
 					nextTextureWidth,
 					nextTextureHeight,
 					actualHeight,
-					spacing,
+					hSpacing,
 					filteringGap
 				)
 			}
@@ -363,10 +375,10 @@ define(
 		 * @param totalWidth
 		 * @param actualHeight
 		 * @param filteringGap Describes how thick the additional row of transparent pixels is which gets inserted between character rows.
-		 * @param spacing
+		 * @param hSpacing
 		 * @return {*}
 		 */
-		var createTextureDimensions = function( charInfos, totalWidth, actualHeight, filteringGap, spacing ) {
+		var createTextureDimensions = function( charInfos, totalWidth, actualHeight, filteringGap, hSpacing ) {
 			filteringGap = filteringGap || 0
 
 			var area      = totalWidth * ( actualHeight + filteringGap ),
@@ -380,7 +392,7 @@ define(
 				height,
 				actualHeight,
 				filteringGap,
-				spacing
+				hSpacing
 			)
 		}
 
@@ -401,7 +413,8 @@ define(
 				font         : 'Arial',
 				size         : 32,
 				style        : 'normal',
-				spacing      : 1,
+				hSpacing     : 1,
+				vSpacing     : 1,
 				outline      : 1,
 				color        : 'fff',
 				outlineColor : '000',
@@ -414,13 +427,13 @@ define(
 
 				var tmpCanvas  = createCanvas( settings.size * 3, settings.size * 3 ),
 					tmpContext = tmpCanvas.getContext( '2d' ),
-					charSet = createCharSet( settings.firstChar, settings.lastChar )
+					charSet    = createCharSet( settings.firstChar, settings.lastChar )
 
 				setFont( tmpContext, settings.font, settings.style, settings.size )
 
 				var doubledSize = settings.size * 2,
-				    charInfos   = createCharInfos( tmpContext, charSet, settings.outline, doubledSize, settings.spacing ),
-					totalWidth  = createTotalWidth( charInfos, settings.spacing )
+				    charInfos   = createCharInfos( tmpContext, charSet, settings.outline, doubledSize, settings.hSpacing, settings.vSpacing ),
+					totalWidth  = createTotalWidth( charInfos, settings.hSpacing )
 
 
 				// perform preliminary pass to determine actual required height
@@ -437,7 +450,6 @@ define(
 					settings.color,
 					settings.outlineColor,
 					settings.outline,
-					settings.spacing,
 					offsetY
 				)
 
@@ -464,7 +476,6 @@ define(
 						settings.color,
 						settings.outlineColor,
 						settings.outline,
-						settings.spacing,
 						offsetY - margins.top
 					)
 				}
@@ -474,7 +485,7 @@ define(
 				var baseline = createBaseline(
 					charInfos,
 					tmpContext.getImageData( 0, 0, tmpCanvas.width, tmpCanvas.height ),
-					settings.spacing
+					settings.hSpacing
 				)
 
 
@@ -485,7 +496,7 @@ define(
 					totalWidth,
 					actualHeight,
 					filteringGap,
-					settings.spacing
+					settings.hSpacing
 				)
 
 
@@ -495,7 +506,8 @@ define(
 					outputTextureDimensions.width,
 					actualHeight,
 					filteringGap,
-					settings.spacing
+					settings.hSpacing,
+					settings.vSpacing
 				)
 
 
@@ -511,14 +523,13 @@ define(
 					settings.color,
 					settings.outlineColor,
 					settings.outline,
-					settings.spacing,
 					offsetY - margins.top
 				)
 
 
 				// draw the debug overlay
 				if( debug ) {
-					drawDebugGrid( outputContext, settings.spacing, tiledCharInfos )
+					drawDebugGrid( outputContext, settings.hSpacing, settings.vSpacing, tiledCharInfos )
 				}
 
 
