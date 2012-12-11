@@ -356,8 +356,8 @@ Ext.define('Spelled.controller.Templates', {
     loadTemplateStores: function( callback ) {
 		var finished = 0,
 			stores   = [
-				'template.Entities',
 				'template.Components',
+				'template.Entities',
 				'template.Systems'
 			],
 			called   = function() {
