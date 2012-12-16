@@ -40,6 +40,30 @@ Ext.define('Spelled.view.asset.create.Animation', {
 					readOnly: true
 				},
 				{
+					xtype: 'fieldcontainer',
+					fieldLabel: "Offset",
+					items: [
+						{
+							xtype: "spelledvec2field",
+							name: 'transformation',
+							value: "[0,0]",
+							fieldLabel: 'Transformation'
+						},
+						{
+							xtype: "spelledvec2field",
+							name: 'scale',
+							value: "[0,0]",
+							fieldLabel: 'Scale'
+						},
+						{
+							xtype: "numberfield",
+							name: 'rotation',
+							value: 0,
+							fieldLabel: 'Rotation'
+						}
+					]
+				},
+				{
 					xtype: "numberfield",
 					name: 'duration',
 					minValue: 0,

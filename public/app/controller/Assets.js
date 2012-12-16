@@ -487,7 +487,10 @@ Ext.define('Spelled.controller.Assets', {
 				{
 					assetId  : asset.get( 'assetId' ),
 					duration : asset.get('config').duration,
-					frameIds : asset.get('config').frameIds
+					frameIds : asset.get('config').frameIds,
+					rotation : asset.get('config').rotation,
+					scale    : Spelled.Converter.convertValueForGrid( asset.get('config').scale ),
+					transformation : Spelled.Converter.convertValueForGrid( asset.get('config').transformation )
 				}
 			)
 		}
@@ -793,6 +796,9 @@ Ext.define('Spelled.controller.Assets', {
 				config.type     = values.animationType
 				config.duration = values.duration
 				config.frameIds = values.frameIds.split( "," )
+				config.rotation = parseFloat( values.rotation )
+				config.transformation = Spelled.Converter.decodeFieldValue( values.transformation )
+				config.scale = Spelled.Converter.decodeFieldValue( values.scale )
 				break
 			case this.TYPE_SPRITE_SHEET:
 				config.textureWidth     = parseInt( values.textureWidth, 10 )
