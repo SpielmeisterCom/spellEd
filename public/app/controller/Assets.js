@@ -342,6 +342,10 @@ Ext.define('Spelled.controller.Assets', {
 			imageField = form.down( 'image' ),
 			values     = form.getValues()
 
+		//HACK: because of charset changes
+		values.firstChar = values.firstChar || 0
+		values.lastChar  = values.lastChar || 255
+
 		imageField.setSrc( this.createFontMap( values, true ).imageDataUrl )
 	},
 
