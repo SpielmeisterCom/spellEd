@@ -458,7 +458,9 @@ Ext.define('Spelled.controller.Assets', {
 					fontStyle    : asset.get('config').fontStyle,
 					color        : asset.get('config').color,
 					outline      : asset.get('config').outline,
-					outlineColor : asset.get('config').outlineColor
+					outlineColor : asset.get('config').outlineColor,
+					firstChar    : asset.get('config').firstChar,
+					lastChar     : asset.get('config').lastChar
 				}
 			)
 		}
@@ -747,13 +749,15 @@ Ext.define('Spelled.controller.Assets', {
 
 		var settings = {
 			font         : values.fontFamily,
-			size         : parseInt( values.fontSize ),
+			size         : parseInt( values.fontSize, 10 ),
 			style        : values.fontStyle,
-			hSpacing     : parseInt( values.hSpacing ),
-			vSpacing     : parseInt( values.vSpacing ),
+			hSpacing     : parseInt( values.hSpacing, 10 ),
+			vSpacing     : parseInt( values.vSpacing, 10 ),
 			color        : values.color,
 			outlineColor : values.outlineColor,
-			outline      : parseInt( values.outline )
+			outline      : parseInt( values.outline, 10 ),
+			firstChar    : parseInt( values.firstChar, 10 ),
+			lastChar     : parseInt( values.lastChar, 10 )
 		}
 
 		return fontGenerator.create( settings, debug )
@@ -782,6 +786,8 @@ Ext.define('Spelled.controller.Assets', {
 				config.hSpacing  = parseInt( values.hSpacing, 10 )
                 config.outline   = parseInt( values.outline, 10 )
                 config.fontSize  = parseInt( values.fontSize, 10 )
+				config.firstChar = parseInt( values.firstChar, 10 )
+				config.lastChar  = parseInt( values.lastChar, 10 )
 				asset.set( 'file', asset.get( 'name' ) + ".png" )
 				break
 			case this.TYPE_KEY_TO_ACTION:

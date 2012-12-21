@@ -8,6 +8,8 @@ define(
 	) {
 		'use strict'
 
+		var FIRST_CHAR = 32,
+			LAST_CHAR  = 255
 
 		/**
 		 * Normalizes a color string. Proper color strings start with a sharp.
@@ -418,8 +420,8 @@ define(
 				outline      : 1,
 				color        : 'fff',
 				outlineColor : '000',
-				firstChar    : 32,
-				lastChar     : 255
+				firstChar    : FIRST_CHAR,
+				lastChar     : LAST_CHAR
 			},
 
 			create : function( settings, debug ) {

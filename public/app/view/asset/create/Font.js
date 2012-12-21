@@ -60,6 +60,20 @@ Ext.define('Spelled.view.asset.create.Font', {
 						},
 						{
 							xtype: "numberfield",
+							name: 'firstChar',
+							minValue: 0,
+							value: 0,
+							fieldLabel: 'Starting character code'
+						},
+						{
+							xtype: "numberfield",
+							name: 'lastChar',
+							minValue: 0,
+							value: 255,
+							fieldLabel: 'Ending character code'
+						},
+						{
+							xtype: "numberfield",
 							name: 'hSpacing',
 							minValue: 0,
 							value: 1,
