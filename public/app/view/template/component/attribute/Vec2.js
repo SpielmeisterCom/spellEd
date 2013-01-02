@@ -4,13 +4,13 @@ Ext.define('Spelled.view.template.component.attribute.Vec2', {
 
 	mixins: [ 'Spelled.abstract.grid.Property' ],
 
-//	valueToRaw: function( value ) {
-//		return Spelled.Converter.convertValueForGrid( value )
-//	},
-//
-//	rawToValue: function( value ){
-//		return Spelled.Converter.decodeFieldValue( value )
-//	},
+	valueToRaw: function( value ) {
+		return ( this.convertIt ) ? Spelled.Converter.convertValueForGrid( value ) : value
+	},
+
+	rawToValue: function( value ){
+		return ( this.convertIt ) ? Spelled.Converter.decodeFieldValue( value ) : value
+	},
 
 	validator: function( value ) {
 		var regexp = /^\[ ?-?\d+\.?\d* ?, ?-?\d+\.?\d* ?\]$/
