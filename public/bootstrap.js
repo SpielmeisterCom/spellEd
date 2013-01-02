@@ -170,6 +170,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.util.Renderable": [],
   "Spelled.model.Script": [],
   "Ext.util.Bindable": [],
+  "Spelled.model.assets.TileMap": [],
   "Spelled.data.writer.Scene": [
     "writer.scene"
   ],
@@ -458,6 +459,7 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.cycle"
   ],
   "Spelled.abstract.view.Navigator": [],
+  "Spelled.model.assets.SpriteSheet": [],
   "Spelled.view.asset.create.Domvas": [
     "widget.domvasassetconfig"
   ],
@@ -571,6 +573,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.data.writer.EntityTemplate": [
     "writer.entityTemplate"
   ],
+  "Spelled.model.assets.Animation": [],
   "Ext.state.Stateful": [],
   "Ext.grid.feature.RowBody": [
     "feature.rowbody"
@@ -701,6 +704,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.data.proxy.WebStorage": [],
   "Spelled.view.scene.plugin.SceneTreeDragZone": [],
   "Ext.util.Floating": [],
+  "Spelled.store.asset.TileMaps": [],
   "Ext.form.action.DirectSubmit": [
     "formaction.directsubmit"
   ],
@@ -780,13 +784,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.grid.column.Action": [
     "widget.actioncolumn"
   ],
-  "Spelled.view.template.component.attribute.Tilemap": [
-    "widget.spelledtilemapfield"
-  ],
   "Spelled.view.menu.contextmenu.ScriptsList": [
     "widget.scriptslistcontextmenu"
   ],
-  "Spelled.store.asset.Tilemaps": [],
   "Ext.layout.component.field.Trigger": [
     "layout.triggerfield"
   ],
@@ -1002,6 +1002,9 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.assetfilefield"
   ],
   "Ext.direct.Manager": [],
+  "Spelled.view.template.component.attribute.TileMap": [
+    "widget.spelledtilemapfield"
+  ],
   "Spelled.view.component.Add": [
     "widget.addcomponent"
   ],
@@ -1053,6 +1056,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.library.Navigator": [
     "widget.librarynavigator"
   ],
+  "Spelled.model.assets.Appearance": [],
   "Ext.ZIndexManager": [],
   "Ext.menu.ColorPicker": [
     "widget.colormenu"
@@ -1111,6 +1115,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.draw.Draw": [],
   "Ext.fx.target.ElementCSS": [],
   "Spelled.abstract.model.Template": [],
+  "Spelled.model.assets.KeyMapping": [],
   "Ext.grid.PagingScroller": [],
   "Ext.layout.component.field.HtmlEditor": [
     "layout.htmleditor"
@@ -1136,6 +1141,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.scene.plugin.CellEditing": [
     "plugin.renameplugin"
   ],
+  "Spelled.model.assets.KeyFrameAnimation": [],
   "Ext.view.TableLayout": [
     "layout.tableview"
   ],
@@ -1151,6 +1157,7 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.systemtemplateinputlist"
   ],
   "Ext.dom.AbstractQuery": [],
+  "Spelled.model.assets.Sound": [],
   "Ext.selection.TreeModel": [
     "selection.treemodel"
   ],
@@ -1218,6 +1225,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.component.field.Slider": [
     "layout.sliderfield"
   ],
+  "Spelled.model.assets.Font": [],
   "Ext.chart.axis.Numeric": [
     "axis.numeric"
   ],
@@ -1390,6 +1398,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.util.Renderable": [],
   "Spelled.model.Script": [],
   "Ext.util.Bindable": [],
+  "Spelled.model.assets.TileMap": [],
   "Spelled.data.writer.Scene": [],
   "Ext.data.SortTypes": [],
   "Spelled.view.template.component.attribute.Number": [],
@@ -1592,6 +1601,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.CycleButton"
   ],
   "Spelled.abstract.view.Navigator": [],
+  "Spelled.model.assets.SpriteSheet": [],
   "Spelled.view.asset.create.Domvas": [],
   "Ext.data.Tree": [],
   "Ext.ModelManager": [
@@ -1666,6 +1676,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.Viewport"
   ],
   "Spelled.data.writer.EntityTemplate": [],
+  "Spelled.model.assets.Animation": [],
   "Ext.state.Stateful": [],
   "Ext.grid.feature.RowBody": [],
   "Ext.form.field.Text": [
@@ -1781,6 +1792,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.scene.plugin.SceneTreeDragZone": [],
   "Ext.util.Floating": [],
+  "Spelled.store.asset.TileMaps": [],
   "Ext.form.action.DirectSubmit": [
     "Ext.form.Action.DirectSubmit"
   ],
@@ -1834,9 +1846,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.grid.column.Action": [
     "Ext.grid.ActionColumn"
   ],
-  "Spelled.view.template.component.attribute.Tilemap": [],
   "Spelled.view.menu.contextmenu.ScriptsList": [],
-  "Spelled.store.asset.Tilemaps": [],
   "Ext.layout.component.field.Trigger": [],
   "Spelled.controller.Scenes": [],
   "Ext.layout.component.field.FieldContainer": [],
@@ -1978,6 +1988,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.util.ProtoElement": [],
   "Spelled.view.asset.create.FileField": [],
   "Ext.direct.Manager": [],
+  "Spelled.view.template.component.attribute.TileMap": [],
   "Spelled.view.component.Add": [],
   "Ext.data.proxy.Proxy": [
     "Ext.data.DataProxy",
@@ -2006,6 +2017,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.resizer.BorderSplitter": [],
   "Spelled.view.menu.contextmenu.TemplatesList": [],
   "Spelled.view.library.Navigator": [],
+  "Spelled.model.assets.Appearance": [],
   "Ext.ZIndexManager": [
     "Ext.WindowGroup"
   ],
@@ -2045,6 +2057,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.draw.Draw": [],
   "Ext.fx.target.ElementCSS": [],
   "Spelled.abstract.model.Template": [],
+  "Spelled.model.assets.KeyMapping": [],
   "Ext.grid.PagingScroller": [],
   "Ext.layout.component.field.HtmlEditor": [],
   "Ext.data.proxy.SessionStorage": [
@@ -2062,6 +2075,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.chart.Mask": [],
   "Ext.selection.CellModel": [],
   "Spelled.view.scene.plugin.CellEditing": [],
+  "Spelled.model.assets.KeyFrameAnimation": [],
   "Ext.view.TableLayout": [],
   "Ext.state.Provider": [],
   "Spelled.model.Asset": [],
@@ -2071,6 +2085,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.data.Errors": [],
   "Spelled.view.template.system.Input": [],
   "Ext.dom.AbstractQuery": [],
+  "Spelled.model.assets.Sound": [],
   "Ext.selection.TreeModel": [],
   "Spelled.store.asset.Fonts": [],
   "Ext.form.Labelable": [],
@@ -2116,6 +2131,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.store.template.component.AttributeTypes": [],
   "Ext.panel.AbstractPanel": [],
   "Ext.layout.component.field.Slider": [],
+  "Spelled.model.assets.Font": [],
   "Ext.chart.axis.Numeric": [
     "Ext.chart.NumericAxis"
   ],

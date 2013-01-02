@@ -1,9 +1,10 @@
 Ext.define('Spelled.store.asset.KeyToActionMappings', {
-    extend: 'Spelled.store.asset.Assets',
+	extend: 'Spelled.store.asset.Assets',
 
-    filters: [
-        function( item ) {
-            return item.get('subtype') === 'keyToActionMap'
-        }
-    ]
-});
+	requires: [
+		'Spelled.model.assets.KeyMapping'
+	],
+
+	model: 'Spelled.model.assets.KeyMapping'
+
+})

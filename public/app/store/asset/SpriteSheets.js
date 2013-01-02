@@ -1,9 +1,9 @@
 Ext.define('Spelled.store.asset.SpriteSheets', {
-    extend: 'Spelled.store.asset.Assets',
+	extend: 'Spelled.store.asset.Assets',
 
-    filters: [
-        function( item ) {
-            return item.get('subtype') === 'spriteSheet'
-        }
-    ]
-});
+	requires: [
+		'Spelled.model.assets.SpriteSheet'
+	],
+
+	model: 'Spelled.model.assets.SpriteSheet'
+})

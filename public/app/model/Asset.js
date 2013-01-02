@@ -5,6 +5,8 @@ Ext.define('Spelled.model.Asset', {
 		'Spelled.data.writer.Asset'
 	],
 
+	docString: '#!/guide/asset',
+
 	mixins: ['Spelled.abstract.model.Model'],
 
 	sortOrder: 999,
@@ -28,9 +30,7 @@ Ext.define('Spelled.model.Asset', {
     fields: [
 		{ name: 'type', type: 'string', defaultValue: 'asset' },
 		'subtype',
-		'file',
         'namespace',
-		'config',
 		'name',
 		'assetId'
     ],
@@ -41,21 +41,12 @@ Ext.define('Spelled.model.Asset', {
 		this.callParent( arguments )
 	},
 
-	getKeyFrameFromComponentAttribute: function( componentId, attributeName ) {
-		var config = this.get( 'config')
-
-		if( config.animate[ componentId ] && config.animate[ componentId ][ attributeName ] )
-			return config.animate[ componentId ][ attributeName ].keyFrames
-		else
-			return []
-	},
-
 	createTreeNode: function( node ) {
 		return node.appendChild(
 			node.createNode( {
 				text   : this.get( 'name' ),
 				cls    : this.get( 'subtype' ),
-				qtitle   : this.sortOrder,
+				qtitle : this.sortOrder,
 				iconCls: this.iconCls,
 				leaf   : true,
 				id     : this.getId()

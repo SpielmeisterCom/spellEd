@@ -1,9 +1,10 @@
 Ext.define('Spelled.store.asset.KeyFrameAnimations', {
-    extend: 'Spelled.store.asset.Assets',
+	extend: 'Spelled.store.asset.Assets',
 
-    filters: [
-        function( item ) {
-            return item.get('subtype') === 'keyFrameAnimation'
-        }
-    ]
-});
+	requires: [
+		'Spelled.model.assets.KeyFrameAnimation'
+	],
+
+	model: 'Spelled.model.assets.KeyFrameAnimation'
+
+})

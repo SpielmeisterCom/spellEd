@@ -1,9 +1,10 @@
 Ext.define('Spelled.store.asset.Animations', {
-    extend: 'Spelled.store.asset.Assets',
+	extend: 'Spelled.store.asset.Assets',
 
-    filters: [
-        function( item ) {
-            return item.get('subtype') === 'animation'
-        }
-    ]
-});
+	requires: [
+		'Spelled.model.assets.Animation'
+	],
+
+	model: 'Spelled.model.assets.Animation'
+
+})

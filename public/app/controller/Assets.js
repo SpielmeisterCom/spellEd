@@ -44,9 +44,17 @@ Ext.define('Spelled.controller.Assets', {
 		'Spelled.store.asset.KeyToActionMappings',
 		'Spelled.store.asset.InterpolationFunctions',
 		'Spelled.store.asset.Assets',
-		'Spelled.store.asset.Tilemaps',
+		'Spelled.store.asset.TileMaps',
 
-		'Spelled.model.Asset'
+		'Spelled.model.Asset',
+		'Spelled.model.assets.Appearance',
+		'Spelled.model.assets.Animation',
+		'Spelled.model.assets.Font',
+		'Spelled.model.assets.KeyFrameAnimation',
+		'Spelled.model.assets.KeyMapping',
+		'Spelled.model.assets.Sound',
+		'Spelled.model.assets.SpriteSheet',
+		'Spelled.model.assets.TileMap'
 	],
 
     views: [
@@ -82,12 +90,20 @@ Ext.define('Spelled.controller.Assets', {
         'asset.KeyFrameAnimationPreviews',
 		'asset.KeyToActionMappings',
 		'asset.InterpolationFunctions',
-	    'asset.Tilemaps',
+	    'asset.TileMaps',
 		'asset.Assets'
     ],
 
     models: [
-        'Asset'
+        'Asset',
+		'assets.Appearance',
+		'assets.Animation',
+		'assets.Font',
+		'assets.KeyFrameAnimation',
+		'assets.KeyMapping',
+		'assets.Sound',
+		'assets.SpriteSheet',
+		'assets.TileMap'
     ],
 
     refs: [
@@ -356,30 +372,12 @@ Ext.define('Spelled.controller.Assets', {
 	showEditHelper: function( id, node ) {
 		if( node ) id = node.getId()
 
-		var asset = this.getAssetAssetsStore().getById( id )
+		var asset = this.getAssetStoreByType( node.get( 'cls' ) ).getById( id )
 		this.showEdit( asset )
 	},
 
 	fieldRenderHelper: function( type, fieldSet, asset ) {
 		switch( type ) {
-			case "domvas":
-				domvasassetconfig.show()
-
-				var aceContainer = domvasassetconfig.down( 'container[name="aceDomvasContainer"]' ),
-					Mode         = Ext.amdModules.aceModeHtml.Mode,
-					editor       = Ext.amdModules.ace.edit( aceContainer.id ),
-					session      = editor.getSession()
-
-				domvasassetconfig.aceEditor = editor
-				session.setMode( new Mode() )
-				editor.setTheme( Ext.amdModules.aceThemePastelOnDark )
-
-				if( !!asset ) {
-					session.setValue( asset.get('config').html )
-				}
-
-				domvasassetconfig.startEdit()
-				break
 			case this.TYPE_ANIMATION:
 				this.addAnimationForm( fieldSet, asset )
 				break
@@ -488,18 +486,18 @@ Ext.define('Spelled.controller.Assets', {
 	addAnimationForm: function( fieldSet, asset ) {
 		fieldSet.add( { xtype: 'animationassetconfig', edit: !!asset } )
 
-		if( !!asset ) {
-			fieldSet.getForm().setValues(
-				{
-					assetId  : asset.get( 'assetId' ),
-					duration : asset.get('config').duration,
-					frameIds : asset.get('config').frameIds,
-					rotation : asset.get('config').rotation,
-					scale    : Spelled.Converter.convertValueForGrid( asset.get('config').scale ),
-					transformation : Spelled.Converter.convertValueForGrid( asset.get('config').transformation )
-				}
-			)
-		}
+//		if( !!asset ) {
+//			fieldSet.getForm().setValues(
+//				{
+//					assetId  : asset.get( 'assetId' ),
+//					duration : asset.get('config').duration,
+//					frameIds : asset.get('config').frameIds,
+//					rotation : asset.get('config').rotation,
+//					scale    : Spelled.Converter.convertValueForGrid( asset.get('config').scale ),
+//					transformation : Spelled.Converter.convertValueForGrid( asset.get('config').transformation )
+//				}
+//			)
+//		}
 	},
 
 	addSpriteSheetForm: function( fieldSet, asset ) {
@@ -673,7 +671,6 @@ Ext.define('Spelled.controller.Assets', {
 		this.fieldRenderHelper( asset.get('subtype'), view, asset )
 		view.loadRecord( asset )
 
-
 		this.addAssetPreview( view, asset )
 
 		this.application.createTab( assetEditor, view )
@@ -703,12 +700,39 @@ Ext.define('Spelled.controller.Assets', {
 		}
 	},
 
+	getAssetModelByType: function( type ) {
+		return this.getAssetStoreByType( type ).getModel()
+	},
+
+	getAssetStoreByType: function( type ) {
+		switch( type ) {
+			case this.TYPE_ANIMATION:
+				return this.getAssetAnimationsStore()
+			case this.TYPE_APPEARANCE:
+				return this.getAssetTexturesStore()
+			case this.TYPE_SPRITE_SHEET:
+				return this.getAssetSpriteSheetsStore()
+			case this.TYPE_FONT:
+				return this.getAssetFontsStore()
+			case this.TYPE_KEY_TO_ACTION:
+				return this.getAssetKeyMappingsStore()
+			case this.TYPE_TILE_MAP:
+				return this.getAssetTileMapsModel()
+			case this.TYPE_KEY_FRAME_ANIMATION:
+				return this.getAssetsKeyFrameAnimationModel()
+			case this.TYPE_SOUND:
+				return this.getAssetsSoundModel()
+		}
+	},
+
 	showConfigHelper: function( tree, node ) {
 		var inspectorPanel = this.getRightPanel()
 
 		if( !node.isLeaf() ) return
 
-		var asset = this.getAssetAssetsStore().getById( node.getId() )
+		var store = this.getAssetStoreByType( node.get( 'cls' ) ),
+			asset = store.getById( node.getId() )
+
 		inspectorPanel.removeAll()
 		this.showConfig( asset )
 	},
@@ -721,23 +745,12 @@ Ext.define('Spelled.controller.Assets', {
 		view.loadRecord( asset )
 
 		inspectorPanel.setTitle( 'Asset information of "' + asset.get('name') +'"' )
-		//TODO: refactor
+
+		view.docString = asset.docString
+
 		switch( asset.get('subtype') ) {
-			case this.TYPE_ANIMATION:
-				view.docString = '#!/guide/asset_type_2d_animated_appearance'
-				break
-			case this.TYPE_SPRITE_SHEET:
-				view.docString = '#!/guide/asset_type_sprite_sheet'
-				break
 			case this.TYPE_APPEARANCE:
-				view.docString = '#!/guide/asset_type_2d_static_appearance'
 				view.add( { xtype: 'image', margin: 20, src: '/' + asset.getFilePath( this.application.getActiveProject().get('name') )} )
-				break
-			case this.TYPE_FONT:
-				view.docString = '#!/guide/asset_type_text_appearance'
-				break
-			case this.TYPE_KEY_TO_ACTION:
-				view.docString = '#!/guide/asset_type_key_to_action_map'
 				break
 		}
 
@@ -1076,7 +1089,7 @@ Ext.define('Spelled.controller.Assets', {
 					definition: Ext.amdModules.systemConverter.toEngineFormat( cameraSystem.getData( true ), { includeNamespace: true } ),
 					systemConfig: {
 						active: true,
-						selectedEntityId:   entity.get( 'id' ),
+						selectedEntityId: entity.get( 'id' ),
 						deactivatedPlugins: ['entityMover']
 					},
 					systemId: cameraSystem.getFullName()
@@ -1101,5 +1114,12 @@ Ext.define('Spelled.controller.Assets', {
 		this.getAssetAssetsStore().load( {
 			callback: callback
 		})
+
+		Ext.Array.each(
+			this.stores,
+			function( item ) {
+				if( item !== 'asset.Assets' ) Ext.getStore( item ).load()
+			}
+		)
     }
 });

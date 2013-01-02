@@ -1,9 +1,10 @@
 Ext.define('Spelled.store.asset.Textures', {
-    extend: 'Spelled.store.asset.Assets',
+	extend: 'Spelled.store.asset.Assets',
 
-    filters: [
-        function( item ) {
-            return item.get('subtype') === 'appearance'
-        }
-    ]
-});
+	requires: [
+		'Spelled.model.assets.Appearance'
+	],
+
+	model: 'Spelled.model.assets.Appearance'
+
+})

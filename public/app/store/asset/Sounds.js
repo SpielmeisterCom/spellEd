@@ -1,9 +1,10 @@
 Ext.define('Spelled.store.asset.Sounds', {
-    extend: 'Spelled.store.asset.Assets',
+	extend: 'Spelled.store.asset.Assets',
 
-    filters: [
-        function( item ) {
-            return item.get('subtype') === 'sound'
-        }
-    ]
-});
+	requires: [
+		'Spelled.model.assets.Sound'
+	],
+
+	model: 'Spelled.model.assets.Sound'
+
+})

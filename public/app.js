@@ -102,11 +102,18 @@ var startApplication = function() {
 			'templates.Systems'
 		],
 
-		stores: [
+		storeIds: [
 			'template.Entities',
 			'template.Components',
 			'template.Systems',
-			'asset.Assets',
+			'asset.Animations',
+			'asset.Fonts',
+			'asset.KeyFrameAnimations',
+			'asset.KeyToActionMappings',
+			'asset.Sounds',
+			'asset.SpriteSheets',
+			'asset.Textures',
+			'asset.TileMaps',
 			'script.Scripts',
 			'config.Scenes'
 		],
@@ -277,7 +284,7 @@ var startApplication = function() {
 
 		setExtraParamOnProxies: function( name, value ) {
 			Ext.each(
-				this.stores,
+				this.storeIds,
 				function( storeId ) {
 					Ext.getStore( storeId ).getProxy().setExtraParam( name, value )
 				}
