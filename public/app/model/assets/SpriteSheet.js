@@ -15,9 +15,8 @@ Ext.define('Spelled.model.assets.SpriteSheet', {
 			update:  Spelled.StorageActions.update,
 			destroy: Spelled.StorageActions.destroy
 		},
-		writer: {
-			type: 'asset'
-		}
+		writer: 'asset',
+		reader: 'asset'
 	},
 
 	fields: [

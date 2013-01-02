@@ -33,13 +33,6 @@ Ext.define('Spelled.view.asset.create.Animation', {
 					]
 				},
 				{
-					xtype: "textfield",
-					name: 'animationType',
-					value: 'sprite',
-					fieldLabel: 'Animation Type',
-					readOnly: true
-				},
-				{
 					xtype: 'fieldcontainer',
 					fieldLabel: "Offset",
 					items: [

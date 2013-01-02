@@ -485,19 +485,6 @@ Ext.define('Spelled.controller.Assets', {
 
 	addAnimationForm: function( fieldSet, asset ) {
 		fieldSet.add( { xtype: 'animationassetconfig', edit: !!asset } )
-
-//		if( !!asset ) {
-//			fieldSet.getForm().setValues(
-//				{
-//					assetId  : asset.get( 'assetId' ),
-//					duration : asset.get('config').duration,
-//					frameIds : asset.get('config').frameIds,
-//					rotation : asset.get('config').rotation,
-//					scale    : Spelled.Converter.convertValueForGrid( asset.get('config').scale ),
-//					transformation : Spelled.Converter.convertValueForGrid( asset.get('config').transformation )
-//				}
-//			)
-//		}
 	},
 
 	addSpriteSheetForm: function( fieldSet, asset ) {
@@ -701,7 +688,7 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	getAssetModelByType: function( type ) {
-		return this.getAssetStoreByType( type ).getModel()
+		return this.getAssetStoreByType( type ).model
 	},
 
 	getAssetStoreByType: function( type ) {
@@ -790,8 +777,13 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	setAssetConfigFromForm: function( form, asset ) {
-		var values    = form.getForm().getValues(),
-			config    = {}
+		var basicForm = form.getForm(),
+			values    = basicForm.getFieldValues()
+
+		if( !basicForm.isValid() ) return
+
+		asset.set( values )
+		return
 
 		switch( asset.get( 'subtype' ) ) {
 			case this.TYPE_FONT:
@@ -930,7 +922,7 @@ Ext.define('Spelled.controller.Assets', {
         var form    = button.up('form').getForm(),
             window  = button.up( 'window' ),
 			values  = form.getValues(),
-			Asset   = this.getAssetModel(),
+			Asset   = this.getAssetModelByType( values.type ),
 			content = {
 				name: values.name,
 				namespace: ( values.namespace === 'root' ) ? '' : values.namespace.substring( 5 ),

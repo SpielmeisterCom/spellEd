@@ -15,12 +15,16 @@ Ext.define('Spelled.model.assets.Animation', {
 			update:  Spelled.StorageActions.update,
 			destroy: Spelled.StorageActions.destroy
 		},
-		writer: {
-			type: 'asset'
-		}
+		writer: 'asset',
+		reader: 'asset'
 	},
 
 	fields: [
-		'file'
+		{ name: 'assetId', type: 'string' },
+		{ name: 'duration', type: 'float' },
+		{ name: 'frameIds', type: 'array'},
+		{ name: 'rotation', type: 'float' },
+		{ name: 'transformation', type: 'array' },
+		{ name: 'scale', type: 'array' }
 	]
 })

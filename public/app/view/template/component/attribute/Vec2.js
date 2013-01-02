@@ -5,22 +5,11 @@ Ext.define('Spelled.view.template.component.attribute.Vec2', {
 	mixins: [ 'Spelled.abstract.grid.Property' ],
 
 //	valueToRaw: function( value ) {
-//		return ( !!value ) ?  value.toString(): "0,0"
+//		return Spelled.Converter.convertValueForGrid( value )
 //	},
 //
 //	rawToValue: function( value ){
-//		var newRawValue = value
-//
-//		if( !!newRawValue && Ext.isString( newRawValue ) ) {
-//			newRawValue = Ext.Array.map(
-//				newRawValue.split(","),
-//				function( key ) {
-//					return parseInt( key, 10 )
-//				}
-//			)
-//		}
-//
-//		return newRawValue
+//		return Spelled.Converter.decodeFieldValue( value )
 //	},
 
 	validator: function( value ) {

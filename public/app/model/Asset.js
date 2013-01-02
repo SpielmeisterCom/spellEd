@@ -2,7 +2,8 @@ Ext.define('Spelled.model.Asset', {
     extend: 'Ext.data.Model',
 	requires: [
 		'proxy.direct',
-		'Spelled.data.writer.Asset'
+		'Spelled.data.writer.Asset',
+		'Spelled.data.reader.Asset'
 	],
 
 	docString: '#!/guide/asset',
@@ -22,9 +23,8 @@ Ext.define('Spelled.model.Asset', {
 			update:  Spelled.StorageActions.update,
 			destroy: Spelled.StorageActions.destroy
 		},
-		writer: {
-			type: 'asset'
-		}
+		writer: 'asset',
+		reader: 'asset'
 	},
 
     fields: [

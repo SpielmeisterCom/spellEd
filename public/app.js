@@ -106,6 +106,7 @@ var startApplication = function() {
 			'template.Entities',
 			'template.Components',
 			'template.Systems',
+			'asset.Assets',
 			'asset.Animations',
 			'asset.Fonts',
 			'asset.KeyFrameAnimations',
