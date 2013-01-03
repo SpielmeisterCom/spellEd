@@ -115,7 +115,8 @@ var startApplication = function() {
 			'asset.Appearances',
 			'asset.TileMaps',
 			'script.Scripts',
-			'config.Scenes'
+			'config.Scenes',
+			'asset.KeyFrameAnimationPreviews'
 		],
 
 		refs: [

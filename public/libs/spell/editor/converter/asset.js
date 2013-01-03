@@ -16,9 +16,9 @@ define(
 			content.config = {}
 
 			_.each(
-				asset,
-				function( value, key ) {
-					if( _.indexOf( forbiddenFields, key ) === -1 ) content.config[ key ] = value
+				_.keys( asset ),
+				function( key ) {
+					if( _.indexOf( forbiddenFields, key ) === -1 ) content.config[ key ] = asset[ key ]
 				}
 			)
 
@@ -31,14 +31,15 @@ define(
 
 		var toEditorFormat = function( asset ) {
 			var preservedKeys = [ 'id', 'name', 'namespace', 'version', 'type', 'subtype' ],
-				result        = _.pick( asset, preservedKeys )
+				result        = _.pick( asset, preservedKeys),
+				config        = asset.config || {}
 
 			_.each(
-				asset.config,
-				function( value, key ) {
+				_.keys( config ),
+				function( key ) {
 					if( _.indexOf( preservedKeys, key ) > -1 ) throw "Error: Asset '" + result.id +"' overrides preserved key: '" + key + "'"
 
-					result[ key ] = value
+					result[ key ] = config[ key ]
 				}
 			)
 

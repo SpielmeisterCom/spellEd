@@ -284,7 +284,7 @@ Ext.define('Spelled.controller.Assets', {
 	postProcessAsset: function( model ) {
 		if( model.get( 'type') === 'asset' && model.get( 'subtype' ) === this.TYPE_FONT ) {
 			var id = this.application.generateFileIdFromObject( model.data )
-			this.saveFontMap( id,  model.get( 'config' ) )
+			this.saveFontMap( id,  model.data )
 		}
 
 		//TODO: remove this workaround for tilemaps
@@ -358,10 +358,6 @@ Ext.define('Spelled.controller.Assets', {
 			imageField = form.down( 'image' ),
 			values     = form.getValues()
 
-		//HACK: because of charset changes
-		values.firstChar = values.firstChar || 0
-		values.lastChar  = values.lastChar || 255
-
 		imageField.setSrc( this.createFontMap( values, true ).imageDataUrl )
 	},
 
@@ -385,7 +381,7 @@ Ext.define('Spelled.controller.Assets', {
 				break
 			case this.TYPE_FONT:
 				this.addFontForm( fieldSet, asset )
-				break
+				return
 			case this.TYPE_SPRITE_SHEET:
 				xtype = 'spritesheetconfig'
 				break
@@ -394,7 +390,7 @@ Ext.define('Spelled.controller.Assets', {
 				break
 			case this.TYPE_KEY_FRAME_ANIMATION:
 				this.addKeyFrameAnimationForm( fieldSet, asset )
-				break
+				return
 			case this.TYPE_TILE_MAP:
 				this.add2dTileMapForm( fieldSet, asset )
 				break
@@ -447,25 +443,7 @@ Ext.define('Spelled.controller.Assets', {
 
 	addFontForm: function( fieldSet, asset ) {
 		fieldSet.add( { xtype: 'textappearanceconfig' } )
-
 		this.refreshFontPreview( fieldSet.down( 'combobox[name="fontFamily"]' ) )
-
-		if( !!asset ) {
-			fieldSet.getForm().setValues(
-				{
-					hSpacing     : asset.get('config').hSpacing,
-					vSpacing     : asset.get('config').vSpacing,
-					fontFamily   : asset.get('config').fontFamily,
-					fontSize     : asset.get('config').fontSize,
-					fontStyle    : asset.get('config').fontStyle,
-					color        : asset.get('config').color,
-					outline      : asset.get('config').outline,
-					outlineColor : asset.get('config').outlineColor,
-					firstChar    : asset.get('config').firstChar,
-					lastChar     : asset.get('config').lastChar
-				}
-			)
-		}
 	},
 
 	addKeyFrameAnimationForm: function( fieldSet, asset ) {
@@ -473,13 +451,11 @@ Ext.define('Spelled.controller.Assets', {
 		this.renderKeyFrameAnimationComponentsTree( keyFrameAnimationConfig )
 
 		if( !!asset ) {
-			var config = asset.get('config')
-			keyFrameAnimationConfig.down( 'numberfield[name="length"]' ).setValue( config.length )
 			keyFrameAnimationConfig.down( 'assetidproperty').setValue( asset.get( 'assetId' ) )
 			keyFrameAnimationConfig.asset = asset
-			keyFrameAnimationConfig.keyFrameConfig = Ext.clone( config )
+			keyFrameAnimationConfig.keyFrameConfig = asset.get( 'animate' ) || {}
 		} else {
-			keyFrameAnimationConfig.keyFrameConfig = { animate: {} }
+			keyFrameAnimationConfig.keyFrameConfig = {}
 		}
 	},
 
@@ -503,14 +479,14 @@ Ext.define('Spelled.controller.Assets', {
 
 	getKeyFrameAnimationConfig: function( view ) {
 		var config    = view.keyFrameConfig,
-			newConfig = { animate: {} }
+			newConfig = {}
 
 		Ext.Object.each(
-			config.animate,
+			config,
 			function( key, component ) {
 
 				var tmpConfig = {}
-				newConfig.animate[ key ] = tmpConfig
+				newConfig[ key ] = tmpConfig
 
 				Ext.Object.each(
 					component,
@@ -540,7 +516,7 @@ Ext.define('Spelled.controller.Assets', {
 					}
 				)
 
-				if( Ext.isEmpty( Ext.Object.getKeys( newConfig.animate[ key ] ) ) ) delete newConfig.animate[ key ]
+				if( Ext.isEmpty( Ext.Object.getKeys( newConfig[ key ] ) ) ) delete newConfig[ key ]
 			}
 		)
 
@@ -573,9 +549,9 @@ Ext.define('Spelled.controller.Assets', {
 				data        = [],
 				xtype       = Ext.getStore( 'template.component.AttributeTypes' ).findRecord( 'name',component.getAttributeByName( attributeName ).get('type') ).get('type')
 
-			var componentConfig = config.animate[ componentId ]
+			var componentConfig = config[ componentId ]
 
-			if( !componentConfig ) componentConfig = config.animate[ componentId ] = {}
+			if( !componentConfig ) componentConfig = config[ componentId ] = {}
 
 			if( configPanel.asset ){
 				data = configPanel.asset.getKeyFrameFromComponentAttribute( componentId, attributeName )
@@ -632,6 +608,8 @@ Ext.define('Spelled.controller.Assets', {
 		var view = Ext.widget( 'editasset', { title: title } )
 
 		this.fieldRenderHelper( asset.get('subtype'), view, asset )
+
+		view.getForm().setValues( asset.data )
 		view.loadRecord( asset )
 
 		this.addAssetPreview( view, asset )
@@ -756,20 +734,12 @@ Ext.define('Spelled.controller.Assets', {
 		var values = form.getForm().getFieldValues()
 console.log( asset )
 		asset.set( values )
-		return
 
 		switch( asset.get( 'subtype' ) ) {
 			case this.TYPE_FONT:
 				var result = this.createFontMap( values )
-				config.charset  = result.charset
-				config.baseline = parseInt( result.baseline, 10 )
-				Ext.copyTo( config, values, 'fontFamily,fontStyle,color,outlineColor' )
-                config.vSpacing  = parseInt( values.vSpacing, 10 )
-				config.hSpacing  = parseInt( values.hSpacing, 10 )
-                config.outline   = parseInt( values.outline, 10 )
-                config.fontSize  = parseInt( values.fontSize, 10 )
-				config.firstChar = parseInt( values.firstChar, 10 )
-				config.lastChar  = parseInt( values.lastChar, 10 )
+				asset.set( 'charset', result.charset )
+				asset.set( 'baseline', parseInt( result.baseline, 10 ) )
 				asset.set( 'file', asset.get( 'name' ) + ".png" )
 				break
 			case this.TYPE_KEY_TO_ACTION:
@@ -780,9 +750,7 @@ console.log( asset )
 				config.html = aceEditor.getSession().getValue()
 				break
 			case this.TYPE_KEY_FRAME_ANIMATION:
-                asset.set( 'assetId', values.assetId )
-				config = this.getKeyFrameAnimationConfig( form.down( 'keyframeanimationconfig' ) )
-				config.length = parseInt( values.length )
+				asset.set( 'animate', this.getKeyFrameAnimationConfig( form.down( 'keyframeanimationconfig' ) ) )
 				break
 			case this.TYPE_TILE_MAP:
 				asset.set( 'assetId', values.tileMapAssetId )
@@ -791,8 +759,6 @@ console.log( asset )
 				config.tileLayerData = this.getMergedTileMapDataDimensions( asset, config )
 				break
 		}
-
-		if( !Ext.isEmpty( config ) ) asset.set( 'config', config )
 	},
 
 	saveFontMap: function( id, values ) {
@@ -963,11 +929,19 @@ console.log( asset )
 		}
     },
 
+	getAssetByAssetId: function( assetId ) {
+		var type = assetId.split(':').shift()
+
+		if( !type ) return
+
+		return this.getAssetStoreByType( type ).findRecord( 'internalAssetId', assetId )
+	},
+
 	animationPreviewHelper: function( container, asset, entity ) {
 		var components = entity.getComponents()
 
         if( asset.get('subtype') === this.TYPE_KEY_FRAME_ANIMATION ){
-            var previewAsset = this.getAssetAssetsStore().findRecord( 'internalAssetId', asset.get( 'assetId' )),
+            var previewAsset = this.getAssetByAssetId( asset.get( 'assetId' ) ),
                 componentId  = 'spell.component.2d.graphics.appearance',
                 config       = {}
 

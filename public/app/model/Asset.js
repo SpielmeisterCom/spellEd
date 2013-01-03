@@ -31,8 +31,7 @@ Ext.define('Spelled.model.Asset', {
 		{ name: 'type', type: 'string', defaultValue: 'asset' },
 		'subtype',
 		{ name: 'namespace', type: 'string', defaultValue: '' },
-		'name',
-		'assetId'
+		'name'
     ],
 
 	destroy: function( options ) {

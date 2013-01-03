@@ -21,6 +21,18 @@ Ext.define('Spelled.model.assets.Font', {
 
 	fields: [
 		{ name: 'subtype', type: 'string', defaultValue: 'font' },
+		'charset',
+		'baseline',
+		'fontSize',
+		'hSpacing',
+		'vSpacing',
+		'color',
+		'outlineColor',
+		'outline',
+		'firstChar',
+		'lastChar',
+		'fontFamily',
+		'fontStyle',
 		'file'
 	]
 })
