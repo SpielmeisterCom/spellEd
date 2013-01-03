@@ -78,20 +78,20 @@ Ext.define('Spelled.controller.Assets', {
     ],
 
     stores: [
-        'asset.Types',
         'asset.Appearances',
         'asset.Sounds',
 		'asset.Fonts',
 		'asset.SpriteSheets',
 		'asset.Animations',
-		'asset.ActionKeys',
-		'template.component.KeyFrameComponents',
 		'asset.KeyFrameAnimations',
-        'asset.KeyFrameAnimationPreviews',
 		'asset.KeyToActionMappings',
-		'asset.InterpolationFunctions',
 	    'asset.TileMaps',
-		'asset.Assets'
+
+		'asset.ActionKeys',
+		'asset.Types',
+		'asset.InterpolationFunctions',
+		'asset.KeyFrameAnimationPreviews',
+		'template.component.KeyFrameComponents'
     ],
 
     models: [
@@ -852,14 +852,10 @@ console.log( asset )
 			this.saveFontMap( id,  form.getForm().getValues() )
 		}
 
-		var successCallback = Ext.bind( function( result) {
-			this.successCallback( result )
-		},this)
-
 		if( fileField && fileField.isValid() ) {
-			this.saveFileUploadFromAsset( fileField, asset, successCallback )
+			this.saveFileUploadFromAsset( fileField, asset )
 		} else {
-			asset.save({ success: successCallback })
+			asset.save()
 		}
 
 		window.close()
@@ -948,18 +944,13 @@ console.log( asset )
 		})
 	},
 
-	removeAsset: function( assetId ) {
-        var asset       = this.getAssetAssetsStore().getById( assetId ),
+	removeAsset: function( assetId, type ) {
+        var asset       = this.getAssetStoreByType( type ).getById( assetId ),
 			assetEditor = this.getAssetEditor()
 
 		this.application.closeOpenedTabs( assetEditor, asset.getFullName() )
 
-		asset.destroy(
-			{
-				callback: this.refreshStores,
-				scope: this
-			}
-		)
+		asset.destroy()
     },
 
     showCreateAsset: function( button ) {
@@ -1102,14 +1093,11 @@ console.log( asset )
 	},
 
     refreshStores: function( callback ) {
-		this.getAssetAssetsStore().load( {
-			callback: callback
-		})
-
+		callback()
 		Ext.Array.each(
 			this.stores,
 			function( item ) {
-				if( item !== 'asset.Assets' ) Ext.getStore( item ).load()
+				Ext.getStore( item ).load()
 			}
 		)
     }

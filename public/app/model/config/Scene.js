@@ -92,7 +92,14 @@ Ext.define('Spelled.model.config.Scene', {
 				'template.Components',
 				'template.Entities',
 				'template.Systems',
-				'asset.Assets'
+				'asset.Appearances',
+				'asset.Sounds',
+				'asset.Fonts',
+				'asset.SpriteSheets',
+				'asset.Animations',
+				'asset.KeyFrameAnimations',
+				'asset.KeyToActionMappings',
+				'asset.TileMaps'
 			],
 			getStore = Ext.getStore,
 			merge    = this.mergeStoreIds

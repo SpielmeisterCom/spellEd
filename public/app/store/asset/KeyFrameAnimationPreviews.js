@@ -1,5 +1,7 @@
 Ext.define('Spelled.store.asset.KeyFrameAnimationPreviews', {
-    extend: 'Spelled.store.asset.Assets',
+	extend: 'Ext.data.Store',
+
+	model: 'Spelled.model.Asset',
 
     filters: [
         function( item ) {

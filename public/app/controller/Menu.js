@@ -379,7 +379,7 @@ Ext.define('Spelled.controller.Menu', {
 		if( node && node.isLeaf() ) {
 			this.application.fireEvent( 'removefromlibrary', node,
 				function(){
-					me.application.getController( 'Assets' ).removeAsset( node.get('id') )
+					me.application.getController( 'Assets' ).removeAsset( node.get('id'), node.get('cls') )
 					node.remove()
 				}
 			)

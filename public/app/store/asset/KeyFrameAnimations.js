@@ -1,5 +1,7 @@
 Ext.define('Spelled.store.asset.KeyFrameAnimations', {
-	extend: 'Spelled.store.asset.Assets',
+	extend: 'Ext.data.Store',
+
+	mixins: [ 'Spelled.store.asset.Assets' ],
 
 	requires: [
 		'Spelled.model.assets.KeyFrameAnimation'

@@ -1,12 +1,9 @@
-Ext.define('Spelled.store.asset.Assets', {
-	extend: 'Ext.data.Store',
-	requires: [
-		'Spelled.model.Asset'
-	],
-
-	model: 'Spelled.model.Asset',
+Ext.define( 'Spelled.store.asset.Assets', {
 	listeners: {
 		load: function( me, records, successful ) {
+			Ext.getStore( 'Library' ).generateNodesFromRecords( records )
+		},
+		add: function( me, records, successful ) {
 			Ext.getStore( 'Library' ).generateNodesFromRecords( records )
 		}
 	}
