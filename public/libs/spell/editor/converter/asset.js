@@ -11,7 +11,7 @@ define(
 		var toEngineFormat = function( asset ) {
 			var fields          = [ 'version', 'type', 'subtype', 'doc' ],
 				content         = _.pick( asset, fields ),
-				forbiddenFields = _.union( fields, [ 'id', 'name', 'namespace', 'assetId', 'file' ] )
+				forbiddenFields = _.union( fields, [ 'myAssetId', 'internalAssetId', 'id', 'name', 'namespace', 'assetId', 'file' ] )
 
 			content.config = {}
 

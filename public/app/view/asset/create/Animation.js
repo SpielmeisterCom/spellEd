@@ -38,6 +38,7 @@ Ext.define('Spelled.view.asset.create.Animation', {
 					items: [
 						{
 							xtype: "spelledvec2field",
+							convertIt: true,
 							name: 'transformation',
 							value: "[0,0]",
 							fieldLabel: 'Transformation'
@@ -45,6 +46,7 @@ Ext.define('Spelled.view.asset.create.Animation', {
 						{
 							xtype: "spelledvec2field",
 							name: 'scale',
+							convertIt: true,
 							value: "[0,0]",
 							fieldLabel: 'Scale'
 						},
@@ -65,6 +67,7 @@ Ext.define('Spelled.view.asset.create.Animation', {
 				{
 					xtype: "textfield",
 					name: 'frameIds',
+					rawToValue: Spelled.Converter.integerListFromString,
 					fieldLabel: 'Frames'
 				}
 			]

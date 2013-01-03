@@ -1,4 +1,4 @@
-Ext.define('Spelled.Converter' ,{
+Ext.define( 'Spelled.Converter' ,{
 	singleton: true,
 
 	convertValueForGrid: function( value ) {
@@ -9,6 +9,11 @@ Ext.define('Spelled.Converter' ,{
 		} else {
 			return value
 		}
+	},
+
+	integerListFromString: function( list ) {
+		var values = list.split( "," )
+		return Ext.Array.map( values, function( item ) { return parseInt( item, 10 ) } )
 	},
 
 	decodeFieldValue: function( value, type ) {

@@ -677,7 +677,7 @@ Ext.define('Spelled.controller.Assets', {
 			record = form.getRecord(),
 			iframe = button.up( 'editasset' ).down( 'assetiframe' )
 
-		if( record ) {
+		if( record && form.getForm().isValid() ) {
 			this.setAssetConfigFromForm( form, record )
 
 			this.application.fireEvent( 'assetchange', record )
@@ -777,11 +777,8 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	setAssetConfigFromForm: function( form, asset ) {
-		var basicForm = form.getForm(),
-			values    = basicForm.getFieldValues()
-
-		if( !basicForm.isValid() ) return
-
+		var values = form.getForm().getFieldValues()
+console.log( asset )
 		asset.set( values )
 		return
 

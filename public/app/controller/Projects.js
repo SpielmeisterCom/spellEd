@@ -30,7 +30,14 @@ Ext.define('Spelled.controller.Projects', {
 		'template.Entities',
 		'template.Systems',
 		'script.Scripts',
-		'asset.Assets',
+		'asset.Textures',
+		'asset.Sounds',
+		'asset.Fonts',
+		'asset.SpriteSheets',
+		'asset.Animations',
+		'asset.KeyFrameAnimations',
+		'asset.KeyToActionMappings',
+		'asset.TileMaps',
 		'config.Scenes'
 	],
 
