@@ -2,6 +2,7 @@ Ext.define('Spelled.view.asset.create.FileField', {
     extend: 'Ext.form.field.File',
     alias: 'widget.assetfilefield',
 
+	needValidation: true,
 	name: 'asset',
 	fieldLabel: 'File',
 	msgTarget: 'side',
@@ -45,7 +46,7 @@ Ext.define('Spelled.view.asset.create.FileField', {
 	},
 
 	validator: function( value ) {
-		if( !value )
+		if( !value && this.needValidation )
 			return "You need to select a new File"
 		else
 			return true

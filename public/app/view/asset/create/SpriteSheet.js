@@ -13,7 +13,7 @@ Ext.define('Spelled.view.asset.create.SpriteSheet', {
 					width: 'null'
 				},
 				{
-					xtype: 'assetfilefield'
+					xtype: 'assetfilefield', needValidation: !this.edit
 				},
 				{
 					xtype: "numberfield",

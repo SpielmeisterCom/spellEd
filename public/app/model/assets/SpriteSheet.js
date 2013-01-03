@@ -21,6 +21,12 @@ Ext.define('Spelled.model.assets.SpriteSheet', {
 
 	fields: [
 		{ name: 'subtype', type: 'string', defaultValue: 'spriteSheet' },
+
+		'textureWidth',
+		'textureHeight',
+		'frameWidth',
+		'frameHeight',
+		'innerPadding',
 		'file'
 	]
 })

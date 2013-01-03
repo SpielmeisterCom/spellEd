@@ -377,15 +377,17 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	fieldRenderHelper: function( type, fieldSet, asset ) {
+		var xtype = ''
+
 		switch( type ) {
 			case this.TYPE_ANIMATION:
-				this.addAnimationForm( fieldSet, asset )
+				xtype = 'animationassetconfig'
 				break
 			case this.TYPE_FONT:
 				this.addFontForm( fieldSet, asset )
 				break
 			case this.TYPE_SPRITE_SHEET:
-				this.addSpriteSheetForm( fieldSet, asset )
+				xtype = 'spritesheetconfig'
 				break
 			case this.TYPE_KEY_TO_ACTION:
 				this.addKeyToActionMapForm( fieldSet, asset )
@@ -397,12 +399,14 @@ Ext.define('Spelled.controller.Assets', {
 				this.add2dTileMapForm( fieldSet, asset )
 				break
 			case this.TYPE_APPEARANCE:
-				this.addAppearanceForm( fieldSet, asset )
+				xtype = 'appearanceasset'
 				break
 			case this.TYPE_SOUND:
-				this.addSoundForm( fieldSet, asset )
+				xtype = 'soundasset'
 				break
 		}
+
+		fieldSet.add( { xtype: xtype, edit: !!asset  } )
 	},
 
 	add2dTileMapForm: function( fieldSet, asset ) {
@@ -441,10 +445,6 @@ Ext.define('Spelled.controller.Assets', {
 		}
 	},
 
-	addSoundForm: function( fieldSet, asset ) {
-		fieldSet.add( { xtype: 'soundasset' } )
-	},
-
 	addFontForm: function( fieldSet, asset ) {
 		fieldSet.add( { xtype: 'textappearanceconfig' } )
 
@@ -481,30 +481,6 @@ Ext.define('Spelled.controller.Assets', {
 		} else {
 			keyFrameAnimationConfig.keyFrameConfig = { animate: {} }
 		}
-	},
-
-	addAnimationForm: function( fieldSet, asset ) {
-		fieldSet.add( { xtype: 'animationassetconfig', edit: !!asset } )
-	},
-
-	addSpriteSheetForm: function( fieldSet, asset ) {
-		fieldSet.add( {xtype: 'spritesheetconfig' } )
-
-		if( !!asset ) {
-			fieldSet.getForm().setValues(
-				{
-					textureWidth  : asset.get('config').textureWidth,
-					textureHeight : asset.get('config').textureHeight,
-					frameWidth    : asset.get('config').frameWidth,
-					frameHeight   : asset.get('config').frameHeight,
-					innerPadding  : asset.get('config').innerPadding
-				}
-			)
-		}
-	},
-
-	addAppearanceForm: function( fieldSet, asset ) {
-		fieldSet.add( { xtype: 'appearanceasset' } )
 	},
 
 	renderKeyFrameAnimationComponentsTree: function( view ) {
@@ -802,13 +778,6 @@ console.log( asset )
 			case 'domvas':
 				var aceEditor = form.down( 'domvasassetconfig' ).aceEditor
 				config.html = aceEditor.getSession().getValue()
-				break
-			case this.TYPE_SPRITE_SHEET:
-				config.textureWidth     = parseInt( values.textureWidth, 10 )
-				config.textureHeight    = parseInt( values.textureHeight, 10 )
-				config.frameWidth       = parseInt( values.frameWidth, 10 )
-				config.frameHeight      = parseInt( values.frameHeight, 10 )
-				config.innerPadding     = parseInt( values.innerPadding, 10 )
 				break
 			case this.TYPE_KEY_FRAME_ANIMATION:
                 asset.set( 'assetId', values.assetId )
