@@ -704,11 +704,11 @@ Ext.define('Spelled.controller.Assets', {
 			case this.TYPE_KEY_TO_ACTION:
 				return this.getAssetKeyMappingsStore()
 			case this.TYPE_TILE_MAP:
-				return this.getAssetTileMapsModel()
+				return this.getAssetTileMapsStore()
 			case this.TYPE_KEY_FRAME_ANIMATION:
-				return this.getAssetsKeyFrameAnimationModel()
+				return this.getAssetKeyFrameAnimationsStore()
 			case this.TYPE_SOUND:
-				return this.getAssetsSoundModel()
+				return this.getAssetSoundsStore()
 		}
 	},
 
@@ -802,15 +802,6 @@ console.log( asset )
 			case 'domvas':
 				var aceEditor = form.down( 'domvasassetconfig' ).aceEditor
 				config.html = aceEditor.getSession().getValue()
-				break
-			case this.TYPE_ANIMATION:
-				asset.set( 'assetId', values.assetId )
-				config.type     = values.animationType
-				config.duration = values.duration
-				config.frameIds = values.frameIds.split( "," )
-				config.rotation = parseFloat( values.rotation )
-				config.transformation = Spelled.Converter.decodeFieldValue( values.transformation )
-				config.scale = Spelled.Converter.decodeFieldValue( values.scale )
 				break
 			case this.TYPE_SPRITE_SHEET:
 				config.textureWidth     = parseInt( values.textureWidth, 10 )
@@ -946,9 +937,11 @@ console.log( asset )
 	},
 
 	removeAsset: function( assetId, type ) {
-        var asset       = this.getAssetStoreByType( type ).getById( assetId ),
+        var store       = this.getAssetStoreByType( type ),
+			asset       = store.getById( assetId ),
 			assetEditor = this.getAssetEditor()
 
+		store.remove( asset )
 		this.application.closeOpenedTabs( assetEditor, asset.getFullName() )
 
 		asset.destroy()

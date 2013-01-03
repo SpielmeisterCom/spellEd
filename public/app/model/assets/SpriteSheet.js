@@ -20,6 +20,7 @@ Ext.define('Spelled.model.assets.SpriteSheet', {
 	},
 
 	fields: [
+		{ name: 'subtype', type: 'string', defaultValue: 'spriteSheet' },
 		'file'
 	]
 })

@@ -20,6 +20,7 @@ Ext.define('Spelled.model.assets.TileMap', {
 	},
 
 	fields: [
+		{ name: 'subtype', type: 'string', defaultValue: '2dTileMap' },
 		'file'
 	]
 })

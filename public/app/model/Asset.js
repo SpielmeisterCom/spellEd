@@ -60,12 +60,12 @@ Ext.define('Spelled.model.Asset', {
 
 	constructor: function() {
 		var object  = arguments[0] || arguments[2],
-			assetId = this.generateIdentifier( object ),
-			internalAssetId = object.subtype + ":" + assetId
+			assetId = this.generateIdentifier( object )
 
 		this.callParent( arguments )
 
-		var metaData = Ext.getStore( 'asset.Types' ).findRecord( 'type', this.raw.subtype || this.data.subtype )
+		var type     = this.raw.subtype || this.data.subtype,
+			metaData = Ext.getStore( 'asset.Types' ).findRecord( 'type', type )
 
 		if ( metaData ) {
 			this.iconCls = metaData.data.iconCls
@@ -73,7 +73,7 @@ Ext.define('Spelled.model.Asset', {
 		}
 
 		this.set( 'myAssetId', assetId)
-		this.set( 'internalAssetId', internalAssetId)
+		this.set( 'internalAssetId', type + ":" + assetId)
 	},
 
 	getAbsoluteFilePath: function() {

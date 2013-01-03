@@ -30,11 +30,14 @@ define(
 		}
 
 		var toEditorFormat = function( asset ) {
-			var result = _.pick( asset, 'id', 'name', 'namespace', 'version', 'type', 'subtype' )
+			var preservedKeys = [ 'id', 'name', 'namespace', 'version', 'type', 'subtype' ],
+				result        = _.pick( asset, preservedKeys )
 
 			_.each(
 				asset.config,
 				function( value, key ) {
+					if( _.indexOf( preservedKeys, key ) > -1 ) throw "Error: Asset '" + result.id +"' overrides preserved key: '" + key + "'"
+
 					result[ key ] = value
 				}
 			)

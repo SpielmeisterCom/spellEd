@@ -20,7 +20,7 @@ Ext.define('Spelled.model.assets.KeyFrameAnimation', {
 	},
 
 	fields: [
-		'file'
+		{ name: 'subtype', type: 'string', defaultValue: 'keyFrameAnimation' }
 	],
 
 	getKeyFrameFromComponentAttribute: function( componentId, attributeName ) {

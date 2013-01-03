@@ -20,6 +20,6 @@ Ext.define('Spelled.model.assets.KeyMapping', {
 	},
 
 	fields: [
-		'file'
+		{ name: 'subtype', type: 'string', defaultValue: 'keyToActionMap' }
 	]
 })

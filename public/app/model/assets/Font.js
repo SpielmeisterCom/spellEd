@@ -20,6 +20,7 @@ Ext.define('Spelled.model.assets.Font', {
 	},
 
 	fields: [
+		{ name: 'subtype', type: 'string', defaultValue: 'font' },
 		'file'
 	]
 })
