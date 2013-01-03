@@ -20,6 +20,7 @@ Ext.define('Spelled.model.assets.Animation', {
 	},
 
 	fields: [
+		{ name: 'subtype', type: 'string', defaultValue: 'animation' },
 		{ name: 'assetId', type: 'string' },
 		{ name: 'duration', type: 'float' },
 		{ name: 'frameIds', type: 'array'},

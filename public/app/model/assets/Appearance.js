@@ -20,6 +20,7 @@ Ext.define('Spelled.model.assets.Appearance', {
 	},
 
 	fields: [
+		{ name: 'subtype', type: 'string', defaultValue: 'appearance' },
 		'file'
 	]
 })

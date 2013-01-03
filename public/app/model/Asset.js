@@ -30,7 +30,7 @@ Ext.define('Spelled.model.Asset', {
     fields: [
 		{ name: 'type', type: 'string', defaultValue: 'asset' },
 		'subtype',
-        'namespace',
+		{ name: 'namespace', type: 'string', defaultValue: '' },
 		'name',
 		'assetId'
     ],

@@ -16,7 +16,7 @@ Ext.define('Spelled.controller.Assets', {
 		'Spelled.view.asset.Form',
 		'Spelled.view.asset.FolderPicker',
 		'Spelled.view.asset.create.Create',
-		'Spelled.view.asset.create.Texture',
+		'Spelled.view.asset.create.Appearance',
 		'Spelled.view.asset.create.SpriteSheet',
 		'Spelled.view.asset.create.Animation',
 		'Spelled.view.asset.create.Font',
@@ -32,7 +32,7 @@ Ext.define('Spelled.controller.Assets', {
 
 
 		'Spelled.store.asset.Types',
-		'Spelled.store.asset.Textures',
+		'Spelled.store.asset.Appearances',
 		'Spelled.store.asset.Sounds',
 		'Spelled.store.asset.Fonts',
 		'Spelled.store.asset.SpriteSheets',
@@ -63,7 +63,7 @@ Ext.define('Spelled.controller.Assets', {
         'asset.Form',
         'asset.FolderPicker',
 		'asset.create.Create',
-		'asset.create.Texture',
+		'asset.create.Appearance',
 		'asset.create.SpriteSheet',
 		'asset.create.Animation',
 		'asset.create.Font',
@@ -79,7 +79,7 @@ Ext.define('Spelled.controller.Assets', {
 
     stores: [
         'asset.Types',
-        'asset.Textures',
+        'asset.Appearances',
         'asset.Sounds',
 		'asset.Fonts',
 		'asset.SpriteSheets',
@@ -397,7 +397,7 @@ Ext.define('Spelled.controller.Assets', {
 				this.add2dTileMapForm( fieldSet, asset )
 				break
 			case this.TYPE_APPEARANCE:
-				this.addTextureForm( fieldSet, asset )
+				this.addAppearanceForm( fieldSet, asset )
 				break
 			case this.TYPE_SOUND:
 				this.addSoundForm( fieldSet, asset )
@@ -503,8 +503,8 @@ Ext.define('Spelled.controller.Assets', {
 		}
 	},
 
-	addTextureForm: function( fieldSet, asset ) {
-		fieldSet.add( { xtype: 'textureasset' } )
+	addAppearanceForm: function( fieldSet, asset ) {
+		fieldSet.add( { xtype: 'appearanceasset' } )
 	},
 
 	renderKeyFrameAnimationComponentsTree: function( view ) {
@@ -696,7 +696,7 @@ Ext.define('Spelled.controller.Assets', {
 			case this.TYPE_ANIMATION:
 				return this.getAssetAnimationsStore()
 			case this.TYPE_APPEARANCE:
-				return this.getAssetTexturesStore()
+				return this.getAssetAppearancesStore()
 			case this.TYPE_SPRITE_SHEET:
 				return this.getAssetSpriteSheetsStore()
 			case this.TYPE_FONT:
@@ -920,6 +920,7 @@ console.log( asset )
             window  = button.up( 'window' ),
 			values  = form.getValues(),
 			Asset   = this.getAssetModelByType( values.type ),
+			store   = this.getAssetStoreByType( values.type ),
 			content = {
 				name: values.name,
 				namespace: ( values.namespace === 'root' ) ? '' : values.namespace.substring( 5 ),
@@ -930,6 +931,8 @@ console.log( asset )
 		if( form.isValid() ){
 			content.id = id + ".json"
 			var asset = Asset.create( content )
+debugger
+			store.add( asset )
 			this.saveAsset( button.up('form'), asset )
         }
     },

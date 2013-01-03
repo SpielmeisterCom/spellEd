@@ -382,6 +382,9 @@ Ext.ClassManager.addNameAliasMappings({
     "proxy.server"
   ],
   "Ext.chart.series.Cartesian": [],
+  "Spelled.view.asset.create.Appearance": [
+    "widget.appearanceasset"
+  ],
   "Ext.grid.column.Column": [
     "widget.gridcolumn"
   ],
@@ -678,7 +681,6 @@ Ext.ClassManager.addNameAliasMappings({
     "formaction.submit"
   ],
   "Ext.Shadow": [],
-  "Spelled.store.asset.Textures": [],
   "Ext.form.Panel": [
     "widget.form"
   ],
@@ -846,9 +848,6 @@ Ext.ClassManager.addNameAliasMappings({
     "proxy.direct"
   ],
   "Ext.chart.Navigation": [],
-  "Spelled.view.asset.create.Texture": [
-    "widget.textureasset"
-  ],
   "Ext.slider.Tip": [
     "widget.slidertip"
   ],
@@ -1117,9 +1116,13 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.abstract.model.Template": [],
   "Spelled.model.assets.KeyMapping": [],
   "Ext.grid.PagingScroller": [],
+  "Spelled.data.reader.Asset": [
+    "reader.asset"
+  ],
   "Ext.layout.component.field.HtmlEditor": [
     "layout.htmleditor"
   ],
+  "Spelled.store.asset.Appearances": [],
   "Ext.data.proxy.SessionStorage": [
     "proxy.sessionstorage"
   ],
@@ -1547,6 +1550,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.chart.CartesianSeries",
     "Ext.chart.CartesianChart"
   ],
+  "Spelled.view.asset.create.Appearance": [],
   "Ext.grid.column.Column": [
     "Ext.grid.Column"
   ],
@@ -1767,7 +1771,6 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.form.Action.Submit"
   ],
   "Ext.Shadow": [],
-  "Spelled.store.asset.Textures": [],
   "Ext.form.Panel": [
     "Ext.FormPanel",
     "Ext.form.FormPanel"
@@ -1894,7 +1897,6 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.data.DirectProxy"
   ],
   "Ext.chart.Navigation": [],
-  "Spelled.view.asset.create.Texture": [],
   "Ext.slider.Tip": [],
   "Ext.chart.theme.Base": [],
   "Ext.form.field.TextArea": [
@@ -2059,7 +2061,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.abstract.model.Template": [],
   "Spelled.model.assets.KeyMapping": [],
   "Ext.grid.PagingScroller": [],
+  "Spelled.data.reader.Asset": [],
   "Ext.layout.component.field.HtmlEditor": [],
+  "Spelled.store.asset.Appearances": [],
   "Ext.data.proxy.SessionStorage": [
     "Ext.data.SessionStorageProxy"
   ],

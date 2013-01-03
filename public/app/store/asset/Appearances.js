@@ -1,4 +1,4 @@
-Ext.define('Spelled.store.asset.Textures', {
+Ext.define('Spelled.store.asset.Appearances', {
 	extend: 'Spelled.store.asset.Assets',
 
 	requires: [

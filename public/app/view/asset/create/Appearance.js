@@ -1,6 +1,6 @@
-Ext.define('Spelled.view.asset.create.Texture', {
+Ext.define('Spelled.view.asset.create.Appearance', {
     extend: 'Ext.container.Container',
-    alias: 'widget.textureasset',
+    alias: 'widget.appearanceasset',
 
 	requires: [
 		'Ext.form.field.File'
