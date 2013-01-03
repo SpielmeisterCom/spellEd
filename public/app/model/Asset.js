@@ -60,16 +60,17 @@ Ext.define('Spelled.model.Asset', {
 
 	constructor: function() {
 		var object  = arguments[0] || arguments[2],
-			assetId =this.generateIdentifier( object ),
-			internalAssetId = object.subtype + ":" + assetId,
-			metaData = Ext.getStore( 'asset.Types' ).findRecord( 'type', object.subtype )
+			assetId = this.generateIdentifier( object ),
+			internalAssetId = object.subtype + ":" + assetId
+
+		this.callParent( arguments )
+
+		var metaData = Ext.getStore( 'asset.Types' ).findRecord( 'type', this.raw.subtype || this.data.subtype )
 
 		if ( metaData ) {
 			this.iconCls = metaData.data.iconCls
 			this.sortOrder = metaData.data.sortOrder
 		}
-
-		this.callParent( arguments )
 
 		this.set( 'myAssetId', assetId)
 		this.set( 'internalAssetId', internalAssetId)

@@ -844,7 +844,8 @@ console.log( asset )
 		var fileField = form.down( 'assetfilefield' ),
 			window    = form.up( 'window' ),
 			id        = this.application.generateFileIdFromObject( asset.data ),
-			type      = asset.get( 'subtype' )
+			type      = asset.get( 'subtype'),
+			store     = this.getAssetStoreByType( type )
 
 		this.setAssetConfigFromForm( form, asset )
 
@@ -852,10 +853,14 @@ console.log( asset )
 			this.saveFontMap( id,  form.getForm().getValues() )
 		}
 
+		var successCallback = Ext.bind( function() {
+			store.add( asset )
+		},this)
+
 		if( fileField && fileField.isValid() ) {
-			this.saveFileUploadFromAsset( fileField, asset )
+			this.saveFileUploadFromAsset( fileField, asset, successCallback )
 		} else {
-			asset.save()
+			asset.save({ success: successCallback })
 		}
 
 		window.close()
@@ -931,10 +936,6 @@ console.log( asset )
 			this.saveAsset( button.up('form'), asset )
         }
     },
-
-	successCallback : function( result ) {
-		this.refreshStoresAndTreeStores()
-	},
 
 	saveBase64AssetFile: function( filePath, content ) {
 		Spelled.StorageActions.create( {
@@ -1089,10 +1090,6 @@ console.log( asset )
 	},
 
 	refreshStoresAndTreeStores: function( callback ) {
-		this.refreshStores( callback )
-	},
-
-    refreshStores: function( callback ) {
 		callback()
 		Ext.Array.each(
 			this.stores,
@@ -1100,5 +1097,5 @@ console.log( asset )
 				Ext.getStore( item ).load()
 			}
 		)
-    }
+	}
 });
