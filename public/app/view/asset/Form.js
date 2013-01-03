@@ -19,7 +19,7 @@ Ext.define('Spelled.view.asset.Form', {
 			items: [
 				{
 					xtype: "hidden",
-					name: 'type'
+					name: 'subtype'
 				},
 				{
 					xtype: "spellednamefield",

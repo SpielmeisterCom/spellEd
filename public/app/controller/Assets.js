@@ -919,19 +919,18 @@ console.log( asset )
         var form    = button.up('form').getForm(),
             window  = button.up( 'window' ),
 			values  = form.getValues(),
-			Asset   = this.getAssetModelByType( values.type ),
-			store   = this.getAssetStoreByType( values.type ),
+			Asset   = this.getAssetModelByType( values.subtype ),
+			store   = this.getAssetStoreByType( values.subtype ),
 			content = {
 				name: values.name,
-				namespace: ( values.namespace === 'root' ) ? '' : values.namespace.substring( 5 ),
-				subtype: values.type
+				namespace: ( values.namespace === 'root' ) ? '' : values.namespace.substring( 5 )
 			},
 			id      = this.application.generateFileIdFromObject( content )
 
 		if( form.isValid() ){
 			content.id = id + ".json"
 			var asset = Asset.create( content )
-debugger
+
 			store.add( asset )
 			this.saveAsset( button.up('form'), asset )
         }
@@ -965,7 +964,7 @@ debugger
 
     showCreateAsset: function( button ) {
         var view        = Ext.widget( 'createasset' ),
-			assetsCombo = view.down('hidden[name="type"]'),
+			assetsCombo = view.down('hidden[name="subtype"]'),
 			assetType   = button.type
 
 		assetsCombo.setValue( assetType )
