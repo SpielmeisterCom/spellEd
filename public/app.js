@@ -113,7 +113,7 @@ var startApplication = function() {
 			'asset.KeyToActionMappings',
 			'asset.Sounds',
 			'asset.SpriteSheets',
-			'asset.Textures',
+			'asset.Appearances',
 			'asset.TileMaps',
 			'script.Scripts',
 			'config.Scenes'
