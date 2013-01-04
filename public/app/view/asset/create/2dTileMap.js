@@ -21,7 +21,7 @@ Ext.define('Spelled.view.asset.create.2dTileMap', {
 					items: [
 						{
 							xtype: "assetidproperty",
-							name : 'tileMapAssetId',
+							name : 'assetId',
 							allowBlank: true,
 							store: 'asset.SpriteSheets'
 						},

@@ -216,15 +216,15 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	handleUpdateAssetMessage: function( iFrameId, payload ) {
-		var asset = this.getAssetAssetsStore().findRecord( 'internalAssetId', payload.id )
+		var asset = this.getAssetByAssetId( payload.id )
 
 		if( asset ) {
-			this.updateAsset( asset.get( 'myAssetId' ), payload.config )
+			this.updateAsset( asset.get( 'internalAssetId' ), payload.config )
 		}
 	},
 
 	assetDeepLink: function( internalAssetId ) {
-		var record = this.getAssetAssetsStore().findRecord( 'internalAssetId', internalAssetId ),
+		var record = this.getAssetByAssetId( internalAssetId ),
 			tree   = this.getNavigator()
 
 		if( record ) {
@@ -273,10 +273,10 @@ Ext.define('Spelled.controller.Assets', {
     },
 
 	updateAsset: function( assetId, config ) {
-		var asset = this.getAssetAssetsStore().findRecord( 'myAssetId', assetId )
+		var asset = this.getAssetByAssetId( assetId )
 
 		if( asset ) {
-			asset.set( 'config', config )
+			asset.set( config )
 			this.application.fireEvent( 'assetchange', asset )
 		}
 	},
@@ -373,17 +373,15 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	fieldRenderHelper: function( type, fieldSet, asset ) {
-		var edit  = !!asset
-
 		switch( type ) {
 			case this.TYPE_ANIMATION:
-				fieldSet.add( { xtype: 'animationassetconfig', edit: edit  } )
+				fieldSet.add( { xtype: 'animationassetconfig' } )
 				break
 			case this.TYPE_FONT:
 				this.addFontForm( fieldSet, asset )
 				break
 			case this.TYPE_SPRITE_SHEET:
-				fieldSet.add( { xtype: 'spritesheetconfig', edit: edit  } )
+				fieldSet.add( { xtype: 'spritesheetconfig' } )
 				break
 			case this.TYPE_KEY_TO_ACTION:
 				this.addKeyToActionMapForm( fieldSet, asset )
@@ -392,30 +390,14 @@ Ext.define('Spelled.controller.Assets', {
 				this.addKeyFrameAnimationForm( fieldSet, asset )
 				break
 			case this.TYPE_TILE_MAP:
-				this.add2dTileMapForm( fieldSet, asset )
+				fieldSet.add( { xtype: '2dtilemapconfig', edit: !!asset } )
 				break
 			case this.TYPE_APPEARANCE:
-				fieldSet.add( { xtype: 'appearanceasset', edit: edit  } )
+				fieldSet.add( { xtype: 'appearanceasset' } )
 				break
 			case this.TYPE_SOUND:
-				fieldSet.add( { xtype: 'soundasset', edit: edit  } )
+				fieldSet.add( { xtype: 'soundasset' } )
 				break
-		}
-	},
-
-	add2dTileMapForm: function( fieldSet, asset ) {
-		fieldSet.add( { xtype: '2dtilemapconfig', edit: !!asset } )
-
-		if( !!asset ) {
-			var config = asset.get('config')
-
-			fieldSet.getForm().setValues(
-				{
-					tileMapAssetId: asset.get('assetId'),
-					width : parseInt( config['width'], 10 ),
-					height: parseInt( config['height'], 10 )
-				}
-			)
 		}
 	},
 
@@ -694,10 +676,7 @@ console.log( asset )
 				asset.setKeyFrames( form.down( 'keyframeanimationconfig').keyFrameConfig )
 				break
 			case this.TYPE_TILE_MAP:
-				asset.set( 'assetId', values.tileMapAssetId )
-				config['width']  = parseInt( values.width, 10 )
-				config['height'] = parseInt( values.height, 10 )
-				config.tileLayerData = this.getMergedTileMapDataDimensions( asset, config )
+				asset.calculateTileLayerData()
 				break
 		}
 	},
@@ -733,33 +712,17 @@ console.log( asset )
 		window.close()
 	},
 
-	getMergedTileMapDataDimensions: function( asset, config ) {
-		var data   = asset.get( 'config').tileLayerData || [],
-			height = config['height'],
-			width  = config['width']
-
-		for( var y = 0; y < height; y++ ) {
-			data[y] = data[ y ] || []
-			for( var x = 0; x < width; x++ ) {
-				data[y][x] = data[ y ] [ x ] || null
-			}
-		}
-
-		return data
-	},
-
 	sliceTileMapData: function( asset ) {
-		var config = asset.get( 'config'),
-			data   = config.tileLayerData,
-			height = config['height'],
-			width  = config['width'],
+		var data   = asset.get( 'tileLayerData' ),
+			height = asset.get( 'height' ),
+			width  = asset.get( 'width' ),
 			slice  = Ext.Array.slice
 
 		for( var y = 0; y < height; y++ ) {
 			data[y] = slice( data[y], 0, width )
 		}
 
-		config.tileLayerData = slice( data, 0, height )
+		asset.set( 'tileLayerData',  slice( data, 0, height ) )
 		asset.save()
 	},
 

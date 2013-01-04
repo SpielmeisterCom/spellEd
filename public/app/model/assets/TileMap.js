@@ -21,6 +21,24 @@ Ext.define('Spelled.model.assets.TileMap', {
 
 	fields: [
 		{ name: 'subtype', type: 'string', defaultValue: '2dTileMap' },
-		'file'
-	]
+		'assetId',
+		'width',
+		'height',
+		{ name: 'tileLayerData', type: 'array' }
+	],
+
+	calculateTileLayerData: function() {
+		var data   = Ext.isArray( this.get( 'tileLayerData' ) ) ? this.get( 'tileLayerData' ) : [],
+			height = this.get( 'height' ),
+			width  = this.get( 'width' )
+
+		for( var y = 0; y < height; y++ ) {
+			data[y] = data[ y ] || []
+			for( var x = 0; x < width; x++ ) {
+				data[y][x] = data[ y ] [ x ] || null
+			}
+		}
+
+		this.set( 'tileLayerData', data )
+	}
 })
