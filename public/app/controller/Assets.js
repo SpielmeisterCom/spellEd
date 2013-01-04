@@ -729,10 +729,7 @@ console.log( asset )
 
 		switch( asset.get( 'subtype' ) ) {
 			case this.TYPE_FONT:
-				var result = this.createFontMap( values )
-				asset.set( 'charset', result.charset )
-				asset.set( 'baseline', parseInt( result.baseline, 10 ) )
-				asset.set( 'file', asset.get( 'name' ) + ".png" )
+				asset.setFontMapInfo( this.createFontMap( values ) )
 				break
 			case this.TYPE_KEY_TO_ACTION:
 				asset.setKeyMappings( form.down( 'grid' ) )
