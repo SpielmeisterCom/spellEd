@@ -657,8 +657,6 @@ Ext.define('Spelled.controller.Assets', {
 
 	setAssetConfigFromForm: function( form, asset ) {
 		var values = form.getForm().getFieldValues()
-console.log( asset )
-
 		asset.set( values )
 
 		switch( asset.get( 'subtype' ) ) {
@@ -668,10 +666,6 @@ console.log( asset )
 			case this.TYPE_KEY_TO_ACTION:
 				asset.setKeyMappings( form.down( 'grid' ) )
 				break
-//			case 'domvas':
-//				var aceEditor = form.down( 'domvasassetconfig' ).aceEditor
-//				config.html = aceEditor.getSession().getValue()
-//				break
 			case this.TYPE_KEY_FRAME_ANIMATION:
 				asset.setKeyFrames( form.down( 'keyframeanimationconfig').keyFrameConfig )
 				break
