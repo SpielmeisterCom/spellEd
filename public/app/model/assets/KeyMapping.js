@@ -20,6 +20,20 @@ Ext.define('Spelled.model.assets.KeyMapping', {
 	},
 
 	fields: [
-		{ name: 'subtype', type: 'string', defaultValue: 'keyToActionMap' }
-	]
+		{ name: 'subtype', type: 'string', defaultValue: 'keyToActionMap' },
+		{ name: 'config', type: 'object' }
+	],
+
+	setKeyMappings: function( grid ) {
+		var store  = grid.getStore(),
+			config = {}
+
+		store.each(
+			function( item ) {
+				config[ item.get( 'key' ) ] = item.get( 'action' )
+			}
+		)
+
+		this.set( 'config', config )
+	}
 })

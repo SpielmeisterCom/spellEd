@@ -387,7 +387,7 @@ Ext.define('Spelled.controller.Assets', {
 				break
 			case this.TYPE_KEY_TO_ACTION:
 				this.addKeyToActionMapForm( fieldSet, asset )
-				break
+				return
 			case this.TYPE_KEY_FRAME_ANIMATION:
 				this.addKeyFrameAnimationForm( fieldSet, asset )
 				return
@@ -427,7 +427,7 @@ Ext.define('Spelled.controller.Assets', {
 		if( !!asset ) {
 			var grid   = keyToActionMapConfig.down('gridpanel'),
 				store  = grid.getStore(),
-				config = asset.get('config')
+				config = asset.get( 'config' )
 
 			store.removeAll()
 			Ext.Object.each(
@@ -656,7 +656,7 @@ Ext.define('Spelled.controller.Assets', {
 			case this.TYPE_FONT:
 				return this.getAssetFontsStore()
 			case this.TYPE_KEY_TO_ACTION:
-				return this.getAssetKeyMappingsStore()
+				return this.getAssetKeyToActionMappingsStore()
 			case this.TYPE_TILE_MAP:
 				return this.getAssetTileMapsStore()
 			case this.TYPE_KEY_FRAME_ANIMATION:
@@ -721,18 +721,10 @@ Ext.define('Spelled.controller.Assets', {
 		return fontGenerator.create( settings, debug )
 	},
 
-	getKeyMappings: function( window ) {
-		var grid  = window.down( 'grid' ),
-			store = grid.getStore(),
-			keyToActionMappings = {}
-
-		store.each(	function( item ) { keyToActionMappings[ item.get( 'key' ) ] = item.get( 'action' ) } )
-		return keyToActionMappings
-	},
-
 	setAssetConfigFromForm: function( form, asset ) {
 		var values = form.getForm().getFieldValues()
 console.log( asset )
+
 		asset.set( values )
 
 		switch( asset.get( 'subtype' ) ) {
@@ -743,12 +735,12 @@ console.log( asset )
 				asset.set( 'file', asset.get( 'name' ) + ".png" )
 				break
 			case this.TYPE_KEY_TO_ACTION:
-				config = this.getKeyMappings( form )
+				asset.setKeyMappings( form.down( 'grid' ) )
 				break
-			case 'domvas':
-				var aceEditor = form.down( 'domvasassetconfig' ).aceEditor
-				config.html = aceEditor.getSession().getValue()
-				break
+//			case 'domvas':
+//				var aceEditor = form.down( 'domvasassetconfig' ).aceEditor
+//				config.html = aceEditor.getSession().getValue()
+//				break
 			case this.TYPE_KEY_FRAME_ANIMATION:
 				asset.set( 'animate', this.getKeyFrameAnimationConfig( form.down( 'keyframeanimationconfig' ) ) )
 				break

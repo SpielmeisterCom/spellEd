@@ -7,7 +7,10 @@ Ext.define('Spelled.view.asset.create.KeyToActionMap', {
 
 		var store = Ext.create( 'Ext.data.Store',{
 				fields: [ 'key','action' ],
-				data: []
+				data: [],
+				listeners: {
+					datachanged: Ext.bind( me.onDataChange, me )
+				}
 			}
 		)
 
@@ -79,6 +82,13 @@ Ext.define('Spelled.view.asset.create.KeyToActionMap', {
 		)
 
 		me.callParent()
+	},
+
+	onDataChange: function() {
+		if( !this.items ) return
+		var grid = this.down( 'gridpanel' )
+
+		grid.fireEvent( 'edit', grid.editingPlugin )
 	},
 
 	handleEditClick: function(gridView, rowIndex, colIndex, column, e, record) {

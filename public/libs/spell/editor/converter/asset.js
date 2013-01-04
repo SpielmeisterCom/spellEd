@@ -13,14 +13,18 @@ define(
 				content         = _.pick( asset, fields ),
 				forbiddenFields = _.union( fields, [ 'myAssetId', 'internalAssetId', 'id', 'name', 'namespace', 'assetId', 'file' ] )
 
-			content.config = {}
+			if( _.has( asset, 'config') ) {
+				content.config = asset.config
+			} else {
+				content.config = {}
 
-			_.each(
-				_.keys( asset ),
-				function( key ) {
-					if( _.indexOf( forbiddenFields, key ) === -1 ) content.config[ key ] = asset[ key ]
-				}
-			)
+				_.each(
+					_.keys( asset ),
+					function( key ) {
+						if( _.indexOf( forbiddenFields, key ) === -1 ) content.config[ key ] = asset[ key ]
+					}
+				)
+			}
 
 			if( asset.file ) content.file = asset.file
 			if( asset.assetId ) content.assetId = asset.assetId
@@ -42,6 +46,8 @@ define(
 					result[ key ] = config[ key ]
 				}
 			)
+
+			result.config = config
 
 			if( asset.file ) result.file = asset.file
 			if( asset.assetId ) result.assetId = asset.assetId
