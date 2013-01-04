@@ -373,36 +373,34 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	fieldRenderHelper: function( type, fieldSet, asset ) {
-		var xtype = ''
+		var edit  = !!asset
 
 		switch( type ) {
 			case this.TYPE_ANIMATION:
-				xtype = 'animationassetconfig'
+				fieldSet.add( { xtype: 'animationassetconfig', edit: edit  } )
 				break
 			case this.TYPE_FONT:
 				this.addFontForm( fieldSet, asset )
-				return
+				break
 			case this.TYPE_SPRITE_SHEET:
-				xtype = 'spritesheetconfig'
+				fieldSet.add( { xtype: 'spritesheetconfig', edit: edit  } )
 				break
 			case this.TYPE_KEY_TO_ACTION:
 				this.addKeyToActionMapForm( fieldSet, asset )
-				return
+				break
 			case this.TYPE_KEY_FRAME_ANIMATION:
 				this.addKeyFrameAnimationForm( fieldSet, asset )
-				return
+				break
 			case this.TYPE_TILE_MAP:
 				this.add2dTileMapForm( fieldSet, asset )
 				break
 			case this.TYPE_APPEARANCE:
-				xtype = 'appearanceasset'
+				fieldSet.add( { xtype: 'appearanceasset', edit: edit  } )
 				break
 			case this.TYPE_SOUND:
-				xtype = 'soundasset'
+				fieldSet.add( { xtype: 'soundasset', edit: edit  } )
 				break
 		}
-
-		fieldSet.add( { xtype: xtype, edit: !!asset  } )
 	},
 
 	add2dTileMapForm: function( fieldSet, asset ) {
@@ -451,7 +449,6 @@ Ext.define('Spelled.controller.Assets', {
 		this.renderKeyFrameAnimationComponentsTree( keyFrameAnimationConfig )
 
 		if( !!asset ) {
-			keyFrameAnimationConfig.down( 'assetidproperty').setValue( asset.get( 'assetId' ) )
 			keyFrameAnimationConfig.asset = asset
 			keyFrameAnimationConfig.keyFrameConfig = asset.get( 'animate' ) || {}
 		} else {
@@ -475,52 +472,6 @@ Ext.define('Spelled.controller.Assets', {
 				}
 			}
 		)
-	},
-
-	getKeyFrameAnimationConfig: function( view ) {
-		var config    = view.keyFrameConfig,
-			newConfig = {}
-
-		Ext.Object.each(
-			config,
-			function( key, component ) {
-
-				var tmpConfig = {}
-				newConfig[ key ] = tmpConfig
-
-				Ext.Object.each(
-					component,
-					function( key, attribute ) {
-						if( attribute.tmpStore ) {
-							var keyFrames = []
-							tmpConfig[ key ] = {}
-							tmpConfig[ key ].keyFrames = keyFrames
-							attribute.tmpStore.each(
-								function( item ) {
-									var cloned        = Ext.clone( item.data ),
-										value         = item.get( 'value'),
-										interpolation = item.get('interpolation')
-
-									cloned.value = Ext.decode( item.get( 'value'), true ) || item.get( 'value')
-									if( !interpolation || Ext.Array.contains( [ "Linear" ], interpolation ) ) delete cloned.interpolation
-
-									keyFrames.push( cloned )
-								}
-							)
-						} else if( attribute.keyFrames ) {
-							tmpConfig[ key ] = {}
-							tmpConfig[ key ].keyFrames = attribute.keyFrames
-						}
-
-						if( Ext.isEmpty( tmpConfig[ key ].keyFrames ) ) delete tmpConfig[ key ]
-					}
-				)
-
-				if( Ext.isEmpty( Ext.Object.getKeys( newConfig[ key ] ) ) ) delete newConfig[ key ]
-			}
-		)
-
-		return newConfig
 	},
 
 	createKeyFrameComponentConfig: function( config, component ) {
@@ -609,6 +560,7 @@ Ext.define('Spelled.controller.Assets', {
 
 		this.fieldRenderHelper( asset.get('subtype'), view, asset )
 
+		//TODO: find out why setValues is needed for showing for example the font form
 		view.getForm().setValues( asset.data )
 		view.loadRecord( asset )
 
@@ -739,7 +691,7 @@ console.log( asset )
 //				config.html = aceEditor.getSession().getValue()
 //				break
 			case this.TYPE_KEY_FRAME_ANIMATION:
-				asset.set( 'animate', this.getKeyFrameAnimationConfig( form.down( 'keyframeanimationconfig' ) ) )
+				asset.setKeyFrames( form.down( 'keyframeanimationconfig').keyFrameConfig )
 				break
 			case this.TYPE_TILE_MAP:
 				asset.set( 'assetId', values.tileMapAssetId )

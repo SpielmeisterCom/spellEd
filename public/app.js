@@ -336,6 +336,42 @@ var startApplication = function() {
 				}
 			)
 
+			//TODO: Bug in ExtJS setValues, uses Ext.iterate which is BAD because it checkes length attribute as condition
+			Ext.override(
+				Ext.form.Basic,
+				{
+					setValues: function( values ) {
+						var me = this,
+							v, vLen, val, field;
+
+						function setVal(fieldId, val) {
+							var field = me.findField(fieldId);
+							if (field) {
+								field.setValue(val);
+								if (me.trackResetOnLoad) {
+									field.resetOriginalValue();
+								}
+							}
+						}
+
+						if (Ext.isArray(values)) {
+							// array of objects
+							vLen = values.length;
+
+							for (v = 0; v < vLen; v++) {
+								val = values[v];
+
+								setVal(val.id, val.value);
+							}
+						} else {
+							// object hash
+							Ext.Object.each(values, setVal);
+						}
+						return this
+					}
+				}
+			)
+
 			//load configuration from global CONFIGURATION variable that is defined in app-initialize
 			this.configuration = Ext.app.CONFIGURATION
 
