@@ -429,7 +429,7 @@ define(
 
 				var tmpCanvas  = createCanvas( settings.size * 3, settings.size * 3 ),
 					tmpContext = tmpCanvas.getContext( '2d' ),
-					charSet    = createCharSet( settings.firstChar, settings.lastChar )
+					charSet    = createCharSet( settings.firstChar || FIRST_CHAR, settings.lastChar || LAST_CHAR)
 
 				setFont( tmpContext, settings.font, settings.style, settings.size )
 
