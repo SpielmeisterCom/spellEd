@@ -352,22 +352,45 @@ Ext.define('Spelled.controller.Projects', {
 		app.setExtraParamOnProxies( 'projectName', projectName )
 	},
 
+	updateLoadingProgress: function( value ) {
+		Ext.MessageBox.updateProgress( value, Math.round( 100 * value ) + '% completed' )
+
+		if( value === 1 ) {
+			Ext.MessageBox.close()
+		}
+	},
+
     loadProject: function( projectName, callback ) {
 		var Project = this.getProjectModel(),
 			record  = this.getProjectsStore().findRecord( 'name', projectName )
 
 		if( !record ) return this.showStartScreen()
 
+		Ext.MessageBox.show({
+			title: 'Please wait',
+			msg: 'Loading project items...',
+			progressText: 'Initializing...',
+			width: 300,
+			progress: true,
+			closable: false
+		})
+
 		this.prepareStores( projectName )
 		this.closeAllTabsFromProject()
 
+		this.updateLoadingProgress( 0.1 )
+
 		Ext.getStore( 'config.Scenes' ).load({
 			callback: function() {
+				this.updateLoadingProgress( 0.2 )
+
 				Project.load(
 					record.getId(),
 					{
 						scope: this,
 						success: function( project ) {
+							this.updateLoadingProgress( 0.3 )
+
 							this.onProjectLoaded( project )
 
 							if( !!callback )
@@ -382,6 +405,7 @@ Ext.define('Spelled.controller.Projects', {
 
 	onProjectLoaded: function( project ) {
 		var app = this.application
+		this.updateLoadingProgress( 0.4 )
 
 		Ext.state.Manager.set( 'projectName', project.get('name') )
 		app.setActiveProject( project )
@@ -391,7 +415,10 @@ Ext.define('Spelled.controller.Projects', {
 		//TODO: find a solution for synchonous loading stores with proxies etc.
 		app.getController( 'Assets' ).refreshStoresAndTreeStores(
 			Ext.bind( function() {
+					this.updateLoadingProgress( 0.5 )
+
 					var callback = Ext.bind( function() {
+							this.updateLoadingProgress( 0.6 )
 							this.projectLoadedCallback( project )
 						},
 						this
@@ -405,6 +432,8 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
 	projectLoadedCallback: function( project ) {
+		this.updateLoadingProgress( 0.7 )
+
 		project.checkForComponentChanges()
 		this.getScenesList( project )
 		this.getNavigator().setActiveTab( this.getScenes() )
@@ -429,6 +458,8 @@ Ext.define('Spelled.controller.Projects', {
 		this.application.getController( 'Scenes' ).renderScene( startScene )
 		this.application.fireEvent( 'buildnamespacenodes' )
 		project.unDirty()
+
+		this.updateLoadingProgress( 1 )
 	},
 
 	closeAllTabsFromProject: function() {
