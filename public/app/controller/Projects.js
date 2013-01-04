@@ -332,9 +332,23 @@ Ext.define('Spelled.controller.Projects', {
         }
     },
 
+	clearStores: function( stores ) {
+		if( !stores ) return
+
+		var store = stores.pop()
+
+		if( store ) {
+			Ext.getStore( store ).removeAll( true )
+			this.clearStores( stores )
+		}
+	},
+
 	prepareStores: function( projectName ) {
 		var app = this.application
+
+		this.clearStores( Ext.clone( app.storeIds ) )
 		app.fireEvent( 'clearstores' )
+
 		app.setExtraParamOnProxies( 'projectName', projectName )
 	},
 
