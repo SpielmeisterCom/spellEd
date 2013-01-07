@@ -394,6 +394,8 @@ Ext.define('Spelled.controller.Projects', {
 				success: function( project ) {
 					this.iterateLoadingProgress()
 
+					//Needed because scenes got fetched
+					this.application.setActiveProject( project )
 					Ext.state.Manager.set( 'projectName', project.get('name') )
 
 					this.projectLoadedCallback( project )
