@@ -262,24 +262,17 @@ Ext.define('Spelled.controller.Projects', {
 		store.add( record )
 
 		Spelled.SpellBuildActions.initDirectory( record.get('name'), record.getId(), function( provider, response ) {
-			me.initProject( record.get('name') )
+			me.loadProject( record.get('name'), true )
 			window.close()
 		})
     },
 
-	initProject: function( projectName ) {
-		var callback = Ext.bind(
-			function( project ) {
-				var sceneController = this.application.getController( 'Scenes' ),
-					scene = sceneController.createScene( { name: 'Scene1', namespace: 'root' } )
+	initProject: function( project ) {
+		var sceneController = this.application.getController( 'Scenes' ),
+			scene           = sceneController.createScene( { name: 'Scene1', namespace: 'root' } )
 
-				project.set('startScene', scene.getFullName() )
-				project.save()
-			},
-			this
-		)
-
-		this.loadProject( projectName, callback )
+		project.set('startScene', scene.getFullName() )
+		project.save()
 	},
 
     showLoadProject: function( ) {
@@ -353,7 +346,7 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
 	PROGRESS_STEP: function() {
-		return 1 / ( this.storesForSave.length + 6 )
+		return 1 / ( this.storesForSave.length - 1 + 4 )
 	},
 
 	iterateLoadingProgress: function( text ) {
@@ -367,9 +360,8 @@ Ext.define('Spelled.controller.Projects', {
 		}
 	},
 
-    loadProject: function( projectName, callback ) {
-		var Project = this.getProjectModel(),
-			record  = this.getProjectsStore().findRecord( 'name', projectName )
+    loadProject: function( projectName, initialize ) {
+		var record  = this.getProjectsStore().findRecord( 'name', projectName )
 
 		if( !record ) return this.showStartScreen()
 
@@ -384,53 +376,43 @@ Ext.define('Spelled.controller.Projects', {
 		this.prepareStores( projectName )
 		this.closeAllTabsFromProject()
 
-		this.iterateLoadingProgress()
-
-		Ext.getStore( 'config.Scenes' ).load({
-			callback: function() {
-				this.iterateLoadingProgress()
-
-				Project.load(
-					record.getId(),
-					{
-						scope: this,
-						success: function( project ) {
-							this.iterateLoadingProgress()
-
-							this.onProjectLoaded( project )
-
-							if( !!callback )
-								Ext.callback( callback( project ) )
-						}
-					}
-				)
-			},
-			scope: this
-		})
+		this.loadStores( projectName, initialize )
 	},
 
-	onProjectLoaded: function( project ) {
-		var app = this.application
+	storesReadyCallback: function( projectName, initialize ) {
+		var Project = this.getProjectModel(),
+			record  = this.getProjectsStore().findRecord( 'name', projectName )
 
-		this.iterateLoadingProgress()
+		this.application.setActiveProject( record )
 
-		Ext.state.Manager.set( 'projectName', project.get('name') )
-		app.setActiveProject( project )
+		if( initialize ) this.initProject( record )
 
-		this.loadStores( project )
+		Project.load(
+			record.getId(),
+			{
+				scope: this,
+				success: function( project ) {
+					this.iterateLoadingProgress()
+
+					Ext.state.Manager.set( 'projectName', project.get('name') )
+
+					this.projectLoadedCallback( project )
+				}
+			}
+		)
 	},
 
-	loadStores: function( project ) {
+	loadStores: function( project, initialize ) {
 		var me        = this,
 			stores    = Ext.clone( this.storesForSave ),
 			getStore  = Ext.getStore,
 			loadStore = function() {
 				var store = stores.shift()
 
-				me.iterateLoadingProgress( "Loading project '" + store + "' ... " )
 				if( !store ) {
-					me.projectLoadedCallback( project )
+					me.storesReadyCallback( project, initialize )
 				} else {
+					me.iterateLoadingProgress( "Loading '" + store + "' ... " )
 					getStore( store ).load( { callback: loadStore } )
 				}
 			}
