@@ -26,18 +26,18 @@ Ext.define('Spelled.controller.Projects', {
     ],
 
 	storesForSave: [
-		'template.Components',
-		'template.Entities',
-		'template.Systems',
 		'script.Scripts',
 		'asset.Appearances',
+		'asset.Animations',
 		'asset.Sounds',
 		'asset.Fonts',
 		'asset.SpriteSheets',
-		'asset.Animations',
 		'asset.KeyFrameAnimations',
 		'asset.KeyToActionMappings',
 		'asset.TileMaps',
+		'template.Components',
+		'template.Entities',
+		'template.Systems',
 		'config.Scenes'
 	],
 
@@ -352,10 +352,17 @@ Ext.define('Spelled.controller.Projects', {
 		app.setExtraParamOnProxies( 'projectName', projectName )
 	},
 
-	updateLoadingProgress: function( value ) {
-		Ext.MessageBox.updateProgress( value, Math.round( 100 * value ) + '% completed' )
+	PROGRESS_STEP: function() {
+		return 1 / ( this.storesForSave.length + 6 )
+	},
 
-		if( value === 1 ) {
+	iterateLoadingProgress: function( text ) {
+		var lastProgress = Ext.MessageBox.progressBar.value || 0,
+			nextProgress = lastProgress + this.PROGRESS_STEP()
+
+		Ext.MessageBox.updateProgress( nextProgress, Math.round( 100 * nextProgress ) + '% completed', text || null )
+
+		if( nextProgress > 0.9999 ) {
 			Ext.MessageBox.close()
 		}
 	},
@@ -371,25 +378,24 @@ Ext.define('Spelled.controller.Projects', {
 			msg: 'Loading project items...',
 			progressText: 'Initializing...',
 			width: 300,
-			progress: true,
-			closable: false
+			progress: true
 		})
 
 		this.prepareStores( projectName )
 		this.closeAllTabsFromProject()
 
-		this.updateLoadingProgress( 0.1 )
+		this.iterateLoadingProgress()
 
 		Ext.getStore( 'config.Scenes' ).load({
 			callback: function() {
-				this.updateLoadingProgress( 0.2 )
+				this.iterateLoadingProgress()
 
 				Project.load(
 					record.getId(),
 					{
 						scope: this,
 						success: function( project ) {
-							this.updateLoadingProgress( 0.3 )
+							this.iterateLoadingProgress()
 
 							this.onProjectLoaded( project )
 
@@ -405,34 +411,35 @@ Ext.define('Spelled.controller.Projects', {
 
 	onProjectLoaded: function( project ) {
 		var app = this.application
-		this.updateLoadingProgress( 0.4 )
+
+		this.iterateLoadingProgress()
 
 		Ext.state.Manager.set( 'projectName', project.get('name') )
 		app.setActiveProject( project )
 
-		app.getController( 'Scripts' ).refreshStores()
-		//Need to do a synchronous load
-		//TODO: find a solution for synchonous loading stores with proxies etc.
-		app.getController( 'Assets' ).refreshStoresAndTreeStores(
-			Ext.bind( function() {
-					this.updateLoadingProgress( 0.5 )
+		this.loadStores( project )
+	},
 
-					var callback = Ext.bind( function() {
-							this.updateLoadingProgress( 0.6 )
-							this.projectLoadedCallback( project )
-						},
-						this
-					)
+	loadStores: function( project ) {
+		var me        = this,
+			stores    = Ext.clone( this.storesForSave ),
+			getStore  = Ext.getStore,
+			loadStore = function() {
+				var store = stores.shift()
 
-					app.getController( 'Templates' ).loadTemplateStores( callback )
-				},
-				this
-			)
-		)
+				me.iterateLoadingProgress( "Loading project '" + store + "' ... " )
+				if( !store ) {
+					me.projectLoadedCallback( project )
+				} else {
+					getStore( store ).load( { callback: loadStore } )
+				}
+			}
+
+		loadStore()
 	},
 
 	projectLoadedCallback: function( project ) {
-		this.updateLoadingProgress( 0.7 )
+		this.iterateLoadingProgress()
 
 		project.checkForComponentChanges()
 		this.getScenesList( project )
@@ -459,7 +466,7 @@ Ext.define('Spelled.controller.Projects', {
 		this.application.fireEvent( 'buildnamespacenodes' )
 		project.unDirty()
 
-		this.updateLoadingProgress( 1 )
+		this.iterateLoadingProgress()
 	},
 
 	closeAllTabsFromProject: function() {

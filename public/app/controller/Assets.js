@@ -921,15 +921,5 @@ Ext.define('Spelled.controller.Assets', {
 			'runtimeModule.start',
 			this.application.getController( 'templates.Entities' ).createEntityPreviewItem( entity )
 		)
-	},
-
-	refreshStoresAndTreeStores: function( callback ) {
-		callback()
-		Ext.Array.each(
-			this.stores,
-			function( item ) {
-				Ext.getStore( item ).load()
-			}
-		)
 	}
 });
