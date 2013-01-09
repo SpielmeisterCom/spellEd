@@ -14,7 +14,8 @@ Ext.define('Spelled.abstract.model.Model', {
 			node.createNode( {
 				text   : this.get( 'name' ),
 				cls    : this.get( 'subtype' ) || this.get( 'type' ),
-				qtitle   : this.sortOrder,
+				sortOrder : this.sortOrder,
+				libraryId : this.getFullName(),
 				iconCls: this.iconCls,
 				leaf   : true,
 				id     : this.getId()

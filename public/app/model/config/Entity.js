@@ -57,6 +57,29 @@ Ext.define('Spelled.model.config.Entity', {
 		}
 	],
 
+	getLibraryIds: function(){
+		var ids   = [],
+			merge = Ext.Array.merge
+
+		if( !this.isAnonymous() ) ids.push( this.get( 'templateId' ) )
+
+		this.mergeWithTemplateConfig()
+
+		this.getComponents().each(
+			function( component ) {
+				ids = merge( ids, component.getLibraryIds() )
+			}
+		)
+
+		this.getChildren().each(
+			function( entity ) {
+				ids = merge( ids, entity.getLibraryIds() )
+			}
+		)
+
+		return ids
+	},
+
 	getMessageData: function() {
 		var data = Ext.amdModules.entityConverter.toEngineFormat( this.getData(true), { includeEntityIds: true } )
 

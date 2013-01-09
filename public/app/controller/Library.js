@@ -10,7 +10,10 @@ Ext.define('Spelled.controller.Library', {
 		'Spelled.view.library.menu.Context',
 
 		'Spelled.store.Library',
-		'Spelled.store.FoldersTree'
+		'Spelled.store.FoldersTree',
+		'Spelled.store.StaticLibraryDependencies',
+
+		'Spelled.model.LibraryNode'
 	],
 
 	TYPE_ASSET        : 1,
@@ -29,8 +32,13 @@ Ext.define('Spelled.controller.Library', {
 
     stores: [
 		'Library',
-		'FoldersTree'
+		'FoldersTree',
+		'StaticLibraryDependencies'
     ],
+
+	models: [
+		'LibraryNode'
+	],
 
     refs: [
         {
@@ -279,6 +287,8 @@ Ext.define('Spelled.controller.Library', {
 			case this.TYPE_SCENE_SCRIPT:
 				this.application.fireEvent( 'scenescriptbeforeclose', panel )
 				break
+			default:
+				panel.close()
 		}
 
 		return false

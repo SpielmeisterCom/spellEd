@@ -17,7 +17,7 @@ Ext.define('Spelled.abstract.store.TreeStore', {
 				node.createNode( {
 					text : part,
 					cls  : 'folder',
-					qtitle : 1,
+					sortOrder : 1,
 					id   : localNodeId
 				} )
 			)

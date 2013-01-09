@@ -67,51 +67,74 @@ Ext.define('Spelled.model.config.Scene', {
 		this.callParent( arguments )
 	},
 
-	mergeStoreIds: function( result, store ) {
-		var	contains = Ext.Array.contains
+	getAssignedSystemDependencies: function() {
+		var systems = this.get( 'systems'),
+			ids     = [],
+			store   = Ext.getStore( 'template.Systems' )
 
-		store.each(
-			function( asset ) {
-				var name = asset.getFullName()
-				if( !contains( result, name ) ) result.push( asset.getFullName() )
-			},
-			this
+		Ext.getStore( 'StaticLibraryDependencies' ).each( function( item ){ ids.push( item.get( 'id' ) ) } )
+
+		Ext.Object.each(
+			systems,
+			function( key, value ) {
+				Ext.Array.each(
+					value,
+					function( item ) {
+						var system = store.findRecord( 'templateId', item.id )
+
+						if( system ){
+							ids.push( system.getFullName() )
+							system.getInput().each(
+								function( input ) {
+									ids.push( input.get( 'componentId' ) )
+								}
+							)
+						}
+					}
+				)
+			}
 		)
+
+		return ids
+	},
+
+	getStaticLibraryIds: function() {
+		var	result   = [],
+			merge    = Ext.Array.merge,
+			systems  = this.get( 'systems' )
+
+		result = merge( result, this.getAssignedSystemDependencies() )
+
+		this.getEntities().each(
+			function( entity ) {
+				result = merge( result, entity.getLibraryIds() )
+			}
+		)
+
+		return result
+	},
+
+	calculateDynamicIds: function( allLibraryItems, staticLibraryItems ) {
+		return Ext.Array.difference( allLibraryItems, staticLibraryItems )
+	},
+
+	getDynamicLibraryIds: function() {
+		var libraryIds = this.get( 'libraryIds' ),
+			staticIds  = this.getStaticLibraryIds()
+
+		return this.calculateDynamicIds( libraryIds, staticIds )
 	},
 
 	syncLibraryIds: function() {
-		var result = []
+		var libraryIds = Ext.isArray( this.get( 'libraryIds' ) ) ? this.get( 'libraryIds' ) : [],
+			staticIds  = this.getStaticLibraryIds(),
+			newIds     = Ext.Array.merge( libraryIds, staticIds )
 
-		if( Ext.isArray( this.get( 'libraryIds' ) ) ) {
-			result = this.get( 'libraryIds' )
-		} else {
-			this.set( 'libraryIds', result )
+		if( Ext.Array.difference( newIds, libraryIds ).length > 0 ) {
+
+			this.set( 'libraryIds', newIds )
+			this.setDirty()
 		}
-
-		var stores = [
-				'template.Components',
-				'template.Entities',
-				'template.Systems',
-				'asset.Appearances',
-				'asset.Sounds',
-				'asset.Fonts',
-				'asset.SpriteSheets',
-				'asset.Animations',
-				'asset.KeyFrameAnimations',
-				'asset.KeyToActionMappings',
-				'asset.TileMaps'
-			],
-			getStore = Ext.getStore,
-			merge    = this.mergeStoreIds
-
-		Ext.Array.each(
-			stores,
-			function( item ) {
-				var store = getStore( item )
-				store.clearFilter( true )
-				merge( result, store )
-			}
-		)
 	},
 
 	checkForComponentChanges: function() {

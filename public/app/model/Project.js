@@ -46,5 +46,9 @@ Ext.define('Spelled.model.Project', {
 				scene.checkForComponentChanges()
 			}
 		)
+	},
+
+	getStartScene: function() {
+		return Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', this.get( 'startScene' ) )
 	}
 });

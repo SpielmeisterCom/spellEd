@@ -430,8 +430,7 @@ Ext.define('Spelled.controller.Projects', {
 		this.getNavigator().setActiveTab( this.getScenes() )
 
 		var tree         = this.getScenesTree(),
-			startSceneId = project.get( 'startScene' ),
-			startScene   = project.getScenes().findRecord( 'sceneId', startSceneId ),
+			startScene   = project.getStartScene(),
 			rootNode     = tree.getRootNode(),
 			node         = rootNode.findChild( 'id', startScene.getId(), true )
 
@@ -445,10 +444,10 @@ Ext.define('Spelled.controller.Projects', {
 
 		this.getNavigator().defaultTitle = project.get( 'name' )
 		this.getScenes().changeTitle()
+		project.unDirty()
 
 		this.application.getController( 'Scenes' ).renderScene( startScene )
 		this.application.fireEvent( 'buildnamespacenodes' )
-		project.unDirty()
 
 		this.iterateLoadingProgress()
 	},

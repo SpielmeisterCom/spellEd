@@ -98,7 +98,7 @@ Ext.define('Spelled.model.template.Entity', {
 
 			var markAsComposites = function( compositeNode ) {
 				compositeNode.set( 'cls', 'templateEntityComposite' )
-				compositeNode.set( 'qtitle', me.sortOrder )
+				compositeNode.set( 'sortOrder', me.sortOrder )
 
 				compositeNode.eachChild( function( item ) {
 					markAsComposites( item )

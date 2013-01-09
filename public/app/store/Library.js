@@ -1,10 +1,14 @@
 Ext.define('Spelled.store.Library', {
     extend: 'Spelled.abstract.store.TreeStore',
 
+	model: 'Spelled.model.LibraryNode',
+
     root: {
         expanded: true,
 		cls: 'folder'
     },
+
+	proxy: 'memory',
 
 	sortHelper : function( node1, node2, field ) {
 		var node1SortOrder = node1.get( field ),
@@ -20,7 +24,7 @@ Ext.define('Spelled.store.Library', {
 
 			node.sort(
 				function( node1, node2 ) {
-					var result = me.sortHelper( node1, node2, 'qtitle' )
+					var result = me.sortHelper( node1, node2, 'sortOrder' )
 
 					if( result === 0 ) {
 						return me.sortHelper( node1, node2, 'text' )
@@ -29,6 +33,20 @@ Ext.define('Spelled.store.Library', {
 				false,
 				true
 			)
+	},
+
+	getAllLibraryIds: function() {
+		var ids = []
+
+		var getLeafs = function( node ) {
+			if( node.isLeaf() ) ids.push( node.get( 'libraryId' ) )
+			node.eachChild( getLeafs )
+
+			return ids
+		}
+
+
+		return getLeafs( this.getRootNode() )
 	},
 
 	listeners: {

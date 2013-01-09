@@ -5,6 +5,8 @@ Ext.define('Spelled.controller.Scenes', {
 		'Spelled.Logger',
 		'Spelled.MessageBus',
 		'Spelled.view.scene.ProgressBar',
+		'Spelled.view.scene.Properties',
+		'Spelled.view.scene.AddLibraryId',
 		'Spelled.store.system.Defaults',
 		'Spelled.store.system.EditMode',
 
@@ -22,6 +24,26 @@ Ext.define('Spelled.controller.Scenes', {
 		'system.Defaults',
 		'system.EditMode'
 	],
+
+	views: [
+		'scene.TreeList',
+		'scene.Navigator',
+		'scene.Create',
+		'scene.Editor',
+		'scene.Script',
+		'scene.Properties',
+		'scene.AddLibraryId',
+		'ui.SpelledRendered',
+		'scene.ProgressBar'
+	],
+
+	TREE_ITEM_TYPE_SCENE         : 1,
+	TREE_ITEM_TYPE_ENTITY        : 2,
+	TREE_ITEM_TYPE_SYSTEM        : 3,
+	TREE_ITEM_TYPE_SCRIPT        : 4,
+	TREE_ITEM_TYPE_ENTITIES      : 5,
+	TREE_ITEM_TYPE_SYSTEM_ITEM   : 6,
+	TREE_ITEM_TYPE_SYSTEM_FOLDER : 7,
 
 	refs: [
 		{
@@ -59,26 +81,12 @@ Ext.define('Spelled.controller.Scenes', {
 		{
 			ref: 'RenderedScene',
 			selector: 'renderedscene'
+		},
+		{
+			ref: 'SceneProperties',
+			selector: 'sceneproperties'
 		}
 	],
-
-	views: [
-		'scene.TreeList',
-		'scene.Navigator',
-		'scene.Create',
-		'scene.Editor',
-		'scene.Script',
-		'ui.SpelledRendered',
-		'scene.ProgressBar'
-	],
-
-	TREE_ITEM_TYPE_SCENE         : 1,
-	TREE_ITEM_TYPE_ENTITY        : 2,
-	TREE_ITEM_TYPE_SYSTEM        : 3,
-	TREE_ITEM_TYPE_SCRIPT        : 4,
-	TREE_ITEM_TYPE_ENTITIES      : 5,
-	TREE_ITEM_TYPE_SYSTEM_ITEM   : 6,
-	TREE_ITEM_TYPE_SYSTEM_FOLDER : 7,
 
 	init: function() {
 		var me               = this,
@@ -202,7 +210,14 @@ Ext.define('Spelled.controller.Scenes', {
 			'renderedscene > toolbar button[action="fullscreen"]': {
 				click: me.activateFullscreen
 			},
-
+			'sceneproperties': {
+				showAddToLibrary: me.showAddToLibrary,
+				activate: me.updateLibraryIdPropertyStores,
+				removeSceneLibraryItem: me.removeSceneLibraryItem
+			},
+			'sceneaddlibraryid': {
+				addToLibrary: me.addToLibrary
+			},
 			'scenetreelist > treeview': {
 				drop : me.dispatchTreeNodeDrop,
 				beforedrop: me.dispatchTreeNodeBeforeDrop
@@ -220,6 +235,9 @@ Ext.define('Spelled.controller.Scenes', {
 			},
 			'scenetreelist [action="showCreateScene"]': {
 				click: me.showCreateScene
+			},
+			'sceneslistcontextmenu [action="showSceneProperties"]': {
+				click: me.showSceneProperties
 			},
 			'createscene button[action="createScene"]' : {
 				click: me.createSceneAction
@@ -246,6 +264,49 @@ Ext.define('Spelled.controller.Scenes', {
 			sendToEngine: this.sendChangeToEngine,
 			scope: this
 		})
+	},
+
+	showAddToLibrary: function( gridView ) {
+		var scene = this.application.getLastSelectedScene()
+
+		Ext.widget( 'sceneaddlibraryid', { excludingIds: scene.get( 'libraryIds' ) } )
+	},
+
+	removeSceneLibraryItem: function( gridView, value ) {
+		var scene = this.application.getLastSelectedScene()
+
+		Ext.Array.remove( scene.get( 'libraryIds' ), value )
+		scene.setDirty()
+
+		this.updateLibraryIdPropertyStores( gridView )
+	},
+
+	addToLibrary: function( window, value ) {
+		var scene = this.application.getLastSelectedScene()
+
+		scene.get( 'libraryIds' ).push( value )
+		scene.setDirty()
+
+		this.updateScenePropertyPanel()
+
+		window.close()
+	},
+
+	updateLibraryIdPropertyStores: function( scenePropertyPanel ) {
+		var scene = this.application.getLastSelectedScene()
+
+		scenePropertyPanel.reconfigureStores( scene )
+		scene.syncLibraryIds()
+	},
+
+	showSceneProperties: function() {
+		var view        = this.getScenePropertiesView().create(),
+			sceneEditor = this.getSceneEditor(),
+			tab         = this.application.findActiveTabByTitle( sceneEditor, view.title )
+
+		if( !tab ) {
+			this.application.createTab( sceneEditor, view )
+		}
 	},
 
 	selectEntityTreeItem: function( entityId ) {
@@ -279,8 +340,7 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	sendSystemChangeToEngine: function( model ) {
-		var startScene   = this.application.getActiveProject().get( 'startScene' ),
-			scene        = this.getConfigScenesStore().findRecord( 'sceneId', startScene ),
+		var scene        = this.application.getActiveProject().getStartScene(),
 			systemConfig = false,
 			executionGroupId = false
 
@@ -563,11 +623,18 @@ Ext.define('Spelled.controller.Scenes', {
 		this.application.showActionColumnIcons( icons )
 	},
 
+	updateScenePropertyPanel: function() {
+		var panel = this.getSceneProperties()
+
+		if( panel && panel.isVisible() ) this.updateLibraryIdPropertyStores( this.getSceneProperties() )
+	},
+
 	dispatchTreeClick: function( treePanel, record ) {
 		this.getRightPanel().removeAll()
 
 		switch( this.getTreeItemType( record ) ) {
 			case this.TREE_ITEM_TYPE_SCENE:
+				this.updateScenePropertyPanel()
 				this.getRightPanel().add( { xtype: 'label' , docString : '#!/guide/concepts_scenes'} )
 				break
 			case this.TREE_ITEM_TYPE_ENTITIES:
@@ -713,7 +780,7 @@ Ext.define('Spelled.controller.Scenes', {
 		var panel   = button.up( 'panel' ),
 			project = this.application.getActiveProject(),
 			iframe  = panel.down( 'spellediframe' ),
-			scene   = this.getConfigScenesStore().findRecord( 'sceneId', project.get( 'startScene' ) )
+			scene   = project.getStartScene()
 
 		iframe.destroy()
 

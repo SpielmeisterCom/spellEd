@@ -292,6 +292,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.component.Body": [
     "layout.body"
   ],
+  "Spelled.model.LibraryNode": [],
   "Spelled.EntityHelper": [],
   "Ext.layout.component.field.ComboBox": [
     "layout.combobox"
@@ -786,6 +787,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.grid.column.Action": [
     "widget.actioncolumn"
   ],
+  "Spelled.store.StaticLibraryDependencies": [],
   "Spelled.view.menu.contextmenu.ScriptsList": [
     "widget.scriptslistcontextmenu"
   ],
@@ -941,6 +943,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.data.reader.Scene": [
     "reader.scene"
+  ],
+  "Spelled.view.scene.AddLibraryId": [
+    "widget.sceneaddlibraryid"
   ],
   "Ext.layout.container.Table": [
     "layout.table"
@@ -1188,6 +1193,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.AbstractManager": [],
   "Spelled.abstract.model.Entity": [],
+  "Spelled.view.scene.Properties": [
+    "widget.sceneproperties"
+  ],
   "Ext.chart.series.Radar": [
     "series.radar"
   ],
@@ -1483,6 +1491,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.menu.contextmenu.KeyToActionMapping": [],
   "Ext.layout.Context": [],
   "Ext.layout.component.Body": [],
+  "Spelled.model.LibraryNode": [],
   "Spelled.EntityHelper": [],
   "Ext.layout.component.field.ComboBox": [],
   "Ext.dd.DDTarget": [],
@@ -1849,6 +1858,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.grid.column.Action": [
     "Ext.grid.ActionColumn"
   ],
+  "Spelled.store.StaticLibraryDependencies": [],
   "Spelled.view.menu.contextmenu.ScriptsList": [],
   "Ext.layout.component.field.Trigger": [],
   "Spelled.controller.Scenes": [],
@@ -1950,6 +1960,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.chart.axis.Radial": [],
   "Spelled.view.template.entity.Edit": [],
   "Spelled.data.reader.Scene": [],
+  "Spelled.view.scene.AddLibraryId": [],
   "Ext.layout.container.Table": [
     "Ext.layout.TableLayout"
   ],
@@ -2111,6 +2122,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.menu.contextmenu.ComponentTemplateAttributesList": [],
   "Ext.AbstractManager": [],
   "Spelled.abstract.model.Entity": [],
+  "Spelled.view.scene.Properties": [],
   "Ext.chart.series.Radar": [],
   "Spelled.view.system.ContextMenu": [],
   "Spelled.view.entity.Create": [],
