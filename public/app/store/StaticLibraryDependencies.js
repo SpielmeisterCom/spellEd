@@ -1,7 +1,7 @@
 Ext.define('Spelled.store.StaticLibraryDependencies', {
     extend: 'Ext.data.Store',
 
-    fields: [ 'id' ],
+    fields: [ 'id', { type: 'boolean', name: 'debugOnly', defaultValue: false } ],
 
     data : [
 		{
@@ -12,6 +12,18 @@ Ext.define('Spelled.store.StaticLibraryDependencies', {
 		},
 		{
 			"id": "spell.component.eventHandlers"
+		},
+		{
+			"id": "spell.system.debug.camera",
+			debugOnly: true
+		},
+		{
+			"id": "spell.component.editorConfiguration",
+			debugOnly: true
+		},
+		{
+			"id": "spell.OpenSans14px",
+			debugOnly: true
 		}
     ]
 });

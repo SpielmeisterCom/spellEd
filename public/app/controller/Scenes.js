@@ -795,10 +795,24 @@ Ext.define('Spelled.controller.Scenes', {
 
 		if( !panel.down( 'spellprogressbar' ) ) panel.add( { xtype: 'spellprogressbar'} )
 
+		var cacheContent = this.generateSceneCacheContent( scene ),
+			dependencies = Ext.getStore( 'StaticLibraryDependencies' )
+
+		Ext.Object.each(
+			cacheContent,
+			function( key, value ) {
+				dependencies.each(
+					function( item ) {
+						if( item.get( 'debugOnly' ) === true ) value.libraryIds.push( item.get( 'id' ) )
+					}
+				)
+			}
+		)
+
 		this.sendChangeToEngine(
 			'runtimeModule.start', {
 				runtimeModule: Ext.amdModules.createProjectInEngineFormat( project ),
-				cacheContent: this.generateSceneCacheContent( scene )
+				cacheContent: cacheContent
 			}
 		)
 
