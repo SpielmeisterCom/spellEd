@@ -1,9 +1,7 @@
 Ext.define('Spelled.view.scene.Properties', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     alias : 'widget.sceneproperties',
-	closable: true,
 
-	title: "Scene properties",
 	layout: {
 		type: 'vbox',
 		align: 'center'
@@ -11,6 +9,7 @@ Ext.define('Spelled.view.scene.Properties', {
 
 	defaults: {
 		flex: 1,
+		padding: 5,
 		width: '100%'
 	},
 
@@ -20,34 +19,51 @@ Ext.define('Spelled.view.scene.Properties', {
 		Ext.applyIf( me, {
 			items: [
 				{
-					name: 'static',
-					title: "Static library items",
-					xtype: 'grid',
-					columns: [
+					xtype: 'panel',
+
+					title: 'Scene dependencies',
+
+					layout: {
+						type: 'vbox',
+						align: 'center'
+					},
+
+					defaults: {
+						flex: 1,
+						width: '100%'
+					},
+					items: [
 						{
-							text: 'Library Id', dataIndex: 'id', flex: 1, hideable: false
-						}
-					]
-				},
-				{
-					name: 'dynamic',
-					title: "Dynamic library items",
-					xtype: 'grid',
-					columns: [
-						{
-							text: 'Library Id', dataIndex: 'id', flex: 1, hideable: false
+							name: 'static',
+//							title: "Static library items",
+							xtype: 'grid',
+							columns: [
+								{
+									text: 'Static library items', dataIndex: 'id', flex: 1, hideable: false
+								}
+							]
 						},
 						{
-							xtype: 'actioncolumn',
-							width: 30,
-							icon: 'images/icons/delete.png',
-							handler: Ext.bind( me.handleRemoveClick, me )
-						}
-					],
-					tbar: [
-						{
-							xtype: 'button', text: 'Add a dynamic library item', icon: 'images/icons/add.png',
-							handler: Ext.bind( me.handleAddClick, me )
+							name: 'dynamic',
+//							title: "Dynamic library items",
+							xtype: 'grid',
+							columns: [
+								{
+									text: 'Dynamic library items', dataIndex: 'id', flex: 1, hideable: false
+								},
+								{
+									xtype: 'actioncolumn',
+									width: 30,
+									icon: 'images/icons/delete.png',
+									handler: Ext.bind( me.handleRemoveClick, me )
+								}
+							],
+							tbar: [
+								{
+									xtype: 'button', text: 'Add a dynamic library item', icon: 'images/icons/add.png',
+									handler: Ext.bind( me.handleAddClick, me )
+								}
+							]
 						}
 					]
 				}

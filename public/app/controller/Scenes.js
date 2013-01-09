@@ -212,7 +212,6 @@ Ext.define('Spelled.controller.Scenes', {
 			},
 			'sceneproperties': {
 				showAddToLibrary: me.showAddToLibrary,
-				activate: me.updateLibraryIdPropertyStores,
 				removeSceneLibraryItem: me.removeSceneLibraryItem
 			},
 			'sceneaddlibraryid': {
@@ -300,13 +299,10 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	showSceneProperties: function() {
-		var view        = this.getScenePropertiesView().create(),
-			sceneEditor = this.getSceneEditor(),
-			tab         = this.application.findActiveTabByTitle( sceneEditor, view.title )
+		var view = this.getScenePropertiesView().create()
 
-		if( !tab ) {
-			this.application.createTab( sceneEditor, view )
-		}
+		this.getRightPanel().add( [ { xtype: 'label' , docString : '#!/guide/concepts_scenes'}, view ] )
+		this.updateScenePropertyPanel()
 	},
 
 	selectEntityTreeItem: function( entityId ) {
@@ -634,8 +630,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		switch( this.getTreeItemType( record ) ) {
 			case this.TREE_ITEM_TYPE_SCENE:
-				this.updateScenePropertyPanel()
-				this.getRightPanel().add( { xtype: 'label' , docString : '#!/guide/concepts_scenes'} )
+				this.showSceneProperties()
 				break
 			case this.TREE_ITEM_TYPE_ENTITIES:
 				this.getRightPanel().add( { xtype: 'label' , docString : '#!/guide/concepts_entities_components'} )
