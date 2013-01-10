@@ -95,11 +95,19 @@ Ext.define('Spelled.model.config.Component', {
 	},
 
 	getEntity: function() {
+		var tmp = null
+
 		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) ) {
-			return this[ 'Spelled.model.config.EntityBelongsToInstance' ]
+			tmp = this[ 'Spelled.model.config.EntityBelongsToInstance' ]
+
+		} else if( this.data[ 'spelled.model.config.entity_id' ] ){
+			tmp = Ext.getStore( 'config.Entities' ).getById( this.data[ 'spelled.model.config.entity_id' ] )
+
 		} else {
-			return Ext.getStore( 'template.Entities' ).getById( this.get( 'spelled.model.template.entity_id' ) )
+			tmp =  Ext.getStore( 'template.Entities' ).getById( this.get( 'spelled.model.template.entity_id' ) )
 		}
+
+		return tmp
 	},
 
 	setEntity: function( entity ) {

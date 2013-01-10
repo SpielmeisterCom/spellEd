@@ -272,21 +272,23 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	removeSceneLibraryItem: function( gridView, value ) {
-		var scene = this.application.getLastSelectedScene()
+		var scene = this.application.getLastSelectedScene(),
+			store = this.getSceneProperties().down( 'grid[name="dynamic"]' ).getStore()
 
 		Ext.Array.remove( scene.get( 'libraryIds' ), value )
 		scene.setDirty()
 
-		this.updateLibraryIdPropertyStores( gridView )
+		store.remove( store.findRecord( 'id' ,value ) )
 	},
 
 	addToLibrary: function( window, value ) {
-		var scene = this.application.getLastSelectedScene()
+		var scene = this.application.getLastSelectedScene(),
+			store = this.getSceneProperties().down( 'grid[name="dynamic"]' ).getStore()
 
 		scene.get( 'libraryIds' ).push( value )
 		scene.setDirty()
 
-		this.updateScenePropertyPanel()
+		store.add( { id: value } )
 
 		window.close()
 	},
@@ -795,24 +797,10 @@ Ext.define('Spelled.controller.Scenes', {
 
 		if( !panel.down( 'spellprogressbar' ) ) panel.add( { xtype: 'spellprogressbar'} )
 
-		var cacheContent = this.generateSceneCacheContent( scene ),
-			dependencies = Ext.getStore( 'StaticLibraryDependencies' )
-
-		Ext.Object.each(
-			cacheContent,
-			function( key, value ) {
-				dependencies.each(
-					function( item ) {
-						if( item.get( 'debugOnly' ) === true ) value.libraryIds.push( item.get( 'id' ) )
-					}
-				)
-			}
-		)
-
 		this.sendChangeToEngine(
 			'runtimeModule.start', {
 				runtimeModule: Ext.amdModules.createProjectInEngineFormat( project ),
-				cacheContent: cacheContent
+				cacheContent: this.generateSceneCacheContent( scene, { editorMode: true } )
 			}
 		)
 
@@ -832,16 +820,43 @@ Ext.define('Spelled.controller.Scenes', {
 		)
 	},
 
-	generateSceneCacheContent: function( scene, withScript ) {
-		var relativeName = scene.getFullName().replace( /\./g, "/" ),
-			toBeCached = [{
+	generateSceneCacheContent: function( scene, config ) {
+		var withScript   = ( config && Ext.isObject( config ) && !!config.withScript ),
+			editorMode   = ( config && Ext.isObject( config ) && !!config.editorMode ),
+			relativeName = scene.getFullName().replace( /\./g, "/" ),
+			toBeCached   = [{
 				content : Ext.amdModules.sceneConverter.toEngineFormat( scene.getData( true ), { includeNamespace: true, includeEntityIds: true } ),
 				filePath : relativeName + ".json"
 			}]
 
-		if( withScript && !!withScript ) toBeCached.push( { content : scene.get( 'content' ), filePath : relativeName + ".js" } )
+		if( withScript ) toBeCached.push( { content : scene.get( 'content' ), filePath : relativeName + ".js" } )
 
-		return Ext.amdModules.createCacheContent( toBeCached )
+		var cacheContent = Ext.amdModules.createCacheContent( toBeCached )
+
+		if( editorMode ) {
+			var dependencies = Ext.getStore( 'StaticLibraryDependencies'),
+				isObject     = Ext.isObject,
+				clone        = Ext.clone
+
+			Ext.Object.each(
+				cacheContent,
+				function( key, value ) {
+					if( !isObject( value ) || value.type != "scene" ) return
+
+					var libraryIds = clone( value.libraryIds )
+
+					dependencies.each(
+						function( item ) {
+							if( item.get( 'debugOnly' ) === true ) libraryIds.push( item.get( 'id' ) )
+						}
+					)
+
+					value.libraryIds = libraryIds
+				}
+			)
+		}
+
+		return cacheContent
 	},
 
 	updateRenderProgress: function( targetId, value ) {

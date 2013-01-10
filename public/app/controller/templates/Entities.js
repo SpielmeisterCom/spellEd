@@ -114,7 +114,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 
 		return {
 			runtimeModule: tmpProjectCfg,
-			cacheContent: this.application.getController( 'Scenes' ).generateSceneCacheContent( scene, true )
+			cacheContent: this.application.getController( 'Scenes' ).generateSceneCacheContent( scene, { withScript: true, editorMode: true } )
 		}
 	},
 
