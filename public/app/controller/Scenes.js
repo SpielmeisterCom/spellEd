@@ -624,7 +624,7 @@ Ext.define('Spelled.controller.Scenes', {
 	updateScenePropertyPanel: function() {
 		var panel = this.getSceneProperties()
 
-		if( panel && panel.isVisible() ) this.updateLibraryIdPropertyStores( this.getSceneProperties() )
+		if( panel ) this.updateLibraryIdPropertyStores( this.getSceneProperties() )
 	},
 
 	dispatchTreeClick: function( treePanel, record ) {
