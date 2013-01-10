@@ -657,6 +657,10 @@ Ext.define('Spelled.controller.Assets', {
 
 	setAssetConfigFromForm: function( form, asset ) {
 		var values = form.getForm().getFieldValues()
+		//no override of namespace
+		delete values.namespace
+		delete values.name
+
 		asset.set( values )
 
 		switch( asset.get( 'subtype' ) ) {
