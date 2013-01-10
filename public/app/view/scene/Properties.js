@@ -60,7 +60,7 @@ Ext.define('Spelled.view.scene.Properties', {
 							],
 							tbar: [
 								{
-									xtype: 'button', text: 'Add a dynamic library item', icon: 'images/icons/add.png',
+									xtype: 'button', text: 'Add dependency', icon: 'images/icons/add.png',
 									handler: Ext.bind( me.handleAddClick, me )
 								}
 							]
