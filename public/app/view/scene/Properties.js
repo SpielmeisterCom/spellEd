@@ -30,26 +30,29 @@ Ext.define('Spelled.view.scene.Properties', {
 
 					defaults: {
 						flex: 1,
-						width: '100%'
+						width: '100%',
+						hideHeaders: true
 					},
 					items: [
 						{
 							name: 'static',
-//							title: "Static library items",
+							title: "Static library items",
 							xtype: 'grid',
 							columns: [
+								this.createTypeColumn(),
 								{
-									text: 'Static library items', dataIndex: 'id', flex: 1, hideable: false
+									text: 'Static library items', dataIndex: 'id', flex: 1
 								}
 							]
 						},
 						{
 							name: 'dynamic',
-//							title: "Dynamic library items",
+							title: "Dynamic library items",
 							xtype: 'grid',
 							columns: [
+								this.createTypeColumn(),
 								{
-									text: 'Dynamic library items', dataIndex: 'id', flex: 1, hideable: false
+									text: 'Dynamic library items', dataIndex: 'id', flex: 1
 								},
 								{
 									xtype: 'actioncolumn',
@@ -73,6 +76,16 @@ Ext.define('Spelled.view.scene.Properties', {
 		me.callParent( arguments )
 	},
 
+	createTypeColumn: function() {
+		return {
+			dataIndex: 'type',
+			width: 25,
+			renderer: function( value ) {
+				return "<img src='" + Ext.BLANK_IMAGE_URL + "' class='img-icon-padding " + value + "'/>"
+			}
+		}
+	},
+
 	handleAddClick: function() {
 		this.fireEvent( 'showAddToLibrary', this )
 	},
@@ -82,16 +95,16 @@ Ext.define('Spelled.view.scene.Properties', {
 	},
 
 	createStore: function( data ) {
-		return Ext.create( 'Ext.data.ArrayStore', {
-			fields: [ 'id' ],
-			sorters: [ 'id' ],
-			data: Ext.Array.map( data, function( item ){ return [ item ] } )
+		return Ext.create( 'Ext.data.Store', {
+			fields: [ 'id', 'type', 'sortOrder' ],
+			sorters: [ 'sortOrder' ],
+			data: data
 		})
 	},
 
 	reconfigureStores: function( scene ) {
-		var staticStore  = this.createStore( scene.getStaticLibraryIds() ),
-			dynamicStore = this.createStore( scene.getDynamicLibraryIds() )
+		var staticStore  = this.createStore( Spelled.Converter.libraryIdsToModels( scene.getStaticLibraryIds() ) ),
+			dynamicStore = this.createStore( Spelled.Converter.libraryIdsToModels( scene.getDynamicLibraryIds() ) )
 
 		this.down( 'grid[name="static"]' ).reconfigure( staticStore )
 		this.down( 'grid[name="dynamic"]' ).reconfigure( dynamicStore )

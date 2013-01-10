@@ -9,7 +9,18 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 
 	initComponent: function() {
 		var me    = this,
-			store = Ext.Array.difference( Ext.getStore( 'Library' ).getAllLibraryIds(), this.excludingIds )
+			all   = Ext.getStore( 'Library' ).getAllLibraryIds(),
+			excluded = this.excludingIds,
+			store = Ext.create( 'Ext.data.Store', {
+				fields: [ 'id', 'type' ]
+			})
+
+		Ext.Array.each(
+			all,
+			function( item ) {
+				if( !Ext.Array.contains( excluded, item.id ) ) store.add( item )
+			}
+		)
 
 		Ext.applyIf( me, {
 			items: [
@@ -31,6 +42,9 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 							emptyText: ' -- Select a library item -- ',
 							forceSelection  : true,
 							store: store,
+							queryMode: 'local',
+							valueField: 'id',
+							displayField: 'id',
 							fieldLabel: 'Library ID',
 							name: 'id',
 							allowBlank: false
@@ -54,6 +68,8 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 	},
 
 	handleAddClick: function() {
-		this.fireEvent( 'addToLibrary', this, this.down( 'combo[name="id"]' ).getValue() )
+		var combo = this.down( 'combo[name="id"]' )
+
+		this.fireEvent( 'addToLibrary', this, combo.findRecordByValue( combo.getValue() ) )
 	}
 })

@@ -4,6 +4,7 @@ Ext.define('Spelled.model.LibraryNode', {
 	fields: [
 		'libraryId',
 		'text',
-		'sortOrder'
+		'sortOrder',
+		'type'
 	]
 })

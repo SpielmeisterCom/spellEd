@@ -39,7 +39,7 @@ Ext.define('Spelled.store.Library', {
 		var ids = []
 
 		var getLeafs = function( node ) {
-			if( node.isLeaf() ) ids.push( node.get( 'libraryId' ) )
+			if( node.isLeaf() ) ids.push( { sortOrder: node.get( 'sortOrder' ), type: node.get( 'iconCls' ), id: node.get( 'libraryId' ) } )
 			node.eachChild( getLeafs )
 
 			return ids

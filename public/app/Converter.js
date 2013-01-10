@@ -11,6 +11,25 @@ Ext.define( 'Spelled.Converter' ,{
 		}
 	},
 
+	libraryIdsToModels: function( libraryIds ) {
+		var result        = [],
+			allLibraryIds = Ext.create( 'Ext.data.Store', {
+			fields: [ 'id', 'type', 'sortOrder' ],
+			data: Ext.getStore( 'Library' ).getAllLibraryIds()
+		})
+
+		Ext.Array.each(
+			libraryIds,
+			function( item ) {
+				var found = allLibraryIds.findRecord( 'id', item )
+
+				if( found ) result.push( found )
+			}
+		)
+
+		return result
+	},
+
 	integerListFromString: function( list ) {
 		var values = list.split( "," )
 		return Ext.Array.map( values, function( item ) { return parseInt( item, 10 ) } )
