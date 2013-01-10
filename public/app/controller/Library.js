@@ -240,14 +240,14 @@ Ext.define('Spelled.controller.Library', {
 	getNodeType: function( node ) {
 		var type = node.get( 'cls' )
 
-		if( Ext.getStore( 'asset.Types' ).findRecord( 'type', type ) ) {
+		if( type === 'script' ) {
+			return this.TYPE_SCRIPT
+
+		}else if( Ext.getStore( 'asset.Types' ).findRecord( 'type', type ) ) {
 			return this.TYPE_ASSET
 
 		} else if( Ext.getStore( 'template.Types' ).findRecord( 'type', type ) || type === this.application.getController( 'Templates' ).TYPE_ENTITY_COMPOSITE ) {
 			return this.TYPE_TEMPLATE
-
-		} else if( type === 'script' ) {
-			return this.TYPE_SCRIPT
 		}
 
 		return type
