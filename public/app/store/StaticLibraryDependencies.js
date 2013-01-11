@@ -24,6 +24,10 @@ Ext.define('Spelled.store.StaticLibraryDependencies', {
 		{
 			"id": "spell.OpenSans14px",
 			debugOnly: true
+		},
+		{
+			"id": "spell.remove",
+			debugOnly: true
 		}
     ]
 });
