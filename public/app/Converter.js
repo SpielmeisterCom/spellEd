@@ -14,14 +14,14 @@ Ext.define( 'Spelled.Converter' ,{
 	libraryIdsToModels: function( libraryIds ) {
 		var result        = [],
 			allLibraryIds = Ext.create( 'Ext.data.Store', {
-			fields: [ 'id', 'type', 'sortOrder' ],
+			fields: [ 'id', 'libraryId', 'type', 'sortOrder' ],
 			data: Ext.getStore( 'Library' ).getAllLibraryIds()
 		})
 
 		Ext.Array.each(
 			libraryIds,
 			function( item ) {
-				var found = allLibraryIds.findRecord( 'id', item )
+				var found = allLibraryIds.findRecord( 'libraryId', item )
 
 				if( found ) result.push( found )
 			}

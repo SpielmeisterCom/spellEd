@@ -34,7 +34,6 @@ Ext.define('Spelled.view.component.property.AssetId', {
 	queryMode       : 'local',
 	editable        : true,
 	emptyText       : '-- Select a existing Asset --',
-	store           : 'asset.Assets',
 	name            : 'assetId',
 	displayField    : 'myAssetId',
 	valueField      : 'internalAssetId',

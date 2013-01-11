@@ -35,36 +35,43 @@ Ext.define('Spelled.view.scene.Properties', {
 					},
 					items: [
 						{
-							name: 'static',
-							title: "Static library items",
-							xtype: 'grid',
-							columns: [
-								this.createTypeColumn(),
-								{
-									text: 'Static library items', dataIndex: 'id', flex: 1
-								}
-							]
-						},
-						{
 							name: 'dynamic',
-							title: "Dynamic library items",
 							xtype: 'grid',
+							listeners: {
+								itemmouseenter : Ext.bind( me.actionColumnHandler, me, [ true ], 0 ),
+								itemmouseleave : Ext.bind( me.actionColumnHandler, me, [ false ], 0 )
+							},
 							columns: [
-								this.createTypeColumn(),
 								{
-									text: 'Dynamic library items', dataIndex: 'id', flex: 1
+									dataIndex: 'type',
+									width: 25,
+									renderer: function( value, style, record ) {
+										style.tdCls += value + " library-img-icon"
+
+										var css = ( record.get( 'static' ) ) ? 'linked-icon' : ""
+
+										return "<img src='" + Ext.BLANK_IMAGE_URL + "' class='" + css +"'/>"
+									}
+								},
+								{
+									text: 'Dynamic library items', dataIndex: 'libraryId', flex: 1
 								},
 								{
 									xtype: 'actioncolumn',
 									width: 30,
-									icon: 'images/icons/delete.png',
-									handler: Ext.bind( me.handleRemoveClick, me )
+									icon: 'images/icons/wrench-arrow.png',
+									iconCls: 'x-hidden edit-action-icon',
+									handler: Ext.bind( me.handleEditClick, me )
 								}
 							],
 							tbar: [
 								{
-									xtype: 'button', text: 'Add dependency', icon: 'images/icons/add.png',
-									handler: Ext.bind( me.handleAddClick, me )
+									xtype: 'button', text: 'Add', icon: 'images/icons/add.png',
+									handler: Ext.bind( me.handleAddClick, me, [ false ] )
+								},
+								{
+									xtype: 'button', text: 'Add multiple', icon: 'images/icons/add.png',
+									handler: Ext.bind( me.handleAddClick, me, [ true ] )
 								}
 							]
 						}
@@ -76,18 +83,25 @@ Ext.define('Spelled.view.scene.Properties', {
 		me.callParent( arguments )
 	},
 
-	createTypeColumn: function() {
-		return {
-			dataIndex: 'type',
-			width: 25,
-			renderer: function( value ) {
-				return "<img src='" + Ext.BLANK_IMAGE_URL + "' class='img-icon-padding " + value + "'/>"
-			}
+	handleEditClick: function( view, rowIndex, colIndex, item, e, record ) {
+		var isStatic = record.get( 'static' )
+
+		if( isStatic ) {
+			this.fireEvent( 'showStaticLibraryItemContextMenu', record, e )
+		} else {
+			this.fireEvent( 'showDynamicLibraryItemContextMenu', record, e)
 		}
 	},
 
-	handleAddClick: function() {
-		this.fireEvent( 'showAddToLibrary', this )
+	handleAddClick: function( multiple ) {
+		this.fireEvent( 'showAddToLibrary', this, multiple )
+	},
+
+	actionColumnHandler: function( show, grid, record, item ) {
+		if( show )
+			this.fireEvent( 'showActionColumns', grid, record, item )
+		else
+			this.fireEvent( 'hideActionColumns', grid, record, item )
 	},
 
 	handleRemoveClick: function( gridView, rowIndex, colIndex, column, e, record ) {
@@ -96,17 +110,19 @@ Ext.define('Spelled.view.scene.Properties', {
 
 	createStore: function( data ) {
 		return Ext.create( 'Ext.data.Store', {
-			fields: [ 'id', 'type', 'sortOrder' ],
+			fields: [ 'libraryId', 'id', 'type', 'sortOrder', 'static' ],
 			sorters: [ 'sortOrder' ],
 			data: data
 		})
 	},
 
 	reconfigureStores: function( scene ) {
-		var staticStore  = this.createStore( Spelled.Converter.libraryIdsToModels( scene.getStaticLibraryIds() ) ),
-			dynamicStore = this.createStore( Spelled.Converter.libraryIdsToModels( scene.getDynamicLibraryIds() ) )
+		var store = this.createStore( Spelled.Converter.libraryIdsToModels( scene.getStaticLibraryIds() ) )
 
-		this.down( 'grid[name="static"]' ).reconfigure( staticStore )
-		this.down( 'grid[name="dynamic"]' ).reconfigure( dynamicStore )
+		store.each(	function( item ) { item.set( 'static', true ) } )
+
+		store.add( Spelled.Converter.libraryIdsToModels( scene.getDynamicLibraryIds() ) )
+
+		this.down( 'grid' ).reconfigure( store )
 	}
 })

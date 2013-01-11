@@ -240,6 +240,12 @@ var startApplication = function() {
 			}
 		},
 
+		showGridActionColumn: function( grid, record, item ) {
+			var icons = Ext.DomQuery.select('.edit-action-icon', item )
+
+			this.showActionColumnIcons( icons )
+		},
+
 		showActionColumnIcons: function( icons ) {
 			Ext.each(
 				icons,

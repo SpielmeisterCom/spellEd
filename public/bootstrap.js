@@ -620,6 +620,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.container.Form": [
     "layout.form"
   ],
+  "Spelled.view.scene.dependencies.StaticContextMenu": [
+    "widget.staticlibraryitemcontextmenu"
+  ],
   "Spelled.store.system.Defaults": [],
   "Ext.chart.MaskLayer": [],
   "Spelled.view.layout.Split": [
@@ -1249,6 +1252,9 @@ Ext.ClassManager.addNameAliasMappings({
     "layout.hbox"
   ],
   "Ext.resizer.Resizer": [],
+  "Spelled.view.scene.dependencies.DynamicContextMenu": [
+    "widget.dynamiclibraryitemcontextmenu"
+  ],
   "Spelled.Compare": [],
   "Ext.selection.RowModel": [
     "selection.rowmodel"
@@ -1723,6 +1729,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.container.Form": [
     "Ext.layout.FormLayout"
   ],
+  "Spelled.view.scene.dependencies.StaticContextMenu": [],
   "Spelled.store.system.Defaults": [],
   "Ext.chart.MaskLayer": [],
   "Spelled.view.layout.Split": [],
@@ -2162,6 +2169,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.resizer.Resizer": [
     "Ext.Resizable"
   ],
+  "Spelled.view.scene.dependencies.DynamicContextMenu": [],
   "Spelled.Compare": [],
   "Ext.selection.RowModel": [],
   "Spelled.view.asset.Form": [],

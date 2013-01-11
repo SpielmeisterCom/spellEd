@@ -102,6 +102,7 @@ Ext.define('Spelled.controller.Library', {
         })
 
 		this.application.on({
+			deeplink : this.deepLink,
 			selectnamespacefrombutton  : this.selectLibraryNamespace,
 			buildnamespacenodes        : this.buildNamespaceNodes,
 			removefromlibrary: this.removeFromLibrary,
@@ -132,14 +133,12 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	deepLinkComponentProperty: function( name, propertyMapping, property ) {
-		var tree    = this.getLibraryTree(),
-			store   = tree.getStore(),
-			value   = property.get( 'value'),
-			record  = undefined
+		var value  = property.get( 'value'),
+			record = undefined
 
 		switch( propertyMapping.get( 'target' ) ) {
 			case 'asset':
-				record = this.getStore( 'asset.Assets' ).findRecord( 'internalAssetId', value )
+				record = this.application.getController( 'Assets' ).getAssetByAssetId( value )
 				break
 			case 'script':
 				var scriptId = value.split( ':').pop()
@@ -147,7 +146,12 @@ Ext.define('Spelled.controller.Library', {
 				break
 		}
 
-		var node = store.getById( record.getId() )
+		this.deepLink( record )
+	},
+
+	deepLink: function( record ) {
+		var tree  = this.getLibraryTree(),
+			node  = tree.getStore().getById( record.getId() )
 
 		if( node ) {
 			this.dispatchLibraryNodeDoubleClick( tree, node )

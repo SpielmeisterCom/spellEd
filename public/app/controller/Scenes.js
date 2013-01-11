@@ -7,6 +7,8 @@ Ext.define('Spelled.controller.Scenes', {
 		'Spelled.view.scene.ProgressBar',
 		'Spelled.view.scene.Properties',
 		'Spelled.view.scene.AddLibraryId',
+		'Spelled.view.scene.dependencies.StaticContextMenu',
+		'Spelled.view.scene.dependencies.DynamicContextMenu',
 		'Spelled.store.system.Defaults',
 		'Spelled.store.system.EditMode',
 
@@ -32,6 +34,8 @@ Ext.define('Spelled.controller.Scenes', {
 		'scene.Editor',
 		'scene.Script',
 		'scene.Properties',
+		'scene.dependencies.StaticContextMenu',
+		'scene.dependencies.DynamicContextMenu',
 		'scene.AddLibraryId',
 		'ui.SpelledRendered',
 		'scene.ProgressBar'
@@ -211,8 +215,17 @@ Ext.define('Spelled.controller.Scenes', {
 				click: me.activateFullscreen
 			},
 			'sceneproperties': {
-				showAddToLibrary: me.showAddToLibrary,
-				removeSceneLibraryItem: me.removeSceneLibraryItem
+				showStaticLibraryItemContextMenu: me.showStaticLibraryItemContextMenu,
+				showDynamicLibraryItemContextMenu: me.showDynamicLibraryItemContextMenu,
+				showActionColumns: Ext.bind( me.application.showGridActionColumn, me.application ),
+				hideActionColumns: me.application.hideActions,
+				showAddToLibrary: me.showAddToLibrary
+			},
+			'staticlibraryitemcontextmenu [action="showInLibrary"], dynamiclibraryitemcontextmenu [action="showInLibrary"]': {
+				click: me.libraryDeepLink
+			},
+			'dynamiclibraryitemcontextmenu [action="remove"]': {
+				click: me.removeSceneLibraryItem
 			},
 			'sceneaddlibraryid': {
 				addToLibrary: me.addToLibrary
@@ -265,27 +278,44 @@ Ext.define('Spelled.controller.Scenes', {
 		})
 	},
 
-	showAddToLibrary: function( gridView ) {
-		var scene = this.application.getLastSelectedScene()
+	libraryDeepLink: function( button ) {
+		var view = button.up( 'menu' )
 
-		Ext.widget( 'sceneaddlibraryid', { excludingIds: scene.get( 'libraryIds' ) } )
+		this.application.fireEvent( 'deeplink', view.ownerView )
 	},
 
-	removeSceneLibraryItem: function( gridView, value ) {
-		var scene = this.application.getLastSelectedScene(),
-			store = this.getSceneProperties().down( 'grid[name="dynamic"]' ).getStore()
+	showStaticLibraryItemContextMenu: function( record, e ) {
+		this.application.fireEvent( 'showcontextmenu', this.getSceneDependenciesStaticContextMenuView(), e, record )
+	},
+
+	showDynamicLibraryItemContextMenu: function( record, e ) {
+		this.application.fireEvent( 'showcontextmenu', this.getSceneDependenciesDynamicContextMenuView(), e, record )
+	},
+
+	showAddToLibrary: function( gridView, multiple ) {
+		var scene = this.application.getLastSelectedScene()
+
+		Ext.widget( 'sceneaddlibraryid', { multiple: multiple, excludingIds: scene.get( 'libraryIds' ) } )
+	},
+
+	removeSceneLibraryItem: function( button ) {
+		var view   = button.up( 'menu'),
+			record = view.ownerView,
+			value  = record.get( 'libraryId' ),
+			scene  = this.application.getLastSelectedScene(),
+			store  = this.getSceneProperties().down( 'grid[name="dynamic"]' ).getStore()
 
 		Ext.Array.remove( scene.get( 'libraryIds' ), value )
 		scene.setDirty()
 
-		store.remove( store.findRecord( 'id' ,value ) )
+		store.remove( store.findRecord( 'libraryId', value ) )
 	},
 
 	addToLibrary: function( window, record ) {
 		var scene = this.application.getLastSelectedScene(),
 			store = this.getSceneProperties().down( 'grid[name="dynamic"]' ).getStore()
 
-		scene.get( 'libraryIds' ).push( record.get( 'id' ) )
+		scene.get( 'libraryIds' ).push( record.get( 'libraryId' ) )
 		scene.setDirty()
 
 		store.add( record )

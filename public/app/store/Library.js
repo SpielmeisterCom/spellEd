@@ -20,26 +20,31 @@ Ext.define('Spelled.store.Library', {
 	},
 
 	sortFunction: function( node ) {
-			var me = this
+		var me = this
 
-			node.sort(
-				function( node1, node2 ) {
-					var result = me.sortHelper( node1, node2, 'sortOrder' )
+		node.sort(
+			function( node1, node2 ) {
+				var result = me.sortHelper( node1, node2, 'sortOrder' )
 
-					if( result === 0 ) {
-						return me.sortHelper( node1, node2, 'text' )
-					} else return result
-				},
-				false,
-				true
-			)
+				if( result === 0 ) {
+					return me.sortHelper( node1, node2, 'text' )
+				} else return result
+			},
+			false,
+			true
+		)
 	},
 
 	getAllLibraryIds: function() {
 		var ids = []
 
 		var getLeafs = function( node ) {
-			if( node.isLeaf() ) ids.push( { sortOrder: node.get( 'sortOrder' ), type: node.get( 'iconCls' ), id: node.get( 'libraryId' ) } )
+			if( node.isLeaf() ) ids.push( {
+				sortOrder: node.get( 'sortOrder' ),
+				type: node.get( 'iconCls' ),
+				libraryId: node.get( 'libraryId' ),
+				id: node.get( 'id' )
+			} )
 			node.eachChild( getLeafs )
 
 			return ids
