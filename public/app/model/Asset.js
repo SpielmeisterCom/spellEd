@@ -64,13 +64,8 @@ Ext.define('Spelled.model.Asset', {
 
 		this.callParent( arguments )
 
-		var type     = this.raw.subtype || this.data.subtype,
-			metaData = Ext.getStore( 'asset.Types' ).findRecord( 'type', type )
-
-		if ( metaData ) {
-			this.iconCls = metaData.data.iconCls
-			this.sortOrder = metaData.data.sortOrder
-		}
+		var type = this.raw.subtype || this.data.subtype
+		this.insertMetaData( 'asset.Types', type )
 
 		this.set( 'myAssetId', assetId)
 		this.set( 'internalAssetId', type + ":" + assetId)

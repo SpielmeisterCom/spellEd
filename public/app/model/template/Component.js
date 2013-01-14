@@ -7,9 +7,6 @@ Ext.define('Spelled.model.template.Component', {
 		'Spelled.data.reader.Component'
 	],
 
-	iconCls : "tree-component-icon",
-	sortOrder: 210,
-
     fields: [
         "namespace",
 		{ name: 'title', type: 'string', defaultValue: "" },

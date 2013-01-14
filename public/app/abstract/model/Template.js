@@ -24,6 +24,9 @@ Ext.define('Spelled.abstract.model.Template', {
 	constructor: function() {
 		var params = arguments[0] || arguments[2]
 		this.callParent( arguments )
+
+		this.insertMetaData( 'template.Types', this.raw.type || this.data.type )
+
 		this.set( 'templateId', this.generateIdentifier( params ))
 	},
 

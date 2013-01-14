@@ -13,8 +13,50 @@ Ext.define('Spelled.view.scene.Properties', {
 		width: '100%'
 	},
 
+	createFilterItem: function( type, label, checked ) {
+		return  {
+			xtype: 'menucheckitem',
+			checked: checked,
+			libraryType: type,
+			listeners: {
+				render: function(comp) {
+					Ext.DomHelper.insertAfter(comp.getEl().down(".x-menu-item-icon"), {
+						tag: 'img',
+						src: Ext.BLANK_IMAGE_URL,
+						cls: type,
+						width: 16,
+						height: 16
+					})
+				},
+				afterrender: function(cmp){
+					cmp.textEl.setStyle({ 'vertical-align': "top", 'margin-left': '5px' })
+				}
+			},
+			checkHandler: Ext.bind( this.filterHandler, this ),
+			text: label
+		}
+	},
+
+	createFilterItemsHelper: function( storeId, checked ) {
+		var result = []
+
+		Ext.getStore( storeId ).each(
+			function( record ) {
+				result.push( this.createFilterItem( record.get( 'iconCls' ), record.get( 'name' ), checked ) )
+			},
+			this
+		)
+
+		return result
+	},
+
 	initComponent: function() {
-		var me = this
+		var me      = this,
+			filters = Ext.Array.merge(
+				this.createFilterItemsHelper( 'asset.Types', true ),
+				this.createFilterItemsHelper( 'template.Types', false ),
+				[ this.createFilterItem( 'scene', 'Scenes', false ) ]
+			)
 
 		Ext.applyIf( me, {
 			items: [
@@ -80,6 +122,11 @@ Ext.define('Spelled.view.scene.Properties', {
 											handler: Ext.bind( me.handleAddClick, me, [ true ] )
 										}
 									]
+								},
+								{
+									text: 'Filter',
+									icon: 'images/icons/eye.png',
+									menu: filters
 								}
 							]
 						}
@@ -89,6 +136,23 @@ Ext.define('Spelled.view.scene.Properties', {
 		})
 
 		me.callParent( arguments )
+	},
+
+	filterHandler: function(  ) {
+		var filters  = this.down( '[text="Filter"] > menu' ),
+			store    = this.down( 'grid' ).getStore(),
+			contains = Ext.Array.contains,
+			filterValues = []
+
+		store.clearFilter()
+
+		filters.items.each(
+			function( filter ) { if( filter.checked ) filterValues.push( filter.libraryType ) }
+		)
+
+		store.filterBy(
+			function( item ) { return contains( filterValues, item.get( 'type' ) ) }
+		)
 	},
 
 	doubleClickHandler: function( view, record ) {
@@ -137,5 +201,7 @@ Ext.define('Spelled.view.scene.Properties', {
 		store.add( Spelled.Converter.libraryIdsToModels( scene.getDynamicLibraryIds() ) )
 
 		this.down( 'grid' ).reconfigure( store )
+
+		this.filterHandler()
 	}
 })

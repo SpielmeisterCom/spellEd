@@ -2,6 +2,15 @@ Ext.define('Spelled.abstract.model.Model', {
 
 	sortOrder: 9,
 
+	insertMetaData: function( storeId, type ) {
+		var metaData = Ext.getStore( storeId ).findRecord( 'type', type )
+
+		if ( metaData ) {
+			this.iconCls   = metaData.data.iconCls
+			this.sortOrder = metaData.data.sortOrder
+		}
+	},
+
 	generateIdentifier: function( object ) {
 		var namespace = object.namespace,
 			name      = object.name

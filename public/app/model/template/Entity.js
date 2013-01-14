@@ -13,9 +13,6 @@ Ext.define('Spelled.model.template.Entity', {
         "name"
     ],
 
-	sortOrder : 220,
-	iconCls : "tree-scene-entity-icon",
-
 	associations: [
 		{
 			type: 'hasMany',

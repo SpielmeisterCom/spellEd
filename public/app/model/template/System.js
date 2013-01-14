@@ -7,9 +7,6 @@ Ext.define('Spelled.model.template.System', {
 		'Spelled.data.writer.SystemTemplate'
 	],
 
-	iconCls : "tree-system-icon",
-	sortOrder : 230,
-
     fields: [
         "namespace",
         "name",
