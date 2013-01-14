@@ -219,10 +219,11 @@ Ext.define('Spelled.controller.Scenes', {
 				showDynamicLibraryItemContextMenu: me.showDynamicLibraryItemContextMenu,
 				showActionColumns: Ext.bind( me.application.showGridActionColumn, me.application ),
 				hideActionColumns: me.application.hideActions,
-				showAddToLibrary: me.showAddToLibrary
+				showAddToLibrary: me.showAddToLibrary,
+				deepLink: me.libraryDeepLink
 			},
 			'staticlibraryitemcontextmenu [action="showInLibrary"], dynamiclibraryitemcontextmenu [action="showInLibrary"]': {
-				click: me.libraryDeepLink
+				click: me.libraryDeepLinkHelper
 			},
 			'dynamiclibraryitemcontextmenu [action="remove"]': {
 				click: me.removeSceneLibraryItem
@@ -278,10 +279,14 @@ Ext.define('Spelled.controller.Scenes', {
 		})
 	},
 
-	libraryDeepLink: function( button ) {
+	libraryDeepLinkHelper: function( button ) {
 		var view = button.up( 'menu' )
 
-		this.application.fireEvent( 'deeplink', view.ownerView )
+		this.libraryDeepLink( view.ownerView )
+	},
+
+	libraryDeepLink: function( record ) {
+		this.application.fireEvent( 'deeplink', record )
 	},
 
 	showStaticLibraryItemContextMenu: function( record, e ) {

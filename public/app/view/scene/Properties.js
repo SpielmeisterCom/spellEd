@@ -40,7 +40,8 @@ Ext.define('Spelled.view.scene.Properties', {
 							listeners: {
 								itemmouseenter : Ext.bind( me.actionColumnHandler, me, [ true ], 0 ),
 								itemmouseleave : Ext.bind( me.actionColumnHandler, me, [ false ], 0 ),
-								itemcontextmenu : Ext.bind( me.contextMenuHandler, me )
+								itemcontextmenu : Ext.bind( me.contextMenuHandler, me ),
+								itemdblclick : Ext.bind( me.doubleClickHandler, me )
 							},
 							columns: [
 								{
@@ -88,6 +89,10 @@ Ext.define('Spelled.view.scene.Properties', {
 		})
 
 		me.callParent( arguments )
+	},
+
+	doubleClickHandler: function( view, record ) {
+		this.fireEvent( 'deepLink', record )
 	},
 
 	contextMenuHandler: function( view, record, item, index, e, eOpts ) {
