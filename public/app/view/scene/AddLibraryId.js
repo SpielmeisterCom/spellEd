@@ -56,6 +56,8 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 			var rootNode  = Ext.getStore( 'Library' ).getRootNode(),
 				newRoot   = rootNode.copy(),
 				copyNodes = function( node, parent ) {
+					var hasLeaf = false
+
 					node.eachChild(
 						function( child ) {
 							if( Ext.Array.contains( excluded, child.get( 'libraryId' ) ) ) return
@@ -69,10 +71,13 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 							copyNodes( child, tmpNode )
 						}
 					)
+
+					parent.cascadeBy( function() { if( this.isLeaf() ) hasLeaf = true })
+
+					if( !hasLeaf ) parent.remove()
 				}
 
 			copyNodes( rootNode, newRoot )
-//			newRoot.cascadeBy( function() { if( !this.hasChildNodes() ) removeNodes.push( this ) } )
 
 			store = Ext.create( 'Spelled.store.Library', { root: newRoot } )
 		}
@@ -89,7 +94,7 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 				rootVisible: false,
 				store: store,
 				listeners: {
-
+					checkchange: Ext.bind( this.checkChangeHandler, this )
 				}
 			}
 		} else {
@@ -116,12 +121,25 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 		}
 	},
 
+
+	checkChangeHandler: function( node, checked ) {
+		node.cascadeBy( function() { this.set( 'checked', checked ) } )
+	},
+
 	handleAddClick: function() {
 		if( this.multiple ) {
 			var tree    = this.down( 'treepanel' ),
-				checked = tree.getChecked()
+				checked = tree.getChecked(),
+				records = []
 
-			this.fireEvent( 'addToLibrary', this, checked )
+			Ext.Array.each(
+				checked,
+				function( node ) {
+					if( node.isLeaf() ) records.push( node )
+				}
+			)
+
+			this.fireEvent( 'addToLibrary', this, records )
 		} else {
 			var combo = this.down( 'combo[name="libraryId"]')
 
