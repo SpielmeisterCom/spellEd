@@ -153,6 +153,8 @@ Ext.define('Spelled.view.scene.Properties', {
 		store.filterBy(
 			function( item ) { return contains( filterValues, item.get( 'type' ) ) }
 		)
+
+		store.sort()
 	},
 
 	doubleClickHandler: function( view, record ) {
