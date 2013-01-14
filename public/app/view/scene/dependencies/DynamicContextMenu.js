@@ -9,8 +9,8 @@ Ext.define('Spelled.view.scene.dependencies.DynamicContextMenu', {
 			icon: 'images/icons/deep_link.png'
 		},
 		{
-			text: 'remove',
-			action: 'Remove',
+			text: 'Remove',
+			action: 'remove',
 			icon: 'images/icons/delete.png'
 		}
     ]

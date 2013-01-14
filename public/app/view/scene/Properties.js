@@ -39,7 +39,8 @@ Ext.define('Spelled.view.scene.Properties', {
 							xtype: 'grid',
 							listeners: {
 								itemmouseenter : Ext.bind( me.actionColumnHandler, me, [ true ], 0 ),
-								itemmouseleave : Ext.bind( me.actionColumnHandler, me, [ false ], 0 )
+								itemmouseleave : Ext.bind( me.actionColumnHandler, me, [ false ], 0 ),
+								itemcontextmenu : Ext.bind( me.contextMenuHandler, me )
 							},
 							columns: [
 								{
@@ -66,12 +67,18 @@ Ext.define('Spelled.view.scene.Properties', {
 							],
 							tbar: [
 								{
-									xtype: 'button', text: 'Add', icon: 'images/icons/add.png',
-									handler: Ext.bind( me.handleAddClick, me, [ false ] )
-								},
-								{
-									xtype: 'button', text: 'Add multiple', icon: 'images/icons/add.png',
-									handler: Ext.bind( me.handleAddClick, me, [ true ] )
+									text: 'Add',
+									icon: 'images/icons/add.png',
+									menu: [
+										{
+											text: 'Single dependency', icon: 'images/icons/add.png',
+											handler: Ext.bind( me.handleAddClick, me, [ false ] )
+										},
+										{
+											text: 'Multiple dependencies', icon: 'images/icons/add.png',
+											handler: Ext.bind( me.handleAddClick, me, [ true ] )
+										}
+									]
 								}
 							]
 						}
@@ -81,6 +88,11 @@ Ext.define('Spelled.view.scene.Properties', {
 		})
 
 		me.callParent( arguments )
+	},
+
+	contextMenuHandler: function( view, record, item, index, e, eOpts ) {
+		e.stopEvent()
+		this.handleEditClick( view, null, null, null, e, record )
 	},
 
 	handleEditClick: function( view, rowIndex, colIndex, item, e, record ) {
@@ -102,10 +114,6 @@ Ext.define('Spelled.view.scene.Properties', {
 			this.fireEvent( 'showActionColumns', grid, record, item )
 		else
 			this.fireEvent( 'hideActionColumns', grid, record, item )
-	},
-
-	handleRemoveClick: function( gridView, rowIndex, colIndex, column, e, record ) {
-		this.fireEvent( 'removeSceneLibraryItem', this, record.getId() )
 	},
 
 	createStore: function( data ) {
