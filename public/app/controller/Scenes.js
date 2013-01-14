@@ -333,6 +333,8 @@ Ext.define('Spelled.controller.Scenes', {
 
 		scene.setDirty()
 
+		this.getSceneProperties().filterHandler()
+
 		window.close()
 	},
 
