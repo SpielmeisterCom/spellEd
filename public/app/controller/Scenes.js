@@ -311,14 +311,22 @@ Ext.define('Spelled.controller.Scenes', {
 		store.remove( store.findRecord( 'libraryId', value ) )
 	},
 
-	addToLibrary: function( window, record ) {
-		var scene = this.application.getLastSelectedScene(),
-			store = this.getSceneProperties().down( 'grid[name="dynamic"]' ).getStore()
+	addToLibrary: function( window, records ) {
+		var scene      = this.application.getLastSelectedScene(),
+			store      = this.getSceneProperties().down( 'grid[name="dynamic"]' ).getStore(),
+			libraryIds = scene.get( 'libraryIds' )
 
-		scene.get( 'libraryIds' ).push( record.get( 'libraryId' ) )
+		Ext.Array.each(
+			records,
+			function( record ) {
+				var libraryId = record.get( 'libraryId' )
+
+				libraryIds.push( libraryId )
+				store.add( record.data )
+			}
+		)
+
 		scene.setDirty()
-
-		store.add( record )
 
 		window.close()
 	},

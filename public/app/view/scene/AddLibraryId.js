@@ -4,6 +4,7 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 	closable: true,
 
 	autoShow: true,
+	multiple: false,
 
 	title: "Add a new library item to scene",
 
@@ -59,9 +60,11 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 						function( child ) {
 							if( Ext.Array.contains( excluded, child.get( 'libraryId' ) ) ) return
 
-							var tmpNode = parent.appendChild( child.copy() )
+							var tmpNode = parent.appendChild( child.copy()),
+								config  = child.convertToDependencyObject()
 
 							tmpNode.set( 'checked', false )
+							tmpNode.set( config )
 
 							copyNodes( child, tmpNode )
 						}
@@ -114,8 +117,15 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 	},
 
 	handleAddClick: function() {
-		var combo = this.down( 'combo[name="libraryId"]' )
+		if( this.multiple ) {
+			var tree    = this.down( 'treepanel' ),
+				checked = tree.getChecked()
 
-		this.fireEvent( 'addToLibrary', this, combo.findRecordByValue( combo.getValue() ) )
+			this.fireEvent( 'addToLibrary', this, checked )
+		} else {
+			var combo = this.down( 'combo[name="libraryId"]')
+
+			this.fireEvent( 'addToLibrary', this, [ combo.findRecordByValue( combo.getValue() ) ] )
+		}
 	}
 })
