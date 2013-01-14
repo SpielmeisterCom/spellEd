@@ -55,7 +55,7 @@ Ext.define('Spelled.view.scene.Properties', {
 			filters = Ext.Array.merge(
 				this.createFilterItemsHelper( 'asset.Types', true ),
 				this.createFilterItemsHelper( 'template.Types', false ),
-				[ this.createFilterItem( 'scene', 'Scenes', false ) ]
+				[ this.createFilterItem( "tree-scene-icon", 'Scenes', false ) ]
 			)
 
 		Ext.applyIf( me, {
