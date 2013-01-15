@@ -93,6 +93,7 @@ var startApplication = function() {
 			'Projects',
 			'Components',
 			'Assets',
+			'assets.Translations',
 			'Templates',
 			'Scripts',
 			'Systems',
@@ -114,6 +115,7 @@ var startApplication = function() {
 			'asset.SpriteSheets',
 			'asset.Appearances',
 			'asset.TileMaps',
+			'asset.Translations',
 			'script.Scripts',
 			'config.Scenes',
 			'asset.KeyFrameAnimationPreviews'

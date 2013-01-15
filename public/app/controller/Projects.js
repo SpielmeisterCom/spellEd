@@ -35,6 +35,7 @@ Ext.define('Spelled.controller.Projects', {
 		'asset.KeyFrameAnimations',
 		'asset.KeyToActionMappings',
 		'asset.TileMaps',
+		'asset.Translations',
 		'template.Components',
 		'template.Entities',
 		'template.Systems',

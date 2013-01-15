@@ -9,6 +9,7 @@ Ext.define('Spelled.controller.Assets', {
 	TYPE_FONT: 'font',
 	TYPE_SOUND: 'sound',
 	TYPE_KEY_TO_ACTION: 'keyToActionMap',
+	TYPE_TRANSLATION: 'translation',
 
 	requires: [
 		'Spelled.view.asset.ColorField',
@@ -580,24 +581,9 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	getAssetStoreByType: function( type ) {
-		switch( type ) {
-			case this.TYPE_ANIMATION:
-				return this.getAssetAnimationsStore()
-			case this.TYPE_APPEARANCE:
-				return this.getAssetAppearancesStore()
-			case this.TYPE_SPRITE_SHEET:
-				return this.getAssetSpriteSheetsStore()
-			case this.TYPE_FONT:
-				return this.getAssetFontsStore()
-			case this.TYPE_KEY_TO_ACTION:
-				return this.getAssetKeyToActionMappingsStore()
-			case this.TYPE_TILE_MAP:
-				return this.getAssetTileMapsStore()
-			case this.TYPE_KEY_FRAME_ANIMATION:
-				return this.getAssetKeyFrameAnimationsStore()
-			case this.TYPE_SOUND:
-				return this.getAssetSoundsStore()
-		}
+		var info = this.getAssetTypesStore().findRecord( 'type', type )
+
+		return Ext.getStore( info.get( 'storeId' ) )
 	},
 
 	showConfigHelper: function( tree, node ) {

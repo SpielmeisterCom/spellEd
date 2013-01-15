@@ -72,6 +72,13 @@ Ext.define('Spelled.store.asset.Types', {
 			"iconCls": "tree-script-icon",
 			"sortOrder": 10,
 			"storeId": "script.Scripts"
+		},
+		{
+			"type":"translation",
+			"name":"Translation",
+			"iconCls": "tree-asset-translation-icon",
+			"sortOrder": 90,
+			"storeId": "asset.Translations"
 		}
     ]
 });
