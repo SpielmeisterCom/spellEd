@@ -4,6 +4,8 @@ Ext.define('Spelled.view.asset.create.Translation', {
 
 	initLanguage: 'en',
 
+	padding: 5,
+
 	initComponent: function() {
 
 		Ext.applyIf( this, {
@@ -31,6 +33,14 @@ Ext.define('Spelled.view.asset.create.Translation', {
 				},
 				{
 					xtype: 'grid',
+					tbar: [
+						{
+							icon: 'images/icons/add.png',
+							text: 'Add',
+							scope: this,
+							handler: this.onAddClick
+						}
+					],
 					columns:[
 						{
 							text: 'Key',
@@ -52,7 +62,9 @@ Ext.define('Spelled.view.asset.create.Translation', {
 						edit: Ext.bind( this.editHandler, this )
 					},
 					store: this.getAsset().getTranslationStore(),
-					plugins: [ 'cellediting' ]
+					plugins: [ Ext.create('Ext.grid.plugin.CellEditing', {
+						pluginId: 'cellplugin'
+					}) ]
 				}
 			]
 		})
@@ -60,6 +72,10 @@ Ext.define('Spelled.view.asset.create.Translation', {
 		this.callParent( arguments )
 
 		this.fireEvent( 'languageChange', this, this.initLanguage )
+	},
+
+	onAddClick: function() {
+		this.fireEvent( 'addNewTranslation', this, this.getSelectedLanguage() )
 	},
 
 	changeLanguageHandler: function( combo, newValue, oldValue ) {
