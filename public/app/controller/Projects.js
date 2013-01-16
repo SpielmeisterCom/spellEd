@@ -8,7 +8,6 @@ Ext.define('Spelled.controller.Projects', {
 		'Spelled.store.Projects',
 
 		'Spelled.model.Project'
-
 	],
 
     views: [
@@ -58,6 +57,9 @@ Ext.define('Spelled.controller.Projects', {
 			},
 			'projectsettings [action="setProjectSettings"]': {
 				click: this.setProjectSettings
+			},
+			projectsettings: {
+				addLanguage: this.addLanguage
 			},
 			'spelledmenu [action="showLoadProject"]': {
 				click: this.showLoadProject
@@ -116,6 +118,14 @@ Ext.define('Spelled.controller.Projects', {
 		}
 	],
 
+	addLanguage: function( view, language ) {
+		var project   = view.down( 'form' ).getForm().getRecord(),
+			grid      = view.down( 'grid[name="supportedLanguage"]'),
+			languages = project.getSupportedLanguages()
+
+		if( language && !languages.getById( language.getId() ) ) languages.add( language )
+	},
+
 	setProjectSettings: function( button ) {
 		var window  = button.up( 'window' ),
 			form    = window.down( 'form' ),
@@ -127,6 +137,8 @@ Ext.define('Spelled.controller.Projects', {
 			values.screenSizeX,
 			values.screenSizeY
 		]
+
+		config.defaultLanguage = values.defaultLanguage
 
 		project.set( 'config', config )
 		project.setDirty()
@@ -235,7 +247,9 @@ Ext.define('Spelled.controller.Projects', {
 
 
 			form.loadRecord( project )
+			form.getForm().setValues( config )
 			form.getForm().setValues( { screenSizeX: config.screenSize[0], screenSizeY: config.screenSize[1] } )
+			form.down( 'grid[name="supportedLanguages"]' ).reconfigure( project.getSupportedLanguages() )
 		}
 	},
 

@@ -29,11 +29,18 @@ Ext.define('Spelled.model.Project', {
 		{ name: 'assetIds', type: 'array', defaultValue: [] }
 	],
 
-    hasMany: {
-        model: 'Spelled.model.config.Scene',
-        name : 'getScenes',
-        associationKey: 'scenes'
-    },
+	hasMany: [
+		{
+			model: 'Spelled.model.Language',
+			name : 'getSupportedLanguages',
+			associationKey: 'supportedLanguages'
+		},
+		{
+			model: 'Spelled.model.config.Scene',
+			name : 'getScenes',
+			associationKey: 'scenes'
+		}
+	],
 
 	unDirty:function() {
 		this.dirty = false
@@ -51,4 +58,4 @@ Ext.define('Spelled.model.Project', {
 	getStartScene: function() {
 		return Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', this.get( 'startScene' ) )
 	}
-});
+})

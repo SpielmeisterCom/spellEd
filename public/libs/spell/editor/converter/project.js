@@ -24,6 +24,13 @@ define(
 				}
 			)
 
+			result.supportedLanguages = _.map(
+				project.getSupportedLanguages,
+				function( language ) {
+					return language.id
+				}
+			)
+
 			return result
 		}
 
@@ -33,7 +40,7 @@ define(
 		 * @param {Object} project
 		 */
 		var toEditorFormat = function( project ) {
-			return _.pick( project, 'config', 'name', 'startScene', 'id', 'type', 'scenes')
+			return _.pick( project, 'config', 'name', 'startScene', 'id', 'type', 'scenes', 'supportedLanguages' )
 		}
 
 		return {

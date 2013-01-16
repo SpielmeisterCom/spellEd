@@ -12,48 +12,98 @@ Ext.define('Spelled.view.project.Settings' ,{
 
 	layout: 'fit',
 
-    items: [
-        {
-            bodyPadding: 10,
-            xtype: 'form',
-            items: [
-                {
-                    xtype: 'displayfield',
-                    name: 'name',
-                    fieldLabel: 'Name',
-                    anchor: '100%',
-                    allowBlank:false,
-					vtype: 'alphanum'
-                },
+	initComponent: function() {
+
+		Ext.applyIf( this, {
+			items: [
 				{
-					xtype: 'fieldcontainer',
-					fieldLabel: "Screen size",
-					layout: 'hbox',
-					defaults: {
-						flex: 1,
-						hideLabel: true
-					},
+					bodyPadding: 10,
+					xtype: 'form',
 					items: [
 						{
-							xtype     : 'numberfield',
-							name      : 'screenSizeX',
-							margin    : '0 5 0 0',
-							allowBlank: false
-						},{
-							xtype :'displayfield',
-							value : 'x',
-							margin: '5 5 0 0'
+							xtype: 'displayfield',
+							name: 'name',
+							fieldLabel: 'Name',
+							anchor: '100%',
+							allowBlank:false,
+							vtype: 'alphanum'
 						},
 						{
-							xtype     : 'numberfield',
-							name      : 'screenSizeY',
-							allowBlank: false
+							xtype: 'fieldcontainer',
+							fieldLabel: "Screen size",
+							layout: 'hbox',
+							defaults: {
+								flex: 1,
+								hideLabel: true
+							},
+							items: [
+								{
+									xtype     : 'numberfield',
+									name      : 'screenSizeX',
+									margin    : '0 5 0 0',
+									allowBlank: false
+								},{
+									xtype :'displayfield',
+									value : 'x',
+									margin: '5 5 0 0'
+								},
+								{
+									xtype     : 'numberfield',
+									name      : 'screenSizeY',
+									allowBlank: false
+								}
+							]
+						},
+						{
+							xtype: 'combo',
+							name: 'defaultLanguage',
+							fieldLabel: 'Select default language',
+							queryMode: 'local',
+							displayField: 'name',
+							valueField: 'id',
+							forceSelection: true,
+							typeAhead: true,
+							store: 'Languages',
+							listeners: {
+								change: Ext.bind( this.addLanguageHandler, this )
+							}
+						},
+						{
+							xtype: 'combo',
+							name: 'language',
+							fieldLabel: 'Add additional language',
+							queryMode: 'local',
+							displayField: 'name',
+							valueField: 'id',
+							forceSelection: true,
+							typeAhead: true,
+							store: 'Languages',
+							listeners: {
+								change: Ext.bind( this.addLanguageHandler, this )
+							}
+						},
+						{
+							xtype: 'grid',
+							name: 'supportedLanguages',
+							columns: {
+								items: [
+									{
+										text: "Supported languages",
+										dataIndex: "name"
+									}
+								],
+								defaults: {
+									flex: 1
+								}
+							}
 						}
 					]
 				}
-            ]
-        }
-    ],
+			] } )
+
+		this.callParent( arguments )
+	},
+
 	buttons: [
 		{
 			text: "Set",
@@ -66,5 +116,9 @@ Ext.define('Spelled.view.project.Settings' ,{
 				this.up('window').close()
 			}
 		}
-	]
-});
+	],
+
+	addLanguageHandler: function( combo, newValue, oldValue ) {
+		this.fireEvent( 'addLanguage', this, combo.findRecordByValue( newValue ) )
+	}
+})

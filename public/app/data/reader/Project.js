@@ -5,29 +5,37 @@ Ext.define('Spelled.data.reader.Project', {
 	read: function( response ) {
 		var result = this.convertResponse( response, Ext.amdModules.projectConverter.toEditorFormat )
 
-		if( !Ext.isArray(response) ) this.convertProjectScenes( result )
+		if( !Ext.isArray(response) ) this.convertProjectAssociations( result )
 
 		return result
 	},
 
-	convertProjectScenes: function( result ) {
+	convertProjectAssociations: function( result ) {
 
 		Ext.Array.each(
 			result.records,
 			function( record ) {
 				record.getScenes().removeAll()
-				var scenes = []
+				record.getScenes().add( this.makeAssoc( record.raw.scenes,  'config.Scenes', 'sceneId' ) )
 
-				Ext.Array.each(
-					record.raw.scenes,
-					function( sceneId ) {
-						var scene = Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', sceneId )
-						if( scene ) scenes.push( scene )
-					}
-				)
+				record.getSupportedLanguages().removeAll()
+				record.getSupportedLanguages().add( this.makeAssoc( record.raw.supportedLanguages,  'Languages', 'id' ) )
+			},
+			this
+		)
+	},
 
-				record.getScenes().add( scenes )
+	makeAssoc: function( items, storeId, idField ) {
+		var results = []
+
+		Ext.Array.each(
+			items,
+			function( id ) {
+				var record = Ext.getStore( storeId ).findRecord( idField, id )
+				if( record ) results.push( record )
 			}
 		)
+
+		return results
 	}
 });

@@ -1,7 +1,7 @@
  Ext.define( 'Spelled.store.Languages', {
     extend: 'Ext.data.ArrayStore',
 
-    fields: [ 'name', 'id' ],
+	model: 'Spelled.model.Language',
 
     data : [
 		['Abkhazian','ab'],

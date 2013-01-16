@@ -4,8 +4,9 @@ Ext.define('Spelled.controller.assets.Translations', {
 	requires: [
 		'Spelled.store.asset.Translations',
 		'Spelled.model.assets.Translation',
-		'Spelled.view.asset.create.Translation',
-		'Spelled.store.Languages'
+		'Spelled.model.Language',
+		'Spelled.store.Languages',
+		'Spelled.view.asset.create.Translation'
 	],
 
     views: [
@@ -89,6 +90,8 @@ Ext.define('Spelled.controller.assets.Translations', {
 	},
 
 	filterLanguage: function( view, language ) {
+		if( !language ) return
+
 		var grid  = view.down( 'grid'),
 			store = grid.getStore()
 

@@ -3,10 +3,19 @@ Ext.define('Spelled.view.asset.create.Translation', {
     alias: 'widget.translationasset',
 
 	initLanguage: 'en',
+	projectLanguages: 'Languages',
 
 	padding: 5,
 
 	initComponent: function() {
+
+		if( this.project ) {
+			this.initLanguage     = this.project.get( 'defaultLanguage' )
+			this.projectLanguages =	Ext.create('Ext.data.Store', {
+				fields: [ 'name', 'id'],
+				data : this.project.getSupportedLanguages().data.items
+			})
+		}
 
 		Ext.applyIf( this, {
 			items: [
@@ -26,7 +35,7 @@ Ext.define('Spelled.view.asset.create.Translation', {
 					value: this.initLanguage,
 					allowBlank: false,
 					typeAhead: true,
-					store: 'Languages',
+					store: this.projectLanguages,
 					listeners: {
 						change: Ext.bind( this.changeLanguageHandler, this )
 					}

@@ -223,6 +223,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.menu.DatePicker": [
     "widget.datemenu"
   ],
+  "Spelled.model.assets.Translation": [],
   "Ext.form.field.Picker": [
     "widget.pickerfield"
   ],
@@ -499,6 +500,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.ComponentLoader": [],
   "Ext.EventObjectImpl": [],
+  "Spelled.controller.assets.Translations": [],
   "Ext.form.FieldAncestor": [],
   "Ext.chart.axis.Gauge": [
     "axis.gauge"
@@ -623,6 +625,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.scene.dependencies.StaticContextMenu": [
     "widget.staticlibraryitemcontextmenu"
   ],
+  "Spelled.store.asset.Translations": [],
   "Spelled.store.system.Defaults": [],
   "Ext.chart.MaskLayer": [],
   "Spelled.view.layout.Split": [
@@ -806,6 +809,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.container.AbstractContainer": [],
   "Spelled.view.template.component.attribute.SpriteSheet": [
     "widget.spelledspritesheetfield"
+  ],
+  "Spelled.view.asset.create.Translation": [
+    "widget.translationasset"
   ],
   "Ext.data.ArrayStore": [
     "store.array"
@@ -1121,6 +1127,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.util.Region": [],
   "Ext.draw.Draw": [],
   "Ext.fx.target.ElementCSS": [],
+  "Spelled.model.Language": [],
   "Spelled.abstract.model.Template": [],
   "Spelled.model.assets.KeyMapping": [],
   "Ext.grid.PagingScroller": [],
@@ -1168,6 +1175,7 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.systemtemplateinputlist"
   ],
   "Ext.dom.AbstractQuery": [],
+  "Spelled.store.Languages": [],
   "Spelled.model.assets.Sound": [],
   "Ext.selection.TreeModel": [
     "selection.treemodel"
@@ -1442,6 +1450,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.layout.Main": [],
   "Ext.fx.target.CompositeSprite": [],
   "Ext.menu.DatePicker": [],
+  "Spelled.model.assets.Translation": [],
   "Ext.form.field.Picker": [
     "Ext.form.Picker"
   ],
@@ -1644,6 +1653,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.ComponentLoader": [],
   "Ext.EventObjectImpl": [],
+  "Spelled.controller.assets.Translations": [],
   "Ext.form.FieldAncestor": [],
   "Ext.chart.axis.Gauge": [],
   "Ext.data.validations": [],
@@ -1730,6 +1740,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.layout.FormLayout"
   ],
   "Spelled.view.scene.dependencies.StaticContextMenu": [],
+  "Spelled.store.asset.Translations": [],
   "Spelled.store.system.Defaults": [],
   "Ext.chart.MaskLayer": [],
   "Spelled.view.layout.Split": [],
@@ -1874,6 +1885,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.panel.DD": [],
   "Ext.container.AbstractContainer": [],
   "Spelled.view.template.component.attribute.SpriteSheet": [],
+  "Spelled.view.asset.create.Translation": [],
   "Ext.data.ArrayStore": [],
   "Ext.window.Window": [
     "Ext.Window"
@@ -2076,6 +2088,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.util.Region": [],
   "Ext.draw.Draw": [],
   "Ext.fx.target.ElementCSS": [],
+  "Spelled.model.Language": [],
   "Spelled.abstract.model.Template": [],
   "Spelled.model.assets.KeyMapping": [],
   "Ext.grid.PagingScroller": [],
@@ -2107,6 +2120,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.data.Errors": [],
   "Spelled.view.template.system.Input": [],
   "Ext.dom.AbstractQuery": [],
+  "Spelled.store.Languages": [],
   "Spelled.model.assets.Sound": [],
   "Ext.selection.TreeModel": [],
   "Spelled.store.asset.Fonts": [],
