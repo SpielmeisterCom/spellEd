@@ -78,6 +78,12 @@ Ext.define('Spelled.view.library.menu.Buttons' ,{
 					action: "showCreateAsset",
 					type: 'keyToActionMap',
 					icon: 'images/icons/keyboard.png'
+				},
+				{
+					text: "Translation file",
+					action: "showCreateAsset",
+					type: 'translation',
+					icon: 'images/icons/asset-translation.png'
 				}
 			]
 		},

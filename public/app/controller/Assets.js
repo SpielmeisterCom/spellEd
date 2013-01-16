@@ -399,6 +399,9 @@ Ext.define('Spelled.controller.Assets', {
 			case this.TYPE_SOUND:
 				fieldSet.add( { xtype: 'soundasset' } )
 				break
+			case this.TYPE_TRANSLATION:
+				fieldSet.add( { xtype: 'translationasset', asset: asset } )
+				break
 		}
 	},
 

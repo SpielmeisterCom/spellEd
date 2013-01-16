@@ -1,0 +1,80 @@
+Ext.define('Spelled.view.asset.create.Translation', {
+    extend: 'Ext.container.Container',
+    alias: 'widget.translationasset',
+
+	initLanguage: 'en',
+
+	initComponent: function() {
+
+		Ext.applyIf( this, {
+			items: [
+				{
+					xtype: 'tool-documentation',
+					docString: "#!/guide/asset_type_translation",
+					width: 'null'
+				},
+				{
+					xtype: 'combo',
+					name: 'language',
+					fieldLabel: 'Select language',
+					queryMode: 'local',
+					displayField: 'name',
+					valueField: 'id',
+					forceSelection: true,
+					value: this.initLanguage,
+					allowBlank: false,
+					typeAhead: true,
+					store: 'Languages',
+					listeners: {
+						change: Ext.bind( this.changeLanguageHandler, this )
+					}
+				},
+				{
+					xtype: 'grid',
+					columns:[
+						{
+							text: 'Key',
+							dataIndex: 'key',
+							editor: {
+								allowBlank: false
+							}
+						},
+						{
+							text: 'Translation',
+							dataIndex: 'translation',
+							flex: 1,
+							editor: {
+								allowBlank: false
+							}
+						}
+					],
+					listeners: {
+						edit: Ext.bind( this.editHandler, this )
+					},
+					store: this.getAsset().getTranslationStore(),
+					plugins: [ 'cellediting' ]
+				}
+			]
+		})
+
+		this.callParent( arguments )
+
+		this.fireEvent( 'languageChange', this, this.initLanguage )
+	},
+
+	changeLanguageHandler: function( combo, newValue, oldValue ) {
+		this.fireEvent( 'languageChange', this, newValue )
+	},
+
+	getSelectedLanguage: function() {
+		return this.down( 'combo[name="language"]' ).getValue()
+	},
+
+	getAsset: function() {
+		return this.asset
+	},
+
+	editHandler: function( editor, e ) {
+		this.fireEvent( 'edit', this, this.getAsset(), e.field, e.value, e.originalValue )
+	}
+})
