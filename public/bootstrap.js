@@ -23,6 +23,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.tree.Panel": [
     "widget.treepanel"
   ],
+  "Spelled.view.template.component.attribute.Translation": [
+    "widget.spelledtranslationfield"
+  ],
   "Spelled.view.entity.HasTemplateHeader": [
     "widget.entityhastemplateheader"
   ],
@@ -1306,6 +1309,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.tree.TreePanel",
     "Ext.TreePanel"
   ],
+  "Spelled.view.template.component.attribute.Translation": [],
   "Spelled.view.entity.HasTemplateHeader": [],
   "Ext.data.Model": [
     "Ext.data.Record"

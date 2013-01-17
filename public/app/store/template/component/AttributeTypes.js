@@ -83,6 +83,10 @@ Ext.define('Spelled.store.template.component.AttributeTypes', {
         {
             "type":"spelledscript",
             "name":"assetId:script"
-        }
+        },
+		{
+			"type":"spelledtranslationfield",
+			"name":"assetId:translation"
+		}
 	]
 });
