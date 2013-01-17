@@ -4,6 +4,9 @@ Ext.define('Spelled.controller.Projects', {
 		'Spelled.view.project.Create',
 		'Spelled.view.project.Load',
 		'Spelled.view.project.Settings',
+		'Spelled.view.project.settings.General',
+		'Spelled.view.project.settings.Language',
+		'Spelled.view.project.settings.AddLanguage',
 
 		'Spelled.store.Projects',
 
@@ -13,7 +16,10 @@ Ext.define('Spelled.controller.Projects', {
     views: [
         'project.Create',
         'project.Load',
-		'project.Settings'
+		'project.Settings',
+		'project.settings.General',
+		'project.settings.Language',
+		'project.settings.AddLanguage'
     ],
 
     stores: [
@@ -52,14 +58,18 @@ Ext.define('Spelled.controller.Projects', {
 		Ext.EventManager.on( window, 'unload', this.projectCloseWarning, this)
 
         this.control({
+			'projectsettingsaddlanguage [action="addLanguage"]':{
+				click: this.addLanguage
+			},
 			'spelledmenu [action="showCreateProject"]': {
 				click: this.showCreateProject
 			},
 			'projectsettings [action="setProjectSettings"]': {
 				click: this.setProjectSettings
 			},
-			projectsettings: {
-				addLanguage: this.addLanguage
+			projectlanguagesettings: {
+				addLanguage: this.addLanguage,
+				showAddLanguage: this.showAddLanguageHandler
 			},
 			'spelledmenu [action="showLoadProject"]': {
 				click: this.showLoadProject
@@ -118,27 +128,38 @@ Ext.define('Spelled.controller.Projects', {
 		}
 	],
 
-	addLanguage: function( view, language ) {
-		var project   = view.down( 'form' ).getForm().getRecord(),
-			grid      = view.down( 'grid[name="supportedLanguage"]'),
+	showAddLanguageHandler: function(){
+		Ext.widget( 'projectsettingsaddlanguage' )
+	},
+
+	addLanguage: function( button ) {
+		var window    = button.up( 'window' ),
+			project   = this.application.getActiveProject(),
+			combo     = window.down( 'combo[name="language"]' ),
+			language  = combo.findRecordByValue( combo.getValue() ),
 			languages = project.getSupportedLanguages()
 
 		if( language && !languages.getById( language.getId() ) ) languages.add( language )
+
+		window.close()
 	},
 
 	setProjectSettings: function( button ) {
-		var window  = button.up( 'window' ),
-			form    = window.down( 'form' ),
-			project = form.getRecord(),
-			values  = form.getValues(),
-			config  = {}
+		var window        = button.up( 'window' ),
+			generalConfig = window.down( 'projectgeneralsettings' ),
+			languageConf  = window.down( 'projectlanguagesettings' ),
+			project       = generalConfig.getRecord(),
+			generalValues = generalConfig.getValues(),
+			languageValues = languageConf.getValues(),
+			config        = {}
 
 		config.screenSize = [
-			values.screenSizeX,
-			values.screenSizeY
+			parseInt( generalValues.screenSizeX, 10 ),
+			parseInt( generalValues.screenSizeY, 10)
 		]
 
-		config.defaultLanguage = values.defaultLanguage
+		config.quadTreeSize = parseInt( generalValues.quadTreeSize, 10 )
+		config.defaultLanguage = languageValues.defaultLanguage
 
 		project.set( 'config', config )
 		project.setDirty()
@@ -241,15 +262,23 @@ Ext.define('Spelled.controller.Projects', {
 		var project = this.application.getActiveProject()
 
 		if( project ) {
-			var view = Ext.widget( 'projectsettings' ),
-				config = project.get( 'config' ),
-				form = view.down( 'form' )
+			var view     = Ext.widget( 'projectsettings' ),
+				config   = project.get( 'config' ),
+				general  = view.down( 'projectgeneralsettings' ),
+				language = view.down( 'projectlanguagesettings'),
+				store    = project.getSupportedLanguages()
 
+			store.sort( 'name' )
+			language.down( 'combo[name="defaultLanguage"]' ).bindStore( store )
+			language.down( 'grid[name="supportedLanguages"]' ).reconfigure( store )
 
-			form.loadRecord( project )
-			form.getForm().setValues( config )
-			form.getForm().setValues( { screenSizeX: config.screenSize[0], screenSizeY: config.screenSize[1] } )
-			form.down( 'grid[name="supportedLanguages"]' ).reconfigure( project.getSupportedLanguages() )
+			general.loadRecord( project )
+			language.loadRecord( project )
+
+			general.getForm().setValues( config )
+			language.getForm().setValues( config )
+
+			general.getForm().setValues( { screenSizeX: config.screenSize[0], screenSizeY: config.screenSize[1] } )
 		}
 	},
 

@@ -65,6 +65,8 @@ Ext.define('Spelled.model.assets.Translation', {
 					language    = record.get( 'language' ) ,
 					translation = record.get( 'translation' )
 
+				if( !key || !language ) return
+
 				config[ key ] = config[ key ] || {}
 				config[ key ][ language ] = config[ key ][ language ] || {}
 				config[ key ][ language ] = translation

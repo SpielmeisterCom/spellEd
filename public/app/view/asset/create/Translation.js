@@ -10,7 +10,7 @@ Ext.define('Spelled.view.asset.create.Translation', {
 	initComponent: function() {
 
 		if( this.project ) {
-			this.initLanguage     = this.project.get( 'defaultLanguage' )
+			this.initLanguage     = this.project.get( 'config').defaultLanguage
 			this.projectLanguages =	Ext.create('Ext.data.Store', {
 				fields: [ 'name', 'id'],
 				data : this.project.getSupportedLanguages().data.items
@@ -30,11 +30,11 @@ Ext.define('Spelled.view.asset.create.Translation', {
 					fieldLabel: 'Select language',
 					queryMode: 'local',
 					displayField: 'name',
+					editable: false,
 					valueField: 'id',
 					forceSelection: true,
 					value: this.initLanguage,
 					allowBlank: false,
-					typeAhead: true,
 					store: this.projectLanguages,
 					listeners: {
 						change: Ext.bind( this.changeLanguageHandler, this )

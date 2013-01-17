@@ -400,7 +400,7 @@ Ext.define('Spelled.controller.Assets', {
 				fieldSet.add( { xtype: 'soundasset' } )
 				break
 			case this.TYPE_TRANSLATION:
-				fieldSet.add( { xtype: 'translationasset', asset: asset, project: this.application.getActiveProject() } )
+				if( asset ) fieldSet.add( { xtype: 'translationasset', asset: asset, project: this.application.getActiveProject() } )
 				break
 		}
 	},
