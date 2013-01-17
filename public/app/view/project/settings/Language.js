@@ -20,6 +20,7 @@ Ext.define('Spelled.view.project.settings.Language' ,{
 					},
 					{
 						xtype: 'grid',
+						name: 'supportedLanguages',
 						tbar: [ {
 								text: "Add",
 								icon: 'images/icons/add.png',
@@ -27,17 +28,21 @@ Ext.define('Spelled.view.project.settings.Language' ,{
 								handler: this.addHandler
 							}
 						],
-						name: 'supportedLanguages',
 						columns: {
 							items: [
 								{
 									text: "Supported languages",
-									dataIndex: "name"
+									dataIndex: "name",
+									flex: 1
+								},
+								{
+									xtype: 'actioncolumn',
+									width: 30,
+									icon: 'images/icons/wrench-arrow.png',
+									iconCls: 'x-hidden edit-action-icon',
+									handler: Ext.bind( this.handleEditClick, this)
 								}
-							],
-							defaults: {
-								flex: 1
-							}
+							]
 						}
 					}
 				]
@@ -45,6 +50,10 @@ Ext.define('Spelled.view.project.settings.Language' ,{
 		)
 
 		this.callParent( arguments )
+	},
+
+	handleEditClick: function( view, rowIndex, colIndex, item, e, record ) {
+		this.fireEvent( 'showContextMenu', record, e )
 	},
 
 	addHandler: function() {

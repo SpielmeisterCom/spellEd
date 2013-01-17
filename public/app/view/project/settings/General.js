@@ -46,6 +46,9 @@ Ext.define('Spelled.view.project.settings.General' ,{
 					xtype: 'numberfield',
 					name: 'quadTreeSize',
 					fieldLabel: 'Quad tree size',
+					decimalPrecision: 0,
+					minValue: 0,
+					value: 1048576,
 					anchor: '100%',
 					allowBlank: false
 				}
@@ -53,9 +56,5 @@ Ext.define('Spelled.view.project.settings.General' ,{
 		})
 
 		this.callParent( arguments )
-	},
-
-	addLanguageHandler: function( combo, newValue, oldValue ) {
-		this.fireEvent( 'addLanguage', this, combo.findRecordByValue( newValue ) )
 	}
 })

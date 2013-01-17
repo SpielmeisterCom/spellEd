@@ -10,7 +10,7 @@ Ext.define('Spelled.view.asset.create.Translation', {
 	initComponent: function() {
 
 		if( this.project ) {
-			this.initLanguage     = this.project.get( 'config').defaultLanguage
+			this.initLanguage     = this.project.getDefaultLanguageKey()
 			this.projectLanguages =	Ext.create('Ext.data.Store', {
 				fields: [ 'name', 'id'],
 				data : this.project.getSupportedLanguages().data.items

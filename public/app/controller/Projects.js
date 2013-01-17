@@ -7,6 +7,7 @@ Ext.define('Spelled.controller.Projects', {
 		'Spelled.view.project.settings.General',
 		'Spelled.view.project.settings.Language',
 		'Spelled.view.project.settings.AddLanguage',
+		'Spelled.view.project.settings.SupportedLanguageContextMenu',
 
 		'Spelled.store.Projects',
 
@@ -19,7 +20,8 @@ Ext.define('Spelled.controller.Projects', {
 		'project.Settings',
 		'project.settings.General',
 		'project.settings.Language',
-		'project.settings.AddLanguage'
+		'project.settings.AddLanguage',
+		'project.settings.SupportedLanguageContextMenu'
     ],
 
     stores: [
@@ -58,6 +60,14 @@ Ext.define('Spelled.controller.Projects', {
 		Ext.EventManager.on( window, 'unload', this.projectCloseWarning, this)
 
         this.control({
+			'supportedlanguagecontextmenu [action="remove"]': {
+				click: this.removeLanguage
+			},
+			'projectlanguagesettings grid[name="supportedLanguages"]': {
+				itemcontextmenu: this.showSupportedLanguageContextMenuHelper,
+				itemmouseenter: Ext.bind( this.application.showGridActionColumn, this.application ),
+				itemmouseleave: this.application.hideActions
+			},
 			'projectsettingsaddlanguage [action="addLanguage"]':{
 				click: this.addLanguage
 			},
@@ -69,6 +79,7 @@ Ext.define('Spelled.controller.Projects', {
 			},
 			projectlanguagesettings: {
 				addLanguage: this.addLanguage,
+				showContextMenu: this.showSupportedLanguageContextMenu,
 				showAddLanguage: this.showAddLanguageHandler
 			},
 			'spelledmenu [action="showLoadProject"]': {
@@ -128,6 +139,23 @@ Ext.define('Spelled.controller.Projects', {
 		}
 	],
 
+	removeLanguage: function( button ){
+		var view     = button.up( 'menu' ),
+			project  = this.application.getActiveProject(),
+			language = view.ownerView
+
+		project.getSupportedLanguages().remove( language )
+		this.application.fireEvent( 'removedLanguage', language )
+	},
+
+	showSupportedLanguageContextMenuHelper: function( view, record, item, index, e ) {
+		this.showSupportedLanguageContextMenu( record, e )
+	},
+
+	showSupportedLanguageContextMenu: function( record, e ) {
+		this.application.fireEvent( 'showcontextmenu', this.getProjectSettingsSupportedLanguageContextMenuView(), e, record )
+	},
+
 	showAddLanguageHandler: function(){
 		Ext.widget( 'projectsettingsaddlanguage' )
 	},
@@ -139,7 +167,10 @@ Ext.define('Spelled.controller.Projects', {
 			language  = combo.findRecordByValue( combo.getValue() ),
 			languages = project.getSupportedLanguages()
 
-		if( language && !languages.getById( language.getId() ) ) languages.add( language )
+		if( language && !languages.getById( language.getId() ) ) {
+			languages.add( language )
+			this.application.fireEvent( 'addedLanguage', language )
+		}
 
 		window.close()
 	},

@@ -53,9 +53,49 @@ Ext.define('Spelled.controller.assets.Translations', {
         })
 
 		this.application.on({
-			scope: this
+			scope: this,
+			addedLanguage: this.createLanguageTokens,
+			removedLanguage: this.removeLanguageTokens
 		})
     },
+
+	createLanguageTokens: function( language ) {
+		var store           = this.getAssetTranslationsStore(),
+			languageKey     = language.getId(),
+			defaultLanguage = this.application.getActiveProject().getDefaultLanguageKey()
+
+		store.each(
+			function( asset ) {
+				var translations = asset.getTranslationStore(),
+					keys         = translations.query( 'language', defaultLanguage )
+
+				keys.each(
+					function( translation ) {
+						var key = translation.get( 'key' )
+
+						translations.add( { key: key, language: languageKey, translation: '' } )
+					}
+				)
+
+				asset.updateTranslation()
+			}
+		)
+	},
+
+	removeLanguageTokens: function( language ) {
+		var store = this.getAssetTranslationsStore()
+
+		store.each(
+			function( asset ) {
+				var translations = asset.getTranslationStore(),
+					keys         = translations.query( 'language', language.getId() )
+
+				translations.remove( keys )
+
+				asset.updateTranslation()
+			}
+		)
+	},
 
 	editTranslation: function( view, asset, field, value, originalValue ) {
 		var store    = asset.getTranslationStore(),

@@ -42,6 +42,10 @@ Ext.define('Spelled.model.Project', {
 		}
 	],
 
+	getDefaultLanguageKey: function() {
+		return this.get( 'config' ).defaultLanguage
+	},
+
 	unDirty:function() {
 		this.dirty = false
 		this.getScenes().each( function( scene ){ scene.unDirty() } )

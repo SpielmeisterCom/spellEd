@@ -36,6 +36,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.controller.Menu": [],
   "Spelled.view.scene.plugin.SceneTreeDropZone": [],
+  "Spelled.view.project.settings.General": [
+    "widget.projectgeneralsettings"
+  ],
   "Ext.button.Button": [
     "widget.button"
   ],
@@ -633,6 +636,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.util.Observable": [],
   "Spelled.controller.templates.Systems": [],
+  "Spelled.view.project.settings.AddLanguage": [
+    "widget.projectsettingsaddlanguage"
+  ],
   "Spelled.view.menu.contextmenu.EntitiesFolderList": [
     "widget.entitiesfolderlistcontextmenu"
   ],
@@ -640,6 +646,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.util.LruCache": [],
   "Ext.dom.CompositeElement": [],
   "Ext.tip.Tip": [],
+  "Spelled.view.project.settings.SupportedLanguageContextMenu": [
+    "widget.supportedlanguagecontextmenu"
+  ],
   "Ext.grid.feature.RowWrap": [
     "feature.rowwrap"
   ],
@@ -740,6 +749,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.template.component.attribute.Sound": [
     "widget.spelledsoundfield"
+  ],
+  "Spelled.view.project.settings.Language": [
+    "widget.projectlanguagesettings"
   ],
   "Ext.layout.component.field.Text": [
     "layout.textfield"
@@ -1306,6 +1318,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.tab.Tab": [],
   "Spelled.controller.Menu": [],
   "Spelled.view.scene.plugin.SceneTreeDropZone": [],
+  "Spelled.view.project.settings.General": [],
   "Ext.button.Button": [
     "Ext.Button"
   ],
@@ -1746,6 +1759,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.layout.Split": [],
   "Ext.util.Observable": [],
   "Spelled.controller.templates.Systems": [],
+  "Spelled.view.project.settings.AddLanguage": [],
   "Spelled.view.menu.contextmenu.EntitiesFolderList": [],
   "Ext.resizer.BorderSplitterTracker": [],
   "Ext.util.LruCache": [],
@@ -1755,6 +1769,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.tip.Tip": [
     "Ext.Tip"
   ],
+  "Spelled.view.project.settings.SupportedLanguageContextMenu": [],
   "Ext.grid.feature.RowWrap": [],
   "Ext.data.proxy.Client": [
     "Ext.data.ClientProxy"
@@ -1843,6 +1858,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.menu.Menu": [],
   "Spelled.view.template.component.attribute.Sound": [],
+  "Spelled.view.project.settings.Language": [],
   "Ext.layout.component.field.Text": [],
   "Ext.data.DirectStore": [],
   "Spelled.view.template.component.attribute.Object": [],
