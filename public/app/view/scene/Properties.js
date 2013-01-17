@@ -9,8 +9,8 @@ Ext.define('Spelled.view.scene.Properties', {
 
 	defaults: {
 		flex: 1,
-		padding: 5,
-		width: '100%'
+		width: '100%',
+		hideHeaders: true
 	},
 
 	createFilterItem: function( type, label, checked ) {
@@ -61,74 +61,56 @@ Ext.define('Spelled.view.scene.Properties', {
 		Ext.applyIf( me, {
 			items: [
 				{
-					xtype: 'panel',
-
-					title: 'Scene dependencies',
-
-					layout: {
-						type: 'vbox',
-						align: 'center'
+					name: 'dynamic',
+					xtype: 'grid',
+					listeners: {
+						itemmouseenter : Ext.bind( me.actionColumnHandler, me, [ true ], 0 ),
+						itemmouseleave : Ext.bind( me.actionColumnHandler, me, [ false ], 0 ),
+						itemcontextmenu : Ext.bind( me.contextMenuHandler, me ),
+						itemdblclick : Ext.bind( me.doubleClickHandler, me )
 					},
-
-					defaults: {
-						flex: 1,
-						width: '100%',
-						hideHeaders: true
-					},
-					items: [
+					columns: [
 						{
-							name: 'dynamic',
-							xtype: 'grid',
-							listeners: {
-								itemmouseenter : Ext.bind( me.actionColumnHandler, me, [ true ], 0 ),
-								itemmouseleave : Ext.bind( me.actionColumnHandler, me, [ false ], 0 ),
-								itemcontextmenu : Ext.bind( me.contextMenuHandler, me ),
-								itemdblclick : Ext.bind( me.doubleClickHandler, me )
-							},
-							columns: [
-								{
-									dataIndex: 'type',
-									width: 25,
-									renderer: function( value, style, record ) {
-										style.tdCls += value + " library-img-icon"
+							dataIndex: 'type',
+							width: 25,
+							renderer: function( value, style, record ) {
+								style.tdCls += value + " library-img-icon"
 
-										var css = ( record.get( 'static' ) ) ? 'linked-icon' : ""
+								var css = ( record.get( 'static' ) ) ? 'linked-icon' : ""
 
-										return "<img src='" + Ext.BLANK_IMAGE_URL + "' class='" + css +"'/>"
-									}
+								return "<img src='" + Ext.BLANK_IMAGE_URL + "' class='" + css +"'/>"
+							}
+						},
+						{
+							text: 'Dynamic library items', dataIndex: 'libraryId', flex: 1
+						},
+						{
+							xtype: 'actioncolumn',
+							width: 30,
+							icon: 'images/icons/wrench-arrow.png',
+							iconCls: 'x-hidden edit-action-icon',
+							handler: Ext.bind( me.handleEditClick, me )
+						}
+					],
+					tbar: [
+						{
+							text: 'Add',
+							icon: 'images/icons/add.png',
+							menu: [
+								{
+									text: 'Single dependency', icon: 'images/icons/add.png',
+									handler: Ext.bind( me.handleAddClick, me, [ false ] )
 								},
 								{
-									text: 'Dynamic library items', dataIndex: 'libraryId', flex: 1
-								},
-								{
-									xtype: 'actioncolumn',
-									width: 30,
-									icon: 'images/icons/wrench-arrow.png',
-									iconCls: 'x-hidden edit-action-icon',
-									handler: Ext.bind( me.handleEditClick, me )
-								}
-							],
-							tbar: [
-								{
-									text: 'Add',
-									icon: 'images/icons/add.png',
-									menu: [
-										{
-											text: 'Single dependency', icon: 'images/icons/add.png',
-											handler: Ext.bind( me.handleAddClick, me, [ false ] )
-										},
-										{
-											text: 'Multiple dependencies', icon: 'images/icons/add.png',
-											handler: Ext.bind( me.handleAddClick, me, [ true ] )
-										}
-									]
-								},
-								{
-									text: 'Filter',
-									icon: 'images/icons/eye.png',
-									menu: filters
+									text: 'Multiple dependencies', icon: 'images/icons/add.png',
+									handler: Ext.bind( me.handleAddClick, me, [ true ] )
 								}
 							]
+						},
+						{
+							text: 'Filter',
+							icon: 'images/icons/eye.png',
+							menu: filters
 						}
 					]
 				}

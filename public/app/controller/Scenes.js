@@ -348,6 +348,7 @@ Ext.define('Spelled.controller.Scenes', {
 	showSceneProperties: function() {
 		var view = this.getScenePropertiesView().create()
 
+		this.getRightPanel().setTitle( 'Scene dependencies' )
 		this.getRightPanel().add( [ { xtype: 'label' , docString : '#!/guide/concepts_scenes'}, view ] )
 		this.updateScenePropertyPanel()
 	},
