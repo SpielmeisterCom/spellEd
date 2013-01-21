@@ -6,6 +6,8 @@ Ext.define('Spelled.view.project.Settings' ,{
 		'Ext.form.FieldContainer'
 	],
 
+    width: 300,
+
     title : 'Project settings',
     modal : true,
 	autoShow: true,

@@ -21,23 +21,23 @@ Ext.define('Spelled.view.project.settings.General' ,{
 					fieldLabel: "Screen size",
 					layout: 'hbox',
 					defaults: {
-						flex: 1,
 						hideLabel: true
 					},
 					items: [
 						{
 							xtype     : 'numberfield',
 							name      : 'screenSizeX',
-							margin    : '0 5 0 0',
+                            flex: 1,
 							allowBlank: false
 						},{
 							xtype :'displayfield',
 							value : 'x',
-							margin: '5 5 0 0'
+							margin: '5 5 0 5'
 						},
 						{
 							xtype     : 'numberfield',
 							name      : 'screenSizeY',
+                            flex: 1,
 							allowBlank: false
 						}
 					]
