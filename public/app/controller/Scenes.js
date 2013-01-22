@@ -880,17 +880,13 @@ Ext.define('Spelled.controller.Scenes', {
 		var cacheContent = Ext.amdModules.createCacheContent( toBeCached )
 
 		if( editorMode ) {
-			var scenes       = Ext.getStore( 'config.Scenes' ),
-				isObject     = Ext.isObject,
-				merge        = Ext.Array.merge,
-				getNamespace = Spelled.Converter.namespaceFromObject
+			var isObject     = Ext.isObject,
+				merge        = Ext.Array.merge
 
 			Ext.Object.each(
 				cacheContent,
 				function( key, value ) {
 					if( !isObject( value ) || value.type != "scene" ) return
-
-					var scene = scenes.findRecord( 'sceneId', getNamespace( value ) )
 
 					value.libraryIds = merge( value.libraryIds, scene.getStaticLibraryIds( true ) )
 				}
