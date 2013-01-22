@@ -39,7 +39,8 @@ Ext.define('Spelled.store.Library', {
 		var ids = []
 
 		var getLeafs = function( node ) {
-			if( node.isLeaf() ) ids.push( node.convertToDependencyObject() )
+			if( node.get( 'libraryId' ) && node.get( 'cls' ) != "folder" ) ids.push( node.convertToDependencyObject() )
+
 			node.eachChild( getLeafs )
 
 			return ids

@@ -4,6 +4,7 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 	closable: true,
 
 	autoShow: true,
+	modal: true,
 	multiple: false,
 
 	title: "Add a new library item to scene",
