@@ -17,6 +17,10 @@ Ext.define('Spelled.store.system.Defaults', {
 			executionGroupId: 'update'
 		},
 		{
+			systemId: 'spell.system.visibility',
+			executionGroupId: 'render'
+		},
+		{
 			systemId: 'spell.system.keyFrameAnimation',
 			executionGroupId: 'render'
 		},
