@@ -11,6 +11,13 @@ Ext.define( 'Spelled.Converter' ,{
 		}
 	},
 
+	namespaceFromObject: function( object ) {
+		var namespace = object.namespace,
+			name      = object.name
+
+		return ( !!namespace && namespace.length > 0 ) ? namespace +"."+ name : name
+	},
+
 	libraryIdsToModels: function( libraryIds ) {
 		var result        = [],
 			allLibraryIds = Ext.create( 'Ext.data.Store', {

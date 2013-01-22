@@ -12,10 +12,7 @@ Ext.define('Spelled.abstract.model.Model', {
 	},
 
 	generateIdentifier: function( object ) {
-		var namespace = object.namespace,
-			name      = object.name
-
-		return ( !!namespace && namespace.length > 0 ) ? namespace +"."+ name : name
+		return Spelled.Converter.namespaceFromObject( object )
 	},
 
 	createTreeNode: function( node ) {

@@ -67,16 +67,9 @@ Ext.define('Spelled.model.config.Scene', {
 		this.callParent( arguments )
 	},
 
-	getAssignedSystemDependencies: function() {
-		var systems = this.get( 'systems'),
-			ids     = [],
+	getAssignedSystemDependencies: function( systems ) {
+		var ids     = [],
 			store   = Ext.getStore( 'template.Systems' )
-
-		Ext.getStore( 'StaticLibraryDependencies' ).each(
-			function( item ){
-				if( item.get( 'debugOnly' ) === false ) ids.push( item.get( 'id' ) )
-			}
-		)
 
 		Ext.Object.each(
 			systems,
@@ -102,12 +95,28 @@ Ext.define('Spelled.model.config.Scene', {
 		return ids
 	},
 
-	getStaticLibraryIds: function() {
-		var	result   = [],
-			merge    = Ext.Array.merge,
-			systems  = this.get( 'systems' )
+	getStaticLibraryIds: function( debug ) {
+		var	result      = [],
+			systems     = Ext.clone( this.get( 'systems' ) ),
+			merge       = Ext.Array.merge,
+			systemStore = Ext.getStore( 'template.Systems')
 
-		result = merge( result, this.getAssignedSystemDependencies() )
+		systems.debug = []
+
+		Ext.getStore( 'StaticLibraryDependencies' ).each(
+			function( item ){
+				var id = item.get( 'id' )
+
+				if( debug || item.get( 'debugOnly' ) === false ) {
+					result.push( id )
+
+					var system = systemStore.findRecord( 'templateId', id )
+					if( system ) systems.debug.push( { id: id } )
+				}
+			}
+		)
+
+		result = merge( result, this.getAssignedSystemDependencies( systems ) )
 
 		this.getEntities().each(
 			function( entity ) {
