@@ -79,20 +79,17 @@ Ext.define('Spelled.model.config.Scene', {
 					function( item ) {
 						var system = store.findRecord( 'templateId', item.id )
 
-						if( system ){
-							ids.push( system.getFullName() )
-							system.getInput().each(
-								function( input ) {
-									ids.push( input.get( 'componentId' ) )
-								}
-							)
-						}
+						if( system ) Ext.Array.push( ids, system.getLibraryIds() )
 					}
 				)
 			}
 		)
 
 		return ids
+	},
+
+	getLibraryIds: function() {
+		return this.get( 'libraryIds' )
 	},
 
 	getStaticLibraryIds: function( debug ) {
@@ -128,7 +125,36 @@ Ext.define('Spelled.model.config.Scene', {
 	},
 
 	calculateDynamicIds: function( allLibraryItems, staticLibraryItems ) {
-		return Ext.Array.difference( allLibraryItems, staticLibraryItems )
+		var items   = Ext.Array.difference( allLibraryItems, staticLibraryItems),
+			library = Ext.getStore( 'Library' )
+
+//TODO: refactor and add asset dependency inserting
+		Ext.Array.each(
+			items,
+			function( item ) {
+				var node        = library.findByLibraryId( item ),
+					libraryItem = null
+
+				switch( node.get( 'cls' ) ) {
+					case 'component':
+						libraryItem = Ext.getStore( 'template.Components' ).getByTemplateId( item )
+						break
+					case 'entityTemplate':
+						libraryItem = Ext.getStore( 'template.Entities' ).getByTemplateId( item )
+						break
+					case 'scene':
+						libraryItem = Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', item )
+						break
+					case 'system':
+						libraryItem = Ext.getStore( 'template.Systems' ).getByTemplateId( item )
+						break
+				}
+
+				if( libraryItem ) Ext.Array.push( items, libraryItem.getLibraryIds() )
+			}
+		)
+
+		return items
 	},
 
 	getDynamicLibraryIds: function() {

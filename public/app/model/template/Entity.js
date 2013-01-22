@@ -56,6 +56,12 @@ Ext.define('Spelled.model.template.Entity', {
 		}
     },
 
+	getLibraryIds: function() {
+		var entity = Ext.create( 'Spelled.model.config.Entity', { templateId: this.getFullName() } )
+
+		return entity.getLibraryIds()
+	},
+
 	getChild: function( id ) {
 
 		var helperFunction = function( entity ) {

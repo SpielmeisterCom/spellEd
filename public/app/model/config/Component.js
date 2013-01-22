@@ -186,7 +186,7 @@ Ext.define('Spelled.model.config.Component', {
 			parents         = [],
 			config          = {}
 
-		if( !componentEntity.hasEntity || !componentEntity.hasEntity() ) return {}
+		if( !componentEntity || !componentEntity.hasEntity || !componentEntity.hasEntity() ) return {}
 
 		var owner         = componentEntity.getOwner(),
 			ownerIsEntity = !!owner.hasEntity

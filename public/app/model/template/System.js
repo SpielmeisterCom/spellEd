@@ -47,6 +47,21 @@ Ext.define('Spelled.model.template.System', {
         }
     },
 
+	getLibraryIds: function() {
+		var ids   = [ this.getFullName() ],
+			store = Ext.getStore( 'template.Components')
+
+		this.getInput().each(
+			function( input ) {
+				var cmp = store.getByTemplateId( input.get( 'componentId' ) )
+
+				Ext.Array.push( ids, cmp.getLibraryIds() )
+			}
+		)
+
+		return ids
+	},
+
 	destroy: function( options ) {
 		Spelled.StorageActions.destroy({ id: this.getAccordingJSFileName() } )
 

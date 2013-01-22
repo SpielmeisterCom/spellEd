@@ -35,6 +35,12 @@ Ext.define('Spelled.store.Library', {
 		)
 	},
 
+	findByLibraryId: function( libraryId ) {
+		var rootNode = this.getRootNode()
+
+		return rootNode.findChild( 'libraryId', libraryId, true )
+	},
+
 	getAllLibraryIds: function() {
 		var ids = []
 

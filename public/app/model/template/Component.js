@@ -36,6 +36,12 @@ Ext.define('Spelled.model.template.Component', {
 		reader: 'component'
 	},
 
+	getLibraryIds: function() {
+		var cmp = Ext.create( 'Spelled.model.config.Component', { templateId: this.getFullName() } )
+
+		return cmp.getLibraryIds()
+	},
+
 	getAttributeByName: function( name ) {
 		return this.getAttributes().findRecord( 'name', name )
 	},
