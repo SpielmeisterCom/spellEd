@@ -61,7 +61,10 @@ Ext.define('Spelled.model.config.Entity', {
 		var ids   = [],
 			merge = Ext.Array.merge
 
-		if( !this.isAnonymous() ) ids.push( this.get( 'templateId' ) )
+		if( !this.isAnonymous() ) {
+			ids.push( this.get( 'templateId' ) )
+			this.mergeChildren( this.getEntityTemplate() )
+		}
 
 		this.mergeWithTemplateConfig()
 
