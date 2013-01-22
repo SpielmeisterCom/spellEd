@@ -145,7 +145,7 @@ Ext.define('Spelled.model.config.Scene', {
 
 		if( Ext.Array.difference( newIds, libraryIds ).length > 0 ) {
 
-			this.set( 'libraryIds', newIds )
+			this.set( 'libraryIds', newIds.sort() )
 			this.setDirty()
 		}
 	},

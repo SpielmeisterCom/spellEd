@@ -327,6 +327,7 @@ Ext.define('Spelled.controller.Scenes', {
 				var libraryId = record.get( 'libraryId' )
 
 				libraryIds.push( libraryId )
+				libraryIds.sort()
 				store.add( record.data )
 			}
 		)
