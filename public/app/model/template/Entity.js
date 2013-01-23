@@ -56,10 +56,10 @@ Ext.define('Spelled.model.template.Entity', {
 		}
     },
 
-	getLibraryIds: function() {
+	getCalculatedDependencies: function() {
 		var entity = Ext.create( 'Spelled.model.config.Entity', { templateId: this.getFullName() } )
 
-		return entity.getLibraryIds()
+		return entity.getCalculatedDependencies()
 	},
 
 	getChild: function( id ) {

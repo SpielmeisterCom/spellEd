@@ -5,6 +5,8 @@ Ext.define('Spelled.model.Script', {
 
 	iconCls : "tree-script-icon",
 
+	mergeDependencies: true,
+
 	sortOrder: 310,
 
     proxy: {
@@ -64,6 +66,7 @@ Ext.define('Spelled.model.Script', {
         'type',
 		'path',
 		'content',
-	    'breakpoints'
+	    'breakpoints',
+		'dependencies'
     ]
 });

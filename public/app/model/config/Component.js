@@ -23,7 +23,7 @@ Ext.define('Spelled.model.config.Component', {
 		}
 	],
 
-	getLibraryIds: function() {
+	getCalculatedDependencies: function() {
 		var ids     = [ this.get( 'templateId' ) ],
 			library = Ext.getStore( 'Library'),
 			getter  = Spelled.Converter.internalAssetIdToMyAssetId
@@ -35,7 +35,7 @@ Ext.define('Spelled.model.config.Component', {
 					var myAssetId   = getter( value ),
 						libraryItem = library.findLibraryItemByLibraryId( myAssetId )
 
-					if( libraryItem ) Ext.Array.push( ids, libraryItem.getLibraryIds() )
+					if( libraryItem ) Ext.Array.push( ids, libraryItem.getCalculatedDependencies() )
 				}
 			}
 		)

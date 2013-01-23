@@ -29,6 +29,19 @@ Ext.define('Spelled.abstract.model.Model', {
 		)
 	},
 
+	updateDependencies: function() {
+		var oldDependencies = this.get( 'dependencies' ) || [],
+			newDependencies = this.getCalculatedDependencies(),
+			ArrayHelper     = Ext.Array
+
+		if( ArrayHelper.difference( oldDependencies, newDependencies ).length > 0 ) {
+			var allDependencies = ( this.mergeDependencies ) ? ArrayHelper.merge( oldDependencies,newDependencies ) : newDependencies
+
+			this.set( 'dependencies', ArrayHelper.unique( ArrayHelper.clean( allDependencies ) ).sort() )
+			this.setDirty()
+		}
+	},
+
 	getAccordingJSFileName: function() {
 		return this.get('id').replace( /\.json$/, ".js" )
 	}

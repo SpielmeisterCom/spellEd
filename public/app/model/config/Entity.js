@@ -57,7 +57,7 @@ Ext.define('Spelled.model.config.Entity', {
 		}
 	],
 
-	getLibraryIds: function(){
+	getCalculatedDependencies: function(){
 		var ids   = [],
 			merge = Ext.Array.merge
 
@@ -70,13 +70,13 @@ Ext.define('Spelled.model.config.Entity', {
 
 		this.getComponents().each(
 			function( component ) {
-				ids = merge( ids, component.getLibraryIds() )
+				ids = merge( ids, component.getCalculatedDependencies() )
 			}
 		)
 
 		this.getChildren().each(
 			function( entity ) {
-				ids = merge( ids, entity.getLibraryIds() )
+				ids = merge( ids, entity.getCalculatedDependencies() )
 			}
 		)
 

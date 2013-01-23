@@ -36,10 +36,10 @@ Ext.define('Spelled.model.template.Component', {
 		reader: 'component'
 	},
 
-	getLibraryIds: function() {
+	getCalculatedDependencies: function() {
 		var cmp = Ext.create( 'Spelled.model.config.Component', { templateId: this.getFullName() } )
 
-		return cmp.getLibraryIds()
+		return cmp.getCalculatedDependencies()
 	},
 
 	getAttributeByName: function( name ) {

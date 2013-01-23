@@ -9,11 +9,13 @@ Ext.define('Spelled.model.config.Scene', {
 
 	iconCls : "tree-scene-icon",
 
+	mergeDependencies: true,
+
     fields: [
 		{ name: 'type', type: 'string', defaultValue: 'scene' },
         'name',
 		'namespace',
-		'libraryIds',
+		'dependencies',
 		{ name: 'systems', type: 'object', defaultValue: { update: [], render: [] } }
     ],
 
@@ -56,7 +58,7 @@ Ext.define('Spelled.model.config.Scene', {
 	},
 
 	save: function() {
-		this.syncLibraryIds()
+		this.updateDependencies()
 
 		this.getEntities().each(
 			function( entity ) {
@@ -79,7 +81,7 @@ Ext.define('Spelled.model.config.Scene', {
 					function( item ) {
 						var system = store.findRecord( 'templateId', item.id )
 
-						if( system ) Ext.Array.push( ids, system.getLibraryIds() )
+						if( system ) Ext.Array.push( ids, system.getCalculatedDependencies() )
 					}
 				)
 			}
@@ -88,8 +90,8 @@ Ext.define('Spelled.model.config.Scene', {
 		return ids
 	},
 
-	getLibraryIds: function() {
-		return this.get( 'libraryIds' )
+	getCalculatedDependencies: function() {
+		return this.get( 'dependencies' )
 	},
 
 	getStaticLibraryIds: function( debug ) {
@@ -117,7 +119,7 @@ Ext.define('Spelled.model.config.Scene', {
 
 		this.getEntities().each(
 			function( entity ) {
-				result = merge( result, entity.getLibraryIds() )
+				result = merge( result, entity.getCalculatedDependencies() )
 			}
 		)
 
@@ -133,7 +135,7 @@ Ext.define('Spelled.model.config.Scene', {
 			function( item ) {
 				var libraryItem = library.findLibraryItemByLibraryId( item )
 
-				if( libraryItem ) Ext.Array.push( items, libraryItem.getLibraryIds() )
+				if( libraryItem ) Ext.Array.push( items, libraryItem.get( 'dependencies' ) )
 			}
 		)
 
@@ -141,22 +143,10 @@ Ext.define('Spelled.model.config.Scene', {
 	},
 
 	getDynamicLibraryIds: function() {
-		var libraryIds = this.get( 'libraryIds' ),
+		var libraryIds = this.get( 'dependencies' ),
 			staticIds  = this.getStaticLibraryIds()
 
 		return this.calculateDynamicIds( libraryIds, staticIds )
-	},
-
-	syncLibraryIds: function() {
-		var libraryIds = Ext.isArray( this.get( 'libraryIds' ) ) ? this.get( 'libraryIds' ) : [],
-			staticIds  = this.getStaticLibraryIds(),
-			newIds     = Ext.Array.merge( libraryIds, staticIds )
-
-		if( Ext.Array.difference( newIds, libraryIds ).length > 0 ) {
-
-			this.set( 'libraryIds', newIds.sort() )
-			this.setDirty()
-		}
 	},
 
 	checkForComponentChanges: function() {

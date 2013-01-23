@@ -13,6 +13,8 @@ Ext.define('Spelled.model.template.System', {
 		{ name: "config", type: "object" }
     ],
 
+	mergeDependencies: true,
+
 	associations: [
 		{
 			type: 'hasOne',
@@ -47,7 +49,7 @@ Ext.define('Spelled.model.template.System', {
         }
     },
 
-	getLibraryIds: function() {
+	getCalculatedDependencies: function() {
 		var ids   = [ this.getFullName() ],
 			store = Ext.getStore( 'template.Components')
 
@@ -55,7 +57,7 @@ Ext.define('Spelled.model.template.System', {
 			function( input ) {
 				var cmp = store.getByTemplateId( input.get( 'componentId' ) )
 
-				Ext.Array.push( ids, cmp.getLibraryIds() )
+				Ext.Array.push( ids, cmp.getCalculatedDependencies() )
 			}
 		)
 

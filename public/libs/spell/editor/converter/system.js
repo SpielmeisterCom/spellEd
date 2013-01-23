@@ -16,7 +16,7 @@ define(
 		 * @return {*}
 		 */
 		var toEngineFormat = function( system, config ) {
-			var attributes       = [ 'version', 'type' ],
+			var attributes       = [ 'version', 'type', 'dependencies' ],
 				includeNamespace = config && !!config.includeNamespace
 
 			if( includeNamespace ) attributes = _.union( attributes, [ 'name', 'namespace' ] )

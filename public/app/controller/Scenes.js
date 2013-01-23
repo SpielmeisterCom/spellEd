@@ -343,7 +343,7 @@ Ext.define('Spelled.controller.Scenes', {
 		var scene = this.application.getLastSelectedScene()
 
 		scenePropertyPanel.reconfigureStores( scene )
-		scene.syncLibraryIds()
+		scene.updateDependencies()
 	},
 
 	showSceneProperties: function() {
@@ -828,7 +828,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		iframe.destroy()
 
-		scene.syncLibraryIds()
+		scene.updateDependencies()
 		scene.checkForComponentChanges()
 
 		this.application.setRenderedScene( scene )

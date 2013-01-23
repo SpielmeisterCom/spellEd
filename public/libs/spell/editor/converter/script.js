@@ -16,7 +16,7 @@ define(
 		 * @return {*}
 		 */
 		var toEngineFormat = function( script ) {
-			return _.pick( script, 'version','type')
+			return _.pick( script, 'version','type', 'dependencies' )
 		}
 
 		return {

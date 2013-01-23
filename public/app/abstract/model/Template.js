@@ -9,6 +9,8 @@ Ext.define('Spelled.abstract.model.Template', {
 
 	extend: 'Ext.data.Model',
 
+	mergeDependencies: false,
+
 	mixins: {
 		abstractModel: 'Spelled.abstract.model.Model'
 	},
@@ -18,8 +20,15 @@ Ext.define('Spelled.abstract.model.Template', {
 	fields: [
 		{ name: 'type', type: 'string', defaultValue: 'entity' },
 		{ name: 'readonly', type: 'boolean', defaultValue: false },
-		{ name: 'engineInternal', type: 'boolean', defaultValue: false }
+		{ name: 'engineInternal', type: 'boolean', defaultValue: false },
+		{ name: 'dependencies', type: 'array' }
 	],
+
+	save: function() {
+		this.updateDependencies()
+
+		return this.callParent( arguments )
+	},
 
 	constructor: function() {
 		var params = arguments[0] || arguments[2]
