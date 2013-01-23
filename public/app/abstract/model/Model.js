@@ -34,7 +34,7 @@ Ext.define('Spelled.abstract.model.Model', {
 			newDependencies = this.getCalculatedDependencies(),
 			ArrayHelper     = Ext.Array
 
-		if( ArrayHelper.difference( oldDependencies, newDependencies ).length > 0 ) {
+		if( oldDependencies.length != newDependencies.length || ArrayHelper.difference( oldDependencies, newDependencies ).length > 0 ) {
 			var allDependencies = ( this.mergeDependencies ) ? ArrayHelper.merge( oldDependencies,newDependencies ) : newDependencies
 
 			this.set( 'dependencies', ArrayHelper.unique( ArrayHelper.clean( allDependencies ) ).sort() )

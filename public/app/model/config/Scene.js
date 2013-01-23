@@ -91,7 +91,7 @@ Ext.define('Spelled.model.config.Scene', {
 	},
 
 	getCalculatedDependencies: function() {
-		return this.get( 'dependencies' )
+		return this.getStaticLibraryIds()
 	},
 
 	getStaticLibraryIds: function( debug ) {
