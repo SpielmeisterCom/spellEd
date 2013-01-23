@@ -35,7 +35,10 @@ Ext.define('Spelled.model.config.Component', {
 					var myAssetId   = getter( value ),
 						libraryItem = library.findLibraryItemByLibraryId( myAssetId )
 
-					if( libraryItem ) Ext.Array.push( ids, libraryItem.getCalculatedDependencies() )
+					if( libraryItem ) {
+						ids.push( myAssetId )
+						Ext.Array.push( ids, libraryItem.getCalculatedDependencies() )
+					}
 				}
 			}
 		)

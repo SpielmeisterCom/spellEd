@@ -35,7 +35,7 @@ Ext.define('Spelled.model.Asset', {
     ],
 
 	getCalculatedDependencies: function() {
-		var ids = [ this.getFullName() ]
+		var ids = []
 
 		if( this.get( 'assetId' ) ) {
 			var myAssetId = Spelled.Converter.internalAssetIdToMyAssetId( this.get( 'assetId' ) )
