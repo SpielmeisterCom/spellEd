@@ -128,27 +128,10 @@ Ext.define('Spelled.model.config.Scene', {
 		var items   = Ext.Array.difference( allLibraryItems, staticLibraryItems),
 			library = Ext.getStore( 'Library' )
 
-//TODO: refactor and add asset dependency inserting
 		Ext.Array.each(
 			items,
 			function( item ) {
-				var node        = library.findByLibraryId( item ),
-					libraryItem = null
-
-				switch( node.get( 'cls' ) ) {
-					case 'component':
-						libraryItem = Ext.getStore( 'template.Components' ).getByTemplateId( item )
-						break
-					case 'entityTemplate':
-						libraryItem = Ext.getStore( 'template.Entities' ).getByTemplateId( item )
-						break
-					case 'scene':
-						libraryItem = Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', item )
-						break
-					case 'system':
-						libraryItem = Ext.getStore( 'template.Systems' ).getByTemplateId( item )
-						break
-				}
+				var libraryItem = library.findLibraryItemByLibraryId( item )
 
 				if( libraryItem ) Ext.Array.push( items, libraryItem.getLibraryIds() )
 			}

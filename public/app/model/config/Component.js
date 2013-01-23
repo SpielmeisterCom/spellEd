@@ -24,43 +24,18 @@ Ext.define('Spelled.model.config.Component', {
 	],
 
 	getLibraryIds: function() {
-		var ids        = [ this.get( 'templateId' ) ],
-			getStore   = Ext.getStore,
-			assetTypes = getStore( 'asset.Types'),
-			getAssetParts = function( id ) {
-				if( Ext.isString( id ) ){
-					var parts = id.split( ':' )
-
-					if( Ext.isArray( parts ) && parts.length > 1 ) {
-						return parts
-					}
-				}
-
-				return false
-			}
+		var ids     = [ this.get( 'templateId' ) ],
+			library = Ext.getStore( 'Library'),
+			getter  = Spelled.Converter.internalAssetIdToMyAssetId
 
 		Ext.Object.each(
 			this.getConfigMergedWithTemplateConfig(),
 			function( key, value ) {
-				if( key === "assetId" ) {
-					var assetParts = getAssetParts( value )
+				if( key === "assetId" && value ) {
+					var myAssetId   = getter( value ),
+						libraryItem = library.findLibraryItemByLibraryId( myAssetId )
 
-					if( assetParts ) {
-						var type       = assetTypes.findRecord( 'type', assetParts[ 0 ]),
-							assetStore = getStore( type.get( 'storeId' )),
-							asset      = assetStore.findRecord( 'internalAssetId', value )
-
-						if( asset ) {
-							//If assets have other assets assigned, we need to insert them too
-							if( asset.get( 'assetId' ) ) {
-								var additional = getAssetParts( asset.get( 'assetId' ) )
-
-								if( additional ) ids.push( additional.pop() )
-							}
-
-							ids.push( asset.getFullName() )
-						}
-					}
+					if( libraryItem ) Ext.Array.push( ids, libraryItem.getLibraryIds() )
 				}
 			}
 		)

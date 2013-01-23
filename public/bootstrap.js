@@ -683,6 +683,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.chart.Highlight": [],
   "Ext.state.Manager": [],
+  "Spelled.StoreHelper": [],
   "Spelled.view.asset.create.Sound": [
     "widget.soundasset"
   ],
@@ -1803,6 +1804,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.chart.Highlight": [],
   "Ext.state.Manager": [],
+  "Spelled.StoreHelper": [],
   "Spelled.view.asset.create.Sound": [],
   "Ext.util.Inflector": [],
   "Ext.grid.Panel": [

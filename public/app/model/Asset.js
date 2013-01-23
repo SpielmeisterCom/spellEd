@@ -34,6 +34,23 @@ Ext.define('Spelled.model.Asset', {
 		'name'
     ],
 
+	getLibraryIds: function() {
+		var ids = [ this.getFullName() ]
+
+		if( this.get( 'assetId' ) ) {
+			var myAssetId = Spelled.Converter.internalAssetIdToMyAssetId( this.get( 'assetId' ) )
+
+			if( myAssetId ) {
+				ids.push( myAssetId )
+
+				var asset = Ext.getStore( 'Library').findLibraryItemByLibraryId( myAssetId )
+				if( asset ) Ext.Array.push( ids, asset.getLibraryIds() )
+			}
+		}
+
+		return ids
+	},
+
 	destroy: function( options ) {
 		if( this.get( 'file' ) ) Spelled.StorageActions.destroy({ id: this.getAbsoluteFilePath() } )
 

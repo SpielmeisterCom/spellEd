@@ -1,6 +1,18 @@
 Ext.define( 'Spelled.Converter' ,{
 	singleton: true,
 
+	internalAssetIdToMyAssetId: function( internalAssetId ) {
+		if( Ext.isString( internalAssetId ) ){
+			var parts = internalAssetId.split( ':' )
+
+			if( Ext.isArray( parts ) && parts.length > 1 ) {
+				return parts.pop()
+			}
+		}
+
+		return false
+	},
+
 	convertValueForGrid: function( value ) {
 		if( Ext.isArray( value ) === true ) {
 			return "[" + value.toString() + "]"

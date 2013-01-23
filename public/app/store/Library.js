@@ -35,10 +35,38 @@ Ext.define('Spelled.store.Library', {
 		)
 	},
 
-	findByLibraryId: function( libraryId ) {
-		var rootNode = this.getRootNode()
+	getNodeByLibraryId: function( libraryId ) {
+		return this.getRootNode().findChild( 'libraryId', libraryId, true )
+	},
 
-		return rootNode.findChild( 'libraryId', libraryId, true )
+	findLibraryItemByLibraryId: function( libraryId ) {
+		var node   = this.getNodeByLibraryId( libraryId ),
+			result = null
+
+		if( node ) {
+			var type = node.get( 'cls' )
+
+			switch( type ) {
+				case 'component':
+					result = Ext.getStore( 'template.Components' ).getByTemplateId( libraryId )
+					break
+				case 'entityTemplate':
+					result = Ext.getStore( 'template.Entities' ).getByTemplateId( libraryId )
+					break
+				case 'scene':
+					result = Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', libraryId )
+					break
+				case 'system':
+					result = Ext.getStore( 'template.Systems' ).getByTemplateId( libraryId )
+					break
+				default:
+					var store = Spelled.StoreHelper.getAssetStoreByType( type )
+
+					if( store ) result = store.findRecord( 'myAssetId', libraryId )
+			}
+		}
+
+		return result
 	},
 
 	getAllLibraryIds: function() {

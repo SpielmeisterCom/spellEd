@@ -584,9 +584,7 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	getAssetStoreByType: function( type ) {
-		var info = this.getAssetTypesStore().findRecord( 'type', type )
-
-		return Ext.getStore( info.get( 'storeId' ) )
+		return Spelled.StoreHelper.getAssetStoreByType( type )
 	},
 
 	showConfigHelper: function( tree, node ) {
@@ -821,11 +819,9 @@ Ext.define('Spelled.controller.Assets', {
     },
 
 	getAssetByAssetId: function( assetId ) {
-		var type = assetId.split(':').shift()
+		var myAssetId   = Spelled.Converter.internalAssetIdToMyAssetId( assetId )
 
-		if( !type ) return
-
-		return this.getAssetStoreByType( type ).findRecord( 'internalAssetId', assetId )
+		return Ext.getStore( 'Library' ).findLibraryItemByLibraryId( myAssetId )
 	},
 
 	animationPreviewHelper: function( container, asset, entity ) {
