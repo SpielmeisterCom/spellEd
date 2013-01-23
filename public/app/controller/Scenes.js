@@ -300,7 +300,7 @@ Ext.define('Spelled.controller.Scenes', {
 	showAddToLibrary: function( gridView, multiple ) {
 		var scene = this.application.getLastSelectedScene()
 
-		Ext.widget( 'sceneaddlibraryid', { multiple: multiple, excludingIds: scene.get( 'libraryIds' ) } )
+		Ext.widget( 'sceneaddlibraryid', { multiple: multiple, excludingIds: scene.get( 'dependencies' ) } )
 	},
 
 	removeSceneLibraryItem: function( button ) {

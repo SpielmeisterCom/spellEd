@@ -62,7 +62,6 @@ Ext.define('Spelled.model.config.Entity', {
 			merge = Ext.Array.merge
 
 		if( !this.isAnonymous() ) {
-			ids.push( this.get( 'templateId' ) )
 			this.mergeChildren( this.getEntityTemplate() )
 		}
 
@@ -70,17 +69,19 @@ Ext.define('Spelled.model.config.Entity', {
 
 		this.getComponents().each(
 			function( component ) {
+				ids.push( this.get( 'templateId' ) )
 				ids = merge( ids, component.getCalculatedDependencies() )
 			}
 		)
 
 		this.getChildren().each(
 			function( entity ) {
+				ids.push( entity.get( 'templateId' ) )
 				ids = merge( ids, entity.getCalculatedDependencies() )
 			}
 		)
 
-		return ids
+		return Ext.Array.clean( ids )
 	},
 
 	getMessageData: function() {

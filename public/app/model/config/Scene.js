@@ -119,11 +119,12 @@ Ext.define('Spelled.model.config.Scene', {
 
 		this.getEntities().each(
 			function( entity ) {
+				result.push( entity.get( 'templateId' ) )
 				result = merge( result, entity.getCalculatedDependencies() )
 			}
 		)
 
-		return result
+		return Ext.Array.clean( result )
 	},
 
 	calculateDynamicIds: function( allLibraryItems, staticLibraryItems ) {
@@ -135,7 +136,7 @@ Ext.define('Spelled.model.config.Scene', {
 			function( item ) {
 				var libraryItem = library.findLibraryItemByLibraryId( item )
 
-				if( libraryItem ) Ext.Array.push( items, libraryItem.get( 'dependencies' ) )
+				if( libraryItem ) Ext.Array.push( items, libraryItem.getCalculatedDependencies() )
 			}
 		)
 

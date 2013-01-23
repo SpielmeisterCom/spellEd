@@ -24,7 +24,7 @@ Ext.define('Spelled.model.config.Component', {
 	],
 
 	getCalculatedDependencies: function() {
-		var ids     = [ this.get( 'templateId' ) ],
+		var ids     = [],
 			library = Ext.getStore( 'Library'),
 			getter  = Spelled.Converter.internalAssetIdToMyAssetId
 
@@ -40,7 +40,7 @@ Ext.define('Spelled.model.config.Component', {
 			}
 		)
 
-		return ids
+		return Ext.Array.clean( ids )
 	},
 
 	getAttributeByName: function( name ) {
