@@ -50,18 +50,18 @@ Ext.define('Spelled.model.template.System', {
     },
 
 	getCalculatedDependencies: function() {
-		var ids   = [ this.getFullName() ],
+		var ids   = [],
 			store = Ext.getStore( 'template.Components')
 
 		this.getInput().each(
 			function( input ) {
 				var cmp = store.getByTemplateId( input.get( 'componentId' ) )
-
+				ids.push( input.get( 'componentId' ) )
 				Ext.Array.push( ids, cmp.getCalculatedDependencies() )
 			}
 		)
 
-		return ids
+		return Ext.Array.clean( ids )
 	},
 
 	destroy: function( options ) {

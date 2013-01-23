@@ -81,13 +81,16 @@ Ext.define('Spelled.model.config.Scene', {
 					function( item ) {
 						var system = store.findRecord( 'templateId', item.id )
 
-						if( system ) Ext.Array.push( ids, system.getCalculatedDependencies() )
+						if( system ) {
+							ids.push( system.getFullName() )
+							Ext.Array.push( ids, system.getCalculatedDependencies() )
+						}
 					}
 				)
 			}
 		)
 
-		return ids
+		return Ext.Array.clean( ids )
 	},
 
 	getCalculatedDependencies: function() {
