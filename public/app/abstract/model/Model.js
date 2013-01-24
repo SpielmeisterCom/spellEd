@@ -30,7 +30,6 @@ Ext.define('Spelled.abstract.model.Model', {
 	},
 
 	fireDirtyEvent: function() {
-console.log( "wanne fire event " + this.getFullName() )
 		this.fireEvent( 'dirty', this )
 	},
 
@@ -43,7 +42,6 @@ console.log( "wanne fire event " + this.getFullName() )
 	},
 
 	updateDependencies: function() {
-console.log( "DepUp: "+ this.getFullName() )
 		var oldDependencies = this.get( 'dependencies' ) || [],
 			newDependencies = this.getCalculatedDependencies(),
 			ArrayHelper     = Ext.Array
