@@ -128,10 +128,11 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 	},
 
 	handleAddClick: function() {
+		var records = []
+
 		if( this.multiple ) {
 			var tree    = this.down( 'treepanel' ),
-				checked = tree.getChecked(),
-				records = []
+				checked = tree.getChecked()
 
 			Ext.Array.each(
 				checked,
@@ -140,11 +141,12 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 				}
 			)
 
-			this.fireEvent( 'addToLibrary', this, records )
 		} else {
 			var combo = this.down( 'combo[name="libraryId"]')
 
-			this.fireEvent( 'addToLibrary', this, [ combo.findRecordByValue( combo.getValue() ) ] )
+			records.push( combo.findRecordByValue( combo.getValue() ) )
 		}
+
+		this.fireEvent( 'addToLibrary', this, records )
 	}
 })

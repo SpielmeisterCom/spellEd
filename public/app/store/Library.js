@@ -59,6 +59,9 @@ Ext.define('Spelled.store.Library', {
 				case 'system':
 					result = Ext.getStore( 'template.Systems' ).getByTemplateId( libraryId )
 					break
+				case 'script':
+					result = Ext.getStore( 'script.Scripts' ).findRecord( 'scriptId', libraryId )
+					break
 				default:
 					var store = Spelled.StoreHelper.getAssetStoreByType( type )
 

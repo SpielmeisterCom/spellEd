@@ -5,13 +5,15 @@ Ext.define('Spelled.controller.Scripts', {
 		'Spelled.view.script.Create',
 		'Spelled.view.script.FolderPicker',
 		'Spelled.view.script.Editor',
-		'Spelled.store.script.Scripts'
+		'Spelled.store.script.Scripts',
+		'Spelled.view.script.Properties'
 	],
 
     views: [
         'script.Create',
         'script.FolderPicker',
-        'script.Editor'
+        'script.Editor',
+		'script.Properties'
     ],
 
     stores: [
@@ -69,10 +71,24 @@ Ext.define('Spelled.controller.Scripts', {
 				scriptbeforeclose : this.checkIfScriptIsDirty,
 				scriptcontextmenu : this.showListContextMenu,
 				savescriptpanel   : this.saveScriptInPanel,
+				scriptselect      : this.showScriptDependenciesHelper,
 				scope : this
 			}
 		)
     },
+
+	showScriptDependencies: function( script ) {
+		this.getRightPanel().setTitle( 'Script dependencies' )
+		this.getRightPanel().add( { xtype: 'scriptproperties', record: script } )
+	},
+
+	showScriptDependenciesHelper: function( tree, node ) {
+		var script = Ext.getStore( 'script.Scripts' ).getById( node.getId() )
+
+		if( script ) {
+			this.showScriptDependencies( script )
+		}
+	},
 
 	reRenderAce: function( panel ) {
 		panel.reRenderAce()

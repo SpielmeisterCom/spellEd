@@ -214,7 +214,7 @@ Ext.define('Spelled.controller.Scenes', {
 			'renderedscene > toolbar button[action="fullscreen"]': {
 				click: me.activateFullscreen
 			},
-			'sceneproperties': {
+			'spelldependencies': {
 				showStaticLibraryItemContextMenu: me.showStaticLibraryItemContextMenu,
 				showDynamicLibraryItemContextMenu: me.showDynamicLibraryItemContextMenu,
 				showActionColumns: Ext.bind( me.application.showGridActionColumn, me.application ),
@@ -298,59 +298,58 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	showAddToLibrary: function( gridView, multiple ) {
-		var scene = this.application.getLastSelectedScene()
+		var record = gridView.record
 
-		Ext.widget( 'sceneaddlibraryid', { multiple: multiple, excludingIds: scene.get( 'dependencies' ) } )
+		Ext.widget( 'sceneaddlibraryid', { multiple: multiple, excludingIds: record.getDependencies() } )
 	},
 
 	removeSceneLibraryItem: function( button ) {
-		var view   = button.up( 'menu'),
-			record = view.ownerView,
-			value  = record.get( 'libraryId' ),
-			scene  = this.application.getLastSelectedScene(),
-			store  = this.getSceneProperties().down( 'grid[name="dynamic"]' ).getStore()
+		var dependencyView = this.getRightPanel().down( 'spelldependencies' ),
+			view           = button.up( 'menu'),
+			recordToRemove = view.ownerView,
+			value          = recordToRemove.get( 'libraryId' ),
+			record         = dependencyView.record,
+			store          = dependencyView.down( 'grid[name="dependencies"]' ).getStore(),
+			dependencies   = record.get( 'dependencies' )
 
-		Ext.Array.remove( scene.get( 'dependencies' ), value )
-		scene.setDirty()
+		Ext.Array.remove( dependencies, value )
+		record.set( 'dependencies', dependencies )
+		record.setDirty()
 
 		store.remove( store.findRecord( 'libraryId', value ) )
 	},
 
 	addToLibrary: function( window, records ) {
-		var scene      = this.application.getLastSelectedScene(),
-			store      = this.getSceneProperties().down( 'grid[name="dynamic"]' ).getStore(),
-			libraryIds = scene.get( 'dependencies' )
+		var dependencyView = this.getRightPanel().down( 'spelldependencies' ),
+			record         = dependencyView.record,
+			dependencies   = record.get( 'dependencies' ),
+			library = Ext.getStore( 'Library' )
 
 		Ext.Array.each(
 			records,
 			function( record ) {
-				var libraryId = record.get( 'libraryId' )
+				var libraryId   = record.get( 'libraryId' ),
+					libraryItem = library.findLibraryItemByLibraryId( libraryId )
 
-				libraryIds.push( libraryId )
-				store.add( record.data )
+				dependencies.push( libraryId )
+
+				if( libraryItem ) Ext.Array.push( dependencies, libraryItem.getDependencies() )
 			}
 		)
 
-		scene.setDirty()
+		record.set( 'dependencies', dependencies )
+		record.setDirty()
 
-		this.getSceneProperties().filterHandler()
+		dependencyView.reconfigureStores()
 
 		window.close()
 	},
 
-	updateLibraryIdPropertyStores: function( scenePropertyPanel ) {
-		var scene = this.application.getLastSelectedScene()
-
-		scenePropertyPanel.reconfigureStores( scene )
-		scene.updateDependencies()
-	},
-
 	showSceneProperties: function() {
-		var view = this.getScenePropertiesView().create()
+		var view  = this.getScenePropertiesView().create( { record: this.application.getLastSelectedScene() } )
 
 		this.getRightPanel().setTitle( 'Scene dependencies' )
 		this.getRightPanel().add( [ { xtype: 'label' , docString : '#!/guide/concepts_scenes'}, view ] )
-		this.updateScenePropertyPanel()
 	},
 
 	selectEntityTreeItem: function( entityId ) {
@@ -665,12 +664,6 @@ Ext.define('Spelled.controller.Scenes', {
 		}
 
 		this.application.showActionColumnIcons( icons )
-	},
-
-	updateScenePropertyPanel: function() {
-		var panel = this.getSceneProperties()
-
-		if( panel ) this.updateLibraryIdPropertyStores( this.getSceneProperties() )
 	},
 
 	dispatchTreeClick: function( treePanel, record ) {

@@ -1,5 +1,5 @@
-Ext.define('Spelled.view.scene.Properties', {
+Ext.define('Spelled.view.script.Properties', {
     extend: 'Spelled.view.library.Dependencies',
 	requires: [ 'Spelled.view.library.Dependencies' ],
-    alias : 'widget.sceneproperties'
+    alias : 'widget.scriptproperties'
 })

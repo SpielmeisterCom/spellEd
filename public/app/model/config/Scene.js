@@ -130,29 +130,6 @@ Ext.define('Spelled.model.config.Scene', {
 		return Ext.Array.clean( result )
 	},
 
-	calculateDynamicIds: function( allLibraryItems, staticLibraryItems ) {
-		var items   = Ext.Array.difference( allLibraryItems, staticLibraryItems),
-			library = Ext.getStore( 'Library' )
-
-		Ext.Array.each(
-			items,
-			function( item ) {
-				var libraryItem = library.findLibraryItemByLibraryId( item )
-
-				if( libraryItem ) Ext.Array.push( items, libraryItem.getDependencies() )
-			}
-		)
-
-		return items
-	},
-
-	getDynamicLibraryIds: function() {
-		var libraryIds = this.get( 'dependencies' ),
-			staticIds  = this.getStaticLibraryIds()
-
-		return this.calculateDynamicIds( libraryIds, staticIds )
-	},
-
 	checkForComponentChanges: function() {
 		this.getEntities().each(
 			function( entity ) {

@@ -871,6 +871,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.template.component.attribute.Enum": [
     "widget.spelledenumfield"
   ],
+  "Spelled.view.script.Properties": [
+    "widget.scriptproperties"
+  ],
   "Ext.data.proxy.Direct": [
     "proxy.direct"
   ],
@@ -1191,6 +1194,9 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.systemtemplateinputlist"
   ],
   "Ext.dom.AbstractQuery": [],
+  "Spelled.view.library.Dependencies": [
+    "widget.spelldependencies"
+  ],
   "Spelled.store.Languages": [],
   "Spelled.model.assets.Sound": [],
   "Ext.selection.TreeModel": [
@@ -1944,6 +1950,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.form.Number"
   ],
   "Spelled.view.template.component.attribute.Enum": [],
+  "Spelled.view.script.Properties": [],
   "Ext.data.proxy.Direct": [
     "Ext.data.DirectProxy"
   ],
@@ -2142,6 +2149,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.data.Errors": [],
   "Spelled.view.template.system.Input": [],
   "Ext.dom.AbstractQuery": [],
+  "Spelled.view.library.Dependencies": [],
   "Spelled.store.Languages": [],
   "Spelled.model.assets.Sound": [],
   "Ext.selection.TreeModel": [],
