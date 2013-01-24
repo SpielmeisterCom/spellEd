@@ -324,7 +324,7 @@ Ext.define('Spelled.controller.Scenes', {
 		Ext.Array.each(
 			records,
 			function( record ) {
-				var libraryId = record.get( 'libraryIdlibraryId' )
+				var libraryId = record.get( 'libraryId' )
 
 				libraryIds.push( libraryId )
 				store.add( record.data )
@@ -697,6 +697,7 @@ Ext.define('Spelled.controller.Scenes', {
 				if( template ) this.application.fireEvent( 'showsystemtemplateconfig', template )
 				break
 			case this.TREE_ITEM_TYPE_SCRIPT:
+				this.showSceneProperties()
 				break
 		}
 	},

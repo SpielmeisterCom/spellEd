@@ -172,7 +172,7 @@ Ext.define('Spelled.view.scene.Properties', {
 	createStore: function( data ) {
 		return Ext.create( 'Ext.data.Store', {
 			fields: [ 'libraryId', 'id', 'type', 'sortOrder', 'static' ],
-			sorters: [ 'sortOrder' ],
+			sorters: [ 'sortOrder', 'libraryId' ],
 			data: data
 		})
 	},
