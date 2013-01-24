@@ -60,7 +60,7 @@ Ext.define('Spelled.model.Asset', {
 				ids.push( myAssetId )
 
 				var asset = Ext.getStore( 'Library').findLibraryItemByLibraryId( myAssetId )
-				if( asset ) Ext.Array.push( ids, asset.getCalculatedDependencies() )
+				if( asset ) Ext.Array.push( ids, asset.getDependencies() )
 			}
 		}
 

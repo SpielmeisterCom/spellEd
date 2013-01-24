@@ -57,7 +57,7 @@ Ext.define('Spelled.model.template.System', {
 			function( input ) {
 				var cmp = store.getByTemplateId( input.get( 'componentId' ) )
 				ids.push( input.get( 'componentId' ) )
-				Ext.Array.push( ids, cmp.getCalculatedDependencies() )
+				Ext.Array.push( ids, cmp.getDependencies() )
 			}
 		)
 

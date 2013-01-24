@@ -10,7 +10,7 @@ Ext.define('Spelled.model.config.Entity', {
 		'Spelled.abstract.model.Entity'
 	],
 
-	mixins: [ 'Spelled.abstract.model.Entity' ],
+	mixins: [ 'Spelled.abstract.model.Entity', 'Spelled.abstract.model.Model' ],
 
     fields: [
         'templateId',
@@ -70,14 +70,14 @@ Ext.define('Spelled.model.config.Entity', {
 		this.getComponents().each(
 			function( component ) {
 				ids.push( this.get( 'templateId' ) )
-				ids = merge( ids, component.getCalculatedDependencies() )
+				ids = merge( ids, component.getDependencies() )
 			}
 		)
 
 		this.getChildren().each(
 			function( entity ) {
 				ids.push( entity.get( 'templateId' ) )
-				ids = merge( ids, entity.getCalculatedDependencies() )
+				ids = merge( ids, entity.getDependencies() )
 			}
 		)
 

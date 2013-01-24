@@ -83,7 +83,7 @@ Ext.define('Spelled.model.config.Scene', {
 
 						if( system ) {
 							ids.push( system.getFullName() )
-							Ext.Array.push( ids, system.getCalculatedDependencies() )
+							Ext.Array.push( ids, system.getDependencies() )
 						}
 					}
 				)
@@ -123,7 +123,7 @@ Ext.define('Spelled.model.config.Scene', {
 		this.getEntities().each(
 			function( entity ) {
 				result.push( entity.get( 'templateId' ) )
-				result = merge( result, entity.getCalculatedDependencies() )
+				result = merge( result, entity.getDependencies() )
 			}
 		)
 
@@ -139,7 +139,7 @@ Ext.define('Spelled.model.config.Scene', {
 			function( item ) {
 				var libraryItem = library.findLibraryItemByLibraryId( item )
 
-				if( libraryItem ) Ext.Array.push( items, libraryItem.getCalculatedDependencies() )
+				if( libraryItem ) Ext.Array.push( items, libraryItem.getDependencies() )
 			}
 		)
 

@@ -576,6 +576,8 @@ Ext.define('Spelled.controller.Assets', {
 
 			this.application.fireEvent( 'assetchange', record )
 
+			record.setDirty()
+
             if( iframe)
 				this.application.sendDebugMessage( iframe.getId(), "library.updateAsset", { definition: record.toSpellEngineMessageFormat() } )
 		}

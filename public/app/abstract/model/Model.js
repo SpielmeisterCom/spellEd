@@ -34,6 +34,14 @@ console.log( "wanne fire event " + this.getFullName() )
 		this.fireEvent( 'dirty', this )
 	},
 
+	getDependencies: function() {
+		//TODO: should be changed if dependencies in spell are inserted
+		var oldDependencies = this.get( 'dependencies' ) || [],
+			newDependencies = this.getCalculatedDependencies()
+
+		return ( this.mergeDependencies ) ? Ext.Array.merge( oldDependencies, newDependencies ) : newDependencies
+	},
+
 	updateDependencies: function() {
 console.log( "DepUp: "+ this.getFullName() )
 		var oldDependencies = this.get( 'dependencies' ) || [],
