@@ -34,6 +34,10 @@ Ext.define('Spelled.model.Script', {
 		this.callParent( arguments )
 	},
 
+	getCalculatedDependencies: function() {
+		return []
+	},
+
 	listeners: {
 		idchanged: function() {
 			Spelled.StorageActions.read( { id: this.getAccordingJSFileName() },
@@ -45,7 +49,15 @@ Ext.define('Spelled.model.Script', {
 				this
 			)
 
+		},
+		dirty: function() {
+			this.updateDependencies()
 		}
+	},
+
+	setDirty: function() {
+		this.fireDirtyEvent()
+		this.callParent()
 	},
 
 	getFullName: function() {

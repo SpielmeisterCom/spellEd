@@ -310,7 +310,7 @@ Ext.define('Spelled.controller.Scenes', {
 			scene  = this.application.getLastSelectedScene(),
 			store  = this.getSceneProperties().down( 'grid[name="dynamic"]' ).getStore()
 
-		Ext.Array.remove( scene.get( 'libraryIds' ), value )
+		Ext.Array.remove( scene.get( 'dependencies' ), value )
 		scene.setDirty()
 
 		store.remove( store.findRecord( 'libraryId', value ) )
@@ -319,15 +319,14 @@ Ext.define('Spelled.controller.Scenes', {
 	addToLibrary: function( window, records ) {
 		var scene      = this.application.getLastSelectedScene(),
 			store      = this.getSceneProperties().down( 'grid[name="dynamic"]' ).getStore(),
-			libraryIds = scene.get( 'libraryIds' )
+			libraryIds = scene.get( 'dependencies' )
 
 		Ext.Array.each(
 			records,
 			function( record ) {
-				var libraryId = record.get( 'libraryId' )
+				var libraryId = record.get( 'libraryIdlibraryId' )
 
 				libraryIds.push( libraryId )
-				libraryIds.sort()
 				store.add( record.data )
 			}
 		)

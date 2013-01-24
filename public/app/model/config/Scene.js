@@ -172,6 +172,9 @@ Ext.define('Spelled.model.config.Scene', {
 				this
 			)
 
+		},
+		dirty: function() {
+			this.updateDependencies()
 		}
 	},
 
@@ -193,7 +196,7 @@ Ext.define('Spelled.model.config.Scene', {
 
 	setDirty: function() {
 		this.getProject().setDirty()
-
+		this.fireDirtyEvent()
 		this.callParent()
 	},
 

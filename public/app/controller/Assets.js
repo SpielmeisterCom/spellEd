@@ -374,6 +374,8 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	fieldRenderHelper: function( type, fieldSet, asset ) {
+		if( asset.isReadonly() ) return
+
 		switch( type ) {
 			case this.TYPE_ANIMATION:
 				fieldSet.add( { xtype: 'animationassetconfig' } )

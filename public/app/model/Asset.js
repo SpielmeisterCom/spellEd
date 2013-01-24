@@ -31,8 +31,24 @@ Ext.define('Spelled.model.Asset', {
 		{ name: 'type', type: 'string', defaultValue: 'asset' },
 		'subtype',
 		{ name: 'namespace', type: 'string', defaultValue: '' },
+		{ name: 'readonly', type: 'boolean', defaultValue: false },
 		'name'
     ],
+
+	listeners: {
+		dirty: function() {
+			this.updateDependencies()
+		}
+	},
+
+	isReadonly: function() {
+		return ( this.get('readonly') === true )
+	},
+
+	setDirty: function() {
+		this.fireDirtyEvent()
+		this.callParent()
+	},
 
 	getCalculatedDependencies: function() {
 		var ids = []

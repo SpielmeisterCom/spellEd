@@ -24,6 +24,17 @@ Ext.define('Spelled.abstract.model.Template', {
 		{ name: 'dependencies', type: 'array' }
 	],
 
+	listeners: {
+		dirty: function() {
+			this.updateDependencies()
+		}
+	},
+
+	setDirty: function() {
+		this.fireDirtyEvent()
+		this.callParent()
+	},
+
 	save: function() {
 		this.updateDependencies()
 

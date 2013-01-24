@@ -81,6 +81,9 @@ Ext.define('Spelled.model.template.System', {
 				this
 			)
 
+		},
+		dirty: function() {
+			this.updateDependencies()
 		}
 	},
 

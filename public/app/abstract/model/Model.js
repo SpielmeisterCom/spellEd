@@ -29,7 +29,13 @@ Ext.define('Spelled.abstract.model.Model', {
 		)
 	},
 
+	fireDirtyEvent: function() {
+console.log( "wanne fire event " + this.getFullName() )
+		this.fireEvent( 'dirty', this )
+	},
+
 	updateDependencies: function() {
+console.log( "DepUp: "+ this.getFullName() )
 		var oldDependencies = this.get( 'dependencies' ) || [],
 			newDependencies = this.getCalculatedDependencies(),
 			ArrayHelper     = Ext.Array
@@ -38,7 +44,8 @@ Ext.define('Spelled.abstract.model.Model', {
 			var allDependencies = ( this.mergeDependencies ) ? ArrayHelper.merge( oldDependencies, newDependencies ) : newDependencies
 
 			this.set( 'dependencies', ArrayHelper.unique( ArrayHelper.clean( allDependencies ) ).sort() )
-			this.setDirty()
+		} else {
+			this.set( 'dependencies', oldDependencies )
 		}
 	},
 

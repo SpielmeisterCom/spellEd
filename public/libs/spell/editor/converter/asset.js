@@ -9,7 +9,7 @@ define(
 		'use strict'
 
 		var toEngineFormat = function( asset ) {
-			var fields          = [ 'version', 'type', 'subtype', 'doc' ],
+			var fields          = [ 'version', 'type', 'subtype', 'doc', 'dependencies' ],
 				content         = _.pick( asset, fields ),
 				forbiddenFields = _.union( fields, [ 'myAssetId', 'internalAssetId', 'id', 'name', 'namespace', 'assetId', 'file' ] )
 
@@ -34,7 +34,7 @@ define(
 		}
 
 		var toEditorFormat = function( asset ) {
-			var preservedKeys = [ 'id', 'name', 'namespace', 'version', 'type', 'subtype' ],
+			var preservedKeys = [ 'id', 'name', 'namespace', 'version', 'type', 'subtype', 'dependencies', 'readonly' ],
 				result        = _.pick( asset, preservedKeys),
 				config        = asset.config || {}
 
