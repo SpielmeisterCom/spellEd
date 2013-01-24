@@ -225,6 +225,14 @@ Ext.define('Spelled.controller.templates.Systems', {
 		form.loadRecord( systemTemplate )
 		form.getForm().setValues( { tmpName: systemTemplate.getFullName() } )
 
+		var dependencyList = view.insert( 0, {
+			xtype: 'panel',
+			title: 'System dependencies',
+			margin: '0 0 5 0',
+			frame: true,
+			items: [ { xtype: 'spelldependencies', record: systemTemplate } ]
+		} )
+
 		if( this.getNavigator().getActiveTab() === this.getScenes() ) {
 			var node       = this.application.getLastSelectedNode( this.getScenesTree() ),
 				configView = Ext.widget( 'systemconfig', { source: node.systemConfig } )
@@ -234,6 +242,7 @@ Ext.define('Spelled.controller.templates.Systems', {
 
 		if( systemTemplate.isReadonly() ) {
 			inputView.disable()
+			dependencyList.disable()
 			this.application.getController( 'Templates' ).addDisabledTemplateHeader( view )
 		}
 		inputView.reconfigure( systemTemplate.getInput() )

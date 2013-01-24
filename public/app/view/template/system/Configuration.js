@@ -10,6 +10,7 @@ Ext.define('Spelled.view.template.system.Configuration', {
 	items: [
 		{
 			xtype: "systemtemplatedetails",
+			hidden: true,
 			flex: 1
 		},
 		{
