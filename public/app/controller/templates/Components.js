@@ -161,6 +161,8 @@ Ext.define('Spelled.controller.templates.Components', {
         componentTemplate.getAttributes().remove( attribute )
         store.remove( attribute )
 
+		componentTemplate.setDirty()
+
         this.refreshComponentTemplateAttributesList( tab )
     },
 
