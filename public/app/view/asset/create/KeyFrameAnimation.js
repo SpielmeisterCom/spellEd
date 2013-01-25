@@ -3,7 +3,10 @@ Ext.define('Spelled.view.asset.create.KeyFrameAnimation', {
     alias: 'widget.keyframeanimationconfig',
 
 	initComponent: function() {
-		var me    = this
+		var me    = this,
+			store = Ext.getStore( 'asset.KeyFrameAnimationPreviews' )
+
+		store.load()
 
 		Ext.applyIf( me, {
 			items: [
@@ -14,11 +17,18 @@ Ext.define('Spelled.view.asset.create.KeyFrameAnimation', {
 				},
 				{
 					xtype: 'assetidproperty',
-					queryMode: 'remote',
-					store: 'asset.KeyFrameAnimationPreviews',
+					queryMode: 'local',
+					store: store,
 					fieldLabel: 'Preview asset',
 					listeners: {
-						select: Ext.bind( me.onSelectAsset, this )
+						select: Ext.bind( me.onSelectAsset, this ),
+						added: function() {
+							this.getStore().load()
+						},
+						beforequery: function(qe){
+							qe.query = new RegExp(qe.query, 'i')
+							qe.forceAll = true
+						}
 					}
 				},
 				{
