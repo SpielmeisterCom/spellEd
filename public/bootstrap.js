@@ -605,6 +605,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.grid.feature.AbstractSummary": [
     "feature.abstractsummary"
   ],
+  "Spelled.view.library.menu.Filter": [
+    "widget.libraryfilterbutton"
+  ],
   "Ext.chart.axis.Category": [
     "axis.category"
   ],
@@ -1742,6 +1745,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.data.XmlReader"
   ],
   "Ext.grid.feature.AbstractSummary": [],
+  "Spelled.view.library.menu.Filter": [],
   "Ext.chart.axis.Category": [
     "Ext.chart.CategoryAxis"
   ],

@@ -12,13 +12,31 @@ Ext.define('Spelled.view.library.TreeList' ,{
 
     rootVisible: false,
 
-	tbar: [
-		{
-			text: 'Create',
-			icon: 'images/icons/add.png',
-			menu: { xtype: 'librarymenu' }
+	setNodeVisible: function( node, visible ) {
+		var el = Ext.fly( this.getView().getNodeByRecord( node ) )
+
+		if ( el != null ) {
+			el.setDisplayed( visible )
 		}
-	],
+	},
+
+	filterLibraryTree: function() {
+		this.down( 'libraryfilterbutton' ).filterHandler()
+	},
+
+	filterNodes: function( store, filters ) {
+		var me = this
+
+		store.getRootNode().cascadeBy( function() {
+			var type = this.get( 'iconCls' )
+
+			if( Ext.Array.contains( filters, type ) || "folder" == this.get( 'cls' )  ) {
+				me.setNodeVisible( this, true )
+			} else {
+				me.setNodeVisible( this, false )
+			}
+		})
+	},
 
 	initComponent: function() {
 		var me         = this,
@@ -27,6 +45,9 @@ Ext.define('Spelled.view.library.TreeList' ,{
 		Ext.applyIf( me, {
 				plugins:[ cellEditor ],
 				listeners: {
+					afteritemexpand : function() {
+						me.filterLibraryTree()
+					},
 					afterrender: function() {
 						cellEditor.removeManagedListener( cellEditor.view, 'celldblclick' )
 					},
@@ -36,7 +57,19 @@ Ext.define('Spelled.view.library.TreeList' ,{
 							return false
 						}
 					}
-				}
+				},
+				tbar: [
+					{
+						text: 'Create',
+						icon: 'images/icons/add.png',
+						menu: { xtype: 'librarymenu' }
+					},
+					{
+						xtype: 'libraryfilterbutton',
+						filterFn: Ext.bind( this.filterNodes, this ),
+						assetsOnly: false
+					}
+				]
 			}
 		)
 

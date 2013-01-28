@@ -13,50 +13,8 @@ Ext.define('Spelled.view.library.Dependencies', {
 		hideHeaders: true
 	},
 
-	createFilterItem: function( type, label, checked ) {
-		return  {
-			xtype: 'menucheckitem',
-			checked: checked,
-			libraryType: type,
-			listeners: {
-				render: function(comp) {
-					Ext.DomHelper.insertAfter(comp.getEl().down(".x-menu-item-icon"), {
-						tag: 'img',
-						src: Ext.BLANK_IMAGE_URL,
-						cls: type,
-						width: 16,
-						height: 16
-					})
-				},
-				afterrender: function(cmp){
-					cmp.textEl.setStyle({ 'vertical-align': "top", 'margin-left': '5px' })
-				}
-			},
-			checkHandler: Ext.bind( this.filterHandler, this ),
-			text: label
-		}
-	},
-
-	createFilterItemsHelper: function( storeId, checked ) {
-		var result = []
-
-		Ext.getStore( storeId ).each(
-			function( record ) {
-				result.push( this.createFilterItem( record.get( 'iconCls' ), record.get( 'name' ), checked ) )
-			},
-			this
-		)
-
-		return result
-	},
-
 	initComponent: function() {
-		var me      = this,
-			filters = Ext.Array.merge(
-				this.createFilterItemsHelper( 'asset.Types', true ),
-				this.createFilterItemsHelper( 'template.Types', false ),
-				[ this.createFilterItem( "tree-scene-icon", 'Scenes', false ) ]
-			)
+		var me      = this
 
 		Ext.applyIf( me, {
 			items: [
@@ -108,9 +66,7 @@ Ext.define('Spelled.view.library.Dependencies', {
 							]
 						},
 						{
-							text: 'Filter',
-							icon: 'images/icons/eye.png',
-							menu: filters
+							xtype: 'libraryfilterbutton'
 						}
 					]
 				}
@@ -120,25 +76,6 @@ Ext.define('Spelled.view.library.Dependencies', {
 		me.callParent( arguments )
 
 		this.reconfigureStores()
-	},
-
-	filterHandler: function(  ) {
-		var filters  = this.down( '[text="Filter"] > menu' ),
-			store    = this.down( 'grid' ).getStore(),
-			contains = Ext.Array.contains,
-			filterValues = []
-
-		store.clearFilter()
-
-		filters.items.each(
-			function( filter ) { if( filter.checked ) filterValues.push( filter.libraryType ) }
-		)
-
-		store.filterBy(
-			function( item ) { return contains( filterValues, item.get( 'type' ) ) }
-		)
-
-		store.sort()
 	},
 
 	doubleClickHandler: function( view, record ) {
@@ -183,7 +120,8 @@ Ext.define('Spelled.view.library.Dependencies', {
 		var record              = this.record,
 			staticDependencies  = record.getCalculatedDependencies(),
 			dynamicDependencies = Ext.Array.difference( record.getDependencies(), staticDependencies ),
-			store               = this.createStore( Spelled.Converter.libraryIdsToModels( staticDependencies ) )
+			store               = this.createStore( Spelled.Converter.libraryIdsToModels( staticDependencies )),
+			filter              = this.down( 'libraryfilterbutton' )
 
 		store.each(	function( item ) { item.set( 'static', true ) } )
 
@@ -191,6 +129,6 @@ Ext.define('Spelled.view.library.Dependencies', {
 
 		this.down( 'grid' ).reconfigure( store )
 
-		this.filterHandler()
+		filter.filterHandler()
 	}
 })
