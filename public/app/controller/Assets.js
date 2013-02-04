@@ -592,14 +592,11 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	showConfigHelper: function( tree, node ) {
-		var inspectorPanel = this.getRightPanel()
-
 		if( !node.isLeaf() ) return
 
 		var store = this.getAssetStoreByType( node.get( 'cls' ) ),
 			asset = store.getById( node.getId() )
 
-		inspectorPanel.removeAll()
 		this.showConfig( asset )
 	},
 

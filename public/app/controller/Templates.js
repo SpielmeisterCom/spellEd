@@ -110,22 +110,16 @@ Ext.define('Spelled.controller.Templates', {
 	showConfig: function( treeGrid, record ) {
 		switch( record.get('cls') ) {
 			case this.TEMPLATE_TYPE_ENTITY:
-				this.getRightPanel().removeAll()
 				this.application.fireEvent( 'showtemplatecomponents', record.getId() )
 				break
 			case this.TYPE_ENTITY_COMPOSITE:
-				this.getRightPanel().removeAll()
 				this.application.fireEvent( 'showcompositecomponents', record )
 				break
 			case this.TEMPLATE_TYPE_SYSTEM:
-				this.getRightPanel().removeAll()
 				var template = this.getTemplateSystemsStore().getById( record.getId() )
 				if( template ) this.application.fireEvent( 'showsystemtemplateconfig', template )
 				break
-			default:
-				return
 		}
-
 	},
 
     deleteTemplateAction: function( node ) {

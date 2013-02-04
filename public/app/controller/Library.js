@@ -320,6 +320,7 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	dispatchLibraryNodeSelect: function( tree, node ) {
+		this.getRightPanel().removeAll()
 
 		switch( this.getNodeType( node ) ) {
 			case this.TYPE_ASSET:
@@ -331,8 +332,6 @@ Ext.define('Spelled.controller.Library', {
 			case this.TYPE_SCRIPT:
 				this.application.fireEvent( 'scriptselect', tree, node )
 				break
-			default:
-				this.getRightPanel().removeAll()
 		}
 	},
 
