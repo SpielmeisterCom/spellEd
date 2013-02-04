@@ -91,26 +91,24 @@ Ext.define('Spelled.model.template.Entity', {
 	},
 
 	createTreeNode: function( node ) {
-		var entityNode = this.mixins.abstractModel.createTreeNode.call( this, node),
-			me         = this
-
+		var entityNode       = this.mixins.abstractModel.createTreeNode.call( this, node ),
+			sortOrder        = this.sortOrder,
+			markAsComposites = function( compositeNode ) {
+			compositeNode.set( 'cls', 'templateEntityComposite' )
+			compositeNode.set( 'sortOrder', sortOrder )
+			compositeNode.eachChild( markAsComposites )
+		}
 
 		this.getChildren().each( function( entity ) {
-			var childNode = entity.createTreeNode( node )
-			entityNode.appendChild( childNode )
+			var childNode = entity.createTreeNode( entityNode )
 
-			var markAsComposites = function( compositeNode ) {
-				compositeNode.set( 'cls', 'templateEntityComposite' )
-				compositeNode.set( 'sortOrder', me.sortOrder )
-
-				compositeNode.eachChild( function( item ) {
-					markAsComposites( item )
-				})
-			}
-			markAsComposites( childNode )
 			entityNode.set( 'leaf', false )
+
+			markAsComposites( childNode )
+
+			entityNode.appendChild( childNode )
 		})
 
-		node.appendChild( entityNode )
+		return entityNode
 	}
 });

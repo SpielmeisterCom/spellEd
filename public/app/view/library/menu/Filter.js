@@ -66,7 +66,16 @@ Ext.define('Spelled.view.library.menu.Filter', {
 			filterValues = []
 
 		filters.items.each(
-			function( filter ) { if( filter.checked ) filterValues.push( filter.libraryType ) }
+			function( filter ) {
+				if( filter.checked ) {
+					filterValues.push( filter.libraryType )
+
+					//TODO: find a solution for filtering "folders" like entity composites
+					if( filter.libraryType === 'tree-scene-entity-icon' ) {
+						Ext.Array.push( filterValues, [ 'tree-scene-entity-readonly-icon', 'tree-scene-entity-linked-icon' ] )
+					}
+				}
+			}
 		)
 
 		this.filterFn( store, filterValues )
