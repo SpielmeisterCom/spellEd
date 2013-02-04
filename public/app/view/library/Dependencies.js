@@ -117,6 +117,8 @@ Ext.define('Spelled.view.library.Dependencies', {
 	},
 
 	reconfigureStores: function() {
+		if( !this.record ) return
+
 		var record              = this.record,
 			staticDependencies  = record.getCalculatedDependencies(),
 			dynamicDependencies = Ext.Array.difference( record.getDependencies(), staticDependencies ),
