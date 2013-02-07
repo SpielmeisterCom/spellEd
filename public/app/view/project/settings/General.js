@@ -51,6 +51,12 @@ Ext.define('Spelled.view.project.settings.General' ,{
 					value: 1048576,
 					anchor: '100%',
 					allowBlank: false
+				},
+				{
+					xtype: 'textfield',
+					name: 'projectId',
+					fieldLabel: 'Project ID',
+					anchor: '100%'
 				}
 			]
 		})
