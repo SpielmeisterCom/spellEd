@@ -189,9 +189,9 @@ Ext.define('Spelled.controller.Projects', {
 			parseInt( generalValues.screenSizeY, 10)
 		]
 
-		config.quadTreeSize    = parseInt( generalValues.quadTreeSize, 10 )
-		config.defaultLanguage = languageValues.defaultLanguage
-		config.projectId       = generalValues.projectId
+		Ext.copyTo( config, generalValues, 'loadingScene,screenMode,projectId' )
+		config.quadTreeSize       = parseInt( generalValues.quadTreeSize, 10 )
+		config.defaultLanguage    = languageValues.defaultLanguage
 
 		project.set( 'config', config )
 		project.setDirty()

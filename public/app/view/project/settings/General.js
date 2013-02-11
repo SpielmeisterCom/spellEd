@@ -57,6 +57,32 @@ Ext.define('Spelled.view.project.settings.General' ,{
 					name: 'projectId',
 					fieldLabel: 'Project ID',
 					anchor: '100%'
+				},
+				{
+					xtype: 'combo',
+					queryMode: 'local',
+					store: {
+						fields: ['name'],
+						data : [
+							{ "name":"fit"},
+							{ "name":"fixed"}
+						]
+					},
+					name: 'screenMode',
+					displayField: 'name',
+					valueField: 'name',
+					fieldLabel: 'Screen mode',
+					anchor: '100%'
+				},
+				{
+					xtype: 'combo',
+					queryMode: 'local',
+					store: 'config.Scenes',
+					name: 'loadingScene',
+					fieldLabel: 'Loading scene',
+					anchor: '100%',
+					displayField: 'name',
+					valueField: 'name'
 				}
 			]
 		})
