@@ -71,9 +71,6 @@ Ext.define('Spelled.view.library.Dependencies', {
 									handler: Ext.bind( me.handleAddClick, me, [ true ] )
 								}
 							]
-						},
-						{
-							xtype: 'libraryfilterbutton'
 						}
 					]
 				}
@@ -126,7 +123,6 @@ Ext.define('Spelled.view.library.Dependencies', {
 		var record              = this.record,
 //			staticDependencies  = record.getCalculatedDependencies(),
 //			dynamicDependencies = Ext.Array.difference( record.getDependencies(), staticDependencies ),
-			filter              = this.down( 'libraryfilterbutton' ),
 			rootNode            = record.createDependencyNode()
 
 //		store.each(	function( item ) { item.set( 'static', true ) } )
@@ -135,7 +131,5 @@ Ext.define('Spelled.view.library.Dependencies', {
 		Spelled.Converter.addAdditionalInfoToDependencyNode( rootNode, true )
 		rootNode.expanded = true
 		this.down( 'treepanel' ).setRootNode( rootNode )
-
-		filter.filterHandler()
 	}
 })
