@@ -76,17 +76,14 @@ Ext.define('Spelled.model.config.Scene', {
 		Ext.Object.each(
 			systems,
 			function( key, value ) {
-				Ext.Array.each(
-					value,
-					function( item ) {
-						var system = store.findRecord( 'templateId', item.id )
+				for ( var j = 0, l = value.length; j < l; j++ ) {
+					var system = store.findRecord( 'templateId', value[j].id )
 
-						if( system ) {
-							ids.push( system.getFullName() )
-							Ext.Array.push( ids, system.getDependencies() )
-						}
+					if( system ) {
+						ids.push( system.getFullName() )
+						Ext.Array.push( ids, system.getDependencies() )
 					}
-				)
+				}
 			}
 		)
 
@@ -97,28 +94,45 @@ Ext.define('Spelled.model.config.Scene', {
 		return this.getStaticLibraryIds()
 	},
 
-	getStaticLibraryIds: function( debug ) {
-		var	result      = [],
-			systems     = Ext.clone( this.get( 'systems' ) ),
-			merge       = Ext.Array.merge,
+	addDebugSystems: function( debug ) {
+		var systems     = [],
 			systemStore = Ext.getStore( 'template.Systems')
-
-		systems.debug = []
 
 		Ext.getStore( 'StaticLibraryDependencies' ).each(
 			function( item ){
 				var id = item.get( 'id' )
 
 				if( debug || item.get( 'debugOnly' ) === false ) {
-					result.push( id )
-
 					var system = systemStore.findRecord( 'templateId', id )
-					if( system ) systems.debug.push( { id: id } )
+					if( system ) systems.push( { id: id } )
 				}
 			}
 		)
 
-		result = merge( result, this.getAssignedSystemDependencies( systems ) )
+		return systems
+	},
+
+	getStaticLibraryIds: function( debug ) {
+		var	result  = [],
+			systems = Ext.clone( this.get( 'systems' ) ),
+			merge   = Ext.Array.merge,
+			store   = Ext.getStore( 'template.Systems' )
+
+		systems.debug = this.addDebugSystems( debug )
+
+		Ext.Object.each(
+			systems,
+			function( key, value ) {
+				for ( var j = 0, l = value.length; j < l; j++ ) {
+					var system = store.findRecord( 'templateId', value[j].id )
+
+					if( system ) {
+						result.push( system.getFullName() )
+						Ext.Array.push( result, system.getDependencies() )
+					}
+				}
+			}
+		)
 
 		this.getEntities().each(
 			function( entity ) {
@@ -128,6 +142,36 @@ Ext.define('Spelled.model.config.Scene', {
 		)
 
 		return Ext.Array.clean( result )
+	},
+
+	createDependencyNode: function() {
+		var children = [],
+			systems  = Ext.clone( this.get( 'systems' ) ),
+			node     = { libraryId: this.getFullName(), children: children },
+			store    = Ext.getStore( 'template.Systems' )
+
+		systems.debug = this.addDebugSystems()
+
+		Ext.Object.each(
+			systems,
+			function( key, value ) {
+				for (var j = 0, l = value.length; j < l; j++) {
+					var system = store.findRecord( 'templateId', value[j].id )
+
+					if( system ) {
+						children.push( system.createDependencyNode() )
+					}
+				}
+			}
+		)
+
+		this.getEntities().each(
+			function( entity ) {
+				children.push( entity.createDependencyNode() )
+			}
+		)
+
+		return node
 	},
 
 	checkForComponentChanges: function() {

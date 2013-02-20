@@ -48,6 +48,29 @@ Ext.define('Spelled.model.config.Component', {
 		return Ext.Array.clean( ids )
 	},
 
+	createDependencyNode: function() {
+		var children = [],
+			node     = { libraryId: this.get( 'templateId' ), children: children },
+			library  = Ext.getStore( 'Library'),
+			getter   = Spelled.Converter.internalAssetIdToMyAssetId
+
+		Ext.Object.each(
+			this.getConfigMergedWithTemplateConfig(),
+			function( key, value ) {
+				if( key === "assetId" && value ) {
+					var myAssetId   = getter( value ),
+						libraryItem = library.findLibraryItemByLibraryId( myAssetId )
+
+					if( libraryItem ) {
+						children.push( libraryItem.createDependencyNode() )
+					}
+				}
+			}
+		)
+
+		return node
+	},
+
 	getAttributeByName: function( name ) {
 		return this.getTemplate().getAttributeByName( name )
 	},

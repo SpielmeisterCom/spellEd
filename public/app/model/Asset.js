@@ -67,6 +67,22 @@ Ext.define('Spelled.model.Asset', {
 		return ids
 	},
 
+	createDependencyNode: function() {
+		var children = [],
+			node     = { libraryId: this.getFullName(), children: children }
+
+		if( this.get( 'assetId' ) ) {
+			var myAssetId = Spelled.Converter.internalAssetIdToMyAssetId( this.get( 'assetId' ) )
+
+			if( myAssetId ) {
+				var asset = Ext.getStore( 'Library').findLibraryItemByLibraryId( myAssetId )
+				if( asset ) children.push( asset.createDependencyNode() )
+			}
+		}
+
+		return node
+	},
+
 	destroy: function( options ) {
 		if( this.get( 'file' ) ) Spelled.StorageActions.destroy({ id: this.getAbsoluteFilePath() } )
 

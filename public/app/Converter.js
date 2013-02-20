@@ -30,23 +30,66 @@ Ext.define( 'Spelled.Converter' ,{
 		return ( !!namespace && namespace.length > 0 ) ? namespace +"."+ name : name
 	},
 
-	libraryIdsToModels: function( libraryIds ) {
-		var result        = [],
-			allLibraryIds = Ext.create( 'Ext.data.Store', {
+	addAdditionalInfoToDependencyNode: function( node, static ) {
+		var allLibraryIds = Ext.create( 'Ext.data.Store', {
 			fields: [ 'id', 'libraryId', 'type', 'sortOrder' ],
 			data: Ext.getStore( 'Library' ).getAllLibraryIds()
-		})
+			})
 
-		Ext.Array.each(
-			libraryIds,
-			function( item ) {
-				var found = allLibraryIds.findRecord( 'libraryId', item )
+		var mergeChildren = function( targetChild, sourceChild ) {
+			var targetChildren = targetChild.children,
+				sourceChildren = sourceChild.children
 
-				if( found ) result.push( found )
+			for ( var u = 0, i = sourceChildren.length; u < i; u++ ) {
+				var item                 = sourceChildren[ u ],
+					entityChildLibraryId = item.libraryId,
+					exists               = false
+
+				for ( var j = 0, l = targetChildren.length; j < l; j++ ) {
+					var sourceItem = targetChildren[ j ]
+
+					if( sourceItem.libraryId == entityChildLibraryId && sourceItem.children.length == 0 ) {
+						exists = sourceItem
+						break
+					}
+				}
+
+				if( !exists ) {
+					targetChildren.push( item )
+				}
 			}
-		)
+		}
 
-		return result
+		var addInfo = function( childNode ) {
+			var found       = allLibraryIds.findRecord( 'libraryId', childNode.libraryId ),
+				children    = childNode.children,
+				tmp         = {},
+				newChildren = []
+
+			if( found ) childNode.iconCls = childNode.iconCls || found.get( 'type' )
+
+			for ( var j = 0, l = children.length; j < l; j++ ) {
+				var child         = children[ j ],
+					libraryId     = child.libraryId,
+					existingChild = tmp[ libraryId ]
+
+				if( !existingChild ) {
+					tmp[ libraryId ] = child
+					newChildren.push( child )
+				} else {
+					//Only for entities
+
+					mergeChildren( existingChild, child )
+					addInfo( existingChild )
+				}
+
+				addInfo( child )
+			}
+
+			childNode.children = newChildren
+		}
+
+		addInfo( node )
 	},
 
 	integerListFromString: function( list ) {

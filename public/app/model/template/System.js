@@ -64,6 +64,22 @@ Ext.define('Spelled.model.template.System', {
 		return Ext.Array.clean( ids )
 	},
 
+	createDependencyNode: function() {
+		var children = [],
+			node     = { libraryId: this.getFullName(), children: children },
+			store    = Ext.getStore( 'template.Components' ),
+			range    = this.getInput().getRange()
+
+		for ( var j = 0, l = range.length; j < l; j++ ) {
+			var input = range[j],
+				cmp   = store.getByTemplateId( input.get( 'componentId' ) )
+
+			children.push( cmp.createDependencyNode() )
+		}
+
+		return node
+	},
+
 	destroy: function( options ) {
 		Spelled.StorageActions.destroy({ id: this.getAccordingJSFileName() } )
 

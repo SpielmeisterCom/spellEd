@@ -62,6 +62,12 @@ Ext.define('Spelled.model.template.Entity', {
 		return entity.getCalculatedDependencies()
 	},
 
+	createDependencyNode: function() {
+		var entity = Ext.create( 'Spelled.model.config.Entity', { templateId: this.getFullName() } )
+
+		return entity.createDependencyNode()
+	},
+
 	getChild: function( id ) {
 
 		var helperFunction = function( entity ) {

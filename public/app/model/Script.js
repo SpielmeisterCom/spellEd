@@ -38,6 +38,10 @@ Ext.define('Spelled.model.Script', {
 		return []
 	},
 
+	createDependencyNode: function() {
+		return { libraryId: this.getFullName(), children:[] }
+	},
+
 	listeners: {
 		idchanged: function() {
 			Spelled.StorageActions.read( { id: this.getAccordingJSFileName() },

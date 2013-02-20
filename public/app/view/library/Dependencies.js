@@ -20,26 +20,33 @@ Ext.define('Spelled.view.library.Dependencies', {
 			items: [
 				{
 					name: 'dependencies',
-					xtype: 'grid',
+					xtype: 'treepanel',
+					animate: false,
+					animCollapse: false,
+
+					hideHeaders: true,
+					rootVisible: false,
 					listeners: {
 						itemmouseenter : Ext.bind( me.actionColumnHandler, me, [ true ], 0 ),
 						itemmouseleave : Ext.bind( me.actionColumnHandler, me, [ false ], 0 ),
 						itemcontextmenu : Ext.bind( me.contextMenuHandler, me ),
 						itemdblclick : Ext.bind( me.doubleClickHandler, me )
 					},
+					fields: [ 'libraryId', 'static' ],
 					columns: [
+//						{
+//							dataIndex: 'type',
+//							width: 25,
+//							renderer: function( value, style, record ) {
+//								style.tdCls += value + " library-img-icon"
+//
+//								var css = ( record.get( 'static' ) ) ? 'linked-icon' : ""
+//
+//								return "<img src='" + Ext.BLANK_IMAGE_URL + "' class='" + css +"'/>"
+//							}
+//						},
 						{
-							dataIndex: 'type',
-							width: 25,
-							renderer: function( value, style, record ) {
-								style.tdCls += value + " library-img-icon"
-
-								var css = ( record.get( 'static' ) ) ? 'linked-icon' : ""
-
-								return "<img src='" + Ext.BLANK_IMAGE_URL + "' class='" + css +"'/>"
-							}
-						},
-						{
+							xtype: 'treecolumn',
 							text: 'Dynamic library items', dataIndex: 'libraryId', flex: 1
 						},
 						{
@@ -120,16 +127,21 @@ Ext.define('Spelled.view.library.Dependencies', {
 		if( !this.record ) return
 
 		var record              = this.record,
-			staticDependencies  = record.getCalculatedDependencies(),
-			dynamicDependencies = Ext.Array.difference( record.getDependencies(), staticDependencies ),
-			store               = this.createStore( Spelled.Converter.libraryIdsToModels( staticDependencies )),
-			filter              = this.down( 'libraryfilterbutton' )
+//			staticDependencies  = record.getCalculatedDependencies(),
+//			dynamicDependencies = Ext.Array.difference( record.getDependencies(), staticDependencies ),
+//			store               = this.createStore( Spelled.Converter.libraryIdsToModels( staticDependencies )),
+			filter              = this.down( 'libraryfilterbutton' ),
+			rootNode            = record.createDependencyNode()
 
-		store.each(	function( item ) { item.set( 'static', true ) } )
+//		store.each(	function( item ) { item.set( 'static', true ) } )
+//		store.add( Spelled.Converter.libraryIdsToModels( dynamicDependencies ) )
+//		this.down( 'treepanel' ).reconfigure( store )
 
-		store.add( Spelled.Converter.libraryIdsToModels( dynamicDependencies ) )
+		console.log( rootNode )
 
-		this.down( 'grid' ).reconfigure( store )
+		Spelled.Converter.addAdditionalInfoToDependencyNode( rootNode, true )
+		rootNode.expanded = true
+		this.down( 'treepanel' ).setRootNode( rootNode )
 
 		filter.filterHandler()
 	}

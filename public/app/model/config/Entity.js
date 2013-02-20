@@ -84,6 +84,31 @@ Ext.define('Spelled.model.config.Entity', {
 		return Ext.Array.clean( ids )
 	},
 
+	createDependencyNode: function() {
+		var children = [],
+			node     = { iconCls: 'tree-scene-entity-icon', libraryId: this.get( 'templateId' ) || 'Anonymous', children: children }
+
+		if( !this.isAnonymous() ) {
+			this.mergeChildren( this.getEntityTemplate() )
+		}
+
+		this.mergeWithTemplateConfig()
+
+		this.getComponents().each(
+			function( component ) {
+				children.push( component.createDependencyNode() )
+			}
+		)
+
+		this.getChildren().each(
+			function( entity ) {
+				children.push( entity.createDependencyNode() )
+			}
+		)
+
+		return node
+	},
+
 	getMessageData: function() {
 		var data = Ext.amdModules.entityConverter.toEngineFormat( this.getData(true), { includeEntityIds: true } )
 
