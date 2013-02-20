@@ -280,9 +280,10 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	libraryDeepLinkHelper: function( button ) {
-		var view = button.up( 'menu' )
+		var view   = button.up( 'menu'),
+			record = Ext.getStore( 'Library' ).findLibraryItemByLibraryId( view.ownerView.get( 'libraryId' ) )
 
-		this.libraryDeepLink( view.ownerView )
+		this.libraryDeepLink( record )
 	},
 
 	libraryDeepLink: function( record ) {

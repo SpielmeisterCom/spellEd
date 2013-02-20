@@ -86,7 +86,8 @@ Ext.define('Spelled.view.library.Dependencies', {
 	},
 
 	doubleClickHandler: function( view, record ) {
-		this.fireEvent( 'deepLink', record )
+		var found = Ext.getStore( 'Library' ).findLibraryItemByLibraryId( record.get( 'libraryId' ) )
+		if( found ) this.fireEvent( 'deepLink', found )
 	},
 
 	contextMenuHandler: function( view, record, item, index, e, eOpts ) {
@@ -96,6 +97,8 @@ Ext.define('Spelled.view.library.Dependencies', {
 
 	handleEditClick: function( view, rowIndex, colIndex, item, e, record ) {
 		var isStatic = record.get( 'static' )
+
+		if( record.get( 'libraryId' ) == 'Anonymous' ) return
 
 		if( isStatic ) {
 			this.fireEvent( 'showStaticLibraryItemContextMenu', record, e )
@@ -109,18 +112,12 @@ Ext.define('Spelled.view.library.Dependencies', {
 	},
 
 	actionColumnHandler: function( show, grid, record, item ) {
+		if( record.get( 'libraryId' ) == 'Anonymous' ) return
+
 		if( show )
 			this.fireEvent( 'showActionColumns', grid, record, item )
 		else
 			this.fireEvent( 'hideActionColumns', grid, record, item )
-	},
-
-	createStore: function( data ) {
-		return Ext.create( 'Ext.data.Store', {
-			fields: [ 'libraryId', 'id', 'type', 'sortOrder', 'static' ],
-			sorters: [ 'sortOrder', 'libraryId' ],
-			data: data
-		})
 	},
 
 	reconfigureStores: function() {
@@ -129,14 +126,10 @@ Ext.define('Spelled.view.library.Dependencies', {
 		var record              = this.record,
 //			staticDependencies  = record.getCalculatedDependencies(),
 //			dynamicDependencies = Ext.Array.difference( record.getDependencies(), staticDependencies ),
-//			store               = this.createStore( Spelled.Converter.libraryIdsToModels( staticDependencies )),
 			filter              = this.down( 'libraryfilterbutton' ),
 			rootNode            = record.createDependencyNode()
 
 //		store.each(	function( item ) { item.set( 'static', true ) } )
-//		store.add( Spelled.Converter.libraryIdsToModels( dynamicDependencies ) )
-//		this.down( 'treepanel' ).reconfigure( store )
-
 		console.log( rootNode )
 
 		Spelled.Converter.addAdditionalInfoToDependencyNode( rootNode, true )
