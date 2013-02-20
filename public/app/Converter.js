@@ -30,7 +30,7 @@ Ext.define( 'Spelled.Converter' ,{
 		return ( !!namespace && namespace.length > 0 ) ? namespace +"."+ name : name
 	},
 
-	addAdditionalInfoToDependencyNode: function( node, static ) {
+	addAdditionalInfoToDependencyNode: function( node, isStatic ) {
 		var allLibraryIds = Ext.create( 'Ext.data.Store', {
 			fields: [ 'id', 'libraryId', 'type', 'sortOrder' ],
 			data: Ext.getStore( 'Library' ).getAllLibraryIds()
@@ -67,6 +67,8 @@ Ext.define( 'Spelled.Converter' ,{
 				newChildren = []
 
 			if( found ) childNode.iconCls = childNode.iconCls || found.get( 'type' )
+
+			childNode.static = isStatic
 
 			for ( var j = 0, l = children.length; j < l; j++ ) {
 				var child         = children[ j ],

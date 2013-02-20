@@ -121,14 +121,21 @@ Ext.define('Spelled.view.library.Dependencies', {
 		if( !this.record ) return
 
 		var record              = this.record,
-//			staticDependencies  = record.getCalculatedDependencies(),
-//			dynamicDependencies = Ext.Array.difference( record.getDependencies(), staticDependencies ),
-			rootNode            = record.createDependencyNode()
-
-//		store.each(	function( item ) { item.set( 'static', true ) } )
-		console.log( rootNode )
+			staticDependencies  = record.getCalculatedDependencies(),
+			dynamicDependencies = Ext.Array.difference( record.getDependencies(), staticDependencies ),
+			rootNode            = record.createDependencyNode(),
+			libraryStore        = Ext.getStore( 'Library' )
 
 		Spelled.Converter.addAdditionalInfoToDependencyNode( rootNode, true )
+
+		for ( var j = 0, l = dynamicDependencies.length; j < l; j++ ) {
+			var item = libraryStore.findLibraryItemByLibraryId( dynamicDependencies[ j ] ),
+				node = item.createDependencyNode()
+
+			rootNode.children.push( node )
+			Spelled.Converter.addAdditionalInfoToDependencyNode( node )
+		}
+
 		rootNode.expanded = true
 		this.down( 'treepanel' ).setRootNode( rootNode )
 	}
