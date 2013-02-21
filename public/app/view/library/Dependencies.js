@@ -32,7 +32,7 @@ Ext.define('Spelled.view.library.Dependencies', {
 						itemcontextmenu : Ext.bind( me.contextMenuHandler, me ),
 						itemdblclick : Ext.bind( me.doubleClickHandler, me )
 					},
-					fields: [ 'libraryId', 'static' ],
+					fields: [ 'libraryId', 'isStatic' ],
 					columns: [
 //						{
 //							dataIndex: 'type',
@@ -93,7 +93,7 @@ Ext.define('Spelled.view.library.Dependencies', {
 	},
 
 	handleEditClick: function( view, rowIndex, colIndex, item, e, record ) {
-		var isStatic = record.get( 'static' )
+		var isStatic = record.get( 'isStatic' )
 
 		if( record.get( 'libraryId' ) == 'Anonymous' ) return
 

@@ -68,7 +68,7 @@ Ext.define( 'Spelled.Converter' ,{
 
 			if( found ) childNode.iconCls = childNode.iconCls || found.get( 'type' )
 
-			childNode.static = isStatic
+			childNode.isStatic = isStatic
 
 			for ( var j = 0, l = children.length; j < l; j++ ) {
 				var child         = children[ j ],
