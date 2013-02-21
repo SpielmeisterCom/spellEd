@@ -1,12 +1,10 @@
 define(
 	'connect-extdirect/createExtDirectBackEnd',
 	[
-		'mongodb',
 		'querystring',
         'formidable'
 	],
 	function(
-		mongodb,
 		querystring,
         formidable
 	) {
@@ -91,36 +89,6 @@ define(
 					return that.apply(null, arguments);
 				};
 			});
-
-			function get_api(request, response)  {
-				var actions = {};
-				for (var act in remotingActions) {
-					actions[act] = [];
-					for (var m in remotingActions[act]) {
-						var cfg = remotingActions[act][m];
-						actions[act].push({
-							name: cfg.name,
-							len: cfg.len,
-							formHandler: cfg.form_handler
-						});
-					}
-				}
-				var config = {
-					'url'       : remotingUrl,
-					'namespace' : remotingNamespace,
-					'type'      : 'remoting',
-					'actions'   : actions
-				}
-
-				var api = [
-					'var Ext=Ext||{};' +
-					'Ext.app=Ext.app||{};' +
-					'Ext.app.REMOTING_API = ' + JSON.stringify( config )
-				].join( '/n' )
-
-				response.writeHead( 200, { 'Content-Type': 'text/javascript' } );
-				response.end( api );
-			}
 
 			function router(request, response, next) {
 
@@ -222,7 +190,6 @@ define(
 			}
 
 			return {
-				get_api : get_api,
 				router : router
 			}
 		}
