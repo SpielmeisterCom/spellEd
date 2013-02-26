@@ -286,12 +286,12 @@ Ext.define('Spelled.controller.Entities', {
 		target.setDirty()
 	},
 
-	sendEntityEventToEngine: function( type, payload ) {
-		if( this.application.isRenderedSceneLastSelectedScene() ) this.application.fireEvent( 'sendToEngine', type, payload )
+	sendEntityEventToEngine: function( type, payload, force ) {
+		if( this.application.isRenderedSceneLastSelectedScene() || force ) this.application.fireEvent( 'sendToEngine', type, payload )
 	},
 
 	removeEntityHelper: function( entity ) {
-		this.sendEntityEventToEngine( 'entity.remove', { entityId: entity.getId() } )
+		this.sendEntityEventToEngine( 'entity.remove', { entityId: entity.getId() }, true )
 
 		entity.getOwner().setDirty()
 		this.deleteEntity( entity )
