@@ -20,9 +20,6 @@ define(
 				if( req.url === '/router/' ) {
 					extDirectBackEnd.router( req, res, next )
 
-				} else if( req.url === '/api' ) {
-					extDirectBackEnd.get_api( req, res )
-
 				} else {
 					next()
 				}

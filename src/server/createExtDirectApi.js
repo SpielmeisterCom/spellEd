@@ -7,6 +7,10 @@ define(
         'server/extDirectApi/createUtil',
 		'server/extDirectApi/createStorageApi',
 
+		'spell/shared/build/exportDeploymentArchive',
+		'spell/shared/build/initializeProjectDirectory',
+		'spell/shared/build/isDevEnvironment',
+
         'underscore'
     ],
     function(
@@ -16,87 +20,128 @@ define(
         createUtil,
 		createStorageApi,
 
+		exportDeploymentArchive,
+		initializeProjectDirectory,
+		isDevEnvironment,
+
         _
     ) {
         'use strict'
 
+		var printErrors = function( errors ) {
+			var tmp = []
+			tmp = tmp.concat( errors )
 
-        return function( projectsRoot, buildServerOptions ) {
+			console.error( tmp.join( '\n' ) )
+		}
 
-			var exportDeployment = function( req, res, payload, next ) {
-				spellBuildServerWrapper( "exportDeployment", payload, req, res )
+		var writeResponse = function( status, res, data ) {
+			var data = data || ""
+
+			res.writeHead( status, {
+				'Content-type'  : 'application/json',
+				'Content-Length': data.length
+			} )
+
+			res.write( data )
+			res.end()
+		}
+
+		var createResponseData = function( method, payload, id ) {
+			var post_data = {
+				action : "ProjectActions",
+				method : method,
+				data   : payload,
+				type   : "rpc",
+				tid    : id
 			}
 
-			var initDirectory = function( req, res, payload, next ) {
-				spellBuildServerWrapper( "initDirectory", payload, req, res )
-			}
+			return JSON.stringify( post_data )
+		}
 
-			var spellBuildServerWrapper = function( method, payload, req, res ) {
-				var post_data = {
-						action : "ProjectActions",
-						method : method,
-						data   : payload,
-						type   : "rpc",
-						tid    : req.extDirectId
-					},
-					dataAsString = JSON.stringify( post_data )
+		/*
+		 * private
+		 */
 
-				buildServerOptions.headers = {
-					'Content-Type': 'application/json',
-					'Content-Length': dataAsString.length
+		/*
+		 * RPC call handler
+		 *
+		 * @param spellCorePath
+		 * @param projectsPath
+		 * @param req
+		 * @param res
+		 * @param payload
+		 * @param next
+		 * @return {*}
+		 */
+		var initDirectory = function( spellCorePath, projectsPath, isDevEnvironment, req, res, payload, next ) {
+			var projectName     = payload[ 0 ],
+				projectPath     = projectsPath + '/' + projectName,
+				projectFilePath = projectsPath + '/' + payload[ 1 ]
+
+			initializeProjectDirectory( spellCorePath, projectName, projectPath, projectFilePath, isDevEnvironment )
+
+			return writeResponse( 200, res, createResponseData( "initDirectory", payload, req.extDirectId ) )
+		}
+
+		/*
+		 * RPC call handler
+		 *
+		 * @param spellCorePath
+		 * @param projectsPath
+		 * @param req
+		 * @param res
+		 * @param payload
+		 * 	payload[ 0 ] : relative project path in projects directory
+		 * 	payload[ 1 ] : relative output file path in projects directory
+		 *
+		 * @param next
+		 * @return {*}
+		 */
+		var exportDeployment = function( spellCorePath, projectsPath, req, res, payload, next  ) {
+			var projectName    = payload[ 0 ],
+				outputFileName = payload[ 1 ],
+				projectPath    = path.join( projectsPath, path.normalize( projectName ) ),
+				outputFilePath = path.join( projectsPath, path.normalize( outputFileName ) )
+
+			var onComplete = function( errors ) {
+				if( errors &&
+					errors.length > 0 ) {
+
+					printErrors( errors )
+					writeResponse( 500, res )
+				} else {
+					writeResponse( 200, res, createResponseData( "exportDeployment", payload, req.extDirectId ) )
 				}
-
-				var post_req = http.request(
-					buildServerOptions,
-					function( response ) {
-						response.setEncoding( 'utf8' )
-
-						var data = ''
-
-						response.on( 'data', function ( chunk ) {
-							data += chunk
-						} )
-
-						response.on( 'end', function () {
-							var responseData = _.clone( post_data )
-							responseData.result = [ data ]
-							writeResponse( 200, res, JSON.stringify( responseData ) )
-						} )
-					}
-				)
-
-				post_req.on( 'error', function() {
-					writeResponse( 503, res )
-				} )
-
-				// post the data
-				post_req.write( dataAsString )
 			}
 
-			var writeResponse = function( status, res, data ) {
-				var data = data || ""
+			return exportDeploymentArchive( spellCorePath, projectPath, outputFilePath, onComplete )
+		}
 
-				res.writeHead( status, {
-					'Content-type'  : 'application/json',
-					'Content-Length': data.length
-				} )
-
-				res.write( data )
-				res.end()
-			}
-
+        return function( projectsRoot, spellCorePath ) {
             return {
-				StorageActions           : createStorageApi( projectsRoot ),
+				StorageActions    : createStorageApi( projectsRoot ),
 				SpellBuildActions : [
 					{
 						name: "initDirectory",
 						len: 2,
-						func: initDirectory
+						func: _.bind(
+							initDirectory,
+							null,
+							spellCorePath,
+							projectsRoot,
+							isDevEnvironment( spellCorePath )
+						)
 					},
 					{
 						name: "exportDeployment",
 						len: 2,
-						func: exportDeployment
+						func: _.bind(
+							exportDeployment,
+							null,
+							spellCorePath,
+							projectsRoot
+						)
 					}
 				]
             }

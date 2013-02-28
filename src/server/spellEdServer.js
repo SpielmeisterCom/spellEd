@@ -37,18 +37,10 @@ define(
 		    var startServerCommand = function( command ) {
 			    var errors                 = [],
 				    port                   = command.port || 3000,
-				    bport                  = command.bport || 8080,
 				    projectsPath           = path.resolve( cwd + ( command.projectsRoot ? '/' + command.projectsRoot : '/projects' ) ),
 					spellEngineModulesPath = path.resolve( projectsPath, '../modules' ),
-					nodeModulesPath        = path.resolve( projectsPath, '../node_modules' )
-
-				var buildServerOptions = {
-					host   : 'localhost',
-					port   : bport,
-					path   : '/router/',
-					method : 'POST'
-				}
-
+					nodeModulesPath        = path.resolve( projectsPath, '../node_modules' ),
+					spellCorePath          = path.resolve( spellPath, '../spellCore' )
 
 			    if( !fs.existsSync( projectsPath ) ) {
 				    errors.push( 'Error: No valid projects directory supplied. Unable to start spelled server. ' +
@@ -66,7 +58,7 @@ define(
 							extDirect(
 								'/router/',
 								'Spelled',
-								createExtDirectApi( projectsPath, buildServerOptions )
+								createExtDirectApi( projectsPath, spellCorePath )
 							)
 						)
 						.use(
@@ -108,7 +100,7 @@ define(
 
 				    http.Server( app ).listen( port )
 
-				    console.log( 'Server started on port ' + port + ' and will use project path ' + projectsPath + ' and connect to a build server at port ' + bport )
+				    console.log( 'Server started on port ' + port + ' and will use project path ' + projectsPath  )
 			    }
 		    }
 
@@ -119,7 +111,6 @@ define(
 		    commander
 			    .command( 'start-server' )
 			    .option( '-p, --port [port number]', 'the port the server runs on' )
-			    .option( '-b, --bport [port number]', 'the port the build server is listening' )
 			    .option( '-r, --projects-root [directory]', 'The path to the projects directory that contains the project directories. The default is the current working directory.' )
 			    .description( 'start the spelled server' )
 			    .action( startServerCommand )
