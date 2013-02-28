@@ -2,6 +2,7 @@
 
 PACKAGE_NAME=nw-package
 PUBLIC_FOLDER=$PACKAGE_NAME/public
+NODE_WEB_KIT_FOLDER=nodeWebKit
 
 echo "Deleting old package"
 rm -rf $PACKAGE_NAME
@@ -16,10 +17,9 @@ mkdir $PUBLIC_FOLDER
 echo "Copy files to package"
 cp -aR build/* $PUBLIC_FOLDER
 
-cp package.json $PACKAGE_NAME/.
+cp -aR $NODE_WEB_KIT_FOLDER/* $PACKAGE_NAME/.
 cp -aR src $PACKAGE_NAME
 
-#cp server $PACKAGE_NAME/.
 echo "Copy node modules files to package"
 cp -aR ../../node_modules $PACKAGE_NAME
 

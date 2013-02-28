@@ -1,7 +1,7 @@
 {
 	"name": "nw-spellEd",
 	"main": "http://localhost:3000",
-	"node-main": "src/server/spellEdNodeWebkitServer.js",
+	"node-main": "start_server.js",
 
 	"webkit": {
 		"plugin": true
