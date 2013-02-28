@@ -41,13 +41,6 @@ requirejs(
 
 		var app = connect()
 			.use(
-			function( req, res, next ) {
-				var url = req.url
-				console.log( url )
-				next()
-			}
-		)
-			.use(
 			extDirect(
 				'/router/',
 				'Spelled',
