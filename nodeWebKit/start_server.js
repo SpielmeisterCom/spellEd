@@ -1,9 +1,8 @@
 var requirejs = require( 'requirejs' ),
 	path      = require( 'path' ),
-	spellPath = path.resolve( process.cwd() , '..' )
+	spellPath = process.cwd()
 
 requirejs.config( {
-	baseUrl: spellPath + '/src',
 	nodeRequire: require
 } )
 
@@ -16,6 +15,16 @@ requirejs(
 		) {
 		'use strict'
 
-		childProcess.execFile( 'node', [ spellPath + '/src/server/webKit/spellEdServer.js' ] )
+		var child = childProcess.execFile( 'node', [ path.resolve( spellPath , 'src/server/webKit/spellEdServer.js' ) ], function (error, stdout, stderr) {
+			console.log('stdout: ' + stdout);
+			console.log('stderr: ' + stderr);
+			if (error !== null) {
+				console.log('exec error: ' + error);
+			}
+		} )
+
+		process.on( 'exit', function () {
+			child.kill()
+		})
 	}
 )

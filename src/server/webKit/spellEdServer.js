@@ -1,11 +1,16 @@
 var requirejs = require( 'requirejs' ),
 	path      = require( 'path' ),
-	spellPath = path.resolve( process.cwd() , '..' )
+	fs		  = require( 'fs' ),
+	spellPath = process.cwd(),
+	define    = requirejs.define
 
 requirejs.config( {
 	baseUrl: spellPath + '/src',
 	nodeRequire: require
 } )
+
+//load needed spell util scripts
+eval( fs.readFileSync( path.resolve( spellPath, 'spellCore/build/spell.util.js' ), 'utf8' ) )
 
 requirejs(
 	[
@@ -28,23 +33,16 @@ requirejs(
 		) {
 		'use strict'
 
-		var port                   = 3000,
-			bport                  = 8080,
-			projectsPath           = path.resolve( spellPath , '../../projects' )
-
-		var buildServerOptions = {
-			host   : 'localhost',
-			port   : bport,
-			path   : '/router/',
-			method : 'POST'
-		}
+		var port          = 3000,
+			projectsPath  = path.resolve( spellPath , '../../../projects' ),
+			spellCorePath = path.resolve( spellPath, 'spellCore' )
 
 		var app = connect()
 			.use(
 			extDirect(
 				'/router/',
 				'Spelled',
-				createExtDirectApi( projectsPath, buildServerOptions )
+				createExtDirectApi( projectsPath, spellCorePath )
 			)
 		)
 			.use(
