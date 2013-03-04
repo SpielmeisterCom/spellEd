@@ -438,6 +438,7 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	changeAspectRatio: function( field, newValue, oldValue ) {
+		this.sendChangeToEngine( 'settings.setScreenMode', newValue === 0 ? 'fill' : 'fit' )
 		this.sendChangeToEngine( 'settings.simulateScreenAspectRatio', { aspectRatio: newValue } )
 	},
 
@@ -849,9 +850,16 @@ Ext.define('Spelled.controller.Scenes', {
 			panel.down( '[action="toggleGrid"]' ).pressed
 		)
 
+		var aspectRatio = panel.down( '[name="aspectRatioSelector"]' ).getValue()
+
+		this.sendChangeToEngine(
+			'settings.setScreenMode',
+			aspectRatio === 0 ? 'fill' : 'fit'
+		)
+
 		this.sendChangeToEngine(
 			'settings.simulateScreenAspectRatio',
-			{ aspectRatio : panel.down( '[name="aspectRatioSelector"]' ).getValue() }
+			{ aspectRatio : aspectRatio }
 		)
 
 		this.sendChangeToEngine(
