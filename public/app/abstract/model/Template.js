@@ -36,7 +36,7 @@ Ext.define('Spelled.abstract.model.Template', {
 	},
 
 	save: function() {
-		this.updateDependencies()
+		if( !this.phantom ) this.updateDependencies()
 
 		return this.callParent( arguments )
 	},
