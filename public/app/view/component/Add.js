@@ -31,12 +31,17 @@ Ext.define('Spelled.view.component.Add' ,{
 					dataIndex: 'text'
 				},
 				{
-					xtype: 'templatecolumn',
 					hidden: true,
 					text: "Component group",
-					tpl: '({group})',
+					renderer: function( value ) {
+						var store  = Ext.getStore( 'grouping.Components' ),
+							record = store.findRecord( 'name', value),
+							name   = ( record ) ? record.get( 'name' ) : 'No Group assigned'
+
+						return ( record && record.get( 'icon' ) ) ?  '<img src="' + record.get( 'icon' ) + '"/>' + name : name
+					},
 					dataIndex: 'group',
-					sortable: false
+					sortable: true
 				}
 			],
 			rootVisible: false

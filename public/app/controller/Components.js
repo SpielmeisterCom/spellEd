@@ -285,7 +285,6 @@ Ext.define('Spelled.controller.Components', {
 						config = {
 							text      : text,
 							id        : component.getId(),
-							group     : componentTemplate.get( 'group' ),
 							leaf      : false
 						}
 
