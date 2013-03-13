@@ -105,6 +105,11 @@ Ext.define('Spelled.controller.Projects', {
 					button.up('window').close()
 					this.showLoadProject()
 				}
+			},
+			'spelledconfigure': {
+				loadProjects: function() {
+					this.application.loadProjects()
+				}
 			}
         })
 
@@ -275,8 +280,7 @@ Ext.define('Spelled.controller.Projects', {
 				this.loadProject( projectName )
 
 			} catch( e ) {
-				Ext.state.Manager.clear( 'projectName' )
-				Ext.create( 'Spelled.view.ui.StartScreen' ).show()
+				this.showStartScreen()
 			}
 
 		} else {

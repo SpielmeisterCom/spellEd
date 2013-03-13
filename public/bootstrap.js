@@ -944,6 +944,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.asset.create.Animation": [
     "widget.animationassetconfig"
   ],
+  "Spelled.view.ui.SpelledConfiguration": [
+    "widget.spelledconfigure"
+  ],
   "Ext.direct.RemotingEvent": [
     "direct.rpc"
   ],
@@ -2004,6 +2007,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.SplitButton"
   ],
   "Spelled.view.asset.create.Animation": [],
+  "Spelled.view.ui.SpelledConfiguration": [],
   "Ext.direct.RemotingEvent": [],
   "Ext.dd.DropTarget": [],
   "Ext.draw.Sprite": [],

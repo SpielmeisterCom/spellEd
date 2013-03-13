@@ -395,16 +395,13 @@ var startApplication = function() {
 			)
 		},
 
-		launch: function() {
-			var loadingComplete = function() {
-				Ext.get('loading').remove()
-				Ext.get('loading-mask').fadeOut( {
-					remove: true
-				} )
+		showSpellEdConfig: function() {
+			Ext.state.Manager.clear( 'projectsPath' )
+			Ext.create( 'Spelled.view.ui.SpelledConfiguration' ).show()
+		},
 
-				Ext.create('Spelled.view.ui.SpelledViewport')
-				var stateProvider = Ext.create( 'Ext.state.CookieProvider')
-				Ext.state.Manager.setProvider( stateProvider )
+		loadProjects: function() {
+			var loadingComplete = function() {
 				this.getController( 'Projects').loadLastProject()
 			}
 
@@ -415,6 +412,37 @@ var startApplication = function() {
 			Ext.getStore( 'Projects' ).load({
 				callback: loadingComplete,
 				scope: this
+			})
+		},
+
+		launch: function() {
+			var me = this,
+				stateProvider = Ext.create( 'Ext.state.CookieProvider')
+
+			Ext.state.Manager.setProvider( stateProvider )
+			Ext.get('loading').remove()
+			Ext.get('loading-mask').fadeOut( {
+				remove: true
+			} )
+
+			Ext.create( 'Spelled.view.ui.SpelledViewport' )
+
+			Ext.Ajax.request({
+				url: 'setSpelledConfig',
+				params: {
+					peek: true
+				},
+				success: function(){
+					var projectsPath = stateProvider.get( 'projectsPath' )
+
+					if( !projectsPath )
+						me.showSpellEdConfig()
+					else
+						me.loadProjects()
+				},
+				failure: function() {
+					me.loadProjects()
+				}
 			})
 		}
 	} )

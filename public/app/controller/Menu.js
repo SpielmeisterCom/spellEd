@@ -16,7 +16,8 @@ Ext.define('Spelled.controller.Menu', {
 		'Spelled.view.doc.Tool',
 		'Spelled.view.ui.SpelledConsole',
 		'Spelled.view.ui.SpelledRightPanel',
-		'Spelled.view.ui.StartScreen'
+		'Spelled.view.ui.StartScreen',
+		'Spelled.view.ui.SpelledConfiguration'
 	],
 
     views: [
@@ -35,7 +36,8 @@ Ext.define('Spelled.controller.Menu', {
 		'doc.Tool',
         'ui.SpelledConsole',
 		'ui.SpelledRightPanel',
-        'ui.StartScreen'
+        'ui.StartScreen',
+		'ui.SpelledConfiguration'
     ],
 
 	refs: [
