@@ -9,6 +9,7 @@ Ext.define('Spelled.model.template.Component', {
 
     fields: [
         "namespace",
+		{ name: 'group', type: 'string', defaultValue: 'General' },
 		{ name: 'title', type: 'string', defaultValue: "" },
 		{ name: 'icon', type: 'string', defaultValue: '' },
 		"doc",
@@ -53,17 +54,20 @@ Ext.define('Spelled.model.template.Component', {
 	},
 
     appendOnTreeNode: function( node ) {
+		var me = this
 
         this.getAttributes().each( function( attribute ) {
 			if( attribute.isEngineInternal() ) return
-            node.appendChild(
-                node.createNode ( {
-                    text      : attribute.get('name'),
-                    id        : attribute.getId(),
-					iconCls   : "tree-component-attribute-icon",
-                    leaf      : true
-                } )
-            )
+
+			var newNode = node.createNode ( {
+				text      : attribute.get('name'),
+				id        : attribute.getId(),
+				iconCls   : "tree-component-attribute-icon",
+				leaf      : true
+			} )
+
+			newNode.set( 'group', me.get( 'group' ) )
+            node.appendChild( newNode )
         })
 
         return node

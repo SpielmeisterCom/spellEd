@@ -9,7 +9,9 @@ Ext.define('Spelled.controller.Components', {
 		'Spelled.store.config.Components',
 		'Spelled.view.component.property.Contextmenu',
 		'Spelled.abstract.grid.property.Grid',
+		'Spelled.abstract.view.GroupedTreeList',
 		'Spelled.store.property.Mappings',
+		'Spelled.store.grouping.Components',
 		'Spelled.Converter',
 		'Spelled.Compare'
 	],
@@ -27,8 +29,9 @@ Ext.define('Spelled.controller.Components', {
     ],
 
     stores: [
-       'config.Components',
-		'property.Mappings'
+    	'config.Components',
+		'property.Mappings',
+		'grouping.Components'
     ],
 
 	refs: [
@@ -255,6 +258,7 @@ Ext.define('Spelled.controller.Components', {
 		)
 
 		this.appendComponentsAttributesOnTreeNode( rootNode, notAssignedComponents )
+		view.down( 'groupedtree' ).groupTreeNodes()
 
 		rootNode.eachChild(
 			function( node ) {
@@ -281,14 +285,15 @@ Ext.define('Spelled.controller.Components', {
 						config = {
 							text      : text,
 							id        : component.getId(),
+							group     : componentTemplate.get( 'group' ),
 							leaf      : false
 						}
 
 					if( !Ext.isEmpty( componentTemplate.get('icon') ) ) config.icon = componentTemplate.get( 'icon' )
 					else config.iconCls = "tree-component-icon"
 
-					var newNode = node.createNode ( config )
-
+					var newNode = node.createNode( config )
+					newNode.set( 'group', componentTemplate.get( 'group' ) )
 					componentTemplate.appendOnTreeNode( newNode )
 
 					node.appendChild( newNode )

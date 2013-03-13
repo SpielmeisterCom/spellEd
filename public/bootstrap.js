@@ -118,6 +118,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.panel.Proxy": [],
   "Ext.ComponentManager": [],
   "Ext.fx.target.Target": [],
+  "Spelled.store.grouping.Components": [],
   "Ext.grid.feature.GroupingSummary": [
     "feature.groupingsummary"
   ],
@@ -343,6 +344,9 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.datepicker"
   ],
   "Ext.tree.ViewDragZone": [],
+  "Spelled.abstract.view.GroupedTreeView": [
+    "widget.groupedtreeview"
+  ],
   "Spelled.view.menu.contextmenu.SystemTemplateInputList": [
     "widget.systemtemplateinputcontextmenu"
   ],
@@ -1178,6 +1182,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.selection.CellModel": [
     "selection.cellmodel"
   ],
+  "Spelled.abstract.view.GroupedTreeList": [
+    "widget.groupedtree"
+  ],
   "Spelled.view.scene.plugin.CellEditing": [
     "plugin.renameplugin"
   ],
@@ -1414,6 +1421,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.ComponentMgr"
   ],
   "Ext.fx.target.Target": [],
+  "Spelled.store.grouping.Components": [],
   "Ext.grid.feature.GroupingSummary": [],
   "Spelled.view.template.component.attribute.KeyToActionMap": [],
   "Ext.grid.property.HeaderContainer": [
@@ -1567,6 +1575,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.DatePicker"
   ],
   "Ext.tree.ViewDragZone": [],
+  "Spelled.abstract.view.GroupedTreeView": [],
   "Spelled.view.menu.contextmenu.SystemTemplateInputList": [],
   "Ext.data.proxy.JsonP": [
     "Ext.data.ScriptTagProxy"
@@ -2142,6 +2151,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.dd.ScrollManager": [],
   "Ext.chart.Mask": [],
   "Ext.selection.CellModel": [],
+  "Spelled.abstract.view.GroupedTreeList": [],
   "Spelled.view.scene.plugin.CellEditing": [],
   "Spelled.model.assets.KeyFrameAnimation": [],
   "Ext.view.TableLayout": [],
