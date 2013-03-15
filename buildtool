@@ -14,51 +14,21 @@ if [ -z $ACTION ]; then
 	exit
 fi
 
-UNAME=$(uname -sm)
-
-if [ "$UNAME" = "Linux i386" ]; then
-	PLATFORM="linux-ia32"
-
-elif [ "$UNAME" = "Linux x86_64" ]; then
-	PLATFORM="linux-x64"
-
-elif [ "$UNAME" = "Darwin i386" ]; then
-	PLATFORM="osx-ia32"
-
-elif [ "$UNAME" = "MINGW32_NT-6.2 i686" ]; then
-	PLATFORM="win-ia32"
-
-elif [ "$UNAME" = "MINGW32_NT-6.1 i686" ]; then
-	PLATFORM="win-ia32"
-
-elif [ "$UNAME" = "MINGW32_NT-6.0 i686" ]; then
-	PLATFORM="win-ia32"
-
-elif [ "$UNAME" = "Darwin x86_64" ]; then
-	PLATFORM="osx-ia32"
-fi
-
-if [ -z $PLATFORM ]; then
-
-	echo Your platform \"$UNAME\" is not supported.
-	exit
-fi
-
-SENCHA=../SenchaCmd/$PLATFORM/sencha
+SENCHA=../SenchaCmd/sencha
 
 if [ "$ACTION" = "bootstrap" ]; then
 	$SENCHA compile -classpath=../extjs/src,public/app meta -alias -out public/bootstrap.js and meta -alt -append -out public/bootstrap.js
 
 elif [ "$ACTION" = "theme" ]; then
         #create css files from sass
-	compass compile public/sass public/sass/ext-all-spelled.scss
+	$SENCHA compass compile public/sass public/sass/ext-all-spelled.scss
 
 	#fix path to images in the generated css file
 	sed -i 's/..\/..\/..\/extjs\/resources\/themes\/images\/spelled\//..\/images\/spelled\//' public/css/ext-all-spelled.css
 
 	#slice fallback images for older browsers
-	PATH=${PATH} sencha slice theme -d ../extjs -c ./public/css/ext-all-spelled.css -o ./public/images/spelled -v
-	cp -aR public/images/spelled-patches/* public/images/spelled/
+#	PATH=${PATH} sencha slice theme -d ../extjs -c ./public/css/ext-all-spelled.css -o ./public/images/spelled -v
+#	cp -aR public/images/spelled-patches/* public/images/spelled/
 
 elif [ "$ACTION" = "deploy" ]; then
 	# cleaning up and creating directory tree
