@@ -14,11 +14,7 @@ Ext.define('Spelled.view.component.Add' ,{
 
 	items: [
 		{
-			features: [
-				{
-					ftype:'grouping'
-				}
-			],
+//			features: [ { ftype:'grouping' } ],
 			hideHeaders: true,
 			xtype: 'groupedtree',
 			title: 'Available Components',
