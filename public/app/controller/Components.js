@@ -431,9 +431,8 @@ Ext.define('Spelled.controller.Components', {
 			iconClass   = ( component.get('additional') ) ? "component-icon" : "linked-component-icon",
 			linkedImage = ( !component.get('additional') && !Ext.isEmpty( template.get('icon') ) ) ? "<img src='/images/icons/link.png' style='margin-left: -18px;'/>" : "<span/>"
 
-		return Ext.widget(
-			'componentproperties',
-			{
+		return {
+				xtype: 'componentproperties',
 				manageHeight: false,
 				title: "<span class='"+ iconClass +"' "+ icon +">" + linkedImage +"</span> <span>" + title +"</span>",
 				isAdditional: component.get('additional'),
@@ -441,7 +440,6 @@ Ext.define('Spelled.controller.Components', {
 				componentConfigId: component.getId(),
 				propertyDeepLinked: this.generatePropertyDeepLinkConfig( config )
 			}
-		)
     },
 
 	getComponentScene: function( component ) {

@@ -459,6 +459,19 @@ Ext.define('Spelled.controller.Entities', {
 		this.createComponentsListView( entity )
 	},
 
+	sortComponentsList: function( items ) {
+		return Ext.Array.sort( items,
+			function( a, b ) {
+				if( !a.componentConfigId ) return -1
+
+				var titleA = Ext.util.Format.stripTags(a.title),
+					titleB = Ext.util.Format.stripTags(b.title)
+
+				return ( titleA > titleB )
+			}
+		)
+	},
+
 	createComponentsListView: function( entity ) {
 		var contentPanel = this.getRightPanel(),
 			View         = this.getEntityComponentsListView(),
@@ -481,15 +494,16 @@ Ext.define('Spelled.controller.Entities', {
 			view.docString = "#!/guide/" + entity.getDocumentationName()
 		}
 
+		var items = []
 		components.each(
 			function( component ) {
 				component.setEntity( entity )
-				view.add( this.application.getController('Components').createConfigGridView( component ) )
+				items.push( this.application.getController('Components').createConfigGridView( component ) )
 			},
 			this
 		)
 
-		view.sortByTitle()
+		view.add( this.sortComponentsList( items ) )
 		view.entity = entity
 
 		contentPanel.add( view )

@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.entity.ComponentsList' ,{
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
     alias: 'widget.entitycomponentslist',
 
 	docString: "#!/guide/entity_documentation",
@@ -10,18 +10,5 @@ Ext.define('Spelled.view.entity.ComponentsList' ,{
 
 	autoScroll: true,
 
-	buttonAlign:'left',
-
-	sortByTitle: function() {
-		this.items.items = this.items.items.sort(
-			function( a, b ) {
-				if( !a.componentConfigId ) return -1
-
-				var titleA = Ext.util.Format.stripTags(a.title),
-					titleB = Ext.util.Format.stripTags(b.title)
-
-				return ( titleA > titleB )
-			}
-		)
-	}
+	buttonAlign:'left'
 });
