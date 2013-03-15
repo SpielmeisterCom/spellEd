@@ -3,8 +3,7 @@ Ext.define('Spelled.abstract.model.Template', {
 		'proxy.direct',
 		'association.belongsto',
 		'association.hasmany',
-		'Spelled.model.config.Component',
-		'Spelled.model.config.Entity'
+		'Spelled.model.config.Component'
 	],
 
 	extend: 'Ext.data.Model',
