@@ -21,6 +21,15 @@ elif [ "$UNAME" = "Linux x86_64" ]; then
 elif [ "$UNAME" = "Darwin i386" ]; then
 	PLATFORM="osx-ia32"
 
+elif [ "$UNAME" = "MINGW32_NT-6.2 i686" ]; then
+	PLATFORM="win-ia32"
+
+elif [ "$UNAME" = "MINGW32_NT-6.1 i686" ]; then
+	PLATFORM="win-ia32"
+
+elif [ "$UNAME" = "MINGW32_NT-6.0 i686" ]; then
+	PLATFORM="win-ia32"
+
 elif [ "$UNAME" = "Darwin x86_64" ]; then
 	PLATFORM="osx-ia32"
 fi
