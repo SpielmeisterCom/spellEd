@@ -43,7 +43,7 @@ Ext.define('Spelled.model.Script', {
 	},
 
 	listeners: {
-		idchanged: function() {
+		loadscript: function() {
 			Spelled.StorageActions.read( { id: this.getAccordingJSFileName() },
 				function( result ) {
 					this.set( 'path', this.getAccordingJSFileName() )
@@ -73,7 +73,7 @@ Ext.define('Spelled.model.Script', {
 		var object = arguments[0] || arguments[2]
 		this.set( 'scriptId', this.generateIdentifier( object ) )
         this.set( 'internalAssetId', "script:" + this.getFullName() )
-		this.setId( object.id )
+		this.fireEvent( 'loadscript' )
 	},
 
     fields: [

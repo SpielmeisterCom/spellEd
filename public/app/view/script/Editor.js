@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.script.Editor', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.Component',
     alias : 'widget.scripteditor',
     closeAction: 'hide',
 

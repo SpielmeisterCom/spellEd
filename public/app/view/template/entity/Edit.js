@@ -8,7 +8,7 @@ Ext.define('Spelled.view.template.entity.Edit', {
 			name: 'entityPreviewContainer',
 			width : '100%',
 			height: '100%',
-			xtype: 'container',
+			xtype: 'component',
 			autoEl : {
 				tag : 'iframe',
 				border: '0',

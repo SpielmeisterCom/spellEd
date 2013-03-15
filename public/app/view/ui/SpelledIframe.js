@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.ui.SpelledIframe', {
-    extend: 'Ext.container.Container',
+    extend: 'Ext.Component',
     alias : 'widget.spellediframe',
 
     width : '100%',

@@ -63,7 +63,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 
 		this.application.createTab( templateEditor, editView )
 		this.application.sendDebugMessage(
-			editView.down( 'container[name="entityPreviewContainer"]').getId(),
+			editView.down( '[name="entityPreviewContainer"]').getId(),
 			'runtimeModule.start',
 			this.createEntityTemplatePreviewItem( entityTemplate )
 		)
