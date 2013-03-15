@@ -12,7 +12,7 @@ Ext.define('Spelled.view.scene.TreeList' ,{
 		}
 	},
 
-    rootVisible: false,
+    //rootVisible: false,
 
     tbar: [
 		{

@@ -7,9 +7,9 @@ Ext.define('Spelled.abstract.view.GroupedTreeList' ,{
 	viewType: 'groupedtreeview',
 
 	groupTreeNodes: function() {
-		var view = this.getView()
-
-		view.store.group( 'group' )
+//		var view = this.getView()
+//
+//		view.store.group( 'group' )
 	}
 });
 
