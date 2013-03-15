@@ -104,7 +104,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 				}
 			},
 			tmpProjectCfg = Ext.amdModules.projectConverter.toEngineFormat( project.getData( true ) ),
-			scene         = this.application.getController( 'Scenes' ).prepareSceneObject( sceneConfig )
+			scene         = this.application.getController( 'Scenes' ).prepareSceneObject( sceneConfig, true )
 
 		scene.getEntities().add( entityConfig )
 

@@ -460,12 +460,14 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
 	sortComponentsList: function( items ) {
+		var stripTags = Ext.util.Format.stripTags
+
 		return Ext.Array.sort( items,
 			function( a, b ) {
 				if( !a.componentConfigId ) return -1
 
-				var titleA = Ext.util.Format.stripTags(a.title),
-					titleB = Ext.util.Format.stripTags(b.title)
+				var titleA = stripTags(a.title),
+					titleB = stripTags(b.title)
 
 				return ( titleA > titleB )
 			}

@@ -725,10 +725,10 @@ Ext.define('Spelled.controller.Scenes', {
 		window.close()
 	},
 
-	prepareSceneObject: function( config ) {
+	prepareSceneObject: function( config, noId ) {
 		var Model   = this.getConfigSceneModel()
 
-		config.id = this.application.generateFileIdFromObject( config ) + '.json'
+		if( !noId ) config.id = this.application.generateFileIdFromObject( config ) + '.json'
 
 		var scene = new Model( config )
 		scene.set( 'content', this.createInitialSceneScriptContent( scene ) )
