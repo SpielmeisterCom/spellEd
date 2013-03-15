@@ -312,7 +312,6 @@ input, textarea, select {
   left: 0;
   top: 0;
   overflow: hidden;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0; }
 
@@ -329,7 +328,6 @@ input, textarea, select {
 .x-item-disabled .x-form-field,
 .x-item-disabled .x-form-cb-label,
 .x-item-disabled .x-form-trigger {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
   opacity: 0.3; }
 
@@ -363,11 +361,10 @@ input, textarea, select {
 /* line 92, ../../../extjs/resources/themes/stylesheets/ext4/default/core/_core.scss */
 .x-css-shadow {
   position: absolute;
-  -moz-border-radius: 5px 5px;
   -webkit-border-radius: 5px 5px;
-  -o-border-radius: 5px 5px;
+  -moz-border-radius: 5px 5px;
   -ms-border-radius: 5px 5px;
-  -khtml-border-radius: 5px 5px;
+  -o-border-radius: 5px 5px;
   border-radius: 5px 5px; }
 
 /* line 98, ../../../extjs/resources/themes/stylesheets/ext4/default/core/_core.scss */
@@ -686,7 +683,6 @@ tr.x-container:before {
   position: absolute;
   top: 0;
   left: 0;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5;
   width: 100%;
@@ -851,7 +847,6 @@ tr.x-container:before {
 
 /* line 87, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
 .x-btn-disabled span {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5; }
   /* line 91, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_button.scss */
@@ -867,7 +862,6 @@ tr.x-container:before {
 .x-ie6 .x-btn-disabled .x-btn-icon,
 .x-ie7 .x-btn-disabled .x-btn-icon,
 .x-ie8 .x-btn-disabled .x-btn-icon {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   opacity: 0.6; }
 
@@ -1000,11 +994,10 @@ tr.x-container:before {
 
 /* line 69, ../../../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-btn-default-small {
-  -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-  -o-border-radius: 3px;
+  -moz-border-radius: 3px;
   -ms-border-radius: 3px;
-  -khtml-border-radius: 3px;
+  -o-border-radius: 3px;
   border-radius: 3px;
   padding: 2px 2px 2px 2px;
   border-width: 1px;
@@ -1026,11 +1019,10 @@ tr.x-container:before {
 .x-nbr .x-btn-default-small {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1100303px 1000303px; }
@@ -1321,11 +1313,10 @@ tr.x-container:before {
 
 /* line 69, ../../../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-btn-default-medium {
-  -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-  -o-border-radius: 3px;
+  -moz-border-radius: 3px;
   -ms-border-radius: 3px;
-  -khtml-border-radius: 3px;
+  -o-border-radius: 3px;
   border-radius: 3px;
   padding: 3px 3px 3px 3px;
   border-width: 1px;
@@ -1347,11 +1338,10 @@ tr.x-container:before {
 .x-nbr .x-btn-default-medium {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1100303px 1000303px; }
@@ -1639,11 +1629,10 @@ tr.x-container:before {
 
 /* line 69, ../../../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-btn-default-large {
-  -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-  -o-border-radius: 3px;
+  -moz-border-radius: 3px;
   -ms-border-radius: 3px;
-  -khtml-border-radius: 3px;
+  -o-border-radius: 3px;
   border-radius: 3px;
   padding: 3px 3px 3px 3px;
   border-width: 1px;
@@ -1665,11 +1654,10 @@ tr.x-container:before {
 .x-nbr .x-btn-default-large {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1100303px 1000303px; }
@@ -1957,11 +1945,10 @@ tr.x-container:before {
 
 /* line 69, ../../../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-btn-default-toolbar-small {
-  -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-  -o-border-radius: 3px;
+  -moz-border-radius: 3px;
   -ms-border-radius: 3px;
-  -khtml-border-radius: 3px;
+  -o-border-radius: 3px;
   border-radius: 3px;
   padding: 2px 2px 2px 2px;
   border-width: 1px;
@@ -1976,11 +1963,10 @@ tr.x-container:before {
 .x-nbr .x-btn-default-toolbar-small {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1100303px 1000303px; }
@@ -2249,11 +2235,10 @@ tr.x-container:before {
 
 /* line 69, ../../../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-btn-default-toolbar-medium {
-  -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-  -o-border-radius: 3px;
+  -moz-border-radius: 3px;
   -ms-border-radius: 3px;
-  -khtml-border-radius: 3px;
+  -o-border-radius: 3px;
   border-radius: 3px;
   padding: 3px 3px 3px 3px;
   border-width: 1px;
@@ -2268,11 +2253,10 @@ tr.x-container:before {
 .x-nbr .x-btn-default-toolbar-medium {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1100303px 1000303px; }
@@ -2541,11 +2525,10 @@ tr.x-container:before {
 
 /* line 69, ../../../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-btn-default-toolbar-large {
-  -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-  -o-border-radius: 3px;
+  -moz-border-radius: 3px;
   -ms-border-radius: 3px;
-  -khtml-border-radius: 3px;
+  -o-border-radius: 3px;
   border-radius: 3px;
   padding: 3px 3px 3px 3px;
   border-width: 1px;
@@ -2560,11 +2543,10 @@ tr.x-container:before {
 .x-nbr .x-btn-default-toolbar-large {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1100303px 1000303px; }
@@ -2855,11 +2837,10 @@ tr.x-container:before {
 
 /* line 69, ../../../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-btn-group-default-framed {
-  -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
-  -o-border-radius: 2px;
+  -moz-border-radius: 2px;
   -ms-border-radius: 2px;
-  -khtml-border-radius: 2px;
+  -o-border-radius: 2px;
   border-radius: 2px;
   padding: 1px 1px 1px 1px;
   border-width: 1px;
@@ -2874,11 +2855,10 @@ tr.x-container:before {
 .x-nbr .x-btn-group-default-framed {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000202px 1000202px; }
@@ -2913,9 +2893,8 @@ tr.x-container:before {
 /* line 60, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_btn-group.scss */
 .x-btn-group-default-framed {
   border-color: #555555;
-  -moz-box-shadow: #7a7a7a 0 1px 0px 0 inset, #7a7a7a 0 -1px 0px 0 inset, #7a7a7a -1px 0 0px 0 inset, #7a7a7a 1px 0 0px 0 inset;
   -webkit-box-shadow: #7a7a7a 0 1px 0px 0 inset, #7a7a7a 0 -1px 0px 0 inset, #7a7a7a -1px 0 0px 0 inset, #7a7a7a 1px 0 0px 0 inset;
-  -o-box-shadow: #7a7a7a 0 1px 0px 0 inset, #7a7a7a 0 -1px 0px 0 inset, #7a7a7a -1px 0 0px 0 inset, #7a7a7a 1px 0 0px 0 inset;
+  -moz-box-shadow: #7a7a7a 0 1px 0px 0 inset, #7a7a7a 0 -1px 0px 0 inset, #7a7a7a -1px 0 0px 0 inset, #7a7a7a 1px 0 0px 0 inset;
   box-shadow: #7a7a7a 0 1px 0px 0 inset, #7a7a7a 0 -1px 0px 0 inset, #7a7a7a -1px 0 0px 0 inset, #7a7a7a 1px 0 0px 0 inset; }
 
 /* line 68, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_btn-group.scss */
@@ -2928,15 +2907,9 @@ tr.x-container:before {
   background: #444444;
   -moz-border-radius-topleft: 2px;
   -webkit-border-top-left-radius: 2px;
-  -o-border-top-left-radius: 2px;
-  -ms-border-top-left-radius: 2px;
-  -khtml-border-top-left-radius: 2px;
   border-top-left-radius: 2px;
   -moz-border-radius-topright: 2px;
   -webkit-border-top-right-radius: 2px;
-  -o-border-top-right-radius: 2px;
-  -ms-border-top-right-radius: 2px;
-  -khtml-border-top-right-radius: 2px;
   border-top-right-radius: 2px; }
 
 /* line 80, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_btn-group.scss */
@@ -2991,13 +2964,11 @@ tr.x-container:before {
     background-repeat: no-repeat;
     cursor: pointer;
     text-decoration: none !important;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
     opacity: 0.7; }
     /* line 63, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_datepicker.scss */
     .x-datepicker-prev a:hover,
     .x-datepicker-next a:hover {
-      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
       filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
       opacity: 1; }
 
@@ -3018,7 +2989,6 @@ tr.x-container:before {
 /* line 86, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_datepicker.scss */
 .x-item-disabled .x-datepicker-prev a:hover,
 .x-item-disabled .x-datepicker-next a:hover {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   opacity: 0.6; }
 
@@ -3462,22 +3432,19 @@ table.x-datepicker-inner {
     margin: 0px;
     border: 1px solid #363636;
     cursor: pointer;
-    -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
-    -o-border-radius: 3px;
+    -moz-border-radius: 3px;
     -ms-border-radius: 3px;
-    -khtml-border-radius: 3px;
+    -o-border-radius: 3px;
     border-radius: 3px; }
 
 /* line 153, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_menu.scss */
 .x-menu-item-disabled {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5; }
 
 /* line 160, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_menu.scss */
 .x-ie .x-menu-item-disabled .x-menu-item-icon {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5; }
 /* line 164, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_menu.scss */
@@ -3774,7 +3741,6 @@ table.x-datepicker-inner {
 
 /* line 302, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_grid.scss */
 .x-action-col-cell .x-item-disabled {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
   opacity: 0.3; }
 
@@ -4653,7 +4619,6 @@ textarea.x-form-invalid-field {
   top: -4px;
   right: -2px;
   height: 30px;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
   /* Yes, there's actually a good reason for this...
@@ -4804,36 +4769,21 @@ textarea.x-form-invalid-field {
 .x-pickerfield-open .x-form-field {
   -moz-border-radius-bottomleft: 0;
   -webkit-border-bottom-left-radius: 0;
-  -o-border-bottom-left-radius: 0;
-  -ms-border-bottom-left-radius: 0;
-  -khtml-border-bottom-left-radius: 0;
   border-bottom-left-radius: 0;
   -moz-border-radius-bottomright: 0;
   -webkit-border-bottom-right-radius: 0;
-  -o-border-bottom-right-radius: 0;
-  -ms-border-bottom-right-radius: 0;
-  -khtml-border-bottom-right-radius: 0;
   border-bottom-right-radius: 0; }
 
 /* line 80, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/form/_triggerfield.scss */
 .x-pickerfield-open-above .x-form-field {
   -moz-border-radius-bottomleft: 3px;
   -webkit-border-bottom-left-radius: 3px;
-  -o-border-bottom-left-radius: 3px;
-  -ms-border-bottom-left-radius: 3px;
-  -khtml-border-bottom-left-radius: 3px;
   border-bottom-left-radius: 3px;
   -moz-border-radius-topleft: 0;
   -webkit-border-top-left-radius: 0;
-  -o-border-top-left-radius: 0;
-  -ms-border-top-left-radius: 0;
-  -khtml-border-top-left-radius: 0;
   border-top-left-radius: 0;
   -moz-border-radius-topright: 0;
   -webkit-border-top-right-radius: 0;
-  -o-border-top-right-radius: 0;
-  -ms-border-top-right-radius: 0;
-  -khtml-border-top-right-radius: 0;
   border-top-right-radius: 0; }
 
 /* line 87, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/form/_triggerfield.scss */
@@ -5092,7 +5042,6 @@ textarea.x-form-invalid-field {
 
 /* line 70, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-ghost, .x-window-ghost {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=65)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=65);
   opacity: 0.65;
   cursor: move; }
@@ -5240,85 +5189,57 @@ textarea.x-form-invalid-field {
 .x-panel-collapsed .x-panel-header-default-top {
   -moz-border-radius-bottomleft: null;
   -webkit-border-bottom-left-radius: null;
-  -o-border-bottom-left-radius: null;
-  -ms-border-bottom-left-radius: null;
-  -khtml-border-bottom-left-radius: null;
   border-bottom-left-radius: null;
   -moz-border-radius-bottomright: null;
   -webkit-border-bottom-right-radius: null;
-  -o-border-bottom-right-radius: null;
-  -ms-border-bottom-right-radius: null;
-  -khtml-border-bottom-right-radius: null;
   border-bottom-right-radius: null; }
 /* line 420, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-collapsed .x-panel-header-default-right {
   -moz-border-radius-topleft: null;
   -webkit-border-top-left-radius: null;
-  -o-border-top-left-radius: null;
-  -ms-border-top-left-radius: null;
-  -khtml-border-top-left-radius: null;
   border-top-left-radius: null;
   -moz-border-radius-bottomleft: null;
   -webkit-border-bottom-left-radius: null;
-  -o-border-bottom-left-radius: null;
-  -ms-border-bottom-left-radius: null;
-  -khtml-border-bottom-left-radius: null;
   border-bottom-left-radius: null; }
 /* line 424, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-collapsed .x-panel-header-default-bottom {
   -moz-border-radius-topleft: null;
   -webkit-border-top-left-radius: null;
-  -o-border-top-left-radius: null;
-  -ms-border-top-left-radius: null;
-  -khtml-border-top-left-radius: null;
   border-top-left-radius: null;
   -moz-border-radius-topright: null;
   -webkit-border-top-right-radius: null;
-  -o-border-top-right-radius: null;
-  -ms-border-top-right-radius: null;
-  -khtml-border-top-right-radius: null;
   border-top-right-radius: null; }
 /* line 428, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-collapsed .x-panel-header-default-left {
   -moz-border-radius-topright: null;
   -webkit-border-top-right-radius: null;
-  -o-border-top-right-radius: null;
-  -ms-border-top-right-radius: null;
-  -khtml-border-top-right-radius: null;
   border-top-right-radius: null;
   -moz-border-radius-bottomright: null;
   -webkit-border-bottom-right-radius: null;
-  -o-border-bottom-right-radius: null;
-  -ms-border-bottom-right-radius: null;
-  -khtml-border-bottom-right-radius: null;
   border-bottom-right-radius: null; }
 
 /* line 434, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-default-top {
-  -moz-box-shadow: #505050 0 1px 0px 0 inset;
   -webkit-box-shadow: #505050 0 1px 0px 0 inset;
-  -o-box-shadow: #505050 0 1px 0px 0 inset;
+  -moz-box-shadow: #505050 0 1px 0px 0 inset;
   box-shadow: #505050 0 1px 0px 0 inset; }
 
 /* line 438, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-default-right {
-  -moz-box-shadow: #505050 -1px 0 0px 0 inset;
   -webkit-box-shadow: #505050 -1px 0 0px 0 inset;
-  -o-box-shadow: #505050 -1px 0 0px 0 inset;
+  -moz-box-shadow: #505050 -1px 0 0px 0 inset;
   box-shadow: #505050 -1px 0 0px 0 inset; }
 
 /* line 442, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-default-bottom {
-  -moz-box-shadow: #505050 0 -1px 0px 0 inset;
   -webkit-box-shadow: #505050 0 -1px 0px 0 inset;
-  -o-box-shadow: #505050 0 -1px 0px 0 inset;
+  -moz-box-shadow: #505050 0 -1px 0px 0 inset;
   box-shadow: #505050 0 -1px 0px 0 inset; }
 
 /* line 446, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-default-left {
-  -moz-box-shadow: #505050 1px 0 0px 0 inset;
   -webkit-box-shadow: #505050 1px 0 0px 0 inset;
-  -o-box-shadow: #505050 1px 0 0px 0 inset;
+  -moz-box-shadow: #505050 1px 0 0px 0 inset;
   box-shadow: #505050 1px 0 0px 0 inset; }
 
 /* line 481, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
@@ -5438,11 +5359,10 @@ textarea.x-form-invalid-field {
 
 /* line 69, ../../../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-panel-default-framed {
-  -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  -o-border-radius: 4px;
+  -moz-border-radius: 4px;
   -ms-border-radius: 4px;
-  -khtml-border-radius: 4px;
+  -o-border-radius: 4px;
   border-radius: 4px;
   padding: 3px 3px 3px 3px;
   border-width: 1px;
@@ -5457,11 +5377,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-panel-default-framed {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000404px 1000404px; }
@@ -5497,27 +5416,15 @@ textarea.x-form-invalid-field {
 .x-panel-header-default-framed-top {
   -moz-border-radius-topleft: 4px;
   -webkit-border-top-left-radius: 4px;
-  -o-border-top-left-radius: 4px;
-  -ms-border-top-left-radius: 4px;
-  -khtml-border-top-left-radius: 4px;
   border-top-left-radius: 4px;
   -moz-border-radius-topright: 4px;
   -webkit-border-top-right-radius: 4px;
-  -o-border-top-right-radius: 4px;
-  -ms-border-top-right-radius: 4px;
-  -khtml-border-top-right-radius: 4px;
   border-top-right-radius: 4px;
   -moz-border-radius-bottomright: 0;
   -webkit-border-bottom-right-radius: 0;
-  -o-border-bottom-right-radius: 0;
-  -ms-border-bottom-right-radius: 0;
-  -khtml-border-bottom-right-radius: 0;
   border-bottom-right-radius: 0;
   -moz-border-radius-bottomleft: 0;
   -webkit-border-bottom-left-radius: 0;
-  -o-border-bottom-left-radius: 0;
-  -ms-border-bottom-left-radius: 0;
-  -khtml-border-bottom-left-radius: 0;
   border-bottom-left-radius: 0;
   padding: 3px 5px 4px 5px;
   border-width: 1px 1px 0 1px;
@@ -5539,11 +5446,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-panel-header-default-framed-top {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000404px 1000000px; }
@@ -5578,27 +5484,15 @@ textarea.x-form-invalid-field {
 .x-panel-header-default-framed-right {
   -moz-border-radius-topleft: 0;
   -webkit-border-top-left-radius: 0;
-  -o-border-top-left-radius: 0;
-  -ms-border-top-left-radius: 0;
-  -khtml-border-top-left-radius: 0;
   border-top-left-radius: 0;
   -moz-border-radius-topright: 4px;
   -webkit-border-top-right-radius: 4px;
-  -o-border-top-right-radius: 4px;
-  -ms-border-top-right-radius: 4px;
-  -khtml-border-top-right-radius: 4px;
   border-top-right-radius: 4px;
   -moz-border-radius-bottomright: 4px;
   -webkit-border-bottom-right-radius: 4px;
-  -o-border-bottom-right-radius: 4px;
-  -ms-border-bottom-right-radius: 4px;
-  -khtml-border-bottom-right-radius: 4px;
   border-bottom-right-radius: 4px;
   -moz-border-radius-bottomleft: 0;
   -webkit-border-bottom-left-radius: 0;
-  -o-border-bottom-left-radius: 0;
-  -ms-border-bottom-left-radius: 0;
-  -khtml-border-bottom-left-radius: 0;
   border-bottom-left-radius: 0;
   padding: 5px 4px 5px 4px;
   border-width: 1px 1px 1px 0;
@@ -5620,11 +5514,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-panel-header-default-framed-right {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000004px 1100400px; }
@@ -5660,27 +5553,15 @@ textarea.x-form-invalid-field {
 .x-panel-header-default-framed-bottom {
   -moz-border-radius-topleft: 0;
   -webkit-border-top-left-radius: 0;
-  -o-border-top-left-radius: 0;
-  -ms-border-top-left-radius: 0;
-  -khtml-border-top-left-radius: 0;
   border-top-left-radius: 0;
   -moz-border-radius-topright: 0;
   -webkit-border-top-right-radius: 0;
-  -o-border-top-right-radius: 0;
-  -ms-border-top-right-radius: 0;
-  -khtml-border-top-right-radius: 0;
   border-top-right-radius: 0;
   -moz-border-radius-bottomright: 4px;
   -webkit-border-bottom-right-radius: 4px;
-  -o-border-bottom-right-radius: 4px;
-  -ms-border-bottom-right-radius: 4px;
-  -khtml-border-bottom-right-radius: 4px;
   border-bottom-right-radius: 4px;
   -moz-border-radius-bottomleft: 4px;
   -webkit-border-bottom-left-radius: 4px;
-  -o-border-bottom-left-radius: 4px;
-  -ms-border-bottom-left-radius: 4px;
-  -khtml-border-bottom-left-radius: 4px;
   border-bottom-left-radius: 4px;
   padding: 3px 5px 4px 5px;
   border-width: 0 1px 1px 1px;
@@ -5702,11 +5583,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-panel-header-default-framed-bottom {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000000px 1000404px; }
@@ -5741,27 +5621,15 @@ textarea.x-form-invalid-field {
 .x-panel-header-default-framed-left {
   -moz-border-radius-topleft: 4px;
   -webkit-border-top-left-radius: 4px;
-  -o-border-top-left-radius: 4px;
-  -ms-border-top-left-radius: 4px;
-  -khtml-border-top-left-radius: 4px;
   border-top-left-radius: 4px;
   -moz-border-radius-topright: 0;
   -webkit-border-top-right-radius: 0;
-  -o-border-top-right-radius: 0;
-  -ms-border-top-right-radius: 0;
-  -khtml-border-top-right-radius: 0;
   border-top-right-radius: 0;
   -moz-border-radius-bottomright: 0;
   -webkit-border-bottom-right-radius: 0;
-  -o-border-bottom-right-radius: 0;
-  -ms-border-bottom-right-radius: 0;
-  -khtml-border-bottom-right-radius: 0;
   border-bottom-right-radius: 0;
   -moz-border-radius-bottomleft: 4px;
   -webkit-border-bottom-left-radius: 4px;
-  -o-border-bottom-left-radius: 4px;
-  -ms-border-bottom-left-radius: 4px;
-  -khtml-border-bottom-left-radius: 4px;
   border-bottom-left-radius: 4px;
   padding: 5px 4px 5px 4px;
   border-width: 1px 0 1px 1px;
@@ -5783,11 +5651,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-panel-header-default-framed-left {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000400px 1100004px; }
@@ -5821,30 +5688,26 @@ textarea.x-form-invalid-field {
 
 /* line 399, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-default-framed-top {
-  -moz-box-shadow: #505050 0 1px 0px 0 inset, #505050 -1px 0 0px 0 inset, #505050 1px 0 0px 0 inset;
   -webkit-box-shadow: #505050 0 1px 0px 0 inset, #505050 -1px 0 0px 0 inset, #505050 1px 0 0px 0 inset;
-  -o-box-shadow: #505050 0 1px 0px 0 inset, #505050 -1px 0 0px 0 inset, #505050 1px 0 0px 0 inset;
+  -moz-box-shadow: #505050 0 1px 0px 0 inset, #505050 -1px 0 0px 0 inset, #505050 1px 0 0px 0 inset;
   box-shadow: #505050 0 1px 0px 0 inset, #505050 -1px 0 0px 0 inset, #505050 1px 0 0px 0 inset; }
 
 /* line 403, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-default-framed-right {
-  -moz-box-shadow: #505050 0 1px 0px 0 inset, #505050 0 -1px 0px 0 inset, #505050 -1px 0 0px 0 inset;
   -webkit-box-shadow: #505050 0 1px 0px 0 inset, #505050 0 -1px 0px 0 inset, #505050 -1px 0 0px 0 inset;
-  -o-box-shadow: #505050 0 1px 0px 0 inset, #505050 0 -1px 0px 0 inset, #505050 -1px 0 0px 0 inset;
+  -moz-box-shadow: #505050 0 1px 0px 0 inset, #505050 0 -1px 0px 0 inset, #505050 -1px 0 0px 0 inset;
   box-shadow: #505050 0 1px 0px 0 inset, #505050 0 -1px 0px 0 inset, #505050 -1px 0 0px 0 inset; }
 
 /* line 407, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-default-framed-bottom {
-  -moz-box-shadow: #505050 0 -1px 0px 0 inset, #505050 -1px 0 0px 0 inset, #505050 1px 0 0px 0 inset;
   -webkit-box-shadow: #505050 0 -1px 0px 0 inset, #505050 -1px 0 0px 0 inset, #505050 1px 0 0px 0 inset;
-  -o-box-shadow: #505050 0 -1px 0px 0 inset, #505050 -1px 0 0px 0 inset, #505050 1px 0 0px 0 inset;
+  -moz-box-shadow: #505050 0 -1px 0px 0 inset, #505050 -1px 0 0px 0 inset, #505050 1px 0 0px 0 inset;
   box-shadow: #505050 0 -1px 0px 0 inset, #505050 -1px 0 0px 0 inset, #505050 1px 0 0px 0 inset; }
 
 /* line 411, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-default-framed-left {
-  -moz-box-shadow: #505050 0 1px 0px 0 inset, #505050 0 -1px 0px 0 inset, #505050 1px 0 0px 0 inset;
   -webkit-box-shadow: #505050 0 1px 0px 0 inset, #505050 0 -1px 0px 0 inset, #505050 1px 0 0px 0 inset;
-  -o-box-shadow: #505050 0 1px 0px 0 inset, #505050 0 -1px 0px 0 inset, #505050 1px 0 0px 0 inset;
+  -moz-box-shadow: #505050 0 1px 0px 0 inset, #505050 0 -1px 0px 0 inset, #505050 1px 0 0px 0 inset;
   box-shadow: #505050 0 1px 0px 0 inset, #505050 0 -1px 0px 0 inset, #505050 1px 0 0px 0 inset; }
 
 /* line 452, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
@@ -5865,38 +5728,25 @@ textarea.x-form-invalid-field {
 
 /* line 468, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_panel.scss */
 .x-panel-header-default-framed-collapsed {
-  -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  -o-border-radius: 4px;
+  -moz-border-radius: 4px;
   -ms-border-radius: 4px;
-  -khtml-border-radius: 4px;
+  -o-border-radius: 4px;
   border-radius: 4px; }
 
 /* line 69, ../../../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-panel-header-default-framed-collapsed-top {
   -moz-border-radius-topleft: 4px;
   -webkit-border-top-left-radius: 4px;
-  -o-border-top-left-radius: 4px;
-  -ms-border-top-left-radius: 4px;
-  -khtml-border-top-left-radius: 4px;
   border-top-left-radius: 4px;
   -moz-border-radius-topright: 4px;
   -webkit-border-top-right-radius: 4px;
-  -o-border-top-right-radius: 4px;
-  -ms-border-top-right-radius: 4px;
-  -khtml-border-top-right-radius: 4px;
   border-top-right-radius: 4px;
   -moz-border-radius-bottomright: 4px;
   -webkit-border-bottom-right-radius: 4px;
-  -o-border-bottom-right-radius: 4px;
-  -ms-border-bottom-right-radius: 4px;
-  -khtml-border-bottom-right-radius: 4px;
   border-bottom-right-radius: 4px;
   -moz-border-radius-bottomleft: 4px;
   -webkit-border-bottom-left-radius: 4px;
-  -o-border-bottom-left-radius: 4px;
-  -ms-border-bottom-left-radius: 4px;
-  -khtml-border-bottom-left-radius: 4px;
   border-bottom-left-radius: 4px;
   padding: 3px 5px 4px 5px;
   border-width: 1px;
@@ -5918,11 +5768,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-panel-header-default-framed-collapsed-top {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000404px 1000404px; }
@@ -5957,27 +5806,15 @@ textarea.x-form-invalid-field {
 .x-panel-header-default-framed-collapsed-right {
   -moz-border-radius-topleft: 4px;
   -webkit-border-top-left-radius: 4px;
-  -o-border-top-left-radius: 4px;
-  -ms-border-top-left-radius: 4px;
-  -khtml-border-top-left-radius: 4px;
   border-top-left-radius: 4px;
   -moz-border-radius-topright: 4px;
   -webkit-border-top-right-radius: 4px;
-  -o-border-top-right-radius: 4px;
-  -ms-border-top-right-radius: 4px;
-  -khtml-border-top-right-radius: 4px;
   border-top-right-radius: 4px;
   -moz-border-radius-bottomright: 4px;
   -webkit-border-bottom-right-radius: 4px;
-  -o-border-bottom-right-radius: 4px;
-  -ms-border-bottom-right-radius: 4px;
-  -khtml-border-bottom-right-radius: 4px;
   border-bottom-right-radius: 4px;
   -moz-border-radius-bottomleft: 4px;
   -webkit-border-bottom-left-radius: 4px;
-  -o-border-bottom-left-radius: 4px;
-  -ms-border-bottom-left-radius: 4px;
-  -khtml-border-bottom-left-radius: 4px;
   border-bottom-left-radius: 4px;
   padding: 5px 4px 5px 4px;
   border-width: 1px;
@@ -5999,11 +5836,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-panel-header-default-framed-collapsed-right {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000404px 1100404px; }
@@ -6039,27 +5875,15 @@ textarea.x-form-invalid-field {
 .x-panel-header-default-framed-collapsed-bottom {
   -moz-border-radius-topleft: 4px;
   -webkit-border-top-left-radius: 4px;
-  -o-border-top-left-radius: 4px;
-  -ms-border-top-left-radius: 4px;
-  -khtml-border-top-left-radius: 4px;
   border-top-left-radius: 4px;
   -moz-border-radius-topright: 4px;
   -webkit-border-top-right-radius: 4px;
-  -o-border-top-right-radius: 4px;
-  -ms-border-top-right-radius: 4px;
-  -khtml-border-top-right-radius: 4px;
   border-top-right-radius: 4px;
   -moz-border-radius-bottomright: 4px;
   -webkit-border-bottom-right-radius: 4px;
-  -o-border-bottom-right-radius: 4px;
-  -ms-border-bottom-right-radius: 4px;
-  -khtml-border-bottom-right-radius: 4px;
   border-bottom-right-radius: 4px;
   -moz-border-radius-bottomleft: 4px;
   -webkit-border-bottom-left-radius: 4px;
-  -o-border-bottom-left-radius: 4px;
-  -ms-border-bottom-left-radius: 4px;
-  -khtml-border-bottom-left-radius: 4px;
   border-bottom-left-radius: 4px;
   padding: 3px 5px 4px 5px;
   border-width: 1px;
@@ -6081,11 +5905,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-panel-header-default-framed-collapsed-bottom {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000404px 1000404px; }
@@ -6120,27 +5943,15 @@ textarea.x-form-invalid-field {
 .x-panel-header-default-framed-collapsed-left {
   -moz-border-radius-topleft: 4px;
   -webkit-border-top-left-radius: 4px;
-  -o-border-top-left-radius: 4px;
-  -ms-border-top-left-radius: 4px;
-  -khtml-border-top-left-radius: 4px;
   border-top-left-radius: 4px;
   -moz-border-radius-topright: 4px;
   -webkit-border-top-right-radius: 4px;
-  -o-border-top-right-radius: 4px;
-  -ms-border-top-right-radius: 4px;
-  -khtml-border-top-right-radius: 4px;
   border-top-right-radius: 4px;
   -moz-border-radius-bottomright: 4px;
   -webkit-border-bottom-right-radius: 4px;
-  -o-border-bottom-right-radius: 4px;
-  -ms-border-bottom-right-radius: 4px;
-  -khtml-border-bottom-right-radius: 4px;
   border-bottom-right-radius: 4px;
   -moz-border-radius-bottomleft: 4px;
   -webkit-border-bottom-left-radius: 4px;
-  -o-border-bottom-left-radius: 4px;
-  -ms-border-bottom-left-radius: 4px;
-  -khtml-border-bottom-left-radius: 4px;
   border-bottom-left-radius: 4px;
   padding: 5px 4px 5px 4px;
   border-width: 1px;
@@ -6162,11 +5973,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-panel-header-default-framed-collapsed-left {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000404px 1100404px; }
@@ -6231,11 +6041,10 @@ textarea.x-form-invalid-field {
 
 /* line 69, ../../../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-tip {
-  -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
-  -o-border-radius: 3px;
+  -moz-border-radius: 3px;
   -ms-border-radius: 3px;
-  -khtml-border-radius: 3px;
+  -o-border-radius: 3px;
   border-radius: 3px;
   padding: 2px 2px 2px 2px;
   border-width: 1px;
@@ -6250,11 +6059,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-tip {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1100303px 1000303px; }
@@ -6381,9 +6189,8 @@ textarea.x-form-invalid-field {
 /* line 137, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_qtip.scss */
 .x-form-invalid-tip {
   border-color: #a1311f;
-  -moz-box-shadow: #d87166 0 1px 0px 0 inset, #d87166 0 -1px 0px 0 inset, #d87166 -1px 0 0px 0 inset, #d87166 1px 0 0px 0 inset;
   -webkit-box-shadow: #d87166 0 1px 0px 0 inset, #d87166 0 -1px 0px 0 inset, #d87166 -1px 0 0px 0 inset, #d87166 1px 0 0px 0 inset;
-  -o-box-shadow: #d87166 0 1px 0px 0 inset, #d87166 0 -1px 0px 0 inset, #d87166 -1px 0 0px 0 inset, #d87166 1px 0 0px 0 inset;
+  -moz-box-shadow: #d87166 0 1px 0px 0 inset, #d87166 0 -1px 0px 0 inset, #d87166 -1px 0 0px 0 inset, #d87166 1px 0 0px 0 inset;
   box-shadow: #d87166 0 1px 0px 0 inset, #d87166 0 -1px 0px 0 inset, #d87166 -1px 0 0px 0 inset, #d87166 1px 0 0px 0 inset; }
 
 /* line 146, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_qtip.scss */
@@ -6400,11 +6207,10 @@ textarea.x-form-invalid-field {
 
 /* line 69, ../../../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-form-invalid-tip-default {
-  -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-  -o-border-radius: 5px;
+  -moz-border-radius: 5px;
   -ms-border-radius: 5px;
-  -khtml-border-radius: 5px;
+  -o-border-radius: 5px;
   border-radius: 5px;
   padding: 4px 4px 4px 4px;
   border-width: 1px;
@@ -6419,11 +6225,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-form-invalid-tip-default {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1100505px 1000505px; }
@@ -6601,11 +6406,10 @@ textarea.x-form-invalid-field {
   position: relative;
   border-width: 1px;
   border-style: solid;
-  -moz-border-radius: 0;
   -webkit-border-radius: 0;
-  -o-border-radius: 0;
+  -moz-border-radius: 0;
   -ms-border-radius: 0;
-  -khtml-border-radius: 0;
+  -o-border-radius: 0;
   border-radius: 0;
   overflow: hidden;
   height: 20px; }
@@ -6616,11 +6420,10 @@ textarea.x-form-invalid-field {
   overflow: hidden;
   position: absolute;
   width: 0;
-  -moz-border-radius: 0;
   -webkit-border-radius: 0;
-  -o-border-radius: 0;
+  -moz-border-radius: 0;
   -ms-border-radius: 0;
-  -khtml-border-radius: 0;
+  -o-border-radius: 0;
   border-radius: 0;
   border-right: 1px solid;
   border-top: 1px solid; }
@@ -6827,19 +6630,17 @@ textarea.x-form-invalid-field {
 
 /* line 58, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_window.scss */
 .x-window-collapsed .x-window-header-vertical {
-  -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-  -o-border-radius: 5px;
+  -moz-border-radius: 5px;
   -ms-border-radius: 5px;
-  -khtml-border-radius: 5px;
+  -o-border-radius: 5px;
   border-radius: 5px; }
 /* line 61, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_window.scss */
 .x-window-collapsed .x-window-header-horizontal {
-  -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-  -o-border-radius: 5px;
+  -moz-border-radius: 5px;
   -ms-border-radius: 5px;
-  -khtml-border-radius: 5px;
+  -o-border-radius: 5px;
   border-radius: 5px; }
 /* line 66, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_window.scss */
 .x-window-collapsed .x-window-header-left {
@@ -6887,42 +6688,28 @@ textarea.x-form-invalid-field {
 /* line 159, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_window.scss */
 .x-window-default {
   border-color: #363636;
-  -moz-border-radius: 5px 5px;
   -webkit-border-radius: 5px 5px;
-  -o-border-radius: 5px 5px;
+  -moz-border-radius: 5px 5px;
   -ms-border-radius: 5px 5px;
-  -khtml-border-radius: 5px 5px;
+  -o-border-radius: 5px 5px;
   border-radius: 5px 5px;
-  -moz-box-shadow: #444444 0 1px 0px 0 inset, #444444 0 -1px 0px 0 inset, #444444 -1px 0 0px 0 inset, #444444 1px 0 0px 0 inset;
   -webkit-box-shadow: #444444 0 1px 0px 0 inset, #444444 0 -1px 0px 0 inset, #444444 -1px 0 0px 0 inset, #444444 1px 0 0px 0 inset;
-  -o-box-shadow: #444444 0 1px 0px 0 inset, #444444 0 -1px 0px 0 inset, #444444 -1px 0 0px 0 inset, #444444 1px 0 0px 0 inset;
+  -moz-box-shadow: #444444 0 1px 0px 0 inset, #444444 0 -1px 0px 0 inset, #444444 -1px 0 0px 0 inset, #444444 1px 0 0px 0 inset;
   box-shadow: #444444 0 1px 0px 0 inset, #444444 0 -1px 0px 0 inset, #444444 -1px 0 0px 0 inset, #444444 1px 0 0px 0 inset; }
 
 /* line 69, ../../../extjs/resources/themes/stylesheets/ext4/default/mixins/_frame.scss */
 .x-window-default {
   -moz-border-radius-topleft: 5px;
   -webkit-border-top-left-radius: 5px;
-  -o-border-top-left-radius: 5px;
-  -ms-border-top-left-radius: 5px;
-  -khtml-border-top-left-radius: 5px;
   border-top-left-radius: 5px;
   -moz-border-radius-topright: 5px;
   -webkit-border-top-right-radius: 5px;
-  -o-border-top-right-radius: 5px;
-  -ms-border-top-right-radius: 5px;
-  -khtml-border-top-right-radius: 5px;
   border-top-right-radius: 5px;
   -moz-border-radius-bottomright: 5px;
   -webkit-border-bottom-right-radius: 5px;
-  -o-border-bottom-right-radius: 5px;
-  -ms-border-bottom-right-radius: 5px;
-  -khtml-border-bottom-right-radius: 5px;
   border-bottom-right-radius: 5px;
   -moz-border-radius-bottomleft: 5px;
   -webkit-border-bottom-left-radius: 5px;
-  -o-border-bottom-left-radius: 5px;
-  -ms-border-bottom-left-radius: 5px;
-  -khtml-border-bottom-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding: 4px 4px 4px 4px;
   border-width: 1px;
@@ -6937,11 +6724,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-window-default {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000505px 1000505px; }
@@ -6998,27 +6784,15 @@ textarea.x-form-invalid-field {
 .x-window-header-default-top {
   -moz-border-radius-topleft: 5px;
   -webkit-border-top-left-radius: 5px;
-  -o-border-top-left-radius: 5px;
-  -ms-border-top-left-radius: 5px;
-  -khtml-border-top-left-radius: 5px;
   border-top-left-radius: 5px;
   -moz-border-radius-topright: 5px;
   -webkit-border-top-right-radius: 5px;
-  -o-border-top-right-radius: 5px;
-  -ms-border-top-right-radius: 5px;
-  -khtml-border-top-right-radius: 5px;
   border-top-right-radius: 5px;
   -moz-border-radius-bottomright: 0;
   -webkit-border-bottom-right-radius: 0;
-  -o-border-bottom-right-radius: 0;
-  -ms-border-bottom-right-radius: 0;
-  -khtml-border-bottom-right-radius: 0;
   border-bottom-right-radius: 0;
   -moz-border-radius-bottomleft: 0;
   -webkit-border-bottom-left-radius: 0;
-  -o-border-bottom-left-radius: 0;
-  -ms-border-bottom-left-radius: 0;
-  -khtml-border-bottom-left-radius: 0;
   border-bottom-left-radius: 0;
   padding: 4px 5px 0 5px;
   border-width: 1px 1px 0 1px;
@@ -7033,11 +6807,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-window-header-default-top {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000505px 1000000px; }
@@ -7073,27 +6846,15 @@ textarea.x-form-invalid-field {
 .x-window-header-default-right {
   -moz-border-radius-topleft: 0;
   -webkit-border-top-left-radius: 0;
-  -o-border-top-left-radius: 0;
-  -ms-border-top-left-radius: 0;
-  -khtml-border-top-left-radius: 0;
   border-top-left-radius: 0;
   -moz-border-radius-topright: 5px;
   -webkit-border-top-right-radius: 5px;
-  -o-border-top-right-radius: 5px;
-  -ms-border-top-right-radius: 5px;
-  -khtml-border-top-right-radius: 5px;
   border-top-right-radius: 5px;
   -moz-border-radius-bottomright: 5px;
   -webkit-border-bottom-right-radius: 5px;
-  -o-border-bottom-right-radius: 5px;
-  -ms-border-bottom-right-radius: 5px;
-  -khtml-border-bottom-right-radius: 5px;
   border-bottom-right-radius: 5px;
   -moz-border-radius-bottomleft: 0;
   -webkit-border-bottom-left-radius: 0;
-  -o-border-bottom-left-radius: 0;
-  -ms-border-bottom-left-radius: 0;
-  -khtml-border-bottom-left-radius: 0;
   border-bottom-left-radius: 0;
   padding: 5px 4px 5px 0;
   border-width: 1px 1px 1px 0;
@@ -7108,11 +6869,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-window-header-default-right {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000005px 1000500px; }
@@ -7148,27 +6908,15 @@ textarea.x-form-invalid-field {
 .x-window-header-default-bottom {
   -moz-border-radius-topleft: 0;
   -webkit-border-top-left-radius: 0;
-  -o-border-top-left-radius: 0;
-  -ms-border-top-left-radius: 0;
-  -khtml-border-top-left-radius: 0;
   border-top-left-radius: 0;
   -moz-border-radius-topright: 0;
   -webkit-border-top-right-radius: 0;
-  -o-border-top-right-radius: 0;
-  -ms-border-top-right-radius: 0;
-  -khtml-border-top-right-radius: 0;
   border-top-right-radius: 0;
   -moz-border-radius-bottomright: 5px;
   -webkit-border-bottom-right-radius: 5px;
-  -o-border-bottom-right-radius: 5px;
-  -ms-border-bottom-right-radius: 5px;
-  -khtml-border-bottom-right-radius: 5px;
   border-bottom-right-radius: 5px;
   -moz-border-radius-bottomleft: 5px;
   -webkit-border-bottom-left-radius: 5px;
-  -o-border-bottom-left-radius: 5px;
-  -ms-border-bottom-left-radius: 5px;
-  -khtml-border-bottom-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding: 0 5px 4px 5px;
   border-width: 0 1px 1px 1px;
@@ -7183,11 +6931,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-window-header-default-bottom {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000000px 1000505px; }
@@ -7223,27 +6970,15 @@ textarea.x-form-invalid-field {
 .x-window-header-default-left {
   -moz-border-radius-topleft: 5px;
   -webkit-border-top-left-radius: 5px;
-  -o-border-top-left-radius: 5px;
-  -ms-border-top-left-radius: 5px;
-  -khtml-border-top-left-radius: 5px;
   border-top-left-radius: 5px;
   -moz-border-radius-topright: 0;
   -webkit-border-top-right-radius: 0;
-  -o-border-top-right-radius: 0;
-  -ms-border-top-right-radius: 0;
-  -khtml-border-top-right-radius: 0;
   border-top-right-radius: 0;
   -moz-border-radius-bottomright: 0;
   -webkit-border-bottom-right-radius: 0;
-  -o-border-bottom-right-radius: 0;
-  -ms-border-bottom-right-radius: 0;
-  -khtml-border-bottom-right-radius: 0;
   border-bottom-right-radius: 0;
   -moz-border-radius-bottomleft: 5px;
   -webkit-border-bottom-left-radius: 5px;
-  -o-border-bottom-left-radius: 5px;
-  -ms-border-bottom-left-radius: 5px;
-  -khtml-border-bottom-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding: 5px 0px 5px 4px;
   border-width: 1px 0 1px 1px;
@@ -7258,11 +6993,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-window-header-default-left {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000500px 1000005px; }
@@ -7298,27 +7032,15 @@ textarea.x-form-invalid-field {
 .x-window-header-default-collapsed-top {
   -moz-border-radius-topleft: 5px;
   -webkit-border-top-left-radius: 5px;
-  -o-border-top-left-radius: 5px;
-  -ms-border-top-left-radius: 5px;
-  -khtml-border-top-left-radius: 5px;
   border-top-left-radius: 5px;
   -moz-border-radius-topright: 5px;
   -webkit-border-top-right-radius: 5px;
-  -o-border-top-right-radius: 5px;
-  -ms-border-top-right-radius: 5px;
-  -khtml-border-top-right-radius: 5px;
   border-top-right-radius: 5px;
   -moz-border-radius-bottomright: 5px;
   -webkit-border-bottom-right-radius: 5px;
-  -o-border-bottom-right-radius: 5px;
-  -ms-border-bottom-right-radius: 5px;
-  -khtml-border-bottom-right-radius: 5px;
   border-bottom-right-radius: 5px;
   -moz-border-radius-bottomleft: 5px;
   -webkit-border-bottom-left-radius: 5px;
-  -o-border-bottom-left-radius: 5px;
-  -ms-border-bottom-left-radius: 5px;
-  -khtml-border-bottom-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding: 4px 5px 4px 5px;
   border-width: 1px;
@@ -7333,11 +7055,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-window-header-default-collapsed-top {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000505px 1000505px; }
@@ -7373,27 +7094,15 @@ textarea.x-form-invalid-field {
 .x-window-header-default-collapsed-right {
   -moz-border-radius-topleft: 5px;
   -webkit-border-top-left-radius: 5px;
-  -o-border-top-left-radius: 5px;
-  -ms-border-top-left-radius: 5px;
-  -khtml-border-top-left-radius: 5px;
   border-top-left-radius: 5px;
   -moz-border-radius-topright: 5px;
   -webkit-border-top-right-radius: 5px;
-  -o-border-top-right-radius: 5px;
-  -ms-border-top-right-radius: 5px;
-  -khtml-border-top-right-radius: 5px;
   border-top-right-radius: 5px;
   -moz-border-radius-bottomright: 5px;
   -webkit-border-bottom-right-radius: 5px;
-  -o-border-bottom-right-radius: 5px;
-  -ms-border-bottom-right-radius: 5px;
-  -khtml-border-bottom-right-radius: 5px;
   border-bottom-right-radius: 5px;
   -moz-border-radius-bottomleft: 5px;
   -webkit-border-bottom-left-radius: 5px;
-  -o-border-bottom-left-radius: 5px;
-  -ms-border-bottom-left-radius: 5px;
-  -khtml-border-bottom-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding: 5px 4px 5px 4px;
   border-width: 1px;
@@ -7408,11 +7117,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-window-header-default-collapsed-right {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000505px 1000505px; }
@@ -7448,27 +7156,15 @@ textarea.x-form-invalid-field {
 .x-window-header-default-collapsed-bottom {
   -moz-border-radius-topleft: 5px;
   -webkit-border-top-left-radius: 5px;
-  -o-border-top-left-radius: 5px;
-  -ms-border-top-left-radius: 5px;
-  -khtml-border-top-left-radius: 5px;
   border-top-left-radius: 5px;
   -moz-border-radius-topright: 5px;
   -webkit-border-top-right-radius: 5px;
-  -o-border-top-right-radius: 5px;
-  -ms-border-top-right-radius: 5px;
-  -khtml-border-top-right-radius: 5px;
   border-top-right-radius: 5px;
   -moz-border-radius-bottomright: 5px;
   -webkit-border-bottom-right-radius: 5px;
-  -o-border-bottom-right-radius: 5px;
-  -ms-border-bottom-right-radius: 5px;
-  -khtml-border-bottom-right-radius: 5px;
   border-bottom-right-radius: 5px;
   -moz-border-radius-bottomleft: 5px;
   -webkit-border-bottom-left-radius: 5px;
-  -o-border-bottom-left-radius: 5px;
-  -ms-border-bottom-left-radius: 5px;
-  -khtml-border-bottom-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding: 4px 5px 4px 5px;
   border-width: 1px;
@@ -7483,11 +7179,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-window-header-default-collapsed-bottom {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000505px 1000505px; }
@@ -7523,27 +7218,15 @@ textarea.x-form-invalid-field {
 .x-window-header-default-collapsed-left {
   -moz-border-radius-topleft: 5px;
   -webkit-border-top-left-radius: 5px;
-  -o-border-top-left-radius: 5px;
-  -ms-border-top-left-radius: 5px;
-  -khtml-border-top-left-radius: 5px;
   border-top-left-radius: 5px;
   -moz-border-radius-topright: 5px;
   -webkit-border-top-right-radius: 5px;
-  -o-border-top-right-radius: 5px;
-  -ms-border-top-right-radius: 5px;
-  -khtml-border-top-right-radius: 5px;
   border-top-right-radius: 5px;
   -moz-border-radius-bottomright: 5px;
   -webkit-border-bottom-right-radius: 5px;
-  -o-border-bottom-right-radius: 5px;
-  -ms-border-bottom-right-radius: 5px;
-  -khtml-border-bottom-right-radius: 5px;
   border-bottom-right-radius: 5px;
   -moz-border-radius-bottomleft: 5px;
   -webkit-border-bottom-left-radius: 5px;
-  -o-border-bottom-left-radius: 5px;
-  -ms-border-bottom-left-radius: 5px;
-  -khtml-border-bottom-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding: 5px 4px 5px 4px;
   border-width: 1px;
@@ -7558,11 +7241,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-window-header-default-collapsed-left {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1000505px 1000505px; }
@@ -7596,30 +7278,26 @@ textarea.x-form-invalid-field {
 
 /* line 217, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_window.scss */
 .x-window-header-default-top {
-  -moz-box-shadow: #444444 0 1px 0px 0 inset, #444444 -1px 0 0px 0 inset, #444444 1px 0 0px 0 inset;
   -webkit-box-shadow: #444444 0 1px 0px 0 inset, #444444 -1px 0 0px 0 inset, #444444 1px 0 0px 0 inset;
-  -o-box-shadow: #444444 0 1px 0px 0 inset, #444444 -1px 0 0px 0 inset, #444444 1px 0 0px 0 inset;
+  -moz-box-shadow: #444444 0 1px 0px 0 inset, #444444 -1px 0 0px 0 inset, #444444 1px 0 0px 0 inset;
   box-shadow: #444444 0 1px 0px 0 inset, #444444 -1px 0 0px 0 inset, #444444 1px 0 0px 0 inset; }
 
 /* line 221, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_window.scss */
 .x-window-header-default-right {
-  -moz-box-shadow: #444444 0 1px 0px 0 inset, #444444 0 -1px 0px 0 inset, #444444 -1px 0 0px 0 inset;
   -webkit-box-shadow: #444444 0 1px 0px 0 inset, #444444 0 -1px 0px 0 inset, #444444 -1px 0 0px 0 inset;
-  -o-box-shadow: #444444 0 1px 0px 0 inset, #444444 0 -1px 0px 0 inset, #444444 -1px 0 0px 0 inset;
+  -moz-box-shadow: #444444 0 1px 0px 0 inset, #444444 0 -1px 0px 0 inset, #444444 -1px 0 0px 0 inset;
   box-shadow: #444444 0 1px 0px 0 inset, #444444 0 -1px 0px 0 inset, #444444 -1px 0 0px 0 inset; }
 
 /* line 225, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_window.scss */
 .x-window-header-default-bottom {
-  -moz-box-shadow: #444444 0 -1px 0px 0 inset, #444444 -1px 0 0px 0 inset, #444444 1px 0 0px 0 inset;
   -webkit-box-shadow: #444444 0 -1px 0px 0 inset, #444444 -1px 0 0px 0 inset, #444444 1px 0 0px 0 inset;
-  -o-box-shadow: #444444 0 -1px 0px 0 inset, #444444 -1px 0 0px 0 inset, #444444 1px 0 0px 0 inset;
+  -moz-box-shadow: #444444 0 -1px 0px 0 inset, #444444 -1px 0 0px 0 inset, #444444 1px 0 0px 0 inset;
   box-shadow: #444444 0 -1px 0px 0 inset, #444444 -1px 0 0px 0 inset, #444444 1px 0 0px 0 inset; }
 
 /* line 229, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_window.scss */
 .x-window-header-default-left {
-  -moz-box-shadow: #444444 0 1px 0px 0 inset, #444444 0 -1px 0px 0 inset, #444444 1px 0 0px 0 inset;
   -webkit-box-shadow: #444444 0 1px 0px 0 inset, #444444 0 -1px 0px 0 inset, #444444 1px 0 0px 0 inset;
-  -o-box-shadow: #444444 0 1px 0px 0 inset, #444444 0 -1px 0px 0 inset, #444444 1px 0 0px 0 inset;
+  -moz-box-shadow: #444444 0 1px 0px 0 inset, #444444 0 -1px 0px 0 inset, #444444 1px 0 0px 0 inset;
   box-shadow: #444444 0 1px 0px 0 inset, #444444 0 -1px 0px 0 inset, #444444 1px 0 0px 0 inset; }
 
 /* line 130, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_window.scss */
@@ -7808,27 +7486,15 @@ textarea.x-form-invalid-field {
 .x-tab-default-top {
   -moz-border-radius-topleft: 4px;
   -webkit-border-top-left-radius: 4px;
-  -o-border-top-left-radius: 4px;
-  -ms-border-top-left-radius: 4px;
-  -khtml-border-top-left-radius: 4px;
   border-top-left-radius: 4px;
   -moz-border-radius-topright: 4px;
   -webkit-border-top-right-radius: 4px;
-  -o-border-top-right-radius: 4px;
-  -ms-border-top-right-radius: 4px;
-  -khtml-border-top-right-radius: 4px;
   border-top-right-radius: 4px;
   -moz-border-radius-bottomright: 0;
   -webkit-border-bottom-right-radius: 0;
-  -o-border-bottom-right-radius: 0;
-  -ms-border-bottom-right-radius: 0;
-  -khtml-border-bottom-right-radius: 0;
   border-bottom-right-radius: 0;
   -moz-border-radius-bottomleft: 0;
   -webkit-border-bottom-left-radius: 0;
-  -o-border-bottom-left-radius: 0;
-  -ms-border-bottom-left-radius: 0;
-  -khtml-border-bottom-left-radius: 0;
   border-bottom-left-radius: 0;
   padding: 3px 3px 0 3px;
   border-width: 1px 1px 0 1px;
@@ -7850,11 +7516,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-tab-default-top {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1100404px 1000000px; }
@@ -7889,27 +7554,15 @@ textarea.x-form-invalid-field {
 .x-tab-default-bottom {
   -moz-border-radius-topleft: 0;
   -webkit-border-top-left-radius: 0;
-  -o-border-top-left-radius: 0;
-  -ms-border-top-left-radius: 0;
-  -khtml-border-top-left-radius: 0;
   border-top-left-radius: 0;
   -moz-border-radius-topright: 0;
   -webkit-border-top-right-radius: 0;
-  -o-border-top-right-radius: 0;
-  -ms-border-top-right-radius: 0;
-  -khtml-border-top-right-radius: 0;
   border-top-right-radius: 0;
   -moz-border-radius-bottomright: 4px;
   -webkit-border-bottom-right-radius: 4px;
-  -o-border-bottom-right-radius: 4px;
-  -ms-border-bottom-right-radius: 4px;
-  -khtml-border-bottom-right-radius: 4px;
   border-bottom-right-radius: 4px;
   -moz-border-radius-bottomleft: 4px;
   -webkit-border-bottom-left-radius: 4px;
-  -o-border-bottom-left-radius: 4px;
-  -ms-border-bottom-left-radius: 4px;
-  -khtml-border-bottom-left-radius: 4px;
   border-bottom-left-radius: 4px;
   padding: 0 3px 3px 3px;
   border-width: 0 1px 1px 1px;
@@ -7931,11 +7584,10 @@ textarea.x-form-invalid-field {
 .x-nbr .x-tab-default-bottom {
   padding: 0 !important;
   border-width: 0 !important;
-  -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-  -o-border-radius: 0px;
+  -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  -khtml-border-radius: 0px;
+  -o-border-radius: 0px;
   border-radius: 0px;
   background-color: transparent;
   background-position: 1100000px 1000404px; }
@@ -8069,9 +7721,8 @@ textarea.x-form-invalid-field {
 /* line 163, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-default-bottom {
   border-top: 1px solid #646464 !important;
-  -moz-box-shadow: #7b7b7b 0 -1px 0px 0 inset, #7b7b7b -1px 0 0px 0 inset, #7b7b7b 1px 0 0px 0 inset;
   -webkit-box-shadow: #7b7b7b 0 -1px 0px 0 inset, #7b7b7b -1px 0 0px 0 inset, #7b7b7b 1px 0 0px 0 inset;
-  -o-box-shadow: #7b7b7b 0 -1px 0px 0 inset, #7b7b7b -1px 0 0px 0 inset, #7b7b7b 1px 0 0px 0 inset;
+  -moz-box-shadow: #7b7b7b 0 -1px 0px 0 inset, #7b7b7b -1px 0 0px 0 inset, #7b7b7b 1px 0 0px 0 inset;
   box-shadow: #7b7b7b 0 -1px 0px 0 inset, #7b7b7b -1px 0 0px 0 inset, #7b7b7b 1px 0 0px 0 inset; }
   /* line 178, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
   .x-tab-default-bottom em {
@@ -8132,7 +7783,6 @@ textarea.x-form-invalid-field {
 
 /* line 238, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-default-disabled .x-tab-icon {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5; }
 
@@ -8257,7 +7907,6 @@ textarea.x-form-invalid-field {
   text-indent: -999px;
   background: no-repeat;
   background-image: url('../images/spelled/tab/tab-default-close.gif');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   opacity: 0.6; }
 
@@ -8269,14 +7918,12 @@ textarea.x-form-invalid-field {
 /* Include the element name otherwise Internet Explorer 7 & 8 take a performance hit */
 /* line 387, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 a.x-tab-close-btn:hover {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1; }
 
 /* Include the element name to raise the specificity to equal the :hover */
 /* line 392, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_tab.scss */
 .x-tab-default-disabled a.x-tab-close-btn {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
   opacity: 0.3; }
 
@@ -8641,15 +8288,13 @@ a.x-tab-close-btn:hover {
 
 /* line 6, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_drawcomponent.scss */
 .x-surface {
-  display: -moz-inline-box;
-  -moz-box-orient: vertical;
+  display: -moz-inline-stack;
   display: inline-block;
   vertical-align: middle;
   *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
   overflow: hidden; }
-  /* line 7, ../../../../../../../../var/lib/gems/1.8/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/css3/_inline-block.scss */
-  .x-surface {
-    *display: inline; }
 
 /* line 11, ../../../extjs/resources/themes/stylesheets/ext4/default/widgets/_drawcomponent.scss */
 .rvml {
@@ -8724,7 +8369,6 @@ svg, vml {
 
 /* line 8, ../../../extjs/resources/themes/stylesheets/ext4/default/util/_dragdrop.scss */
 .x-dd-drag-repair .x-dd-drag-ghost {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   opacity: 0.6; }
 /* line 12, ../../../extjs/resources/themes/stylesheets/ext4/default/util/_dragdrop.scss */
@@ -8733,7 +8377,6 @@ svg, vml {
 
 /* line 17, ../../../extjs/resources/themes/stylesheets/ext4/default/util/_dragdrop.scss */
 .x-dd-drag-ghost {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=85)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=85);
   opacity: 0.85;
   padding: 5px;
@@ -8766,7 +8409,6 @@ svg, vml {
   width: 0;
   background-color: #c3daf9;
   border: 1px dotted #3399bb;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
   opacity: 0.5;
   zoom: 1; }
@@ -8791,7 +8433,6 @@ svg, vml {
   line-height: 6px;
   overflow: hidden;
   zoom: 1;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
   background-color: #fff; }
@@ -8903,13 +8544,11 @@ svg, vml {
 
 /* line 149, ../../../extjs/resources/themes/stylesheets/ext4/default/util/_resizable.scss */
 .x-resizable-over .x-resizable-handle, .x-resizable-pinned .x-resizable-handle {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1; }
 
 /* line 153, ../../../extjs/resources/themes/stylesheets/ext4/default/util/_resizable.scss */
 .x-window .x-window-handle {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0; }
 
@@ -8936,7 +8575,6 @@ svg, vml {
   display: none;
   z-index: 200000;
   background-color: #fff;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0; }
 
@@ -9056,13 +8694,11 @@ svg, vml {
   z-index: 4;
   font-size: 1px;
   background-color: #b4b4b4;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
   opacity: 0.8; }
 
 /* line 97, ../../../extjs/resources/themes/stylesheets/ext4/default/util/_splitter.scss */
 .x-splitter-active .x-collapse-el {
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
   opacity: 0.3; }
 
@@ -9070,7 +8706,6 @@ svg, vml {
 .x-proxy-el {
   position: absolute;
   background: #b4b4b4;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
   opacity: 0.8; }
 
@@ -9181,9 +8816,8 @@ svg, vml {
 /* line 108, ../../../extjs/resources/themes/stylesheets/ext4/default/layout/_layout.scss */
 .x-accordion-hd {
   background: #646464 !important;
-  -moz-box-shadow: inset 0 0 0 0 #646464;
   -webkit-box-shadow: inset 0 0 0 0 #646464;
-  -o-box-shadow: inset 0 0 0 0 #646464;
+  -moz-box-shadow: inset 0 0 0 0 #646464;
   box-shadow: inset 0 0 0 0 #646464; }
   /* line 112, ../../../extjs/resources/themes/stylesheets/ext4/default/layout/_layout.scss */
   .x-accordion-hd .x-tool-collapse-top,
@@ -9223,9 +8857,8 @@ svg, vml {
 /* line 155, ../../../extjs/resources/themes/stylesheets/ext4/default/layout/_layout.scss */
 .x-accordion-hd-sibling-expanded {
   border-top-color: #646464 !important;
-  -moz-box-shadow: inset 0 1px 0 0 #848484;
   -webkit-box-shadow: inset 0 1px 0 0 #848484;
-  -o-box-shadow: inset 0 1px 0 0 #848484;
+  -moz-box-shadow: inset 0 1px 0 0 #848484;
   box-shadow: inset 0 1px 0 0 #848484; }
 
 /* line 160, ../../../extjs/resources/themes/stylesheets/ext4/default/layout/_layout.scss */
@@ -9274,7 +8907,6 @@ svg, vml {
   .x-box-scroller-left .x-toolbar-scroll-left-disabled,
   .x-box-scroller-left .x-tabbar-scroll-left-disabled {
     background-position: -18px 0;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
     opacity: 0.5;
     cursor: default; }
@@ -9319,7 +8951,6 @@ svg, vml {
   .x-box-scroller-right .x-toolbar-scroll-right-disabled,
   .x-box-scroller-right .x-tabbar-scroll-right-disabled {
     background-position: 0 0;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
     opacity: 0.5;
     cursor: default; }

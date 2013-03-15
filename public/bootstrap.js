@@ -2,11 +2,13 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.template.component.attribute.KeyFrameAnimation": [
     "widget.spelledkeyframeanimationfield"
   ],
+  "Ext.dom.AbstractElement_static": [],
   "Ext.draw.engine.ImageExporter": [],
   "Ext.layout.component.Auto": [
     "layout.autocomponent"
   ],
   "Ext.grid.property.Store": [],
+  "Ext.dom.Element_anim": [],
   "Spelled.view.library.menu.Context": [
     "widget.librarycontextmenu"
   ],
@@ -14,6 +16,7 @@ Ext.ClassManager.addNameAliasMappings({
     "layout.box"
   ],
   "Spelled.controller.Scripts": [],
+  "Ext.rtl.resizer.BorderSplitterTracker": [],
   "Ext.direct.JsonProvider": [
     "direct.jsonprovider"
   ],
@@ -51,30 +54,33 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.direct.RemotingProvider": [
     "direct.remotingprovider"
   ],
-  "Ext.data.NodeInterface": [],
   "Ext.grid.column.Date": [
     "widget.datecolumn"
   ],
-  "Ext.form.field.Trigger": [
-    "widget.triggerfield",
-    "widget.trigger"
-  ],
+  "Ext.data.NodeInterface": [],
+  "Ext.view.NodeCache": [],
   "Ext.grid.plugin.RowEditing": [
     "plugin.rowediting"
+  ],
+  "Ext.form.field.Trigger": [
+    "widget.trigger",
+    "widget.triggerfield"
   ],
   "Ext.tip.QuickTip": [
     "widget.quicktip"
   ],
+  "Ext.rtl.grid.plugin.HeaderResizer": [],
   "Ext.form.action.Load": [
     "formaction.load"
   ],
   "Ext.form.field.ComboBox": [
-    "widget.combobox",
-    "widget.combo"
+    "widget.combo",
+    "widget.combobox"
   ],
   "Ext.layout.container.Border": [
     "layout.border"
   ],
+  "Ext.rtl.layout.container.Column": [],
   "Spelled.controller.Assets": [],
   "Ext.data.JsonPStore": [
     "store.jsonp"
@@ -84,15 +90,17 @@ Ext.ClassManager.addNameAliasMappings({
     "layout.textareafield"
   ],
   "Ext.dom.AbstractHelper": [],
-  "Ext.layout.container.Container": [],
-  "Ext.selection.Model": [],
+  "Ext.layout.container.Container": [
+    "layout.container"
+  ],
   "Ext.util.Sortable": [],
+  "Ext.selection.Model": [],
   "Ext.draw.CompositeSprite": [],
   "Ext.fx.Queue": [],
   "Ext.dd.StatusProxy": [],
   "Ext.form.field.Checkbox": [
-    "widget.checkboxfield",
-    "widget.checkbox"
+    "widget.checkbox",
+    "widget.checkboxfield"
   ],
   "Spelled.controller.Library": [],
   "Ext.XTemplateCompiler": [],
@@ -101,12 +109,14 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.util.Offset": [],
   "Ext.dom.Element": [],
+  "Ext.container.Monitor": [],
   "Spelled.view.template.component.attribute.Script": [
     "widget.spelledscript"
   ],
   "Ext.view.DragZone": [],
   "Ext.util.KeyNav": [],
   "Spelled.model.template.System": [],
+  "Ext.rtl.dom.Element_static": [],
   "Ext.form.field.File": [
     "widget.filefield",
     "widget.fileuploadfield"
@@ -116,8 +126,9 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.sliderfield"
   ],
   "Ext.panel.Proxy": [],
-  "Ext.ComponentManager": [],
   "Ext.fx.target.Target": [],
+  "Ext.ComponentManager": [],
+  "Ext.dom.AbstractElement_traversal": [],
   "Spelled.store.grouping.Components": [],
   "Ext.grid.feature.GroupingSummary": [
     "feature.groupingsummary"
@@ -129,19 +140,20 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.component.BoundList": [
     "layout.boundlist"
   ],
+  "Spelled.model.template.SystemConfigItem": [],
   "Spelled.view.asset.create.SpriteSheet": [
     "widget.spritesheetconfig"
   ],
-  "Spelled.model.template.SystemConfigItem": [],
   "Ext.tab.Bar": [
     "widget.tabbar"
   ],
   "Ext.app.Application": [],
   "Spelled.store.template.Entities": [],
-  "Ext.ShadowPool": [],
   "Ext.layout.container.Accordion": [
     "layout.accordion"
   ],
+  "Ext.ShadowPool": [],
+  "Ext.grid.locking.HeaderContainer": [],
   "Spelled.view.asset.edit.Edit": [
     "widget.editasset"
   ],
@@ -149,10 +161,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.template.component.attribute.TextAppearance": [
     "widget.spelledtextappearancefield"
   ],
-  "Ext.layout.container.boxOverflow.None": [],
   "Ext.panel.Tool": [
     "widget.tool"
   ],
+  "Ext.layout.container.boxOverflow.None": [],
   "Ext.tree.View": [
     "widget.treeview"
   ],
@@ -182,6 +194,7 @@ Ext.ClassManager.addNameAliasMappings({
     "writer.scene"
   ],
   "Ext.data.SortTypes": [],
+  "Ext.rtl.layout.container.HBox": [],
   "Spelled.view.template.component.attribute.Number": [
     "widget.spellednumberfield"
   ],
@@ -189,6 +202,7 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.componenttemplateattributeslist"
   ],
   "Ext.util.Animate": [],
+  "Ext.data.flash.BinaryXhr": [],
   "Spelled.view.menu.contextmenu.SceneSystemsItemList": [
     "widget.scenesystemsitemlistcontextmenu"
   ],
@@ -203,8 +217,8 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.spellprogressbar"
   ],
   "Ext.Component": [
-    "widget.component",
-    "widget.box"
+    "widget.box",
+    "widget.component"
   ],
   "Spelled.view.template.system.Details": [
     "widget.systemtemplatedetails"
@@ -226,10 +240,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.layout.Main": [
     "widget.mainlayout"
   ],
-  "Ext.fx.target.CompositeSprite": [],
   "Ext.menu.DatePicker": [
     "widget.datemenu"
   ],
+  "Ext.fx.target.CompositeSprite": [],
   "Spelled.model.assets.Translation": [],
   "Ext.form.field.Picker": [
     "widget.pickerfield"
@@ -261,7 +275,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.fx.target.Element": [],
   "Ext.draw.Surface": [],
   "Ext.dd.DDProxy": [],
+  "Ext.grid.plugin.BufferedRendererTreeView": [],
   "Ext.data.AbstractStore": [],
+  "Ext.grid.locking.View": [],
   "Ext.form.action.StandardSubmit": [
     "formaction.standardsubmit"
   ],
@@ -274,10 +290,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.picker.Month": [
     "widget.monthpicker"
   ],
+  "Ext.menu.Manager": [],
   "Ext.container.Container": [
     "widget.container"
   ],
-  "Ext.menu.Manager": [],
+  "Ext.rtl.form.field.Spinner": [],
   "Ext.util.KeyMap": [],
   "Ext.data.Batch": [],
   "Spelled.data.reader.Reader": [],
@@ -296,10 +313,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.menu.contextmenu.KeyToActionMapping": [
     "widget.keytoactionmappingcontextmenu"
   ],
-  "Ext.layout.Context": [],
+  "Ext.dom.Element_position": [],
   "Ext.layout.component.Body": [
     "layout.body"
   ],
+  "Ext.layout.Context": [],
   "Spelled.model.LibraryNode": [],
   "Spelled.EntityHelper": [],
   "Ext.layout.component.field.ComboBox": [
@@ -313,37 +331,45 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.data.Field": [
     "data.field"
   ],
+  "Ext.form.field.FileButton": [
+    "widget.filebutton"
+  ],
   "Ext.chart.series.Gauge": [
     "series.gauge"
   ],
   "Spelled.store.system.EditMode": [],
   "Ext.data.StoreManager": [],
-  "Ext.data.IdGenerator": [],
   "Ext.tip.QuickTipManager": [],
+  "Ext.data.IdGenerator": [],
   "Ext.grid.plugin.Editing": [
     "editing.editing"
   ],
   "Spelled.view.menu.contextmenu.AssetsList": [
     "widget.assetslistcontextmenu"
   ],
-  "Ext.grid.RowEditor": [],
   "Ext.state.LocalStorageProvider": [
     "state.localstorage"
+  ],
+  "Ext.grid.RowEditor": [
+    "widget.roweditor"
   ],
   "Spelled.data.reader.EntityTemplate": [
     "reader.entityTemplate"
   ],
+  "Ext.app.EventDomain": [],
   "Ext.form.action.Action": [],
   "Ext.ProgressBar": [
     "widget.progressbar"
   ],
+  "Ext.fx.Easing": [],
+  "Ext.tree.ViewDragZone": [],
   "Ext.data.reader.Array": [
     "reader.array"
   ],
   "Ext.picker.Date": [
     "widget.datepicker"
   ],
-  "Ext.tree.ViewDragZone": [],
+  "Ext.rtl.grid.column.Column": [],
   "Spelled.abstract.view.GroupedTreeView": [
     "widget.groupedtreeview"
   ],
@@ -355,34 +381,40 @@ Ext.ClassManager.addNameAliasMappings({
     "proxy.scripttag"
   ],
   "Spelled.controller.templates.Components": [],
+  "Ext.fx.Anim": [],
   "Ext.chart.series.Area": [
     "series.area"
   ],
-  "Ext.fx.Anim": [],
   "Ext.menu.Item": [
     "widget.menuitem"
   ],
   "Spelled.store.FoldersTree": [],
+  "Ext.util.TaskManager": [],
+  "Ext.rtl.dom.Element_position": [],
   "Ext.chart.Legend": [],
   "Ext.grid.plugin.HeaderReorderer": [
     "plugin.gridheaderreorderer"
   ],
+  "Ext.rtl.view.Table": [],
   "Spelled.controller.Components": [],
   "Ext.layout.container.VBox": [
     "layout.vbox"
   ],
+  "Ext.rtl.util.Floating": [],
   "Spelled.store.asset.Sounds": [],
   "Ext.view.DropZone": [],
+  "Ext.rtl.tree.Column": [],
   "Ext.layout.component.Button": [
     "layout.button"
   ],
   "Ext.form.field.Hidden": [
-    "widget.hiddenfield",
-    "widget.hidden"
+    "widget.hidden",
+    "widget.hiddenfield"
   ],
   "Spelled.view.template.entity.Add": [
     "widget.addentitytotemplate"
   ],
+  "Ext.rtl.grid.plugin.RowEditing": [],
   "Ext.form.FieldContainer": [
     "widget.fieldcontainer"
   ],
@@ -390,13 +422,14 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.templatefolderpicker"
   ],
   "Spelled.abstract.view.Menu": [],
+  "Ext.chart.series.Cartesian": [],
   "Ext.data.proxy.Server": [
     "proxy.server"
   ],
-  "Ext.chart.series.Cartesian": [],
   "Spelled.view.asset.create.Appearance": [
     "widget.appearanceasset"
   ],
+  "Ext.rtl.layout.component.Dock": [],
   "Ext.grid.column.Column": [
     "widget.gridcolumn"
   ],
@@ -408,6 +441,7 @@ Ext.ClassManager.addNameAliasMappings({
     "layout.fit"
   ],
   "Ext.util.CSS": [],
+  "Ext.rtl.AbstractComponent": [],
   "Ext.layout.component.field.Field": [
     "layout.field"
   ],
@@ -417,14 +451,16 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.data.proxy.Ajax": [
     "proxy.ajax"
   ],
+  "Ext.app.domain.Component": [],
+  "Ext.rtl.EventObjectImpl": [],
   "Ext.form.Label": [
     "widget.label"
   ],
   "Spelled.abstract.field.AssetId": [],
-  "Ext.view.BoundListKeyNav": [],
   "Ext.data.writer.Writer": [
     "writer.base"
   ],
+  "Ext.view.BoundListKeyNav": [],
   "Ext.form.FieldSet": [
     "widget.fieldset"
   ],
@@ -436,11 +472,11 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.checkboxgroup"
   ],
   "Ext.data.JsonP": [],
-  "Spelled.view.template.component.Edit": [
-    "widget.componenttemplateedit"
-  ],
   "Spelled.view.scene.Create": [
     "widget.createscene"
+  ],
+  "Spelled.view.template.component.Edit": [
+    "widget.componenttemplateedit"
   ],
   "Ext.draw.engine.Vml": [],
   "Spelled.data.writer.ComponentTemplate": [
@@ -449,6 +485,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.container.CheckboxGroup": [
     "layout.checkboxgroup"
   ],
+  "Ext.app.domain.Direct": [],
   "Spelled.store.asset.KeyFrameAnimationPreviews": [],
   "Ext.panel.Header": [
     "widget.header"
@@ -459,10 +496,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.asset.create.Create": [
     "widget.createasset"
   ],
-  "Ext.app.Controller": [],
   "Ext.grid.plugin.CellEditing": [
     "plugin.cellediting"
   ],
+  "Ext.app.Controller": [],
+  "Ext.rtl.dom.Layer": [],
   "Ext.form.field.Time": [
     "widget.timefield"
   ],
@@ -473,6 +511,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.button.Cycle": [
     "widget.cycle"
   ],
+  "Ext.app.domain.Global": [],
   "Spelled.abstract.view.Navigator": [],
   "Spelled.model.assets.SpriteSheet": [],
   "Spelled.view.asset.create.Domvas": [
@@ -497,10 +536,12 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.scene.Editor": [
     "widget.sceneeditor"
   ],
+  "Ext.rtl.slider.Multi": [],
   "Ext.grid.header.DropZone": [],
   "Spelled.store.Projects": [],
   "Ext.Layer": [],
   "Spelled.store.asset.Assets": [],
+  "Ext.rtl.layout.component.field.Text": [],
   "Spelled.view.component.AddButton": [
     "widget.addcomponentbutton"
   ],
@@ -508,24 +549,25 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.grid.column.Template": [
     "widget.templatecolumn"
   ],
-  "Ext.ComponentLoader": [],
   "Ext.EventObjectImpl": [],
+  "Ext.ComponentLoader": [],
   "Spelled.controller.assets.Translations": [],
   "Ext.form.FieldAncestor": [],
+  "Ext.app.domain.Controller": [],
   "Ext.chart.axis.Gauge": [
     "axis.gauge"
   ],
   "Ext.data.validations": [],
   "Spelled.controller.Layout": [],
   "Ext.data.Connection": [],
-  "Spelled.store.asset.KeyFrameAnimations": [],
   "Spelled.controller.Systems": [],
-  "Ext.direct.ExceptionEvent": [
-    "direct.exception"
-  ],
-  "Ext.dd.DropZone": [],
+  "Spelled.store.asset.KeyFrameAnimations": [],
   "Ext.resizer.Splitter": [
     "widget.splitter"
+  ],
+  "Ext.dd.DropZone": [],
+  "Ext.direct.ExceptionEvent": [
+    "direct.exception"
   ],
   "Ext.form.RadioManager": [],
   "Ext.data.association.HasOne": [
@@ -550,32 +592,33 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.template.component.attribute.Vec4": [
     "widget.spelledvec4field"
   ],
-  "Ext.diag.layout.ContextItem": [],
   "Ext.fx.target.CompositeElementCSS": [],
+  "Ext.diag.layout.ContextItem": [],
+  "Ext.rtl.layout.ContextItem": [],
   "Ext.chart.series.Line": [
     "series.line"
   ],
   "Ext.view.Table": [
     "widget.tableview"
   ],
+  "Spelled.controller.templates.Entities": [],
   "Spelled.view.template.ReadOnly": [
     "widget.readonlytemplateheader"
   ],
-  "Spelled.controller.templates.Entities": [],
   "Ext.data.writer.Json": [
     "writer.json"
   ],
-  "Ext.fx.Manager": [],
   "Ext.fx.target.CompositeElement": [],
+  "Ext.fx.Manager": [],
   "Ext.chart.Label": [],
   "Ext.grid.View": [
     "widget.gridview"
   ],
   "Spelled.store.asset.Types": [],
-  "Spelled.store.template.component.KeyFrameComponents": [],
   "Spelled.store.template.Types": [],
-  "Ext.form.Basic": [],
+  "Spelled.store.template.component.KeyFrameComponents": [],
   "Ext.Action": [],
+  "Ext.form.Basic": [],
   "Spelled.view.scene.Script": [
     "widget.scenescriptedit"
   ],
@@ -603,6 +646,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.library.folder.Create": [
     "widget.createlibraryfolder"
   ],
+  "Ext.rtl.layout.component.field.Trigger": [],
   "Ext.data.reader.Xml": [
     "reader.xml"
   ],
@@ -612,21 +656,24 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.library.menu.Filter": [
     "widget.libraryfilterbutton"
   ],
+  "Ext.rtl.layout.container.boxOverflow.Scroller": [],
   "Ext.chart.axis.Category": [
     "axis.category"
   ],
+  "Ext.grid.plugin.BufferedRendererTableView": [],
   "Ext.layout.container.Absolute": [
     "layout.absolute"
   ],
+  "Ext.rtl.layout.container.Box": [],
   "Ext.data.reader.Json": [
     "reader.json"
   ],
   "Ext.util.TextMetrics": [],
-  "Ext.view.BoundList": [
-    "widget.boundlist"
-  ],
   "Ext.data.TreeStore": [
     "store.tree"
+  ],
+  "Ext.view.BoundList": [
+    "widget.boundlist"
   ],
   "Spelled.store.system.Types": [],
   "Ext.form.field.HtmlEditor": [
@@ -635,10 +682,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.container.Form": [
     "layout.form"
   ],
+  "Spelled.store.asset.Translations": [],
   "Spelled.view.scene.dependencies.StaticContextMenu": [
     "widget.staticlibraryitemcontextmenu"
   ],
-  "Spelled.store.asset.Translations": [],
   "Spelled.store.system.Defaults": [],
   "Ext.chart.MaskLayer": [],
   "Spelled.view.layout.Split": [
@@ -654,11 +701,15 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.resizer.BorderSplitterTracker": [],
   "Ext.util.LruCache": [],
-  "Ext.dom.CompositeElement": [],
   "Ext.tip.Tip": [],
+  "Ext.dom.CompositeElement": [],
+  "Ext.grid.column.CheckColumn": [
+    "widget.checkcolumn"
+  ],
   "Spelled.view.project.settings.SupportedLanguageContextMenu": [
     "widget.supportedlanguagecontextmenu"
   ],
+  "Ext.rtl.resizer.SplitterTracker": [],
   "Ext.grid.feature.RowWrap": [
     "feature.rowwrap"
   ],
@@ -676,12 +727,13 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.LoadMask": [
     "widget.loadmask"
   ],
+  "Ext.rtl.grid.RowEditor": [],
   "Ext.toolbar.Paging": [
     "widget.pagingtoolbar"
   ],
   "Ext.data.association.Association": [],
-  "Ext.grid.LockingView": [],
   "Ext.tree.ViewDropZone": [],
+  "Ext.grid.LockingView": [],
   "Ext.toolbar.Toolbar": [
     "widget.toolbar"
   ],
@@ -696,18 +748,18 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.util.Inflector": [],
   "Ext.grid.Panel": [
-    "widget.gridpanel",
-    "widget.grid"
+    "widget.grid",
+    "widget.gridpanel"
   ],
   "Ext.XTemplate": [],
   "Spelled.abstract.view.TreeList": [],
   "Ext.data.NodeStore": [
     "store.node"
   ],
+  "Ext.Shadow": [],
   "Ext.form.action.Submit": [
     "formaction.submit"
   ],
-  "Ext.Shadow": [],
   "Ext.form.Panel": [
     "widget.form"
   ],
@@ -724,11 +776,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.dd.DD": [],
   "Ext.dom.CompositeElementLite": [],
   "Spelled.model.Project": [],
-  "Ext.grid.RowNumberer": [
-    "widget.rownumberer"
-  ],
   "Ext.toolbar.Fill": [
     "widget.tbfill"
+  ],
+  "Ext.grid.RowNumberer": [
+    "widget.rownumberer"
   ],
   "Ext.data.proxy.WebStorage": [],
   "Spelled.view.scene.plugin.SceneTreeDragZone": [],
@@ -742,9 +794,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.data.UuidGenerator": [
     "idgen.uuid"
   ],
-  "Ext.form.CheckboxManager": [],
-  "Ext.fx.target.Component": [],
   "Ext.util.Point": [],
+  "Ext.fx.target.Component": [],
+  "Ext.form.CheckboxManager": [],
   "Ext.form.field.Field": [],
   "Spelled.view.asset.create.2dTileMap": [
     "widget.2dtilemapconfig"
@@ -773,34 +825,44 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.template.component.attribute.Object": [
     "widget.spelledobjectfield"
   ],
+  "Ext.dom.Layer": [],
+  "Spelled.store.AspectRatios": [],
   "Spelled.view.ui.SpelledRightPanel": [
     "widget.rightpanel"
   ],
-  "Spelled.store.AspectRatios": [],
   "Spelled.store.config.Entities": [],
+  "Ext.grid.RowEditorButtons": [
+    "widget.roweditorbuttons"
+  ],
   "Spelled.view.template.component.attribute.Appearance": [
     "widget.spelledappearancefield"
   ],
   "Ext.data.BufferStore": [
     "store.buffer"
   ],
+  "Ext.grid.plugin.DivRenderer": [
+    "plugin.divrenderer"
+  ],
   "Ext.grid.ColumnLayout": [
     "layout.gridcolumn"
   ],
-  "Ext.form.field.Base": [
-    "widget.field"
+  "Ext.dom.AbstractElement_style": [],
+  "Ext.Template": [],
+  "Ext.AbstractComponent": [],
+  "Ext.chart.series.Column": [
+    "series.column"
   ],
   "Ext.flash.Component": [
     "widget.flash"
   ],
-  "Ext.AbstractComponent": [],
-  "Ext.Template": [],
-  "Ext.chart.series.Column": [
-    "series.column"
+  "Ext.form.field.Base": [
+    "widget.field"
   ],
   "Spelled.view.library.field.Name": [
     "widget.spellednamefield"
   ],
+  "Ext.dom.AbstractElement_insertion": [],
+  "Ext.grid.feature.GroupStore": [],
   "Ext.data.SequentialIdGenerator": [
     "idgen.sequential"
   ],
@@ -861,20 +923,22 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.selection.DataViewModel": [],
   "Ext.dd.DragTracker": [],
   "Spelled.store.template.Components": [],
+  "Ext.data.Group": [],
   "Spelled.model.template.Entity": [],
   "Spelled.abstract.model.Model": [],
   "Ext.dd.DragDropManager": [],
   "Ext.selection.CheckboxModel": [
     "selection.checkboxmodel"
   ],
+  "Ext.menu.KeyNav": [],
   "Ext.layout.container.Column": [
     "layout.column"
   ],
-  "Ext.menu.KeyNav": [],
   "Ext.draw.Matrix": [],
   "Ext.form.field.Number": [
     "widget.numberfield"
   ],
+  "Ext.rtl.util.Renderable": [],
   "Spelled.view.template.component.attribute.Enum": [
     "widget.spelledenumfield"
   ],
@@ -890,9 +954,11 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.chart.theme.Base": [],
   "Ext.form.field.TextArea": [
-    "widget.textareafield",
-    "widget.textarea"
+    "widget.textarea",
+    "widget.textareafield"
   ],
+  "Ext.rtl.layout.container.VBox": [],
+  "Ext.util.Positionable": [],
   "Spelled.view.template.component.Details": [
     "widget.componenttemplatedetails"
   ],
@@ -905,8 +971,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.MessageBus": [],
   "Spelled.store.Library": [],
   "Ext.form.field.Radio": [
-    "widget.radiofield",
-    "widget.radio"
+    "widget.radio",
+    "widget.radiofield"
   ],
   "Spelled.view.ui.StartScreen": [
     "widget.startscreen"
@@ -918,12 +984,13 @@ Ext.ClassManager.addNameAliasMappings({
     "series.pie"
   ],
   "Ext.view.TableChunker": [],
-  "Ext.direct.Provider": [
-    "direct.provider"
-  ],
   "Ext.tree.plugin.TreeViewDragDrop": [
     "plugin.treeviewdragdrop"
   ],
+  "Ext.direct.Provider": [
+    "direct.provider"
+  ],
+  "Ext.data.TreeModel": [],
   "Ext.layout.Layout": [],
   "Spelled.view.entity.ComponentsList": [
     "widget.entitycomponentslist"
@@ -933,6 +1000,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.dom.Helper": [],
   "Spelled.model.config.Entity": [],
+  "Ext.rtl.button.Button": [],
   "Ext.util.AbstractMixedCollection": [],
   "Spelled.store.template.Systems": [],
   "Ext.data.JsonStore": [
@@ -947,25 +1015,25 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.ui.SpelledConfiguration": [
     "widget.spelledconfigure"
   ],
+  "Ext.dd.DropTarget": [],
   "Ext.direct.RemotingEvent": [
     "direct.rpc"
   ],
-  "Ext.dd.DropTarget": [],
   "Ext.draw.Sprite": [],
   "Spelled.data.reader.Script": [
     "reader.script"
   ],
+  "Ext.fx.target.Sprite": [],
   "Ext.data.proxy.LocalStorage": [
     "proxy.localstorage"
   ],
-  "Ext.fx.target.Sprite": [],
   "Spelled.view.menu.contextmenu.ScenesList": [
     "widget.sceneslistcontextmenu"
   ],
-  "Ext.AbstractPlugin": [],
   "Ext.layout.component.Draw": [
     "layout.draw"
   ],
+  "Ext.AbstractPlugin": [],
   "Spelled.view.library.TreeList": [
     "widget.librarytreelist"
   ],
@@ -991,16 +1059,17 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.script.Create": [
     "widget.createscript"
   ],
+  "Ext.chart.axis.Abstract": [],
   "Ext.data.proxy.Rest": [
     "proxy.rest"
   ],
-  "Ext.chart.axis.Abstract": [],
+  "Ext.rtl.layout.container.Absolute": [],
   "Ext.util.Queue": [],
   "Ext.state.CookieProvider": [],
+  "Spelled.store.template.component.Attributes": [],
   "Spelled.view.asset.create.Font": [
     "widget.textappearanceconfig"
   ],
-  "Spelled.store.template.component.Attributes": [],
   "Ext.Img": [
     "widget.image",
     "widget.imagecomponent"
@@ -1008,11 +1077,13 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.dd.DragSource": [],
   "Ext.grid.CellEditor": [],
   "Ext.layout.ClassList": [],
+  "Ext.button.Manager": [],
   "Ext.util.Sorter": [],
   "Ext.resizer.SplitterTracker": [],
   "Ext.panel.Table": [
     "widget.tablepanel"
   ],
+  "Ext.dom.Element_scroll": [],
   "Spelled.view.ui.SpelledConsole": [
     "widget.console"
   ],
@@ -1056,6 +1127,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.menu.CheckItem": [
     "widget.menucheckitem"
   ],
+  "Ext.dom.Element_fx": [],
   "Spelled.view.asset.Iframe": [
     "widget.assetiframe"
   ],
@@ -1069,25 +1141,31 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.library.FolderPicker": [
     "widget.libraryfolderpicker"
   ],
-  "Ext.form.RadioGroup": [
-    "widget.radiogroup"
-  ],
   "Ext.draw.Component": [
     "widget.draw"
   ],
   "Ext.toolbar.Item": [
     "widget.tbitem"
   ],
+  "Ext.form.RadioGroup": [
+    "widget.radiogroup"
+  ],
   "Spelled.view.template.component.attribute.Boolean": [
     "widget.spelledbooleanfield"
   ],
+  "Ext.rtl.tab.Bar": [],
+  "Ext.rtl.form.field.Trigger": [],
   "Ext.slider.Thumb": [],
   "Ext.grid.header.DragZone": [],
+  "Ext.rtl.resizer.ResizeTracker": [],
   "Ext.form.action.DirectLoad": [
     "formaction.directload"
   ],
   "Ext.picker.Time": [
     "widget.timepicker"
+  ],
+  "Ext.grid.plugin.BufferedRenderer": [
+    "plugin.bufferedrenderer"
   ],
   "Ext.resizer.BorderSplitter": [
     "widget.bordersplitter"
@@ -1099,10 +1177,10 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.librarynavigator"
   ],
   "Spelled.model.assets.Appearance": [],
-  "Ext.ZIndexManager": [],
   "Ext.menu.ColorPicker": [
     "widget.colormenu"
   ],
+  "Ext.ZIndexManager": [],
   "Ext.menu.Menu": [
     "widget.menu"
   ],
@@ -1110,18 +1188,20 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.toolbar.Spacer": [
     "widget.tbspacer"
   ],
+  "Ext.rtl.dd.DD": [],
   "Ext.panel.Panel": [
     "widget.panel"
   ],
   "Ext.util.Memento": [],
+  "Ext.app.domain.Store": [],
   "Ext.data.proxy.Memory": [
     "proxy.memory"
   ],
-  "Ext.chart.axis.Time": [
-    "axis.time"
-  ],
   "Ext.grid.plugin.DragDrop": [
     "plugin.gridviewdragdrop"
+  ],
+  "Ext.chart.axis.Time": [
+    "axis.time"
   ],
   "Spelled.view.template.component.attribute.Integer": [
     "widget.spelledintegerfield"
@@ -1130,8 +1210,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.component.Tab": [
     "layout.tab"
   ],
-  "Ext.draw.engine.SvgExporter": [],
   "Ext.ComponentQuery": [],
+  "Ext.dom.Element_style": [],
+  "Ext.draw.engine.SvgExporter": [],
   "Ext.grid.feature.Chunking": [
     "feature.chunking"
   ],
@@ -1141,12 +1222,13 @@ Ext.ClassManager.addNameAliasMappings({
     "layout.auto",
     "layout.autocontainer"
   ],
+  "Ext.grid.locking.Lockable": [],
   "Spelled.abstract.store.TreeStore": [],
-  "Spelled.view.component.property.AssetId": [
-    "widget.assetidproperty"
-  ],
   "Spelled.data.writer.SystemTemplate": [
     "writer.systemTemplate"
+  ],
+  "Spelled.view.component.property.AssetId": [
+    "widget.assetidproperty"
   ],
   "Ext.view.AbstractView": [],
   "Spelled.view.template.component.attribute.String": [
@@ -1154,11 +1236,13 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.store.asset.InterpolationFunctions": [],
   "Ext.util.Region": [],
-  "Ext.draw.Draw": [],
   "Ext.fx.target.ElementCSS": [],
+  "Ext.draw.Draw": [],
   "Spelled.model.Language": [],
+  "Ext.util.Event": [],
   "Spelled.abstract.model.Template": [],
   "Spelled.model.assets.KeyMapping": [],
+  "Ext.rtl.panel.Panel": [],
   "Ext.grid.PagingScroller": [],
   "Spelled.data.reader.Asset": [
     "reader.asset"
@@ -1167,6 +1251,7 @@ Ext.ClassManager.addNameAliasMappings({
     "layout.htmleditor"
   ],
   "Spelled.store.asset.Appearances": [],
+  "Ext.dom.Element_dd": [],
   "Ext.data.proxy.SessionStorage": [
     "proxy.sessionstorage"
   ],
@@ -1175,13 +1260,14 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.menuseparator"
   ],
   "Spelled.controller.Templates": [],
-  "Ext.direct.RemotingMethod": [],
+  "Ext.util.History": [],
   "Ext.direct.Event": [
     "direct.event"
   ],
-  "Ext.util.History": [],
+  "Ext.direct.RemotingMethod": [],
   "Ext.dd.ScrollManager": [],
   "Ext.chart.Mask": [],
+  "Ext.rtl.dom.Element_anim": [],
   "Ext.selection.CellModel": [
     "selection.cellmodel"
   ],
@@ -1195,6 +1281,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.view.TableLayout": [
     "layout.tableview"
   ],
+  "Ext.rtl.panel.Header": [],
+  "Ext.rtl.dom.Element_scroll": [],
   "Ext.state.Provider": [],
   "Spelled.model.Asset": [],
   "Spelled.abstract.validator.General": [],
@@ -1207,10 +1295,13 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.systemtemplateinputlist"
   ],
   "Ext.dom.AbstractQuery": [],
+  "Spelled.store.Languages": [],
   "Spelled.view.library.Dependencies": [
     "widget.spelldependencies"
   ],
-  "Spelled.store.Languages": [],
+  "Ext.grid.plugin.RowExpander": [
+    "plugin.rowexpander"
+  ],
   "Spelled.model.assets.Sound": [],
   "Ext.selection.TreeModel": [
     "selection.treemodel"
@@ -1226,10 +1317,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.store.property.Mappings": [],
   "Spelled.abstract.writer.JsonWriter": [],
   "Spelled.store.template.SystemInputDefinitions": [],
-  "Ext.draw.engine.Svg": [],
   "Ext.grid.property.Grid": [
     "widget.propertygrid"
   ],
+  "Ext.draw.engine.Svg": [],
   "Spelled.view.project.Load": [
     "widget.loadproject"
   ],
@@ -1245,6 +1336,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.chart.series.Radar": [
     "series.radar"
   ],
+  "Ext.rtl.dom.Element_insertion": [],
   "Spelled.view.system.ContextMenu": [
     "widget.scenesystemslistcontextmenu"
   ],
@@ -1256,6 +1348,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.grid.column.Boolean": [
     "widget.booleancolumn"
   ],
+  "Ext.layout.SizeModel": [],
   "Ext.direct.PollingProvider": [
     "direct.pollingprovider"
   ],
@@ -1268,11 +1361,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.data.writer.Project": [
     "writer.project"
   ],
-  "Ext.data.writer.Xml": [
-    "writer.xml"
-  ],
   "Ext.tree.Column": [
     "widget.treecolumn"
+  ],
+  "Ext.data.writer.Xml": [
+    "writer.xml"
   ],
   "Ext.slider.Multi": [
     "widget.multislider"
@@ -1291,10 +1384,10 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.spellediframe"
   ],
   "Ext.data.Operation": [],
+  "Ext.resizer.Resizer": [],
   "Ext.layout.container.HBox": [
     "layout.hbox"
   ],
-  "Ext.resizer.Resizer": [],
   "Spelled.view.scene.dependencies.DynamicContextMenu": [
     "widget.dynamiclibraryitemcontextmenu"
   ],
@@ -1309,20 +1402,24 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.data.writer.Script": [
     "writer.script"
   ],
-  "Ext.perf.Monitor": [],
-  "Ext.util.MixedCollection": []
-});Ext.ClassManager.addNameAlternateMappings({
+  "Ext.util.MixedCollection": [],
+  "Ext.perf.Monitor": []
+});
+Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.template.component.attribute.KeyFrameAnimation": [],
+  "Ext.dom.AbstractElement_static": [],
   "Ext.draw.engine.ImageExporter": [],
   "Ext.layout.component.Auto": [],
   "Ext.grid.property.Store": [
     "Ext.grid.PropertyStore"
   ],
+  "Ext.dom.Element_anim": [],
   "Spelled.view.library.menu.Context": [],
   "Ext.layout.container.Box": [
     "Ext.layout.BoxLayout"
   ],
   "Spelled.controller.Scripts": [],
+  "Ext.rtl.resizer.BorderSplitterTracker": [],
   "Ext.direct.JsonProvider": [],
   "Spelled.view.project.Settings": [],
   "Ext.tree.Panel": [
@@ -1350,19 +1447,21 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.store.config.Components": [],
   "Ext.util.TaskRunner": [],
   "Ext.direct.RemotingProvider": [],
-  "Ext.data.NodeInterface": [],
   "Ext.grid.column.Date": [
     "Ext.grid.DateColumn"
   ],
+  "Ext.data.NodeInterface": [],
+  "Ext.view.NodeCache": [],
+  "Ext.grid.plugin.RowEditing": [],
   "Ext.form.field.Trigger": [
     "Ext.form.TriggerField",
     "Ext.form.TwinTriggerField",
     "Ext.form.Trigger"
   ],
-  "Ext.grid.plugin.RowEditing": [],
   "Ext.tip.QuickTip": [
     "Ext.QuickTip"
   ],
+  "Ext.rtl.grid.plugin.HeaderResizer": [],
   "Ext.form.action.Load": [
     "Ext.form.Action.Load"
   ],
@@ -1372,6 +1471,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.container.Border": [
     "Ext.layout.BorderLayout"
   ],
+  "Ext.rtl.layout.container.Column": [],
   "Spelled.controller.Assets": [],
   "Ext.data.JsonPStore": [],
   "Spelled.store.asset.KeyToActionMappings": [],
@@ -1380,10 +1480,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.container.Container": [
     "Ext.layout.ContainerLayout"
   ],
+  "Ext.util.Sortable": [],
   "Ext.selection.Model": [
     "Ext.AbstractSelectionModel"
   ],
-  "Ext.util.Sortable": [],
   "Ext.draw.CompositeSprite": [],
   "Ext.fx.Queue": [],
   "Ext.dd.StatusProxy": [],
@@ -1400,12 +1500,14 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.Element",
     "Ext.core.Element"
   ],
+  "Ext.container.Monitor": [],
   "Spelled.view.template.component.attribute.Script": [],
   "Ext.view.DragZone": [],
   "Ext.util.KeyNav": [
     "Ext.KeyNav"
   ],
   "Spelled.model.template.System": [],
+  "Ext.rtl.dom.Element_static": [],
   "Ext.form.field.File": [
     "Ext.form.FileUploadField",
     "Ext.ux.form.FileUploadField",
@@ -1420,10 +1522,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.panel.Proxy": [
     "Ext.dd.PanelProxy"
   ],
+  "Ext.fx.target.Target": [],
   "Ext.ComponentManager": [
     "Ext.ComponentMgr"
   ],
-  "Ext.fx.target.Target": [],
+  "Ext.dom.AbstractElement_traversal": [],
   "Spelled.store.grouping.Components": [],
   "Ext.grid.feature.GroupingSummary": [],
   "Spelled.view.template.component.attribute.KeyToActionMap": [],
@@ -1431,22 +1534,23 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.grid.PropertyColumnModel"
   ],
   "Ext.layout.component.BoundList": [],
-  "Spelled.view.asset.create.SpriteSheet": [],
   "Spelled.model.template.SystemConfigItem": [],
+  "Spelled.view.asset.create.SpriteSheet": [],
   "Ext.tab.Bar": [],
   "Ext.app.Application": [],
   "Spelled.store.template.Entities": [],
-  "Ext.ShadowPool": [],
   "Ext.layout.container.Accordion": [
     "Ext.layout.AccordionLayout"
   ],
+  "Ext.ShadowPool": [],
+  "Ext.grid.locking.HeaderContainer": [],
   "Spelled.view.asset.edit.Edit": [],
   "Ext.resizer.ResizeTracker": [],
   "Spelled.view.template.component.attribute.TextAppearance": [],
+  "Ext.panel.Tool": [],
   "Ext.layout.container.boxOverflow.None": [
     "Ext.layout.boxOverflow.None"
   ],
-  "Ext.panel.Tool": [],
   "Ext.tree.View": [],
   "Ext.ElementLoader": [],
   "Ext.grid.ColumnComponentLayout": [],
@@ -1464,9 +1568,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.model.assets.TileMap": [],
   "Spelled.data.writer.Scene": [],
   "Ext.data.SortTypes": [],
+  "Ext.rtl.layout.container.HBox": [],
   "Spelled.view.template.component.attribute.Number": [],
   "Spelled.view.template.component.Attributes": [],
   "Ext.util.Animate": [],
+  "Ext.data.flash.BinaryXhr": [],
   "Spelled.view.menu.contextmenu.SceneSystemsItemList": [],
   "Spelled.view.asset.create.KeyToActionMap": [],
   "Ext.form.field.Date": [
@@ -1486,8 +1592,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.data.writer.Asset": [],
   "Spelled.data.reader.Component": [],
   "Spelled.view.layout.Main": [],
-  "Ext.fx.target.CompositeSprite": [],
   "Ext.menu.DatePicker": [],
+  "Ext.fx.target.CompositeSprite": [],
   "Spelled.model.assets.Translation": [],
   "Ext.form.field.Picker": [
     "Ext.form.Picker"
@@ -1513,7 +1619,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.fx.target.Element": [],
   "Ext.draw.Surface": [],
   "Ext.dd.DDProxy": [],
+  "Ext.grid.plugin.BufferedRendererTreeView": [],
   "Ext.data.AbstractStore": [],
+  "Ext.grid.locking.View": [
+    "Ext.grid.LockingView"
+  ],
   "Ext.form.action.StandardSubmit": [],
   "Spelled.view.script.FolderPicker": [],
   "Ext.diag.layout.Context": [],
@@ -1522,12 +1632,13 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.picker.Month": [
     "Ext.MonthPicker"
   ],
-  "Ext.container.Container": [
-    "Ext.Container"
-  ],
   "Ext.menu.Manager": [
     "Ext.menu.MenuMgr"
   ],
+  "Ext.container.Container": [
+    "Ext.Container"
+  ],
+  "Ext.rtl.form.field.Spinner": [],
   "Ext.util.KeyMap": [
     "Ext.KeyMap"
   ],
@@ -1542,8 +1653,9 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.TabPanel"
   ],
   "Spelled.view.menu.contextmenu.KeyToActionMapping": [],
-  "Ext.layout.Context": [],
+  "Ext.dom.Element_position": [],
   "Ext.layout.component.Body": [],
+  "Ext.layout.Context": [],
   "Spelled.model.LibraryNode": [],
   "Spelled.EntityHelper": [],
   "Ext.layout.component.field.ComboBox": [],
@@ -1551,6 +1663,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.chart.Chart": [],
   "Spelled.store.asset.ActionKeys": [],
   "Ext.data.Field": [],
+  "Ext.form.field.FileButton": [],
   "Ext.chart.series.Gauge": [],
   "Spelled.store.system.EditMode": [],
   "Ext.data.StoreManager": [
@@ -1558,62 +1671,74 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.data.StoreMgr",
     "Ext.StoreManager"
   ],
-  "Ext.data.IdGenerator": [],
   "Ext.tip.QuickTipManager": [
     "Ext.QuickTips"
   ],
+  "Ext.data.IdGenerator": [],
   "Ext.grid.plugin.Editing": [],
   "Spelled.view.menu.contextmenu.AssetsList": [],
-  "Ext.grid.RowEditor": [],
   "Ext.state.LocalStorageProvider": [],
+  "Ext.grid.RowEditor": [],
   "Spelled.data.reader.EntityTemplate": [],
+  "Ext.app.EventDomain": [],
   "Ext.form.action.Action": [
     "Ext.form.Action"
   ],
   "Ext.ProgressBar": [],
+  "Ext.fx.Easing": [],
+  "Ext.tree.ViewDragZone": [],
   "Ext.data.reader.Array": [
     "Ext.data.ArrayReader"
   ],
   "Ext.picker.Date": [
     "Ext.DatePicker"
   ],
-  "Ext.tree.ViewDragZone": [],
+  "Ext.rtl.grid.column.Column": [],
   "Spelled.abstract.view.GroupedTreeView": [],
   "Spelled.view.menu.contextmenu.SystemTemplateInputList": [],
   "Ext.data.proxy.JsonP": [
     "Ext.data.ScriptTagProxy"
   ],
   "Spelled.controller.templates.Components": [],
-  "Ext.chart.series.Area": [],
   "Ext.fx.Anim": [],
+  "Ext.chart.series.Area": [],
   "Ext.menu.Item": [
     "Ext.menu.TextItem"
   ],
   "Spelled.store.FoldersTree": [],
+  "Ext.util.TaskManager": [
+    "Ext.TaskManager"
+  ],
+  "Ext.rtl.dom.Element_position": [],
   "Ext.chart.Legend": [],
   "Ext.grid.plugin.HeaderReorderer": [],
+  "Ext.rtl.view.Table": [],
   "Spelled.controller.Components": [],
   "Ext.layout.container.VBox": [
     "Ext.layout.VBoxLayout"
   ],
+  "Ext.rtl.util.Floating": [],
   "Spelled.store.asset.Sounds": [],
   "Ext.view.DropZone": [],
+  "Ext.rtl.tree.Column": [],
   "Ext.layout.component.Button": [],
   "Ext.form.field.Hidden": [
     "Ext.form.Hidden"
   ],
   "Spelled.view.template.entity.Add": [],
+  "Ext.rtl.grid.plugin.RowEditing": [],
   "Ext.form.FieldContainer": [],
   "Spelled.view.template.FolderPicker": [],
   "Spelled.abstract.view.Menu": [],
-  "Ext.data.proxy.Server": [
-    "Ext.data.ServerProxy"
-  ],
   "Ext.chart.series.Cartesian": [
     "Ext.chart.CartesianSeries",
     "Ext.chart.CartesianChart"
   ],
+  "Ext.data.proxy.Server": [
+    "Ext.data.ServerProxy"
+  ],
   "Spelled.view.asset.create.Appearance": [],
+  "Ext.rtl.layout.component.Dock": [],
   "Ext.grid.column.Column": [
     "Ext.grid.Column"
   ],
@@ -1625,19 +1750,22 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.layout.FitLayout"
   ],
   "Ext.util.CSS": [],
+  "Ext.rtl.AbstractComponent": [],
   "Ext.layout.component.field.Field": [],
   "Spelled.view.template.component.attribute.Mat3": [],
   "Ext.data.proxy.Ajax": [
     "Ext.data.HttpProxy",
     "Ext.data.AjaxProxy"
   ],
+  "Ext.app.domain.Component": [],
+  "Ext.rtl.EventObjectImpl": [],
   "Ext.form.Label": [],
   "Spelled.abstract.field.AssetId": [],
-  "Ext.view.BoundListKeyNav": [],
   "Ext.data.writer.Writer": [
     "Ext.data.DataWriter",
     "Ext.data.Writer"
   ],
+  "Ext.view.BoundListKeyNav": [],
   "Ext.form.FieldSet": [],
   "Ext.XTemplateParser": [],
   "Spelled.store.script.Scripts": [],
@@ -1647,17 +1775,19 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.fx.PropertyHandler": [],
   "Ext.form.CheckboxGroup": [],
   "Ext.data.JsonP": [],
-  "Spelled.view.template.component.Edit": [],
   "Spelled.view.scene.Create": [],
+  "Spelled.view.template.component.Edit": [],
   "Ext.draw.engine.Vml": [],
   "Spelled.data.writer.ComponentTemplate": [],
   "Ext.layout.container.CheckboxGroup": [],
+  "Ext.app.domain.Direct": [],
   "Spelled.store.asset.KeyFrameAnimationPreviews": [],
   "Ext.panel.Header": [],
   "Spelled.view.menu.contextmenu.templatesList.Entity": [],
   "Spelled.view.asset.create.Create": [],
-  "Ext.app.Controller": [],
   "Ext.grid.plugin.CellEditing": [],
+  "Ext.app.Controller": [],
+  "Ext.rtl.dom.Layer": [],
   "Ext.form.field.Time": [
     "Ext.form.TimeField",
     "Ext.form.Time"
@@ -1667,6 +1797,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.button.Cycle": [
     "Ext.CycleButton"
   ],
+  "Ext.app.domain.Global": [],
   "Spelled.abstract.view.Navigator": [],
   "Spelled.model.assets.SpriteSheet": [],
   "Spelled.view.asset.create.Domvas": [],
@@ -1681,28 +1812,31 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.data.XmlStore": [],
   "Ext.grid.ViewDropZone": [],
   "Spelled.view.scene.Editor": [],
+  "Ext.rtl.slider.Multi": [],
   "Ext.grid.header.DropZone": [],
   "Spelled.store.Projects": [],
   "Ext.Layer": [],
   "Spelled.store.asset.Assets": [],
+  "Ext.rtl.layout.component.field.Text": [],
   "Spelled.view.component.AddButton": [],
   "Ext.util.HashMap": [],
   "Ext.grid.column.Template": [
     "Ext.grid.TemplateColumn"
   ],
-  "Ext.ComponentLoader": [],
   "Ext.EventObjectImpl": [],
+  "Ext.ComponentLoader": [],
   "Spelled.controller.assets.Translations": [],
   "Ext.form.FieldAncestor": [],
+  "Ext.app.domain.Controller": [],
   "Ext.chart.axis.Gauge": [],
   "Ext.data.validations": [],
   "Spelled.controller.Layout": [],
   "Ext.data.Connection": [],
-  "Spelled.store.asset.KeyFrameAnimations": [],
   "Spelled.controller.Systems": [],
-  "Ext.direct.ExceptionEvent": [],
-  "Ext.dd.DropZone": [],
+  "Spelled.store.asset.KeyFrameAnimations": [],
   "Ext.resizer.Splitter": [],
+  "Ext.dd.DropZone": [],
+  "Ext.direct.ExceptionEvent": [],
   "Ext.form.RadioManager": [],
   "Ext.data.association.HasOne": [
     "Ext.data.HasOneAssociation"
@@ -1714,29 +1848,30 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.window.MessageBox": [],
   "Spelled.view.template.component.attribute.Vec3": [],
   "Spelled.view.template.component.attribute.Vec4": [],
-  "Ext.diag.layout.ContextItem": [],
   "Ext.fx.target.CompositeElementCSS": [],
+  "Ext.diag.layout.ContextItem": [],
+  "Ext.rtl.layout.ContextItem": [],
   "Ext.chart.series.Line": [
     "Ext.chart.LineSeries",
     "Ext.chart.LineChart"
   ],
   "Ext.view.Table": [],
-  "Spelled.view.template.ReadOnly": [],
   "Spelled.controller.templates.Entities": [],
+  "Spelled.view.template.ReadOnly": [],
   "Ext.data.writer.Json": [
     "Ext.data.JsonWriter"
   ],
-  "Ext.fx.Manager": [],
   "Ext.fx.target.CompositeElement": [],
+  "Ext.fx.Manager": [],
   "Ext.chart.Label": [],
   "Ext.grid.View": [],
   "Spelled.store.asset.Types": [],
-  "Spelled.store.template.component.KeyFrameComponents": [],
   "Spelled.store.template.Types": [],
+  "Spelled.store.template.component.KeyFrameComponents": [],
+  "Ext.Action": [],
   "Ext.form.Basic": [
     "Ext.form.BasicForm"
   ],
-  "Ext.Action": [],
   "Spelled.view.scene.Script": [],
   "Spelled.view.project.Create": [],
   "Spelled.abstract.store.Template": [],
@@ -1753,25 +1888,29 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.template.system.input.Add": [],
   "Spelled.view.library.folder.Create": [],
+  "Ext.rtl.layout.component.field.Trigger": [],
   "Ext.data.reader.Xml": [
     "Ext.data.XmlReader"
   ],
   "Ext.grid.feature.AbstractSummary": [],
   "Spelled.view.library.menu.Filter": [],
+  "Ext.rtl.layout.container.boxOverflow.Scroller": [],
   "Ext.chart.axis.Category": [
     "Ext.chart.CategoryAxis"
   ],
+  "Ext.grid.plugin.BufferedRendererTableView": [],
   "Ext.layout.container.Absolute": [
     "Ext.layout.AbsoluteLayout"
   ],
+  "Ext.rtl.layout.container.Box": [],
   "Ext.data.reader.Json": [
     "Ext.data.JsonReader"
   ],
   "Ext.util.TextMetrics": [],
+  "Ext.data.TreeStore": [],
   "Ext.view.BoundList": [
     "Ext.BoundList"
   ],
-  "Ext.data.TreeStore": [],
   "Spelled.store.system.Types": [],
   "Ext.form.field.HtmlEditor": [
     "Ext.form.HtmlEditor"
@@ -1779,8 +1918,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.container.Form": [
     "Ext.layout.FormLayout"
   ],
-  "Spelled.view.scene.dependencies.StaticContextMenu": [],
   "Spelled.store.asset.Translations": [],
+  "Spelled.view.scene.dependencies.StaticContextMenu": [],
   "Spelled.store.system.Defaults": [],
   "Ext.chart.MaskLayer": [],
   "Spelled.view.layout.Split": [],
@@ -1790,13 +1929,17 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.menu.contextmenu.EntitiesFolderList": [],
   "Ext.resizer.BorderSplitterTracker": [],
   "Ext.util.LruCache": [],
-  "Ext.dom.CompositeElement": [
-    "Ext.CompositeElement"
-  ],
   "Ext.tip.Tip": [
     "Ext.Tip"
   ],
+  "Ext.dom.CompositeElement": [
+    "Ext.CompositeElement"
+  ],
+  "Ext.grid.column.CheckColumn": [
+    "Ext.ux.CheckColumn"
+  ],
   "Spelled.view.project.settings.SupportedLanguageContextMenu": [],
+  "Ext.rtl.resizer.SplitterTracker": [],
   "Ext.grid.feature.RowWrap": [],
   "Ext.data.proxy.Client": [
     "Ext.data.ClientProxy"
@@ -1810,14 +1953,15 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.asset.FolderPicker": [],
   "Ext.LoadMask": [],
+  "Ext.rtl.grid.RowEditor": [],
   "Ext.toolbar.Paging": [
     "Ext.PagingToolbar"
   ],
   "Ext.data.association.Association": [
     "Ext.data.Association"
   ],
-  "Ext.grid.LockingView": [],
   "Ext.tree.ViewDropZone": [],
+  "Ext.grid.LockingView": [],
   "Ext.toolbar.Toolbar": [
     "Ext.Toolbar"
   ],
@@ -1837,10 +1981,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.XTemplate": [],
   "Spelled.abstract.view.TreeList": [],
   "Ext.data.NodeStore": [],
+  "Ext.Shadow": [],
   "Ext.form.action.Submit": [
     "Ext.form.Action.Submit"
   ],
-  "Ext.Shadow": [],
   "Ext.form.Panel": [
     "Ext.FormPanel",
     "Ext.form.FormPanel"
@@ -1856,10 +2000,10 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.CompositeElementLite"
   ],
   "Spelled.model.Project": [],
-  "Ext.grid.RowNumberer": [],
   "Ext.toolbar.Fill": [
     "Ext.Toolbar.Fill"
   ],
+  "Ext.grid.RowNumberer": [],
   "Ext.data.proxy.WebStorage": [
     "Ext.data.WebStorageProxy"
   ],
@@ -1872,9 +2016,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.util.Cookies": [],
   "Spelled.model.config.Scene": [],
   "Ext.data.UuidGenerator": [],
-  "Ext.form.CheckboxManager": [],
-  "Ext.fx.target.Component": [],
   "Ext.util.Point": [],
+  "Ext.fx.target.Component": [],
+  "Ext.form.CheckboxManager": [],
   "Ext.form.field.Field": [],
   "Spelled.view.asset.create.2dTileMap": [],
   "Ext.form.field.Display": [
@@ -1890,27 +2034,35 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.component.field.Text": [],
   "Ext.data.DirectStore": [],
   "Spelled.view.template.component.attribute.Object": [],
-  "Spelled.view.ui.SpelledRightPanel": [],
+  "Ext.dom.Layer": [
+    "Ext.Layer"
+  ],
   "Spelled.store.AspectRatios": [],
+  "Spelled.view.ui.SpelledRightPanel": [],
   "Spelled.store.config.Entities": [],
+  "Ext.grid.RowEditorButtons": [],
   "Spelled.view.template.component.attribute.Appearance": [],
   "Ext.data.BufferStore": [],
+  "Ext.grid.plugin.DivRenderer": [],
   "Ext.grid.ColumnLayout": [],
-  "Ext.form.field.Base": [
-    "Ext.form.Field",
-    "Ext.form.BaseField"
-  ],
-  "Ext.flash.Component": [
-    "Ext.FlashComponent"
-  ],
-  "Ext.AbstractComponent": [],
+  "Ext.dom.AbstractElement_style": [],
   "Ext.Template": [],
+  "Ext.AbstractComponent": [],
   "Ext.chart.series.Column": [
     "Ext.chart.ColumnSeries",
     "Ext.chart.ColumnChart",
     "Ext.chart.StackedColumnChart"
   ],
+  "Ext.flash.Component": [
+    "Ext.FlashComponent"
+  ],
+  "Ext.form.field.Base": [
+    "Ext.form.Field",
+    "Ext.form.BaseField"
+  ],
   "Spelled.view.library.field.Name": [],
+  "Ext.dom.AbstractElement_insertion": [],
+  "Ext.grid.feature.GroupStore": [],
   "Ext.data.SequentialIdGenerator": [],
   "Spelled.view.template.component.Property": [],
   "Ext.grid.header.Container": [],
@@ -1949,6 +2101,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.selection.DataViewModel": [],
   "Ext.dd.DragTracker": [],
   "Spelled.store.template.Components": [],
+  "Ext.data.Group": [],
   "Spelled.model.template.Entity": [],
   "Spelled.abstract.model.Model": [],
   "Ext.dd.DragDropManager": [
@@ -1956,15 +2109,16 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.dd.DDM"
   ],
   "Ext.selection.CheckboxModel": [],
+  "Ext.menu.KeyNav": [],
   "Ext.layout.container.Column": [
     "Ext.layout.ColumnLayout"
   ],
-  "Ext.menu.KeyNav": [],
   "Ext.draw.Matrix": [],
   "Ext.form.field.Number": [
     "Ext.form.NumberField",
     "Ext.form.Number"
   ],
+  "Ext.rtl.util.Renderable": [],
   "Spelled.view.template.component.attribute.Enum": [],
   "Spelled.view.script.Properties": [],
   "Ext.data.proxy.Direct": [
@@ -1976,6 +2130,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.form.field.TextArea": [
     "Ext.form.TextArea"
   ],
+  "Ext.rtl.layout.container.VBox": [],
+  "Ext.util.Positionable": [],
   "Spelled.view.template.component.Details": [],
   "Spelled.view.template.component.attribute.List": [],
   "Spelled.view.entity.Convert": [],
@@ -1991,8 +2147,9 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.chart.PieChart"
   ],
   "Ext.view.TableChunker": [],
-  "Ext.direct.Provider": [],
   "Ext.tree.plugin.TreeViewDragDrop": [],
+  "Ext.direct.Provider": [],
+  "Ext.data.TreeModel": [],
   "Ext.layout.Layout": [],
   "Spelled.view.entity.ComponentsList": [],
   "Ext.toolbar.TextItem": [
@@ -2000,6 +2157,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.dom.Helper": [],
   "Spelled.model.config.Entity": [],
+  "Ext.rtl.button.Button": [],
   "Ext.util.AbstractMixedCollection": [],
   "Spelled.store.template.Systems": [],
   "Ext.data.JsonStore": [],
@@ -2008,17 +2166,17 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.asset.create.Animation": [],
   "Spelled.view.ui.SpelledConfiguration": [],
-  "Ext.direct.RemotingEvent": [],
   "Ext.dd.DropTarget": [],
+  "Ext.direct.RemotingEvent": [],
   "Ext.draw.Sprite": [],
   "Spelled.data.reader.Script": [],
+  "Ext.fx.target.Sprite": [],
   "Ext.data.proxy.LocalStorage": [
     "Ext.data.LocalStorageProxy"
   ],
-  "Ext.fx.target.Sprite": [],
   "Spelled.view.menu.contextmenu.ScenesList": [],
-  "Ext.AbstractPlugin": [],
   "Ext.layout.component.Draw": [],
+  "Ext.AbstractPlugin": [],
   "Spelled.view.library.TreeList": [],
   "Ext.Editor": [],
   "Ext.chart.Tip": [],
@@ -2030,21 +2188,26 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.layout.TableLayout"
   ],
   "Spelled.view.script.Create": [],
+  "Ext.chart.axis.Abstract": [],
   "Ext.data.proxy.Rest": [
     "Ext.data.RestProxy"
   ],
-  "Ext.chart.axis.Abstract": [],
+  "Ext.rtl.layout.container.Absolute": [],
   "Ext.util.Queue": [],
   "Ext.state.CookieProvider": [],
-  "Spelled.view.asset.create.Font": [],
   "Spelled.store.template.component.Attributes": [],
+  "Spelled.view.asset.create.Font": [],
   "Ext.Img": [],
   "Ext.dd.DragSource": [],
   "Ext.grid.CellEditor": [],
   "Ext.layout.ClassList": [],
+  "Ext.button.Manager": [
+    "Ext.ButtonToggleManager"
+  ],
   "Ext.util.Sorter": [],
   "Ext.resizer.SplitterTracker": [],
   "Ext.panel.Table": [],
+  "Ext.dom.Element_scroll": [],
   "Spelled.view.ui.SpelledConsole": [],
   "Ext.draw.Color": [],
   "Ext.chart.series.Bar": [
@@ -2073,6 +2236,7 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.data.Proxy"
   ],
   "Ext.menu.CheckItem": [],
+  "Ext.dom.Element_fx": [],
   "Spelled.view.asset.Iframe": [],
   "Ext.dom.AbstractElement": [],
   "Spelled.view.component.Properties": [],
@@ -2080,85 +2244,101 @@ Ext.ClassManager.addNameAliasMappings({
     "Ext.layout.CardLayout"
   ],
   "Spelled.view.library.FolderPicker": [],
-  "Ext.form.RadioGroup": [],
   "Ext.draw.Component": [],
   "Ext.toolbar.Item": [
     "Ext.Toolbar.Item"
   ],
+  "Ext.form.RadioGroup": [],
   "Spelled.view.template.component.attribute.Boolean": [],
+  "Ext.rtl.tab.Bar": [],
+  "Ext.rtl.form.field.Trigger": [],
   "Ext.slider.Thumb": [],
   "Ext.grid.header.DragZone": [],
+  "Ext.rtl.resizer.ResizeTracker": [],
   "Ext.form.action.DirectLoad": [
     "Ext.form.Action.DirectLoad"
   ],
   "Ext.picker.Time": [],
+  "Ext.grid.plugin.BufferedRenderer": [],
   "Ext.resizer.BorderSplitter": [],
   "Spelled.view.menu.contextmenu.TemplatesList": [],
   "Spelled.view.library.Navigator": [],
   "Spelled.model.assets.Appearance": [],
+  "Ext.menu.ColorPicker": [],
   "Ext.ZIndexManager": [
     "Ext.WindowGroup"
   ],
-  "Ext.menu.ColorPicker": [],
   "Ext.menu.Menu": [],
   "Ext.chart.LegendItem": [],
   "Ext.toolbar.Spacer": [
     "Ext.Toolbar.Spacer"
   ],
+  "Ext.rtl.dd.DD": [],
   "Ext.panel.Panel": [
     "Ext.Panel"
   ],
   "Ext.util.Memento": [],
+  "Ext.app.domain.Store": [],
   "Ext.data.proxy.Memory": [
     "Ext.data.MemoryProxy"
   ],
+  "Ext.grid.plugin.DragDrop": [],
   "Ext.chart.axis.Time": [
     "Ext.chart.TimeAxis"
   ],
-  "Ext.grid.plugin.DragDrop": [],
   "Spelled.view.template.component.attribute.Integer": [],
   "Spelled.abstract.grid.Property": [],
   "Ext.layout.component.Tab": [],
-  "Ext.draw.engine.SvgExporter": [],
   "Ext.ComponentQuery": [],
+  "Ext.dom.Element_style": [],
+  "Ext.draw.engine.SvgExporter": [],
   "Ext.grid.feature.Chunking": [],
   "Spelled.store.asset.SpriteSheets": [],
   "Spelled.model.config.Component": [],
   "Ext.layout.container.Auto": [],
+  "Ext.grid.locking.Lockable": [
+    "Ext.grid.Lockable"
+  ],
   "Spelled.abstract.store.TreeStore": [],
-  "Spelled.view.component.property.AssetId": [],
   "Spelled.data.writer.SystemTemplate": [],
+  "Spelled.view.component.property.AssetId": [],
   "Ext.view.AbstractView": [],
   "Spelled.view.template.component.attribute.String": [],
   "Spelled.store.asset.InterpolationFunctions": [],
   "Ext.util.Region": [],
-  "Ext.draw.Draw": [],
   "Ext.fx.target.ElementCSS": [],
+  "Ext.draw.Draw": [],
   "Spelled.model.Language": [],
+  "Ext.util.Event": [],
   "Spelled.abstract.model.Template": [],
   "Spelled.model.assets.KeyMapping": [],
+  "Ext.rtl.panel.Panel": [],
   "Ext.grid.PagingScroller": [],
   "Spelled.data.reader.Asset": [],
   "Ext.layout.component.field.HtmlEditor": [],
   "Spelled.store.asset.Appearances": [],
+  "Ext.dom.Element_dd": [],
   "Ext.data.proxy.SessionStorage": [
     "Ext.data.SessionStorageProxy"
   ],
   "Ext.app.EventBus": [],
   "Ext.menu.Separator": [],
   "Spelled.controller.Templates": [],
-  "Ext.direct.RemotingMethod": [],
-  "Ext.direct.Event": [],
   "Ext.util.History": [
     "Ext.History"
   ],
+  "Ext.direct.Event": [],
+  "Ext.direct.RemotingMethod": [],
   "Ext.dd.ScrollManager": [],
   "Ext.chart.Mask": [],
+  "Ext.rtl.dom.Element_anim": [],
   "Ext.selection.CellModel": [],
   "Spelled.abstract.view.GroupedTreeList": [],
   "Spelled.view.scene.plugin.CellEditing": [],
   "Spelled.model.assets.KeyFrameAnimation": [],
   "Ext.view.TableLayout": [],
+  "Ext.rtl.panel.Header": [],
+  "Ext.rtl.dom.Element_scroll": [],
   "Ext.state.Provider": [],
   "Spelled.model.Asset": [],
   "Spelled.abstract.validator.General": [],
@@ -2167,8 +2347,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.data.Errors": [],
   "Spelled.view.template.system.Input": [],
   "Ext.dom.AbstractQuery": [],
-  "Spelled.view.library.Dependencies": [],
   "Spelled.store.Languages": [],
+  "Spelled.view.library.Dependencies": [],
+  "Ext.grid.plugin.RowExpander": [],
   "Spelled.model.assets.Sound": [],
   "Ext.selection.TreeModel": [],
   "Spelled.store.asset.Fonts": [],
@@ -2180,10 +2361,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.store.property.Mappings": [],
   "Spelled.abstract.writer.JsonWriter": [],
   "Spelled.store.template.SystemInputDefinitions": [],
-  "Ext.draw.engine.Svg": [],
   "Ext.grid.property.Grid": [
     "Ext.grid.PropertyGrid"
   ],
+  "Ext.draw.engine.Svg": [],
   "Spelled.view.project.Load": [],
   "Ext.FocusManager": [
     "Ext.FocusMgr"
@@ -2193,6 +2374,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.abstract.model.Entity": [],
   "Spelled.view.scene.Properties": [],
   "Ext.chart.series.Radar": [],
+  "Ext.rtl.dom.Element_insertion": [],
   "Spelled.view.system.ContextMenu": [],
   "Spelled.view.entity.Create": [],
   "Ext.grid.property.Property": [
@@ -2202,14 +2384,15 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.grid.column.Boolean": [
     "Ext.grid.BooleanColumn"
   ],
+  "Ext.layout.SizeModel": [],
   "Ext.direct.PollingProvider": [],
   "Spelled.view.asset.inspector.Config": [],
   "Ext.grid.plugin.HeaderResizer": [],
   "Spelled.data.writer.Project": [],
+  "Ext.tree.Column": [],
   "Ext.data.writer.Xml": [
     "Ext.data.XmlWriter"
   ],
-  "Ext.tree.Column": [],
   "Ext.slider.Multi": [
     "Ext.slider.MultiSlider"
   ],
@@ -2225,11 +2408,11 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.ui.SpelledIframe": [],
   "Ext.data.Operation": [],
-  "Ext.layout.container.HBox": [
-    "Ext.layout.HBoxLayout"
-  ],
   "Ext.resizer.Resizer": [
     "Ext.Resizable"
+  ],
+  "Ext.layout.container.HBox": [
+    "Ext.layout.HBoxLayout"
   ],
   "Spelled.view.scene.dependencies.DynamicContextMenu": [],
   "Spelled.Compare": [],
@@ -2237,8 +2420,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.asset.Form": [],
   "Ext.layout.ContextItem": [],
   "Spelled.data.writer.Script": [],
+  "Ext.util.MixedCollection": [],
   "Ext.perf.Monitor": [
     "Ext.Perf"
-  ],
-  "Ext.util.MixedCollection": []
+  ]
 });
