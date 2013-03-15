@@ -8,7 +8,8 @@ Ext.define('Spelled.view.entity.ComponentsList' ,{
 
 	border: false,
 
-	autoScroll: true,
+	overflowY: 'auto',
+	overflowX: 'hidden',
 
 	buttonAlign:'left'
 });

@@ -2,6 +2,8 @@ Ext.define('Spelled.abstract.grid.property.Grid', {
     extend: 'Ext.grid.property.Grid',
 	alias : 'widget.defaultpropertygrid',
 
+	sourceConfig: {},
+
 	addCustomEditor: function( key, attribute ) {
 		var value  = attribute.value,
 			type   = attribute.type,
@@ -10,11 +12,11 @@ Ext.define('Spelled.abstract.grid.property.Grid', {
 
 		if( Ext.isArray( values ) && values.length > 0 ) cellEditorConfig.field.store = values
 
-		this.customEditors[ key ] = new Ext.grid.CellEditor( cellEditorConfig )
+		if( !this.sourceConfig[ key ] ) this.sourceConfig[ key ] = {}
+		this.sourceConfig[ key ][ 'editor' ] = new Ext.grid.CellEditor( cellEditorConfig )
 	},
 
 	initComponent: function() {
-		this.customEditors = {}
 		Ext.Object.each( this.source,
 			this.addCustomEditor,
 			this

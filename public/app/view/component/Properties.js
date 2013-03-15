@@ -40,7 +40,7 @@ Ext.define('Spelled.view.component.Properties', {
 	},
 
 	attachDeepLink: function() {
-		var propertyNames = this.propertyNames = {}
+		var propertyNames = this.sourceConfig
 
 		this.addEvents( 'propertydeeplinkclick' )
 		this.addListener( 'cellclick', this.checkIfDeepLinkClick, this )
@@ -48,7 +48,8 @@ Ext.define('Spelled.view.component.Properties', {
 		Ext.Object.each(
 			this.propertyDeepLinked,
 			function( key, value ) {
-				propertyNames[ key ] = key + " <img src='/images/icons/deep_link.png' class='linkedProperty'/>"
+				if( !propertyNames[ key ] ) propertyNames[ key ] = {}
+				propertyNames[ key ][ 'displayName' ] = key + " <img src='/images/icons/deep_link.png' class='linkedProperty'/>"
 			}
 		)
 	},
