@@ -1,0 +1,99 @@
+{
+  "sources": {
+    "theme.html.tpl.merge": {
+      "350c4d6793902b81dd7023596505db2bf8d8f474": "eJy9VLFu2zAQ3f0VF03tQNFJOhSOpMVN0RYFGtTu0JGmziZjSlTJs2wjyL+XlFTHSQ008FBCECDevffu3onMLj58m85/3t2CosoUo+yCsREATG2zd3qlCN7It3A1vrxi4XWdwgxrqQR8rmU6YiwABpxCURYRCRlpMljc7gi+zGCusEL4JFyN3me8j/V5FZIIstQw/LXRbZ5MbU1YE5vvG0xA9l95QrgjHmVuIEg7j5T/mH9k75Ni1BMNNcNXK0oQxoCLhA5LMLpeexB1CV463ZDv8mLdHTCGQ7LJE097g14hUgIU5AdV6X0CyuEyT3AnqsZg2m3xgaBnPUbci1b0uwl4J/MkTXl4HpZOVLi1bn0nSD3ykMpKbNN7nxQZ7wGv51xYS56caF7gT9hBCmFmtEQXDHV42ofXt9EIuRYr9N/RPDVCccZsITxyL7zng1XcYV2i+3eNcWSVqPUSPQ3TUtaR3PynOv9onzmNcyQPDZ6pKTeebHXS2u5X7pniSmMZK6zRCbIOHg6BuLa6JDWB6/F43OxuDqHH0RM8pKyQWDyNQgeWFwyVcCtdT+DyGcER97vxX5HGek3aBlQ4e4J0i8/jtkW3NHY7gVZ7vTB4XFnXIx+azPjRvbOw5R6kCTbH03rUdPQoBrv87rr6DX1Jir8\u003d"
+    },
+    "build.properties.merge": {
+      "9b4673b03b114f13c1c2915ca4d24a364edfc1ea": "eJylVk1v2zAMvedXEOuAbUCt3gv4MGA779JjLrJNxwpkyZDkNsGQ/z7S8oecOMW6BQXiSI9PFN8j3QfI//6ze4AfFowNgJUKEBrloVYaBQBt0d/LtAIV1sqgh87ZDl1Q9Nh7rKA4M67ola4y1XZanFr9CG+NKhug2NAgFNIj8B4BbQ3SgOw6rUoZlDU+xjJvid4T5LvW0NpK1ROC1nxjewIVCK2sEIKNUXwY8VXwBNZxHtqWUoskR2WGFJIDv3gGOkuXrpTDMlh3FrTykbLtPoh/gFfplO09HD3lWtq2o5q6pJgfTUC6gxdoXpWzpkUTcqKq+pIvuIulocvln3/TxcX8+/JEC1eBl92I56QcKUAMYiHLs3OvNhABfVDmEEvx0iApnFS9JI1Zq0FFMgnpVTbSHBAOaNBJPYpuu1ngnvwiPeCp1H1FzIPryHvOtoOCHgO5kk6C2rpWkmNPHYnnweCbZmcSCe0ASiZyh54v9xiXTpLMh8+ESD7Dr3gxzjtaLb35fsbHpHBvYFnLjGzRd7LE/Ocp7Keqb1Pdbi71m7ZugrIKi/6wz2upPV7B5vC4TKrY3lH/jKonis9bu6mdR53O76jEBVem68PQXLYP/NhJ2hlmATENvT8212hn/m4JL+ArHp5ps8KTkL47PY7PR9+BEAK+7diVTCe4iHncbUKrOcfl7PnABc+/RldPfk6pLmM8Z2xXDLEiKce6K9YsCQ2xHH3KUWrpPVV6SF1qnU0LR3+F2DrolmNpQM/y4zgIUycE1+M2aPLBXYR17JktM27jrn3JqKnv30lphkzx0bT/PCY91YcHpff/MyNJVJJQ8PtnNM1Q8IxUW22KodNGyLR4WQg85bHlmHX8ZcDNQa4vzuug0ppaHYQrFmaunUOdz116hzklfieZke6y4p+0werOZLg6M5624zBSQbAUN2Nl3i03NpOZM8Pi1ZP2nUqUUMUxMs24PMuCo/EKWVZYx2+ELKNpXmKs3jjUk9fccDRn+zTurXA3JtgC3ZMjJVnESKK2BLkivaxi7llqfdJgKLL9r1gSntBcKv7m+fTJo6GJDTU1DP17g5/mETy25rA6F3T3B/ZmfAg\u003d"
+    },
+    "app.js.tpl.merge": {
+      "ca9cfeb9d3913435880b586ce4603fc886054b52": "eJzdVk1v4jAQvedXjJBQQsuGPdOyW6nlUGm3XanVSivEwU0GsOrYWX8AFcp/37HNR7qFQ6We6kuwx+955r1JzKbLq1pp+4sVz2yOWaGq3KAsFix3lotetxmcJUDjccENzLhAoOccJWpmsQQmS3B1GX4/vcBDgMJ1VebwRzkomAQsuQW7hzMT+CRiSZiZ0vCinAZW14IXzHIl+/DkPAINBrCBFRcCFmyJYBU8IVSo5+HAQHU4FFYLlEDH1aiJuTJQqBJ36RI1WGaeDRhXLCiRfUDOKZ9VIKsIIEyfgNJqJQRqA5TjkuPKhGrDEdpJ6VGdqJXPnmSYa1ZiJ08C0W2JTIgXoLCco/GZH0RYKSdKX4ngFd/pWCljKaKfD+FSSQxsXIIiRTTUghXElu1KuD7k2cvhdtZWg9SXyka1gsqBapeQP9KLezDTi9X38gW9a61KV5Bh0IkMJMmMPLIdKoRZTxj4wmZvpy9Ro1GCfKqYdL78PDkbJMlgADf3cHf/CDfjH+PHMXyJWpRcY2H5MjSVxr+O5rEnWlXUsTWDgl6dnOiutpvhahu9X6LWvESTJOO1zVvdlG1iv7EKh5BuKHJHP5u0n1zaWgCfjTq09jPY3vnW6oHhZNMNUz+WTDg0eYzACLKZk0XoqCyu9WCz3+yHLyJbMk1lWdo/mfapEG09NgJyQynaLO2nPdKclr9e0OMy7soFyrldXMD5Of+fObTDLAv7Jnx6LOwHnZvXziyyjS8dhrADNL2LN4AmOT0jIqelfxxwTS/bKrLXDs4hTbfU3SZoSxqMOlVbWT/SkFCTbiaQrbkscQ2jEawL5aTtwXdioWRJFpg2lwOiicgp+RVmbdd++7dySx3e0CEcMS2+u688C0vvsCzs/zyOBd1OGbZsifrBfj1YRR+ILbcJk6OOxdBry+LaOzyLgM9jWhTvlGumLe0H29a6Y7YHtG7Howa2b89XLrYC77Cyhfo8frZUPWVq8Ub4D3A2zJiz6lojXfv+W+D/AQ7BaoeJL/Mfnl7s3A\u003d\u003d"
+    },
+    "app.json.tpl.merge": {
+      "e5f71b1bb6813850ab3a32f5d235c01c12678423": "eJyr5lIAAqW8xNxUJSsFpWoQo1aJqxYAS3MGqQ\u003d\u003d"
+    }
+  },
+  "targets": {
+    "sass/example/theme.html": {
+      "source": "theme.html.tpl.merge",
+      "version": "350c4d6793902b81dd7023596505db2bf8d8f474",
+      "parameters": {
+        "frameworkName": "ext",
+        "frameworkPath": "ext",
+        "senchadir": ".sencha",
+        "controllerFileName": "Main",
+        "appModels": "",
+        "viewFileName": "Main",
+        "appControllers": "",
+        "appViews": "",
+        "uniqueId": "00a54118-c7d4-4874-9840-2531953324f5",
+        "appName": "spellEd",
+        "controllerName": "Main",
+        "viewName": "Main",
+        "themeName": "default",
+        "packagesRelPath": "packages",
+        "name": "spellEd",
+        "library": "all",
+        "appStores": ""
+      }
+    },
+    "app/app.js": {
+      "source": "app.js.tpl.merge",
+      "version": "ca9cfeb9d3913435880b586ce4603fc886054b52",
+      "parameters": {
+        "appName": "spellEd",
+        "frameworkPath": "ext",
+        "appModels": "",
+        "appControllers": "Main",
+        "appStores": "",
+        "appViews": "Main,Viewport"
+      }
+    },
+    ".sencha/app/build.properties": {
+      "source": "build.properties.merge",
+      "version": "9b4673b03b114f13c1c2915ca4d24a364edfc1ea",
+      "parameters": {
+        "frameworkName": "ext",
+        "frameworkPath": "ext",
+        "senchadir": ".sencha",
+        "controllerFileName": "Main",
+        "appModels": "",
+        "viewFileName": "Main",
+        "appControllers": "",
+        "appViews": "",
+        "uniqueId": "00a54118-c7d4-4874-9840-2531953324f5",
+        "appName": "spellEd",
+        "controllerName": "Main",
+        "viewName": "Main",
+        "themeName": "default",
+        "packagesRelPath": "packages",
+        "name": "spellEd",
+        "library": "all",
+        "appStores": ""
+      }
+    },
+    "app.json": {
+      "source": "app.json.tpl.merge",
+      "version": "e5f71b1bb6813850ab3a32f5d235c01c12678423",
+      "parameters": {
+        "frameworkName": "ext",
+        "frameworkPath": "ext",
+        "senchadir": ".sencha",
+        "controllerFileName": "Main",
+        "appModels": "",
+        "viewFileName": "Main",
+        "appControllers": "",
+        "appViews": "",
+        "uniqueId": "00a54118-c7d4-4874-9840-2531953324f5",
+        "appName": "spellEd",
+        "controllerName": "Main",
+        "viewName": "Main",
+        "themeName": "default",
+        "packagesRelPath": "packages",
+        "name": "spellEd",
+        "library": "all",
+        "appStores": ""
+      }
+    }
+  }
+}

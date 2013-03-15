@@ -3,8 +3,8 @@
 	<head>
 		<title>SpellEd - the SpellJS Editor</title>
 
-		<link rel="stylesheet" type="text/css" href="css/ext-all-spelled.css">
-		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link rel="stylesheet" type="text/css" href="resources/css/ext-all-spelled.css">
+		<link rel="stylesheet" type="text/css" href="resouces/css/main.css">
 
 		<script type="text/javascript" src="libs/require.js"></script>
 		<script type="text/javascript">
@@ -17,16 +17,17 @@
         <!-- <x-bootstrap> -->
         <script type="text/javascript">
             if( navigator.appName === 'Microsoft Internet Explorer' ) {
-                document.write( '<script type="text/javascript" src="extjs/ext-all.js"><\/script>' )
+                document.write( '<script type="text/javascript" src="ext/ext-all.js"><\/script>' )
             } else {
-                document.write( '<script type="text/javascript" src="extjs/ext-dev.js"><\/script>' )
+                document.write( '<script type="text/javascript" src="ext/ext-dev.js"><\/script>' )
             }
         </script>
 
+	<link rel="stylesheet" href="bootstrap.css">
         <script type="text/javascript" src="bootstrap.js"></script>
         <!-- </x-bootstrap> -->
-        <script type="text/javascript" src="app-configuration.js"></script>
-        <script type="text/javascript" src="app.js"></script>
+        <script type="text/javascript" src="app/configuration.js"></script>
+        <script type="text/javascript" src="app/app.js"></script>
         <!-- </x-compile> -->
 
         <meta charset="utf-8">
