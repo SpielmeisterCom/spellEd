@@ -6,7 +6,11 @@ if [ -z $ACTION ]; then
 	echo Usage: $0 action
 	echo
 	echo Available actions:
-	echo bootstrap - create new bootstrap file
+	echo
+	echo bootstrap - create new bootstrap.js file
+	echo theme - recompile the theme from sass files
+	echo deploy - compile a new deployable version of the app
+	echo
 	exit
 fi
 
@@ -45,7 +49,7 @@ SENCHA=../SenchaCmd/$PLATFORM/sencha
 if [ "$ACTION" = "bootstrap" ]; then
 	$SENCHA compile -classpath=../extjs/src,public/app meta -alias -out public/bootstrap.js and meta -alt -append -out public/bootstrap.js
 
-elif [ "$ACTION" = "css" ]; then
+elif [ "$ACTION" = "theme" ]; then
         #create css files from sass
 	compass compile public/sass public/sass/ext-all-spelled.scss
 
