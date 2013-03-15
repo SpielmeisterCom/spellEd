@@ -76,10 +76,6 @@ define(
 									to      : '/lib/ace/'
 								},
 								{
-									rewrite : '/extjs/',
-									to      : '/'
-								},
-								{
 									rewrite : /public\/library/,
 									to      : 'library'
 								}
