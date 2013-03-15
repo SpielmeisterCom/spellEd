@@ -6,7 +6,7 @@ Ext.define('Spelled.view.scene.dependencies.StaticContextMenu', {
 		{
 			text: 'Show in library',
 			action: 'showInLibrary',
-			icon: 'images/icons/deep_link.png'
+			icon: 'resources/images/icons/deep_link.png'
 		}
     ]
 });

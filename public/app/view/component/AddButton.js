@@ -9,7 +9,7 @@ Ext.define('Spelled.view.component.AddButton' ,{
 	items:[
 		{
 			align: 'center',
-			icon: 'images/icons/component-add.png',
+			icon: 'resources/images/icons/component-add.png',
 			xtype: "button",
 			text: "Add components to this entity",
 			action: "showAddComponent"

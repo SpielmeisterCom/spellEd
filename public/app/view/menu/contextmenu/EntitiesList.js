@@ -12,12 +12,12 @@ Ext.define('Spelled.view.menu.contextmenu.EntitiesList', {
 
     items: [
 		{
-			icon: 'images/icons/entity-add.png',
+			icon: 'resources/images/icons/entity-add.png',
 			text: 'Add new child entity',
 			action: 'create'
 		},
 		{
-			icon: 'images/icons/entity-convert.png',
+			icon: 'resources/images/icons/entity-convert.png',
 			text: 'Convert to template',
 			action: 'showConvertEntity'
 		},
@@ -27,12 +27,12 @@ Ext.define('Spelled.view.menu.contextmenu.EntitiesList', {
 			action: 'rename'
 		},
 		{
-			icon: 'images/icons/entity-clone.png',
+			icon: 'resources/images/icons/entity-clone.png',
 			text: 'Clone',
 			action: 'clone'
 		},
 		{
-			icon: 'images/icons/entity-delete.png',
+			icon: 'resources/images/icons/entity-delete.png',
             text: 'Remove',
             action: 'remove'
 		}

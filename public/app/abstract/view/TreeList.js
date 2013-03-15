@@ -25,7 +25,7 @@ Ext.define('Spelled.abstract.view.TreeList' ,{
 				{
 					xtype: 'actioncolumn',
 					width: 30,
-					icon: 'images/icons/wrench-arrow.png',
+					icon: 'resources/images/icons/wrench-arrow.png',
 					iconCls: 'x-hidden edit-action-icon',
 					handler: Ext.bind(me.handleEditClick, me)
 				}

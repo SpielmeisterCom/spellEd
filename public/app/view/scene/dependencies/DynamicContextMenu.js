@@ -6,12 +6,12 @@ Ext.define('Spelled.view.scene.dependencies.DynamicContextMenu', {
 		{
 			text: 'Show in library',
 			action: 'showInLibrary',
-			icon: 'images/icons/deep_link.png'
+			icon: 'resources/images/icons/deep_link.png'
 		},
 		{
 			text: 'Remove',
 			action: 'remove',
-			icon: 'images/icons/delete.png'
+			icon: 'resources/images/icons/delete.png'
 		}
     ]
 });

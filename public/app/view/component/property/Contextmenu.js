@@ -4,24 +4,24 @@ Ext.define('Spelled.view.component.property.Contextmenu', {
 
     items: [
 		{
-			icon: 'images/icons/copy-identifier.png',
+			icon: 'resources/images/icons/copy-identifier.png',
 			text: 'Copy identifier to clipboard',
 			action: 'copyComponentIdentifier'
 		},
         {
-			icon: 'images/icons/revert-component.png',
+			icon: 'resources/images/icons/revert-component.png',
             text: 'Reset to component defaults',
             action: 'toComponentDefaults'
         },
 		{
 			hidden: true,
-			icon: 'images/icons/revert-template.png',
+			icon: 'resources/images/icons/revert-template.png',
 			text: 'Reset to template defaults',
 			action: 'toEntityDefaults'
 		},
 		{
 			hidden: true,
-			icon: 'images/icons/component-delete.png',
+			icon: 'resources/images/icons/component-delete.png',
 			text: 'Remove component',
 			action: 'removeComponent'
 		}

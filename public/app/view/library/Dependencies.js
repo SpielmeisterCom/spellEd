@@ -52,7 +52,7 @@ Ext.define('Spelled.view.library.Dependencies', {
 						{
 							xtype: 'actioncolumn',
 							width: 30,
-							icon: 'images/icons/wrench-arrow.png',
+							icon: 'resources/images/icons/wrench-arrow.png',
 							iconCls: 'x-hidden edit-action-icon',
 							handler: Ext.bind( me.handleEditClick, me )
 						}
@@ -60,14 +60,14 @@ Ext.define('Spelled.view.library.Dependencies', {
 					tbar: [
 						{
 							text: 'Add',
-							icon: 'images/icons/add.png',
+							icon: 'resources/images/icons/add.png',
 							menu: [
 								{
-									text: 'Single dependency', icon: 'images/icons/add.png',
+									text: 'Single dependency', icon: 'resources/images/icons/add.png',
 									handler: Ext.bind( me.handleAddClick, me, [ false ] )
 								},
 								{
-									text: 'Multiple dependencies', icon: 'images/icons/add.png',
+									text: 'Multiple dependencies', icon: 'resources/images/icons/add.png',
 									handler: Ext.bind( me.handleAddClick, me, [ true ] )
 								}
 							]

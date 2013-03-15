@@ -429,7 +429,7 @@ Ext.define('Spelled.controller.Components', {
 
 		var icon        = ( Ext.isEmpty( template.get('icon') ) )? "" : "style='background: url(" + template.get('icon') +") no-repeat;'",
 			iconClass   = ( component.get('additional') ) ? "component-icon" : "linked-component-icon",
-			linkedImage = ( !component.get('additional') && !Ext.isEmpty( template.get('icon') ) ) ? "<img src='/images/icons/link.png' style='margin-left: -18px;'/>" : "<span/>"
+			linkedImage = ( !component.get('additional') && !Ext.isEmpty( template.get('icon') ) ) ? "<img src='resources/images/icons/link.png' style='margin-left: -18px;'/>" : "<span/>"
 
 		return {
 				xtype: 'componentproperties',

@@ -9,12 +9,12 @@ Ext.define('Spelled.view.menu.contextmenu.templatesList.Entity', {
 			action: 'add'
 		},
 		{
-			icon: 'images/icons/application_go.png',
+			icon: 'resources/images/icons/application_go.png',
 			text: 'Open template',
 			action: 'open'
 		},
         {
-			icon: 'images/icons/delete.png',
+			icon: 'resources/images/icons/delete.png',
             text: 'Remove',
             action: 'remove'
         }

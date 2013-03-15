@@ -44,7 +44,7 @@ Ext.define('Spelled.view.asset.create.Translation', {
 					xtype: 'grid',
 					tbar: [
 						{
-							icon: 'images/icons/add.png',
+							icon: 'resources/images/icons/add.png',
 							text: 'Add',
 							scope: this,
 							handler: this.onAddClick

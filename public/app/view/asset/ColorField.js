@@ -32,7 +32,7 @@ Ext.define('Spelled.view.asset.ColorField', {
 	markInvalid : function( msg ) {
 		Spelled.view.asset.ColorField.superclass.markInvalid.call(this, msg);
 		this.inputEl.setStyle({
-			'background-image': 'url(/extjs/resources/themes/images/default/grid/invalid_line.gif)'
+			'background-image': 'url(resources/images/spelled/grid/invalid_line.gif)'
 		});
 	},
 

@@ -7,14 +7,14 @@ Ext.define('Spelled.view.library.menu.Context', {
     items: [
 		{
 			text: 'Create',
-			icon: 'images/icons/add.png',
+			icon: 'resources/images/icons/add.png',
 			menu: { xtype: 'librarymenu' }
 		},
 		{
 			hidden: true,
 			action: 'deleteFolder',
 			text: 'Remove empty folder',
-			icon: 'images/icons/delete.png'
+			icon: 'resources/images/icons/delete.png'
 		}
     ]
 });

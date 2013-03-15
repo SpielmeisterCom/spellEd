@@ -6,7 +6,7 @@ Ext.define('Spelled.view.project.settings.SupportedLanguageContextMenu', {
 		{
 			text: 'Remove',
 			action: 'remove',
-			icon: 'images/icons/delete.png'
+			icon: 'resources/images/icons/delete.png'
 		}
     ]
 });

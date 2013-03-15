@@ -23,7 +23,7 @@ Ext.define('Spelled.view.project.settings.Language' ,{
 						name: 'supportedLanguages',
 						tbar: [ {
 								text: "Add",
-								icon: 'images/icons/add.png',
+								icon: 'resources/images/icons/add.png',
 								scope: this,
 								handler: this.addHandler
 							}
@@ -38,7 +38,7 @@ Ext.define('Spelled.view.project.settings.Language' ,{
 								{
 									xtype: 'actioncolumn',
 									width: 30,
-									icon: 'images/icons/wrench-arrow.png',
+									icon: 'resources/images/icons/wrench-arrow.png',
 									iconCls: 'x-hidden edit-action-icon',
 									handler: Ext.bind( this.handleEditClick, this)
 								}

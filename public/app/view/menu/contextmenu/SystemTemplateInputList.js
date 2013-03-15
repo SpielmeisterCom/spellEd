@@ -4,7 +4,7 @@ Ext.define('Spelled.view.menu.contextmenu.SystemTemplateInputList', {
 
     items: [
         {
-			icon: 'images/icons/delete.png',
+			icon: 'resources/images/icons/delete.png',
             text: 'Remove',
             action: 'remove'
         }

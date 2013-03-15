@@ -13,7 +13,7 @@ Ext.define('Spelled.view.menu.Menu', {
 				items: [
 					{
 						text: 'Project',
-						icon: "images/icons/book.png",
+						icon: "resources/images/icons/book.png",
 						menu: {
 							items: [{
 								text   : 'Create',
@@ -33,17 +33,17 @@ Ext.define('Spelled.view.menu.Menu', {
 					},
 					{
 						text: "Save",
-						icon: "images/icons/script-save.png",
+						icon: "resources/images/icons/script-save.png",
 						action: "saveProject"
 					},
 					{
 						text: "Export for deployment",
-						icon: "images/icons/application_go.png",
+						icon: "resources/images/icons/application_go.png",
 						action: "exportProject"
 					},
 					{
 						text: 'Layout',
-						icon: "images/icons/monitor.png",
+						icon: "resources/images/icons/monitor.png",
 						menu: {
 							items: [{
 								text   : 'Main layout',

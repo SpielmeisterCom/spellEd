@@ -4,7 +4,7 @@ Ext.define('Spelled.view.menu.contextmenu.AssetsList', {
 
     items: [
 		{
-			icon: 'images/icons/cog.png',
+			icon: 'resources/images/icons/cog.png',
 			text: 'Edit',
 			action: 'edit'
 		},
@@ -14,7 +14,7 @@ Ext.define('Spelled.view.menu.contextmenu.AssetsList', {
 			action: 'rename'
 		},
         {
-			icon: 'images/icons/delete.png',
+			icon: 'resources/images/icons/delete.png',
             text: 'Remove',
             action: 'remove'
 		}

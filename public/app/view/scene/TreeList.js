@@ -17,22 +17,22 @@ Ext.define('Spelled.view.scene.TreeList' ,{
     tbar: [
 		{
 			text: 'Create',
-			icon: 'images/icons/add.png',
+			icon: 'resources/images/icons/add.png',
 			menu: [
 				{
 					text: "Add new scene",
 					action: "showCreateScene",
-					icon: 'images/icons/scene-add.png'
+					icon: 'resources/images/icons/scene-add.png'
 				},
 				{
 					text: "Add new entity",
 					action: "showCreateEntity",
-					icon: 'images/icons/entity-add.png'
+					icon: 'resources/images/icons/entity-add.png'
 				},
 				{
 					text: "Add system",
 					action: "showAddSystem",
-					icon: 'images/icons/system-add.png'
+					icon: 'resources/images/icons/system-add.png'
 				}
 			]
 		}

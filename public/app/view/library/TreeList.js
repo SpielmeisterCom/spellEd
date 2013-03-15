@@ -61,7 +61,7 @@ Ext.define('Spelled.view.library.TreeList' ,{
 				tbar: [
 					{
 						text: 'Create',
-						icon: 'images/icons/add.png',
+						icon: 'resources/images/icons/add.png',
 						menu: { xtype: 'librarymenu' }
 					},
 					{

@@ -4,12 +4,12 @@ Ext.define('Spelled.view.menu.contextmenu.TemplatesList', {
 
     items: [
 		{
-			icon: 'images/icons/application_go.png',
+			icon: 'resources/images/icons/application_go.png',
 			text: 'Open',
 			action: 'open'
 		},
         {
-			icon: 'images/icons/delete.png',
+			icon: 'resources/images/icons/delete.png',
             text: 'Remove',
             action: 'remove'
         }

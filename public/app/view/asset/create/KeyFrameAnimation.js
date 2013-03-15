@@ -105,7 +105,7 @@ Ext.define('Spelled.view.asset.create.KeyFrameAnimation', {
 								{
 									xtype: 'actioncolumn',
 									width: 30,
-									icon: 'images/icons/wrench-arrow.png',
+									icon: 'resources/images/icons/wrench-arrow.png',
 									handler: Ext.bind( me.handleEditClick, me )
 								}
 							]

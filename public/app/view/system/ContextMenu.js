@@ -4,7 +4,7 @@ Ext.define('Spelled.view.system.ContextMenu', {
 
 	items: [
 		{
-			icon: 'images/icons/system-add.png',
+			icon: 'resources/images/icons/system-add.png',
 			text: 'Add system',
 			action: 'showAddSystem'
 		}

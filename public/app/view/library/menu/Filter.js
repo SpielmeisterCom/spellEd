@@ -3,7 +3,7 @@ Ext.define('Spelled.view.library.menu.Filter', {
     alias : 'widget.libraryfilterbutton',
 
 	text: 'Filter',
-	icon: 'images/icons/eye.png',
+	icon: 'resources/images/icons/eye.png',
 
 	assetsOnly: true,
 
