@@ -30,7 +30,6 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.scene.plugin.SceneTreeDropZone": [],
   "Spelled.view.project.settings.General": [],
   "Spelled.view.template.component.attribute.AnimatedAppearance": [],
-  "Ext.ux.CheckColumn": [],
   "Spelled.store.config.Components": [],
   "Ext.ux.PreviewPlugin": [],
   "Spelled.model.template.ComponentAttribute": [],
@@ -352,9 +351,6 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.template.component.attribute.AnimatedAppearance": [
     "widget.spelledanimatedappearancefield"
-  ],
-  "Ext.ux.CheckColumn": [
-    "widget.checkcolumn"
   ],
   "Spelled.store.config.Components": [],
   "Ext.ux.PreviewPlugin": [
