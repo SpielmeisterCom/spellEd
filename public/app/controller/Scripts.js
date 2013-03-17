@@ -6,7 +6,9 @@ Ext.define('Spelled.controller.Scripts', {
 		'Spelled.view.script.FolderPicker',
 		'Spelled.view.script.Editor',
 		'Spelled.store.script.Scripts',
-		'Spelled.view.script.Properties'
+		'Spelled.view.script.Properties',
+
+		'Spelled.Remoting'
 	],
 
     views: [

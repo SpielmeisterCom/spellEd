@@ -1,6 +1,7 @@
 Ext.define('Spelled.data.writer.Scene', {
     extend: 'Spelled.data.writer.Writer',
 	alias: 'writer.scene',
+	requires: ['Spelled.Remoting'],
 
 	write: function( request ) {
 		var records = request.operation.records || [],
