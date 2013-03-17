@@ -1,2 +1,9 @@
-$menu-item-active-background-color: darken(#f3f3f3, 5) !default;
-$menu-item-active-border-color: #9d9d9d !default;
+//$menu-item-active-background-color: darken(#f3f3f3, 5) !default;
+//$menu-item-active-border-color: #9d9d9d !default;
+$menu-text-color: #fff;
+$menu-item-active-background-color: $color_selected;
+$menu-item-active-border-color: $color2;
+$menu-background-color: $color2;
+
+$menu-separator-border-color: $menu-background-color;
+$menu-separator-background-color: $menu-background-color;
