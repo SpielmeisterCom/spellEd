@@ -1,1 +1,9 @@
-$boundlist-border-color: #b5b8c8 !default;
+//$boundlist-border-color: #b5b8c8 !default;
+$boundlist-color: #fff;
+$boundlist-background-color: $color2;
+$boundlist-border-color: $color_selected;
+$boundlist-border-width: 1px;
+
+$boundlist-item-border-width: 0;
+$boundlist-item-over-background-color: $color_selected;
+$boundlist-item-selected-background-color: $color_selected;
