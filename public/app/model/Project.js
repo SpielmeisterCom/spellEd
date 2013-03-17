@@ -1,21 +1,15 @@
 Ext.define('Spelled.model.Project', {
     extend: 'Ext.data.Model',
 	requires: [
-		'proxy.direct',
+		'proxy.storageaction',
 		'Spelled.data.reader.Project',
 		'Spelled.data.writer.Project'
 	],
 
 	proxy: {
-        type: 'direct',
+        type: 'storageaction',
 		extraParams: {
 			type: 'project'
-		},
-		api: {
-			create:  Spelled.StorageActions.create,
-			read:    Spelled.StorageActions.read,
-			update:  Spelled.StorageActions.update,
-			destroy: Spelled.StorageActions.destroy
 		},
 		reader: 'project',
 		writer: 'project'

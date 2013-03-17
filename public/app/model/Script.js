@@ -1,6 +1,6 @@
 Ext.define('Spelled.model.Script', {
     extend: 'Ext.data.Model',
-	requires: ['proxy.direct', 'Spelled.data.reader.Script', 'Spelled.data.writer.Script'],
+	requires: ['proxy.storageaction', 'Spelled.data.reader.Script', 'Spelled.data.writer.Script'],
 	mixins: ['Spelled.abstract.model.Model'],
 
 	iconCls : "tree-script-icon",
@@ -10,22 +10,16 @@ Ext.define('Spelled.model.Script', {
 	sortOrder: 310,
 
     proxy: {
-        type: 'direct',
-		extraParams: {
-			type: 'script'
-		},
-        api: {
-            create:  Spelled.StorageActions.create,
-            read:    Spelled.StorageActions.read,
-            update:  Spelled.StorageActions.update,
-            destroy: Spelled.StorageActions.destroy
-        },
-		writer: {
-			type: 'script'
-		},
-		reader: {
-			type: 'script'
-		}
+        type: 'storageaction',
+	    extraParams: {
+		    type: 'script'
+	    },
+	    writer: {
+		    type: 'script'
+	    },
+	    reader: {
+		    type: 'script'
+	    }
     },
 
 	destroy: function( options ) {
