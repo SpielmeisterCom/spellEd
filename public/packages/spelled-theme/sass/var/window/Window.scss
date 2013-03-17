@@ -1,2 +1,15 @@
-$window-background-color: #e8e8e8 !default;
-$window-header-color: #333 !default;
+//$window-background-color: #e8e8e8 !default;
+//$window-header-color: #333 !default;
+$window-border-color: $color2;
+$window-inner-border-color: $color3;
+
+$window-header-color: #fff;
+
+$window-background-color: $color2;
+
+$window-body-color: #fff;
+$window-body-background-color: $color3;
+
+.x-window-item {
+  background-color: $color3;
+}
