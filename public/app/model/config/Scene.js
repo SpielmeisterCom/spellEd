@@ -1,7 +1,7 @@
 Ext.define('Spelled.model.config.Scene', {
     extend: 'Ext.data.Model',
 	requires: [
-		'proxy.direct',
+		'proxy.storageaction',
 		'Spelled.data.reader.Scene',
 		'Spelled.data.writer.Scene'
 	],
@@ -33,15 +33,9 @@ Ext.define('Spelled.model.config.Scene', {
     },
 
 	proxy: {
-		type: 'direct',
+		type: 'storageaction',
 		extraParams: {
 			type: 'scene'
-		},
-		api: {
-			create:  Spelled.StorageActions.create,
-			read:    Spelled.StorageActions.read,
-			update:  Spelled.StorageActions.update,
-			destroy: Spelled.StorageActions.destroy
 		},
 		reader: 'scene',
 		writer: 'scene'
