@@ -145,6 +145,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.form.ItemSelector": [
     "Ext.ux.ItemSelector"
   ],
+  "Spelled.Remoting": [],
   "Ext.ux.Spotlight": [],
   "Ext.ux.grid.FiltersFeature": [],
   "Spelled.data.reader.Script": [],
@@ -198,6 +199,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.ajax.SimManager": [],
   "Spelled.view.template.component.Edit": [],
   "Spelled.view.scene.Create": [],
+  "Spelled.proxy.StorageAction": [],
   "Spelled.data.writer.ComponentTemplate": [],
   "Spelled.store.asset.KeyFrameAnimationPreviews": [],
   "Ext.ux.TabScrollerMenu": [],
@@ -220,8 +222,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.controller.Entities": [],
   "Spelled.view.template.component.attribute.String": [],
   "Spelled.view.ui.SpelledRendered": [],
-  "Spelled.view.library.menu.Buttons": [],
   "Spelled.Converter": [],
+  "Spelled.view.library.menu.Buttons": [],
   "Spelled.store.asset.InterpolationFunctions": [],
   "Spelled.model.Language": [],
   "Ext.ux.data.PagingMemoryProxy": [
@@ -590,6 +592,7 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.itemselector",
     "widget.itemselectorfield"
   ],
+  "Spelled.Remoting": [],
   "Ext.ux.Spotlight": [],
   "Ext.ux.grid.FiltersFeature": [
     "feature.filters"
@@ -710,6 +713,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.scene.Create": [
     "widget.createscene"
   ],
+  "Spelled.proxy.StorageAction": [
+    "proxy.storageaction"
+  ],
   "Spelled.data.writer.ComponentTemplate": [
     "writer.componentTemplate"
   ],
@@ -758,10 +764,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.ui.SpelledRendered": [
     "widget.renderedscene"
   ],
+  "Spelled.Converter": [],
   "Spelled.view.library.menu.Buttons": [
     "widget.librarymenu"
   ],
-  "Spelled.Converter": [],
   "Spelled.store.asset.InterpolationFunctions": [],
   "Spelled.model.Language": [],
   "Ext.ux.data.PagingMemoryProxy": [
