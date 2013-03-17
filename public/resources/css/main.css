@@ -195,3 +195,16 @@
     border-radius: 0px 20px 20px 0px;
     box-shadow: inset 0px 0px 2px 2px red;
 }
+
+/*For tree nodes dragging in scenes-navigator*/
+/*
+.dragged-node-highlight .x-grid-cell,
+  .dragged-node-highlight .x-grid-rowwrap-div {
+      background-color: #9a9a9a;
+  }
+*/
+/*text color in the file upload form tag should be white*/
+/*
+.x-form-file-wrap .x-form-text {
+      color: #fff; }
+      */
