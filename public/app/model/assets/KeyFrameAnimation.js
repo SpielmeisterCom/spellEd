@@ -4,16 +4,10 @@ Ext.define('Spelled.model.assets.KeyFrameAnimation', {
 	docString: '#!/guide/asset_type_key_frame_animation',
 
 	proxy: {
-		type: 'direct',
+		type: 'storageaction',
 		extraParams: {
 			type: 'asset',
 			subtype: 'keyFrameAnimation'
-		},
-		api: {
-			create:  Spelled.StorageActions.create,
-			read:    Spelled.StorageActions.read,
-			update:  Spelled.StorageActions.update,
-			destroy: Spelled.StorageActions.destroy
 		},
 		writer: 'asset',
 		reader: 'asset'

@@ -1,7 +1,7 @@
 Ext.define('Spelled.model.Asset', {
     extend: 'Ext.data.Model',
 	requires: [
-		'proxy.direct',
+		'proxy.storageaction',
 		'Spelled.data.writer.Asset',
 		'Spelled.data.reader.Asset'
 	],
@@ -13,15 +13,9 @@ Ext.define('Spelled.model.Asset', {
 	sortOrder: 999,
 
 	proxy: {
-		type: 'direct',
+		type: 'storageaction',
 		extraParams: {
 			type: 'asset'
-		},
-		api: {
-			create:  Spelled.StorageActions.create,
-			read:    Spelled.StorageActions.read,
-			update:  Spelled.StorageActions.update,
-			destroy: Spelled.StorageActions.destroy
 		},
 		writer: 'asset',
 		reader: 'asset'

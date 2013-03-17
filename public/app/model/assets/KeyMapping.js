@@ -4,16 +4,10 @@ Ext.define('Spelled.model.assets.KeyMapping', {
 	docString: '#!/guide/asset_type_key_to_action_map',
 
 	proxy: {
-		type: 'direct',
+		type: 'storageaction',
 		extraParams: {
 			type: 'asset',
 			subtype: 'keyToActionMap'
-		},
-		api: {
-			create:  Spelled.StorageActions.create,
-			read:    Spelled.StorageActions.read,
-			update:  Spelled.StorageActions.update,
-			destroy: Spelled.StorageActions.destroy
 		},
 		writer: 'asset',
 		reader: 'asset'

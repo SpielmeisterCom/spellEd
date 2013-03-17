@@ -4,16 +4,10 @@ Ext.define('Spelled.model.assets.Translation', {
 	docString: '#!/guide/asset_type_translation',
 
 	proxy: {
-		type: 'direct',
+		type: 'storageaction',
 		extraParams: {
 			type: 'asset',
 			subtype: 'translation'
-		},
-		api: {
-			create:  Spelled.StorageActions.create,
-			read:    Spelled.StorageActions.read,
-			update:  Spelled.StorageActions.update,
-			destroy: Spelled.StorageActions.destroy
 		},
 		writer: 'asset',
 		reader: 'asset'
