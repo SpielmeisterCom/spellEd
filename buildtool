@@ -13,18 +13,14 @@ if [ -z $ACTION ]; then
 	exit
 fi
 
-SENCHA=../SenchaCmd/sencha
+PWD=$(pwd)
+SENCHA=$PWD/../SenchaCmd/sencha
+
 
 if [ "$ACTION" = "theme" ]; then
-        #create css files from sass
-	$SENCHA compass compile public/sass public/sass/ext-all-spelled.scss
-
-	#fix path to images in the generated css file
-	sed -i 's/..\/..\/..\/extjs\/resources\/themes\/images\/spelled\//..\/images\/spelled\//' public/css/ext-all-spelled.css
-
-	#slice fallback images for older browsers
-#	PATH=${PATH} sencha slice theme -d ../extjs -c ./public/css/ext-all-spelled.css -o ./public/images/spelled -v
-#	cp -aR public/images/spelled-patches/* public/images/spelled/
+	cd public/packages/spelled-theme
+	$SENCHA package build
+	cd $PWD
 
 elif [ "$ACTION" = "deploy" ]; then
 	# cleaning up and creating directory tree
