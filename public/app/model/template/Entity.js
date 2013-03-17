@@ -38,15 +38,9 @@ Ext.define('Spelled.model.template.Entity', {
 	},
 
 	proxy: {
-		type: 'direct',
+		type: 'storageaction',
 		extraParams: {
 			type: 'entityTemplate'
-		},
-		api: {
-			create:  Spelled.StorageActions.create,
-			read:    Spelled.StorageActions.read,
-			update:  Spelled.StorageActions.update,
-			destroy: Spelled.StorageActions.destroy
 		},
 		writer: {
 			type: 'entityTemplate'
