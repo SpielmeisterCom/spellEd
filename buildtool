@@ -34,8 +34,7 @@ elif [ "$ACTION" = "deploy" ]; then
         cp ../../node_modules/underscore/underscore.js build/libs
         cp -R ../ace/lib/ace build/libs
 
-        # creating the javascript include
-        $SENCHA -debug compile -classpath=../extjs/src,public/app \
-page -yui -in=public/index.html -out=build/index.html
-
+        cd public
+        $SENCHA app build
+        cd $PWD
 fi
