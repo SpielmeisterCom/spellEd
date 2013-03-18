@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!../nodejs/node
 
 var requirejs = require( 'requirejs' ),
 	fs        = require( 'fs' ),
