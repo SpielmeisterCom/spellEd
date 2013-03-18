@@ -550,6 +550,8 @@ Ext.define('Spelled.controller.Scenes', {
 	dispatchTreeNodeDrop: function(  node, data, overModel, dropPosition ) {
 		var record = data.records[ 0 ]
 
+		this.application.selectNode( this.getScenesTree(), record )
+
 		switch( this.getTreeItemType( record ) ){
 			case this.TREE_ITEM_TYPE_SYSTEM_ITEM:
 				this.application.fireEvent( 'movescenesystem', record )
