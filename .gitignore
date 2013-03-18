@@ -3,6 +3,5 @@
 atlassian-ide-plugin.xml
 public/sass/.sass-cache
 public/spellEd.jsb3
-/build
-/public/build
+build
 nw-package
