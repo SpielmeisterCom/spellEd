@@ -57,5 +57,18 @@ Ext.define('Spelled.base.model.Model', {
 
 	getAccordingJSFileName: function() {
 		return this.get('id').replace( /\.json$/, ".js" )
+	},
+
+	writeAccordingJSFile: function() {
+		if( !this.get( 'id' ) ) return
+
+		Spelled.StorageActions.read( { id: this.getAccordingJSFileName() },
+			function( result ) {
+				this.set( 'path', this.getAccordingJSFileName() )
+				this.set( 'content', result )
+				this.dirty = false
+			},
+			this
+		)
 	}
 });

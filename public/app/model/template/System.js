@@ -82,15 +82,7 @@ Ext.define('Spelled.model.template.System', {
 
 	listeners: {
 		loadscript: function() {
-			Spelled.StorageActions.read( { id: this.getAccordingJSFileName() },
-				function( result ) {
-					this.set( 'path', this.getAccordingJSFileName() )
-					this.set( 'content', result )
-					this.dirty = false
-				},
-				this
-			)
-
+			this.writeAccordingJSFile()
 		},
 		dirty: function() {
 			this.updateDependencies()
@@ -110,7 +102,8 @@ Ext.define('Spelled.model.template.System', {
 
 	constructor: function() {
 		this.callParent( arguments )
-		this.fireEvent( 'loadscript' )
+
+		if( arguments.length > 1 ) this.fireEvent( 'loadscript' )
 	},
 
     appendOnTreeNode: function( node ) {

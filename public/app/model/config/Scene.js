@@ -184,15 +184,8 @@ Ext.define('Spelled.model.config.Scene', {
 
 	listeners: {
 		loadscript: function() {
-			Spelled.StorageActions.read( { id: this.getAccordingJSFileName() },
-				function( result ) {
-					this.data.path = this.getAccordingJSFileName()
-					this.data.content = result
-					this.unDirty()
-				},
-				this
-			)
-
+			this.writeAccordingJSFile()
+			this.unDirty()
 		},
 		dirty: function() {
 			this.updateDependencies()

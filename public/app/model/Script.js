@@ -38,15 +38,7 @@ Ext.define('Spelled.model.Script', {
 
 	listeners: {
 		loadscript: function() {
-			Spelled.StorageActions.read( { id: this.getAccordingJSFileName() },
-				function( result ) {
-					this.set( 'path', this.getAccordingJSFileName() )
-					this.set( 'content', result )
-					this.dirty = false
-				},
-				this
-			)
-
+			this.writeAccordingJSFile()
 		},
 		dirty: function() {
 			this.updateDependencies()
