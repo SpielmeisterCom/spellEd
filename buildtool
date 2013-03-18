@@ -8,33 +8,36 @@ if [ -z $ACTION ]; then
 	echo Available actions:
 	echo
 	echo theme - recompile the theme from sass files
-	echo deploy - compile a new deployable version of the app
+	echo build - compile a new deployable version of the app
 	echo
 	exit
 fi
 
-PWD=$(pwd)
-SENCHA=$PWD/../SenchaCmd/sencha
-
+CWD=$(pwd)
+SENCHA=$CWD/../SenchaCmd/sencha
 
 if [ "$ACTION" = "theme" ]; then
 	cd public/packages/spelled-theme
 	$SENCHA package build
-	cd $PWD
+	cd $CWD
 
-elif [ "$ACTION" = "deploy" ]; then
+elif [ "$ACTION" = "build" ]; then
 	# cleaning up and creating directory tree
         rm -rf build
         mkdir build
 
-        # populating output with static content
-        cp -R public/css public/images build
+        cd public
+        $SENCHA app build
+        cd $CWD
+        
+	# copy sencha build
+	cp public/build/spellEd/production/index.html build/
+	cp public/build/spellEd/production/all-classes.js build/
+	cp -R public/build/spellEd/production/resources build/
+
+	# populating output with static content
         cp -RL public/libs build
         cp ../../node_modules/requirejs/require.js build/libs
         cp ../../node_modules/underscore/underscore.js build/libs
         cp -R ../ace/lib/ace build/libs
-
-        cd public
-        $SENCHA app build
-        cd $PWD
 fi
