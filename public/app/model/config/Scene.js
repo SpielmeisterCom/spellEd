@@ -213,7 +213,8 @@ Ext.define('Spelled.model.config.Scene', {
 		this.callParent( arguments )
 		this.set( 'sceneId', this.generateIdentifier( params ))
 		this.setId( params.id )
-		if( params.id ) this.fireEvent( 'loadscript' )
+
+		if( arguments.length > 1 && params.id ) this.fireEvent( 'loadscript' )
 	},
 
 	setDirty: function() {
