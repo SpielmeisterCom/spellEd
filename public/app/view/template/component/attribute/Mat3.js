@@ -2,7 +2,7 @@ Ext.define('Spelled.view.template.component.attribute.Mat3', {
 	extend: 'Ext.form.field.Text',
 	alias : 'widget.spelledmat3field',
 
-	mixins: [ 'Spelled.abstract.grid.Property' ],
+	mixins: [ 'Spelled.base.grid.Property' ],
 
 	validator: function( value ) {
 		var regexp = /^\[ ?-?\d+\.?\d* ?, ?-?\d+\.?\d* ?, ?-?\d+\.?\d* ?, ?-?\d+\.?\d* ?, ?-?\d+\.?\d* ?, ?-?\d+\.?\d* ?, ?-?\d+\.?\d* ?, ?-?\d+\.?\d* ?, ?-?\d+\.?\d* ?\]$/

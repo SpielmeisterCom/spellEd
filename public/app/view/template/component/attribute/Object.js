@@ -2,7 +2,7 @@ Ext.define('Spelled.view.template.component.attribute.Object', {
     extend: 'Ext.form.field.TextArea',
     alias : 'widget.spelledobjectfield',
 
-	mixins: [ 'Spelled.abstract.grid.Property' ],
+	mixins: [ 'Spelled.base.grid.Property' ],
 
 	transformRawValue: function( value ){
 		return Ext.encode( value )

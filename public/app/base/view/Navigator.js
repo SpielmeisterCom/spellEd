@@ -1,4 +1,4 @@
-Ext.define('Spelled.abstract.view.Navigator' ,{
+Ext.define('Spelled.base.view.Navigator' ,{
     extend: 'Ext.panel.Panel',
 
 	layout: {

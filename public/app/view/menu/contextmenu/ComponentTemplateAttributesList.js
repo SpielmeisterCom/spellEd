@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.menu.contextmenu.ComponentTemplateAttributesList', {
-    extend: 'Spelled.abstract.view.Menu',
+    extend: 'Spelled.base.view.Menu',
     alias : 'widget.componenttemplateattributescontextmenu',
 
     items: [

@@ -1,7 +1,7 @@
 Ext.define('Spelled.view.template.component.attribute.Enum', {
 	extend: 'Ext.form.ComboBox',
     alias : 'widget.spelledenumfield',
-	mixins: [ 'Spelled.abstract.grid.Property' ],
+	mixins: [ 'Spelled.base.grid.Property' ],
 
 	initComponent: function() {
 		this.addEditPropertyEvent()

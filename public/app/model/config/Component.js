@@ -1,7 +1,7 @@
 Ext.define('Spelled.model.config.Component', {
 	extend: 'Ext.data.Model',
 
-	mixins: [ 'Spelled.abstract.model.Model' ],
+	mixins: [ 'Spelled.base.model.Model' ],
 
 	requires: [
 		'idgen.uuid',

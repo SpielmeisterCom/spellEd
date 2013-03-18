@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.scene.TreeList' ,{
-    extend: 'Spelled.abstract.view.TreeList',
+    extend: 'Spelled.base.view.TreeList',
     alias : 'widget.scenetreelist',
 
 	requires: ['Spelled.view.scene.plugin.CellEditing'],

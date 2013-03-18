@@ -5,7 +5,7 @@ Ext.define('Spelled.model.config.Scene', {
 		'Spelled.data.reader.Scene',
 		'Spelled.data.writer.Scene'
 	],
-	mixins: [ 'Spelled.abstract.model.Model' ],
+	mixins: [ 'Spelled.base.model.Model' ],
 
 	iconCls : "tree-scene-icon",
 

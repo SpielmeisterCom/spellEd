@@ -1,4 +1,4 @@
-Ext.define('Spelled.abstract.grid.property.Grid', {
+Ext.define('Spelled.base.grid.property.Grid', {
     extend: 'Ext.grid.property.Grid',
 	alias : 'widget.defaultpropertygrid',
 

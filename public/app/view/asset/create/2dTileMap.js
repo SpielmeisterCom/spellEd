@@ -2,7 +2,7 @@ Ext.define('Spelled.view.asset.create.2dTileMap', {
 	extend: 'Ext.container.Container',
 	alias: 'widget.2dtilemapconfig',
 
-	mixins: [ 'Spelled.abstract.field.AssetId' ],
+	mixins: [ 'Spelled.base.field.AssetId' ],
 
 	initComponent: function() {
 		var me    = this

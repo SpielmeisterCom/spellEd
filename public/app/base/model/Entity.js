@@ -1,4 +1,4 @@
-Ext.define( 'Spelled.abstract.model.Entity', {
+Ext.define( 'Spelled.base.model.Entity', {
 	checkForComponentChanges : function() {
 		this.getComponents().each(
 			function( component ) {

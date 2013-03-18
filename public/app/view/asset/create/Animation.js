@@ -2,7 +2,7 @@ Ext.define('Spelled.view.asset.create.Animation', {
     extend: 'Ext.container.Container',
     alias: 'widget.animationassetconfig',
 
-	mixins: [ 'Spelled.abstract.field.AssetId' ],
+	mixins: [ 'Spelled.base.field.AssetId' ],
 
 	initComponent: function() {
 		var me   = this

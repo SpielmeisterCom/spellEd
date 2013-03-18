@@ -2,7 +2,7 @@ Ext.define('Spelled.view.scene.plugin.CellEditing' ,{
     extend: 'Ext.grid.plugin.CellEditing',
 	alias: 'plugin.renameplugin',
 
-	mixins: [ 'Spelled.abstract.validator.General' ],
+	mixins: [ 'Spelled.base.validator.General' ],
 
 	//TODO: remove this after sencha fixes the bug in Ext.grid.plugin.CellEditing-event-validateedit
 	onEditComplete : function(ed, value, startValue) {

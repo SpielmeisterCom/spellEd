@@ -51,7 +51,7 @@ Ext.define('Spelled.view.template.component.attribute.Script', {
     displayField    : 'scriptId',
     valueField      : 'internalAssetId',
 
-    mixins: [ 'Spelled.abstract.grid.Property' ],
+    mixins: [ 'Spelled.base.grid.Property' ],
 
     initComponent: function() {
         this.addEditPropertyEvent()

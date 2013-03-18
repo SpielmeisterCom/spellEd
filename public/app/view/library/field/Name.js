@@ -2,9 +2,9 @@ Ext.define('Spelled.view.library.field.Name', {
     extend: 'Ext.form.field.Text',
     alias : 'widget.spellednamefield',
 
-	requires: [ 'Spelled.abstract.validator.General' ],
+	requires: [ 'Spelled.base.validator.General' ],
 
-	mixins: [ 'Spelled.abstract.validator.General' ],
+	mixins: [ 'Spelled.base.validator.General' ],
 
 	checkTreeNode: function( node, parts ) {
 		var text = parts.shift()

@@ -2,7 +2,7 @@ Ext.define('Spelled.view.library.folder.Create', {
 	extend: 'Ext.window.Window',
     alias : 'widget.createlibraryfolder',
 
-	mixins: [ 'Spelled.abstract.validator.General' ],
+	mixins: [ 'Spelled.base.validator.General' ],
 
 	autoShow: true,
 	modal: true,

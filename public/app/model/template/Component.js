@@ -1,5 +1,5 @@
 Ext.define('Spelled.model.template.Component', {
-	extend: 'Spelled.abstract.model.Template',
+	extend: 'Spelled.base.model.Template',
 
 	requires: [
 		'association.hasmany',

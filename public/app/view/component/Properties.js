@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.component.Properties', {
-    extend: 'Spelled.abstract.grid.property.Grid',
+    extend: 'Spelled.base.grid.property.Grid',
 
     alias : 'widget.componentproperties',
 

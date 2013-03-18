@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.library.Navigator', {
-	extend: 'Spelled.abstract.view.Navigator',
+	extend: 'Spelled.base.view.Navigator',
     alias : 'widget.librarynavigator',
 
     title: "Library",

@@ -1,5 +1,5 @@
 Ext.define('Spelled.store.template.Systems', {
-    extend: 'Spelled.abstract.store.Template',
+    extend: 'Spelled.base.store.Template',
 
     model: 'Spelled.model.template.System'
 });

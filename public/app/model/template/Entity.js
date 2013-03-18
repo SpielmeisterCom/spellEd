@@ -1,12 +1,12 @@
 Ext.define('Spelled.model.template.Entity', {
-	extend: 'Spelled.abstract.model.Template',
+	extend: 'Spelled.base.model.Template',
 	requires: [
 		'Spelled.data.writer.EntityTemplate',
 		'Spelled.data.reader.EntityTemplate',
-		'Spelled.abstract.model.Entity'
+		'Spelled.base.model.Entity'
 	],
 
-	mixins: [ 'Spelled.abstract.model.Entity' ],
+	mixins: [ 'Spelled.base.model.Entity' ],
 
 	fields: [
         "namespace",

@@ -1,5 +1,5 @@
 Ext.define('Spelled.store.FoldersTree', {
-	extend: 'Spelled.abstract.store.TreeStore',
+	extend: 'Spelled.base.store.TreeStore',
 
     root: {
         expanded: true,

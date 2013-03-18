@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.template.component.Attributes' ,{
-    extend: 'Spelled.abstract.view.TreeList',
+    extend: 'Spelled.base.view.TreeList',
     alias : 'widget.componenttemplateattributeslist',
 
     title: 'Attributes',

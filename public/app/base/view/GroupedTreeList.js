@@ -1,8 +1,8 @@
-Ext.define('Spelled.abstract.view.GroupedTreeList' ,{
-    extend: 'Spelled.abstract.view.TreeList',
+Ext.define('Spelled.base.view.GroupedTreeList' ,{
+    extend: 'Spelled.base.view.TreeList',
 	alias: 'widget.groupedtree',
 
-	requires: [ 'Spelled.abstract.view.GroupedTreeView' ],
+	requires: [ 'Spelled.base.view.GroupedTreeView' ],
 
 	viewType: 'groupedtreeview',
 

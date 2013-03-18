@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.scene.Navigator', {
-    extend: 'Spelled.abstract.view.Navigator',
+    extend: 'Spelled.base.view.Navigator',
     alias : 'widget.scenesnavigator',
 
     title: "Scenes",

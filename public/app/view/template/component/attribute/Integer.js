@@ -4,7 +4,7 @@ Ext.define('Spelled.view.template.component.attribute.Integer', {
 
 	decimalPrecision: 0,
 
-	mixins: [ 'Spelled.abstract.grid.Property' ],
+	mixins: [ 'Spelled.base.grid.Property' ],
 
 	initComponent: function() {
 		this.addEditPropertyEvent()

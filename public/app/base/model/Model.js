@@ -1,4 +1,4 @@
-Ext.define('Spelled.abstract.model.Model', {
+Ext.define('Spelled.base.model.Model', {
 
 	sortOrder: 9,
 

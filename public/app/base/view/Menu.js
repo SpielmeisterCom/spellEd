@@ -1,4 +1,4 @@
-Ext.define('Spelled.abstract.view.Menu' ,{
+Ext.define('Spelled.base.view.Menu' ,{
 	extend: 'Ext.menu.Menu',
 
 	ownerView: undefined,

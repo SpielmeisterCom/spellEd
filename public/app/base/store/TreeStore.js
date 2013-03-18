@@ -1,4 +1,4 @@
-Ext.define('Spelled.abstract.store.TreeStore', {
+Ext.define('Spelled.base.store.TreeStore', {
     extend: 'Ext.data.TreeStore',
 
     hasFilter: false,

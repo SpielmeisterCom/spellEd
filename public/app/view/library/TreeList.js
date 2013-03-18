@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.library.TreeList' ,{
-    extend: 'Spelled.abstract.view.TreeList',
+    extend: 'Spelled.base.view.TreeList',
     alias : 'widget.librarytreelist',
 
 	requires: [

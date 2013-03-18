@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.component.property.Contextmenu', {
-    extend: 'Spelled.abstract.view.Menu',
+    extend: 'Spelled.base.view.Menu',
     alias : 'widget.componentpropertycontextmenu',
 
     items: [

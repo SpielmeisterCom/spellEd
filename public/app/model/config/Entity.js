@@ -7,10 +7,10 @@ Ext.define('Spelled.model.config.Entity', {
 		'Spelled.model.config.Component',
 		'Spelled.model.config.Scene',
 		'Spelled.model.template.Entity',
-		'Spelled.abstract.model.Entity'
+		'Spelled.base.model.Entity'
 	],
 
-	mixins: [ 'Spelled.abstract.model.Entity', 'Spelled.abstract.model.Model' ],
+	mixins: [ 'Spelled.base.model.Entity', 'Spelled.base.model.Model' ],
 
     fields: [
         'templateId',

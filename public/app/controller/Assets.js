@@ -29,7 +29,7 @@ Ext.define('Spelled.controller.Assets', {
 		'Spelled.view.asset.create.2dTileMap',
 		'Spelled.view.asset.create.FileField',
 		'Spelled.view.asset.create.Sound',
-		'Spelled.abstract.field.AssetId',
+		'Spelled.base.field.AssetId',
 
 
 		'Spelled.store.asset.Types',

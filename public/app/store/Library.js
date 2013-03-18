@@ -1,5 +1,5 @@
 Ext.define('Spelled.store.Library', {
-    extend: 'Spelled.abstract.store.TreeStore',
+    extend: 'Spelled.base.store.TreeStore',
 
 	model: 'Spelled.model.LibraryNode',
 

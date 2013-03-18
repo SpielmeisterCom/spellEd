@@ -1,4 +1,4 @@
-Ext.define('Spelled.abstract.store.Template', {
+Ext.define('Spelled.base.store.Template', {
     extend: 'Ext.data.Store',
 
     loadDataViaReader : function(data, append) {

@@ -1,4 +1,4 @@
-Ext.define('Spelled.abstract.validator.General' ,{
+Ext.define('Spelled.base.validator.General' ,{
 
 	isNamespaceCompliant: function( value ) {
 		var rgxp = /^[0-9\.aA-zZ]*$/g

@@ -1,4 +1,4 @@
-Ext.define('Spelled.abstract.model.Template', {
+Ext.define('Spelled.base.model.Template', {
 	requires: [
 		'proxy.direct',
 		'association.belongsto',
@@ -11,10 +11,10 @@ Ext.define('Spelled.abstract.model.Template', {
 	mergeDependencies: false,
 
 	mixins: {
-		abstractModel: 'Spelled.abstract.model.Model'
+		abstractModel: 'Spelled.base.model.Model'
 	},
 
-    requires: ['Spelled.abstract.writer.JsonWriter'],
+    requires: ['Spelled.base.writer.JsonWriter'],
 
 	fields: [
 		{ name: 'type', type: 'string', defaultValue: 'entity' },

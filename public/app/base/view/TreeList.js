@@ -1,4 +1,4 @@
-Ext.define('Spelled.abstract.view.TreeList' ,{
+Ext.define('Spelled.base.view.TreeList' ,{
     extend: 'Ext.tree.Panel',
 	requires: [
 		'widget.treecolumn',

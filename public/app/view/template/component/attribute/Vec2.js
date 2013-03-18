@@ -2,7 +2,7 @@ Ext.define('Spelled.view.template.component.attribute.Vec2', {
     extend: 'Ext.form.field.Text',
     alias : 'widget.spelledvec2field',
 
-	mixins: [ 'Spelled.abstract.grid.Property' ],
+	mixins: [ 'Spelled.base.grid.Property' ],
 
 	valueToRaw: function( value ) {
 		return ( this.convertIt ) ? Spelled.Converter.convertValueForGrid( value ) : value

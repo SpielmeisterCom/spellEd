@@ -1,4 +1,4 @@
-Ext.define('Spelled.abstract.grid.Property', {
+Ext.define('Spelled.base.grid.Property', {
 	addEditPropertyEvent: function() {
 		this.addEvents(
 			'editproperty'

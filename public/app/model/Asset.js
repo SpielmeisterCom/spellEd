@@ -8,7 +8,7 @@ Ext.define('Spelled.model.Asset', {
 
 	docString: '#!/guide/asset',
 
-	mixins: ['Spelled.abstract.model.Model'],
+	mixins: ['Spelled.base.model.Model'],
 
 	sortOrder: 999,
 

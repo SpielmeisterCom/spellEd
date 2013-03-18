@@ -2,7 +2,7 @@ Ext.define('Spelled.view.template.component.attribute.List', {
 	extend: 'Ext.form.field.Text',
     alias : 'widget.spelledlistfield',
 
-	mixins: [ 'Spelled.abstract.grid.Property' ],
+	mixins: [ 'Spelled.base.grid.Property' ],
 
 	validator: function( value ) {
 //		var regexp = /^\[ ?\w*?\]$/
