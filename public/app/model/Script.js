@@ -67,7 +67,7 @@ Ext.define('Spelled.model.Script', {
 		var object = arguments[0] || arguments[2]
 		this.set( 'scriptId', this.generateIdentifier( object ) )
         this.set( 'internalAssetId', "script:" + this.getFullName() )
-		this.fireEvent( 'loadscript' )
+		if( arguments.length > 1 ) this.fireEvent( 'loadscript' )
 	},
 
     fields: [
