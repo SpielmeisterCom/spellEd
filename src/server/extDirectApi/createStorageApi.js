@@ -105,7 +105,7 @@ define(
 
 				writeContent( filePath, content, params.encoding )
 
-				return filePath
+				return ( _.has( params, 'type' ) ) ? generateExtModel( filePath ) : getByFilePath( filePath )
 			}
 
 			var update = function( req, res, payload, next ) {

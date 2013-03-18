@@ -38,7 +38,7 @@ Ext.define('Spelled.model.Script', {
 
 	listeners: {
 		loadscript: function() {
-			this.writeAccordingJSFile()
+			this.readAccordingJSFile()
 		},
 		dirty: function() {
 			this.updateDependencies()

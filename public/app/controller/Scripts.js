@@ -191,21 +191,15 @@ Ext.define('Spelled.controller.Scripts', {
 
         if( form.isValid() ){
 			script.set( 'content', this.createModuleHeader( script.getFullName(), '' ) )
+			script.set( 'path', script.getAccordingJSFileName() )
 
-			Spelled.StorageActions.create(
-				{ id: id + ".js", content: script.get( 'content' ) },
-				function( id ) {
-					script.set( 'path', id )
+			script.save({
+					success: function( record ) {
+						Ext.Msg.alert('Success', 'Your Script "' + record.getFullName() + '" has been created.')
+						me.getScriptScriptsStore().add( record )
 
-					script.save({
-							success: function( record ) {
-								Ext.Msg.alert('Success', 'Your Script "' + record.getFullName() + '" has been created.')
-                                me.getScriptScriptsStore().add( record )
-
-								window.close()
-							}
-						}
-					)
+						window.close()
+					}
 				}
 			)
 		}

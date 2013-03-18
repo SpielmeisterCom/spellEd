@@ -17,7 +17,9 @@ Ext.define('Spelled.data.reader.Reader', {
 			data = this.readRecords( tmpResponse)
 
 		} else {
-			response = converter( response )
+			var tmp = ( !Ext.isObject( response ) && Ext.isString( response ) ) ? Ext.JSON.decode( response ) : response
+
+			response = converter( tmp )
 
 			if (response) {
 				data = response.responseText ? this.getResponseData(response) : this.readRecords(response);

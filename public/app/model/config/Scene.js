@@ -184,7 +184,7 @@ Ext.define('Spelled.model.config.Scene', {
 
 	listeners: {
 		loadscript: function() {
-			this.writeAccordingJSFile()
+			this.readAccordingJSFile()
 			this.unDirty()
 		},
 		dirty: function() {
