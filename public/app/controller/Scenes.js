@@ -12,6 +12,8 @@ Ext.define('Spelled.controller.Scenes', {
 		'Spelled.store.system.Defaults',
 		'Spelled.store.system.EditMode',
 
+		'Spelled.view.ui.SpelledIframe',
+
 		'widget.label'
 	],
 
