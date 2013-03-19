@@ -2,7 +2,10 @@ Ext.define('Spelled.view.scene.TreeList' ,{
     extend: 'Spelled.base.view.TreeList',
     alias : 'widget.scenetreelist',
 
-	requires: ['Spelled.view.scene.plugin.CellEditing'],
+	requires: [
+		'Spelled.view.scene.plugin.CellEditing',
+		'Spelled.view.scene.plugin.TreeViewDragDrop'
+	],
 
     store : 'ScenesTree',
 
