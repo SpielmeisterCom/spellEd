@@ -1,9 +1,3 @@
-Ext.Loader.setConfig( {
-	paths : {
-		"Spelled" : "app"
-	}
-} );
-
 require(
 	[
 		'requireToExt/inject',
