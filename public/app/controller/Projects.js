@@ -526,7 +526,7 @@ Ext.define('Spelled.controller.Projects', {
 		this.getScenes().changeTitle()
 		project.unDirty()
 
-		this.application.getController( 'Scenes' ).renderScene( startScene )
+		this.application.fireEvent( 'renderscene', startScene )
 		this.application.fireEvent( 'buildnamespacenodes' )
 
 		this.iterateLoadingProgress()

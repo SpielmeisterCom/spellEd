@@ -41,6 +41,16 @@ Ext.define('Spelled.model.config.Scene', {
 		writer: 'scene'
 	},
 
+	listeners: {
+		loadscript: function() {
+			this.readAccordingJSFile()
+			this.unDirty()
+		},
+		dirty: function() {
+			this.updateDependencies()
+		}
+	},
+
 	destroy: function( options ) {
 		Spelled.StorageActions.destroy({ id: this.getAccordingJSFileName() } )
 
@@ -180,16 +190,6 @@ Ext.define('Spelled.model.config.Scene', {
 				entity.checkForComponentChanges()
 			}
 		)
-	},
-
-	listeners: {
-		loadscript: function() {
-			this.readAccordingJSFile()
-			this.unDirty()
-		},
-		dirty: function() {
-			this.updateDependencies()
-		}
 	},
 
 	revertScript: function() {

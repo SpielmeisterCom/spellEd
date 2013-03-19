@@ -272,6 +272,7 @@ Ext.define('Spelled.controller.Scenes', {
 			deletescene: this.deleteScene,
 			clearstores: this.clearScenesStore,
 			scenescriptbeforeclose: this.checkIfSceneScriptIsDirty,
+			renderscene: this.renderScene,
 			reloadscene: this.reloadSceneKeyEvent,
 			scenetabchange: this.showScenesEditor,
 			systemchange: this.sendSystemChangeToEngine,
