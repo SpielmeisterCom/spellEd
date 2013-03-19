@@ -1,6 +1,8 @@
 Ext.define('Spelled.store.Library', {
     extend: 'Spelled.base.store.TreeStore',
 
+	requires: ['Spelled.StoreHelper'],
+
 	model: 'Spelled.model.LibraryNode',
 
     root: {
