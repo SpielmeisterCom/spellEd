@@ -22,7 +22,7 @@ Ext.define('Spelled.view.menu.contextmenu.EntitiesList', {
 			action: 'showConvertEntity'
 		},
 		{
-			icon: 'images/icons/entity-rename.png',
+			icon: 'resources/images/icons/entity-rename.png',
 			text: 'Rename',
 			action: 'rename'
 		},
