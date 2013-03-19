@@ -32,26 +32,26 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.project.settings.General": [],
   "Spelled.view.template.component.attribute.AnimatedAppearance": [],
   "Spelled.store.config.Components": [],
-  "Ext.ux.PreviewPlugin": [],
   "Spelled.model.template.ComponentAttribute": [],
+  "Ext.ux.PreviewPlugin": [],
   "Ext.ux.ajax.SimXhr": [],
   "Spelled.view.asset.ColorField": [],
   "Ext.ux.CellDragDrop": [],
-  "Spelled.model.Project": [],
   "Spelled.controller.Assets": [],
+  "Spelled.model.Project": [],
   "Ext.ux.ajax.Simlet": [],
   "Ext.ux.SlidingPager": [],
   "Spelled.view.scene.plugin.SceneTreeDragZone": [],
-  "Ext.ux.TabReorderer": [],
   "Spelled.store.asset.TileMaps": [],
+  "Ext.ux.TabReorderer": [],
   "Ext.ux.grid.filter.NumericFilter": [],
   "Spelled.model.config.Scene": [],
   "Spelled.store.asset.KeyToActionMappings": [],
   "Ext.ux.event.Recorder": [],
   "Spelled.view.asset.create.2dTileMap": [],
   "Spelled.view.menu.Menu": [],
-  "Spelled.view.project.settings.Language": [],
   "Spelled.view.template.component.attribute.Sound": [],
+  "Spelled.view.project.settings.Language": [],
   "Spelled.controller.Library": [],
   "Ext.ux.grid.filter.BooleanFilter": [],
   "Spelled.view.template.component.attribute.Script": [],
@@ -61,8 +61,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.ui.SpelledRightPanel": [],
   "Spelled.store.config.Entities": [],
   "Ext.ux.IFrame": [],
-  "Spelled.store.grouping.Components": [],
   "Spelled.view.template.component.attribute.Appearance": [],
+  "Spelled.store.grouping.Components": [],
   "Spelled.view.template.component.attribute.KeyToActionMap": [],
   "Ext.ux.form.SearchField": [],
   "Ext.ux.dd.CellFieldDropZone": [],
@@ -80,8 +80,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.store.StaticLibraryDependencies": [],
   "Spelled.view.menu.contextmenu.ScriptsList": [],
   "Spelled.model.Script": [],
-  "Spelled.controller.Scenes": [],
   "Spelled.model.assets.TileMap": [],
+  "Spelled.controller.Scenes": [],
   "Spelled.data.writer.Scene": [],
   "Ext.ux.FieldReplicator": [],
   "Spelled.view.template.component.attribute.Number": [],
@@ -113,8 +113,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.store.template.Components": [],
   "Spelled.model.template.Entity": [],
   "Spelled.model.template.SystemInputDefinition": [],
-  "Spelled.view.system.Add": [],
   "Spelled.view.template.component.attribute.Enum": [],
+  "Spelled.view.system.Add": [],
   "Ext.ux.statusbar.StatusBar": [
     "Ext.ux.StatusBar"
   ],
@@ -122,26 +122,26 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.script.FolderPicker": [],
   "Ext.ux.event.Player": [],
   "Spelled.view.template.component.Details": [],
-  "Spelled.view.entity.Convert": [],
   "Spelled.view.template.component.attribute.List": [],
   "Spelled.MessageBus": [],
+  "Spelled.view.entity.Convert": [],
   "Spelled.store.Library": [],
   "Ext.ux.ToolbarDroppable": [],
   "Spelled.view.ui.StartScreen": [],
-  "Spelled.view.entity.ComponentsList": [],
   "Spelled.data.reader.Reader": [],
+  "Spelled.view.entity.ComponentsList": [],
   "Spelled.store.config.Scenes": [],
   "Spelled.view.scene.plugin.TreeViewDragDrop": [],
   "Ext.ux.DataView.Draggable": [],
-  "Spelled.model.config.Entity": [],
   "Ext.ux.TabCloseMenu": [],
+  "Spelled.model.config.Entity": [],
   "Spelled.view.menu.contextmenu.KeyToActionMapping": [],
   "Spelled.store.template.Systems": [],
   "Spelled.view.asset.create.Animation": [],
   "Spelled.view.ui.SpelledConfiguration": [],
+  "Spelled.model.LibraryNode": [],
   "Spelled.EntityHelper": [],
   "Ext.ux.grid.filter.DateTimeFilter": [],
-  "Spelled.model.LibraryNode": [],
   "Ext.ux.form.ItemSelector": [
     "Ext.ux.ItemSelector"
   ],
@@ -151,11 +151,11 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.data.reader.Script": [],
   "Spelled.view.menu.contextmenu.ScenesList": [],
   "Spelled.store.asset.ActionKeys": [],
-  "Spelled.store.system.EditMode": [],
   "Spelled.view.library.TreeList": [],
+  "Spelled.store.system.EditMode": [],
   "Spelled.view.menu.contextmenu.AssetsList": [],
-  "Spelled.base.grid.Property": [],
   "Spelled.base.writer.JsonWriter": [],
+  "Spelled.base.grid.Property": [],
   "Ext.ux.ajax.DataSimlet": [],
   "Ext.ux.grid.TransformGrid": [],
   "Spelled.data.reader.EntityTemplate": [],
@@ -184,8 +184,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.template.component.attribute.TileMap": [],
   "Spelled.base.view.Navigator": [],
   "Spelled.view.component.Add": [],
-  "Spelled.view.template.FolderPicker": [],
   "Ext.ux.event.RecorderManager": [],
+  "Spelled.view.template.FolderPicker": [],
   "Ext.ux.ProgressBarPager": [],
   "Spelled.view.asset.create.Appearance": [],
   "Spelled.view.asset.Iframe": [],
@@ -194,9 +194,9 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.template.component.attribute.Boolean": [],
   "Spelled.view.template.component.attribute.Mat3": [],
   "Spelled.view.menu.contextmenu.TemplatesList": [],
+  "Spelled.view.library.Navigator": [],
   "Spelled.base.view.Menu": [],
   "Spelled.model.assets.Appearance": [],
-  "Spelled.view.library.Navigator": [],
   "Spelled.store.script.Scripts": [],
   "Ext.ux.ajax.SimManager": [],
   "Spelled.view.template.component.Edit": [],
@@ -206,10 +206,11 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.store.asset.KeyFrameAnimationPreviews": [],
   "Ext.ux.TabScrollerMenu": [],
   "Spelled.view.template.component.attribute.Integer": [],
+  "Spelled.Application": [],
   "Spelled.view.menu.contextmenu.templatesList.Entity": [],
   "Spelled.view.asset.create.Create": [],
-  "Spelled.model.config.Component": [],
   "Spelled.store.asset.SpriteSheets": [],
+  "Spelled.model.config.Component": [],
   "Spelled.view.component.property.Contextmenu": [],
   "Ext.ux.LiveSearchGridPanel": [],
   "Ext.ux.grid.filter.DateFilter": [],
@@ -218,20 +219,20 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.TreePicker": [],
   "Spelled.data.writer.SystemTemplate": [],
   "Spelled.view.component.property.AssetId": [],
-  "Spelled.controller.Entities": [],
-  "Spelled.view.template.component.attribute.String": [],
-  "Spelled.view.ui.SpelledRendered": [],
   "Spelled.view.library.menu.Buttons": [],
-  "Spelled.Converter": [],
   "Spelled.store.asset.InterpolationFunctions": [],
+  "Spelled.view.ui.SpelledRendered": [],
+  "Spelled.view.template.component.attribute.String": [],
+  "Spelled.controller.Entities": [],
+  "Spelled.Converter": [],
   "Spelled.model.Language": [],
   "Spelled.base.model.Model": [],
   "Ext.ux.data.PagingMemoryProxy": [
     "Ext.data.PagingMemoryProxy"
   ],
   "Spelled.view.scene.Editor": [],
-  "Spelled.base.validator.General": [],
   "Spelled.model.assets.KeyMapping": [],
+  "Spelled.base.validator.General": [],
   "Ext.ux.BoxReorderer": [],
   "Spelled.data.reader.Asset": [],
   "Ext.ux.grid.filter.Filter": [],
@@ -252,8 +253,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.store.ScenesTree": [],
   "Spelled.view.template.component.attribute.Vec2": [],
   "Spelled.view.template.component.attribute.Vec3": [],
-  "Ext.ux.DataView.LabelEditor": [],
   "Spelled.store.asset.Animations": [],
+  "Ext.ux.DataView.LabelEditor": [],
   "Spelled.view.template.component.attribute.Vec4": [],
   "Ext.ux.grid.filter.StringFilter": [],
   "Spelled.view.template.system.Input": [],
@@ -272,8 +273,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.scene.Script": [],
   "Spelled.view.project.Load": [],
   "Spelled.view.project.Create": [],
-  "Spelled.base.model.Entity": [],
   "Spelled.base.model.Template": [],
+  "Spelled.base.model.Entity": [],
   "Spelled.view.menu.contextmenu.ComponentTemplateAttributesList": [],
   "Spelled.view.scene.Properties": [],
   "Spelled.data.writer.EntityTemplate": [],
@@ -287,8 +288,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.template.system.input.Add": [],
   "Spelled.view.library.folder.Create": [],
   "Spelled.view.asset.inspector.Config": [],
-  "Spelled.data.writer.Project": [],
   "Spelled.view.library.menu.Filter": [],
+  "Spelled.data.writer.Project": [],
   "Spelled.store.template.component.AttributeTypes": [],
   "Spelled.store.system.Types": [],
   "Ext.ux.event.Maker": [],
@@ -303,8 +304,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.controller.templates.Systems": [],
   "Ext.ux.DataTip": [],
   "Spelled.view.asset.Form": [],
-  "Spelled.view.project.settings.AddLanguage": [],
   "Spelled.base.store.TreeStore": [],
+  "Spelled.view.project.settings.AddLanguage": [],
   "Ext.ux.ajax.JsonSimlet": [],
   "Spelled.view.menu.contextmenu.EntitiesFolderList": [],
   "Spelled.data.writer.Script": []
@@ -358,10 +359,10 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.spelledanimatedappearancefield"
   ],
   "Spelled.store.config.Components": [],
+  "Spelled.model.template.ComponentAttribute": [],
   "Ext.ux.PreviewPlugin": [
     "plugin.preview"
   ],
-  "Spelled.model.template.ComponentAttribute": [],
   "Ext.ux.ajax.SimXhr": [],
   "Spelled.view.asset.ColorField": [
     "widget.colorfield"
@@ -369,15 +370,15 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.CellDragDrop": [
     "plugin.celldragdrop"
   ],
-  "Spelled.model.Project": [],
   "Spelled.controller.Assets": [],
+  "Spelled.model.Project": [],
   "Ext.ux.ajax.Simlet": [
     "simlet.basic"
   ],
   "Ext.ux.SlidingPager": [],
   "Spelled.view.scene.plugin.SceneTreeDragZone": [],
-  "Ext.ux.TabReorderer": [],
   "Spelled.store.asset.TileMaps": [],
+  "Ext.ux.TabReorderer": [],
   "Ext.ux.grid.filter.NumericFilter": [
     "gridfilter.numeric"
   ],
@@ -390,11 +391,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.menu.Menu": [
     "widget.spelledmenu"
   ],
-  "Spelled.view.project.settings.Language": [
-    "widget.projectlanguagesettings"
-  ],
   "Spelled.view.template.component.attribute.Sound": [
     "widget.spelledsoundfield"
+  ],
+  "Spelled.view.project.settings.Language": [
+    "widget.projectlanguagesettings"
   ],
   "Spelled.controller.Library": [],
   "Ext.ux.grid.filter.BooleanFilter": [
@@ -415,10 +416,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.IFrame": [
     "widget.uxiframe"
   ],
-  "Spelled.store.grouping.Components": [],
   "Spelled.view.template.component.attribute.Appearance": [
     "widget.spelledappearancefield"
   ],
+  "Spelled.store.grouping.Components": [],
   "Spelled.view.template.component.attribute.KeyToActionMap": [
     "widget.spelledkeyaction"
   ],
@@ -456,8 +457,8 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.scriptslistcontextmenu"
   ],
   "Spelled.model.Script": [],
-  "Spelled.controller.Scenes": [],
   "Spelled.model.assets.TileMap": [],
+  "Spelled.controller.Scenes": [],
   "Spelled.data.writer.Scene": [
     "writer.scene"
   ],
@@ -529,11 +530,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.store.template.Components": [],
   "Spelled.model.template.Entity": [],
   "Spelled.model.template.SystemInputDefinition": [],
-  "Spelled.view.system.Add": [
-    "widget.addsystem"
-  ],
   "Spelled.view.template.component.attribute.Enum": [
     "widget.spelledenumfield"
+  ],
+  "Spelled.view.system.Add": [
+    "widget.addsystem"
   ],
   "Ext.ux.statusbar.StatusBar": [
     "widget.statusbar"
@@ -548,31 +549,31 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.template.component.Details": [
     "widget.componenttemplatedetails"
   ],
-  "Spelled.view.entity.Convert": [
-    "widget.convertentity"
-  ],
   "Spelled.view.template.component.attribute.List": [
     "widget.spelledlistfield"
   ],
   "Spelled.MessageBus": [],
+  "Spelled.view.entity.Convert": [
+    "widget.convertentity"
+  ],
   "Spelled.store.Library": [],
   "Ext.ux.ToolbarDroppable": [],
   "Spelled.view.ui.StartScreen": [
     "widget.startscreen"
   ],
+  "Spelled.data.reader.Reader": [],
   "Spelled.view.entity.ComponentsList": [
     "widget.entitycomponentslist"
   ],
-  "Spelled.data.reader.Reader": [],
   "Spelled.store.config.Scenes": [],
   "Spelled.view.scene.plugin.TreeViewDragDrop": [
     "plugin.scenetreedragdrop"
   ],
   "Ext.ux.DataView.Draggable": [],
-  "Spelled.model.config.Entity": [],
   "Ext.ux.TabCloseMenu": [
     "plugin.tabclosemenu"
   ],
+  "Spelled.model.config.Entity": [],
   "Spelled.view.menu.contextmenu.KeyToActionMapping": [
     "widget.keytoactionmappingcontextmenu"
   ],
@@ -583,11 +584,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.ui.SpelledConfiguration": [
     "widget.spelledconfigure"
   ],
+  "Spelled.model.LibraryNode": [],
   "Spelled.EntityHelper": [],
   "Ext.ux.grid.filter.DateTimeFilter": [
     "gridfilter.datetime"
   ],
-  "Spelled.model.LibraryNode": [],
   "Ext.ux.form.ItemSelector": [
     "widget.itemselector",
     "widget.itemselectorfield"
@@ -604,15 +605,15 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.sceneslistcontextmenu"
   ],
   "Spelled.store.asset.ActionKeys": [],
-  "Spelled.store.system.EditMode": [],
   "Spelled.view.library.TreeList": [
     "widget.librarytreelist"
   ],
+  "Spelled.store.system.EditMode": [],
   "Spelled.view.menu.contextmenu.AssetsList": [
     "widget.assetslistcontextmenu"
   ],
-  "Spelled.base.grid.Property": [],
   "Spelled.base.writer.JsonWriter": [],
+  "Spelled.base.grid.Property": [],
   "Ext.ux.ajax.DataSimlet": [],
   "Ext.ux.grid.TransformGrid": [],
   "Spelled.data.reader.EntityTemplate": [
@@ -672,11 +673,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.component.Add": [
     "widget.addcomponent"
   ],
-  "Spelled.view.template.FolderPicker": [
-    "widget.templatefolderpicker"
-  ],
   "Ext.ux.event.RecorderManager": [
     "widget.eventrecordermanager"
+  ],
+  "Spelled.view.template.FolderPicker": [
+    "widget.templatefolderpicker"
   ],
   "Ext.ux.ProgressBarPager": [],
   "Spelled.view.asset.create.Appearance": [
@@ -700,11 +701,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.menu.contextmenu.TemplatesList": [
     "widget.templateslistcontextmenu"
   ],
-  "Spelled.base.view.Menu": [],
-  "Spelled.model.assets.Appearance": [],
   "Spelled.view.library.Navigator": [
     "widget.librarynavigator"
   ],
+  "Spelled.base.view.Menu": [],
+  "Spelled.model.assets.Appearance": [],
   "Spelled.store.script.Scripts": [],
   "Ext.ux.ajax.SimManager": [],
   "Spelled.view.template.component.Edit": [
@@ -726,14 +727,15 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.template.component.attribute.Integer": [
     "widget.spelledintegerfield"
   ],
+  "Spelled.Application": [],
   "Spelled.view.menu.contextmenu.templatesList.Entity": [
     "widget.templateslistentitycontextmenu"
   ],
   "Spelled.view.asset.create.Create": [
     "widget.createasset"
   ],
-  "Spelled.model.config.Component": [],
   "Spelled.store.asset.SpriteSheets": [],
+  "Spelled.model.config.Component": [],
   "Spelled.view.component.property.Contextmenu": [
     "widget.componentpropertycontextmenu"
   ],
@@ -754,18 +756,18 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.component.property.AssetId": [
     "widget.assetidproperty"
   ],
-  "Spelled.controller.Entities": [],
-  "Spelled.view.template.component.attribute.String": [
-    "widget.spelledtextfield"
-  ],
-  "Spelled.view.ui.SpelledRendered": [
-    "widget.renderedscene"
-  ],
   "Spelled.view.library.menu.Buttons": [
     "widget.librarymenu"
   ],
-  "Spelled.Converter": [],
   "Spelled.store.asset.InterpolationFunctions": [],
+  "Spelled.view.ui.SpelledRendered": [
+    "widget.renderedscene"
+  ],
+  "Spelled.view.template.component.attribute.String": [
+    "widget.spelledtextfield"
+  ],
+  "Spelled.controller.Entities": [],
+  "Spelled.Converter": [],
   "Spelled.model.Language": [],
   "Spelled.base.model.Model": [],
   "Ext.ux.data.PagingMemoryProxy": [
@@ -774,8 +776,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.scene.Editor": [
     "widget.sceneeditor"
   ],
-  "Spelled.base.validator.General": [],
   "Spelled.model.assets.KeyMapping": [],
+  "Spelled.base.validator.General": [],
   "Ext.ux.BoxReorderer": [],
   "Spelled.data.reader.Asset": [
     "reader.asset"
@@ -810,8 +812,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.template.component.attribute.Vec3": [
     "widget.spelledvec3field"
   ],
-  "Ext.ux.DataView.LabelEditor": [],
   "Spelled.store.asset.Animations": [],
+  "Ext.ux.DataView.LabelEditor": [],
   "Spelled.view.template.component.attribute.Vec4": [
     "widget.spelledvec4field"
   ],
@@ -848,8 +850,8 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.project.Create": [
     "widget.createproject"
   ],
-  "Spelled.base.model.Entity": [],
   "Spelled.base.model.Template": [],
+  "Spelled.base.model.Entity": [],
   "Spelled.view.menu.contextmenu.ComponentTemplateAttributesList": [
     "widget.componenttemplateattributescontextmenu"
   ],
@@ -883,11 +885,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.asset.inspector.Config": [
     "widget.assetconfig"
   ],
-  "Spelled.data.writer.Project": [
-    "writer.project"
-  ],
   "Spelled.view.library.menu.Filter": [
     "widget.libraryfilterbutton"
+  ],
+  "Spelled.data.writer.Project": [
+    "writer.project"
   ],
   "Spelled.store.template.component.AttributeTypes": [],
   "Spelled.store.system.Types": [],
@@ -915,10 +917,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.asset.Form": [
     "widget.assetform"
   ],
+  "Spelled.base.store.TreeStore": [],
   "Spelled.view.project.settings.AddLanguage": [
     "widget.projectsettingsaddlanguage"
   ],
-  "Spelled.base.store.TreeStore": [],
   "Ext.ux.ajax.JsonSimlet": [
     "simlet.json"
   ],
