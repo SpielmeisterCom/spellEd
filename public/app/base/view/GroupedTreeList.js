@@ -8,6 +8,7 @@ Ext.define('Spelled.base.view.GroupedTreeList' ,{
 
 	groupTreeNodes: function() {
 		var view = this.getView()
+		view.store.model = this.store.model
 
 		view.store.group( 'group' )
 	}
