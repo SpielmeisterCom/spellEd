@@ -13,6 +13,7 @@ Ext.define('Spelled.model.config.Entity', {
 	mixins: [ 'Spelled.base.model.Entity', 'Spelled.base.model.Model' ],
 
     fields: [
+		{ name: 'preview', type: 'boolean', defaultValue: false },
         'templateId',
         'name',
 		{ name: 'removable', type: 'boolean', defaultValue: true },

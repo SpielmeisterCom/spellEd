@@ -291,13 +291,17 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
 	removeEntityHelper: function( entity ) {
+		var owner = entity.getOwner()
+
+		if( !owner ) return
+
 		this.sendEntityEventToEngine( 'entity.remove', { entityId: entity.getId() }, true )
 
-		entity.getOwner().setDirty()
+		owner.setDirty()
 		this.deleteEntity( entity )
 		var node = this.getScenesTree().getStore().getNodeById( entity.getId() )
 
-		node.remove()
+		if( node ) node.remove()
 	},
 
 	removeEntity: function( entity ) {

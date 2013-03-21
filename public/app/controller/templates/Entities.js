@@ -88,7 +88,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
 	createEntityTemplatePreviewItem: function( entityTemplate ) {
-		return this.createEntityPreviewItem( { name: "preview", templateId: entityTemplate.getFullName() } )
+		return this.createEntityPreviewItem( { name: "preview", templateId: entityTemplate.getFullName(), preview: true } )
 	},
 
 	createEntityPreviewItem: function( entityConfig ) {

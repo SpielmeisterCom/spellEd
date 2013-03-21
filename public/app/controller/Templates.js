@@ -258,7 +258,7 @@ Ext.define('Spelled.controller.Templates', {
 
 			store.each(
 				function( item ) {
-					if( item.get('templateId') === template.getFullName() ) {
+					if( item.get('templateId') === template.getFullName() && !item.get( 'preview' ) ) {
 						found = true
 						return false
 					}
