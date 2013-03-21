@@ -14,7 +14,22 @@ Ext.define('Spelled.view.component.Add' ,{
 
 	items: [
 		{
-			features: [ { ftype:'grouping' } ],
+			features: [ {
+				ftype:'grouping',
+				groupHeaderTpl: [
+					'Group: ',
+					'{name:this.formatName}',
+					{
+						formatName: function( value ) {
+							var store  = Ext.getStore( 'grouping.Components' ),
+								record = store.findRecord( 'name', value),
+								name   = ( value == 'zzz' ) ? 'No Group assigned' : value
+
+							return ( record && record.get( 'icon' ) ) ?  '<img src="' + record.get( 'icon' ) + '"/>' + name : name
+						}
+					}
+				]
+			} ],
 			hideHeaders: true,
 			xtype: 'groupedtree',
 			title: 'Available Components',
@@ -29,13 +44,6 @@ Ext.define('Spelled.view.component.Add' ,{
 				{
 					hidden: true,
 					text: "Component group",
-					renderer: function( value ) {
-						var store  = Ext.getStore( 'grouping.Components' ),
-							record = store.findRecord( 'name', value),
-							name   = ( record ) ? record.get( 'name' ) : 'No Group assigned'
-
-						return ( record && record.get( 'icon' ) ) ?  '<img src="' + record.get( 'icon' ) + '"/>' + name : name
-					},
 					dataIndex: 'group',
 					sortable: true
 				}
