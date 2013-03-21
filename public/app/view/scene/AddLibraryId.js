@@ -81,6 +81,8 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 			copyNodes( rootNode, newRoot )
 
 			store = Ext.create( 'Spelled.store.Library', { root: newRoot } )
+		} else {
+			store.sort( 'libraryId', 'ASC' )
 		}
 
 		return store
