@@ -196,7 +196,7 @@ Ext.define('Spelled.model.config.Component', {
 
 		if( owner.isAnonymous && owner.isAnonymous() && owner.removable === true ) return {}
 
-		var	rootOwner = ( ownerIsEntity ) ? Spelled.EntityHelper.getRootOwnerFromChildren( componentEntity.get( 'name' ), owner, parents ) : owner
+		var	rootOwner = ( ownerIsEntity || owner.isReadonly ) ? Spelled.EntityHelper.getRootOwnerFromChildren( componentEntity.get( 'name' ), owner, parents ) : owner
 
 		if( !rootOwner ) return {}
 
