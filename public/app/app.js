@@ -24,7 +24,6 @@ require(
 	],
 	function(
 		injectModulesIntoExt,
-
 		ace,
 		aceModeSpellScript,
 		aceModeHtml,

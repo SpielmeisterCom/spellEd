@@ -104,6 +104,108 @@ this file in most cases.
                 </if>
             </else>
         </if>
+
+        <property name="bootstrap.example.js" value="${app.example.dir}/bootstrap.js"/>
+        <property name="bootstrap.base.path" value="${app.example.dir}"/>
+        <x-normalize-path path="${build.dir}/resources" property="image.search.path"/>
+                        
+        <if>
+            <isset property="app.theme"/>
+            <then>
+                <property name="build.theme.commands">
+                    and
+                    union
+                        -not
+                        -tag=core
+                    and
+                    metadata
+                        +append
+                        --base-path=${bootstrap.base.path}
+                        +loader-paths
+                        -jsonp=Ext.Loader.addClassPathMappings
+                        -out=${bootstrap.example.js}
+                    and
+                    exclude
+                        -tag=framework
+                    and
+                    include
+                        -namespace=Ext.ux
+                    and
+                    metadata
+                        --base-path=${bootstrap.base.path}
+                        +alternates
+                        +append
+                        -out=${bootstrap.example.js}
+                    and
+                    metadata
+                        --base-path=${bootstrap.base.path}
+                        +alias
+                        +append
+                        -out=${bootstrap.example.js}
+                    and
+                    union
+                        -tag=packageOverrides
+                    and
+                    metadata
+                        --base-path=${bootstrap.base.path}
+                        +append
+                        +filenames
+                        -tpl=Ext.Loader.loadScript("{0}");
+                        -out=${bootstrap.example.js}
+
+                # sass
+
+                    and
+                    restore
+                        page
+                    and
+                    #only set variables for used classes eg. $include-class-name
+                    sass
+                        +class-name-vars
+                        -variable=$image-search-path:'${image.search.path}'
+                        -variable=$theme-name: '${app.theme}' !default
+                        -output=${app.out.scss}
+                    and
+                    include
+                        -all
+                    and
+                    sass
+                        +class-name-vars
+                        +etc
+                        +vars
+                        +rules
+                        -variable=$image-search-path:'${image.search.path}'
+                        -variable=$theme-name: '${app.theme}' !default
+                        -output=${app.example.scss}
+                    and
+                    # include etc and vars from all classes
+                    sass
+                        +etc
+                        +vars
+                        +append
+                        -output=${app.out.scss}
+                    and
+                    restore
+                        page
+                    and
+                    #only include rules from used classes
+                    sass
+                        +rules
+                        +append
+                        -output=${app.out.scss}
+                    and
+                    sass
+                        +ruby
+                        -output=${app.out.ruby}                
+                </property>
+            </then>
+            <else>
+                <property name="build.theme.commands" value=""/>
+                <property name="skip.sass" value="true"/>
+                <property name="skip.slice" value="true"/>
+            </else>
+        </if>
+
         
         <!-- Some operations require sencha.jar in the Ant classpath -->
         <x-extend-classpath>
@@ -225,7 +327,7 @@ this file in most cases.
                         <local name="base.path"/>
                         <local name="base.resource.path"/>
                         <property name="base.path" location="${workspace.packages.dir}/@{base}"/>
-                        <property name="base.resource.path" location="${base.path}/build/resources"/>
+                        <property name="base.resource.path" location="${base.path}/resources"/>
                         
                         <if>
                             <available file="${base.resource.path}" type="dir" />
@@ -234,7 +336,7 @@ this file in most cases.
                                     <fileset 
                                         dir="${base.resource.path}" 
                                         includes="**/*"
-                                        excludes="${base}-all*.css"/>
+                                        excludes="@{base}-all*.css"/>
                                 </copy>
                             </then>
                         </if>
@@ -252,16 +354,16 @@ this file in most cases.
                         <local name="base.path"/>
                         <local name="base.resource.path"/>
                         <property name="base.path" location="${workspace.packages.dir}/@{base}"/>
-                        <property name="base.resource.path" location="${base.path}/build/resources"/>
+                        <property name="base.resource.path" location="${base.path}/resources"/>
                         
                         <if>
                             <available file="${base.resource.path}" type="dir" />
                             <then>
-                                <copy todir="${build.dir}/resources/${base}" overwrite="true">
+                                <copy todir="${build.dir}/resources/@{base}" overwrite="true">
                                     <fileset 
                                         dir="${base.resource.path}" 
                                         includes="**/*"
-                                        excludes="${base}-all*.css"/>
+                                        excludes="@{base}-all*.css"/>
                                 </copy>
                             </then>
                         </if>
@@ -313,12 +415,17 @@ this file in most cases.
             description="Copy theme resources to folder">
         <antcall target="-before-copy-resources"/>
 
-        <copy todir="${build.dir}/resources" overwrite="true">
-            <fileset 
-                dir="${app.dir}/resources" 
-                includes="**/*" 
-                excludes="**/Readme.md"/>
-        </copy>
+        <if>
+            <available file="${build.dir}/resources"/>
+            <then>
+                <copy todir="${build.dir}/resources" overwrite="true">
+                    <fileset 
+                        dir="${app.dir}/resources" 
+                        includes="**/*" 
+                        excludes="**/Readme.md"/>
+                </copy>
+            </then>
+        </if>
         
         <antcall target="-after-copy-resources"/>
     </target>
@@ -350,10 +457,7 @@ this file in most cases.
     -->
     <target name="-before-page"/>
     <target name="-page">
-        <property name="bootstrap.example.js" value="${app.example.dir}/bootstrap.js"/>
-        <property name="bootstrap.base.path" value="${app.example.dir}"/>
-        <x-normalize-path path="${build.dir}/resources" property="image.search.path"/>
-
+        
 <echo file="${bootstrap.example.js}">
 /**
  * This file is generated by Sencha Cmd and should NOT be edited.  It is 
@@ -390,81 +494,8 @@ this file in most cases.
                     -out=${build.classes.file}
 
             # bootstrap
-                
-                and
-                union
-                    -not
-                    -tag=core
-                and
-                metadata
-                    +append
-                    --base-path=${bootstrap.base.path}
-                    +loader-paths
-                    -jsonp=Ext.Loader.addClassPathMappings
-                    -out=${bootstrap.example.js}
-                and
-                exclude
-                    -tag=framework
-                and
-                include
-                    -namespace=Ext.ux
-                and
-                metadata
-                    --base-path=${bootstrap.base.path}
-                    +alternates
-                    +append
-                    -out=${bootstrap.example.js}
-                and
-                metadata
-                    --base-path=${bootstrap.base.path}
-                    +alias
-                    +append
-                    -out=${bootstrap.example.js}
+             ${build.theme.commands}
             
-            # sass
-                
-                and
-                restore
-                    page
-                and
-                #only set variables for used classes eg. $include-class-name
-                sass
-                    +class-name-vars
-                    -variable=$image-search-path:'${image.search.path}'
-                    -variable=$theme-name: '${app.theme}' !default
-                    -output=${app.out.scss}
-                and
-                include
-                    -all
-                and
-                sass
-                    +class-name-vars
-                    +etc
-                    +vars
-                    +rules
-                    -variable=$image-search-path:'${image.search.path}'
-                    -variable=$theme-name: '${app.theme}' !default
-                    -output=${app.example.scss}
-                and
-                # include etc and vars from all classes
-                sass
-                    +etc
-                    +vars
-                    +append
-                    -output=${app.out.scss}
-                and
-                restore
-                    page
-                and
-                #only include rules from used classes
-                sass
-                    +rules
-                    +append
-                    -output=${app.out.scss}
-                and
-                sass
-                    +ruby
-                    -output=${app.out.ruby}                
         </x-sencha-command>
     </target>
     <target name="-after-page"/>
