@@ -87,14 +87,5 @@ Ext.define('Spelled.store.Library', {
 
 
 		return getLeafs( this.getRootNode() )
-	},
-
-	listeners: {
-		expand: function( node ) {
-			this.sortFunction( node )
-		},
-		generateNodesFromRecords: function( records ) {
-			Ext.getStore( 'FoldersTree' ).generateNodesFromRecords( records )
-		}
 	}
 });

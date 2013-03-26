@@ -70,48 +70,64 @@ Ext.define('Spelled.controller.Library', {
     ],
 
     init: function() {
-        this.control({
-			'componentproperties' :{
-				propertydeeplinkclick: this.deepLinkComponentProperty
+		this.listen({
+			component: {
+				'componentproperties' :{
+					propertydeeplinkclick: this.deepLinkComponentProperty
+				},
+				'librarynavigator': {
+					activate: this.showLibrary
+				},
+				'sceneeditor tab,#SecondTabPanel tab': {
+					beforeclose: this.dispatchLibraryTabBeforeClose
+				},
+				'librarymenu button[action="showCreateFolder"]' : {
+					click: this.showCreateFolder
+				},
+				'createlibraryfolder button[action="createFolder"]': {
+					click: this.createFolderHelper
+				},
+				'librarytreelist': {
+					edit            : this.dispatchLibraryNodeRename,
+					editclick       : this.dispatchLibraryNodeContextMenu,
+					itemcontextmenu : this.dispatchLibraryNodeContextMenu,
+					select          : this.dispatchLibraryNodeSelect,
+					itemdblclick    : this.dispatchLibraryNodeDoubleClick,
+					itemmouseenter  : this.application.showActionsOnLeaf,
+					itemmouseleave  : this.application.hideActions
+				},
+				'librarycontextmenu [action="deleteFolder"]': {
+					click: this.removeFolder
+				},
+				'assetslistcontextmenu [action="rename"]': {
+					click: this.showRenameLibraryItem
+				}
 			},
-			'librarynavigator': {
-				activate: this.showLibrary
+			store: {
+				'#Library': {
+					beforeappend: this.sortLibraryTree,
+					generateNodesFromRecords: this.generateLibraryNodes
+				}
 			},
-			'sceneeditor tab,#SecondTabPanel tab': {
-				beforeclose: this.dispatchLibraryTabBeforeClose
-			},
-			'librarymenu button[action="showCreateFolder"]' : {
-				click: this.showCreateFolder
-			},
-			'createlibraryfolder button[action="createFolder"]': {
-				click: this.createFolderHelper
-			},
-			'librarytreelist': {
-				edit            : this.dispatchLibraryNodeRename,
-				editclick       : this.dispatchLibraryNodeContextMenu,
-				itemcontextmenu : this.dispatchLibraryNodeContextMenu,
-				select          : this.dispatchLibraryNodeSelect,
-				itemdblclick    : this.dispatchLibraryNodeDoubleClick,
-				itemmouseenter  : this.application.showActionsOnLeaf,
-				itemmouseleave  : this.application.hideActions
-			},
-			'librarycontextmenu [action="deleteFolder"]': {
-				click: this.removeFolder
-			},
-			'assetslistcontextmenu [action="rename"]': {
-				click: this.showRenameLibraryItem
+			controller:{
+				'*': {
+					deeplink : this.deepLink,
+					selectnamespacefrombutton : this.selectLibraryNamespace,
+					buildnamespacenodes       : this.buildNamespaceNodes,
+					removefromlibrary: this.removeFromLibrary,
+					clearstores: this.clearStore
+				}
 			}
-        })
-
-		this.application.on({
-			deeplink : this.deepLink,
-			selectnamespacefrombutton  : this.selectLibraryNamespace,
-			buildnamespacenodes        : this.buildNamespaceNodes,
-			removefromlibrary: this.removeFromLibrary,
-			clearstores: this.clearStore,
-			scope: this
 		})
     },
+
+	sortLibraryTree: function( node ) {
+		Ext.getStore( 'Library' ).sortFunction( node )
+	},
+
+	generateLibraryNodes: function( records ) {
+		Ext.getStore( 'FoldersTree' ).generateNodesFromRecords( records )
+	},
 
 	dispatchLibraryNodeRename: function( editor, e, newName, oldName ) {
 		var node = e.record
