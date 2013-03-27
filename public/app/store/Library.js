@@ -21,10 +21,10 @@ Ext.define('Spelled.store.Library', {
 		return node1SortOrder < node2SortOrder ? -1 : 1
 	},
 
-	sortFunction: function( node ) {
+	sortFunction: function() {
 		var me = this
 
-		node.sort(
+		this.getRootNode().sort(
 			function( node1, node2 ) {
 				var result = me.sortHelper( node1, node2, 'sortOrder' )
 
