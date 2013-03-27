@@ -5,6 +5,7 @@ Ext.define('Spelled.view.library.menu.Buttons' ,{
 	requires: [
 		'Ext.container.ButtonGroup'
 	],
+	plain: true,
 
 	items: [
 		{
