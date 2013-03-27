@@ -187,7 +187,7 @@ Ext.define('Spelled.controller.Systems', {
 			scene    			 = this.application.getLastSelectedScene()
 
 		if( contextMenu && contextMenu.ownerView )
-			view.setExecutionGroup( contextMenu.ownerView.getId() )
+			view.setExecutionGroup( contextMenu.ownerView.get( 'text' ) )
 
 		view.setScene( scene )
 
@@ -285,7 +285,6 @@ Ext.define('Spelled.controller.Systems', {
 				var exists = rootNode.findChild( 'text', key ),
 					node   = ( exists ) ? exists : rootNode.createNode( {
 					text      : key,
-					id        : key,
 					leaf      : false,
 					allowDrop : true,
 					allowDrag : false,
