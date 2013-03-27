@@ -105,7 +105,8 @@ Ext.define('Spelled.controller.Library', {
 			},
 			store: {
 				'#Library': {
-					beforeappend: this.sortLibraryTree,
+					append: this.sortLibraryTree,
+					sort: this.sortNodeHelper,
 					generateNodesFromRecords: this.generateLibraryNodes
 				}
 			},
@@ -121,8 +122,22 @@ Ext.define('Spelled.controller.Library', {
 		})
     },
 
+	nodesToSort: [],
+
+	sortNodeHelper: function() {
+		var nodeToSort = this.nodesToSort.pop()
+
+		if( nodeToSort ) {
+			Ext.getStore( 'Library' ).sortFunction( nodeToSort )
+		}
+	},
+
 	sortLibraryTree: function( node ) {
-		Ext.getStore( 'Library' ).sortFunction( node )
+		var length = this.nodesToSort.length
+
+		this.nodesToSort.push( node )
+
+		if( length == 0 ) this.sortNodeHelper()
 	},
 
 	generateLibraryNodes: function( records ) {

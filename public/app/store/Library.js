@@ -32,8 +32,8 @@ Ext.define('Spelled.store.Library', {
 					return me.sortHelper( node1, node2, 'text' )
 				} else return result
 			},
-			false,
-			true
+			true,
+			false
 		)
 	},
 
