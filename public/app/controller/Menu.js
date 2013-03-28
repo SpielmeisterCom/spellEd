@@ -370,7 +370,7 @@ Ext.define('Spelled.controller.Menu', {
 		var node = this.application.getLastSelectedNode( this.getAssetsTree() )
 
 		if( node && node.isLeaf() ) {
-			this.application.getController( 'Assets' ).showEditHelper( node.get('id') )
+			this.application.getController( 'Assets' ).showEditHelper( node.get('id'), node )
 		}
 	},
 
