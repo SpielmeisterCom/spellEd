@@ -516,11 +516,7 @@ Ext.define('Spelled.controller.Projects', {
 
 		tree.getSelectionModel().select( node )
 
-		rootNode.collapse( true, function() {
-			rootNode.expand()
-			node.expand()
-			node.expandChildren()
-		})
+		rootNode.collapseChildren( true )
 
 		this.getNavigator().defaultTitle = project.get( 'name' )
 		this.getScenes().changeTitle()

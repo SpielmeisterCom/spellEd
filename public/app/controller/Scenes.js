@@ -541,6 +541,7 @@ Ext.define('Spelled.controller.Scenes', {
 			if( child.getId() === scene.getId() ) {
 				child.set( 'leaf', false )
 				child.expand()
+				child.expandChildren()
 				child.set( 'iconCls', "tree-default-scene-icon" )
 			} else {
 				child.collapse( true )
