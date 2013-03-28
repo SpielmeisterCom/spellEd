@@ -42,6 +42,7 @@ Ext.define('Spelled.view.asset.create.Translation', {
 				},
 				{
 					xtype: 'grid',
+					height: 500,
 					tbar: [
 						{
 							icon: 'resources/images/icons/add.png',
