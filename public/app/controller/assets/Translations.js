@@ -101,14 +101,11 @@ Ext.define('Spelled.controller.assets.Translations', {
 		var store    = asset.getTranslationStore(),
 			language = view.getSelectedLanguage()
 
-		if( field === 'key' ) {
+		if( field === 'key' && originalValue ) {
 			var translations = store.query( 'key', originalValue )
 
-			translations.each(
-				function( record ) {
-					record.set( field, value )
-				}
-			)
+			if( translations )
+				translations.each( function( record ) { record.set( field, value ) } )
 		}
 
 		store.clearFilter( true )
