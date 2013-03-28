@@ -72,6 +72,7 @@ Ext.define('Spelled.view.asset.create.Translation', {
 					},
 					store: this.getAsset().getTranslationStore(),
 					plugins: [ Ext.create('Ext.grid.plugin.CellEditing', {
+						clicksToEdit: 1,
 						pluginId: 'cellplugin'
 					}) ]
 				}
