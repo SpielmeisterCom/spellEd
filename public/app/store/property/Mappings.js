@@ -48,6 +48,11 @@ Ext.define('Spelled.store.property.Mappings', {
             "name"  :"spelledscript",
 			"target": "script",
             "type"  :"libraryLink"
-        }
+        },
+		{
+			"name"  : "spelledtranslationfield",
+			"target": "asset",
+			"type"  : "libraryLink"
+		}
 	]
 });
