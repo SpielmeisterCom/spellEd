@@ -116,11 +116,26 @@ Ext.define('Spelled.controller.assets.Translations', {
 		var store    = asset.getTranslationStore(),
 			language = view.getSelectedLanguage()
 
-		if( field === 'key' && originalValue ) {
-			var translations = store.query( 'key', originalValue )
+		if( field === 'key' ) {
+			if( originalValue ) {
+				var translations = store.query( 'key', originalValue )
 
-			if( translations )
-				translations.each( function( record ) { record.set( field, value ) } )
+				if( translations )
+					translations.each( function( record ) { record.set( field, value ) } )
+
+			} else {
+				var languages = view.project.getSupportedLanguages()
+
+				languages.each(
+					function( languageItem ) {
+						var key = languageItem.getId()
+
+						if( key != language && store.findBy( function( record ){ return record.get( 'language' ) == language && record.get( 'key' ) == value } ) > -1 ){
+							store.add( { language: key, key: value} )
+						}
+					}
+				)
+			}
 		}
 
 		store.clearFilter( true )
@@ -129,16 +144,12 @@ Ext.define('Spelled.controller.assets.Translations', {
 	},
 
 	addItem: function( view, language ) {
-		var grid  = view.down( 'grid'),
-			store = grid.getStore(),
-			edit  = grid.getPlugin('cellplugin')
+		var grid    = view.down( 'grid'),
+			store   = grid.getStore(),
+			edit    = grid.getPlugin('cellplugin'),
+			newItem = store.add( { language: language } )
 
-		store.insert( 0, { 'language': language } )
-
-		edit.startEditByPosition({
-			row: 0,
-			column: 0
-		})
+		edit.startEdit( newItem.pop(), 0 )
 	},
 
 	filterLanguage: function( view, language ) {
