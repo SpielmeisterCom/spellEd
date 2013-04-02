@@ -80,6 +80,21 @@ Ext.define('Spelled.controller.assets.Translations', {
 				asset.updateTranslation()
 			}
 		)
+
+		this.reselectLanguageFromTranslationTabs()
+	},
+
+	reselectLanguageFromTranslationTabs: function() {
+		var tabs = this.getAssetEditor().query( 'translationasset' )
+
+		Ext.Array.each(
+			tabs,
+			function( tab ) {
+				tab.down('combo[name="language"]').bindStore( tab.createStore() )
+				this.filterLanguage( tab, tab.getSelectedLanguage() )
+			},
+			this
+		)
 	},
 
 	removeLanguageTokens: function( language ) {
