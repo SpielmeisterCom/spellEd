@@ -15,6 +15,7 @@ fi
 
 CWD=$(pwd)
 SENCHA=$CWD/../SenchaCmd/sencha
+export PATH="/cygdrive/c/Ruby193/bin:/bin:/usr/bin:/usr/local/bin"
 
 if [ "$ACTION" = "theme" ]; then
 	cd public/packages/spelled-theme
