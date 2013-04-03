@@ -46,7 +46,6 @@ Ext.define('Spelled.view.asset.create.Translation', {
 				},
 				{
 					xtype: 'grid',
-					height: 500,
 					tbar: [
 						{
 							icon: 'resources/images/icons/add.png',
@@ -73,6 +72,10 @@ Ext.define('Spelled.view.asset.create.Translation', {
 						}
 					],
 					listeners: {
+						afterlayout: function() {
+							var height = this.ownerCt.ownerCt.getHeight() - 60
+							if( height != this.getHeight() ) this.setHeight( height )
+						},
 						edit: Ext.bind( this.editHandler, this )
 					},
 					store: this.getAsset().getTranslationStore(),
