@@ -59,7 +59,9 @@ Ext.define('Spelled.view.asset.create.Translation', {
 							text: 'Key',
 							dataIndex: 'key',
 							editor: {
-								allowBlank: false
+								xtype: 'textfield',
+								allowBlank: false,
+								validator: Ext.bind( this.keyValidation, this )
 							}
 						},
 						{
@@ -74,6 +76,7 @@ Ext.define('Spelled.view.asset.create.Translation', {
 					listeners: {
 						afterlayout: function() {
 							var height = this.ownerCt.ownerCt.getHeight() - 60
+
 							if( height != this.getHeight() ) this.setHeight( height )
 						},
 						edit: Ext.bind( this.editHandler, this )
@@ -90,6 +93,13 @@ Ext.define('Spelled.view.asset.create.Translation', {
 		this.callParent( arguments )
 
 		this.fireEvent( 'languageChange', this, this.initLanguage )
+	},
+
+	keyValidation: function( value ) {
+		var store = this.getAsset().getTranslationStore(),
+			found = store.findRecord( 'key', value, 0, false, false, true )
+
+		return ( found ) ? "Key already given!" : true
 	},
 
 	onAddClick: function() {
