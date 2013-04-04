@@ -91,10 +91,12 @@ Ext.define('Spelled.controller.templates.Entities', {
 		return this.createEntityPreviewItem( { name: "preview", templateId: entityTemplate.getFullName(), preview: true } )
 	},
 
-	createEntityPreviewItem: function( entityConfig ) {
-		var project       = this.application.getActiveProject(),
+	createEntityPreviewItem: function( entityConfig, dependencies ) {
+		var dependencies  = Ext.isArray( dependencies ) ? dependencies : [],
+			project       = this.application.getActiveProject(),
 			sceneConfig   = {
 				name: "dummyScene", namespace: '',
+				dependencies: dependencies,
 				systems: {
 					update: [
 						{ id: 'spell.system.debug.camera', config: { active: true } },

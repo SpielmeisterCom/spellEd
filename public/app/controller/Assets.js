@@ -832,16 +832,9 @@ Ext.define('Spelled.controller.Assets', {
 
         if( asset.get('subtype') === this.TYPE_KEY_FRAME_ANIMATION ){
             var previewAsset = this.getAssetByAssetId( asset.get( 'assetId' ) ),
-                componentId  = 'spell.component.2d.graphics.appearance',
-                config       = {}
+                config       = { assetId: 'appearance:spell.defaultAppearance' }
 
             if( previewAsset ) {
-                switch( previewAsset.get( 'subtype' ) ) {
-                    case this.TYPE_ANIMATION:
-                        componentId   = 'spell.component.2d.graphics.animatedAppearance'
-                        break
-                }
-
                 config.assetId = previewAsset.get( 'internalAssetId' )
             }
 
@@ -849,7 +842,7 @@ Ext.define('Spelled.controller.Assets', {
                 templateId: "spell.component.animation.keyFrameAnimation",
                 config:{ assetId: asset.get( 'internalAssetId' ) }
             },{
-                templateId: componentId,
+                templateId: 'spell.component.2d.graphics.animatedAppearance',
                 config: config
             }])
 
@@ -908,10 +901,22 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	initSpellEngineAssetIFrame: function( container, entity ) {
-		this.application.sendDebugMessage(
-			container.getId(),
-			'runtimeModule.start',
-			this.application.getController( 'templates.Entities' ).createEntityPreviewItem( entity )
+		var store        = this.getAssetKeyFrameAnimationPreviewsStore(),
+			spriteSheets = this.getAssetSpriteSheetsStore().collect( 'myAssetId' )
+
+		store.load(
+			{
+				scope: this,
+				callback: function() {
+					var dependencies = Ext.Array.merge( store.collect( 'myAssetId' ), spriteSheets )
+
+					this.application.sendDebugMessage(
+						container.getId(),
+						'runtimeModule.start',
+						this.application.getController( 'templates.Entities' ).createEntityPreviewItem( entity, dependencies)
+					)
+				}
+			}
 		)
 	}
 });
