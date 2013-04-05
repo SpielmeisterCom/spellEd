@@ -77,7 +77,7 @@ Ext.define('Spelled.view.asset.create.Translation', {
 						afterlayout: function() {
 							var height = this.ownerCt.ownerCt.getHeight() - 60
 
-							if( height != this.getHeight() ) this.setHeight( height )
+							if( height > 0 && height != this.getHeight()  ) this.setHeight( height )
 						},
 						edit: Ext.bind( this.editHandler, this )
 					},
