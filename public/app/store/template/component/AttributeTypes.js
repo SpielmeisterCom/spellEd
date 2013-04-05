@@ -1,34 +1,41 @@
 Ext.define('Spelled.store.template.component.AttributeTypes', {
     extend: 'Ext.data.Store',
 
-	fields: ['type', 'name'],
+	fields: ['type', 'name', 'defaultValue'],
 
 	data : [
 		{
+			"defaultValue": "0",
 			"type":"spellednumberfield",
 			"name":"number"
 		},
 		{
+			"defaultValue": "{}",
 			"type":"spelledobjectfield",
 			"name":"object"
 		},
 		{
+			"defaultValue": "Default Value",
 			"type":"spelledtextfield",
 			"name":"string"
 		},
 		{
+			"defaultValue": "[0,0]",
 			"type":"spelledvec2field",
 			"name":"vec2"
 		},
 		{
+			"defaultValue": "[0,0,0]",
 			"type":"spelledvec3field",
 			"name":"vec3"
 		},
 		{
+			"defaultValue": "[0,0,0,0]",
 			"type":"spelledvec4field",
 			"name":"vec4"
 		},
 		{
+			"defaultValue": "[1,2,3,4,5,6,7,8,9]",
 			"type":"spelledmat3field",
 			"name":"mat3"
 		},
@@ -41,10 +48,12 @@ Ext.define('Spelled.store.template.component.AttributeTypes', {
 			"name":"enum"
 		},
 		{
+			"defaultValue": "0",
 			"type":"spelledintegerfield",
 			"name":"integer"
 		},
 		{
+			"defaultValue": "true",
 			"type":"spelledbooleanfield",
 			"name":"boolean"
 		},

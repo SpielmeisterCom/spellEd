@@ -10,6 +10,7 @@ Ext.define('Spelled.controller.templates.Components', {
 		'Spelled.view.template.component.attribute.Vec2',
 		'Spelled.view.template.component.attribute.Vec3',
 		'Spelled.view.template.component.attribute.Vec4',
+		'Spelled.view.template.component.attribute.Mat3',
 		'Spelled.view.template.component.attribute.String',
 		'Spelled.view.template.component.attribute.Number',
 		'Spelled.view.template.component.attribute.List',
@@ -44,6 +45,7 @@ Ext.define('Spelled.controller.templates.Components', {
 		'template.component.attribute.Vec2',
 		'template.component.attribute.Vec3',
 		'template.component.attribute.Vec4',
+		'template.component.attribute.Mat3',
 		'template.component.attribute.String',
 		'template.component.attribute.Number',
 		'template.component.attribute.List',
@@ -194,7 +196,7 @@ Ext.define('Spelled.controller.templates.Components', {
 		var defaultValueField = {
 			xtype: attributeType.get('type'),
 			name: 'default',
-			allowBlank:false,
+			allowBlank: false,
 			fieldLabel: 'Default value',
 			matchFieldWidth: true
 		}
@@ -226,7 +228,14 @@ Ext.define('Spelled.controller.templates.Components', {
 		propertyView.showConfig()
         propertyView.getForm().loadRecord( attribute )
 
-		if( field.isValid() ) attribute.set( 'default', field.getValue() )
+		if( field.isValid() ) {
+			attribute.set( 'default', field.getValue() )
+		} else if( attributeType.get( 'defaultValue' ) ) {
+			var defaultValue = attributeType.get( 'defaultValue' )
+
+			field.setValue( defaultValue )
+			attribute.set( 'default', Spelled.Converter.decodeFieldValue( defaultValue, attribute.get( 'type' ) ) )
+		}
     },
 
     openTemplate: function( componentTemplate ) {
