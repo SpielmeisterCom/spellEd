@@ -1,5 +1,6 @@
 CWD=$(shell pwd)
 SENCHA=$(CWD)/../SenchaCmd/sencha
+NODE=$(CWD)/../nodejs/node
 
 #todo set path for windows ruby include
 
@@ -42,7 +43,18 @@ build/nw-package: build/spelledjs
 build/app.nw: build/nw-package
 	cd build/nw-package && zip -9 -r app.nw *
 	mv build/nw-package/app.nw build/app.nw
+	
 
+build/spelledjs/libs.js:
+	# copy all libs into one directory
+	cp -RL public/libs build/spelledjs
+	cp ../../node_modules/requirejs/require.js build/spelledjs/libs
+	cp ../../node_modules/underscore/underscore.js build/spelledjs/libs
+	cp -R ../ace/lib/ace build/spelledjs/libs
+	
+	# minifying libs
+	$(NODE) ../spellCore/tools/n.js -s build/spelledjs/libs -m spellEdDeps -i "ace/ace,spell/ace/mode/spellscript,ace/mode/html,ace/theme/pastel_on_dark" >>build/spelledjs/libs.js
+	
 build/spelledjs: 
 	mkdir -p build/spelledjs
 	cd public && $(SENCHA) app build
@@ -52,8 +64,3 @@ build/spelledjs:
 	cp public/build/spellEd/production/all-classes.js build/spelledjs
 	cp -R public/build/spellEd/production/resources build/spelledjs
 
-        # populating output with static content
-	cp -RL public/libs build/spelledjs
-	cp ../../node_modules/requirejs/require.js build/spelledjs/libs
-	cp ../../node_modules/underscore/underscore.js build/spelledjs/libs
-	cp -R ../ace/lib/ace build/spelledjs/libs
