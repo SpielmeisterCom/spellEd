@@ -1,6 +1,13 @@
-var requirejs = require( 'requirejs' ),
-	path      = require( 'path' ),
-	spellPath = process.cwd()
+var requirejs   = require( 'requirejs' ),
+	path        = require( 'path' ),
+	spellPath   = path.resolve( process.execPath + '/..'),
+	tmpAppPath  = path.resolve( process.mainModule.filename + '/..'),
+	nodeBin     = 'node'
+
+if( process.platform == 'windows' ) {
+	nodeBin += '.exe'
+}
+
 
 requirejs.config( {
 	nodeRequire: require
@@ -15,13 +22,16 @@ requirejs(
 		) {
 		'use strict'
 
-		var child = childProcess.execFile( 'node', [ path.resolve( spellPath , 'src/server/webKit/spellEdServer.js' ) ], function (error, stdout, stderr) {
-			console.log('stdout: ' + stdout);
-			console.log('stderr: ' + stderr);
-			if (error !== null) {
-				console.log('exec error: ' + error);
+		var child = childProcess.execFile(
+			spellPath + '/' + nodeBin,
+			[ tmpAppPath + '/src/server/webKit/spellEdServer.js' ],
+
+			function (error, stdout, stderr) {
+				if (error !== null) {
+					console.log('exec error: ' + error);
+				}
 			}
-		} )
+		)
 
 		process.on( 'exit', function () {
 			child.kill()

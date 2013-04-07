@@ -1,16 +1,14 @@
 var requirejs = require( 'requirejs' ),
 	path      = require( 'path' ),
 	fs		  = require( 'fs' ),
-	spellPath = process.cwd(),
+	spellPath   = path.resolve( process.execPath + '/..'),
+	tmpAppPath  = path.resolve( process.mainModule.filename + '/../../../..'),
 	define    = requirejs.define
 
 requirejs.config( {
-	baseUrl: spellPath + '/src',
+	baseUrl: tmpAppPath + '/src',
 	nodeRequire: require
 } )
-
-//load needed spell util scripts
-eval( fs.readFileSync( path.resolve( spellPath, 'spellCore/build/spell.util.js' ), 'utf8' ) )
 
 requirejs(
 	[
@@ -34,7 +32,7 @@ requirejs(
 		'use strict'
 
 		var port          = 3000,
-			spellCorePath = path.resolve( spellPath, 'spellCore' )
+			spellCorePath = path.resolve( tmpAppPath, 'spellCore' )
 
 		var app = connect()
 			.use(

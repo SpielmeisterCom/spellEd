@@ -5,12 +5,7 @@ define(
 		'http',
         'fs',
         'server/extDirectApi/createUtil',
-		'server/extDirectApi/createStorageApi',
-
-		'spell/shared/build/exportDeploymentArchive',
-		'spell/shared/build/initializeProjectDirectory',
-		'spell/shared/build/isDevEnvironment',
-
+	'server/extDirectApi/createStorageApi',
         'underscore'
     ],
     function(
@@ -19,11 +14,6 @@ define(
         fs,
         createUtil,
 		createStorageApi,
-
-		exportDeploymentArchive,
-		initializeProjectDirectory,
-		isDevEnvironment,
-
         _
     ) {
         'use strict'
@@ -79,7 +69,8 @@ define(
 				projectPath     = projectsPath + '/' + projectName,
 				projectFilePath = projectsPath + '/' + payload[ 1 ]
 
-			initializeProjectDirectory( spellCorePath, projectName, projectPath, projectFilePath, isDevEnvironment )
+			//TODO: call spellcli
+			//initializeProjectDirectory( spellCorePath, projectName, projectPath, projectFilePath, isDevEnvironment )
 
 			return writeResponse( 200, res, createResponseData( "initDirectory", payload, req.extDirectId ) )
 		}
@@ -114,8 +105,8 @@ define(
 					writeResponse( 200, res, createResponseData( "exportDeployment", payload, req.extDirectId ) )
 				}
 			}
-
-			return exportDeploymentArchive( spellCorePath, projectPath, outputFilePath, onComplete )
+//TODO: call spellcli
+		//	return exportDeploymentArchive( spellCorePath, projectPath, outputFilePath, onComplete )
 		}
 
         return function( projectsRoot, spellCorePath ) {

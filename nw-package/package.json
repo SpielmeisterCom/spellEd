@@ -1,7 +1,6 @@
 {
-	"name": "nw-spellEd",
-	"main": "http://localhost:3000",
-	"node-main": "start_server.js",
+	"name": "com.spelljs.spellEd",
+	"main": "public/index.html",
 
 	"webkit": {
 		"plugin": true
@@ -9,6 +8,6 @@
 	"window": {
 		"fullscreen": false,
 		"frame": true,
-		"toolbar": true
+		"toolbar": true 
 	}
 }
