@@ -11,9 +11,6 @@ requirejs.config( {
 	nodeRequire: require
 } )
 
-//load needed spell util scripts
-eval( fs.readFileSync( path.resolve( spellPath, '../spellCore/build/spell.util.js' ), 'utf8' ) )
-
 requirejs(
 	[
 		'server/spellEdServer'

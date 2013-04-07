@@ -121,7 +121,7 @@ define(
 							null,
 							spellCorePath,
 							projectsRoot,
-							isDevEnvironment( spellCorePath )
+							true
 						)
 					},
 					{
