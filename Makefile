@@ -8,34 +8,27 @@ theme:
 	cd public/packages/spelled-theme && $(SENCHA) package build
 	cd $(CWD)
 
-.PHONE: distclean
-distclean:
-	# cleaning up and creating directory tree
-	rm -rf build
-
-.PHONY: nw-package
-nw-package: spelledjs
-	mkdir -p build/nw-package
-	rm -R build/nw-package/* || true
-
-	cp -aR build/spelledjs/* build/nw-package/
-	cp -aR nw-package/* build/nw-package/
-
-.PHONY: app.nw
-app.nw: nw-package
-	rm build/app.nw || true
-	cd build/nw-package && zip -9 -r app.nw *
-	mv build/nw-package/app.nw build/app.nw
-
 .PHONY: spelledserver
 spelledserver:
 	mkdir -p build/spelledserver
 	rm -R build/spelledserver/* || true
 
-.PHONY: spelledjs
-spelledjs: 
+.PHONE: distclean
+distclean:
+	# cleaning up and creating directory tree
+	rm -rf build
+
+build/nw-package/package.json: build/spelledjs/index.html
+	mkdir -p build/nw-package
+	cp -aR build/spelledjs/* build/nw-package/
+	cp -aR nw-package/* build/nw-package/
+
+build/app.nw: build/nw-package/package.json
+	cd build/nw-package && zip -9 -r app.nw *
+	mv build/nw-package/app.nw build/app.nw
+
+build/spelledjs/index.html: 
 	mkdir -p build/spelledjs
-	rm -R build/spelledjs/* || true
 	cd public && $(SENCHA) app build
 
         # copy sencha build
