@@ -12447,19 +12447,19 @@ body.x-nbr .x-grid-row-editor-buttons {
   border-width: 1px 1px 0 1px;
   border-style: solid;
   background-image: none;
-  background-color: #444444;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #373737), color-stop(25%, #3e3e3e), color-stop(45%, #444444));
-  background-image: -webkit-linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: -moz-linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: -o-linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
+  background-color: #646464;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #575757), color-stop(25%, #5e5e5e), color-stop(45%, #646464));
+  background-image: -webkit-linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -moz-linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -o-linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
 }
 
 /* line 195, ../../../ext-theme-base/sass/etc/mixins/frame.scss */
 .x-tab-default-top-mc {
   background-image: url(images/tab/tab-default-top-fbg.gif);
   background-position: 0 top;
-  background-color: #444444;
+  background-color: #646464;
 }
 
 /* line 218, ../../../ext-theme-base/sass/etc/mixins/frame.scss */
@@ -12609,19 +12609,19 @@ body.x-nbr .x-tab-default-top {
   border-width: 0 1px 1px 1px;
   border-style: solid;
   background-image: none;
-  background-color: #444444;
-  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #373737), color-stop(25%, #3e3e3e), color-stop(45%, #444444));
-  background-image: -webkit-linear-gradient(bottom, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: -moz-linear-gradient(bottom, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: -o-linear-gradient(bottom, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: linear-gradient(bottom, #373737, #3e3e3e 25%, #444444 45%);
+  background-color: #646464;
+  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #575757), color-stop(25%, #5e5e5e), color-stop(45%, #646464));
+  background-image: -webkit-linear-gradient(bottom, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -moz-linear-gradient(bottom, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -o-linear-gradient(bottom, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: linear-gradient(bottom, #575757, #5e5e5e 25%, #646464 45%);
 }
 
 /* line 195, ../../../ext-theme-base/sass/etc/mixins/frame.scss */
 .x-tab-default-bottom-mc {
   background-image: url(images/tab/tab-default-bottom-fbg.gif);
   background-position: 0 top;
-  background-color: #444444;
+  background-color: #646464;
 }
 
 /* line 218, ../../../ext-theme-base/sass/etc/mixins/frame.scss */
@@ -12771,19 +12771,19 @@ body.x-nbr .x-tab-default-bottom {
   border-width: 1px 1px 0 1px;
   border-style: solid;
   background-image: none;
-  background-color: #444444;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #373737), color-stop(25%, #3e3e3e), color-stop(45%, #444444));
-  background-image: -webkit-linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: -moz-linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: -o-linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
+  background-color: #646464;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #575757), color-stop(25%, #5e5e5e), color-stop(45%, #646464));
+  background-image: -webkit-linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -moz-linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -o-linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
 }
 
 /* line 195, ../../../ext-theme-base/sass/etc/mixins/frame.scss */
 .x-tab-default-left-mc {
   background-image: url(images/tab/tab-default-top-fbg.gif);
   background-position: 0 top;
-  background-color: #444444;
+  background-color: #646464;
 }
 
 /* line 218, ../../../ext-theme-base/sass/etc/mixins/frame.scss */
@@ -12933,19 +12933,19 @@ body.x-nbr .x-tab-default-left {
   border-width: 1px 1px 0 1px;
   border-style: solid;
   background-image: none;
-  background-color: #444444;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #373737), color-stop(25%, #3e3e3e), color-stop(45%, #444444));
-  background-image: -webkit-linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: -moz-linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: -o-linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
+  background-color: #646464;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #575757), color-stop(25%, #5e5e5e), color-stop(45%, #646464));
+  background-image: -webkit-linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -moz-linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -o-linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
 }
 
 /* line 195, ../../../ext-theme-base/sass/etc/mixins/frame.scss */
 .x-tab-default-right-mc {
   background-image: url(images/tab/tab-default-top-fbg.gif);
   background-position: 0 top;
-  background-color: #444444;
+  background-color: #646464;
 }
 
 /* line 218, ../../../ext-theme-base/sass/etc/mixins/frame.scss */
@@ -13106,7 +13106,7 @@ body.x-nbr .x-tab-default-right {
 }
 /* line 176, ../../../ext-theme-neutral/sass/src/tab/Panel.scss */
 .x-ie8m .x-tab-default .x-tab-glyph {
-  color: #a1a1a1;
+  color: #b1b1b1;
 }
 /* line 184, ../../../ext-theme-neutral/sass/src/tab/Panel.scss */
 .x-strict .x-ie9 .x-tab-bar-vertical .x-tab-default {
@@ -13137,15 +13137,15 @@ body.x-nbr .x-tab-default-right {
 .x-tab-default-right {
   border-bottom: 0px solid #646464;
   background-image: none;
-  background-color: #444444;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #373737), color-stop(25%, #3e3e3e), color-stop(45%, #444444));
-  background-image: -webkit-linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: -moz-linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: -o-linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: linear-gradient(top, #373737, #3e3e3e 25%, #444444 45%);
-  -webkit-box-shadow: #5b5b5b 0 1px 0px 0 inset, #5b5b5b -1px 0 0px 0 inset, #5b5b5b 1px 0 0px 0 inset;
-  -moz-box-shadow: #5b5b5b 0 1px 0px 0 inset, #5b5b5b -1px 0 0px 0 inset, #5b5b5b 1px 0 0px 0 inset;
-  box-shadow: #5b5b5b 0 1px 0px 0 inset, #5b5b5b -1px 0 0px 0 inset, #5b5b5b 1px 0 0px 0 inset;
+  background-color: #646464;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #575757), color-stop(25%, #5e5e5e), color-stop(45%, #646464));
+  background-image: -webkit-linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -moz-linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -o-linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: linear-gradient(top, #575757, #5e5e5e 25%, #646464 45%);
+  -webkit-box-shadow: #7b7b7b 0 1px 0px 0 inset, #7b7b7b -1px 0 0px 0 inset, #7b7b7b 1px 0 0px 0 inset;
+  -moz-box-shadow: #7b7b7b 0 1px 0px 0 inset, #7b7b7b -1px 0 0px 0 inset, #7b7b7b 1px 0 0px 0 inset;
+  box-shadow: #7b7b7b 0 1px 0px 0 inset, #7b7b7b -1px 0 0px 0 inset, #7b7b7b 1px 0 0px 0 inset;
 }
 /* line 236, ../../../ext-theme-neutral/sass/src/tab/Panel.scss */
 .x-nlg .x-tab-default-top, .x-nlg
@@ -13158,15 +13158,15 @@ body.x-nbr .x-tab-default-right {
 .x-tab-default-bottom {
   border-top: 0px solid #646464;
   background-image: none;
-  background-color: #444444;
-  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #373737), color-stop(25%, #3e3e3e), color-stop(45%, #444444));
-  background-image: -webkit-linear-gradient(bottom, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: -moz-linear-gradient(bottom, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: -o-linear-gradient(bottom, #373737, #3e3e3e 25%, #444444 45%);
-  background-image: linear-gradient(bottom, #373737, #3e3e3e 25%, #444444 45%);
-  -webkit-box-shadow: #5b5b5b 0 -1px 0px 0 inset, #5b5b5b -1px 0 0px 0 inset, #5b5b5b 1px 0 0px 0 inset;
-  -moz-box-shadow: #5b5b5b 0 -1px 0px 0 inset, #5b5b5b -1px 0 0px 0 inset, #5b5b5b 1px 0 0px 0 inset;
-  box-shadow: #5b5b5b 0 -1px 0px 0 inset, #5b5b5b -1px 0 0px 0 inset, #5b5b5b 1px 0 0px 0 inset;
+  background-color: #646464;
+  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #575757), color-stop(25%, #5e5e5e), color-stop(45%, #646464));
+  background-image: -webkit-linear-gradient(bottom, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -moz-linear-gradient(bottom, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: -o-linear-gradient(bottom, #575757, #5e5e5e 25%, #646464 45%);
+  background-image: linear-gradient(bottom, #575757, #5e5e5e 25%, #646464 45%);
+  -webkit-box-shadow: #7b7b7b 0 -1px 0px 0 inset, #7b7b7b -1px 0 0px 0 inset, #7b7b7b 1px 0 0px 0 inset;
+  -moz-box-shadow: #7b7b7b 0 -1px 0px 0 inset, #7b7b7b -1px 0 0px 0 inset, #7b7b7b 1px 0 0px 0 inset;
+  box-shadow: #7b7b7b 0 -1px 0px 0 inset, #7b7b7b -1px 0 0px 0 inset, #7b7b7b 1px 0 0px 0 inset;
 }
 /* line 257, ../../../ext-theme-neutral/sass/src/tab/Panel.scss */
 .x-nlg .x-tab-default-bottom {
@@ -13212,7 +13212,7 @@ body.x-nbr .x-tab-default-right {
 
 /* line 318, ../../../ext-theme-neutral/sass/src/tab/Panel.scss */
 .x-tab-default-over {
-  background-color: #4b4b4b;
+  background-color: #575757;
 }
 /* line 342, ../../../ext-theme-neutral/sass/src/tab/Panel.scss */
 .x-tab-default-over .x-tab-glyph {
@@ -13220,7 +13220,7 @@ body.x-nbr .x-tab-default-right {
 }
 /* line 349, ../../../ext-theme-neutral/sass/src/tab/Panel.scss */
 .x-ie8m .x-tab-default-over .x-tab-glyph {
-  color: #a5a5a5;
+  color: #ababab;
 }
 
 /* line 358, ../../../ext-theme-neutral/sass/src/tab/Panel.scss */
@@ -13228,12 +13228,12 @@ body.x-nbr .x-tab-default-right {
 .x-tab-default-left-over,
 .x-tab-default-right-over {
   background-image: none;
-  background-color: #4b4b4b;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #414141), color-stop(25%, #464646), color-stop(45%, #4b4b4b));
-  background-image: -webkit-linear-gradient(top, #414141, #464646 25%, #4b4b4b 45%);
-  background-image: -moz-linear-gradient(top, #414141, #464646 25%, #4b4b4b 45%);
-  background-image: -o-linear-gradient(top, #414141, #464646 25%, #4b4b4b 45%);
-  background-image: linear-gradient(top, #414141, #464646 25%, #4b4b4b 45%);
+  background-color: #575757;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #4e4e4e), color-stop(25%, #535353), color-stop(45%, #575757));
+  background-image: -webkit-linear-gradient(top, #4e4e4e, #535353 25%, #575757 45%);
+  background-image: -moz-linear-gradient(top, #4e4e4e, #535353 25%, #575757 45%);
+  background-image: -o-linear-gradient(top, #4e4e4e, #535353 25%, #575757 45%);
+  background-image: linear-gradient(top, #4e4e4e, #535353 25%, #575757 45%);
 }
 /* line 362, ../../../ext-theme-neutral/sass/src/tab/Panel.scss */
 .x-nlg .x-tab-default-top-over, .x-nlg
@@ -13245,12 +13245,12 @@ body.x-nbr .x-tab-default-right {
 /* line 367, ../../../ext-theme-neutral/sass/src/tab/Panel.scss */
 .x-tab-default-bottom-over {
   background-image: none;
-  background-color: #4b4b4b;
-  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #414141), color-stop(25%, #464646), color-stop(45%, #4b4b4b));
-  background-image: -webkit-linear-gradient(bottom, #414141, #464646 25%, #4b4b4b 45%);
-  background-image: -moz-linear-gradient(bottom, #414141, #464646 25%, #4b4b4b 45%);
-  background-image: -o-linear-gradient(bottom, #414141, #464646 25%, #4b4b4b 45%);
-  background-image: linear-gradient(bottom, #414141, #464646 25%, #4b4b4b 45%);
+  background-color: #575757;
+  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #4e4e4e), color-stop(25%, #535353), color-stop(45%, #575757));
+  background-image: -webkit-linear-gradient(bottom, #4e4e4e, #535353 25%, #575757 45%);
+  background-image: -moz-linear-gradient(bottom, #4e4e4e, #535353 25%, #575757 45%);
+  background-image: -o-linear-gradient(bottom, #4e4e4e, #535353 25%, #575757 45%);
+  background-image: linear-gradient(bottom, #4e4e4e, #535353 25%, #575757 45%);
 }
 /* line 371, ../../../ext-theme-neutral/sass/src/tab/Panel.scss */
 .x-nlg .x-tab-default-bottom-over {
@@ -13399,7 +13399,7 @@ body.x-nbr .x-tab-default-right {
 .x-tab-default-top-over .x-frame-mc,
 .x-tab-default-left-over .x-frame-mc,
 .x-tab-default-right-over .x-frame-mc {
-  background-color: #4b4b4b;
+  background-color: #575757;
   background-repeat: repeat-x;
   background-image: url(images/tab/tab-default-top-over-fbg.gif);
 }
@@ -13420,7 +13420,7 @@ body.x-nbr .x-tab-default-right {
 }
 /* line 558, ../../../ext-theme-neutral/sass/src/tab/Panel.scss */
 .x-tab-default-bottom-over .x-frame-mc {
-  background-color: #4b4b4b;
+  background-color: #575757;
   background-repeat: repeat-x;
   background-image: url(images/tab/tab-default-bottom-over-fbg.gif);
 }
@@ -13681,8 +13681,8 @@ body.x-nbr .x-tab-default-right {
 
 /* line 880, ../../../ext-theme-neutral/sass/src/tab/Panel.scss */
 .x-tab-default .x-tab-close-btn {
-  top: 4px;
-  right: 6px;
+  top: 5px;
+  right: 7px;
 }
 
 /* line 925, ../../../ext-theme-neutral/sass/src/tab/Panel.scss */

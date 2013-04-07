@@ -10,10 +10,10 @@
 
 $tab-height: 27px !default;
 
-$tab-base-color: $color3;
+$tab-base-color: $color1;
 $tab-color: #fff;
 $tab-border-color: $color2;
-$tab-base-color-over: darken($color1, 10);
+$tab-base-color-over: darken($color1, 5);
 $tab-base-color-active: $color2;
 $tab-color-active: #fff;
 
@@ -22,8 +22,8 @@ $tab-line-height: 15px !default;
 
 //$tab-inner-border: false;
 
-$tab-closable-icon-top: 4px;
-$tab-closable-icon-right: 6px;
+$tab-closable-icon-top: 5px;
+$tab-closable-icon-right: 7px;
 
 $tabbar-strip-height: 0px;
 
