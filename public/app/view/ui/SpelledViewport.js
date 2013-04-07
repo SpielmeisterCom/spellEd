@@ -10,6 +10,18 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
         collapsible: true
     },
 
+	listeners: {
+		add: function (c, i) {
+			if (i.xtype == 'bordersplitter') {
+				i.width = 2;
+				i.height = 2;
+				i.style = {
+					backgroundColor: '#646464'
+				};
+			}
+		}
+	},
+
     initComponent: function() {
         var me = this;
 
@@ -45,7 +57,7 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                     collapsible: false,
                     region:'center',
                     layout: 'fit',
-                    items:[
+	                items:[
                         {
 							xtype: "mainlayout"
 						},
