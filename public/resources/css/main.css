@@ -191,6 +191,19 @@
     color: red;
 }
 
+.spelledToolbar {
+    background: none !important;
+    background-color: #646464 !important;
+}
+
+#Navigator-splitter-collapseEl, #RightPanel-splitter-collapseEl,#SpelledConsole-splitter-collapseEl {
+    display: none !important;
+}
+
+.x-tab-bar-default {
+    background-color: #646464 !important;
+}
+
 .ace_gutter-cell.ace_breakpoint{
     border-radius: 0px 20px 20px 0px;
     box-shadow: inset 0px 0px 2px 2px red;

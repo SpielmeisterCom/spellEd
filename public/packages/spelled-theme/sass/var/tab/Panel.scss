@@ -6,26 +6,35 @@
 //
 //$tab-border-color-disabled: #dadada !default;
 //
-//$tab-background-gradient: color-stops(#dcdcdc, #eaeaea) !default;
-//$tab-background-gradient-over: color-stops(#ffffff, #f0f0f0) !default;
-//$tab-background-gradient-active: color-stops(#ffffff, #eaeaea) !default;
-//$tab-background-gradient-disabled: color-stops(#eeeeee, #f4f4f4) !default;
 
-$tab-height: 25px;
 
-$tab-base-color: $color1;
+$tab-height: 27px !default;
+
+$tab-base-color: $color3;
 $tab-color: #fff;
+$tab-border-color: $color2;
 $tab-base-color-over: darken($color1, 10);
 $tab-base-color-active: $color2;
 $tab-color-active: #fff;
 
-$tab-inner-border: false;
 
-$tab-closable-icon-top: 6px;
-$tab-closable-icon-right: 3px;
+$tab-line-height: 15px !default;
+
+//$tab-inner-border: false;
+
+$tab-closable-icon-top: 4px;
+$tab-closable-icon-right: 6px;
 
 $tabbar-strip-height: 0px;
-$tabbar-top-body-padding: 0px 0 0px;
-$tabbar-bottom-body-padding: 0px 0 0px;
-$tabbar-top-body-border-width: 0px 0px 0;
-$tabbar-top-strip-border-width: 0px 0px 0;
+
+$tab-border-width: 1px 1px 0 1px !default;
+//$tab-border-width: 1px 1px 0 1px !default;
+
+
+$tabbar-background-gradient: null !default;
+$tabbar-border-width: 0 !default;
+
+//tabbar-strip
+$tabbar-strip-height: 0px !default;
+$tabbar-strip-border-width: 0px 0 0 !default;
+$tabbar-strip-plain-border-width: 0px 0px 0 !default;
