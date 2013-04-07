@@ -10,10 +10,10 @@ Ext.define('Spelled.view.menu.Menu', {
 		me.items = [
 			{
 				xtype: 'toolbar',
+				cls: 'spelledToolbar',
 				items: [
 					{
 						text: 'Project',
-						icon: "resources/images/icons/book.png",
 						menu: {
 							items: [{
 								text   : 'Create',
@@ -33,17 +33,14 @@ Ext.define('Spelled.view.menu.Menu', {
 					},
 					{
 						text: "Save",
-						icon: "resources/images/icons/script-save.png",
 						action: "saveProject"
 					},
 					{
 						text: "Export for deployment",
-						icon: "resources/images/icons/application_go.png",
 						action: "exportProject"
 					},
 					{
 						text: 'Layout',
-						icon: "resources/images/icons/monitor.png",
 						menu: {
 							items: [{
 								text   : 'Main layout',
