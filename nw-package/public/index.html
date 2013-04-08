@@ -13,58 +13,19 @@
 				baseUrl: 'libs',
 				nodeRequire: require
 				} )
-requirejs(
-        [
-                'requireToExt/inject',
 
-                'ace/ace',
-                'spell/ace/mode/spellscript',
-                'ace/mode/html',
-                'ace/theme/pastel_on_dark',
+			window.requirejs = requirejs
 
-                'spell/editor/createProjectInEngineFormat',
-                'spell/editor/converter/asset',
-                'spell/editor/converter/project',
-                'spell/editor/converter/scene',
-                'spell/editor/converter/script',
-                'spell/editor/converter/component',
-                'spell/editor/converter/system',
-                'spell/editor/converter/entity',
-                'spell/editor/converter/entityTemplate',
-                'spell/editor/createCacheContent',
-                'spell/editor/createFontGenerator',
-                'spell/editor/systemFontDetector',
+            var gui = require('nw.gui');
 
-                'underscore'
-        ],
-        function(
-                injectModulesIntoExt,
-                ace,
-                aceModeSpellScript,
-                aceModeHtml,
-                aceThemePastelOnDark,
+            var menu = new gui.Menu({ type: 'menubar' });
+            menu.append(new gui.MenuItem({ label: 'Item A' }));
+            menu.append(new gui.MenuItem({ label: 'Item B' }));
+            menu.append(new gui.MenuItem({ type: 'separator' }));
+            menu.append(new gui.MenuItem({ label: 'Item C' }));
 
-                createProjectInEngineFormat,
-                assetConverter,
-                projectConverter,
-                sceneConverter,
-                scriptConverter,
-                componentConverter,
-                systemConverter,
-                entityConverter,
-                entityTemplateConverter,
-                createCacheContent,
-                createFontGenerator,
-                systemFontDetector,
-
-                _
-        ) {
-	console.log(arguments);
-});
-
-			
-			
-			</script>
+            gui.Window.get().menu = menu;
+        </script>
 
 		<script type="text/javascript" src="libs/fontDetect/javascripts/swfobject.js"></script>
 
