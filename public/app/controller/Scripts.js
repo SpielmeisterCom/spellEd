@@ -123,8 +123,8 @@ Ext.define('Spelled.controller.Scripts', {
 	addAceEditor: function( panel ) {
 		panel.aceEditor = Ext.amdModules.ace.edit( panel.id )
 
-		var SpellScriptMode = Ext.amdModules.aceModeSpellScript.Mode
-		panel.aceEditor.getSession().setMode( new SpellScriptMode() )
+		var JavaScriptMode = Ext.amdModules.aceModeJavaScript.Mode
+		panel.aceEditor.getSession().setMode( new JavaScriptMode() )
 		panel.aceEditor.setTheme( Ext.amdModules.aceThemePastelOnDark )
 
 		panel.refreshContent()
