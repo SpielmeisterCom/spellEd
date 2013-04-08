@@ -15149,7 +15149,7 @@ dom.importCssString(exports.cssText, exports.cssClass);
 });
 ;
             (function() {
-                window.require(["ace/ace"], function(a) {
+                window.requirejs(["ace/ace"], function(a) {
                     a && a.config.init();
                     if (!window.ace)
                         window.ace = {};
@@ -15157,7 +15157,8 @@ dom.importCssString(exports.cssText, exports.cssClass);
                         ace[key] = a[key];
                 });
             })();
-        /* ***** BEGIN LICENSE BLOCK *****
+        
+/* ***** BEGIN LICENSE BLOCK *****
  * Distributed under the BSD license:
  *
  * Copyright (c) 2010, Ajax.org B.V.
