@@ -1,4 +1,4 @@
-require(
+requirejs(
 	[
 		'requireToExt/inject',
 
