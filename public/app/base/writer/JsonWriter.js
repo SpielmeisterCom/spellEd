@@ -1,9 +1,12 @@
 Ext.define('Spelled.base.writer.JsonWriter', {
-    override: 'Ext.data.writer.Json',
+  
+	requires: ['Spelled.Configuration'],
 
-    getRecordData: function( record ) {
+	override: 'Ext.data.writer.Json',
+
+	getRecordData: function( record ) {
 		Ext.apply( record.data, record.getAssociatedData() )
-		record.data.version = Ext.app.CONFIGURATION.storageVersion
-        return record.data
+		record.data.version = Spelled.Configuration.storageVersion
+		return record.data
     }
 });

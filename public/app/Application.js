@@ -4,7 +4,8 @@ Ext.define('Spelled.Application', {
 	name: 'Spelled',
 	requires: [
 		'Ext.state.CookieProvider',
-		'Spelled.view.ui.SpelledViewport'
+		'Spelled.view.ui.SpelledViewport',
+		'Spelled.Configuration'
 	],
 
 	appFolder: 'app',
@@ -307,7 +308,7 @@ Ext.define('Spelled.Application', {
 		)
 
 		//load configuration from global CONFIGURATION variable that is defined in app-initialize
-		this.configuration = Ext.app.CONFIGURATION
+		this.configuration = Spelled.Configuration
 
 		/**
 		 * Message bus used for communication with engine instances.

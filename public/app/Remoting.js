@@ -2,13 +2,14 @@ Ext.define( 'Spelled.Remoting', {
 	singleton: true,
 
 	requires: [
-		'Ext.direct.*'
+		'Ext.direct.*',
+		'Spelled.Configuration'
 	],
 
 	constructor: function() {
 		Ext.Direct.addProvider(
 		{
-			"url":"/router/",
+			"url": Spelled.Configuration.extDirectRouterUrl,
 			"namespace":"Spelled",
 			"type":"remoting",
 			"actions":{
