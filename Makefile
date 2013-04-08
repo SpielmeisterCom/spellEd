@@ -10,7 +10,7 @@ all: build/spelledjs build/app.nw spelledserver
 .PHONY: theme
 theme:
 	#regenerating theme only (useful for development)
-	cd public/packages/spelled-theme && $(SENCHA) package build
+	$(SENCHA) -cwd public/packages/spelled-theme package build
 	cd $(CWD)
 
 .PHONY: clean
@@ -59,7 +59,7 @@ build/spelledjs/public/libs.js:
 build/spelledjs/public:
 	# creating extjs build
 	mkdir -p build/spelledjs/public
-	cd public && $(SENCHA) app build
+	$(SENCHA) -cwd public app build
 
         # copy sencha build
 	cp public/build/spellEd/production/index.html build/spelledjs/public
