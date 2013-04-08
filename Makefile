@@ -16,7 +16,7 @@ theme:
 .PHONY: clean
 clean:
 	# cleaning up and creating directory tree
-	rm -rf build
+	rm -Rf build
 
 .PHONY: spelledserver
 spelledserver:
@@ -25,8 +25,7 @@ spelledserver:
 
 .PHONY: clean-nw
 clean-nw:
-	rm -R build/nw-package
-	rm build/app.nw
+	rm -R build/nw-package build/app.nw || true 
 
 .PHONY: rebuild-nw
 rebuild-nw: clean-nw build/nw-package build/app.nw
@@ -34,33 +33,38 @@ rebuild-nw: clean-nw build/nw-package build/app.nw
 build/nw-package: build/spelledjs
 	mkdir -p build/nw-package/public
 
-	cp -aR build/spelledjs/* build/nw-package/public
+	cp -aR build/spelledjs/public build/nw-package
 	cp -aR nw-package/* build/nw-package/
 	mkdir -p build/nw-package/node_modules
 	cp -aR src build/nw-package/ 
-	cp -aR ../../node_modules/ build/nw-package/
+	cp -aR ../../node_modules build/nw-package/
+
+	cp -R ../ace/lib/ace build/nw-package/node_modules
+
 
 build/app.nw: build/nw-package
 	cd build/nw-package && zip -9 -r app.nw *
 	mv build/nw-package/app.nw build/app.nw
 	
 
-build/spelledjs/libs.js:
+build/spelledjs/public/libs.js:
 	# copy all libs into one directory
-	cp -RL public/libs build/spelledjs
-	cp ../../node_modules/requirejs/require.js build/spelledjs/libs
-	cp ../../node_modules/underscore/underscore.js build/spelledjs/libs
-	cp -R ../ace/lib/ace build/spelledjs/libs
+	cp -RL public/libs build/spelledjs/public
+	cp ../../node_modules/requirejs/require.js build/spelledjs/public/libs
+	cp ../../node_modules/underscore/underscore.js build/spelledjs/public/libs
 	
 	# minifying libs
-	$(NODE) ../spellCore/tools/n.js -s build/spelledjs/libs -m spellEdDeps -i "ace/ace,spell/ace/mode/spellscript,ace/mode/html,ace/theme/pastel_on_dark" >>build/spelledjs/libs.js
-	
-build/spelledjs: 
-	mkdir -p build/spelledjs
+	$(NODE) ../spellCore/tools/n.js -s build/spelledjs/public/libs -m spellEdDeps -i "underscore,ace/ace,spell/ace/mode/spellscript,ace/mode/html,ace/theme/pastel_on_dark" >>build/spelledjs/public/libs.js
+
+build/spelledjs/public:
+	# creating extjs build
+	mkdir -p build/spelledjs/public
 	cd public && $(SENCHA) app build
 
         # copy sencha build
-	cp public/build/spellEd/production/index.html build/spelledjs
-	cp public/build/spellEd/production/all-classes.js build/spelledjs
-	cp -R public/build/spellEd/production/resources build/spelledjs
+	cp public/build/spellEd/production/index.html build/spelledjs/public
+	cp public/build/spellEd/production/all-classes.js build/spelledjs/public
+	cp -R public/build/spellEd/production/resources build/spelledjs/public
+
+build/spelledjs: build/spelledjs/public build/spelledjs/public/libs.js 
 
