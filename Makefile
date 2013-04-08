@@ -52,13 +52,12 @@ public/ace:
 
 	# concatenating needed files to one include
 	cat ../ace/build/src/ace.js >>public/ace/ace.js
-	$(SED) 's/window.\require/window\.requirejs/g' public/ace/ace.js
+	$(SED) 's/window\.require/window\.requirejs/g' public/ace/ace.js
 	cat ../ace/build/src/theme-pastel_on_dark.js >>public/ace/ace.js
 	cat ../ace/build/src/mode-html.js >>public/ace/ace.js
 	cat ../ace/build/src/mode-javascript.js >>public/ace/ace.js
 
 	# include spellscript include and worker
-#	cp  public/libs/spell/ace/mode/spellscript_worker.js public/ace
 	cp ../ace/build/src/worker-javascript.js public/ace
 
 build/nw-package: build/spelledjs
@@ -75,14 +74,14 @@ build/app.nw: build/nw-package
 	mv build/nw-package/app.nw build/app.nw
 	
 
-build/spelledjs/public/libs.js: public/ace
+build/spelledjs/public/libs.js:
 	# copy all libs into one directory
 	cp -RL public/libs build/spelledjs/public
 	cp ../../node_modules/requirejs/require.js build/spelledjs/public/libs
 	cp ../../node_modules/underscore/underscore.js build/spelledjs/public/libs
 	
 	# minifying libs
-	$(NODE) ../spellCore/tools/n.js -s build/spelledjs/public/libs -m spellEdDeps -i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/theme/pastel_on_dark" >>build/spelledjs/public/libs.js
+	$(NODE) ../spellCore/tools/n.js -s build/spelledjs/public/libs -m spellEdDeps -i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark" >>build/spelledjs/public/libs.js
 
 
 
