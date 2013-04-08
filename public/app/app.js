@@ -3,7 +3,7 @@ requirejs(
 		'requireToExt/inject',
 
 		'ace/ace',
-		'spell/ace/mode/spellscript',
+		'ace/mode/javascript',
 		'ace/mode/html',
 		'ace/theme/pastel_on_dark',
 
@@ -25,7 +25,7 @@ requirejs(
 	function(
 		injectModulesIntoExt,
 		ace,
-		aceModeSpellScript,
+		aceModeJavaScript,
 		aceModeHtml,
 		aceThemePastelOnDark,
 
@@ -48,7 +48,7 @@ requirejs(
 
 		injectModulesIntoExt( {
 			'ace'                         : ace,
-			'aceModeSpellScript'          : aceModeSpellScript,
+			'aceModeJavaScript'           : aceModeJavaScript,
 			'aceModeHtml'                 : aceModeHtml,
 			'aceThemePastelOnDark'        : aceThemePastelOnDark,
 			'assetConverter'              : assetConverter,

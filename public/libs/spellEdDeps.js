@@ -2,11 +2,6 @@ define('spellEdDeps',
 	[
 		'requireToExt/inject',
 
-		'ace/ace',
-		'spell/ace/mode/spellscript',
-		'ace/mode/html',
-		'ace/theme/pastel_on_dark',
-
 		'spell/editor/createProjectInEngineFormat',
 		'spell/editor/converter/asset',
 		'spell/editor/converter/project',
