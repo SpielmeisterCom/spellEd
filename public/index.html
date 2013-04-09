@@ -8,34 +8,36 @@
 
 		<script type="text/javascript" src="libs/fontDetect/javascripts/swfobject.js"></script>
 
-        	<!-- <x-compile> -->
-	        <!-- <x-bootstrap> -->
-		<script type="text/javascript" src="libs/require.js"></script>
-		<script type="text/javascript">
-			require.config( { baseUrl : 'libs', waitSeconds: 14 } )
-			window.requirejs = require
-		</script>
-	        <script type="text/javascript">
-	            if( navigator.appName === 'Microsoft Internet Explorer' ) {
-	                document.write( '<script type="text/javascript" src="ext/ext-all.js"><\/script>' )
-	            } else {
-	                document.write( '<script type="text/javascript" src="ext/ext-dev.js"><\/script>' )
-	            }
-	        </script>
+        <script type="text/javascript" src="libs/require.js"></script>
+        <script type="text/javascript">
+            require.config( { baseUrl : 'libs', waitSeconds: 14 } )
+            window.requirejs = require
+        </script>
+        <script type="text/javascript" src="libs.js"></script>
 
-		<link rel="stylesheet" href="bootstrap.css">
-	        <script type="text/javascript" src="bootstrap.js"></script>
-	        <!-- </x-bootstrap> -->
-	        <script type="text/javascript" src="ace/ace.js"></script>
-	        <script type="text/javascript" src="app/app.js"></script>
-	        <!-- </x-compile> -->
+        <!-- <x-compile> -->
+        <!-- <x-bootstrap> -->
+            <!-- this part is only included in the dev version and gets stripped away in the build -->
+            <script type="text/javascript">
+                if( navigator.appName === 'Microsoft Internet Explorer' ) {
+                    document.write( '<script type="text/javascript" src="ext/ext-all.js"><\/script>' )
+                } else {
+                    document.write( '<script type="text/javascript" src="ext/ext-dev.js"><\/script>' )
+                }
+            </script>
 
-        	<meta charset="utf-8">
-	        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	        <meta http-equiv="X-UA-Compatible" content="IE=10, IE=9" >
+            <link rel="stylesheet" href="bootstrap.css">
+            <script type="text/javascript" src="bootstrap.js"></script>
+        <!-- </x-bootstrap> -->
+        <script type="text/javascript" src="app/app.js"></script>
+        <!-- </x-compile> -->
 
-	        <meta name="apple-mobile-web-app-capable" content="yes" />
-        	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=10, IE=9" >
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 	</head>
 	<body>
 		<div id="loading-mask"></div>
