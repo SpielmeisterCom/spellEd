@@ -11,18 +11,18 @@ endif
 
 
 .PHONY: all
-all: build/spelledjs build/app.nw spelledserver
+all: build/spelledjs/public build/app.nw spelledserver
+
+.PHONY: clean
+clean:
+	# cleaning up and creating directory tree
+	rm -Rf build public/build || true
 
 .PHONY: theme
 theme:
 	#regenerating theme only (useful for development)
 	$(SENCHA) -cwd public/packages/spelled-theme package build
 	cd $(CWD)
-
-.PHONY: clean
-clean:
-	# cleaning up and creating directory tree
-	rm -Rf build
 
 .PHONY: spelledserver
 spelledserver:
@@ -31,69 +31,63 @@ spelledserver:
 
 .PHONY: clean-nw
 clean-nw:
-	rm -R build/nw-package build/app.nw build/spelledjs/public/libs.js || true 
+	rm -R build/nw-package build/app.nw build/libs.js || true
 
 .PHONY: rebuild-nw
 rebuild-nw: clean-nw build/nw-package build/app.nw
 
-.PHONY: rebuild-ace
-rebuild-ace: clean-ace public/ace 
 
-.PHONY: clean-ace
-clean-ace:
-	rm -Rf public/ace
-
-.PHONY: public/ace
-public/ace:
-	mkdir -p public/ace
-
+../ace/build/src/ace.js:
 	# building ace lib
 	cd ../ace && ../nodejs/node ./Makefile.dryice.js normal
 
-	# concatenating needed files to one include
-	cat ../ace/build/src/ace.js >>public/ace/ace.js
-	$(SED) 's/window\.require/window\.requirejs/g' public/ace/ace.js
-	cat ../ace/build/src/theme-pastel_on_dark.js >>public/ace/ace.js
-	cat ../ace/build/src/mode-html.js >>public/ace/ace.js
-	cat ../ace/build/src/mode-javascript.js >>public/ace/ace.js
+build/ace.js: ../ace/build/src/ace.js
+	# creating concatinated version of the ace lib
+	mkdir -p build
+
+	# concatenated needed files to one include
+	cat ../ace/build/src/ace.js >>build/ace.js
+	$(SED) 's/window\.require/window\.requirejs/g' build/ace.js
+	cat ../ace/build/src/theme-pastel_on_dark.js >>build/ace.js
+	cat ../ace/build/src/mode-html.js >>build/ace.js
+	cat ../ace/build/src/mode-javascript.js >>build/ace.js
 
 	# include spellscript include and worker
-	cp ../ace/build/src/worker-javascript.js public/ace
+	#cp ../ace/build/src-min/worker-javascript.js public/build
 
-build/nw-package: build/spelledjs
+build/libs.js: build/ace.js
+	# creating concatenated version of all libs
+	cat build/ace.js >>build/libs.js
+
+	$(NODE) ../spellCore/tools/n.js -s public/libs -m spellEdDeps \
+-i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark"\
+>>build/libs.js
+
+build/spelledjs/public/libs.js: build/libs.js
+	# minify concatenated libs.js
+	$(NODE) ../spellCore/tools/n.js mangle build/libs.js -a >build/spelledjs/public/libs.js
+
+build/spelledjs/public/all-classes.js:
+	# creating extjs build
+	mkdir -p build/spelledjs/public
+	$(SENCHA) -cwd public app build
+
+    # copy sencha build
+	cp public/build/spellEd/production/index.html build/spelledjs/public
+	cp public/build/spellEd/production/all-classes.js build/spelledjs/public
+	cp -R public/build/spellEd/production/resources build/spelledjs/public
+
+build/spelledjs/public: build/spelledjs/public/all-classes.js build/spelledjs/public/libs.js
+
+build/nw-package: build/spelledjs/public
 	mkdir -p build/nw-package/public
 
 	cp -aR build/spelledjs/public build/nw-package
 	cp -aR nw-package/* build/nw-package/
 	mkdir -p build/nw-package/node_modules
-	cp -aR src build/nw-package/ 
+	cp -aR src build/nw-package/
 	cp -aR ../../node_modules build/nw-package/
 
 build/app.nw: build/nw-package
 	cd build/nw-package && zip -9 -r app.nw *
 	mv build/nw-package/app.nw build/app.nw
-	
-
-build/spelledjs/public/libs.js:
-	# copy all libs into one directory
-	cp -RL public/libs build/spelledjs/public
-	cp ../../node_modules/requirejs/require.js build/spelledjs/public/libs
-	cp ../../node_modules/underscore/underscore.js build/spelledjs/public/libs
-	
-	# minifying libs
-	$(NODE) ../spellCore/tools/n.js -s build/spelledjs/public/libs -m spellEdDeps -i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark" >>build/spelledjs/public/libs.js
-
-
-
-build/spelledjs/public:
-	# creating extjs build
-	mkdir -p build/spelledjs/public
-	$(SENCHA) -cwd public app build
-
-        # copy sencha build
-	cp public/build/spellEd/production/index.html build/spelledjs/public
-	cp public/build/spellEd/production/all-classes.js build/spelledjs/public
-	cp -R public/build/spellEd/production/resources build/spelledjs/public
-
-build/spelledjs: build/spelledjs/public build/spelledjs/public/libs.js 
-
