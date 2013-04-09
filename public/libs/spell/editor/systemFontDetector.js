@@ -16,7 +16,7 @@ define(
 
 		var FontDetect = function( swfId, swfLocation ) {
 			this._swfObjectId = swfId
-			this.hasFlash     = swfobject ? swfobject.hasFlashPlayerVersion( minFlashVersion ) : false
+			this.hasFlash     = typeof swfobject !== 'undefined' ? swfobject.hasFlashPlayerVersion( minFlashVersion ) : false
 
 			if( this.hasFlash ) {
 				loadSWF( swfId, swfLocation )
