@@ -22,12 +22,7 @@ define(
 	) {
 	'use strict'
 
-		var printErrors = function( errors ) {
-			var tmp = []
-			tmp = tmp.concat( errors )
-
-			console.error( tmp.join( '\n' ) )
-		}
+		var appendExtension = process.platform == 'win32' ? '.exe' : ''
 
 		var writeResponse = function( status, res, data ) {
 			var data = data || ""
@@ -68,15 +63,21 @@ define(
 		 * @param next
 		 * @return {*}
 		 */
-		var initDirectory = function( spellCorePath, projectsPath, isDevEnvironment, req, res, payload, next ) {
+		var initDirectory = function( spellCorePath, projectsPath, spellCliPath, isDevEnvironment, req, res, payload, next ) {
 			var projectName     = payload[ 0 ],
-				projectPath     = projectsPath + '/' + projectName,
-				projectFilePath = projectsPath + '/' + payload[ 1 ]
+				projectPath     = projectsPath + '/' + projectName
 
-			//TODO: call spellcli
-			//initializeProjectDirectory( spellCorePath, projectName, projectPath, projectFilePath, isDevEnvironment )
+			var onComplete = function( error, stdout, stderr ) {
 
-			return writeResponse( 200, res, createResponseData( "initDirectory", payload, req.extDirectId ) )
+				if ( error !== null) {
+					console.log( 'childProcess.execFile ' + error )
+					writeResponse( 500, res )
+				} else {
+					writeResponse( 200, res, createResponseData( "initDirectory", payload, req.extDirectId ) )
+				}
+			}
+
+			childProcess.execFile( spellCliPath + appendExtension, [ 'init','-d', projectPath ], {}, onComplete )
 		}
 
 		/*
@@ -108,8 +109,8 @@ define(
 					writeResponse( 200, res, createResponseData( "exportDeployment", payload, req.extDirectId ) )
 				}
 			}
-			childProcess.execFile( spellCliPath, [ ' -d ' + projectPath, '-f ' + outputFilePath ], {}, onComplete )
-		//	return exportDeploymentArchive( spellCorePath, projectPath, outputFilePath, onComplete )
+
+			childProcess.execFile( spellCliPath + appendExtension, [ 'export','-d', projectPath, '-f', outputFilePath ], {}, onComplete )
 		}
 
         return function( projectsRoot, spellCorePath, spellCliPath ) {
