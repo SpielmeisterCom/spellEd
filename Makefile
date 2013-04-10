@@ -63,6 +63,12 @@ build/libs.js: build/ace.js
 -i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark"\
 >>build/libs.js
 
+build/nwlibs.js: 
+#	$(NODE) ../spellCore/tools/n.js -s src -m spellEdDeps >>build/nwlibs.js
+
+build/spelledjs/public/nwlibs.js: build/nwlibs.js
+	$(NODE) ../spellCore/tools/n.js mangle build/nwlibs.js -a >build/spelledjs/public/nwlibs.js
+
 build/spelledjs/public/libs.js: build/libs.js
 	# minify concatenated libs.js
 	$(NODE) ../spellCore/tools/n.js mangle build/libs.js -a >build/spelledjs/public/libs.js
@@ -79,7 +85,7 @@ build/spelledjs/public/all-classes.js:
 
 build/spelledjs/public: build/spelledjs/public/all-classes.js build/spelledjs/public/libs.js
 
-build/nw-package: build/spelledjs/public
+build/nw-package: build/spelledjs/public build/spelledjs/public/nwlibs.js
 	mkdir -p build/nw-package/public
 
 	cp -aR build/spelledjs/public build/nw-package
