@@ -63,16 +63,21 @@ define(
 		 * @param next
 		 * @return {*}
 		 */
-		var initDirectory = function( spellCorePath, projectsPath, isDevEnvironment, req, res, payload, next ) {
+		var initDirectory = function( spellCorePath, projectsPath, spellCliPath, isDevEnvironment, req, res, payload, next ) {
 			var projectName     = payload[ 0 ],
-				projectPath     = projectsPath + '/' + projectName,
-				projectFilePath = projectsPath + '/' + payload[ 1 ]
+				projectPath     = projectsPath + '/' + projectName
 
-			//TODO: call spellcli
-			//initializeProjectDirectory( spellCorePath, projectName, projectPath, projectFilePath, isDevEnvironment )
+			var onComplete = function( error, stdout, stderr ) {
 
-			childProcess.execFile( spellCliPath + appendExtension, [ 'export','-d', projectPath, '-f', outputFilePath ], {}, onComplete )
-			return writeResponse( 200, res, createResponseData( "initDirectory", payload, req.extDirectId ) )
+				if ( error !== null) {
+					console.log( 'childProcess.execFile ' + error )
+					writeResponse( 500, res )
+				} else {
+					writeResponse( 200, res, createResponseData( "initDirectory", payload, req.extDirectId ) )
+				}
+			}
+
+			childProcess.execFile( spellCliPath + appendExtension, [ 'init','-d', projectPath ], {}, onComplete )
 		}
 
 		/*
