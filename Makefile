@@ -64,7 +64,7 @@ build/libs.js: build/ace.js
 >>build/libs.js
 
 build/nwlibs.js: 
-#	$(NODE) ../spellCore/tools/n.js -s src -m spellEdDeps >>build/nwlibs.js
+	$(NODE) ../spellCore/tools/n.js -s src -m server/createExtDirectApi -i "flob,path,http,fs,child_process,underscore" >>build/nwlibs.js
 
 build/spelledjs/public/nwlibs.js: build/nwlibs.js
 	$(NODE) ../spellCore/tools/n.js mangle build/nwlibs.js -a >build/spelledjs/public/nwlibs.js
