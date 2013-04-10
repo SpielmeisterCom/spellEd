@@ -22,12 +22,7 @@ define(
 	) {
 	'use strict'
 
-		var printErrors = function( errors ) {
-			var tmp = []
-			tmp = tmp.concat( errors )
-
-			console.error( tmp.join( '\n' ) )
-		}
+		var appendExtension = process.platform == 'win32' ? '.exe' : ''
 
 		var writeResponse = function( status, res, data ) {
 			var data = data || ""
@@ -76,6 +71,7 @@ define(
 			//TODO: call spellcli
 			//initializeProjectDirectory( spellCorePath, projectName, projectPath, projectFilePath, isDevEnvironment )
 
+			childProcess.execFile( spellCliPath + appendExtension, [ 'export','-d', projectPath, '-f', outputFilePath ], {}, onComplete )
 			return writeResponse( 200, res, createResponseData( "initDirectory", payload, req.extDirectId ) )
 		}
 
@@ -108,8 +104,8 @@ define(
 					writeResponse( 200, res, createResponseData( "exportDeployment", payload, req.extDirectId ) )
 				}
 			}
-			childProcess.execFile( spellCliPath, [ ' -d ' + projectPath, '-f ' + outputFilePath ], {}, onComplete )
-		//	return exportDeploymentArchive( spellCorePath, projectPath, outputFilePath, onComplete )
+
+			childProcess.execFile( spellCliPath + appendExtension, [ 'export','-d', projectPath, '-f', outputFilePath ], {}, onComplete )
 		}
 
         return function( projectsRoot, spellCorePath, spellCliPath ) {
