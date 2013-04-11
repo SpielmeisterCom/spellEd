@@ -3,22 +3,16 @@ Ext.define( 'Spelled.provider.WebKit', {
 	alias:  'direct.webkitprovider',
 	id: 'webkitProvider',
 
-	listeners: {
-		beforecallback: function() {
-			console.log( "beforecallback" )
-			console.log( arguments )
-		},
-		call: function() {
-			console.log( "call" )
-			console.log( arguments )
-		},
-		beforecall: function() {
-			console.log( "beforecall" )
-			console.log( arguments )
-		}
-	},
+	queueTransaction: function( transaction ) {
+		var me = this
 
-	//enableBuffer: false,
+		if ( transaction.form ) {
+			me.sendFormRequest( transaction )
+			return
+		}
+
+		me.sendRequest( transaction )
+	},
 
 	sendRequest: function(data) {
 		var me = this, request, callData, i, len
@@ -49,11 +43,8 @@ Ext.define( 'Spelled.provider.WebKit', {
 		var me = this,
 			i, len, events, event, transaction, transactions;
 
-console.log( "response" )
-console.log( response )
 		events = me.createEvents(response);
-console.log( "events" )
-console.log( events )
+
 		for (i = 0, len = events.length; i < len; ++i) {
 			event = events[i];
 			transaction = me.getTransaction(event);
@@ -68,7 +59,6 @@ console.log( events )
 	},
 
 	doWebKitRequest: function( request ) {
-console.log( request )
 		var requestData = request.jsonData,
 			action      = requestData.action,
 			method      = requestData.method,
@@ -85,9 +75,7 @@ console.log( request )
 
 		if( !neededFunc ) throw "Method: '" + method +"' not found in: '" +action + "' not supported in WebKit Provider."
 
-
 		var result = neededFunc.func( null, null, args )
-console.log( result )
 
 		var response = {
 			responseText: Ext.encode( [ Ext.Object.merge( {}, request.jsonData, { result: result } ) ] )

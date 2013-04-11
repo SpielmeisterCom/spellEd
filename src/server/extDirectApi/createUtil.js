@@ -1,14 +1,10 @@
 define(
 	'server/extDirectApi/createUtil',
 	[
-		'path',
-
-		'underscore'
+		'path'
 	],
 	function(
-		path,
-
-		_
+		path
 	) {
 		'use strict'
 
@@ -29,7 +25,7 @@ define(
 
 				var dir = decodeURIComponent( requestedPath ),
 					filePath  = path.resolve( root, normalize(
-						( 0 != requestedPath.indexOf(root) ? join(root, dir) : dir )
+						( 0 != requestedPath.toLowerCase().indexOf(root.toLowerCase()) ? join(root, dir) : dir )
 					))
 
 				// null byte(s), bad request

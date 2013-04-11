@@ -57,7 +57,7 @@ define(
 					subtype    = params.subtype,
 					pattern    = ( params.projectName ) ? searchPath + "/library/**/*" : searchPath + "/*/*",
 					files      = flob.byTypes( pattern, [ '.json' ] )
-console.log( "pattern: " + pattern )
+
 				var result = _.map(
 					files,
 					function( filePath ) {
@@ -87,7 +87,7 @@ console.log( "pattern: " + pattern )
 				)
 			}
 
-			var read = function( req, res, payload, next ) {
+			var read = function( req, res, payload ) {
 				var params = _.isArray( payload ) ? payload.pop() : payload
 
 				if( _.has( params, 'id' ) ) {
@@ -98,7 +98,7 @@ console.log( "pattern: " + pattern )
 				}
 			}
 
-			var create = function(  req, res, payload, next  ) {
+			var create = function(  req, res, payload  ) {
 				var params   = _.isArray( payload ) ? payload.pop() : payload,
 					filePath = util.getPath( params.id ),
 					content  = params.content
@@ -108,7 +108,7 @@ console.log( "pattern: " + pattern )
 				return ( _.has( params, 'type' ) ) ? generateExtModel( filePath ) : getByFilePath( filePath )
 			}
 
-			var update = function( req, res, payload, next ) {
+			var update = function( req, res, payload ) {
 				var params   = _.isArray( payload ) ? payload.pop() : payload,
 					filePath = util.getPath( params.id),
 					content  = params.content
@@ -116,16 +116,15 @@ console.log( "pattern: " + pattern )
 				return writeContent( filePath, content, params.encoding )
 			}
 
-			var destroy = function( req, res, payload, next ) {
+			var destroy = function( req, res, payload ) {
 				var params   = _.isArray( payload ) ? payload.pop() : payload,
 					filePath = util.getPath( params.id)
 
 				fs.unlink( filePath )
 			}
 
-			var getNamespaces = function( req, res, payload, next ) {
+			var getNamespaces = function( req, res, payload ) {
 				var params     = _.isArray( payload ) ? payload.pop() : payload,
-//					files      = flob.sync( "/library/**/*", { root: searchPath } ),
 					readDir    = fs.readdirSync,
 					fsStat     = fs.statSync,
 					join       = path.join,
@@ -160,7 +159,7 @@ console.log( "pattern: " + pattern )
 				return _.uniq( _.without( result, false ) )
 			}
 
-			var createNamespaceFolder = function( req, res, payload, next ) {
+			var createNamespaceFolder = function( req, res, payload ) {
 				var params      = _.isArray( payload ) ? payload.pop() : payload,
 					projectPath = util.getPath( path.join( params.projectName, 'library' ) ),
 					namespace   = params.path,
@@ -200,7 +199,7 @@ console.log( "pattern: " + pattern )
 				fs.rmdirSync( dirPath )
 			}
 
-			var deleteFolder = function( req, res, payload, next ) {
+			var deleteFolder = function( req, res, payload ) {
 				var params      = _.isArray( payload ) ? payload.pop() : payload,
 					projectPath = util.getPath( path.join( params.projectName, 'library' ) ),
 					namespace   = params.namespace
