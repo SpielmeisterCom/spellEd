@@ -44,21 +44,23 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 	setConfigHandler: function() {
 		var window       = this.up( 'spelledconfigure' ),
 			field        = this.up( 'form' ).down( 'textfield[name="projectsPath"]' ),
-			projectsPath = field.getValue()
+			projectsPath = field.getValue(),
+			fs           = require( 'fs' ),
+			provider     = Ext.direct.Manager.getProvider( 'webkitProvider' )
 
-		Ext.Ajax.request({
-			url: 'setSpelledConfig',
-			params: {
-				projectsPath: projectsPath
-			},
-			success: function(){
+		var exists = fs.existsSync( projectsPath )
+
+		if( exists ) {
+			Spelled.Configuration.projectsPath = projectsPath
+
+			provider.createWebKitExtDirectApi( function() {
 				window.fireEvent( 'loadProjects' )
 				window.close()
-			},
-			failure: function() {
-				field.markInvalid( 'No such folder' )
-				field.textValid = false
-			}
-		})
+			} )
+
+		} else {
+			field.markInvalid( 'No such folder' )
+			field.textValid = false
+		}
 	}
 });

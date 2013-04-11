@@ -19,7 +19,7 @@ define(
 		'use strict'
 
 		return function( root ) {
-			var util          = createUtil( root),
+			var util          = createUtil( root ),
 				libraryPrefix = "library"
 
 			var generateExtModel = function( filePath ) {
@@ -57,7 +57,7 @@ define(
 					subtype    = params.subtype,
 					pattern    = ( params.projectName ) ? searchPath + "/library/**/*" : searchPath + "/*/*",
 					files      = flob.byTypes( pattern, [ '.json' ] )
-
+console.log( "pattern: " + pattern )
 				var result = _.map(
 					files,
 					function( filePath ) {

@@ -354,22 +354,15 @@ Ext.define('Spelled.Application', {
 
 		Ext.create( 'Spelled.view.ui.SpelledViewport' )
 
-		Ext.Ajax.request({
-			url: 'setSpelledConfig',
-			params: {
-				peek: true
-			},
-			success: function(){
-				var projectsPath = stateProvider.get( 'projectsPath' )
+		if( Spelled.Configuration.isNodeWebKit() ) {
+			var projectsPath = stateProvider.get( 'projectsPath' )
 
-				if( !projectsPath )
-					me.showSpellEdConfig()
-				else
-					me.loadProjects()
-			},
-			failure: function() {
+			if( !projectsPath )
+				me.showSpellEdConfig()
+			else
 				me.loadProjects()
-			}
-		})
+		} else {
+			me.loadProjects()
+		}
 	}
 });
