@@ -50,6 +50,25 @@ Ext.define('Spelled.nw.Toolbar', {
 		})
 
 		this.addEvents( events );
+
+		var subMenu = new gui.Menu();
+
+		subMenu.append(new gui.MenuItem({
+			label: 'Open Devtools',
+			click: function() {
+				var gui = require('nw.gui');
+				var win = gui.Window.get();
+				win.showDevTools();
+			}
+		}));
+
+		menubar.append(
+			new gui.MenuItem({
+				label: 'Debug',
+				submenu: subMenu
+			})
+		);
+
 		win.menu = menubar;
 	}
 
