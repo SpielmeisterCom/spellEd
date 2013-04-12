@@ -18,7 +18,9 @@ function loadCSSFile(filename){
 }
 
 var isNWRuntime = (typeof process) !== 'undefined',
-	isDevelEnv  = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1',
+	isDevelEnv  =   window.location.hostname === 'localhost' ||
+					window.location.hostname === '127.0.0.1' ||
+					(window.location.search && window.location.search === '?isDevelEnv=true'),
 	JSincludes  = [],
 	CSSincludes = []
 
@@ -35,6 +37,7 @@ if( isDevelEnv ) {
 	JSincludes.push( 'app/app.js' )
 
 	if( isNWRuntime ) {
+		JSincludes.push('libs.js')
 		JSincludes.push('nwlibs.js')
 	}
 
@@ -54,31 +57,32 @@ if( isDevelEnv ) {
 }
 
 
-if( !isNWRuntime || isDevelEnv ) {
-	// use require.js in browser mode
-	head.js("libs/require.js", function() {
-
-		requirejs.config( {
-			baseUrl : 'libs', waitSeconds: 14
-		} )
-
-		loadSpellEd()
-	} )
-
-} else {
-
+if( isNWRuntime ) {
 	// use require.js in node.js mode
 	var requirejs   = require( 'requirejs' ),
 		define  = requirejs.define
 
 	requirejs.config( {
-		baseUrl: '/libs',
+		baseUrl: '../public/libs',
 		nodeRequire: require
 	} )
 
 	window.requirejs = requirejs
 
 	loadSpellEd()
+
+} else {
+	// use require.js in browser mode
+	head.js("libs/require.js", function() {
+
+		requirejs.config( {
+			baseUrl : 'libs', waitSeconds: 14,
+			nodeRequire: require
+
+		} )
+
+		loadSpellEd()
+	} )
 }
 
 
