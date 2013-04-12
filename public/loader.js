@@ -60,7 +60,7 @@ if( !isNWRuntime || isDevelEnv ) {
 
 		requirejs.config( {
 			baseUrl : 'libs', waitSeconds: 14
-		} )cd
+		} )
 
 		loadSpellEd()
 	} )
