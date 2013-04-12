@@ -36,7 +36,7 @@ Ext.define( 'Spelled.provider.WebKit', {
 
 		request.jsonData = callData
 
-		me.doWebKitRequest( request )
+		Ext.defer( me.doWebKitRequest, 10, me, [ request ] )
 	},
 
 	onData: function(options, success, response) {
