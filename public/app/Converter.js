@@ -1,6 +1,12 @@
 Ext.define( 'Spelled.Converter' ,{
 	singleton: true,
 
+	toWorkspaceUrl: function( url ) {
+		var workspacePath = Spelled.Configuration.projectsPath
+
+		return ( workspacePath && workspacePath.length > 0 ) ? workspacePath + '/' + url : url
+	},
+
 	internalAssetIdToMyAssetId: function( internalAssetId ) {
 		if( Ext.isString( internalAssetId ) ){
 			var parts = internalAssetId.split( ':' )

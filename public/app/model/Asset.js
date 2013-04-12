@@ -119,7 +119,7 @@ Ext.define('Spelled.model.Asset', {
 	},
 
     getFilePath: function( projectName ) {
-		return projectName + "/library/" + this.get( 'namespace').split( "." ).join( "/" ) + "/" + this.get( 'file' )
+		return Spelled.Converter.toWorkspaceUrl( projectName + "/library/" + this.get( 'namespace').split( "." ).join( "/" ) + "/" + this.get( 'file' ) )
     },
 
     toSpellEngineMessageFormat: function() {
