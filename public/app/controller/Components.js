@@ -425,9 +425,10 @@ Ext.define('Spelled.controller.Components', {
 	createConfigGridView: function( component ) {
         var config   = this.transformConfigForGrid( component, component.getConfigMergedWithTemplateConfig() ),
 			template = component.getTemplate(),
-			title    = ( Ext.isEmpty( template.get('title') ) ) ? component.get('templateId') : template.get('title')
+			title    = ( Ext.isEmpty( template.get('title') ) ) ? component.get('templateId') : template.get('title'),
+			iconUrl  = template.get('icon')
 
-		var icon        = ( Ext.isEmpty( template.get('icon') ) )? "" : "style='background: url(" + template.get('icon') +") no-repeat;'",
+		var icon        = ( Ext.isEmpty( iconUrl ) )? "" : "style='background: url(" + iconUrl +") no-repeat;'",
 			iconClass   = ( component.get('additional') ) ? "component-icon" : "linked-component-icon",
 			linkedImage = ( !component.get('additional') && !Ext.isEmpty( template.get('icon') ) ) ? "<img src='resources/images/icons/link.png' style='margin-left: -18px;'/>" : "<span/>"
 
