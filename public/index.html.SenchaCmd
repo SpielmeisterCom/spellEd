@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- <x-compile> -->
+    <script type="text/javascript" src="app/app.js"></script>
+    <!-- </x-compile> -->
+</head>
+</html>
