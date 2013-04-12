@@ -19,7 +19,9 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 						xtype: 'form',
 						items: [
 							{
-								xtype: 'textfield',
+								xtype: 'field',
+								inputType: 'file',
+								inputAttrTpl: 'nwdirectory',
 								name: 'projectsPath',
 								labelWidth: 150,
 								fieldLabel: 'Path to the projects folder',
@@ -43,7 +45,7 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 
 	setConfigHandler: function() {
 		var window       = this.up( 'spelledconfigure' ),
-			field        = this.up( 'form' ).down( 'textfield[name="projectsPath"]' ),
+			field        = this.up( 'form' ).down( 'field[name="projectsPath"]' ),
 			projectsPath = field.getValue(),
 			fs           = require( 'fs' ),
 			provider     = Ext.direct.Manager.getProvider( 'webkitProvider' )
