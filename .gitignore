@@ -4,6 +4,7 @@ atlassian-ide-plugin.xml
 public/sass/.sass-cache
 public/spellEd.jsb3
 /build/
+/public/bootstrap.css
 /public/build/
 /public/packages/ext-locale-af/build/
 /public/packages/ext-locale-bg/build/
