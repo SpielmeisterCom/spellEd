@@ -55,6 +55,13 @@ build/ace.js: ../ace/build/src/ace.js
 	# include spellscript include and worker
 	#cp ../ace/build/src-min/worker-javascript.js public/build
 
+nw-debug: build/ace.js
+	cat build/ace.js >public/libs.js
+	$(NODE) ../spellCore/tools/n.js -s public/libs -m spellEdDeps \
+-i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark"\
+>>public/libs.js
+	$(NODE) ../spellCore/tools/n.js -s src -m server/createExtDirectApi -i "flob,path,http,fs,child_process,underscore" >public/nwlibs.js
+
 build/libs.js: build/ace.js
 	# creating concatenated version of all libs
 	cat build/ace.js >>build/libs.js
