@@ -76,12 +76,19 @@ build/spelledjs/public/libs.js: build/libs.js
 build/spelledjs/public/all-classes.js:
 	# creating extjs build
 	mkdir -p build/spelledjs/public
+	mv public/index.html public/index.html.orig
+	cp public/index.html.SenchaCmd public/index.html
 	$(SENCHA) -cwd public app build
+	mv public/index.html.orig public/index.html
 
-    # copy sencha build
+	# copy sencha build
 	cp public/build/spellEd/production/index.html build/spelledjs/public
 	cp public/build/spellEd/production/all-classes.js build/spelledjs/public
 	cp -R public/build/spellEd/production/resources build/spelledjs/public
+
+	# override index.html
+	cp public/index.html build/spelledjs/public
+	$(NODE) ../spellCore/tools/n.js mangle public/loader.js -a >build/spelledjs/public/loader.js
 
 build/spelledjs/public: build/spelledjs/public/all-classes.js build/spelledjs/public/libs.js
 
