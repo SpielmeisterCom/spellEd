@@ -61,3 +61,5 @@ public/spellEd.jsb3
 /public/packages/ext-theme-gray/build/
 /public/packages/ext-theme-neptune/build/
 public/packages/spelled-theme/build/.sass-cache
+public/libs.js
+public/nwlibs.js
