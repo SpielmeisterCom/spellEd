@@ -1,0 +1,16 @@
+{
+	"name": "com.spelljs.spellEd",
+	"main": "http://localhost:3000",
+
+	"nodejs": true,
+	"node-remote": "http://localhost:3000",
+
+	"webkit": {
+		"plugin": true
+	},
+	"window": {
+		"fullscreen": false,
+		"frame": true,
+		"toolbar": true 
+	}
+}
