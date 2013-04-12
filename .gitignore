@@ -6,6 +6,8 @@ public/spellEd.jsb3
 /build/
 /public/bootstrap.css
 /public/build/
+/public/sass/example/bootstrap.js
+/public/sass/example/example.css
 /public/packages/ext-locale-af/build/
 /public/packages/ext-locale-bg/build/
 /public/packages/ext-locale-ca/build/
