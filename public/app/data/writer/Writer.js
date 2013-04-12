@@ -6,7 +6,7 @@ Ext.define('Spelled.data.writer.Writer', {
 			records   = operation.records || [],
 			self      = this
 
-		var data = _.map(
+		var data = Ext.Array.map(
 			records,
 			function( record ) {
 				var content = converter( self.getRecordData( record, operation ) )

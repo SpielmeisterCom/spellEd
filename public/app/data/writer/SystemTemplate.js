@@ -7,7 +7,7 @@ Ext.define('Spelled.data.writer.SystemTemplate', {
 		var records = request.operation.records || [],
 			data    = this.convertRequest( request,  Ext.amdModules.systemConverter.toEngineFormat )
 
-		_.each(
+		Ext.Array.each(
 			records,
 			function( record ) {
 				Spelled.StorageActions.update( { id: record.getAccordingJSFileName(), content: record.get( 'content' ) } )
