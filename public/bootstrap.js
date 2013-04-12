@@ -15,6 +15,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.menu.contextmenu.EntitiesList": [],
   "Spelled.controller.Projects": [],
   "Spelled.view.asset.FolderPicker": [],
+  "Spelled.Configuration": [],
   "Spelled.base.view.TreeList": [],
   "Spelled.view.library.menu.Context": [],
   "Spelled.controller.Scripts": [],
@@ -140,8 +141,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.asset.create.Animation": [],
   "Spelled.view.ui.SpelledConfiguration": [],
   "Spelled.model.LibraryNode": [],
-  "Spelled.EntityHelper": [],
   "Ext.ux.grid.filter.DateTimeFilter": [],
+  "Spelled.EntityHelper": [],
   "Ext.ux.form.ItemSelector": [
     "Ext.ux.ItemSelector"
   ],
@@ -161,6 +162,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.data.reader.EntityTemplate": [],
   "Spelled.view.template.entity.Edit": [],
   "Spelled.data.reader.Scene": [],
+  "Spelled.nw.Toolbar": [],
   "Spelled.view.scene.AddLibraryId": [],
   "Spelled.view.script.Create": [],
   "Spelled.store.template.component.Attributes": [],
@@ -213,8 +215,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.model.config.Component": [],
   "Spelled.view.component.property.Contextmenu": [],
   "Ext.ux.LiveSearchGridPanel": [],
-  "Ext.ux.grid.filter.DateFilter": [],
   "Spelled.model.assets.SpriteSheet": [],
+  "Ext.ux.grid.filter.DateFilter": [],
   "Spelled.view.asset.create.Domvas": [],
   "Ext.ux.TreePicker": [],
   "Spelled.data.writer.SystemTemplate": [],
@@ -264,6 +266,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.store.asset.Fonts": [],
   "Spelled.controller.templates.Entities": [],
   "Spelled.view.template.ReadOnly": [],
+  "Spelled.provider.WebKit": [],
   "Spelled.data.reader.Project": [],
   "Spelled.store.property.Mappings": [],
   "Spelled.store.asset.Types": [],
@@ -324,6 +327,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.asset.FolderPicker": [
     "widget.assetfolderpicker"
   ],
+  "Spelled.Configuration": [],
   "Spelled.base.view.TreeList": [],
   "Spelled.view.library.menu.Context": [
     "widget.librarycontextmenu"
@@ -585,10 +589,10 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.spelledconfigure"
   ],
   "Spelled.model.LibraryNode": [],
-  "Spelled.EntityHelper": [],
   "Ext.ux.grid.filter.DateTimeFilter": [
     "gridfilter.datetime"
   ],
+  "Spelled.EntityHelper": [],
   "Ext.ux.form.ItemSelector": [
     "widget.itemselector",
     "widget.itemselectorfield"
@@ -624,6 +628,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.data.reader.Scene": [
     "reader.scene"
+  ],
+  "Spelled.nw.Toolbar": [
+    "widget.nwtoolbar"
   ],
   "Spelled.view.scene.AddLibraryId": [
     "widget.sceneaddlibraryid"
@@ -740,10 +747,10 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.componentpropertycontextmenu"
   ],
   "Ext.ux.LiveSearchGridPanel": [],
+  "Spelled.model.assets.SpriteSheet": [],
   "Ext.ux.grid.filter.DateFilter": [
     "gridfilter.date"
   ],
-  "Spelled.model.assets.SpriteSheet": [],
   "Spelled.view.asset.create.Domvas": [
     "widget.domvasassetconfig"
   ],
@@ -832,6 +839,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.controller.templates.Entities": [],
   "Spelled.view.template.ReadOnly": [
     "widget.readonlytemplateheader"
+  ],
+  "Spelled.provider.WebKit": [
+    "direct.webkitprovider"
   ],
   "Spelled.data.reader.Project": [
     "reader.project"
