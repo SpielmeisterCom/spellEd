@@ -1,6 +1,7 @@
 Ext.define('Spelled.view.menu.Menu', {
     extend: 'Ext.panel.Panel',
     alias : 'widget.spelledmenu',
+	requires: ['Spelled.nw.Toolbar'],
 
 	border: false,
 
@@ -9,7 +10,7 @@ Ext.define('Spelled.view.menu.Menu', {
 
 		me.items = [
 			{
-				xtype: 'toolbar',
+				xtype: Spelled.Configuration.isNodeWebKit() ? 'nwtoolbar' : 'toolbar',
 				cls: 'spelledToolbar',
 				items: [
 					{
@@ -24,20 +25,18 @@ Ext.define('Spelled.view.menu.Menu', {
 								tooltip: 'Load a existing Spell-Project',
 								action: 'showLoadProject'
 							},{
+								text: "Save",
+								action: "saveProject"
+							},{
+								text: "Export for deployment",
+								action: "exportProject"
+							},{
 								text   : 'Settings',
 								tooltip: 'Edit the project settings',
 								action: 'showProjectSettings'
 							}]
 
 						}
-					},
-					{
-						text: "Save",
-						action: "saveProject"
-					},
-					{
-						text: "Export for deployment",
-						action: "exportProject"
 					},
 					{
 						text: 'Layout',
@@ -51,11 +50,11 @@ Ext.define('Spelled.view.menu.Menu', {
 							}]
 
 						}
-					},
+					}/*,
 					{
 						xtype: 'tool-documentation',
 						docString: ""
-					}
+					}*/
 				]
 			}
 		]
