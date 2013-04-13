@@ -7,7 +7,6 @@ Ext.define('Spelled.nw.Toolbar', {
 		var me = this;
 		me.callParent();
 
-
 		var gui = require('nw.gui');
 		var win = gui.Window.get();
 		var menubar = new gui.Menu({ type: 'menubar' });
@@ -25,11 +24,8 @@ Ext.define('Spelled.nw.Toolbar', {
 					subMenu.append(new gui.MenuItem({
 						label: subItem.text,
 						click: function() {
-
-							me.fireEvent(
-								subItem.action
-							);
-
+                            var controller = Spelled.app.getController('Projects');
+                            controller[ subItem.action ].apply(controller)
 						}
 					}));
 				});
