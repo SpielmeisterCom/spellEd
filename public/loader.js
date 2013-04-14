@@ -17,6 +17,16 @@ function loadCSSFile(filename){
 	document.getElementsByTagName("head")[0].appendChild(fileref)
 }
 
+function registerGlobalErrorHandler() {
+    window.onerror = function(errorMsg, url, lineNumber) {
+        // code to run when error has occured on page
+        window.location.href = 'error.html?' +
+            'errorMsg='     + encodeURIComponent(errorMsg) +
+            '&url='         + encodeURIComponent(url) +
+            '&lineNumber='  + encodeURIComponent(lineNumber)
+    }
+}
+
 var isNWRuntime = (typeof process) !== 'undefined',
 	isDevelEnv  =   window.location.hostname === 'localhost' ||
 					window.location.hostname === '127.0.0.1' ||
@@ -49,6 +59,7 @@ if( isDevelEnv ) {
 	CSSincludes.push('packages/spelled-theme/build/resources/spelled-theme-all.css');
 
 } else {
+    registerGlobalErrorHandler();
 
 	JSincludes.push('libs.js')
 
