@@ -23,6 +23,8 @@ Ext.define('Spelled.nw.Toolbar', {
 
 					subMenu.append(new gui.MenuItem({
 						label: subItem.text,
+                        keyEquivalent: subItem.keyEquivalent,
+                        appleSelector: (subItem.appleSelector) ? subItem.appleSelector : 'invoke:',
 						click: function() {
                             var controller = Spelled.app.getController('Projects');
                             controller[ subItem.action ].apply(controller)
@@ -50,7 +52,8 @@ Ext.define('Spelled.nw.Toolbar', {
 		var subMenu = new gui.Menu();
 
 		subMenu.append(new gui.MenuItem({
-			label: 'Open Devtools',
+			label: 'Open Development Console',
+            keyEquivalent: 'c',
 			click: function() {
 				var gui = require('nw.gui');
 				var win = gui.Window.get();
