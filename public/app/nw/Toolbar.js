@@ -65,7 +65,7 @@ Ext.define('Spelled.nw.Toolbar', {
 			click: function() {
 
 				window.setTimeout( function() {
-					window.triggerError('BOOM! WebKit exploded!');
+					window.triggerError('WebKit Warp Core Ejection');
 				}, 1);
 			}
 		}));
@@ -73,7 +73,7 @@ Ext.define('Spelled.nw.Toolbar', {
 		subMenu.append(new gui.MenuItem({
 			label: 'Eject Warp Core [Node]',
 			click: function() {
-				window.triggerError('BOOM! Node exploded!');
+				window.triggerError('Node WebKit Warp Core Ejection');
 			}
 		}));
 
