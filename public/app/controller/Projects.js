@@ -88,6 +88,13 @@ Ext.define('Spelled.controller.Projects', {
 			'spelledmenu [action="showProjectSettings"]': {
 				click: this.showProjectSettings
 			},
+			nwtoolbar: {
+				showLoadProject    : this.showLoadProject,
+				showProjectSettings: this.showProjectSettings,
+				showCreateProject  : this.showCreateProject,
+				exportProject      : this.exportActiveProject,
+				saveProject        : this.globalSave
+			},
             'createproject button[action="createProject"]': {
                 click: this.createProject
             },
