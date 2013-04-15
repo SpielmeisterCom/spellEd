@@ -27,7 +27,7 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 							var owner = ( position == 'append' ) ? targetNode : targetNode.parentNode
 
 							if( owner != record.parentNode ){
-								valid = Spelled.Compare.isUniqueEntityNameChild( owner, record.get( 'text' ) )
+								valid = !owner.findChild( 'text', record.get( 'text' ) )
 							}
 						}
 						break

@@ -20,7 +20,10 @@ Ext.define('Spelled.view.entity.Create' ,{
                     anchor: '100%',
                     allowBlank:false,
 					validator: function( value ) {
-						if( this.isConfigEntityCompliant( value ) ) return true
+						var ownerRecord = this.up( 'form').getRecord().getOwner()
+
+						if( Spelled.EntityHelper.hasOwnerAnChildWithThisName( ownerRecord, value ) ) return "The owner has already an entity named " + value
+						else if( this.isConfigEntityCompliant( value ) ) return true
 						else return "Usage of invalid characters. No: '.' or '/' allowed"
 					}
                 },
