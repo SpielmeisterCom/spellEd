@@ -18,9 +18,9 @@ function loadCSSFile(filename){
 }
 
 function registerGlobalErrorHandler(isNWRuntime, isDevelEnv) {
-
-    if( isDevelEnv )
-        return
+	window.triggerError = function(message) {
+		throw message
+	}
 
     window.onerror = function(errorMsg, url, lineNumber) {
         if( !isNWRuntime ) {
@@ -72,11 +72,6 @@ if( isDevelEnv ) {
 	if( isNWRuntime ) {
 		JSincludes.push('libs.js')
 		JSincludes.push('nwlibs.js')
-
-		//automatically open DevTools when DevelEnv=true
-		var gui = require('nw.gui');
-		var win = gui.Window.get();
-		win.showDevTools();
 	}
 
 	CSSincludes.push('packages/spelled-theme/build/resources/spelled-theme-all.css');
