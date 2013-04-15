@@ -89,12 +89,6 @@ Ext.define('Spelled.controller.Menu', {
 				showDocumentation: this.showDocumentation
 			},
 
-            'spelledmenu [action="saveProject"]': {
-                click: this.saveProject
-            },
-			'spelledmenu button[action="exportProject"]': {
-				click: this.exportProject
-			},
 			'spelledmenu tool-documentation': {
 				showDocumentation: this.showEditorDocumentation
 			},
@@ -503,7 +497,6 @@ Ext.define('Spelled.controller.Menu', {
 		)
     },
 
-
 	setDefaultScene: function() {
 		var scene = this.application.getLastSelectedScene()
 
@@ -518,13 +511,5 @@ Ext.define('Spelled.controller.Menu', {
         if( scene ) {
             this.application.getController( 'Scenes' ).renderScene( scene )
         }
-    },
-
-    saveProject: function() {
-        this.application.fireEvent( 'globalsave' )
-    },
-
-	exportProject: function() {
-		this.application.fireEvent( 'exportproject' )
-	}
+    }
 });

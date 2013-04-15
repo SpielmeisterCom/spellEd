@@ -6,7 +6,8 @@ define(
 		'fs',
 		'server/extDirectApi/createUtil',
 		'server/extDirectApi/createStorageApi',
-		'child_process',
+		'server/extDirectApi/exportDeployment',
+		'server/extDirectApi/initDirectory',
 
 		'underscore'
 	],
@@ -16,13 +17,12 @@ define(
 		fs,
 		createUtil,
 		createStorageApi,
-		childProcess,
+		exportDeployment,
+		initDirectory,
 
 		_
 	) {
 	'use strict'
-
-		var appendExtension = process.platform == 'win32' ? '.exe' : ''
 
 		var writeResponse = function( status, res, data ) {
 			var data = data || ""
@@ -51,23 +51,10 @@ define(
 		/*
 		 * private
 		 */
+		var initDirectoryWrapper = function( spellCorePath, projectsPath, spellCliPath, isDevEnvironment, req, res, payload ) {
+			var projectName = payload[ 0 ]
 
-		/*
-		 * RPC call handler
-		 *
-		 * @param spellCorePath
-		 * @param projectsPath
-		 * @param req
-		 * @param res
-		 * @param payload
-		 * @param next
-		 * @return {*}
-		 */
-		var initDirectory = function( spellCorePath, projectsPath, spellCliPath, isDevEnvironment, req, res, payload, next ) {
-			var projectName     = payload[ 0 ],
-				projectPath     = projectsPath + '/' + projectName
-
-			var onComplete = function( error, stdout, stderr ) {
+			var onComplete = function( error ) {
 
 				if ( error !== null) {
 					console.log( 'childProcess.execFile ' + error )
@@ -77,30 +64,14 @@ define(
 				}
 			}
 
-			childProcess.execFile( spellCliPath + appendExtension, [ 'init','-d', projectPath ], {}, onComplete )
+			initDirectory( spellCorePath, projectsPath, spellCliPath, isDevEnvironment, projectName, onComplete )
 		}
 
-		/*
-		 * RPC call handler
-		 *
-		 * @param spellCorePath
-		 * @param projectsPath
-		 * @param req
-		 * @param res
-		 * @param payload
-		 * 	payload[ 0 ] : relative project path in projects directory
-		 * 	payload[ 1 ] : relative output file path in projects directory
-		 *
-		 * @param next
-		 * @return {*}
-		 */
-		var exportDeployment = function( spellCorePath, projectsPath, spellCliPath, req, res, payload, next  ) {
+		var exportDeploymentWrapper = function( spellCorePath, projectsPath, spellCliPath, req, res, payload  ) {
 			var projectName    = payload[ 0 ],
-				outputFileName = payload[ 1 ],
-				projectPath    = path.join( projectsPath, path.normalize( projectName ) ),
-				outputFilePath = path.join( projectsPath, path.normalize( outputFileName ) )
+				outputFileName = payload[ 1 ]
 
-			var onComplete = function( error, stdout, stderr ) {
+			var onComplete = function( error ) {
 
 				if ( error !== null) {
 					console.log( 'childProcess.execFile ' + error )
@@ -110,7 +81,7 @@ define(
 				}
 			}
 
-			childProcess.execFile( spellCliPath + appendExtension, [ 'export','-d', projectPath, '-f', outputFilePath ], {}, onComplete )
+			exportDeployment( spellCorePath, projectsPath, spellCliPath, projectName, outputFileName, onComplete )
 		}
 
         return function( projectsRoot, spellCorePath, spellCliPath ) {
@@ -121,7 +92,7 @@ define(
 						name: "initDirectory",
 						len: 2,
 						func: _.bind(
-							initDirectory,
+							initDirectoryWrapper,
 							null,
 							spellCorePath,
 							projectsRoot,
@@ -133,7 +104,7 @@ define(
 						name: "exportDeployment",
 						len: 2,
 						func: _.bind(
-							exportDeployment,
+							exportDeploymentWrapper,
 							null,
 							spellCorePath,
 							projectsRoot,
