@@ -22,7 +22,7 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 								xtype: 'field',
 								inputType: 'file',
 								inputAttrTpl: 'nwdirectory',
-								name: 'projectsPath',
+								name: 'workspacePath',
 								labelWidth: 150,
 								fieldLabel: 'Path to the projects folder',
 								allowBlank: false
@@ -44,16 +44,16 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 	},
 
 	setConfigHandler: function() {
-		var window       = this.up( 'spelledconfigure' ),
-			field        = this.up( 'form' ).down( 'field[name="projectsPath"]' ),
-			projectsPath = field.getValue(),
-			fs           = require( 'fs' ),
-			provider     = Ext.direct.Manager.getProvider( 'webkitProvider' )
+		var window        = this.up( 'spelledconfigure' ),
+			field         = this.up( 'form' ).down( 'field[name="workspacePath"]' ),
+			workspacePath = field.getValue(),
+			fs            = require( 'fs' ),
+			provider      = Ext.direct.Manager.getProvider( 'webkitProvider' )
 
-		var exists = fs.existsSync( projectsPath )
+		var exists = fs.existsSync( workspacePath )
 
 		if( exists ) {
-			Spelled.Configuration.projectsPath = projectsPath
+			Spelled.Configuration.setWorkspacePath( workspacePath )
 
 			provider.createWebKitExtDirectApi( function() {
 				window.fireEvent( 'loadProjects' )

@@ -2,7 +2,7 @@ Ext.define( 'Spelled.Converter' ,{
 	singleton: true,
 
 	toWorkspaceUrl: function( url ) {
-		var workspacePath = Spelled.Configuration.projectsPath
+		var workspacePath = Spelled.Configuration.getWorkspacePath()
 
 		return ( workspacePath && workspacePath.length > 0 ) ? workspacePath + '/' + url : url
 	},

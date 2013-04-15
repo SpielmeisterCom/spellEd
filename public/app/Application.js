@@ -323,7 +323,7 @@ Ext.define('Spelled.Application', {
 	},
 
 	showSpellEdConfig: function() {
-		Ext.state.Manager.clear( 'projectsPath' )
+		Ext.state.Manager.clear( 'workspacePath' )
 		Ext.create( 'Spelled.view.ui.SpelledConfiguration' ).show()
 	},
 
@@ -343,10 +343,10 @@ Ext.define('Spelled.Application', {
 	},
 
 	launch: function() {
-		var me = this,
-			stateProvider = Ext.create( 'Ext.state.CookieProvider')
+		var me = this
 
-		Ext.state.Manager.setProvider( stateProvider )
+		Spelled.Configuration.createStateProvider()
+
 		Ext.get('loading').remove()
 		Ext.get('loading-mask').fadeOut( {
 			remove: true
@@ -355,12 +355,16 @@ Ext.define('Spelled.Application', {
 		Ext.create( 'Spelled.view.ui.SpelledViewport' )
 
 		if( Spelled.Configuration.isNodeWebKit() ) {
-			var projectsPath = stateProvider.get( 'projectsPath' )
+			var workspacePath = Spelled.Configuration.getWorkspacePath()
 
-			if( !projectsPath )
+			if( !workspacePath )
 				me.showSpellEdConfig()
-			else
-				me.loadProjects()
+			else {
+				var provider = Ext.direct.Manager.getProvider( 'webkitProvider')
+				provider.createWebKitExtDirectApi( function() {
+					me.loadProjects()
+				} )
+			}
 		} else {
 			me.loadProjects()
 		}
