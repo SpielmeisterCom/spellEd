@@ -31,7 +31,7 @@ spelledserver:
 
 .PHONY: clean-nw
 clean-nw:
-	rm -R build/nw-package build/app.nw build/libs.js || true
+	rm -R build/nw-package build/app.nw build/libs.js build/nwlibs.js build/loader.js build/spelledjs/public/loader.js || true
 
 .PHONY: rebuild-nw
 rebuild-nw: clean-nw build/nw-package build/app.nw
@@ -80,6 +80,10 @@ build/spelledjs/public/libs.js: build/libs.js
 	# minify concatenated libs.js
 	$(NODE) ../spellCore/tools/n.js mangle build/libs.js -a >build/spelledjs/public/libs.js
 
+build/spelledjs/public/loader.js:
+	# minifing loader
+	$(NODE) ../spellCore/tools/n.js mangle public/loader.js -a >build/spelledjs/public/loader.js
+
 build/spelledjs/public/all-classes.js:
 	# creating extjs build
 	mkdir -p build/spelledjs/public
@@ -95,9 +99,9 @@ build/spelledjs/public/all-classes.js:
 
 	# override index.html
 	cp public/index.html build/spelledjs/public
-	$(NODE) ../spellCore/tools/n.js mangle public/loader.js -a >build/spelledjs/public/loader.js
+	cp public/error.html build/spelledjs/public
 
-build/spelledjs/public: build/spelledjs/public/all-classes.js build/spelledjs/public/libs.js
+build/spelledjs/public: build/spelledjs/public/all-classes.js build/spelledjs/public/libs.js build/spelledjs/public/loader.js
 
 build/nw-package: build/spelledjs/public build/spelledjs/public/nwlibs.js
 	mkdir -p build/nw-package/public
