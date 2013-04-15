@@ -17,15 +17,36 @@ function loadCSSFile(filename){
 	document.getElementsByTagName("head")[0].appendChild(fileref)
 }
 
-function registerGlobalErrorHandler() {
+function registerGlobalErrorHandler(isNWRuntime, isDevelEnv) {
+
+    if( isDevelEnv )
+        return
+
     window.onerror = function(errorMsg, url, lineNumber) {
-        // code to run when error has occured on page
-        window.location.href = 'error.html?' +
-            'errorMsg='     + encodeURIComponent(errorMsg) +
-            '&url='         + encodeURIComponent(url) +
-            '&lineNumber='  + encodeURIComponent(lineNumber)
+        if( !isNWRuntime ) {
+            // code to run when error has occured on page
+            window.location.href = 'error.html?' +
+                'errorMsg='         + encodeURIComponent(errorMsg) +
+                '&url='             + encodeURIComponent(url) +
+                '&lineNumber='      + encodeURIComponent(lineNumber)
+
+            return
+        }
+
+        var gui = require('nw.gui'),
+            win = gui.Window.get()
+
+        win.capturePage(function(img) {
+            // code to run when error has occured on page
+            window.location.href = 'error.html?' +
+                'errorMsg='         + encodeURIComponent(errorMsg) +
+                '&url='             + encodeURIComponent(url) +
+                '&lineNumber='      + encodeURIComponent(lineNumber) +
+                '&screenCapture='   + encodeURIComponent(img)
+        }, 'png');
     }
 }
+
 
 var isNWRuntime = (typeof process) !== 'undefined',
 	isDevelEnv  =   window.location.hostname === 'localhost' ||
@@ -33,6 +54,8 @@ var isNWRuntime = (typeof process) !== 'undefined',
 					(window.location.search && window.location.search === '?isDevelEnv=true'),
 	JSincludes  = [],
 	CSSincludes = []
+
+registerGlobalErrorHandler(isNWRuntime, isDevelEnv);
 
 if( !isNWRuntime ) {
 	JSincludes.push('libs/fontDetect/javascripts/swfobject.js')
@@ -57,10 +80,7 @@ if( isDevelEnv ) {
 	}
 
 	CSSincludes.push('packages/spelled-theme/build/resources/spelled-theme-all.css');
-
 } else {
-    registerGlobalErrorHandler();
-
 	JSincludes.push('libs.js')
 
 	if( isNWRuntime ) {
