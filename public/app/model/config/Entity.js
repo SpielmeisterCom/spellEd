@@ -196,21 +196,19 @@ Ext.define('Spelled.model.config.Entity', {
 	},
 
 	generateCloneName: function( name ) {
-		if( this.hasEntity() ) {
-			var found = this.getEntity().getChildren().findRecord( 'name', name )
+		var existingChild = Spelled.EntityHelper.hasOwnerAnChildWithThisName( this.getOwner(), name )
 
-			if( found )	{
-				var parts    = name.split( "_"),
-					lastPart = parts.pop(),
-					counter  = parseInt( lastPart, 10),
-					valid    = Ext.isNumber( counter ),
-					index    = valid ? counter + 1 : 1
+		if( existingChild ) {
+			var parts    = name.split( "_"),
+				lastPart = parts.pop(),
+				counter  = parseInt( lastPart, 10),
+				valid    = Ext.isNumber( counter ),
+				index    = valid ? counter + 1 : 1
 
-				if( !valid ) parts.push( lastPart )
+			if( !valid ) parts.push( lastPart )
 
-				parts.push( index )
-				return this.generateCloneName( parts.join( "_" ) )
-			}
+			parts.push( index )
+			return this.generateCloneName( parts.join( "_" ) )
 		}
 
 		return name

@@ -5,7 +5,7 @@ Ext.define( 'Spelled.EntityHelper', {
 		var entities = ( owner.hasOwnerEntity ) ? owner.getChildren() : owner.getEntities(),
 			child    = entities.findRecord( 'name', name, null, null, null, true )
 
-		return !!child
+		return child
 	},
 
 	missingTemplateError: function( model ) {
