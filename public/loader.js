@@ -17,33 +17,36 @@ function loadCSSFile(filename){
 	document.getElementsByTagName("head")[0].appendChild(fileref)
 }
 
+var nwExceptionHandler = function(errorMsg) {
+    var gui = require('nw.gui'),
+        win = gui.Window.get()
+
+    win.capturePage(function(img) {
+        // code to run when error has occured on page
+        window.location.href = 'error.html?' +
+            'errorMsg='         + encodeURIComponent(errorMsg) +
+            '&screenCapture='   + encodeURIComponent(img)
+    }, 'png');
+}
+
 function registerGlobalErrorHandler(isNWRuntime, isDevelEnv) {
 	window.triggerError = function(message) {
 		throw message
 	}
 
-    window.onerror = function(errorMsg, url, lineNumber) {
-        if( !isNWRuntime ) {
-            // code to run when error has occured on page
-            window.location.href = 'error.html?' +
-                'errorMsg='         + encodeURIComponent(errorMsg) +
-                '&url='             + encodeURIComponent(url) +
-                '&lineNumber='      + encodeURIComponent(lineNumber)
-
-            return
+    if( isNWRuntime ) {
+        process.on('uncaughtException', nwExceptionHandler);
+        window.onerror = function(errorMsg, url, lineNumber) {
+              nwExceptionHandler(url + ':' + lineNumber + "\n" + errorMsg);
         }
 
-        var gui = require('nw.gui'),
-            win = gui.Window.get()
+    } else {
 
-        win.capturePage(function(img) {
-            // code to run when error has occured on page
-            window.location.href = 'error.html?' +
-                'errorMsg='         + encodeURIComponent(errorMsg) +
-                '&url='             + encodeURIComponent(url) +
-                '&lineNumber='      + encodeURIComponent(lineNumber) +
-                '&screenCapture='   + encodeURIComponent(img)
-        }, 'png');
+        window.onerror = function(errorMsg, url, lineNumber) {
+            var msg = url + ':' + lineNumber + "\n" + errorMsg;
+            window.location.href = 'error.html?errorMsg=' + encodeURIComponent(msg)
+        }
+
     }
 }
 
