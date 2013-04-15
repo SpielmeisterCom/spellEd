@@ -12,11 +12,15 @@ Ext.define('Spelled.view.template.entity.Add' ,{
             xtype: 'form',
             items: [
                 {
-                    xtype: 'textfield',
+                    xtype: 'spelledtextfield',
                     name: 'name',
                     fieldLabel: 'Name',
                     anchor: '100%',
-                    allowBlank:false
+                    allowBlank:false,
+					validator: function( value ) {
+						var ownerRecord = this.up( 'form' ).getRecord().getEntity()
+						return this.isEntityNameValid( ownerRecord, value )
+					}
                 },
 				{
 					xtype: 'hiddenfield',
