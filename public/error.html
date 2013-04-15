@@ -77,11 +77,17 @@
             var time                = new Date().getTime(),
                 elapsedTime         = time - startTime,
                 numRows             = tiles.length,
-                animationLength     = 800,
-                animationProcess    = (elapsedTime / animationLength),
+                animationLength     = 800
+
+            if (numRows > 30) {
+                animationLength += (numRows-30) * 30;
+            }
+
+            var animationProcess    = (elapsedTime / animationLength),
                 firstVisibleRow,
                 lastVisibleRow,
                 animationFinished   = false
+
 
             if( state == 1 ) { //building blocks from bottom to top
                 firstVisibleRow     = numRows - Math.floor(animationProcess * numRows)
