@@ -77,11 +77,7 @@
             var time                = new Date().getTime(),
                 elapsedTime         = time - startTime,
                 numRows             = tiles.length,
-                animationLength     = 800
-
-            if (numRows > 30) {
-                animationLength += (numRows-30) * 30;
-            }
+                animationLength     = numRows * 20
 
             var animationProcess    = (elapsedTime / animationLength),
                 firstVisibleRow,
