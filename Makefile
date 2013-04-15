@@ -60,7 +60,7 @@ nw-debug: build/ace.js
 	$(NODE) ../spellCore/tools/n.js -s public/libs -m spellEdDeps \
 -i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark"\
 >>public/libs.js
-	$(NODE) ../spellCore/tools/n.js -s src -m server/createExtDirectApi -i "flob,path,http,fs,child_process,underscore" >public/nwlibs.js
+	$(NODE) ../spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "flob,path,http,fs,child_process,underscore" >public/nwlibs.js
 
 build/libs.js: build/ace.js
 	# creating concatenated version of all libs
@@ -71,7 +71,7 @@ build/libs.js: build/ace.js
 >>build/libs.js
 
 build/nwlibs.js:
-	$(NODE) ../spellCore/tools/n.js -s src -m server/createExtDirectApi -i "flob,path,http,fs,child_process,underscore" >>build/nwlibs.js
+	$(NODE) ../spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "flob,path,http,fs,child_process,underscore" >>build/nwlibs.js
 
 build/spelledjs/public/nwlibs.js: build/nwlibs.js
 	$(NODE) ../spellCore/tools/n.js mangle build/nwlibs.js -a >build/spelledjs/public/nwlibs.js
