@@ -70,7 +70,7 @@ build/libs.js: build/ace.js
 -i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark"\
 >>build/libs.js
 
-build/nwlibs.js: 
+build/nwlibs.js:
 	$(NODE) ../spellCore/tools/n.js -s src -m server/createExtDirectApi -i "flob,path,http,fs,child_process,underscore" >>build/nwlibs.js
 
 build/spelledjs/public/nwlibs.js: build/nwlibs.js
@@ -85,6 +85,8 @@ build/spelledjs/public/loader.js:
 	$(NODE) ../spellCore/tools/n.js mangle public/loader.js -a >build/spelledjs/public/loader.js
 
 build/spelledjs/public/all-classes.js:
+	mv public/index.html.orig public/index.html || true
+
 	# creating extjs build
 	mkdir -p build/spelledjs/public
 	mv public/index.html public/index.html.orig
