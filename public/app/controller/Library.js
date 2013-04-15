@@ -134,7 +134,7 @@ Ext.define('Spelled.controller.Library', {
 
 		switch( this.getNodeType( node ) ) {
 			case this.TYPE_ASSET:
-				var asset = Ext.getStore( 'asset.Assets' ).getById( node.getId() )
+				var asset = Spelled.StoreHelper.getAssetStoreByType( node.get( 'cls' ) ).getById( node.getId() )
 				this.application.fireEvent( 'renameasset', asset, newName, oldName )
 				break
 		}
