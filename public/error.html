@@ -97,12 +97,13 @@
             var time                = new Date().getTime(),
                 elapsedTime         = time - startTime,
                 numRows             = tiles.length,
-                animationLength     = numRows * 20
+                animationLength     = 800
 
             var animationProcess    = (elapsedTime / animationLength),
                 firstVisibleRow,
                 lastVisibleRow,
-                animationFinished   = false
+                animationFinished   = false,
+                updateTiles         = true
 
 
             if( state == 1 ) { //building blocks from bottom to top
@@ -117,6 +118,7 @@
             } else if ( state == 2 && elapsedTime > 100 ) { //holding full tileset
                 startTime = time;
                 state = 3;
+                updateTiles = false;
 
             } else if ( state == 3 ) { // removing blocks from bottom to top
                 firstVisibleRow = 0
@@ -139,23 +141,25 @@
                 firstVisibleRow = lastVisibleRow = -1;
             }
 
-            for (var y=0; y < numRows; y++) {
-                var numCols = tiles[ y ].length
+            if( updateTiles ) {
+                for (var y=0; y < numRows; y++) {
+                    var numCols = tiles[ y ].length
 
-                for (var x=0; x < numCols; x++) {
-                    var div = tiles[ y ][ x ]
+                    for (var x=0; x < numCols; x++) {
+                        var div = tiles[ y ][ x ]
 
-                    if (animationFinished) {
-                        tileLayer.removeChild(div)
-                        delete tiles[y][x]
+                        if (animationFinished) {
+                            tileLayer.removeChild(div)
+                            delete tiles[y][x]
 
-                    } else if (y < firstVisibleRow || y > lastVisibleRow) {
-                        div.style.display = 'none';
-                    } else {
-                        div.style.display = 'block';
+                        } else if (y < firstVisibleRow || y > lastVisibleRow) {
+                            div.style.opacity = 0;
+                        } else {
+                            div.style.opacity = 1;
+                        }
                     }
-                }
 
+                }
             }
 
             if(!animationFinished) {
