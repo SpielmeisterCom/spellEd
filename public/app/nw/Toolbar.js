@@ -26,7 +26,8 @@ Ext.define('Spelled.nw.Toolbar', {
                         keyEquivalent: subItem.keyEquivalent,
                         appleSelector: (subItem.appleSelector) ? subItem.appleSelector : 'invoke:',
 						click: function() {
-							me.fireEvent( subItem.action, me )
+                            var controller = Spelled.app.getController('Projects');
+                            controller[ subItem.action ].apply(controller)
 						}
 					}));
 				});
@@ -57,6 +58,23 @@ Ext.define('Spelled.nw.Toolbar', {
 				var gui = require('nw.gui');
 				var win = gui.Window.get();
 				win.showDevTools();
+			}
+		}));
+
+		subMenu.append(new gui.MenuItem({
+			label: 'Eject Warp Core [WebKit]',
+			click: function() {
+
+				window.setTimeout( function() {
+					window.triggerError('BOOM! WebKit exploded!');
+				}, 1);
+			}
+		}));
+
+		subMenu.append(new gui.MenuItem({
+			label: 'Eject Warp Core [Node]',
+			click: function() {
+				window.triggerError('BOOM! Node exploded!');
 			}
 		}));
 
