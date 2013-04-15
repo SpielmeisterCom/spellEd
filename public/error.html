@@ -2,11 +2,40 @@
 <html>
 <head>
     <title></title>
+    <script type="text/javascript">
+        function parseURLParams() {
+            var     urlParams,
+                    match,
+                    pl     = /\+/g,  // Regex for replacing addition symbol with a space
+                    search = /([^&=]+)=?([^&]*)/g,
+                    decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+                    query  = window.location.search.substring(1);
+
+            urlParams = {};
+            while (match = search.exec(query))
+                urlParams[decode(match[1])] = decode(match[2]);
+
+            return urlParams;
+        }
+
+        var urlParams = parseURLParams();
+
+        window.onload = function() {
+            if( urlParams[ 'screenCapture' ]) {
+                var img = new Image();
+                img.src = urlParams[ 'screenCapture' ]
+
+                console.log(urlParams[ 'screenCapture' ]);
+                document.body.appendChild(img);
+            }
+        }
+    </script>
 </head>
 <body>
 'errorMsg'  : errorMsg,
 'url'       : url,
 'lineNumber': lineNumber
+TODO Add error handler here
 
 </body>
 </html>
