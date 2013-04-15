@@ -26,8 +26,7 @@ Ext.define('Spelled.nw.Toolbar', {
                         keyEquivalent: subItem.keyEquivalent,
                         appleSelector: (subItem.appleSelector) ? subItem.appleSelector : 'invoke:',
 						click: function() {
-                            var controller = Spelled.app.getController('Projects');
-                            controller[ subItem.action ].apply(controller)
+							me.fireEvent( subItem.action, me )
 						}
 					}));
 				});
