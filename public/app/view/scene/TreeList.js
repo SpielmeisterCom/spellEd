@@ -52,8 +52,20 @@ Ext.define('Spelled.view.scene.TreeList' ,{
 						cellEditor.removeManagedListener( cellEditor.view, 'celldblclick' )
 					},
 					validateedit: function( editor, e ) {
-						if( !cellEditor.isConfigEntityCompliant( e.value ) ){
-							Ext.MessageBox.alert( 'Error', "Usage of invalid characters. No: '.' or '/' allowed" )
+						var name         = e.value,
+							node         = e.record,
+							owner        = node.parentNode,
+							msg          = null,
+							existingNode = owner.findChild( 'text', name )
+
+						if( existingNode && existingNode != node ) {
+							msg = "The name '"+ name +"' is already given."
+						} else if( !cellEditor.isConfigEntityCompliant( name ) ){
+							msg = "Usage of invalid characters. No: '.' or '/' allowed"
+						}
+
+						if( msg ) {
+							Ext.MessageBox.alert( 'Error', msg )
 							return false
 						}
 					}
