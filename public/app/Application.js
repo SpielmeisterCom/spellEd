@@ -332,7 +332,7 @@ Ext.define('Spelled.Application', {
 			this.getController( 'Projects').loadLastProject()
 		}
 
-		this.engineMessageBus.addHandler( {'spell.debug.consoleMessage' : function( sourceId, payload ) {
+		this.engineMessageBus.addHandler( {'spelled.debug.consoleMessage' : function( sourceId, payload ) {
 			Spelled.Logger.log( payload.level, payload.text )
 		}} )
 
