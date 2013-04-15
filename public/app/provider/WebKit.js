@@ -89,7 +89,7 @@ Ext.define( 'Spelled.provider.WebKit', {
 
 		requirejs(
 			[
-				'server/createExtDirectApi'
+				'webKit/createExtDirectApi'
 			],
 			function(
 				createExtDirectApi
