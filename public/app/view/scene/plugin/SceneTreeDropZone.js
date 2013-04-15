@@ -22,7 +22,14 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 					case 'tree-scene-entity-icon':
 					case 'tree-scene-entity-linked-icon':
 					case 'tree-scene-entity-readonly-icon':
-						valid = this.checkEntityDrag(  targetNode, position  )
+						valid = this.checkEntityDrag( targetNode, position )
+						if( valid ) {
+							var owner = ( position == 'append' ) ? targetNode : targetNode.parentNode
+
+							if( owner != record.parentNode ){
+								valid = Spelled.Compare.isUniqueEntityNameChild( owner, record.get( 'text' ) )
+							}
+						}
 						break
 				}
 
