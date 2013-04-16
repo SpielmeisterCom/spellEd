@@ -30,6 +30,8 @@ var nwExceptionHandler = function(errorMsg) {
 }
 
 function registerGlobalErrorHandler(isNWRuntime, isDevelEnv) {
+	if( isDevelEnv ) return
+
 	window.triggerError = function(message) {
 		throw message
 	}

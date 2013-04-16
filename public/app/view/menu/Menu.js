@@ -16,7 +16,12 @@ Ext.define('Spelled.view.menu.Menu', {
 					{
 						text: 'SpellEd',
 						menu: {
-							items: [{
+							items: [
+							{
+								text    : 'Change  workspace',
+								nwType  : 'normal',
+								action  : 'showSetWorkspace'
+							}, {
                                 text    : 'About SpellEd',
                                 nwType  : 'normal',
                                 action  : 'showAboutDialog'
@@ -40,10 +45,6 @@ Ext.define('Spelled.view.menu.Menu', {
                                 appleSelector  : 'closeAllWindows:',
                                 keyEquivalent: 'q'
                             }
-
-
-
-
                             ]
                         }
                     },

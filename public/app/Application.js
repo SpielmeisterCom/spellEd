@@ -355,9 +355,10 @@ Ext.define('Spelled.Application', {
 		Ext.create( 'Spelled.view.ui.SpelledViewport' )
 
 		if( Spelled.Configuration.isNodeWebKit() ) {
-			var workspacePath = Spelled.Configuration.getWorkspacePath()
+			var workspacePath = Spelled.Configuration.getWorkspacePath(),
+				fs            = require( 'fs' )
 
-			if( !workspacePath )
+			if( !workspacePath || !fs.existsSync( workspacePath ) )
 				me.showSpellEdConfig()
 			else {
 				var provider = Ext.direct.Manager.getProvider( 'webkitProvider')
