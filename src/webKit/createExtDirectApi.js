@@ -46,6 +46,7 @@ define(
 		}
 
         return function( projectsRoot, spellCorePath, spellCliPath ) {
+console.log( arguments )
             return {
 				StorageActions    : createStorageApi( projectsRoot ),
 				SpellBuildActions : [

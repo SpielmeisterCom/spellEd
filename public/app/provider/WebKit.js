@@ -95,7 +95,7 @@ Ext.define( 'Spelled.provider.WebKit', {
 				createExtDirectApi
 				) {
 				'use strict'
-				me.webKitExtDirectApi = createExtDirectApi( Spelled.Configuration.getWorkspacePath(), Spelled.Configuration.spellCorePath, Spelled.Configuration.spellCliPath )
+				me.webKitExtDirectApi = createExtDirectApi( Spelled.Configuration.getWorkspacePath(), Spelled.Configuration.getSpellCorePath(), Spelled.Configuration.getSpellCliPath() )
 
 				Ext.callback( callback )
 			}
