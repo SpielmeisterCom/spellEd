@@ -1,7 +1,7 @@
 Ext.define('Spelled.view.menu.Menu', {
     extend: 'Ext.panel.Panel',
     alias : 'widget.spelledmenu',
-	requires: ['Spelled.nw.Toolbar'],
+	requires: ['Spelled.nw.Toolbar', 'Spelled.view.ui.SpelledAboutDialog'],
 
 	border: false,
 	isNodeWebkit: false,

@@ -97,11 +97,15 @@ Ext.define('Spelled.controller.Projects', {
 			'spelledmenu [action="showSetWorkspace"]': {
 				click: this.showSetWorkSpace
 			},
+			'spelledmenu [action="showAboutDialog"]': {
+				click: this.showAboutDialog
+			},
 			nwtoolbar: {
 				showSetWorkspace   : this.showSetWorkSpace,
 				showLoadProject    : this.showLoadProject,
 				showProjectSettings: this.showProjectSettings,
 				showCreateProject  : this.showCreateProject,
+				showAboutDialog    : this.showAboutDialog,
 				exportProject      : this.exportActiveProject,
 				saveProject        : this.globalSave
 			},
@@ -556,5 +560,9 @@ Ext.define('Spelled.controller.Projects', {
 
     getScenesList: function( project ) {
 	    this.application.getController('Scenes').showScenesList( project.getScenes() )
-    }
+    },
+
+	showAboutDialog: function() {
+		Ext.widget( 'spelledabout' )
+	}
 });
