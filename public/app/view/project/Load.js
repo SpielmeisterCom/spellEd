@@ -2,7 +2,7 @@ Ext.define('Spelled.view.project.Load' ,{
     extend: 'Ext.Window',
     alias: 'widget.loadproject',
 
-    title : 'Load an existing Project',
+    title : 'Open an existing Project',
     modal : true,
 
 	layout: 'fit',
@@ -30,7 +30,7 @@ Ext.define('Spelled.view.project.Load' ,{
             ],
             buttons: [
                 {
-                    text: "Load",
+                    text: "Open",
                     action: "loadProject",
                     formBind:true
                 },

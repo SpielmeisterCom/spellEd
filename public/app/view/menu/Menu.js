@@ -57,7 +57,7 @@ Ext.define('Spelled.view.menu.Menu', {
                                 keyEquivalent: 'n'
                             },{
 								text   : 'Open Project...',
-								tooltip: 'Load a existing Spell-Project',
+								tooltip: 'Opens an existing Spell-Project',
 								action: 'showLoadProject'
 							},{
 								text: "Save",
