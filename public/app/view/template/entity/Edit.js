@@ -19,7 +19,7 @@ Ext.define('Spelled.view.template.entity.Edit', {
 			afterRender: function() {
 				var owner = this.up('entitytemplateedit')
 
-				this.el.dom.src = '/' + owner.projectName + '/public/spellEdShim.html?iframeId='+this.id
+				this.el.dom.src =  Spelled.Converter.toWorkspaceUrl( '/' + owner.projectName + '/public/spellEdShim.html?iframeId='+this.id )
 				this.focus()
 			}
 		}

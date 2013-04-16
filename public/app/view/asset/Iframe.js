@@ -11,7 +11,7 @@ Ext.define('Spelled.view.asset.Iframe', {
     ],
 
     afterRender: function() {
-        this.load( this.src + '?iframeId=' + this.id )
+        this.load( Spelled.Converter.toWorkspaceUrl( this.src + '?iframeId=' + this.id ) )
     },
 
     initComponent: function () {
