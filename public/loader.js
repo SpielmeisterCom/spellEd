@@ -105,6 +105,11 @@ if( isNWRuntime ) {
 
 	window.requirejs = requirejs
 
+	//Maximize window
+	var gui = require('nw.gui'),
+	    win = gui.Window.get();
+	win.maximize();
+
 	loadSpellEd()
 
 } else {
