@@ -383,17 +383,18 @@ Ext.define('Spelled.controller.Projects', {
 
 	exportActiveProject: function() {
 		var project        = this.application.getActiveProject(),
-			exportFileName = project.get('name') +".zip",
+			projectName    = project.get( 'name' ),
+			exportFileName = projectName +".zip",
 			me             = this
 
 		Spelled.SpellBuildActions.exportDeployment(
-			project.get( 'name' ),
+			projectName,
 			exportFileName,
 			function( provider, response ) {
 				if( !!response.data ) {
 					// WORKAROUND: delaying the download a little bit to mitigate asynchronous race condition
 					var task = new Ext.util.DelayedTask( function() {
-						window.location = '/' + exportFileName
+						window.location = Spelled.Converter.toWorkspaceUrl( '/' + exportFileName )
 					} )
 
 					task.delay( 5000 )

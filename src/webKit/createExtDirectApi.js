@@ -1,10 +1,6 @@
 define(
 	'webKit/createExtDirectApi',
 	[
-		'path',
-		'http',
-		'fs',
-		'server/extDirectApi/createUtil',
 		'server/extDirectApi/createStorageApi',
 		'server/extDirectApi/exportDeployment',
 		'server/extDirectApi/initDirectory',
@@ -12,10 +8,6 @@ define(
 		'underscore'
 	],
 	function(
-		path,
-		http,
-		fs,
-		createUtil,
 		createStorageApi,
 		exportDeployment,
 		initDirectory,
@@ -23,19 +15,6 @@ define(
 		_
 	) {
 	'use strict'
-
-		var createResponseData = function( method, payload, id ) {
-			var post_data = {
-				action : "ProjectActions",
-				method : method,
-				data   : payload,
-				type   : "rpc",
-				tid    : id
-			}
-
-			return JSON.stringify( post_data )
-		}
-
 		/*
 		 * private
 		 */
@@ -46,9 +25,6 @@ define(
 
 				if ( error !== null) {
 					console.log( 'childProcess.execFile ' + error )
-					return ""
-				} else {
-					return createResponseData( "initDirectory", payload, req.extDirectId )
 				}
 			}
 
@@ -63,9 +39,6 @@ define(
 
 				if ( error !== null) {
 					console.log( 'childProcess.execFile ' + error )
-					return ""
-				} else {
-					return createResponseData( "exportDeployment", payload, req.extDirectId )
 				}
 			}
 

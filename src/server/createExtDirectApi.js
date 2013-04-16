@@ -1,10 +1,6 @@
 define(
 	'server/createExtDirectApi',
 	[
-		'path',
-		'http',
-		'fs',
-		'server/extDirectApi/createUtil',
 		'server/extDirectApi/createStorageApi',
 		'server/extDirectApi/exportDeployment',
 		'server/extDirectApi/initDirectory',
@@ -12,10 +8,6 @@ define(
 		'underscore'
 	],
 	function(
-		path,
-		http,
-		fs,
-		createUtil,
 		createStorageApi,
 		exportDeployment,
 		initDirectory,

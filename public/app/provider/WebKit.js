@@ -63,7 +63,7 @@ Ext.define( 'Spelled.provider.WebKit', {
 			action      = requestData.action,
 			method      = requestData.method,
 			transaction = request.transaction,
-			args        = transaction.args[0],
+			args        = requestData.data,
 			api         = this.webKitExtDirectApi
 
 		if( !api ) throw "Api not initialized"
