@@ -3,7 +3,7 @@
 	"main": "../public/index.html?isDevelEnv=true",
 
 	"version": "0.8.3",
-	"user-agent": "%name/%ver (%osinfo) WebKit/%webkit_ver nw/%nwver",
+	"user-agent": "%name/%ver (%osinfo) AppleWebKit/%webkit_ver nw/%nwver",
 
 	"webkit": {
 		"plugin": false 
