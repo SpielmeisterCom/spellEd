@@ -384,7 +384,7 @@ Ext.define('Spelled.controller.Assets', {
 				this.addFontForm( fieldSet, asset )
 				break
 			case this.TYPE_SPRITE_SHEET:
-				fieldSet.add( { xtype: 'spritesheetconfig' } )
+				fieldSet.add( { xtype: 'spritesheetconfig', edit: !!asset } )
 				break
 			case this.TYPE_KEY_TO_ACTION:
 				this.addKeyToActionMapForm( fieldSet, asset )
