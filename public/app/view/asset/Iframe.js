@@ -5,13 +5,16 @@ Ext.define('Spelled.view.asset.Iframe', {
     loadMask: 'Loading...',
 
     src: 'about:blank',
+	workspacePrefix: true,
 
     renderTpl: [
         '<iframe src="{src}" name="{frameName}" width="100%" height="100%" frameborder="0"></iframe>'
     ],
 
     afterRender: function() {
-        this.load( Spelled.Converter.toWorkspaceUrl( this.src + '?iframeId=' + this.id ) )
+		var src = this.src + '?iframeId=' + this.id
+
+        this.load( this.workspacePrefix ? Spelled.Converter.toWorkspaceUrl( src ) : src )
     },
 
     initComponent: function () {

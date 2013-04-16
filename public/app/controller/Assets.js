@@ -804,7 +804,7 @@ Ext.define('Spelled.controller.Assets', {
 		switch( subType ) {
 			case this.TYPE_APPEARANCE:
 			case this.TYPE_SPRITE_SHEET:
-				view.add( { xtype: 'assetiframe', src: '/' + asset.getFilePath( project.get('name') ), height: '100%' } )
+				view.add( { xtype: 'assetiframe', workspacePrefix: false, src: '/' + asset.getFilePath( project.get('name') ), height: '100%' } )
 				break
             case this.TYPE_KEY_FRAME_ANIMATION:
 			case this.TYPE_ANIMATION:
