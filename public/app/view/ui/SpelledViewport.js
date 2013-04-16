@@ -30,6 +30,7 @@ Ext.define('Spelled.view.ui.SpelledViewport', {
                 {
                     xtype: 'spelledmenu',
                     collapsible: false,
+					isNodeWebkit: Spelled.Configuration.isNodeWebKit(),
 					region:'north'
                 },
                 {
