@@ -132,10 +132,14 @@ Ext.define('Spelled.controller.Library', {
     },
 
 	showItemInFolder: function() {
-		var gui  = require('nw.gui'),
-			node = this.application.getLastSelectedNode( this.getLibraryTree() )
+		var project    = this.application.getActiveProject(),
+			gui        = require('nw.gui'),
+			path       = require( 'path' ),
+			node       = this.application.getLastSelectedNode( this.getLibraryTree()),
+			parts      = Ext.Array.erase( node.getId().split('.'), 0, 1),
+			folderPath = path.join( project.get( 'name' ), 'library', parts.join( path.sep ) )
 
-		gui.Shell.showItemInFolder( node.getId() )
+		gui.Shell.openItem( Spelled.Converter.toWorkspaceUrl( folderPath ) )
 	},
 
 	sortLibraryTree: function( node ) {

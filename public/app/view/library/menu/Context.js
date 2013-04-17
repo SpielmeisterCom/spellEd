@@ -11,6 +11,9 @@ Ext.define('Spelled.view.library.menu.Context', {
 			menu: { xtype: 'librarymenu' }
 		},
 		{
+			xtype: 'menuitemshowinfolder'
+		},
+		{
 			hidden: true,
 			action: 'deleteFolder',
 			text: 'Remove empty folder',
