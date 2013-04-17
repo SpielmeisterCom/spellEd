@@ -7,7 +7,7 @@ Ext.define( 'Spelled.Converter' ,{
 
 		if( Spelled.Configuration.isNodeWebKit() ) {
 			var path = require( 'path' )
-			return path.normalize( url )
+			return 'file://'+ path.normalize( url )
 		} else {
 			return url
 		}
