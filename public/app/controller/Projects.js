@@ -106,6 +106,7 @@ Ext.define('Spelled.controller.Projects', {
 				showProjectSettings: this.showProjectSettings,
 				showCreateProject  : this.showCreateProject,
 				showAboutDialog    : this.showAboutDialog,
+				showUpdateDialog   : this.showUpdateDialog,
 				exportProject      : this.exportActiveProject,
 				saveProject        : this.globalSave
 			},
@@ -164,6 +165,25 @@ Ext.define('Spelled.controller.Projects', {
 			selector: 'spelledmenu button[action="saveProject"]'
 		}
 	],
+
+	showUpdateDialog: function() {
+		var msg     = Ext.MessageBox.wait( 'Connecting to update server...' )
+
+		Ext.Ajax.request({
+			url: 'http://localhost:3000',
+			params: {
+				version: version
+			},
+			success: function(response){
+				var text = response.responseText
+
+				Ext.Msg.alert( 'Info', text )
+			},
+			failure: function(response, opts) {
+				Ext.Msg.alert( 'Error', 'Update server not reachable. Please try again later.' )
+			}
+		})
+	},
 
 	removeLanguage: function( button ){
 		var view     = button.up( 'menu' ),

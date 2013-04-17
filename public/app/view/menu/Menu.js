@@ -104,9 +104,9 @@ Ext.define('Spelled.view.menu.Menu', {
 					nwType  : 'normal',
 					action  : 'showAboutDialog'
 				}, {
-					text   : 'Check for Updates...',
+					text    : 'Check for Updates...',
 					nwType  : 'normal',
-					action: 'showUpdateDialog',
+					action  : 'showUpdateDialog',
 					hidden  : !this.isNodeWebkit
 				}, {
 					text    : 'Hide SpellEd',
