@@ -2,9 +2,15 @@ Ext.define( 'Spelled.Converter' ,{
 	singleton: true,
 
 	toWorkspaceUrl: function( url ) {
-		var workspacePath = Spelled.Configuration.getWorkspacePath()
+		var workspacePath = Spelled.Configuration.getWorkspacePath(),
+			url           = ( workspacePath && workspacePath.length > 0 ) ? workspacePath + '/' + url : url
 
-		return ( workspacePath && workspacePath.length > 0 ) ? workspacePath + '/' + url : url
+		if( Spelled.Configuration.isNodeWebKit() ) {
+			var path = require( 'path' )
+			return path.normalize( url )
+		} else {
+			return url
+		}
 	},
 
 	internalAssetIdToMyAssetId: function( internalAssetId ) {
