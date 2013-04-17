@@ -279,23 +279,6 @@
             }
         }
 
-        function getPlatformDetails() {
-            var os = require('os')
-
-            var platformData = {
-                'os_platform':  os.platform(),
-                'os_release':   os.release(),
-                'os_arch':      os.arch(),
-                'version_v8':   process.versions['v8'],
-                'version_node': process.versions['node'],
-                'version_nw':   process.versions['node-webkit']
-            }
-
-            console.log(window);
-
-            return platformData;
-        }
-
         var urlParams = parseURLParams();
 
         window.onload = function() {
@@ -323,10 +306,11 @@
                 requestAnimationFrame ( animateTiles.bind( window, tileLayer, tiles, startTime, 1 ) )
             },500)
 
-            console.log(getPlatformDetails());
-
             var errorMsg = document.getElementById('errorMsg');
-            errorMsg.innerHTML = urlParams[ 'errorMsg' ]
+	    errorMsg.innerHTML = urlParams[ 'errorMsg' ]
+
+	    var versionEl = document.getElementById('version');
+	    versionEl.innerHTML = navigator.userAgent
         }
 
         function toggleScreenshot(el) {
@@ -406,7 +390,7 @@
             var descriptionEl   = document.getElementById('description'),
                 description     = descriptionEl.value,
                 errorMsg        = urlParams[ 'errorMsg' ],
-                jiraDescription = errorMsg + "\n\n" + description,
+                jiraDescription = errorMsg + "\n\n" + description + "\n\nVersion: " + navigator.userAgent,
                 jiraTitle       = jiraDescription.substring(0, 120)
 
             createJiraIssue(jiraTitle, jiraDescription, 'Bug');
@@ -444,6 +428,11 @@
             </fieldset>
 
             <fieldset>
+                <strong>Software Version</strong><br/>
+                <div class="errorMsg" id="version"/>
+            </fieldset>
+	    
+	    <fieldset>
                 <strong>Error Message</strong><br/>
                 <div class="errorMsg" id="errorMsg"/>
             </fieldset>
