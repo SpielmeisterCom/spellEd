@@ -22,6 +22,10 @@ Ext.define('Spelled.controller.Layout', {
 			},
 			'spelledmenu [action="changeToSplitLayout"]': {
 				click: this.changeToSplitLayout
+			},
+			nwtoolbar: {
+				changeToMainLayout: this.changeToMainLayout,
+				changeToSplitLayout: this.changeToSplitLayout
 			}
         })
 
