@@ -7,6 +7,10 @@ Ext.define('Spelled.view.menu.contextmenu.AssetsList', {
 			xtype: 'menuitemedit'
 		},
 		{
+			xtype: 'menuitemshowinfolder',
+			hidden: !Spelled.Configuration.isNodeWebKit()
+		},
+		{
 			xtype: 'menuitemrename'
 		},
         {

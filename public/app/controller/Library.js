@@ -12,6 +12,7 @@ Ext.define('Spelled.controller.Library', {
 		'Spelled.view.library.menu.item.Rename',
 		'Spelled.view.library.menu.item.Edit',
 		'Spelled.view.library.menu.item.Remove',
+		'Spelled.view.library.menu.item.ShowItemInFolder',
 
 		'Spelled.store.Library',
 		'Spelled.store.FoldersTree',
@@ -78,6 +79,9 @@ Ext.define('Spelled.controller.Library', {
     init: function() {
 		this.listen({
 			component: {
+				'menuitemshowinfolder': {
+					click: this.showItemInFolder
+				},
 				'componentproperties' :{
 					propertydeeplinkclick: this.deepLinkComponentProperty
 				},
@@ -126,6 +130,13 @@ Ext.define('Spelled.controller.Library', {
 			}
 		})
     },
+
+	showItemInFolder: function() {
+		var gui  = require('nw.gui'),
+			node = this.application.getLastSelectedNode( this.getLibraryTree() )
+
+		gui.Shell.showItemInFolder( node.getId() )
+	},
 
 	sortLibraryTree: function( node ) {
 		Ext.getStore( 'Library' ).sortFunction()
