@@ -19,9 +19,7 @@ Ext.define('Spelled.view.menu.contextmenu.SceneSystemsItemList', {
 			action: 'open'
 		},
 		{
-			icon: 'resources/images/icons/system-delete.png',
-			text: 'Remove',
-			action: 'remove'
+			xtype: 'menuitemremove'
 		}
     ]
 });

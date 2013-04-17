@@ -9,9 +9,7 @@ Ext.define('Spelled.view.menu.contextmenu.TemplatesList', {
 			action: 'open'
 		},
         {
-			icon: 'resources/images/icons/delete.png',
-            text: 'Remove',
-            action: 'remove'
+			xtype: 'menuitemremove'
         }
     ]
 });

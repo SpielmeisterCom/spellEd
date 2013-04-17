@@ -4,14 +4,10 @@ Ext.define('Spelled.view.menu.contextmenu.ScriptsList', {
 
     items: [
 		{
-			icon: 'resources/images/icons/script-edit.png',
-			text: 'Edit',
-			action: 'edit'
+			xtype: 'menuitemedit'
 		},
 		{
-			icon: 'resources/images/icons/script-delete.png',
-			text: 'Remove',
-			action: 'remove'
+			xtype: 'menuitemremove'
 		}
     ]
 });

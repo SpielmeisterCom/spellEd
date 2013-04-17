@@ -9,6 +9,9 @@ Ext.define('Spelled.controller.Library', {
 		'Spelled.view.library.menu.Buttons',
 		'Spelled.view.library.menu.Context',
 		'Spelled.view.library.menu.Filter',
+		'Spelled.view.library.menu.item.Rename',
+		'Spelled.view.library.menu.item.Edit',
+		'Spelled.view.library.menu.item.Remove',
 
 		'Spelled.store.Library',
 		'Spelled.store.FoldersTree',
@@ -29,7 +32,10 @@ Ext.define('Spelled.controller.Library', {
 		'library.folder.Create',
 		'library.menu.Buttons',
 		'library.menu.Context',
-		'library.menu.Filter'
+		'library.menu.Filter',
+		'library.menu.item.Rename',
+		'library.menu.item.Edit',
+		'library.menu.item.Remove'
     ],
 
     stores: [

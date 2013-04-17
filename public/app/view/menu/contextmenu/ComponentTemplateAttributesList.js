@@ -4,9 +4,7 @@ Ext.define('Spelled.view.menu.contextmenu.ComponentTemplateAttributesList', {
 
     items: [
         {
-			icon: 'resources/images/icons/delete.png',
-            text: 'Remove',
-            action: 'remove'
+			xtype: 'menuitemremove'
         }
     ]
 });

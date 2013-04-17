@@ -14,9 +14,7 @@ Ext.define('Spelled.view.menu.contextmenu.ScenesList', {
             action: 'render'
         },
         {
-			icon: 'resources/images/icons/scene-delete.png',
-            text: 'Remove Scene',
-            action: 'remove'
+			xtype: 'menuitemremove'
 		}
     ]
 });

@@ -4,19 +4,13 @@ Ext.define('Spelled.view.menu.contextmenu.AssetsList', {
 
     items: [
 		{
-			icon: 'resources/images/icons/cog.png',
-			text: 'Edit',
-			action: 'edit'
+			xtype: 'menuitemedit'
 		},
 		{
-			icon: 'resources/images/icons/rename.png',
-			text: 'Rename',
-			action: 'rename'
+			xtype: 'menuitemrename'
 		},
         {
-			icon: 'resources/images/icons/delete.png',
-            text: 'Remove',
-            action: 'remove'
+			xtype: 'menuitemremove'
 		}
     ]
 });
