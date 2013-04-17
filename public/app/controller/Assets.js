@@ -615,7 +615,7 @@ Ext.define('Spelled.controller.Assets', {
 			case this.TYPE_APPEARANCE:
 			case this.TYPE_SPRITE_SHEET:
 			case this.TYPE_FONT:
-				view.add( { xtype: 'image', margin: 20, src: '/' + asset.getFilePath( this.application.getActiveProject().get('name') )} )
+				view.add( { xtype: 'image', margin: 20, src: asset.getFilePath( this.application.getActiveProject().get('name') )} )
 				break
 		}
 
