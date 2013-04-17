@@ -994,11 +994,23 @@ Ext.define('Spelled.controller.Scenes', {
 		this.getSpelledIframe().focus()
 	},
 
+	enterWebkitFullScreen: function() {
+		var gui = require('nw.gui'),
+			win = gui.Window.get()
+
+		win.toggleFullscreen()
+	},
+
 	activateFullscreen: function( button, state ) {
 		var tab      = this.getSpelledIframe(),
 			dom      = tab.el.dom,
 			prefixes = ["moz", "webkit", "ms", "o", ""],
 			fullScreenFunctionAvailable = false
+
+		if( Spelled.Configuration.isNodeWebKit() ) {
+			this.enterWebkitFullScreen()
+			return
+		}
 
 		Ext.each(prefixes, function( prefix ) {
 			var fnName = (prefix.length > 0) ? "RequestFullScreen" : "requestFullScreen"
