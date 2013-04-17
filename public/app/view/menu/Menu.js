@@ -5,6 +5,7 @@ Ext.define('Spelled.view.menu.Menu', {
 
 	border: false,
 	isNodeWebkit: false,
+	isMacOs: false,
 
 	layoutMenu: {
 		text: 'Layout',
@@ -111,21 +112,21 @@ Ext.define('Spelled.view.menu.Menu', {
 					text    : 'Hide SpellEd',
 					appleSelector  : 'hide:',
 					keyEquivalent: 'h',
-					hidden  : !this.isNodeWebkit
+					hidden  : !this.isMacOs
 				}, {
 					text    : 'Hide Others',
 					appleSelector  : 'hideOtherApplications:',
 					keyEquivalent: 'h',
-					hidden  : !this.isNodeWebkit
+					hidden  : !this.isMacOs
 				}, {
 					text    : 'Show All',
 					appleSelector  : 'unhideAllApplications:',
-					hidden  : !this.isNodeWebkit
+					hidden  : !this.isMacOs
 				}, {
 					text    : 'Quit SpellEd',
 					appleSelector  : 'closeAllWindows:',
 					keyEquivalent: 'q',
-					hidden  : !this.isNodeWebkit
+					hidden  : !this.isMacOs
 				}
 			]
 		}
@@ -136,17 +137,17 @@ Ext.define('Spelled.view.menu.Menu', {
 			menuItems = [
 				this.spellEdGeneralMenu,
 				this.projectMenu,
-				this.isNodeWebkit ? this.editMenu : null,
+				this.isMacOs ? this.editMenu : null,
 				this.layoutMenu
 			]
 
-		me.items = [
-			{
+		Ext.applyIf(me, {
+			items : {
 				xtype: this.isNodeWebkit ? 'nwtoolbar' : 'toolbar',
 				cls: 'spelledToolbar',
 				items: menuItems
 			}
-		]
+		})
 
 		me.callParent( arguments )
 	}
