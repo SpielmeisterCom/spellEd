@@ -176,11 +176,26 @@ Ext.define('Spelled.controller.Projects', {
 	checkVersion: function( response, request, silent ) {
 		var me          = this,
 			result      = Ext.decode( response.responseText, true ),
-			version     = (result.version || "0").replace( /\./g, '' ),
-			yourVersion = Spelled.Configuration.version.replace( /\./g, '' ),
-			url         = result.url
+			version     = (result.version || "0").split( '.' ),
+			yourVersion = Spelled.Configuration.version.split( '.' ),
+			url         = result.url,
+			newer       = false
 
-		if( parseInt( version, 10 ) > parseInt( yourVersion, 10 ) ) {
+		for( var i = 0; i < version.length; i++ ) {
+			if( yourVersion[ i ] ) {
+				var partFromServer = parseInt( version[ i ], 10),
+					yourPart       = parseInt( yourVersion[ i ], 10)
+
+				if( partFromServer > yourPart ) {
+					newer = true
+					break
+				} else if( partFromServer < yourPart ) {
+					break
+				}
+			}
+		}
+
+		if( newer ) {
 			Ext.Msg.confirm( 'New version is available', "Do you want to download the new version?",
 				function( button ) {
 					if( button == 'yes' ) {
