@@ -136,6 +136,7 @@ Ext.define('Spelled.controller.Projects', {
         })
 
 		this.application.on( {
+			checkForUpdate : this.checkForUpdate,
 			'exportproject': this.exportActiveProject,
 			'globalsave'   : this.globalSave,
 			'revertmodel'  : this.revertModel,
@@ -166,23 +167,49 @@ Ext.define('Spelled.controller.Projects', {
 		}
 	],
 
-	showUpdateDialog: function() {
-		var msg     = Ext.MessageBox.wait( 'Connecting to update server...' )
+	redirectToDownloadServer: function( url ) {
+		var gui = require('nw.gui')
+
+		gui.Shell.openExternal( url )
+	},
+
+	checkVersion: function( response, request, silent ) {
+		var me          = this,
+			result      = Ext.decode( response.responseText, true ),
+			version     = (result.version || "0").replace( /\./g, '' ),
+			yourVersion = Spelled.Configuration.version.replace( /\./g, '' ),
+			url         = result.url
+
+		if( parseInt( version, 10 ) > parseInt( yourVersion, 10 ) ) {
+			Ext.Msg.confirm( 'New version is available', "Do you want to download the new version?",
+				function( button ) {
+					if( button == 'yes' ) {
+						me.redirectToDownloadServer( url )
+					}
+				}
+			)
+		} else if( !silent ) {
+			Ext.Msg.alert( 'Info', "No update available." )
+		}
+	},
+
+	checkForUpdate: function( silent ) {
+		var me = this
 
 		Ext.Ajax.request({
-			url: 'http://localhost:3000',
-			params: {
-				version: version
-			},
-			success: function(response){
-				var text = response.responseText
-
-				Ext.Msg.alert( 'Info', text )
-			},
-			failure: function(response, opts) {
-				Ext.Msg.alert( 'Error', 'Update server not reachable. Please try again later.' )
+			url: 'http://localhost:3000/spellEdVersion.json',
+			method: 'GET',
+			success: Ext.bind( me.checkVersion, me, [ silent ], true ),
+			failure: function( response, opts ) {
+				if( !silent ) Ext.Msg.alert( 'Error', 'Update server not reachable. Please try again later.' )
 			}
 		})
+	},
+
+	showUpdateDialog: function() {
+		var msg = Ext.MessageBox.wait( 'Connecting to update server...' )
+
+		this.checkForUpdate()
 	},
 
 	removeLanguage: function( button ){
