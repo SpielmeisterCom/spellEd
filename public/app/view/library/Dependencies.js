@@ -129,8 +129,11 @@ Ext.define('Spelled.view.library.Dependencies', {
 		Spelled.Converter.addAdditionalInfoToDependencyNode( rootNode, true )
 
 		for ( var j = 0, l = dynamicDependencies.length; j < l; j++ ) {
-			var item = libraryStore.findLibraryItemByLibraryId( dynamicDependencies[ j ] ),
-				node = item.createDependencyNode()
+			var item = libraryStore.findLibraryItemByLibraryId( dynamicDependencies[ j ] )
+
+			if( !item ) continue
+
+			var	node = item.createDependencyNode()
 
 			rootNode.children.push( node )
 			Spelled.Converter.addAdditionalInfoToDependencyNode( node )
