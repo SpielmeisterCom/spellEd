@@ -4,8 +4,6 @@ Ext.define('Spelled.view.menu.Menu', {
 	requires: ['Spelled.nw.Toolbar', 'Spelled.view.ui.SpelledAboutDialog'],
 
 	border: false,
-	isNodeWebkit: false,
-	isMacOs: false,
 
 	layoutMenu: {
 		text: 'Layout',
@@ -93,42 +91,40 @@ Ext.define('Spelled.view.menu.Menu', {
 	spellEdGeneralMenu: {
 		text: 'SpellEd',
 		menu: {
-			items: [
-				{
-					text    : 'Change  workspace',
-					nwType  : 'normal',
-					action  : 'showSetWorkspace',
-					hidden  : !this.isNodeWebkit
-				}, {
-					text    : 'About SpellEd',
-					nwType  : 'normal',
-					action  : 'showAboutDialog'
-				}, {
-					text    : 'Check for Updates...',
-					nwType  : 'normal',
-					action  : 'showUpdateDialog',
-					hidden  : !this.isNodeWebkit
-				}, {
-					text    : 'Hide SpellEd',
-					appleSelector  : 'hide:',
-					keyEquivalent: 'h',
-					hidden  : !this.isMacOs
-				}, {
-					text    : 'Hide Others',
-					appleSelector  : 'hideOtherApplications:',
-					keyEquivalent: 'h',
-					hidden  : !this.isMacOs
-				}, {
-					text    : 'Show All',
-					appleSelector  : 'unhideAllApplications:',
-					hidden  : !this.isMacOs
-				}, {
-					text    : 'Quit SpellEd',
-					appleSelector  : 'closeAllWindows:',
-					keyEquivalent: 'q',
-					hidden  : !this.isMacOs
-				}
-			]
+			items: [{
+				text    : 'Change  workspace',
+				nwType  : 'normal',
+				action  : 'showSetWorkspace',
+				hidden  : !Spelled.Configuration.isNodeWebKit()
+			}, {
+				text    : 'About SpellEd',
+				nwType  : 'normal',
+				action  : 'showAboutDialog'
+			}, {
+				text    : 'Check for Updates...',
+				nwType  : 'normal',
+				action  : 'showUpdateDialog',
+				hidden  : !Spelled.Configuration.isNodeWebKit()
+			}, {
+				text    : 'Hide SpellEd',
+				appleSelector  : 'hide:',
+				keyEquivalent: 'h',
+				hidden  : !Spelled.Configuration.isMacOs()
+			}, {
+				text    : 'Hide Others',
+				appleSelector  : 'hideOtherApplications:',
+				keyEquivalent: 'h',
+				hidden  : !Spelled.Configuration.isMacOs()
+			}, {
+				text    : 'Show All',
+				appleSelector  : 'unhideAllApplications:',
+				hidden  : !Spelled.Configuration.isMacOs()
+			}, {
+				text    : 'Quit SpellEd',
+				appleSelector  : 'closeAllWindows:',
+				keyEquivalent: 'q',
+				hidden  : !Spelled.Configuration.isMacOs()
+			}]
 		}
 	},
 
@@ -137,13 +133,13 @@ Ext.define('Spelled.view.menu.Menu', {
 			menuItems = [
 				this.spellEdGeneralMenu,
 				this.projectMenu,
-				this.isMacOs ? this.editMenu : null,
+				Spelled.Configuration.isMacOs() ? this.editMenu : null,
 				this.layoutMenu
 			]
 
 		Ext.applyIf(me, {
 			items : {
-				xtype: this.isNodeWebkit ? 'nwtoolbar' : 'toolbar',
+				xtype: Spelled.Configuration.isNodeWebKit() ? 'nwtoolbar' : 'toolbar',
 				cls: 'spelledToolbar',
 				items: menuItems
 			}
