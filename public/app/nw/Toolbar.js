@@ -4,31 +4,34 @@ Ext.define('Spelled.nw.Toolbar', {
 	isToolbar: true,
 
 	initComponent: function() {
-		var me = this;
-		me.callParent();
+		var me = this
 
-		var gui = require('nw.gui');
-		var win = gui.Window.get();
-		var menubar = new gui.Menu({ type: 'menubar' });
+		me.callParent( arguments )
 
-		var events = {};
+		var gui     = require('nw.gui'),
+			win     = gui.Window.get(),
+			menubar = new gui.Menu( { type: 'menubar' } ),
+			events  = {}
 
 		Ext.each(me.items.items, function(item) {
 			if(item.menu) {
 				var subMenu = new gui.Menu();
 
 				Ext.each(item.menu.items, function(subItem) {
+					var hidden = !!subItem.hidden
 
-					events[ subItem.action ] = true;
+					events[ subItem.action ] = true
 
-					subMenu.append(new gui.MenuItem({
-						label: subItem.text,
-                        keyEquivalent: subItem.keyEquivalent,
-                        appleSelector: (subItem.appleSelector) ? subItem.appleSelector : 'invoke:',
-						click: function() {
-							me.fireEvent( subItem.action, me )
-						}
-					}));
+					if( !hidden ) {
+						subMenu.append(new gui.MenuItem({
+							label: subItem.text,
+							keyEquivalent: subItem.keyEquivalent,
+							appleSelector: (subItem.appleSelector) ? subItem.appleSelector : 'invoke:',
+							click: function() {
+								me.fireEvent( subItem.action, me )
+							}
+						}));
+					}
 				});
 
 				menubar.append(
