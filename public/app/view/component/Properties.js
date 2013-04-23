@@ -12,6 +12,8 @@ Ext.define('Spelled.view.component.Properties', {
 	hideHeaders: true,
 	deferRowRender: false,
 
+	nameColumnWidth : '50%',
+
 	initComponent: function() {
 		var me = this
 
