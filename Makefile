@@ -11,7 +11,7 @@ endif
 
 
 .PHONY: all
-all: build/spelledjs/public build/app.nw spelledserver
+all: clean build/spelledjs/public build/app.nw spelledserver
 
 .PHONY: clean
 clean:
@@ -26,8 +26,7 @@ theme:
 
 .PHONY: spelledserver
 spelledserver:
-	mkdir -p build/spelledserver
-	rm -R build/spelledserver/* || true
+	#todo build spelledserver
 
 .PHONY: clean-nw
 clean-nw:
