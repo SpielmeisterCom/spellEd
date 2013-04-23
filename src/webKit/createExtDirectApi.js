@@ -1,6 +1,7 @@
 define(
 	'webKit/createExtDirectApi',
 	[
+		'path',
 		'server/extDirectApi/createStorageApi',
 		'server/extDirectApi/exportDeployment',
 		'server/extDirectApi/initDirectory',
@@ -8,6 +9,7 @@ define(
 		'underscore'
 	],
 	function(
+		path,
 		createStorageApi,
 		exportDeployment,
 		initDirectory,
@@ -46,7 +48,11 @@ define(
 		}
 
         return function( projectsRoot, spellCorePath, spellCliPath ) {
-console.log( arguments )
+			var execDir = path.dirname( process.execPath )
+
+			spellCorePath = path.join( execDir, spellCorePath )
+			spellCliPath  = path.join( execDir, spellCliPath )
+
             return {
 				StorageActions    : createStorageApi( projectsRoot ),
 				SpellBuildActions : [

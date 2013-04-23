@@ -26,12 +26,12 @@ Ext.define( 'Spelled.Configuration', {
 	},
 
 	getSpellCliPath: function() {
-		var spellCliPath = 'C:/Users/Ioannis/Projects/spellengine/modules/spellCore/spellcli'
+		var spellCliPath = 'spellcli'
 		return spellCliPath
 	},
 
 	getSpellCorePath: function() {
-		var spellCorePath = 'C:/Users/Ioannis/Projects/spellengine/modules/spellCore'
+		var spellCorePath = 'spellCore'
 		return spellCorePath
 
 	},
