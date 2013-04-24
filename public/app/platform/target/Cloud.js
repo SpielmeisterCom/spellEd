@@ -4,7 +4,7 @@ Ext.define( 'Spelled.platform.target.Cloud', {
 	],
 
 	copyToClipboard: function( text ) {
-
+		window.prompt ("Copy identifier to clipboard: Ctrl+C, Enter", text )
 	},
 
 	createRemoteProvider: function() {

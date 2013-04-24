@@ -4,7 +4,10 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 	],
 
 	copyToClipboard: function( text ) {
+		var gui       = require('nw.gui'),
+			clipboard = gui.Clipboard.get()
 
+		clipboard.set( text, 'text')
 	},
 
 	createRemoteProvider: function() {

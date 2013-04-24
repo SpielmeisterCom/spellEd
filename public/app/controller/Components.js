@@ -96,7 +96,7 @@ Ext.define('Spelled.controller.Components', {
 			component    = this.getConfigComponentsStore().getById( propertyGrid.componentConfigId )
 
 
-		window.prompt ("Copy identifier to clipboard: Ctrl+C, Enter",  component.get( 'templateId' ) )
+		Spelled.app.platform.copyToClipboard( component.get( 'templateId' ) )
 	},
 
 	revertComponent: function( button, event ) {
