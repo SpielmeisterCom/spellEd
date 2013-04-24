@@ -110,5 +110,14 @@ Ext.define('Spelled.model.template.Entity', {
 		})
 
 		return entityNode
+	},
+
+	toSpellEngineMessageFormat: function() {
+		var data    = this.getData( true ),
+			payload = Ext.amdModules.entityTemplateConverter.toEngineFormat( data )
+
+		Ext.copyTo( payload, data, 'name,namespace' )
+
+		return payload
 	}
 });

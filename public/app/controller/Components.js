@@ -375,7 +375,7 @@ Ext.define('Spelled.controller.Components', {
 
 			entity.setDirty()
 
-			this.sendUpdateToAllEntitiesOnTemplateComponent( component, name, value )
+			this.sendUpdateToAllEntitiesOnTemplateComponent( component )
 		}
 	},
 
@@ -466,26 +466,15 @@ Ext.define('Spelled.controller.Components', {
 		this.sendComponentUpdate( component, name, newValue )
 	},
 
-	sendUpdateToAllEntitiesOnTemplateComponent: function( component, name, value ) {
-		var componentOwner = component.getEntity(),
-			entityTemplate = Spelled.EntityHelper.getRootTemplateOwnerFromComponent( component )
+	sendUpdateToAllEntitiesOnTemplateComponent: function( component ) {
+		var entityTemplate = Spelled.EntityHelper.getRootTemplateOwnerFromComponent( component )
 
 		if( entityTemplate ) {
-			var entities = Ext.getStore( 'config.Entities' ).query( 'templateId', entityTemplate.getFullName() )
 
-			entities.each(
-				function( entity ) {
-					var parents = [],
-						owner   = Spelled.EntityHelper.getRootEntityOwnerFromEntity( componentOwner, parents ),
-						needed  = Spelled.EntityHelper.findNeededEntity( entity, parents )
-
-					if( needed && ( needed.hasScene() || needed.hasEntity() ) ) {
-						needed.mergeWithTemplateConfig()
-						var cmp = needed.getComponentByTemplateId( component.get( 'templateId' ) )
-						this.sendComponentUpdate( cmp, name, value, true )
-					}
-				},
-				this
+			this.application.fireEvent(
+				'sendToEngine',
+				'library.updateEntityTemplate',
+				{ definition: entityTemplate.toSpellEngineMessageFormat() }
 			)
 		}
 	},
