@@ -5,7 +5,7 @@ Ext.define( 'Spelled.Converter' ,{
 		var workspacePath = Spelled.Configuration.getWorkspacePath(),
 			url           = ( workspacePath && workspacePath.length > 0 ) ? workspacePath + '/' + url : url
 
-		return Spelled.PlatformAdapter.normalizeUrl( url )
+		return Spelled.app.platform.normalizeUrl( url )
 	},
 
 	internalAssetIdToMyAssetId: function( internalAssetId ) {

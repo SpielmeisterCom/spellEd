@@ -6,7 +6,7 @@ Ext.define('Spelled.Application', {
 		'Ext.state.CookieProvider',
 		'Spelled.view.ui.SpelledViewport',
 		'Spelled.Configuration',
-		'Spelled.PlatformAdapter'
+		'Spelled.platform.Adapter'
 	],
 
 	appFolder: 'app',
@@ -315,6 +315,7 @@ Ext.define('Spelled.Application', {
 		 * Message bus used for communication with engine instances.
 		 */
 		this.engineMessageBus = Ext.create( 'Spelled.MessageBus' )
+		this.platform = Spelled.platform.Adapter.factory()
 
 		window.addEventListener(
 			'message',
@@ -322,7 +323,7 @@ Ext.define('Spelled.Application', {
 			false
 		)
 
-		Ext.Direct.addProvider( Spelled.PlatformAdapter.createRemoteProvider() )
+		Ext.Direct.addProvider( this.platform.createRemoteProvider() )
 	},
 
 	loadProjects: function() {
@@ -350,7 +351,7 @@ Ext.define('Spelled.Application', {
 
 		Ext.create( 'Spelled.view.ui.SpelledViewport' )
 
-		if( Spelled.PlatformAdapter.isNodeWebKit() ) {
+		if( Spelled.platform.Adapter.isNodeWebKit() ) {
 			this.getController( 'NodeWebKit').checkWorkspaceSettings()
 		} else {
 			this.loadProjects()

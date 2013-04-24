@@ -998,7 +998,7 @@ Ext.define('Spelled.controller.Scenes', {
 		var tab      = this.getSpelledIframe(),
 			dom      = tab.el.dom
 
-		if ( !Spelled.PlatformAdapter.enterFullScreen( dom ) ) {
+		if ( !Spelled.app.platform.enterFullScreen( dom ) ) {
 			//inform the user if this function is not available
 			Ext.Msg.alert( 'Not supported', 'Sorry, the fullscreen function is not yet supported in your browser. Try using another browser.')
 		}

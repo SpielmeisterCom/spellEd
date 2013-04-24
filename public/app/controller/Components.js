@@ -95,6 +95,7 @@ Ext.define('Spelled.controller.Components', {
 		var propertyGrid = button.up( 'menu' ).ownerView,
 			component    = this.getConfigComponentsStore().getById( propertyGrid.componentConfigId )
 
+
 		window.prompt ("Copy identifier to clipboard: Ctrl+C, Enter",  component.get( 'templateId' ) )
 	},
 
