@@ -94,14 +94,10 @@ Ext.define('Spelled.controller.Projects', {
 			'spelledmenu [action="exportProject"]': {
 				click: this.exportActiveProject
 			},
-			'spelledmenu [action="showSetWorkspace"]': {
-				click: this.showSetWorkSpace
-			},
 			'spelledmenu [action="showAboutDialog"]': {
 				click: this.showAboutDialog
 			},
 			nwtoolbar: {
-				showSetWorkspace   : this.showSetWorkSpace,
 				showLoadProject    : this.showLoadProject,
 				showProjectSettings: this.showProjectSettings,
 				showCreateProject  : this.showCreateProject,
@@ -444,10 +440,6 @@ Ext.define('Spelled.controller.Projects', {
 
         view.show()
     },
-
-	showSetWorkSpace: function() {
-		this.application.showSpellEdConfig()
-	},
 
 	saveActiveProject: function( callback ) {
 		var project = this.application.getActiveProject()
