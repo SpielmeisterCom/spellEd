@@ -6,12 +6,14 @@ Ext.define('Spelled.Application', {
 		'Ext.state.CookieProvider',
 		'Spelled.view.ui.SpelledViewport',
 		'Spelled.Configuration',
-		'Spelled.platform.Adapter'
+		'Spelled.platform.Adapter',
+		'Spelled.controller.NodeWebKit'
 	],
 
 	appFolder: 'app',
 
 	controllers: [
+		'NodeWebKit',
 		'Layout',
 		'Scenes',
 		'Entities',

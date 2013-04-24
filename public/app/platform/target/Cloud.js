@@ -3,6 +3,10 @@ Ext.define( 'Spelled.platform.target.Cloud', {
 		'Spelled.Remoting'
 	],
 
+	showItemInFolder: function( projectName, libraryId ) {
+		console.log( 'Not supported' )
+	},
+
 	copyToClipboard: function( text ) {
 		window.prompt ("Copy identifier to clipboard: Ctrl+C, Enter", text )
 	},
