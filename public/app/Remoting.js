@@ -51,11 +51,5 @@ Ext.define( 'Spelled.Remoting', {
 				]
 			}
 		}
-	},
-
-	constructor: function() {
-		var provider = Spelled.Configuration.isNodeWebKit() ? this.createNodeWebKitProvider() : this.createSpellEdCloudProvider()
-
-		Ext.Direct.addProvider( provider )
 	}
 })

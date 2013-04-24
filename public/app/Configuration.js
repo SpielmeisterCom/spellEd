@@ -1,14 +1,6 @@
 Ext.define( 'Spelled.Configuration', {
 	singleton              : true,
 
-	isNodeWebKit: function() {
-		return ( typeof process == 'object' )
-	},
-
-	isMacOs: function() {
-		return ( typeof process == 'object' && process.platform == 'darwin' )
-	},
-
 	getStateProvider: function() {
 		return Ext.state.Manager.getProvider()
 	},

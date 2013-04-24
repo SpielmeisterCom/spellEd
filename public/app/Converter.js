@@ -5,12 +5,7 @@ Ext.define( 'Spelled.Converter' ,{
 		var workspacePath = Spelled.Configuration.getWorkspacePath(),
 			url           = ( workspacePath && workspacePath.length > 0 ) ? workspacePath + '/' + url : url
 
-		if( Spelled.Configuration.isNodeWebKit() ) {
-			var path = require( 'path' )
-			return path.normalize( url )
-		} else {
-			return url
-		}
+		return Spelled.PlatformAdapter.normalizeUrl( url )
 	},
 
 	internalAssetIdToMyAssetId: function( internalAssetId ) {

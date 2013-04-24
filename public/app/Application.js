@@ -5,7 +5,8 @@ Ext.define('Spelled.Application', {
 	requires: [
 		'Ext.state.CookieProvider',
 		'Spelled.view.ui.SpelledViewport',
-		'Spelled.Configuration'
+		'Spelled.Configuration',
+		'Spelled.PlatformAdapter'
 	],
 
 	appFolder: 'app',
@@ -320,11 +321,8 @@ Ext.define('Spelled.Application', {
 			Ext.bind( this.engineMessageBus.receive, this.engineMessageBus ),
 			false
 		)
-	},
 
-	showSpellEdConfig: function() {
-		Ext.state.Manager.clear( 'workspacePath' )
-		Ext.create( 'Spelled.view.ui.SpelledConfiguration' ).show()
+		Ext.Direct.addProvider( Spelled.PlatformAdapter.createRemoteProvider() )
 	},
 
 	loadProjects: function() {
@@ -343,8 +341,6 @@ Ext.define('Spelled.Application', {
 	},
 
 	launch: function() {
-		var me = this
-
 		Spelled.Configuration.createStateProvider()
 
 		Ext.get('loading').remove()
@@ -354,20 +350,10 @@ Ext.define('Spelled.Application', {
 
 		Ext.create( 'Spelled.view.ui.SpelledViewport' )
 
-		if( Spelled.Configuration.isNodeWebKit() ) {
-			var workspacePath = Spelled.Configuration.getWorkspacePath(),
-				fs            = require( 'fs' )
-
-			if( !workspacePath || !fs.existsSync( workspacePath ) )
-				me.showSpellEdConfig()
-			else {
-				var provider = Ext.direct.Manager.getProvider( 'webkitProvider')
-				provider.createWebKitExtDirectApi( function() {
-					me.loadProjects()
-				} )
-			}
+		if( Spelled.PlatformAdapter.isNodeWebKit() ) {
+			this.getController( 'NodeWebKit').checkWorkspaceSettings()
 		} else {
-			me.loadProjects()
+			this.loadProjects()
 		}
 	}
 });

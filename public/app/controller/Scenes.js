@@ -994,40 +994,11 @@ Ext.define('Spelled.controller.Scenes', {
 		this.getSpelledIframe().focus()
 	},
 
-	enterWebkitFullScreen: function() {
-		var gui = require('nw.gui'),
-			win = gui.Window.get()
-
-		win.toggleFullscreen()
-	},
-
 	activateFullscreen: function( button, state ) {
 		var tab      = this.getSpelledIframe(),
-			dom      = tab.el.dom,
-			prefixes = ["moz", "webkit", "ms", "o", ""],
-			fullScreenFunctionAvailable = false
+			dom      = tab.el.dom
 
-		if( Spelled.Configuration.isNodeWebKit() ) {
-			this.enterWebkitFullScreen()
-			return
-		}
-
-		Ext.each(prefixes, function( prefix ) {
-			var fnName = (prefix.length > 0) ? "RequestFullScreen" : "requestFullScreen"
-
-			if (dom[prefix + fnName] !== undefined) {
-				dom.contentWindow.focus()
-
-				//we need to call this function directly here, because Firefox does
-				//not accept calling this function from another context
-				dom[prefix + fnName]()
-
-				fullScreenFunctionAvailable = true
-			}
-		})
-
-
-		if (!fullScreenFunctionAvailable) {
+		if ( !Spelled.PlatformAdapter.enterFullScreen( dom ) ) {
 			//inform the user if this function is not available
 			Ext.Msg.alert( 'Not supported', 'Sorry, the fullscreen function is not yet supported in your browser. Try using another browser.')
 		}

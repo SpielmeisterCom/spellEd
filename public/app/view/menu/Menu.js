@@ -95,7 +95,7 @@ Ext.define('Spelled.view.menu.Menu', {
 				text    : 'Change  workspace',
 				nwType  : 'normal',
 				action  : 'showSetWorkspace',
-				hidden  : !Spelled.Configuration.isNodeWebKit()
+				hidden  : !Spelled.PlatformAdapter.isNodeWebKit()
 			}, {
 				text    : 'About SpellEd',
 				nwType  : 'normal',
@@ -104,26 +104,26 @@ Ext.define('Spelled.view.menu.Menu', {
 				text    : 'Check for Updates...',
 				nwType  : 'normal',
 				action  : 'showUpdateDialog',
-				hidden  : !Spelled.Configuration.isNodeWebKit()
+				hidden  : !Spelled.PlatformAdapter.isNodeWebKit()
 			}, {
 				text    : 'Hide SpellEd',
 				appleSelector  : 'hide:',
 				keyEquivalent: 'h',
-				hidden  : !Spelled.Configuration.isMacOs()
+				hidden  : !Spelled.PlatformAdapter.isMacOs()
 			}, {
 				text    : 'Hide Others',
 				appleSelector  : 'hideOtherApplications:',
 				keyEquivalent: 'h',
-				hidden  : !Spelled.Configuration.isMacOs()
+				hidden  : !Spelled.PlatformAdapter.isMacOs()
 			}, {
 				text    : 'Show All',
 				appleSelector  : 'unhideAllApplications:',
-				hidden  : !Spelled.Configuration.isMacOs()
+				hidden  : !Spelled.PlatformAdapter.isMacOs()
 			}, {
 				text    : 'Quit SpellEd',
 				appleSelector  : 'closeAllWindows:',
 				keyEquivalent: 'q',
-				hidden  : !Spelled.Configuration.isMacOs()
+				hidden  : !Spelled.PlatformAdapter.isMacOs()
 			}]
 		}
 	},
@@ -133,13 +133,13 @@ Ext.define('Spelled.view.menu.Menu', {
 			menuItems = [
 				this.spellEdGeneralMenu,
 				this.projectMenu,
-				Spelled.Configuration.isMacOs() ? this.editMenu : null,
+				Spelled.PlatformAdapter.isMacOs() ? this.editMenu : null,
 				this.layoutMenu
 			]
 
 		Ext.applyIf(me, {
 			items : {
-				xtype: Spelled.Configuration.isNodeWebKit() ? 'nwtoolbar' : 'toolbar',
+				xtype: Spelled.PlatformAdapter.getToolbarXType(),
 				cls: 'spelledToolbar',
 				items: menuItems
 			}
