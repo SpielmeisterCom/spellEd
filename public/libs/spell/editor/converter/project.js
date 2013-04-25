@@ -8,6 +8,11 @@ define(
 	) {
 		'use strict'
 
+		var initConfig = function( project ) {
+			if( !_.has( project, 'config' ) ) {
+				project.config = {}
+			}
+		}
 
 		/**
 		 * This function creates a project in the spell engine format. It requires the project in the editor format as input.
@@ -23,6 +28,8 @@ define(
 					return ( !scene.namespace ) ? scene.name : scene.namespace + "." + scene.name
 				}
 			)
+
+			initConfig( result )
 
 			result.config.supportedLanguages = _.map(
 				project.getSupportedLanguages,
@@ -41,6 +48,8 @@ define(
 		 */
 		var toEditorFormat = function( project ) {
 			var result = _.pick( project, 'config', 'name', 'startScene', 'id', 'type', 'scenes' )
+
+			initConfig( result )
 
 			result.supportedLanguages = project.config.supportedLanguages
 
