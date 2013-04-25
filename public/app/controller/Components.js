@@ -470,12 +470,16 @@ Ext.define('Spelled.controller.Components', {
 		var entityTemplate = Spelled.EntityHelper.getRootTemplateOwnerFromComponent( component )
 
 		if( entityTemplate ) {
+			var previewTab = this.application.findTabByTitle( this.getSceneEditor(), entityTemplate.getFullName() ),
+				type       = 'library.updateEntityTemplate',
+				message    = { definition: entityTemplate.toSpellEngineMessageFormat() }
 
-			this.application.fireEvent(
-				'sendToEngine',
-				'library.updateEntityTemplate',
-				{ definition: entityTemplate.toSpellEngineMessageFormat() }
-			)
+			if( previewTab ) {
+				var iframe = previewTab.down( 'component[name="entityPreviewContainer"]' )
+				this.application.sendDebugMessage( iframe.getId(), type, message )
+			}
+
+			this.application.fireEvent( 'sendToEngine', type, message )
 		}
 	},
 
