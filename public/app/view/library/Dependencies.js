@@ -129,9 +129,14 @@ Ext.define('Spelled.view.library.Dependencies', {
 		Spelled.Converter.addAdditionalInfoToDependencyNode( rootNode, true )
 
 		for ( var j = 0, l = dynamicDependencies.length; j < l; j++ ) {
-			var item = libraryStore.findLibraryItemByLibraryId( dynamicDependencies[ j ] )
+			var libraryId = dynamicDependencies[ j ],
+				item      = libraryStore.findLibraryItemByLibraryId( libraryId )
 
-			if( !item ) continue
+			if( !item ) {
+				//Remove dependency which could not be resolved
+				Ext.Array.remove( record.get( 'dependencies' ), libraryId )
+				continue
+			}
 
 			var	node = item.createDependencyNode()
 
