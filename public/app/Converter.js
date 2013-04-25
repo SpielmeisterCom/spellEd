@@ -1,6 +1,10 @@
 Ext.define( 'Spelled.Converter' ,{
 	singleton: true,
 
+	libraryIdToRelativePath: function( libraryId ) {
+		return libraryId.replace( /\./g, "/" )
+	},
+
 	toWorkspaceUrl: function( url ) {
 		var workspacePath = Spelled.Configuration.getWorkspacePath(),
 			url           = ( workspacePath && workspacePath.length > 0 ) ? workspacePath + '/' + url : url

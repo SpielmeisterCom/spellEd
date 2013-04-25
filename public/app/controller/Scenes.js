@@ -874,10 +874,33 @@ Ext.define('Spelled.controller.Scenes', {
 		)
 	},
 
+	generateUnsavedCacheContent: function() {
+		var getStore     = Ext.getStore,
+			stores       = this.application.getController( 'Projects' ).storesForSave,
+			cacheContent = []
+
+		var generateCacheContent = function( item ) {
+			if( item.dirty === true && item.toSpellEngineMessageFormat ) {
+				var filePath = Spelled.Converter.libraryIdToRelativePath( item.getFullName() ) + ".json"
+
+				cacheContent.push( { content: item.toSpellEngineMessageFormat(), filePath: filePath } )
+			}
+		}
+
+		Ext.each(
+			stores,
+			function( id ) {
+				getStore( id ).each( generateCacheContent )
+			}
+		)
+
+		return cacheContent
+	},
+
 	generateSceneCacheContent: function( scene, config ) {
 		var withScript   = ( config && Ext.isObject( config ) && !!config.withScript ),
 			editorMode   = ( config && Ext.isObject( config ) && !!config.editorMode ),
-			relativeName = scene.getFullName().replace( /\./g, "/" ),
+			relativeName = Spelled.Converter.libraryIdToRelativePath( scene.getFullName() ),
 			toBeCached   = [{
 				content : Ext.amdModules.sceneConverter.toEngineFormat( scene.getData( true ), { includeNamespace: true, includeEntityIds: true } ),
 				filePath : relativeName + ".json"
@@ -885,7 +908,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		if( withScript ) toBeCached.push( { content : scene.get( 'content' ), filePath : relativeName + ".js" } )
 
-		var cacheContent = Ext.amdModules.createCacheContent( toBeCached )
+		var cacheContent = Ext.amdModules.createCacheContent( Ext.Array.merge( toBeCached, this.generateUnsavedCacheContent() ) )
 
 		if( editorMode ) {
 			var isObject     = Ext.isObject,
