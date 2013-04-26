@@ -176,7 +176,8 @@ Ext.define('Spelled.controller.Assets', {
 				domvasedit: this.showDomvasPreview
 			},
 			'localizedfilefield': {
-				localizechange: this.addLocalizationFileFields
+				localizechange: this.addLocalizationFileFields,
+				updatepreview: this.updateLocalizationPreview
 			}
         })
 
@@ -378,7 +379,7 @@ Ext.define('Spelled.controller.Assets', {
 
 	fieldRenderHelper: function( type, fieldSet, asset ) {
 		if( asset && asset.isReadonly() ) return
-console.log( asset )
+
 		switch( type ) {
 			case this.TYPE_ANIMATION:
 				fieldSet.add( { xtype: 'animationassetconfig' } )
@@ -612,20 +613,26 @@ console.log( asset )
 
 	showConfig: function( asset ) {
 		var inspectorPanel = this.getRightPanel(),
-			View           = this.getAssetInspectorConfigView()
+			View           = this.getAssetInspectorConfigView(),
+			view           = new View(),
+			project        = this.application.getActiveProject(),
+			src            = asset.getFilePath( project.get('name') )
 
-		var view = new View()
 		view.loadRecord( asset )
 
 		inspectorPanel.setTitle( 'Asset information of "' + asset.get('name') +'"' )
 
 		view.docString = asset.docString
 
+		if( asset.get( 'localized' ) ){
+			src = Spelled.Converter.getLocalizedFilePath( src, project.getDefaultLanguageKey() )
+		}
+
 		switch( asset.get('subtype') ) {
 			case this.TYPE_APPEARANCE:
 			case this.TYPE_SPRITE_SHEET:
 			case this.TYPE_FONT:
-				view.add( { xtype: 'image', margin: 20, src: asset.getFilePath( this.application.getActiveProject().get('name') )} )
+				view.add( { xtype: 'image', margin: 20, src: src } )
 				break
 		}
 
@@ -736,16 +743,9 @@ console.log( asset )
 		reader.onload = (function(theFile) {
 			return function( e ) {
 				var result    = e.target.result,
-					extension = "." + theFile.type.split( "/").pop(),
-					langExt   = extension
+					extension = "." + theFile.type.split( "/").pop()
 
-				if( localized && fileField.getName() != 'default' ){
-					var language = fileField.getName()
-
-					langExt = "." + language + extension
-				}
-
-				me.saveBase64AssetFile( id + langExt, result )
+				me.saveBase64AssetFile( id + Spelled.Converter.localizeExtension( fileField.getName(), extension ), result )
 				asset.set( 'file', name + extension )
 				asset.save({ success: callback })
 			}
@@ -807,6 +807,17 @@ console.log( asset )
 		this.application.fireEvent( 'selectnamespacefrombutton', view, button )
     },
 
+	updateLocalizationPreview: function( container, asset, language ) {
+		var project = this.application.getActiveProject(),
+			src     = asset.getFilePath( project.get('name') )
+
+		if( language != 'default' ) {
+			src = Spelled.Converter.getLocalizedFilePath( src, language )
+		}
+
+		container.load( src )
+	},
+
     addAssetPreview: function( view, asset ) {
 		var project      = this.application.getActiveProject(),
 			entityConfig = Ext.create( 'Spelled.model.config.Entity', { name: "asset" }),
@@ -821,8 +832,6 @@ console.log( asset )
 		])
 
 		switch( subType ) {
-			case this.TYPE_APPEARANCE:
-				break
 			case this.TYPE_SPRITE_SHEET:
 				view.add( { xtype: 'assetiframe', workspacePrefix: false, src: asset.getFilePath( project.get('name') ), height: '100%' } )
 				break

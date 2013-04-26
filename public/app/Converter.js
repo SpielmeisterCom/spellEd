@@ -5,6 +5,21 @@ Ext.define( 'Spelled.Converter' ,{
 		return libraryId.replace( /\./g, "/" )
 	},
 
+	getLocalizedFilePath: function( filePath, language ) {
+		var parts     = filePath.split( '.' ),
+			extension = parts.pop()
+
+		parts.push( this.localizeExtension( language, "." + extension ) )
+
+		return parts.join( '' )
+	},
+
+	localizeExtension: function( language, extension ) {
+		if( language == 'default' ) return extension
+
+		return "." + language + extension
+	},
+
 	toWorkspaceUrl: function( url ) {
 		var workspacePath = Spelled.Configuration.getWorkspacePath(),
 			url           = ( workspacePath && workspacePath.length > 0 ) ? workspacePath + '/' + url : url

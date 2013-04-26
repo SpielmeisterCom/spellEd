@@ -28,7 +28,7 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
 			me.createLanguageTab( 'Image', 'default' )
 		}
 
-		tabPanel.setActiveTab( 0 )
+		if( tabPanel.up( 'form' ).getRecord() ) tabPanel.setActiveTab( 0 )
 	},
 
 	createLanguageTab: function( name, id ) {
@@ -40,7 +40,8 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
 				{
 					xtype: 'assetfilefield',
 					name: id
-				}
+				},
+				{ xtype: 'assetiframe', workspacePrefix: false, height: '100%' }
 			]
 		})
 	},
@@ -54,6 +55,15 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
 		asset.set( 'localized', newValue )
 
 		this.fireEvent( 'localizechange', cmp, asset )
+	},
+
+	updatePreview: function( tabPanel, newCard ) {
+		var form   = tabPanel.up( 'form' ),
+			asset  = form.getRecord(),
+			iframe = newCard.down( 'assetiframe'),
+			name   = newCard.down( 'assetfilefield').getName()
+
+		if( asset ) this.fireEvent( 'updatepreview', iframe, asset, name )
 	},
 
 	initComponent: function() {
@@ -70,7 +80,13 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
 					}
 				},
 				{
-					xtype: 'tabpanel'
+					xtype: 'tabpanel',
+					listeners: {
+						tabchange: Ext.bind( me.updatePreview, me ),
+						afterrender: function() {
+							this.setActiveTab( 0 )
+						}
+					}
 				}
 			]
 		})
