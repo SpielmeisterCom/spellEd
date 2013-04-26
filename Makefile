@@ -11,7 +11,7 @@ endif
 
 
 .PHONY: all
-all: clean build/spelledjs/public build/app.nw spelledserver
+all: clean build/spelledjs/public build/app.nw build/spelledserver
 
 .PHONY: clean
 clean:
@@ -24,8 +24,7 @@ theme:
 	$(SENCHA) -cwd public/packages/spelled-theme package build
 	cd $(CWD)
 
-.PHONY: spelledserver
-spelledserver:
+build/spelledserver:
 	mkdir -p build/spelledserver
 	tail -n+2 server >build/spelledserver/tmp.js
 	
