@@ -209,6 +209,22 @@
     box-shadow: inset 0px 0px 2px 2px red;
 }
 
+/*
+this is a bug in extjs 4.2 regarding the width of tooltip
+They work in firefox 19 but not in chrome 26
+the following three css lines fix the problem
+*/
+
+.x-tip {
+    width: auto !important;
+}
+.x-tip-body {
+    width: auto !important;
+}
+.x-tip-body span {
+    width: auto !important;
+}
+
 /*For tree nodes dragging in scenes-navigator*/
 /*
 .dragged-node-highlight .x-grid-cell,
