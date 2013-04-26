@@ -190,6 +190,10 @@ Ext.define('Spelled.controller.Projects', {
 			languages = project.getSupportedLanguages()
 
 		if( language && !languages.getById( language.getId() ) ) {
+			if( !project.getDefaultLanguageKey() ) {
+				project.get( 'config' ).defaultLanguage = language.getId()
+			}
+
 			languages.add( language )
 			this.application.fireEvent( 'addedLanguage', language )
 		}
