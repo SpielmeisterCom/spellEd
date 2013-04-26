@@ -41,7 +41,10 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
 					xtype: 'assetfilefield',
 					name: id
 				},
-				{ xtype: 'assetiframe', workspacePrefix: false, height: '100%' }
+				{
+					height: 5000,
+					xtype: 'assetiframe', workspacePrefix: false
+				}
 			]
 		})
 	},
