@@ -174,6 +174,9 @@ Ext.define('Spelled.controller.Assets', {
             },
 			'domvasassetconfig': {
 				domvasedit: this.showDomvasPreview
+			},
+			'localizedfilefield': {
+				localizechange: this.addLocalizationFileFields
 			}
         })
 
@@ -375,7 +378,7 @@ Ext.define('Spelled.controller.Assets', {
 
 	fieldRenderHelper: function( type, fieldSet, asset ) {
 		if( asset && asset.isReadonly() ) return
-
+console.log( asset )
 		switch( type ) {
 			case this.TYPE_ANIMATION:
 				fieldSet.add( { xtype: 'animationassetconfig' } )
@@ -396,7 +399,7 @@ Ext.define('Spelled.controller.Assets', {
 				fieldSet.add( { xtype: '2dtilemapconfig', edit: !!asset } )
 				break
 			case this.TYPE_APPEARANCE:
-				fieldSet.add( { xtype: 'appearanceasset' } )
+				this.addLocalizationFileFields( fieldSet.add( { xtype: 'appearanceasset', edit: !!asset } ), asset )
 				break
 			case this.TYPE_SOUND:
 				fieldSet.add( { xtype: 'soundasset' } )
@@ -405,6 +408,13 @@ Ext.define('Spelled.controller.Assets', {
 				if( asset ) fieldSet.add( { xtype: 'translationasset', asset: asset, project: this.application.getActiveProject() } )
 				break
 		}
+	},
+
+	addLocalizationFileFields: function( cmp, asset ) {
+		var panel   = cmp.down( 'localizedfilefield'),
+			project = this.application.getActiveProject()
+
+		panel.createLanguageTabs( asset.get( 'localized' ), project.getSupportedLanguages() )
 	},
 
 	addKeyToActionMapForm: function( fieldSet, asset ) {
@@ -715,19 +725,28 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	saveFileUploadFromAsset: function( fileField, asset, callback ) {
-		var me     = this,
-			id     = this.application.generateFileIdFromObject( asset.data ),
-			reader = new FileReader(),
-			file   = fileField.fileRawInput
+		var me        = this,
+			id        = this.application.generateFileIdFromObject( asset.data ),
+			reader    = new FileReader(),
+			file      = fileField.fileRawInput,
+			name      = asset.get( 'name' ),
+			localized = asset.get( 'localized' )
 
 		// Closure to capture the file information.
 		reader.onload = (function(theFile) {
 			return function( e ) {
 				var result    = e.target.result,
-					extension = "." + theFile.type.split( "/").pop()
+					extension = "." + theFile.type.split( "/").pop(),
+					langExt   = extension
 
-				me.saveBase64AssetFile( id + extension, result )
-				asset.set( 'file', asset.get( 'name' ) + extension )
+				if( localized && fileField.getName() != 'default' ){
+					var language = fileField.getName()
+
+					langExt = "." + language + extension
+				}
+
+				me.saveBase64AssetFile( id + langExt, result )
+				asset.set( 'file', name + extension )
 				asset.save({ success: callback })
 			}
 		})( file )
@@ -803,6 +822,7 @@ Ext.define('Spelled.controller.Assets', {
 
 		switch( subType ) {
 			case this.TYPE_APPEARANCE:
+				break
 			case this.TYPE_SPRITE_SHEET:
 				view.add( { xtype: 'assetiframe', workspacePrefix: false, src: asset.getFilePath( project.get('name') ), height: '100%' } )
 				break

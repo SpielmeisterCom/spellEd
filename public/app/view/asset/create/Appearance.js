@@ -3,7 +3,8 @@ Ext.define('Spelled.view.asset.create.Appearance', {
     alias: 'widget.appearanceasset',
 
 	requires: [
-		'Ext.form.field.File'
+		'Ext.form.field.File',
+		'Spelled.view.asset.create.LocalizedFileField'
 	],
 
 	items: [
@@ -13,7 +14,7 @@ Ext.define('Spelled.view.asset.create.Appearance', {
 			width: 'null'
 		},
 		{
-			xtype: 'assetfilefield'
+			xtype: 'localizedfilefield'
 		}
 	]
 });

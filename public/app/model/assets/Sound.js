@@ -14,6 +14,7 @@ Ext.define('Spelled.model.assets.Sound', {
 	},
 
 	fields: [
+		'localized',
 		{ name: 'subtype', type: 'string', defaultValue: 'sound' },
 		'file'
 	]

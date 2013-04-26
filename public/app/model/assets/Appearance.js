@@ -14,6 +14,7 @@ Ext.define('Spelled.model.assets.Appearance', {
 	},
 
 	fields: [
+		{ name: 'localized', type: 'boolean', defaultValue: false },
 		{ name: 'subtype', type: 'string', defaultValue: 'appearance' },
 		'file'
 	]
