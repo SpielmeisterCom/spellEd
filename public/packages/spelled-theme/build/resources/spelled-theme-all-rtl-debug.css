@@ -5552,7 +5552,7 @@ body.x-nbr .x-btn-default-toolbar-large {
   color: white;
   font-size: 12px;
   font-size: normal;
-  border-width: 0px;
+  border-width: 1px;
   border-style: solid;
 }
 
@@ -11430,7 +11430,7 @@ a.x-color-picker-item:hover {
 /* line 1, ../../../ext-theme-neutral/sass/src/panel/Table.scss */
 .x-grid-body {
   background: #444444;
-  border-width: 0px;
+  border-width: 1px;
   border-style: solid;
   border-color: #646464;
 }
