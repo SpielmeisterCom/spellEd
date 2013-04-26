@@ -403,7 +403,7 @@ Ext.define('Spelled.controller.Assets', {
 				this.addLocalizationFileFields( fieldSet.add( { xtype: 'appearanceasset', edit: !!asset } ), asset )
 				break
 			case this.TYPE_SOUND:
-				fieldSet.add( { xtype: 'soundasset' } )
+				this.addLocalizationFileFields( fieldSet.add( { xtype: 'soundasset', edit: !!asset } ), asset )
 				break
 			case this.TYPE_TRANSLATION:
 				if( asset ) fieldSet.add( { xtype: 'translationasset', asset: asset, project: this.application.getActiveProject() } )

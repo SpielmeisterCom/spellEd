@@ -13,9 +13,7 @@ Ext.define('Spelled.view.asset.create.Sound', {
 			width: 'null'
 		},
 		{
-			xtype: 'checkbox',
-			fieldLabel: 'Localized',
-			name: 'localized'
+			xtype: 'localizedfilefield'
 		}
 	]
 });

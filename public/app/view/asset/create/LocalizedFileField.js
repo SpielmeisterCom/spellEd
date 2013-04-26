@@ -25,7 +25,7 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
 			me.generateLanguageFileField( languages )
 
 		} else {
-			me.createLanguageTab( 'Image', 'default' )
+			me.createLanguageTab( 'Default', 'default' )
 		}
 
 		if( tabPanel.up( 'form' ).getRecord() ) tabPanel.setActiveTab( 0 )
