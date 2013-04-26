@@ -10775,7 +10775,7 @@ a.x-color-picker-item:hover {
 
 /* line 30, ../../../ext-theme-neutral/sass/src/grid/header/Container.scss */
 .x-grid-body {
-  border-top-color: #c5c5c5;
+  border-top-color: #363636;
 }
 
 /* line 34, ../../../ext-theme-neutral/sass/src/grid/header/Container.scss */
@@ -10799,9 +10799,9 @@ a.x-color-picker-item:hover {
   position: absolute;
   overflow: hidden;
   border: 0 none;
-  border-right: 1px solid #c5c5c5;
+  border-right: 1px solid #363636;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
-  color: black;
+  color: white;
   font: normal 11px tahoma, arial, verdana, sans-serif;
   background-image: none;
   background-color: #646464;
@@ -10821,7 +10821,7 @@ a.x-color-picker-item:hover {
 /* line 35, ../../../ext-theme-neutral/sass/src/grid/column/Column.scss */
 .x-group-sub-header {
   background: transparent;
-  border-top: 1px solid #c5c5c5;
+  border-top: 1px solid #363636;
   border-left-width: 0;
 }
 /* line 41, ../../../ext-theme-neutral/sass/src/grid/column/Column.scss */
