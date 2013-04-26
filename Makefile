@@ -26,7 +26,17 @@ theme:
 
 .PHONY: spelledserver
 spelledserver:
-	#todo build spelledserver
+	mkdir -p build/spelledserver
+	tail -n+2 server >build/spelledserver/tmp.js
+	
+	echo >>build/spelledserver/tmp.js
+
+	$(NODE) ../spellCore/tools/n.js -s src -m server/spellEdServer -i "connect,http,querystring,formidable,fs,underscore,path,flob,child_process,commander" >>build/spelledserver/tmp.js
+	
+	$(NODE) ../spellCore/tools/n.js mangle build/spelledserver/tmp.js -a >build/spelledserver/spellEdServer.js
+	rm build/spelledserver/tmp.js
+
+	chmod +x build/spelledserver/spellEdServer.js
 
 .PHONY: clean-nw
 clean-nw:
