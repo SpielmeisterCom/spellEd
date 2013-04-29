@@ -394,6 +394,8 @@ Ext.define('Spelled.controller.Projects', {
 			exportFileName = projectName +".zip",
 			me             = this
 
+		var progress = Ext.Msg.wait( 'Please wait...', 'Exporting project' )
+
 		Spelled.SpellBuildActions.exportDeployment(
 			projectName,
 			exportFileName,
@@ -401,12 +403,14 @@ Ext.define('Spelled.controller.Projects', {
 				if( !!response.data ) {
 					// WORKAROUND: delaying the download a little bit to mitigate asynchronous race condition
 					var task = new Ext.util.DelayedTask( function() {
+						progress.close()
 						window.location = Spelled.Converter.toWorkspaceUrl( '/' + exportFileName )
 					} )
 
 					task.delay( 5000 )
 
 				} else {
+					progress.close()
 					me.application.showBuildServerConnectError()
 				}
 			}
