@@ -56,8 +56,7 @@ Ext.define('Spelled.controller.Projects', {
 			scope: this
 		})
 
-		Ext.EventManager.on( window, 'beforeunload', this.projectCloseWarning, this)
-		Ext.EventManager.on( window, 'unload', this.projectCloseWarning, this)
+		this.application.platform.addClosingEditorHandler()
 
         this.control({
 			'supportedlanguagecontextmenu [action="remove"]': {

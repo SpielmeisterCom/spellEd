@@ -1,10 +1,15 @@
 Ext.define( 'Spelled.platform.target.Cloud', {
+	extend: 'Spelled.platform.target.Abstract',
 	requires: [
 		'Spelled.Remoting'
 	],
 
-	showItemInFolder: function( projectName, libraryId ) {
-		console.log( 'Not supported' )
+	addClosingEditorHandler: function() {
+		var controller = Spelled.getApplication().getController( 'Projects' ),
+			callback   = controller.projectCloseWarning
+
+		Ext.EventManager.on( window, 'beforeunload', callback, controller )
+		Ext.EventManager.on( window, 'unload', callback, controller )
 	},
 
 	copyToClipboard: function( text ) {
@@ -13,10 +18,6 @@ Ext.define( 'Spelled.platform.target.Cloud', {
 
 	createRemoteProvider: function() {
 		return Spelled.Remoting.createSpellEdCloudProvider()
-	},
-
-	getToolbarXType: function() {
-		return 'toolbar'
 	},
 
 	enterFullScreen: function( dom ) {
@@ -38,9 +39,5 @@ Ext.define( 'Spelled.platform.target.Cloud', {
 		})
 
 		return success
-	},
-
-	normalizeUrl: function( url ) {
-		return url
 	}
 })

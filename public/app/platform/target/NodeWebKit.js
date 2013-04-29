@@ -1,4 +1,5 @@
 Ext.define( 'Spelled.platform.target.NodeWebKit', {
+	extend: 'Spelled.platform.target.Abstract',
 	requires: [
 		'Spelled.Remoting'
 	],
