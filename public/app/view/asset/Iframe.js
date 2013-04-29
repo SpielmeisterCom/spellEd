@@ -8,7 +8,7 @@ Ext.define('Spelled.view.asset.Iframe', {
 	workspacePrefix: true,
 
     renderTpl: [
-        '<iframe src="{src}" name="{frameName}" width="100%" height="100%" frameborder="0"></iframe>'
+        '<iframe src="{src}" name="{frameName}" style="width: 100%; height: 100%;" frameborder="0" scrolling="no" border="0" ></iframe>'
     ],
 
     afterRender: function() {
