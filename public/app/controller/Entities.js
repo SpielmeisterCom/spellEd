@@ -306,13 +306,13 @@ Ext.define('Spelled.controller.Entities', {
 
 	removeEntity: function( entity ) {
 		if( !entity.isRemovable() ) {
-			Ext.Msg.alert(
-				"Remove not allowed",
+			Spelled.MessageBox.alert(
+				"Removing not allowed",
 				"The entity '" + entity.get('name') + "' is locked to a template and can't be removed!"
 			)
 		} else {
 			Ext.Msg.confirm(
-				'Remove '+ entity.get('name'),
+				'Removing '+ entity.get('name'),
 				'Do you really want to remove the entity "' + entity.get('name') + '"?',
 				function( button ) {
 					if ( button === 'yes' ) {
@@ -327,7 +327,7 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
 	showEntityRemoveAlert: function( entity ) {
-		Ext.Msg.alert( "Can not remove: '" + entity.get( 'name' ) + "'", "Is linked to a entityTemplate: '" + entity.getOwner().get( 'name' ) + "'" )
+		Spelled.MessageBox.alert( "Can not remove: '" + entity.get( 'name' ) + "'", "Is linked to a entityTemplate: '" + entity.getOwner().get( 'name' ) + "'" )
 	},
 
 	showTemplateEntity: function( entityTemplateId ) {

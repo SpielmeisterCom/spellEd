@@ -411,7 +411,7 @@ Ext.define('Spelled.controller.Projects', {
 
 				} else {
 					progress.close()
-					me.application.showBuildServerConnectError()
+					Spelled.MessageBox.showBuildServerConnectError()
 				}
 			}
 		)
@@ -458,10 +458,10 @@ Ext.define('Spelled.controller.Projects', {
 		var lastProgress = Ext.MessageBox.progressBar.value || 0,
 			nextProgress = lastProgress + this.PROGRESS_STEP()
 
-		Ext.MessageBox.updateProgress( nextProgress, Math.round( 100 * nextProgress ) + '% completed', text || null )
+		Ext.Msg.updateProgress( nextProgress, Math.round( 100 * nextProgress ) + '% completed', text || null )
 
 		if( nextProgress > 0.9999 ) {
-			Ext.MessageBox.close()
+			Ext.Msg.close()
 		}
 	},
 
@@ -470,7 +470,7 @@ Ext.define('Spelled.controller.Projects', {
 
 		if( !record ) return this.showStartScreen()
 
-		Ext.MessageBox.show({
+		Ext.Msg.show({
 			title: 'Please wait',
 			msg: 'Loading project items...',
 			progressText: 'Initializing...',

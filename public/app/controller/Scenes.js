@@ -816,7 +816,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 			this.application.removeSelectedNode( this.getScenesTree() )
 		} else {
-			Ext.Msg.alert( "Can't remove this scene", "You must at least have one scene in a project." )
+			Spelled.MessageBox.alert( "Can't remove this scene", "You must at least have one scene in a project." )
 		}
 	},
 
@@ -1023,7 +1023,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		if ( !Spelled.app.platform.enterFullScreen( dom ) ) {
 			//inform the user if this function is not available
-			Ext.Msg.alert( 'Not supported', 'Sorry, the fullscreen function is not yet supported in your browser. Try using another browser.')
+			Spelled.MessageBox.alert( 'Not supported', 'Sorry, the fullscreen function is not yet supported in your browser. Try using another browser.')
 		}
 	},
 

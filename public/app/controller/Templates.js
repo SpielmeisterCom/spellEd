@@ -220,7 +220,7 @@ Ext.define('Spelled.controller.Templates', {
             this.application.getController('Templates').removeTemplate( template )
 			this.application.removeSelectedNode( Ext.getCmp( 'LibraryTree' ) )
         } else {
-            Ext.Msg.alert( 'Error', 'The Template "' + template.getFullName() + '" is used in this Project and can not be deleted.' +
+			Spelled.MessageBox.alert( 'Error', 'The Template "' + template.getFullName() + '" is used in this Project and can not be deleted.' +
                 '<br>Remove all references to this Template first!')
         }
     },

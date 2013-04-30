@@ -65,7 +65,7 @@ Ext.define('Spelled.view.scene.TreeList' ,{
 						}
 
 						if( msg ) {
-							Ext.MessageBox.alert( 'Error', msg )
+							Spelled.MessageBox.alert( 'Error', msg )
 							return false
 						}
 					}

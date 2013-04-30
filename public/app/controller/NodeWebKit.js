@@ -64,7 +64,7 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 				}
 			)
 		} else if( !silent ) {
-			Ext.Msg.alert( 'Info', "No update available." )
+			Spelled.MessageBox.info( 'Info', "No update available." )
 		}
 	},
 
@@ -76,13 +76,13 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 			method: 'GET',
 			success: Ext.bind( me.checkVersion, me, [ silent ], true ),
 			failure: function( response, opts ) {
-				if( !silent ) Ext.Msg.alert( 'Error', 'Update server not reachable. Please try again later.' )
+				if( !silent ) Spelled.MessageBox.alert( 'Error', 'Update server not reachable. Please try again later.' )
 			}
 		})
 	},
 
 	showUpdateDialog: function() {
-		var msg = Ext.MessageBox.wait( 'Connecting to update server...' )
+		Ext.Msg.wait( 'Connecting to update server...' )
 
 		this.checkForUpdate()
 	},

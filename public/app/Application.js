@@ -6,6 +6,7 @@ Ext.define('Spelled.Application', {
 		'Ext.state.CookieProvider',
 		'Spelled.view.ui.SpelledViewport',
 		'Spelled.Configuration',
+		'Spelled.MessageBox',
 		'Spelled.platform.Adapter',
 		'Spelled.controller.NodeWebKit'
 	],
@@ -91,10 +92,6 @@ Ext.define('Spelled.Application', {
 	activateTabByEvent: function( tab, event ) {
 		event.stopEvent()
 		Ext.getCmp('Navigator').setActiveTab( tab, event )
-	},
-
-	showBuildServerConnectError: function() {
-		Ext.Msg.alert( 'Service unavailable', "SpellEd can't connect to the Build-Server." )
 	},
 
 	getLastSelectedNode: function( treePanel ) {
@@ -248,13 +245,8 @@ Ext.define('Spelled.Application', {
 	init: function() {
 		Ext.Direct.on('exception', function( response ) {
 			if( !Ext.Msg.isVisible() ) {
-				Ext.Msg.show({
-					closable: false,
-					title: 'Critical Error',
-					msg: "Could not execute '" + response.transaction.action +"."+ response.transaction.method +
-						"': <br/><br/>"+ response.xhr.responseText,
-					icon: Ext.MessageBox.ERROR
-				})
+				Spelled.MessageBox.error( 'Critical Error', "Could not execute '" + response.transaction.action +"."+ response.transaction.method +
+					"': <br/><br/>"+ response.xhr.responseText, true )
 			}
 		})
 
@@ -264,7 +256,7 @@ Ext.define('Spelled.Application', {
 				listeners: {
 					exception: {
 						fn: function( proxy, response ) {
-							Ext.Msg.alert(
+							Spelled.MessageBox.alert(
 								'An Error occurred',
 								"Could not execute '" + response.transaction.action +"."+ response.transaction.method +"': <br/><br/>"+ response.xhr.responseText
 							)

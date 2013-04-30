@@ -53,7 +53,7 @@ Ext.define('Spelled.view.library.TreeList' ,{
 					},
 					validateedit: function( editor, e ) {
 						if( !cellEditor.isJavaScriptCompliant( e.value ) ){
-							Ext.MessageBox.alert( 'Error', "Usage of invalid characters. No: '.' or '/' allowed" )
+							Spelled.MessageBox.alert( 'Error', "Usage of invalid characters. No: '.' or '/' allowed" )
 							return false
 						}
 					}
