@@ -412,10 +412,11 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	addLocalizationFileFields: function( cmp, asset ) {
-		var panel   = cmp.down( 'localizedfilefield'),
-			project = this.application.getActiveProject()
+		var panel     = cmp.down( 'localizedfilefield'),
+			project   = this.application.getActiveProject(),
+			localized = asset ? asset.get( 'localized' ) : false
 
-		panel.createLanguageTabs( asset.get( 'localized' ), project.getSupportedLanguages() )
+		panel.createLanguageTabs( localized, project.getSupportedLanguages() )
 	},
 
 	addKeyToActionMapForm: function( fieldSet, asset ) {
