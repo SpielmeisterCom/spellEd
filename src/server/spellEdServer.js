@@ -40,7 +40,7 @@ define(
 				    projectsPath           = path.resolve( path.join( cwd , command.projectsRoot ? '/' + command.projectsRoot : '/projects' ) ),
 					spellCliPath           = path.resolve( command.spellCliPath ),
 					spellEngineModulesPath = path.resolve( projectsPath, '../modules' ),
-					nodeModulesPath        = path.resolve( projectsPath, '../node_modules' ),
+					nodeModulesPath        = path.resolve( spellPath, '../node_modules' ),
 					spellCorePath          = path.resolve( spellPath, '../spellCore' )
 
 			    if( !fs.existsSync( projectsPath ) ) {
