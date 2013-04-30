@@ -66,7 +66,10 @@ Ext.define('Spelled.controller.Templates', {
 			},
             'createtemplate button[action="createTemplate"]' : {
                 click: this.createTemplate
-            }
+            },
+			'templateslistcontextmenu menuitemcopyid,templateslistentitycontextmenu menuitemcopyid,scriptslistcontextmenu menuitemcopyid,assetslistcontextmenu menuitemcopyid': {
+				click: this.copyIdentifier
+			}
         })
 
 		this.application.on({
@@ -78,6 +81,14 @@ Ext.define('Spelled.controller.Templates', {
 			scope: this
 		})
     },
+
+	copyIdentifier: function() {
+		var node = this.application.getLastSelectedNode( this.getTemplatesTree() )
+
+		if( node ) {
+			Spelled.app.platform.copyToClipboard( node.get( 'libraryId' ) )
+		}
+	},
 
 	checkIfTemplateIsDirty: function( panel ) {
 		var template = panel.template

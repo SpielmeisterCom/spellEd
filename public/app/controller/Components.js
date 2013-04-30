@@ -10,6 +10,7 @@ Ext.define('Spelled.controller.Components', {
 		'Spelled.view.component.property.Contextmenu',
 		'Spelled.base.grid.property.Grid',
 		'Spelled.base.view.GroupedTreeList',
+		'Spelled.view.library.menu.item.CopyIdentifier',
 		'Spelled.store.property.Mappings',
 		'Spelled.store.grouping.Components',
 		'Spelled.Converter',

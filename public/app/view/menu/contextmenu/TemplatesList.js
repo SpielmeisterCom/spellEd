@@ -8,6 +8,7 @@ Ext.define('Spelled.view.menu.contextmenu.TemplatesList', {
 			text: 'Open',
 			action: 'open'
 		},
+		{ xtype: 'menuitemcopyid' },
         {
 			xtype: 'menuitemremove'
         }

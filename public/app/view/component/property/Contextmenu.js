@@ -3,11 +3,7 @@ Ext.define('Spelled.view.component.property.Contextmenu', {
     alias : 'widget.componentpropertycontextmenu',
 
     items: [
-		{
-			icon: 'resources/images/icons/copy-identifier.png',
-			text: 'Copy identifier to clipboard',
-			action: 'copyComponentIdentifier'
-		},
+		{ xtype: 'menuitemcopyid' },
         {
 			icon: 'resources/images/icons/revert-component.png',
             text: 'Reset to component defaults',

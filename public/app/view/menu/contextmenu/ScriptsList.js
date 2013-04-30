@@ -6,6 +6,7 @@ Ext.define('Spelled.view.menu.contextmenu.ScriptsList', {
 		{
 			xtype: 'menuitemedit'
 		},
+		{ xtype: 'menuitemcopyid' },
 		{
 			xtype: 'menuitemremove'
 		}

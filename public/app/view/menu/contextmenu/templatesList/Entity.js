@@ -13,6 +13,7 @@ Ext.define('Spelled.view.menu.contextmenu.templatesList.Entity', {
 			text: 'Open template',
 			action: 'open'
 		},
+		{ xtype: 'menuitemcopyid' },
         {
 			xtype: 'menuitemremove'
         }
