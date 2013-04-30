@@ -6,9 +6,9 @@ Ext.define('Spelled.view.menu.contextmenu.AssetsList', {
 		{
 			xtype: 'menuitemedit'
 		},
-		{
-			xtype: 'menuitemrename'
-		},
+//		{
+//			xtype: 'menuitemrename'
+//		},
 		{ xtype: 'menuitemcopyid' },
         {
 			xtype: 'menuitemremove'
