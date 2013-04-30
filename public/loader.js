@@ -117,9 +117,7 @@ if( isNWRuntime ) {
 	head.js("libs/require.js", function() {
 
 		requirejs.config( {
-			baseUrl : 'libs', waitSeconds: 14,
-			nodeRequire: require
-
+			baseUrl : 'libs', waitSeconds: 14
 		} )
 
 		loadSpellEd()
