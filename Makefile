@@ -70,6 +70,8 @@ nw-debug: build/ace.js
 >>public/libs.js
 	$(NODE) ../spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "flob,path,http,fs,child_process,underscore" >public/nwlibs.js
 
+
+
 build/libs.js: build/ace.js
 	# creating concatenated version of all libs
 	cat build/ace.js >>build/libs.js
@@ -111,6 +113,13 @@ build/spelledjs/public/all-classes.js:
 	cp public/index.html build/spelledjs/public
 	cp public/error.html build/spelledjs/public
 
+	# copy fontdetect lib
+	mkdir -p build/spelledjs/public/libs
+	cp -aR public/libs/fontDetect build/spelledjs/public/libs
+
+	#copy ace lib
+	cp -aR ../ace/lib/ace build/spelledjs/public/libs/
+	
 build/spelledjs/public: build/spelledjs/public/all-classes.js build/spelledjs/public/libs.js build/spelledjs/public/loader.js
 
 build/nw-package: build/spelledjs/public build/spelledjs/public/nwlibs.js
