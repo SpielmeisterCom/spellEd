@@ -39,9 +39,14 @@ define(
 				    port                   = command.port || 3000,
 				    projectsPath           = path.resolve( path.join( cwd , command.projectsRoot ? '/' + command.projectsRoot : '/projects' ) ),
 					spellCliPath           = path.resolve( command.spellCliPath ),
-					spellEngineModulesPath = path.resolve( projectsPath, '../modules' ),
+					spellEngineModulesPath = path.resolve( spellPath, '../' ),
 					nodeModulesPath        = path.resolve( spellPath, '../node_modules' ),
 					spellCorePath          = path.resolve( spellPath, '../spellCore' )
+
+
+                if( !fs.existsSync( nodeModulesPath ) ) {
+                    nodeModulesPath        = path.resolve( spellPath, '../../node_modules' )
+                }
 
 			    if( !fs.existsSync( projectsPath ) ) {
 				    errors.push( 'Error: No valid projects directory supplied. Unable to start spelled server. ' +
