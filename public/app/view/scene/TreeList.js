@@ -60,8 +60,8 @@ Ext.define('Spelled.view.scene.TreeList' ,{
 
 						if( existingNode && existingNode != node ) {
 							msg = "The name '"+ name +"' is already given."
-						} else if( !cellEditor.isConfigEntityCompliant( name ) ){
-							msg = "Usage of invalid characters. No: '.' or '/' allowed"
+						} else if( !cellEditor.isConfigEntityCompliant( name ) || !Ext.form.field.VTypes.alphanum( name ) ){
+							msg = "Only alphanumaric characters allowed."
 						}
 
 						if( msg ) {
