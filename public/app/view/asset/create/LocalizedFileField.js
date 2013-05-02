@@ -64,9 +64,9 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
 		var form   = tabPanel.up( 'form' ),
 			asset  = form.getRecord(),
 			iframe = newCard.down( 'assetiframe'),
-			name   = newCard.down( 'assetfilefield').getName()
+			field  = newCard.down( 'assetfilefield')
 
-		if( asset ) this.fireEvent( 'updatepreview', iframe, asset, name )
+		if( field && asset ) this.fireEvent( 'updatepreview', iframe, asset, field.getName() )
 	},
 
 	initComponent: function() {
