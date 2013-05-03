@@ -61,7 +61,7 @@ ace:
 	#cat ../ace/build/src/mode-html.js >>build/ace.js
 	#cat ../ace/build/src/mode-javascript.js >>build/ace.js
 
-nw-debug: build/spelledjs/public/lib/ace/
+nw-debug:
 	$(NODE) ../spellCore/tools/n.js -s public/lib -m spellEdDeps \
 -i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark"\
 >>public/libs.js
@@ -108,7 +108,7 @@ build/spelledjs/public/all-classes.js:
 	cp public/index.html build/spelledjs/public
 	cp public/error.html build/spelledjs/public
 
-build/spelledjs/public: build/spelledjs/public/all-classes.js build/spelledjs/public/libs.js build/spelledjs/public/loader.js build/spelledjs/public/lib/ace/
+build/spelledjs/public: build/spelledjs/public/all-classes.js build/spelledjs/public/libs.js build/spelledjs/public/loader.js
 	# copy ace & fontdetect library
 	mkdir -p build/spelledjs/public/lib/
 	cp -aR public/lib/fontDetect public/lib/ace build/spelledjs/public/lib
