@@ -45,30 +45,23 @@ clean-nw:
 .PHONY: rebuild-nw
 rebuild-nw: clean-nw build/nw-package build/app.nw
 
-../ace/build/src/ace.js:
-	# building ace lib
+.PHONY: ace
+ace:
+	# building ace lib	
 	cd ../ace && ../nodejs/node ./Makefile.dryice.js normal
 
-build/spelledjs/public/lib/ace/: ../ace/build/src/ace.js
-	#copy ace lib
-	mkdir -p build/spelledjs/public/lib/ace || true
-	cp -aR ../ace/build/src-min/* build/spelledjs/public/lib/ace/
-
-build/ace.js: ../ace/build/src/ace.js
-	# creating concatinated version of the ace lib
-	mkdir -p build
-
+	rm -Rf public/lib/ace || true
+	mkdir -p public/lib/ace || true
+	cp -aR ../ace/build/src-min/* public/lib/ace/
+	
 	# concatenated needed files to one include
-	cat ../ace/build/src/ace.js >>build/ace.js
-	$(SED) 's/window\.require/window\.requirejs/g' build/ace.js
-	cat ../ace/build/src/theme-pastel_on_dark.js >>build/ace.js
-	cat ../ace/build/src/mode-html.js >>build/ace.js
-	cat ../ace/build/src/mode-javascript.js >>build/ace.js
-	cat ../ace/build/src/worker-javascript.js >>build/ace.js
+	#cat ../ace/build/src/ace.js >>build/ace.js
+	#$(SED) 's/window\.require/window\.requirejs/g' build/ace.js
+	#cat ../ace/build/src/theme-pastel_on_dark.js >>build/ace.js
+	#cat ../ace/build/src/mode-html.js >>build/ace.js
+	#cat ../ace/build/src/mode-javascript.js >>build/ace.js
 
-nw-debug: build/spelledjs/public/lib/ace/ build/ace.js
-	cat build/ace.js >public/libs.js
-
+nw-debug: build/spelledjs/public/lib/ace/
 	$(NODE) ../spellCore/tools/n.js -s public/lib -m spellEdDeps \
 -i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark"\
 >>public/libs.js
@@ -77,10 +70,7 @@ nw-debug: build/spelledjs/public/lib/ace/ build/ace.js
 	mkdir -p public/lib || true
 	cp -aR build/spelledjs/public/lib/ace/ public/lib/
 
-build/libs.js: build/ace.js
-	# creating concatenated version of all libs
-	cat build/ace.js >>build/libs.js
-
+build/libs.js: 
 	$(NODE) ../spellCore/tools/n.js -s public/lib -m spellEdDeps \
 -i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark"\
 >>build/libs.js

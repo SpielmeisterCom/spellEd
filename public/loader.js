@@ -62,8 +62,10 @@ var isNWRuntime = (typeof process) !== 'undefined',
 
 registerGlobalErrorHandler(isNWRuntime, isDevelEnv);
 
+JSincludes.push( 'lib/ace/ace.js' )
+
 if( !isNWRuntime ) {
-	JSincludes.push('lib/fontDetect/javascripts/swfobject.js')
+    JSincludes.push('lib/fontDetect/javascripts/swfobject.js')
 }
 
 if( isDevelEnv ) {
