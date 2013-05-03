@@ -44,10 +44,14 @@ clean-nw:
 .PHONY: rebuild-nw
 rebuild-nw: clean-nw build/nw-package build/app.nw
 
-
 ../ace/build/src/ace.js:
 	# building ace lib
 	cd ../ace && ../nodejs/node ./Makefile.dryice.js normal
+
+build/spelledjs/public/lib/ace/: ../ace/build/src/ace.js
+	#copy ace lib
+	mkdir -p build/spelledjs/public/lib/ace || true
+	cp -aR ../ace/build/src-min/* build/spelledjs/public/lib/ace/
 
 build/ace.js: ../ace/build/src/ace.js
 	# creating concatinated version of the ace lib
@@ -60,23 +64,22 @@ build/ace.js: ../ace/build/src/ace.js
 	cat ../ace/build/src/mode-html.js >>build/ace.js
 	cat ../ace/build/src/mode-javascript.js >>build/ace.js
 
-	# include spellscript include and worker
-	#cp ../ace/build/src-min/worker-javascript.js public/build
-
-nw-debug: build/ace.js
+nw-debug: build/spelledjs/public/lib/ace/ build/ace.js
 	cat build/ace.js >public/libs.js
-	$(NODE) ../spellCore/tools/n.js -s public/libs -m spellEdDeps \
+
+	$(NODE) ../spellCore/tools/n.js -s public/lib -m spellEdDeps \
 -i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark"\
 >>public/libs.js
 	$(NODE) ../spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "flob,path,http,fs,child_process,underscore" >public/nwlibs.js
 
-
+	mkdir -p public/lib || true
+	cp -aR build/spelledjs/public/lib/ace/ public/lib/
 
 build/libs.js: build/ace.js
 	# creating concatenated version of all libs
 	cat build/ace.js >>build/libs.js
 
-	$(NODE) ../spellCore/tools/n.js -s public/libs -m spellEdDeps \
+	$(NODE) ../spellCore/tools/n.js -s public/lib -m spellEdDeps \
 -i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark"\
 >>build/libs.js
 
@@ -113,14 +116,10 @@ build/spelledjs/public/all-classes.js:
 	cp public/index.html build/spelledjs/public
 	cp public/error.html build/spelledjs/public
 
-	# copy fontdetect lib
-	mkdir -p build/spelledjs/public/libs
-	cp -aR public/libs/fontDetect build/spelledjs/public/libs
-
-	#copy ace lib
-	cp -aR ../ace/lib/ace build/spelledjs/public/libs/
-	
-build/spelledjs/public: build/spelledjs/public/all-classes.js build/spelledjs/public/libs.js build/spelledjs/public/loader.js
+build/spelledjs/public: build/spelledjs/public/all-classes.js build/spelledjs/public/libs.js build/spelledjs/public/loader.js build/spelledjs/public/lib/ace/
+	# copy fontdetect library
+	mkdir -p build/spelledjs/public/lib/
+	cp -aR public/lib/fontDetect build/spelledjs/public/lib
 
 build/nw-package: build/spelledjs/public build/spelledjs/public/nwlibs.js
 	mkdir -p build/nw-package/public
