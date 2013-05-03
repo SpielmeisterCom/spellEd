@@ -53,13 +53,7 @@ ace:
 	rm -Rf public/lib/ace || true
 	mkdir -p public/lib/ace || true
 	cp -aR ../ace/build/src-min/* public/lib/ace/
-	
-	# concatenated needed files to one include
-	#cat ../ace/build/src/ace.js >>build/ace.js
-	#$(SED) 's/window\.require/window\.requirejs/g' build/ace.js
-	#cat ../ace/build/src/theme-pastel_on_dark.js >>build/ace.js
-	#cat ../ace/build/src/mode-html.js >>build/ace.js
-	#cat ../ace/build/src/mode-javascript.js >>build/ace.js
+	$(SED) 's/window\.require/window\.requirejs/g' public/lib/ace/ace.js
 
 nw-debug:
 	$(NODE) ../spellCore/tools/n.js -s public/lib -m spellEdDeps \
