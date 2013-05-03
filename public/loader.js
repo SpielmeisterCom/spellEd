@@ -63,7 +63,7 @@ var isNWRuntime = (typeof process) !== 'undefined',
 registerGlobalErrorHandler(isNWRuntime, isDevelEnv);
 
 if( !isNWRuntime ) {
-	JSincludes.push('libs/fontDetect/javascripts/swfobject.js')
+	JSincludes.push('lib/fontDetect/javascripts/swfobject.js')
 }
 
 if( isDevelEnv ) {
@@ -99,7 +99,7 @@ if( isNWRuntime ) {
 		define  = requirejs.define
 
 	requirejs.config( {
-		baseUrl: '../public/libs',
+		baseUrl: '../public/lib',
 		nodeRequire: require
 	} )
 
@@ -114,10 +114,10 @@ if( isNWRuntime ) {
 
 } else {
 	// use require.js in browser mode
-	head.js("libs/require.js", function() {
+	head.js("lib/require.js", function() {
 
 		requirejs.config( {
-			baseUrl : 'libs', waitSeconds: 14
+			baseUrl : 'lib', waitSeconds: 14
 		} )
 
 		loadSpellEd()

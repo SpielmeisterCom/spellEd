@@ -70,16 +70,12 @@ define(
 						.use(
 							createUrlRewriter( [
 								{
-									rewrite : '/libs/require.js',
+									rewrite : '/lib/require.js',
 									to      : '/require.js'
 								},
 								{
-									rewrite : '/libs/underscore.js',
+									rewrite : '/lib/underscore.js',
 									to      : '/underscore.js'
-								},
-								{
-									rewrite : '/libs/ace/',
-									to      : '/lib/ace/'
 								},
 								{
 									rewrite : /public\/library/,

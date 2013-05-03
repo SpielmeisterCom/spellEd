@@ -33,6 +33,6 @@ define(
 			}
 		}
 
-		return new FontDetect( 'font-detect-swf', 'libs/fontDetect/flash/FontList.swf' )
+		return new FontDetect( 'font-detect-swf', 'lib/fontDetect/flash/FontList.swf' )
 	}
 )
