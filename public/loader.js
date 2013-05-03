@@ -57,7 +57,11 @@ var isNWRuntime = (typeof process) !== 'undefined',
 	isDevelEnv  =   window.location.hostname === 'localhost' ||
 					window.location.hostname === '127.0.0.1' ||
 					(window.location.search && window.location.search === '?isDevelEnv=true'),
-	JSincludes  = [],
+	JSincludes  = [
+        "lib/ace/ace.js",
+        "lib/ace/theme-pastel_on_dark.js",
+        "lib/ace/mode-javascript.js",
+        "lib/ace/mode-html.js"],
 	CSSincludes = []
 
 registerGlobalErrorHandler(isNWRuntime, isDevelEnv);
@@ -132,15 +136,5 @@ function loadSpellEd() {
 		loadCSSFile( CSSincludes[i] )
 	}
 
-    // load ace first and then the rest
-    head.js("lib/ace/ace.js", function() {
-        head.js([
-            "lib/ace/mode-html.js",
-            "lib/ace/mode-javascript.js",
-            "lib/ace/theme-pastel_on_dark.js"
-        ], function() {
-            head.js.apply( null, JSincludes )
-        });
-
-    } )
+    head.js.apply( null, JSincludes )
 }
