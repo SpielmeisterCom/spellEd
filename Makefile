@@ -109,9 +109,9 @@ build/spelledjs/public/all-classes.js:
 	cp public/error.html build/spelledjs/public
 
 build/spelledjs/public: build/spelledjs/public/all-classes.js build/spelledjs/public/libs.js build/spelledjs/public/loader.js build/spelledjs/public/lib/ace/
-	# copy fontdetect library
+	# copy ace & fontdetect library
 	mkdir -p build/spelledjs/public/lib/
-	cp -aR public/lib/fontDetect build/spelledjs/public/lib
+	cp -aR public/lib/fontDetect public/lib/ace build/spelledjs/public/lib
 
 build/nw-package: build/spelledjs/public build/spelledjs/public/nwlibs.js
 	mkdir -p build/nw-package/public
