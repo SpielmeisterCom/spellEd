@@ -13,6 +13,7 @@ Ext.define('Spelled.view.template.entity.Add' ,{
             items: [
                 {
                     xtype: 'spelledtextfield',
+					vtype: 'alphanum',
                     name: 'name',
                     fieldLabel: 'Name',
                     anchor: '100%',

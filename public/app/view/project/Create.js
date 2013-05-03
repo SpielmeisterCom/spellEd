@@ -18,7 +18,11 @@ Ext.define('Spelled.view.project.Create' ,{
                     fieldLabel: 'Name',
                     anchor: '100%',
                     allowBlank:false,
-					vtype: 'alphanum'
+					vtype: 'alphanum',
+					validator: function( value ) {
+						var project = Ext.getStore( 'Projects' ).findRecord( 'name', value, 0, false, false, true )
+						return ( project ) ? "Project with this name already exists!" : true
+					}
                 }
             ],
             buttons: [

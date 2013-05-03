@@ -15,6 +15,7 @@ Ext.define('Spelled.view.entity.Create' ,{
             items: [
                 {
                     xtype: 'spelledtextfield',
+					vtype: 'alphanum',
                     name: 'name',
                     fieldLabel: 'Name',
                     anchor: '100%',
