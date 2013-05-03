@@ -63,6 +63,7 @@ build/ace.js: ../ace/build/src/ace.js
 	cat ../ace/build/src/theme-pastel_on_dark.js >>build/ace.js
 	cat ../ace/build/src/mode-html.js >>build/ace.js
 	cat ../ace/build/src/mode-javascript.js >>build/ace.js
+	cat ../ace/build/src/worker-javascript.js >>build/ace.js
 
 nw-debug: build/spelledjs/public/lib/ace/ build/ace.js
 	cat build/ace.js >public/libs.js
