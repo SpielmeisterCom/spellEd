@@ -17,6 +17,7 @@ all: clean build/spelledjs/public build/app.nw build/spelledserver
 clean:
 	# cleaning up and creating directory tree
 	rm -Rf build public/build || true
+	cd ../ace && make clean
 
 .PHONY: theme
 theme:
