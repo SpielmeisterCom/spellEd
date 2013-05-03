@@ -62,7 +62,7 @@ var isNWRuntime = (typeof process) !== 'undefined',
 
 registerGlobalErrorHandler(isNWRuntime, isDevelEnv);
 
-JSincludes.push( 'lib/ace/ace.js' )
+
 
 if( !isNWRuntime ) {
     JSincludes.push('lib/fontDetect/javascripts/swfobject.js')
@@ -128,9 +128,19 @@ if( isNWRuntime ) {
 
 
 function loadSpellEd() {
-	head.js.apply( null, JSincludes )
-
 	for( var i= 0; i<CSSincludes.length; i++) {
 		loadCSSFile( CSSincludes[i] )
 	}
+
+    // load ace first and then the rest
+    head.js("lib/ace/ace.js", function() {
+        head.js([
+            "lib/ace/mode-html.js",
+            "lib/ace/mode-javascript.js",
+            "lib/ace/theme-pastel_on_dark.js"
+        ], function() {
+            head.js.apply( null, JSincludes )
+        });
+
+    } )
 }
