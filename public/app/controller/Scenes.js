@@ -190,7 +190,10 @@ Ext.define('Spelled.controller.Scenes', {
 				},
                 'spelled.debug.entity.select': function( sourceId, payload ) {
                     me.selectEntityTreeItem( payload.id )
-                }
+				},
+				'spelled.debug.executingScene': function( sourcId, payload ) {
+					me.switchScene( payload )
+				}
 			}
 		)
 
@@ -1051,9 +1054,17 @@ Ext.define('Spelled.controller.Scenes', {
 			tab = this.application.createTab( sceneEditor, newTab )
 		}
 
-		this.application.setRenderedScene( scene )
-		this.setDefaultScene( scene )
+		this.switchScene( scene.get( 'sceneId' ) )
 		this.reloadScene( tab.down( 'button' ) )
+	},
+
+	switchScene: function( sceneId ) {
+		var scene = this.getConfigScenesStore().findRecord( 'sceneId', sceneId, 0, false, false, true )
+
+		if( scene ) {
+			this.application.setRenderedScene( scene )
+			this.setDefaultScene( scene )
+		}
 	},
 
 	showScenesList: function( scenes ) {
