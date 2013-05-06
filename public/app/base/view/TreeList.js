@@ -23,26 +23,14 @@ Ext.define('Spelled.base.view.TreeList' ,{
 					}
 				},
 				{
-					xtype: 'actioncolumn',
-					width: 30,
-					icon: 'resources/images/icons/wrench-arrow.png',
-					iconCls: 'x-hidden edit-action-icon',
-					handler: Ext.bind(me.handleEditClick, me)
+					xtype: 'spelledactioncolumn',
+					iconCls: 'x-hidden edit-action-icon'
 				}
 			]
 		})
 
 
-        me.addEvents(
-			'editclick'
-        )
-
         me.callParent()
-    },
-
-	handleEditClick: function(gridView, rowIndex, colIndex, column, e, node) {
-		this.getSelectionModel().select( node )
-		this.fireEvent('editclick', gridView, rowIndex, colIndex, column, e);
     }
 });
 

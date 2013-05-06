@@ -67,19 +67,12 @@ Ext.define('Spelled.view.asset.create.KeyToActionMap', {
 							}
 						},
 						{
-							xtype: 'actioncolumn',
-							width: 30,
-							icon: 'resources/images/icons/wrench-arrow.png',
-							handler: Ext.bind( me.handleEditClick, me )
+							xtype: 'spelledactioncolumn'
 						}
 					]
 				}
 			]
 		})
-
-		me.addEvents(
-			'editclick'
-		)
 
 		me.callParent()
 	},
@@ -89,10 +82,5 @@ Ext.define('Spelled.view.asset.create.KeyToActionMap', {
 		var grid = this.down( 'gridpanel' )
 
 		grid.fireEvent( 'edit', grid.editingPlugin )
-	},
-
-	handleEditClick: function(gridView, rowIndex, colIndex, column, e, record) {
-		gridView.getSelectionModel().select( rowIndex )
-		this.fireEvent('editclick', gridView, rowIndex, colIndex, column, e);
 	}
 });

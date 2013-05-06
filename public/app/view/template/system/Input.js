@@ -34,26 +34,14 @@ Ext.define('Spelled.view.template.system.Input' ,{
 				}
 			},
 			{
-				xtype: 'actioncolumn',
-				width: 30,
-				icon: 'resources/images/icons/wrench-arrow.png',
-				handler: Ext.bind(me.handleEditClick, me)
+				xtype: 'spelledactioncolumn'
 			}
 		];
-
-		me.addEvents(
-			'editclick'
-		)
 
 		me.callParent( arguments )
 	},
 
 	enableColumnHide: false,
-
-	handleEditClick: function(gridView, rowIndex, colIndex, column, e, record) {
-		gridView.getSelectionModel().select( rowIndex )
-		this.fireEvent('editclick', gridView, rowIndex, colIndex, column, e);
-	},
 
 	selType: 'rowmodel',
 

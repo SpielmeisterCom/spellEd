@@ -30,6 +30,7 @@ Ext.define('Spelled.controller.Assets', {
 		'Spelled.view.asset.create.FileField',
 		'Spelled.view.asset.create.Sound',
 		'Spelled.base.field.AssetId',
+		'Spelled.base.grid.column.Action',
 
 
 		'Spelled.store.asset.Types',
@@ -154,11 +155,9 @@ Ext.define('Spelled.controller.Assets', {
 		    'textappearanceconfig field' : {
 				change: this.refreshFontPreview
 			},
-			'keytoactionconfig, keyframeanimationconfig': {
-				editclick: this.showKeyMappingContextMenu
-			},
 			'keytoactionconfig gridpanel, keyframeanimationconfig gridpanel': {
-				itemcontextmenu: this.showKeyMappingContextMenu
+				itemcontextmenu: this.showKeyMappingContextMenu,
+				editclick: this.showKeyMappingContextMenu
 			},
 			'keytoactionconfig button[action="addKeyMapping"]': {
 				click: this.addKeyMapping
@@ -519,17 +518,7 @@ Ext.define('Spelled.controller.Assets', {
 				)
 			}
 
-			var column = Ext.create('Ext.grid.column.Column', {
-				header: 'value',
-				width: 120,
-				dataIndex: 'value',
-				editor: {
-					xtype: xtype
-				}
-			})
-			grid.headerCt.remove( grid.down( 'gridcolumn[dataIndex="value"]' ), true )
-			grid.headerCt.insert( 1, column)
-			grid.getView().refresh()
+			grid.down( 'gridcolumn[dataIndex="value"]').setEditor( { xtype: xtype } )
 
 			this.createKeyFrameComponentConfig( componentConfig, component )
 
