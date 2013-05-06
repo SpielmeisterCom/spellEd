@@ -11,8 +11,10 @@ Ext.define('Spelled.view.asset.Iframe', {
         '<iframe src="{src}" name="{frameName}" style="width: 100%; height: 100%;" frameborder="0" scrolling="no" border="0" ></iframe>'
     ],
 
+	renderingBackEnd: 'canvas-2d',
+
     afterRender: function() {
-		var src = this.src + '?iframeId=' + this.id
+		var src = this.src + '?iframeId=' + this.id + '&renderingBackEnd=' + this.renderingBackEnd
 
         this.load( this.workspacePrefix ? Spelled.Converter.toWorkspaceUrl( src ) : src )
     },
