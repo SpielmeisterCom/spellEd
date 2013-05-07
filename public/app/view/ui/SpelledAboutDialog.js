@@ -12,31 +12,17 @@ Ext.define('Spelled.view.ui.SpelledAboutDialog' ,{
 
 		Ext.applyIf(
 			this,{
-				items: [
-					{
-						xtype: 'image',
-						src: 'http://spelljs.com/wp-content/themes/spelljs/images/logo-spell-js.png'
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'Version',
-						value: Spelled.Configuration.version,
-						readOnly: true
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'Build number',
-						value: Spelled.Configuration.buildNumber,
-						readOnly: true
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'Build timestamp',
-						value: Spelled.Configuration.buildTimeStamp,
-						readOnly: true
-					}
-				]
-			}
+                bodyPadding: '5 5 0',
+                width: 300,
+                height: 195,
+                html:
+                    '<img src="resources/images/logo-spell-js.png"/><br/>' +
+                    '<strong>SpellJS version ' + Spelled.Configuration.version + '</strong> ' +
+                    '&nbsp;&nbsp;&nbsp;Build number ' + Spelled.Configuration.buildNumber + '<br/>' +
+                    'built on ' + Spelled.Configuration.buildTimeStamp + '<br/><br/>' +
+                    '&copy; 2011-2013 Spielmeister GmbH, Germany<br/><br/>' +
+                    'Parts of this product use open source software.<br/>Please consult the licence details for more details.'
+            }
 		)
 
 		this.callParent( arguments )
