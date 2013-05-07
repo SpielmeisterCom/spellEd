@@ -28,7 +28,7 @@ Ext.define( 'Spelled.Configuration', {
 
 	},
 
-	version                : '0.8.7',
+	version                : '0.8.8',
 	buildNumber	       : '99999',
 	buildTimeStamp	       : '2099-01-01T01:00:00.000+01:00',
 	storageVersion         : 1,
