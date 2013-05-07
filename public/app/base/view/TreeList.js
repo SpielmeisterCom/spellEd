@@ -24,7 +24,8 @@ Ext.define('Spelled.base.view.TreeList' ,{
 				},
 				{
 					xtype: 'spelledactioncolumn',
-					iconCls: 'x-hidden edit-action-icon'
+					iconCls: 'x-hidden edit-action-icon',
+					width: 30
 				}
 			]
 		})
