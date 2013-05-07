@@ -21,6 +21,8 @@ var nwExceptionHandler = function(errorMsg) {
     var gui = require('nw.gui'),
         win = gui.Window.get()
 
+	win.menu = new gui.Menu({ type: 'menubar' })
+
     win.capturePage(function(img) {
         // code to run when error has occured on page
         window.location.href = 'error.html?' +
