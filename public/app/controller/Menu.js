@@ -204,7 +204,8 @@ Ext.define('Spelled.controller.Menu', {
 			},
 			nwtoolbar: {
 				showAboutDialog : this.showAboutDialog,
-				showBugReportDialog : this.showBugReportDialog
+				showBugReportDialog : this.showBugReportDialog,
+				showFeedbackDialog : this.showFeedbackDialog
 			}
         })
 
