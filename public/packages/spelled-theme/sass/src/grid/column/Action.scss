@@ -1,0 +1,17 @@
+.#{$prefix}action-col-cell .#{$prefix}grid-cell-inner {
+  padding: 0 !important;
+}
+
+.#{$prefix}action-col-cell .#{$prefix}item-disabled {
+  @include opacity(0.3);
+}
+
+.#{$prefix}grid-with-row-lines .#{$prefix}action-col-cell .#{$prefix}grid-cell-inner {
+  padding-top: 1px;
+}
+
+.#{$prefix}action-col-icon {
+  height: $grid-actioncolumn-icon-height;
+  width: $grid-actioncolumn-icon-width;
+  cursor: $grid-actioncolumn-icon-cursor;
+}
