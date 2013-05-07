@@ -191,6 +191,20 @@ Ext.define('Spelled.controller.Menu', {
 
 			'keytoactionmappingcontextmenu [action="remove"]': {
 				click: this.removeKeyMapping
+			},
+
+			'spelledmenu [action="showAboutDialog"]': {
+				click: this.showAboutDialog
+			},
+			'spelledmenu [action="showBugReportDialog"]': {
+				click: this.showBugReportDialog
+			},
+			'spelledmenu [action="showFeedbackDialog"]': {
+				click: this.showFeedbackDialog
+			},
+			nwtoolbar: {
+				showAboutDialog : this.showAboutDialog,
+				showBugReportDialog : this.showBugReportDialog
 			}
         })
 
@@ -200,6 +214,18 @@ Ext.define('Spelled.controller.Menu', {
 			scope: this
 		})
     },
+
+	showBugReportDialog : function() {
+		window.open( 'error.html?type=manual', '_blank' )
+	},
+
+	showFeedbackDialog : function() {
+		window.open( 'http://spelljs.com/contact-us', '_blank' )
+	},
+
+	showAboutDialog: function() {
+		Ext.widget( 'spelledabout' )
+	},
 
 	showEditorDocumentation: function( docString ) {
 		this.application.showDocumentation( docString )
@@ -511,5 +537,7 @@ Ext.define('Spelled.controller.Menu', {
         if( scene ) {
             this.application.getController( 'Scenes' ).renderScene( scene )
         }
-    }
+    },
+
+
 });

@@ -101,6 +101,14 @@ Ext.define('Spelled.view.menu.Menu', {
 				nwType  : 'normal',
 				action  : 'showAboutDialog'
 			}, {
+				text    : 'Report a bug',
+				nwType  : 'normal',
+				action  : 'showBugReportDialog'
+			}, {
+				text    : 'Send us feedback',
+				nwType  : 'normal',
+				action  : 'showFeedbackDialog'
+			}, {
 				text    : 'Check for Updates...',
 				nwType  : 'normal',
 				action  : 'showUpdateDialog',
