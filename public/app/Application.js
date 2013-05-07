@@ -84,7 +84,7 @@ Ext.define('Spelled.Application', {
 
 	showDocumentation: function( docString ) {
 		if( Ext.isObject( this.configuration ) ) {
-			var docPath = this.configuration.documentationServerURL + docString
+			var docPath = Spelled.Configuration.getDocumentationServerUrl() + docString
 			window.open( docPath, '_blank')
 		}
 	},

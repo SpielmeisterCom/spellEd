@@ -28,11 +28,15 @@ Ext.define( 'Spelled.Configuration', {
 
 	},
 
+	getDocumentationServerUrl: function() {
+		return this.documentationServerURL + this.version + '/'
+	},
+
 	version                : '0.8.8',
 	buildNumber	       : '99999',
 	buildTimeStamp	       : '2099-01-01T01:00:00.000+01:00',
 	storageVersion         : 1,
 	extDirectRouterUrl     : '/router/',
 	name                   : "SpellEd",
-	documentationServerURL : "http://docs.spelljs.com/0.8.1/"
+	documentationServerURL : "http://docs.spelljs.com/"
 })
