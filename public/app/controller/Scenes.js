@@ -538,20 +538,11 @@ Ext.define('Spelled.controller.Scenes', {
 		var project = this.application.getActiveProject(),
 			tree    = this.getScenesTree()
 
-		project.set( 'startScene', scene.getFullName() )
+		tree.getRootNode().eachChild( function( child ) { child.set( 'iconCls', "tree-scene-icon" ) } )
 
-		tree.getRootNode().eachChild( function( child ) {
-			if( child.getId() === scene.getId() ) {
-				child.set( 'leaf', false )
-				child.expand()
-				child.expandChildren()
-				child.set( 'iconCls', "tree-default-scene-icon" )
-			} else {
-				child.collapse( true )
-				child.set( 'leaf', true )
-				child.set( 'iconCls', "tree-scene-icon" )
-			}
-		})
+		tree.getStore().getById( scene.getId()).set( 'iconCls', "tree-default-scene-icon" )
+
+		project.set( 'startScene', scene.getFullName() )
 	},
 
 	dispatchTreeNodeDrop: function(  node, data, overModel, dropPosition ) {
@@ -827,14 +818,12 @@ Ext.define('Spelled.controller.Scenes', {
 		var panel   = button.up( 'panel' ),
 			project = this.application.getActiveProject(),
 			iframe  = panel.down( 'spellediframe' ),
-			scene   = project.getStartScene()
+			scene   = this.application.getRenderedScene()
 
 		iframe.destroy()
 
 		scene.updateDependencies()
 		scene.checkForComponentChanges()
-
-		this.application.setRenderedScene( scene )
 
 		panel.add(
 			{
@@ -847,9 +836,12 @@ Ext.define('Spelled.controller.Scenes', {
 
 		if( !panel.down( 'spellprogressbar' ) ) panel.add( { xtype: 'spellprogressbar'} )
 
+		var runtimeModule = Ext.amdModules.createProjectInEngineFormat( project )
+		runtimeModule.startScene = scene.get( 'sceneId' )
+
 		this.sendChangeToEngine(
 			'runtimeModule.start', {
-				runtimeModule: Ext.amdModules.createProjectInEngineFormat( project ),
+				runtimeModule: runtimeModule,
 				cacheContent: this.generateSceneCacheContent( scene, { editorMode: true } )
 			}
 		)
@@ -1059,11 +1051,22 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	switchScene: function( sceneId ) {
-		var scene = this.getConfigScenesStore().findRecord( 'sceneId', sceneId, 0, false, false, true )
+		var scene = this.getConfigScenesStore().findRecord( 'sceneId', sceneId, 0, false, false, true),
+			tree  = this.getScenesTree()
+
+		tree.getRootNode().eachChild( function( child ) {
+			if( child.getId() === scene.getId() ) {
+				child.set( 'leaf', false )
+				child.expand()
+				child.expandChildren()
+			} else {
+				child.collapse( true )
+				child.set( 'leaf', true )
+			}
+		})
 
 		if( scene ) {
 			this.application.setRenderedScene( scene )
-			this.setDefaultScene( scene )
 		}
 	},
 
