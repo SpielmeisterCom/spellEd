@@ -4,6 +4,8 @@ Ext.define('Spelled.view.asset.Iframe', {
 
     loadMask: 'Loading...',
 
+	height: '100%',
+
     src: 'about:blank',
 	workspacePrefix: true,
 
