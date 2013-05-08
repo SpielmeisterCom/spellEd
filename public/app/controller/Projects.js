@@ -330,7 +330,7 @@ Ext.define('Spelled.controller.Projects', {
 			general.getForm().setValues( config )
 			language.getForm().setValues( config )
 
-			general.getForm().setValues( { screenSizeX: config.screenSize[0], screenSizeY: config.screenSize[1] } )
+			if( config.screenSize ) general.getForm().setValues( { screenSizeX: config.screenSize[0], screenSizeY: config.screenSize[1] } )
 		}
 	},
 
