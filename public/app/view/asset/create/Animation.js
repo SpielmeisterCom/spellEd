@@ -62,13 +62,20 @@ Ext.define('Spelled.view.asset.create.Animation', {
 					xtype: "numberfield",
 					name: 'duration',
 					minValue: 0,
-					fieldLabel: 'Duration'
+					fieldLabel: 'Duration',
+					allowBlank: false
 				},
 				{
-					xtype: "textfield",
+					xtype: "spelledtextfield",
 					name: 'frameIds',
 					rawToValue: Spelled.Converter.integerListFromString,
-					fieldLabel: 'Frames'
+					fieldLabel: 'Frames',
+					allowBlank: false,
+					validator: function( value ) {
+						var rgxp = /^[0-9,]*$/g
+
+						return ( rgxp.test( value ) ) ? true : "This is not a valid frame list. Example: 1,2,3,4,5"
+					}
 				}
 			]
 		})
