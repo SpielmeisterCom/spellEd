@@ -34,7 +34,8 @@ Ext.define('Spelled.view.template.system.Input' ,{
 				}
 			},
 			{
-				xtype: 'spelledactioncolumn'
+				xtype: 'spelledactioncolumn',
+				width: 30
 			}
 		];
 

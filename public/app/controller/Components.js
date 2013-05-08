@@ -287,7 +287,7 @@ Ext.define('Spelled.controller.Components', {
 						config = {
 							text      : text,
 							id        : component.getId(),
-							leaf      : false
+							leaf      : true
 						}
 
 					if( !Ext.isEmpty( componentTemplate.get('icon') ) ) config.icon = componentTemplate.get( 'icon' )
@@ -295,7 +295,6 @@ Ext.define('Spelled.controller.Components', {
 
 					var newNode = node.createNode( config )
 					newNode.set( 'group', componentTemplate.get( 'group' ) )
-					componentTemplate.appendOnTreeNode( newNode )
 
 					node.appendChild( newNode )
 				}
