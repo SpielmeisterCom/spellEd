@@ -1054,6 +1054,8 @@ Ext.define('Spelled.controller.Scenes', {
 		var scene = this.getConfigScenesStore().findRecord( 'sceneId', sceneId, 0, false, false, true),
 			tree  = this.getScenesTree()
 
+		if( !scene ) return
+
 		tree.getRootNode().eachChild( function( child ) {
 			if( child.getId() === scene.getId() ) {
 				child.set( 'leaf', false )
