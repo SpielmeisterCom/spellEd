@@ -41,7 +41,20 @@ Ext.define('Spelled.view.template.system.input.Add' ,{
 					flex:1,
                     xtype: 'treepanel',
                     title: 'Choose component dictionary that will be mapped',
-                    rootVisible: false
+                    rootVisible: false,
+					listeners: {
+						checkchange: function( node, checked ) {
+							var root = node.getOwnerTree().getRootNode()
+
+							root.cascadeBy(
+								function( child ){
+									if( child != node ) {
+										child.set( 'checked', false )
+									}
+								}
+							)
+						}
+					}
                 }
 
             ],
