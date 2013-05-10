@@ -1068,6 +1068,7 @@ Ext.define('Spelled.controller.Scenes', {
 		})
 
 		if( scene ) {
+			this.setSceneDevelopmentEnvironment()
 			this.application.setRenderedScene( scene )
 		}
 	},
