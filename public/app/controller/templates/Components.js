@@ -192,10 +192,10 @@ Ext.define('Spelled.controller.templates.Components', {
     },
 
 	changedAttributeType: function( combobox, value ) {
-		if( combobox.getValue() == value ) return
-
 		var propertyView = combobox.up( 'componenttemplateproperty'),
 			attribute    = propertyView.getRecord()
+
+		if( attribute.get( 'type' ) == value ) return
 
 		attribute.set( 'type', value )
 
