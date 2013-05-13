@@ -538,7 +538,5 @@ Ext.define('Spelled.controller.Menu', {
         if( scene ) {
             this.application.getController( 'Scenes' ).renderScene( scene )
         }
-    },
-
-
+    }
 });
