@@ -298,7 +298,7 @@ Ext.define('Spelled.controller.Library', {
 		if( type === 'assetiframe' || type === 'editasset' ) {
 			return this.TYPE_ASSET
 
-		} else if( type === 'systemtemplateedit' || type === 'componenttemplateedit' || type === 'entitytemplateedit' ) {
+		} else if( type === 'systemtemplateedit' || type === 'componenttemplatescript' || type === 'entitytemplateedit' ) {
 			return this.TYPE_TEMPLATE
 
 		} else if( type === 'scripteditor' ) {
