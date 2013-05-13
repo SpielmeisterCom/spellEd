@@ -1,13 +1,12 @@
 Ext.define('Spelled.view.template.component.Edit', {
-    extend: 'Ext.panel.Panel',
-    alias : 'widget.componenttemplateedit',
-    closable: true,
+	extend: 'Ext.container.Container',
+	alias : 'widget.componenttemplateedit',
 
-    layout: {
-        align: 'stretch',
-        type: 'vbox',
+	layout: {
+		align: 'stretch',
+		type: 'vbox',
 		padding: 5
-    },
+	},
 
 	items: [
 		{

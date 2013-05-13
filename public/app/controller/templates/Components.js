@@ -2,6 +2,7 @@ Ext.define('Spelled.controller.templates.Components', {
     extend: 'Ext.app.Controller',
 
 	requires: [
+		'Spelled.view.template.component.Script',
 		'Spelled.view.template.component.Edit',
 		'Spelled.view.template.component.Details',
 		'Spelled.view.template.component.Attributes',
@@ -37,6 +38,7 @@ Ext.define('Spelled.controller.templates.Components', {
 	],
 
     views: [
+		'template.component.Script',
         'template.component.Edit',
         'template.component.Details',
         'template.component.Attributes',
@@ -82,35 +84,46 @@ Ext.define('Spelled.controller.templates.Components', {
 		{
 			ref : 'TemplateEditor',
 			selector: '#SceneEditor'
+		},
+		{
+			ref : 'RightPanel',
+			selector: '#RightPanel'
 		}
     ],
 
     init: function() {
-        this.control({
-			'componenttemplateedit form field': {
-				change: this.updateComponent
+		this.listen({
+			component: {
+				'componenttemplateedit form field': {
+					change: this.updateComponent
+				},
+				'componenttemplateproperty > combobox[name="type"]' : {
+					change: this.changedAttributeType
+				},
+				'componenttemplateattributeslist [action="addAttribute"]' : {
+					click: this.addAttribute
+				},
+				'componenttemplateattributeslist': {
+					select:          this.showAttributeConfig,
+					editclick:       this.showAttributesListContextMenu,
+					itemcontextmenu: this.showAttributesListContextMenu,
+					itemmouseenter:  this.application.showActionsOnLeaf,
+					itemmouseleave:  this.application.hideActions
+				}
 			},
-            'componenttemplateproperty > combobox[name="type"]' : {
-                change: this.changedAttributeType
-            },
-            'componenttemplateattributeslist [action="addAttribute"]' : {
-                click: this.addAttribute
-            },
-            'componenttemplateattributeslist': {
-                select:          this.showAttributeConfig,
-                editclick:       this.showAttributesListContextMenu,
-                itemcontextmenu: this.showAttributesListContextMenu,
-                itemmouseenter:  this.application.showActionsOnLeaf,
-                itemmouseleave:  this.application.hideActions
-            }
-        })
+			controller: {
+				'#Templates': {
+					showcomponenttemplateconfig: this.showConfig
+				}
+			}
+		})
     },
 
 	updateComponent: function( field, newValue ) {
 		var form   = field.up( 'form' ).getForm(),
 			record = form.getRecord(),
 			values = field.getModelData(),
-			tab    = this.getTemplateEditor().getActiveTab()
+			view   = this.getRightPanel().down( 'componenttemplateedit' )
 
 		if( Ext.isDefined( record.data[ field.getName() ] ) && newValue != record.get( field.getName()) ){
 			record.setDirty()
@@ -118,7 +131,7 @@ Ext.define('Spelled.controller.templates.Components', {
 			if( values['default'] ) values['default'] = Spelled.Converter.decodeFieldValue( values['default'], record.get( 'type' ) )
 
 			record.set( values )
-			if( tab ) this.refreshComponentTemplateAttributesList( tab )
+			if( view ) this.refreshComponentTemplateAttributesList( view )
 		}
 	},
 
@@ -174,11 +187,13 @@ Ext.define('Spelled.controller.templates.Components', {
 		var attribute = Ext.getStore('template.component.Attributes').getById( record.getId() )
 
         if( attribute ) {
-            this.fillAttributeConfigView( treePanel.view.up('tabpanel').getActiveTab().down( 'componenttemplateproperty' ), attribute )
+            this.fillAttributeConfigView( this.getRightPanel().down( 'componenttemplateproperty' ), attribute )
         }
     },
 
 	changedAttributeType: function( combobox, value ) {
+		if( combobox.getValue() == value ) return
+
 		var propertyView = combobox.up( 'componenttemplateproperty'),
 			attribute    = propertyView.getRecord()
 
@@ -238,18 +253,16 @@ Ext.define('Spelled.controller.templates.Components', {
 		}
     },
 
-    openTemplate: function( componentTemplate ) {
-        var templateEditor = this.getTemplateEditor()
+	showConfig: function( componentId ) {
+		var componentTemplate = this.getTemplateComponentsStore().getById( componentId ),
+			editView = Ext.widget( 'componenttemplateedit',  {
+				template : componentTemplate
+			}
+		)
 
-        var editView = Ext.create( 'Spelled.view.template.component.Edit',  {
-                title: componentTemplate.getFullName(),
-                template : componentTemplate
-            }
-        )
-
-        var form = editView.down( 'componenttemplatedetails' )
-        form.loadRecord( componentTemplate )
-        form.getForm().setValues( { tmpName: componentTemplate.getFullName() } )
+		var form = editView.down( 'componenttemplatedetails' )
+		form.loadRecord( componentTemplate )
+		form.getForm().setValues( { tmpName: componentTemplate.getFullName() } )
 
 		if( componentTemplate.isReadonly() ) {
 			this.application.getController( 'Templates' ).addDisabledTemplateHeader( editView )
@@ -259,13 +272,27 @@ Ext.define('Spelled.controller.templates.Components', {
 			editView.down('componenttemplateattributeslist').setReadonly()
 		}
 
-        var tab = this.application.createTab( templateEditor, editView )
-        this.refreshComponentTemplateAttributesList( tab )
+		this.refreshComponentTemplateAttributesList( editView )
+
+		this.getRightPanel().removeAll()
+		this.getRightPanel().add( editView )
+	},
+
+    openTemplate: function( componentTemplate ) {
+        var templateEditor = this.getTemplateEditor()
+
+        var scriptView = Ext.widget( 'componenttemplatescript', {
+                title: componentTemplate.getFullName(),
+                template : componentTemplate
+            }
+        )
+
+        this.application.createTab( templateEditor, scriptView )
     },
 
-    refreshComponentTemplateAttributesList: function( tab ) {
-        var componentTemplate = tab.template,
-            attributesView  = tab.down( 'componenttemplateattributeslist' )
+    refreshComponentTemplateAttributesList: function( view ) {
+        var componentTemplate = view.template,
+            attributesView    = view.down( 'componenttemplateattributeslist' )
 
         var rootNode = attributesView.getStore().setRootNode( {
                 text: componentTemplate.getFullName(),

@@ -60,26 +60,28 @@ Ext.define('Spelled.controller.Templates', {
     ],
 
     init: function() {
-        this.control({
-			'librarymenu button[action="showCreateTemplate"]': {
-				click: this.showCreateTemplate
+		this.listen({
+			'component': {
+				'librarymenu button[action="showCreateTemplate"]': {
+					click: this.showCreateTemplate
+				},
+				'createtemplate button[action="createTemplate"]' : {
+					click: this.createTemplate
+				},
+				'templateslistcontextmenu menuitemcopyid,templateslistentitycontextmenu menuitemcopyid,scriptslistcontextmenu menuitemcopyid,assetslistcontextmenu menuitemcopyid': {
+					click: this.copyIdentifier
+				}
 			},
-            'createtemplate button[action="createTemplate"]' : {
-                click: this.createTemplate
-            },
-			'templateslistcontextmenu menuitemcopyid,templateslistentitycontextmenu menuitemcopyid,scriptslistcontextmenu menuitemcopyid,assetslistcontextmenu menuitemcopyid': {
-				click: this.copyIdentifier
+			controller:{
+				'*': {
+					templatecontextmenu: this.showTemplatesContextMenu,
+					templatedblclick   : this.openTemplate,
+					templateselect     : this.showConfig,
+					templatebeforeclose: this.checkIfTemplateIsDirty,
+					templateremove     : this.removeTemplateCallback
+				}
 			}
         })
-
-		this.application.on({
-			templatecontextmenu: this.showTemplatesContextMenu,
-			templatedblclick   : this.openTemplate,
-			templateselect     : this.showConfig,
-			templatebeforeclose: this.checkIfTemplateIsDirty,
-			templateremove     : this.removeTemplateCallback,
-			scope: this
-		})
     },
 
 	copyIdentifier: function() {
@@ -120,6 +122,9 @@ Ext.define('Spelled.controller.Templates', {
 
 	showConfig: function( treeGrid, record ) {
 		switch( record.get('cls') ) {
+			case this.TEMPLATE_TYPE_COMPONENT:
+				this.fireEvent( 'showcomponenttemplateconfig', record.getId() )
+				break
 			case this.TEMPLATE_TYPE_ENTITY:
 				this.application.fireEvent( 'showtemplatecomponents', record.getId() )
 				break
