@@ -259,7 +259,7 @@ Ext.define('Spelled.controller.Components', {
 			}
 		)
 
-		this.appendComponentsAttributesOnTreeNode( rootNode, notAssignedComponents )
+		this.appendComponentsOnTreeNode( rootNode, notAssignedComponents )
 		view.down( 'groupedtree' ).groupTreeNodes()
 
 		rootNode.eachChild(
@@ -273,7 +273,8 @@ Ext.define('Spelled.controller.Components', {
 		view.show()
 	},
 
-	appendComponentsAttributesOnTreeNode: function( node, components ) {
+	appendComponentsOnTreeNode: function( node, components, appendAttributes ) {
+		var appendAttributes = !!appendAttributes
 
 		components.each(
 			function( component ) {
@@ -287,7 +288,7 @@ Ext.define('Spelled.controller.Components', {
 						config = {
 							text      : text,
 							id        : component.getId(),
-							leaf      : true
+							leaf      : !appendAttributes
 						}
 
 					if( !Ext.isEmpty( componentTemplate.get('icon') ) ) config.icon = componentTemplate.get( 'icon' )
@@ -295,6 +296,7 @@ Ext.define('Spelled.controller.Components', {
 
 					var newNode = node.createNode( config )
 					newNode.set( 'group', componentTemplate.get( 'group' ) )
+					if( appendAttributes ) componentTemplate.appendOnTreeNode( newNode )
 
 					node.appendChild( newNode )
 				}

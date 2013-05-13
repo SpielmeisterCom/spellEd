@@ -373,7 +373,7 @@ Ext.define('Spelled.controller.templates.Systems', {
             }
         )
 
-        this.application.getController('Components').appendComponentsAttributesOnTreeNode( rootNode, templateComponentsStore )
+        this.application.getController('Components').appendComponentsOnTreeNode( rootNode, templateComponentsStore )
 		availableComponentsView.groupTreeNodes()
 
         rootNode.eachChild(
