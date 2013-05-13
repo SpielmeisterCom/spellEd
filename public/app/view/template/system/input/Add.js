@@ -39,7 +39,7 @@ Ext.define('Spelled.view.template.system.input.Add' ,{
                 },
                 {
 					flex:1,
-                    xtype: 'treepanel',
+                    xtype: 'groupedtree',
                     title: 'Choose component dictionary that will be mapped',
                     rootVisible: false,
 					listeners: {

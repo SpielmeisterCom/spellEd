@@ -363,7 +363,7 @@ Ext.define('Spelled.controller.templates.Systems', {
     showAddInput: function( ) {
         var View = this.getTemplateSystemInputAddView(),
             view = new View(),
-            availableComponentsView = view.down( 'treepanel' ),
+            availableComponentsView = view.down( 'groupedtree' ),
             templateComponentsStore = Ext.getStore( 'template.Components' )
 
 
@@ -374,6 +374,7 @@ Ext.define('Spelled.controller.templates.Systems', {
         )
 
         this.application.getController('Components').appendComponentsAttributesOnTreeNode( rootNode, templateComponentsStore )
+		availableComponentsView.groupTreeNodes()
 
         rootNode.eachChild(
             function( node ) {
