@@ -98,7 +98,7 @@ Ext.define('Spelled.controller.templates.Components', {
 					change: this.updateComponent
 				},
 				'componenttemplateproperty > combobox[name="type"]' : {
-					change: this.changedAttributeType
+					select: this.changedAttributeType
 				},
 				'componenttemplateattributeslist [action="addAttribute"]' : {
 					click: this.addAttribute
@@ -191,13 +191,12 @@ Ext.define('Spelled.controller.templates.Components', {
         }
     },
 
-	changedAttributeType: function( combobox, value ) {
-		var propertyView = combobox.up( 'componenttemplateproperty'),
-			attribute    = propertyView.getRecord()
+	changedAttributeType: function( combobox, records ) {
+		var propertyView   = combobox.up( 'componenttemplateproperty'),
+			attribute      = propertyView.getRecord(),
+			selectedRecord = records.pop()
 
-		if( attribute.get( 'type' ) == value ) return
-
-		attribute.set( 'type', value )
+		attribute.set( 'type', selectedRecord.get( 'name' ) )
 
 		this.fillAttributeConfigView( propertyView, attribute )
 	},
