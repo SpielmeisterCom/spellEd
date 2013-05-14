@@ -467,7 +467,7 @@ Ext.define('Spelled.controller.Assets', {
 		templateComponentsStore.load({
 				scope: this,
 				callback: function() {
-					this.application.getController('Components').appendComponentsAttributesOnTreeNode( rootNode, templateComponentsStore )
+					this.application.getController('Components').appendComponentsOnTreeNode( rootNode, templateComponentsStore, true )
 				}
 			}
 		)
