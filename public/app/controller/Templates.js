@@ -343,6 +343,8 @@ Ext.define('Spelled.controller.Templates', {
 					"default": true,
 					"doc": "if active is false the system will be skipped during processing"
 				} )
+			} else if( values.type === this.TEMPLATE_TYPE_COMPONENT ) {
+				model.set( 'content', this.application.getController( 'templates.Components' ).createComponentScaffolding( model.getFullName(), model.get( 'name' ) ) )
 			}
 
 			if( values.owner ) this.application.getController( 'templates.Entities' ).convertEntity( values.owner, model )

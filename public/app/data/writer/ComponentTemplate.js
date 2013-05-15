@@ -3,8 +3,15 @@ Ext.define('Spelled.data.writer.ComponentTemplate', {
 	alias: 'writer.componentTemplate',
 
 	write: function( request ) {
-		var data = this.convertRequest( request,  Ext.amdModules.componentConverter.toEngineFormat )
+		var records = request.operation.records || [],
+			data    = this.convertRequest( request,  Ext.amdModules.componentConverter.toEngineFormat )
 
+		Ext.Array.each(
+			records,
+			function( record ) {
+				Spelled.StorageActions.update( { id: record.getAccordingJSFileName(), content: record.get( 'content' ) } )
+			}
+		)
 		return this.writeRecords( request, data )
 	}
 });
