@@ -64,8 +64,9 @@ Ext.define('Spelled.base.model.Model', {
 
 		var path = this.getAccordingJSFileName()
 
-		Spelled.StorageActions.read( { id: path },
+		Spelled.StorageActions.read( { id: path, canBeIgnored: this.canBeIgnored },
 			function( result ) {
+if( this.canBeIgnored ){ console.log( path ) ; console.log( arguments ) }
 				this.set( 'path', path )
 				this.set( 'content', result )
 				this.dirty = false

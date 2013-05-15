@@ -39,7 +39,9 @@ define(
 				return content
 			}
 
-			var getByFilePath = function( filePath ) {
+			var getByFilePath = function( filePath, canBeIgnored ) {
+				if( canBeIgnored && !fs.existsSync(filePath) ) return ''
+
 				return fs.readFileSync( filePath, 'utf8' )
 			}
 
@@ -88,11 +90,11 @@ define(
 			}
 
 			var read = function( req, res, payload ) {
-				var params = _.isArray( payload ) ? payload.pop() : payload
+				var params   = _.isArray( payload ) ? payload.pop() : payload
 
 				if( _.has( params, 'id' ) ) {
 					var filePath = util.getPath( params.id )
-					return ( _.has( params, 'type' ) ) ? generateExtModel( filePath ) : getByFilePath( filePath )
+					return ( _.has( params, 'type' ) ) ? generateExtModel( filePath ) : getByFilePath( filePath, params.canBeIgnored )
 				} else {
 					return getAllByType( params )
 				}
