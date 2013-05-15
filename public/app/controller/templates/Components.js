@@ -155,8 +155,8 @@ Ext.define('Spelled.controller.templates.Components', {
     },
 
     addAttribute: function( button ) {
-        var tab        = button.up('tabpanel').getActiveTab(),
-            ownerModel = tab.template
+        var panel      = button.up('componenttemplateedit'),
+            ownerModel = panel.template
 
         var newAttribute = Ext.create(
             'Spelled.model.template.ComponentAttribute',
@@ -170,7 +170,7 @@ Ext.define('Spelled.controller.templates.Components', {
         ownerModel.getAttributes().add( newAttribute )
 		newAttribute.setDirty()
 
-        this.refreshComponentTemplateAttributesList( tab )
+        this.refreshComponentTemplateAttributesList( panel )
     },
 
     removeComponentTemplate: function( id ) {
@@ -317,77 +317,19 @@ Ext.define('Spelled.controller.templates.Components', {
     },
 
 	createComponentScaffolding: function( fullName, typeName ) {
-		var prefix = [
-			"/**",
-			" * @class " + fullName,
-			" */",
-			""
-		].join( '\n' )
-
 		var parts = [
 			"",
-			"/**",
-			" * Creates an instance of the system.",
-			" *",
-			" * @constructor",
-			" * @param {Object} [spell] The spell object.",
-			" */",
 			"var " + typeName + " = function( spell ) {",
 			"	",
 			"}",
 			"",
 			typeName + ".prototype = {",
-			"	/**",
-			" 	 * Gets called when the system is created.",
-			" 	 *",
-			" 	 * @param {Object} [spell] The spell object.",
-			"	 */",
-			"	init: function( spell ) {",
-			"		",
-			"	},",
 			"",
-			"	/**",
-			" 	 * Gets called when the system is destroyed.",
-			" 	 *",
-			" 	 * @param {Object} [spell] The spell object.",
-			"	 */",
-			"	destroy: function( spell ) {",
-			"		",
-			"	},",
-			"",
-			"	/**",
-			" 	 * Gets called when the system is activated.",
-			" 	 *",
-			" 	 * @param {Object} [spell] The spell object.",
-			"	 */",
-			"	activate: function( spell ) {",
-			"		",
-			"	},",
-			"",
-			"	/**",
-			" 	 * Gets called when the system is deactivated.",
-			" 	 *",
-			" 	 * @param {Object} [spell] The spell object.",
-			"	 */",
-			"	deactivate: function( spell ) {",
-			"		",
-			"	},",
-			"",
-			"	/**",
-			" 	 * Gets called to trigger the processing of game state.",
-			" 	 *",
-			"	 * @param {Object} [spell] The spell object.",
-			"	 * @param {Object} [timeInMs] The current time in ms.",
-			"	 * @param {Object} [deltaTimeInMs] The elapsed time in ms.",
-			"	 */",
-			"	process: function( spell, timeInMs, deltaTimeInMs ) {",
-			"		",
-			"	}",
 			"}",
 			"",
 			"return " + typeName
 		]
 
-		return this.application.getController( 'Scripts' ).createModuleHeader( fullName, parts.join( '\n\t\t' ), prefix )
+		return this.application.getController( 'Scripts' ).createModuleHeader( fullName, parts.join( '\n\t\t' ) )
 	}
 });
