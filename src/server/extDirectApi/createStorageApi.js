@@ -39,9 +39,7 @@ define(
 				return content
 			}
 
-			var getByFilePath = function( filePath, canBeIgnored ) {
-				if( canBeIgnored && !fs.existsSync(filePath) ) return ''
-
+			var getByFilePath = function( filePath ) {
 				return fs.readFileSync( filePath, 'utf8' )
 			}
 
@@ -94,7 +92,7 @@ define(
 
 				if( _.has( params, 'id' ) ) {
 					var filePath = util.getPath( params.id )
-					return ( _.has( params, 'type' ) ) ? generateExtModel( filePath ) : getByFilePath( filePath, params.canBeIgnored )
+					return ( _.has( params, 'type' ) ) ? generateExtModel( filePath ) : getByFilePath( filePath )
 				} else {
 					return getAllByType( params )
 				}
