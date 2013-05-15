@@ -88,7 +88,7 @@ define(
 			}
 
 			var read = function( req, res, payload ) {
-				var params = _.isArray( payload ) ? payload.pop() : payload
+				var params   = _.isArray( payload ) ? payload.pop() : payload
 
 				if( _.has( params, 'id' ) ) {
 					var filePath = util.getPath( params.id )

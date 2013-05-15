@@ -54,29 +54,31 @@ Ext.define('Spelled.controller.Scripts', {
     ],
 
     init: function() {
-        this.control({
-			'scripteditor': {
-				activate: this.reRenderAce,
-				save:     this.globalSaveHelper,
-				render:   this.addAceEditor
+		this.listen({
+			component: {
+				'scripteditor': {
+					activate: this.reRenderAce,
+					save:     this.globalSaveHelper,
+					render:   this.addAceEditor
+				},
+				'librarymenu [action="showCreateScript"]' : {
+					click: this.showCreateScript
+				},
+				'createscript button[action="createScript"]' : {
+					click: this.createScript
+				}
 			},
-            'librarymenu [action="showCreateScript"]' : {
-                click: this.showCreateScript
-            },
-            'createscript button[action="createScript"]' : {
-                click: this.createScript
-            }
-        })
-
-		this.application.on( {
-				scriptdblclick    : this.openScriptHelper,
-				scriptbeforeclose : this.checkIfScriptIsDirty,
-				scriptcontextmenu : this.showListContextMenu,
-				savescriptpanel   : this.saveScriptInPanel,
-				scriptselect      : this.showScriptDependenciesHelper,
-				scope : this
+			controller: {
+				'*': {
+					scriptdblclick    : this.openScriptHelper,
+					scriptbeforeclose : this.checkIfScriptIsDirty,
+					scriptcontextmenu : this.showListContextMenu,
+					savescriptpanel   : this.saveScriptInPanel,
+					scriptselect      : this.showScriptDependenciesHelper,
+					refreshscripttab  : this.refreshScriptTab
+				}
 			}
-		)
+        })
     },
 
 	showScriptDependencies: function( script ) {
@@ -115,7 +117,7 @@ Ext.define('Spelled.controller.Scripts', {
 		this.application.fireEvent( 'globalsave' )
 	},
 
-		saveScriptInPanel: function( panel ) {
+	saveScriptInPanel: function( panel ) {
 		var model = panel.model
 		if( model.dirty ) model.save()
 	},
@@ -237,5 +239,10 @@ Ext.define('Spelled.controller.Scripts', {
 
     refreshStores: function() {
 		this.getScriptScriptsStore().load()
-    }
+    },
+
+	refreshScriptTab: function( tab, model ) {
+		tab.setModel( model )
+		tab.refreshContent()
+	}
 });

@@ -154,11 +154,6 @@ Ext.define('Spelled.controller.templates.Systems', {
 		)
 	},
 
-	refreshScriptTab: function( tab, systemTemplate ) {
-		tab.setModel( systemTemplate )
-		tab.refreshContent()
-	},
-
     showInputListContextMenu: function( view, record, item, index, e, options ) {
         this.application.getController('Menu').showSystemTemplateInputListContextMenu( e )
     },
@@ -274,7 +269,7 @@ Ext.define('Spelled.controller.templates.Systems', {
         this.refreshSystemTemplateInputList()
 
 		editView.aceEditor.setReadOnly( systemTemplate.isReadonly() )
-		this.refreshScriptTab( tab, systemTemplate )
+		this.fireEvent( 'refreshscripttab', tab, systemTemplate )
     },
 
     refreshSystemTemplateInputList: function() {

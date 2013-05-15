@@ -61,6 +61,7 @@ Ext.define('Spelled.view.asset.create.KeyFrameAnimation', {
 							}],
 							bbar: [
 								{
+									icon: 'resources/images/icons/add.png',
 									text: "Add",
 									action: "addFrame"
 								}

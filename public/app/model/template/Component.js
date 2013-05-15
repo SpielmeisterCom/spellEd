@@ -31,6 +31,27 @@ Ext.define('Spelled.model.template.Component', {
 		reader: 'component'
 	},
 
+	listeners: {
+		loadscript: function() {
+			this.readAccordingJSFile()
+		},
+		dirty: function() {
+			this.updateDependencies()
+		}
+	},
+
+	destroy: function( options ) {
+		Spelled.StorageActions.destroy({ id: this.getAccordingJSFileName() } )
+
+		this.callParent( arguments )
+	},
+
+	constructor: function() {
+		this.callParent( arguments )
+
+		if( arguments.length > 1 ) this.fireEvent( 'loadscript' )
+	},
+
 	getCalculatedDependencies: function() {
 		var cmp = Ext.create( 'Spelled.model.config.Component', { templateId: this.getFullName() } )
 
