@@ -191,8 +191,24 @@ Ext.define('Spelled.controller.Scenes', {
                 'spelled.debug.entity.select': function( sourceId, payload ) {
                     me.selectEntityTreeItem( payload.id )
 				},
-				'spelled.debug.executingScene': function( sourcId, payload ) {
-					me.switchScene( payload )
+				'spelled.debug.startScene': function( sourcId, payload ) {
+					var sceneId = payload.startSceneId,
+						scene   = me.getConfigScenesStore().findRecord( 'sceneId', sceneId, 0, false, false, true )
+
+					if( !scene ) {
+						throw 'Error: Could not find scene "' + sceneId + '".'
+					}
+
+					me.switchScene( scene )
+
+					me.sendChangeToEngine(
+						'application.addToCache',
+						{
+							cacheContent : me.generateSceneCacheContent( scene, { editorMode: true } )
+						}
+					)
+
+					me.sendChangeToEngine( 'application.startScene', payload )
 				}
 			}
 		)
@@ -1051,31 +1067,34 @@ Ext.define('Spelled.controller.Scenes', {
 			tab = this.application.createTab( sceneEditor, newTab )
 		}
 
-		this.switchScene( scene.get( 'sceneId' ) )
+		var sceneId = scene.get( 'sceneId' ),
+			scene   = this.getConfigScenesStore().findRecord( 'sceneId', sceneId, 0, false, false, true )
+
+		if( !scene ) {
+			throw 'Error: Could not find scene "' + sceneId + '".'
+		}
+
+		this.switchScene( scene )
 		this.reloadScene( tab.down( 'button' ) )
 	},
 
-	switchScene: function( sceneId ) {
-		var scene = this.getConfigScenesStore().findRecord( 'sceneId', sceneId, 0, false, false, true),
-			tree  = this.getScenesTree()
-
-		if( !scene ) return
+	switchScene: function( scene ) {
+		var tree = this.getScenesTree()
 
 		tree.getRootNode().eachChild( function( child ) {
 			if( child.getId() === scene.getId() ) {
 				child.set( 'leaf', false )
 				child.expand()
 				child.expandChildren()
+
 			} else {
 				child.collapse( true )
 				child.set( 'leaf', true )
 			}
-		})
+		} )
 
-		if( scene ) {
-			this.setSceneDevelopmentEnvironment()
-			this.application.setRenderedScene( scene )
-		}
+		this.setSceneDevelopmentEnvironment()
+		this.application.setRenderedScene( scene )
 	},
 
 	showScenesList: function( scenes ) {
