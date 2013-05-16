@@ -836,13 +836,26 @@ Ext.define('Spelled.controller.Scenes', {
 
 		if( !panel.down( 'spellprogressbar' ) ) panel.add( { xtype: 'spellprogressbar'} )
 
-		var runtimeModule = Ext.amdModules.createProjectInEngineFormat( project )
-		runtimeModule.startScene = scene.get( 'sceneId' )
+		var applicationModule = Ext.amdModules.createProjectInEngineFormat( project )
+		applicationModule.startScene = scene.get( 'sceneId' )
 
 		this.sendChangeToEngine(
-			'runtimeModule.start', {
-				runtimeModule: runtimeModule,
+			'application.setApplicationModule', {
+				applicationModule: applicationModule
+			}
+		)
+
+		this.sendChangeToEngine(
+			'application.addToCache', {
 				cacheContent: this.generateSceneCacheContent( scene, { editorMode: true } )
+			}
+		)
+
+		this.sendChangeToEngine(
+			'application.startScene', {
+				startSceneId: scene.get( 'sceneId' ),
+				initialConfig: {},
+				showLoadingScene: false
 			}
 		)
 
