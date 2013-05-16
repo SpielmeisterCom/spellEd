@@ -840,22 +840,14 @@ Ext.define('Spelled.controller.Scenes', {
 		applicationModule.startScene = scene.get( 'sceneId' )
 
 		this.sendChangeToEngine(
-			'application.setApplicationModule', {
-				applicationModule: applicationModule
-			}
-		)
-
-		this.sendChangeToEngine(
 			'application.addToCache', {
 				cacheContent: this.generateSceneCacheContent( scene, { editorMode: true } )
 			}
 		)
 
 		this.sendChangeToEngine(
-			'application.startScene', {
-				startSceneId: scene.get( 'sceneId' ),
-				initialConfig: {},
-				showLoadingScene: false
+			'application.startApplicationModule', {
+				applicationModule: applicationModule
 			}
 		)
 
