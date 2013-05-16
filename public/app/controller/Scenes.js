@@ -191,7 +191,7 @@ Ext.define('Spelled.controller.Scenes', {
                 'spelled.debug.entity.select': function( sourceId, payload ) {
                     me.selectEntityTreeItem( payload.id )
 				},
-				'spelled.debug.startScene': function( sourcId, payload ) {
+				'spelled.debug.application.startScene': function( sourcId, payload ) {
 					var sceneId = payload.startSceneId,
 						scene   = me.getConfigScenesStore().findRecord( 'sceneId', sceneId, 0, false, false, true )
 
