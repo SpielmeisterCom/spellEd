@@ -209,6 +209,19 @@ Ext.define('Spelled.controller.Scenes', {
 					)
 
 					me.sendChangeToEngine( 'application.startScene', payload )
+				},
+				'spelled.debug.application.sceneStarted': function( sourcId, payload ) {
+					var cameraState = me.getRenderedScene().down( '[action="toggleDevCam"]' ).pressed
+
+					me.sendChangeToEngine(
+						'system.add',
+						{
+							executionGroupId : 'update',
+							systemConfig : { active: cameraState },
+							systemId : 'spell.system.debug.camera',
+							index : 0
+						}
+					)
 				}
 			}
 		)
