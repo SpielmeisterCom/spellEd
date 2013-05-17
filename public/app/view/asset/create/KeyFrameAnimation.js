@@ -2,6 +2,8 @@ Ext.define('Spelled.view.asset.create.KeyFrameAnimation', {
     extend: 'Ext.container.Container',
     alias: 'widget.keyframeanimationconfig',
 
+	padding: 5,
+
 	initComponent: function() {
 		var me    = this,
 			store = Ext.getStore( 'asset.KeyFrameAnimationPreviews' )

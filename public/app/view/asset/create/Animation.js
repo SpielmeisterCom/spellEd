@@ -4,6 +4,8 @@ Ext.define('Spelled.view.asset.create.Animation', {
 
 	mixins: [ 'Spelled.base.field.AssetId' ],
 
+	padding: 5,
+
 	initComponent: function() {
 		var me   = this
 

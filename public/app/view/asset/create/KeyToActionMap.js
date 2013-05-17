@@ -2,6 +2,8 @@ Ext.define('Spelled.view.asset.create.KeyToActionMap', {
     extend: 'Ext.container.Container',
     alias: 'widget.keytoactionconfig',
 
+	padding: 5,
+
 	initComponent: function() {
 		var me = this
 

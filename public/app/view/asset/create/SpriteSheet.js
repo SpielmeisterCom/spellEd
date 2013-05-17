@@ -2,6 +2,8 @@ Ext.define('Spelled.view.asset.create.SpriteSheet', {
     extend: 'Ext.container.Container',
     alias: 'widget.spritesheetconfig',
 
+	padding: 5,
+
 	initComponent: function() {
 	    var me = this
 
