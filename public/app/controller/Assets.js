@@ -927,13 +927,10 @@ Ext.define('Spelled.controller.Assets', {
 			{
 				scope: this,
 				callback: function() {
-					var dependencies = Ext.Array.merge( store.collect( 'myAssetId' ), spriteSheets )
+					var dependencies = Ext.Array.merge( store.collect( 'myAssetId' ), spriteSheets ),
+						config = this.application.getController( 'templates.Entities' ).createEntityPreviewItem( entity, dependencies)
 
-					this.application.sendDebugMessage(
-						container.getId(),
-						'runtimeModule.start',
-						this.application.getController( 'templates.Entities' ).createEntityPreviewItem( entity, dependencies)
-					)
+					this.application.fireEvent( 'initentitypreviewruntime', container.getId(), config.applicationModule, config.cacheContent )
 				}
 			}
 		)

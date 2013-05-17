@@ -182,7 +182,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		engineMessageBus.addHandler(
 			{
-				'spelled.initialized' : function( sourceId, payload ) {
+				'spelled.initialized' : function( sourceId ) {
 					engineMessageBus.flushQueue( sourceId )
 				},
 				'spelled.loadingProgress' : function( sourceId, payload ) {
@@ -191,7 +191,7 @@ Ext.define('Spelled.controller.Scenes', {
                 'spelled.debug.entity.select': function( sourceId, payload ) {
                     me.selectEntityTreeItem( payload.id )
 				},
-				'spelled.debug.application.startScene': function( sourcId, payload ) {
+				'spelled.debug.application.startScene': function( sourceId, payload ) {
 					var sceneId = payload.startSceneId,
 						scene   = me.getConfigScenesStore().findRecord( 'sceneId', sceneId, 0, false, false, true )
 
