@@ -33,6 +33,8 @@ Ext.define( 'Spelled.Converter' ,{
 
 			if( Ext.isArray( parts ) && parts.length > 1 ) {
 				return parts.pop()
+			} else {
+				return internalAssetId
 			}
 		}
 
