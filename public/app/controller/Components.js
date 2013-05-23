@@ -13,6 +13,7 @@ Ext.define('Spelled.controller.Components', {
 		'Spelled.view.library.menu.item.CopyIdentifier',
 		'Spelled.store.property.Mappings',
 		'Spelled.store.grouping.Components',
+		'Spelled.store.BlacklistedComponentAttributes',
 		'Spelled.Converter',
 		'Spelled.Compare'
 	],
@@ -30,6 +31,7 @@ Ext.define('Spelled.controller.Components', {
     ],
 
     stores: [
+		'BlacklistedComponentAttributes',
     	'config.Components',
 		'property.Mappings',
 		'grouping.Components'
@@ -273,8 +275,14 @@ Ext.define('Spelled.controller.Components', {
 		view.show()
 	},
 
-	appendComponentsOnTreeNode: function( node, components, appendAttributes ) {
-		var appendAttributes = !!appendAttributes
+	appendComponentsOnTreeNode: function( node, components, appendAttributes, blacklist ) {
+		var blStore = Ext.getStore( 'BlacklistedComponentAttributes' ),
+			appendAttributes = !!appendAttributes,
+			getBlacklistedAttributesByLibraryId = function( id ) {
+				var item = blStore.getById( id )
+
+				return ( blacklist && item ) ? item.get( 'attributes' ) : []
+			}
 
 		components.each(
 			function( component ) {
@@ -284,8 +292,10 @@ Ext.define('Spelled.controller.Components', {
 					Ext.getStore( 'template.Components' ).getByTemplateId( component.get('templateId') )
 
 				if( componentTemplate ) {
-					var text = ( Ext.isEmpty( componentTemplate.get('title') ) ) ? componentTemplate.getFullName() : componentTemplate.get('title') + " (" + componentTemplate.getFullName() + ")",
-						config = {
+					var libraryId = componentTemplate.getFullName(),
+						text      = ( Ext.isEmpty( componentTemplate.get('title') ) ) ? libraryId : componentTemplate.get('title') + " (" + libraryId + ")",
+						blAttr    = getBlacklistedAttributesByLibraryId( libraryId ),
+						config    = {
 							text      : text,
 							id        : component.getId(),
 							leaf      : !appendAttributes
@@ -296,7 +306,7 @@ Ext.define('Spelled.controller.Components', {
 
 					var newNode = node.createNode( config )
 					newNode.set( 'group', componentTemplate.get( 'group' ) )
-					if( appendAttributes ) componentTemplate.appendOnTreeNode( newNode )
+					if( appendAttributes ) componentTemplate.appendOnTreeNode( newNode, blAttr )
 
 					node.appendChild( newNode )
 				}

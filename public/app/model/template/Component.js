@@ -68,11 +68,14 @@ Ext.define('Spelled.model.template.Component', {
 		return this.getAttributes().findRecord( 'name', name )
 	},
 
-    appendOnTreeNode: function( node ) {
-		var group = this.get( 'group' )
+    appendOnTreeNode: function( node, blacklist ) {
+		var group    = this.get( 'group' ),
+			contains = Ext.Array.contains
+
+		blacklist = Ext.isArray( blacklist ) ? blacklist : []
 
         this.getAttributes().each( function( attribute ) {
-			if( attribute.isEngineInternal() ) return
+			if( attribute.isEngineInternal() || contains( blacklist, attribute.get('name') ) ) return
 
 			var newNode = node.createNode ( {
 				text      : attribute.get('name'),
