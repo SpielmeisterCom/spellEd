@@ -266,23 +266,6 @@ Ext.define('Spelled.Application', {
 			}
 		)
 
-		//TODO: Remove this if this bug gets fixed: http://www.sencha.com/forum/showthread.php?135060-4.0.1-Cell-Editor-XY-incorrect-when-shown-on-top-of-WebGL-window-in-Chrome
-		Ext.override(Ext.grid.CellEditor, {
-			onShow: function() {
-				this.callOverridden();
-
-				if (Ext.isChrome) {
-					Ext.defer(function() {
-						var x = this.el.getX();
-						var y = this.el.getY();
-						this.el.setXY([x+1, y+1]);
-						this.el.setX(x);
-						this.el.setY(y);
-					}, 1, this);
-				}
-			}
-		});
-
 		//TODO: Bug in ExtJS setValues, uses Ext.iterate which is BAD because it checkes length attribute as condition
 		Ext.override(
 			Ext.form.Basic,
