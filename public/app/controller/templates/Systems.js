@@ -268,7 +268,6 @@ Ext.define('Spelled.controller.templates.Systems', {
 		this.getRightPanel().add( configurationView )
         this.refreshSystemTemplateInputList()
 
-		editView.aceEditor.setReadOnly( systemTemplate.isReadonly() )
 		this.fireEvent( 'refreshscripttab', tab, systemTemplate )
     },
 

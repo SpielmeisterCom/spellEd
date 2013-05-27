@@ -44,6 +44,7 @@ Ext.define('Spelled.controller.templates.Entities', {
         })
 
 		this.application.on( {
+			initentitypreviewruntime: this.initEntityPreviewRuntime,
 			showtemplatecomponents : this.showEntityTemplateComponentsListHelper,
 			showcompositecomponents: this.showEntityCompositeComponentsListHelper,
 			scope: this
@@ -62,10 +63,26 @@ Ext.define('Spelled.controller.templates.Entities', {
 		)
 
 		this.application.createTab( templateEditor, editView )
+
+		var containerId = editView.down( '[name="entityPreviewContainer"]').getId(),
+			config      = this.createEntityTemplatePreviewItem( entityTemplate )
+
+		this.initEntityPreviewRuntime( containerId, config.applicationModule, config.cacheContent )
+	},
+
+	initEntityPreviewRuntime: function( containerId, applicationModule, cacheContent ) {
 		this.application.sendDebugMessage(
-			editView.down( '[name="entityPreviewContainer"]').getId(),
-			'runtimeModule.start',
-			this.createEntityTemplatePreviewItem( entityTemplate )
+			containerId,
+			'application.addToCache', {
+				cacheContent: cacheContent
+			}
+		)
+
+		this.application.sendDebugMessage(
+			containerId,
+			'application.startApplicationModule', {
+				applicationModule: applicationModule
+			}
 		)
 	},
 
@@ -115,7 +132,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 		scene.updateDependencies()
 
 		return {
-			runtimeModule: tmpProjectCfg,
+			applicationModule: tmpProjectCfg,
 			cacheContent: this.application.getController( 'Scenes' ).generateSceneCacheContent( scene, { withScript: true, editorMode: true } )
 		}
 	},

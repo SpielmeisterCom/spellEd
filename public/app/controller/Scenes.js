@@ -182,7 +182,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		engineMessageBus.addHandler(
 			{
-				'spelled.initialized' : function( sourceId, payload ) {
+				'spelled.initialized' : function( sourceId ) {
 					engineMessageBus.flushQueue( sourceId )
 				},
 				'spelled.loadingProgress' : function( sourceId, payload ) {
@@ -191,8 +191,37 @@ Ext.define('Spelled.controller.Scenes', {
                 'spelled.debug.entity.select': function( sourceId, payload ) {
                     me.selectEntityTreeItem( payload.id )
 				},
-				'spelled.debug.executingScene': function( sourcId, payload ) {
-					me.switchScene( payload )
+				'spelled.debug.application.startScene': function( sourceId, payload ) {
+					var sceneId = payload.startSceneId,
+						scene   = me.getConfigScenesStore().findRecord( 'sceneId', sceneId, 0, false, false, true )
+
+					if( !scene ) {
+						throw 'Error: Could not find scene "' + sceneId + '".'
+					}
+
+					me.switchScene( scene )
+
+					me.sendChangeToEngine(
+						'application.addToCache',
+						{
+							cacheContent : me.generateSceneCacheContent( scene, { editorMode: true } )
+						}
+					)
+
+					me.sendChangeToEngine( 'application.startScene', payload )
+				},
+				'spelled.debug.application.sceneStarted': function( sourcId, payload ) {
+					var cameraState = me.getRenderedScene().down( '[action="toggleDevCam"]' ).pressed
+
+					me.sendChangeToEngine(
+						'system.add',
+						{
+							executionGroupId : 'update',
+							systemConfig : { active: cameraState },
+							systemId : 'spell.system.debug.camera',
+							index : 0
+						}
+					)
 				}
 			}
 		)
@@ -434,7 +463,7 @@ Ext.define('Spelled.controller.Scenes', {
 		}
 
 		//don't send an update to the engine if we have no breakpoint enabled and active warnings/errors
-		if( !hasBreakpoints && annotations.length > 0 ) return
+//		if( !hasBreakpoints && annotations.length > 0 ) return
 
 		this.sendChangeToEngine( "library.updateScript", { id: model.getFullName(), moduleSource: lines.join("\n") } )
 	},
@@ -836,13 +865,18 @@ Ext.define('Spelled.controller.Scenes', {
 
 		if( !panel.down( 'spellprogressbar' ) ) panel.add( { xtype: 'spellprogressbar'} )
 
-		var runtimeModule = Ext.amdModules.createProjectInEngineFormat( project )
-		runtimeModule.startScene = scene.get( 'sceneId' )
+		var applicationModule = Ext.amdModules.createProjectInEngineFormat( project )
+		applicationModule.startScene = scene.get( 'sceneId' )
 
 		this.sendChangeToEngine(
-			'runtimeModule.start', {
-				runtimeModule: runtimeModule,
+			'application.addToCache', {
 				cacheContent: this.generateSceneCacheContent( scene, { editorMode: true } )
+			}
+		)
+
+		this.sendChangeToEngine(
+			'application.startApplicationModule', {
+				applicationModule: applicationModule
 			}
 		)
 
@@ -1046,31 +1080,34 @@ Ext.define('Spelled.controller.Scenes', {
 			tab = this.application.createTab( sceneEditor, newTab )
 		}
 
-		this.switchScene( scene.get( 'sceneId' ) )
+		var sceneId = scene.get( 'sceneId' ),
+			scene   = this.getConfigScenesStore().findRecord( 'sceneId', sceneId, 0, false, false, true )
+
+		if( !scene ) {
+			throw 'Error: Could not find scene "' + sceneId + '".'
+		}
+
+		this.switchScene( scene )
 		this.reloadScene( tab.down( 'button' ) )
 	},
 
-	switchScene: function( sceneId ) {
-		var scene = this.getConfigScenesStore().findRecord( 'sceneId', sceneId, 0, false, false, true),
-			tree  = this.getScenesTree()
-
-		if( !scene ) return
+	switchScene: function( scene ) {
+		var tree = this.getScenesTree()
 
 		tree.getRootNode().eachChild( function( child ) {
 			if( child.getId() === scene.getId() ) {
 				child.set( 'leaf', false )
 				child.expand()
 				child.expandChildren()
+
 			} else {
 				child.collapse( true )
 				child.set( 'leaf', true )
 			}
-		})
+		} )
 
-		if( scene ) {
-			this.setSceneDevelopmentEnvironment()
-			this.application.setRenderedScene( scene )
-		}
+		this.setSceneDevelopmentEnvironment()
+		this.application.setRenderedScene( scene )
 	},
 
 	showScenesList: function( scenes ) {

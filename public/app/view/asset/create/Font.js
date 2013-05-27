@@ -2,6 +2,8 @@ Ext.define('Spelled.view.asset.create.Font', {
     extend: 'Ext.container.Container',
     alias: 'widget.textappearanceconfig',
 
+	padding: 5,
+
 	initComponent: function() {
 	    var me = this
 

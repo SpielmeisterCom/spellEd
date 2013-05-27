@@ -103,7 +103,7 @@ Ext.define('Spelled.controller.Entities', {
 					var tree = me.getScenesTree(),
 						node = tree.getStore().getNodeById( payload.id )
 
-					if( node ) me.cloneEntityConfig( node.getId(), node )
+					if( node ) me.cloneEntityConfig( node.getId(), node, true )
 				},
 				'spelled.debug.entity.remove': function ( sourceId, payload ) {
 					var entity = me.getConfigEntitiesStore().getById( payload.id )
@@ -195,7 +195,7 @@ Ext.define('Spelled.controller.Entities', {
 		view.down('form').getForm().setValues( { type:'entityTemplate', owner: node.getId() } )
 	},
 
-	cloneEntityConfig: function( id, node ) {
+	cloneEntityConfig: function( id, node, forced ) {
 		var store      = this.getConfigEntitiesStore(),
 			entity     = store.getById( id ),
 			owner      = entity.getOwner(),
@@ -217,11 +217,11 @@ Ext.define('Spelled.controller.Entities', {
 		clone.setDirty()
 		store.add( clone )
 
-		this.sendCreateMessage( clone )
+		this.sendCreateMessage( clone, forced )
 	},
 
-	sendCreateMessage: function( entity ) {
-		this.sendEntityEventToEngine( 'entity.create', { entityConfig: entity.getMessageData() } )
+	sendCreateMessage: function( entity, forced ) {
+		this.sendEntityEventToEngine( 'entity.create', { entityConfig: entity.getMessageData() }, forced )
 	},
 
 	isSceneTarget: function( targetId ) {

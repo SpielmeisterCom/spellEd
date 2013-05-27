@@ -242,6 +242,7 @@ Ext.define('Spelled.controller.Scripts', {
     },
 
 	refreshScriptTab: function( tab, model ) {
+		tab.aceEditor.setReadOnly( model.isReadonly() )
 		tab.setModel( model )
 		tab.refreshContent()
 	}

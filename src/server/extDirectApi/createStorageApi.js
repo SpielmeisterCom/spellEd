@@ -92,6 +92,9 @@ define(
 
 				if( _.has( params, 'id' ) ) {
 					var filePath = util.getPath( params.id )
+
+					if( !fs.existsSync( filePath ) ) return
+
 					return ( _.has( params, 'type' ) ) ? generateExtModel( filePath ) : getByFilePath( filePath )
 				} else {
 					return getAllByType( params )
