@@ -456,12 +456,12 @@ Ext.define('Spelled.controller.Menu', {
 
     removeComponentAttribute: function( button ) {
 		var contextmenu = button.ownerCt,
-			tabPanel    = contextmenu.getTabPanel()
+			panel       = contextmenu.getOwnerView().up( 'componenttemplateedit' )
 
-        var node = this.application.getLastSelectedNode( tabPanel.down( 'componenttemplateattributeslist' ) )
+        var node = this.application.getLastSelectedNode( panel.down( 'componenttemplateattributeslist' ) )
 
         if( node && node.isLeaf() ) {
-            this.application.getController( 'templates.Components' ).removeComponentAttribute( tabPanel, node.get('id') )
+            this.application.getController( 'templates.Components' ).removeComponentAttribute( panel, node.get('id') )
 			node.remove()
         }
     },

@@ -179,9 +179,8 @@ Ext.define('Spelled.controller.templates.Components', {
         this.application.getController('Templates').removeTemplateCallback( component )
     },
 
-    removeComponentAttribute: function( tabPanel, id ) {
-        var tab                = tabPanel.getActiveTab(),
-            componentTemplate  = tab.template,
+    removeComponentAttribute: function( panel, id ) {
+        var componentTemplate  = panel.template,
             store              = Ext.getStore( 'template.component.Attributes' ),
             attribute          = store.getById( id )
 
@@ -190,7 +189,7 @@ Ext.define('Spelled.controller.templates.Components', {
 
 		componentTemplate.setDirty()
 
-        this.refreshComponentTemplateAttributesList( tab )
+        this.refreshComponentTemplateAttributesList( panel )
     },
 
     showAttributeConfig: function( treePanel, record ) {
