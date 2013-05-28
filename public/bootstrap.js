@@ -5,6 +5,7 @@
  * metadata-driven class system features 
  */
 Ext.Loader.addClassPathMappings({
+  " Ext.Msg": "ext/src/window/MessageBox.js",
   "Ext": "ext/src",
   "Ext.rtl.EventObjectImpl": "ext/src/rtl/EventObject.js",
   "Spelled": "app"
@@ -18,16 +19,20 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.Configuration": [],
   "Spelled.base.view.TreeList": [],
   "Spelled.view.library.menu.Context": [],
+  "Spelled.platform.Adapter": [],
   "Spelled.controller.Scripts": [],
   "Spelled.view.library.menu.item.Edit": [],
   "Spelled.view.project.Settings": [],
   "Ext.ux.DataView.DragSelector": [],
+  "Spelled.MessageBox": [],
   "Spelled.base.view.GroupedTreeList": [],
   "Spelled.StoreHelper": [],
+  "Spelled.view.library.menu.item.ShowItemInFolder": [],
   "Ext.ux.grid.menu.ListMenu": [],
   "Spelled.view.template.component.attribute.Translation": [],
   "Spelled.view.entity.HasTemplateHeader": [],
   "Spelled.view.asset.create.Sound": [],
+  "Spelled.store.BlacklistedComponentAttributes": [],
   "Spelled.view.script.Editor": [],
   "Spelled.controller.Menu": [],
   "Spelled.view.scene.plugin.SceneTreeDropZone": [],
@@ -38,6 +43,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.PreviewPlugin": [],
   "Ext.ux.ajax.SimXhr": [],
   "Spelled.view.asset.ColorField": [],
+  "Spelled.base.grid.column.Action": [],
   "Ext.ux.CellDragDrop": [],
   "Spelled.controller.Assets": [],
   "Spelled.model.Project": [],
@@ -98,8 +104,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.scene.ProgressBar": [],
   "Ext.ux.dd.PanelFieldDragZone": [],
   "Spelled.view.template.system.Details": [],
-  "Spelled.view.scene.TreeList": [],
   "Spelled.Logger": [],
+  "Spelled.view.scene.TreeList": [],
   "Spelled.view.template.system.input.ComboBox": [],
   "Spelled.view.ui.SpelledViewport": [],
   "Ext.ux.GMapPanel": [],
@@ -124,20 +130,22 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.script.Properties": [],
   "Spelled.view.script.FolderPicker": [],
   "Ext.ux.event.Player": [],
+  "Spelled.platform.target.Abstract": [],
   "Spelled.view.template.component.Details": [],
   "Spelled.view.library.menu.item.Rename": [],
   "Spelled.view.template.component.attribute.List": [],
   "Spelled.MessageBus": [],
   "Spelled.view.entity.Convert": [],
   "Spelled.store.Library": [],
+  "Spelled.view.library.menu.item.CopyIdentifier": [],
   "Ext.ux.ToolbarDroppable": [],
   "Spelled.view.ui.StartScreen": [],
   "Spelled.data.reader.Reader": [],
   "Spelled.view.entity.ComponentsList": [],
   "Spelled.store.config.Scenes": [],
   "Spelled.view.library.menu.item.Remove": [],
-  "Spelled.view.scene.plugin.TreeViewDragDrop": [],
   "Ext.ux.DataView.Draggable": [],
+  "Spelled.view.scene.plugin.TreeViewDragDrop": [],
   "Ext.ux.TabCloseMenu": [],
   "Spelled.model.config.Entity": [],
   "Spelled.view.menu.contextmenu.KeyToActionMapping": [],
@@ -175,6 +183,9 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.event.Driver": [],
   "Spelled.base.store.Template": [],
   "Spelled.view.menu.contextmenu.SystemTemplateInputList": [],
+  "Spelled.controller.NodeWebKit": [],
+  "Spelled.platform.target.NodeWebKit": [],
+  "Spelled.view.asset.create.LocalizedFileField": [],
   "Spelled.controller.templates.Components": [],
   "Spelled.store.FoldersTree": [],
   "Ext.ux.form.MultiSelect": [
@@ -203,11 +214,12 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.library.Navigator": [],
   "Spelled.model.assets.Appearance": [],
   "Spelled.base.view.Menu": [],
+  "Spelled.platform.target.Cloud": [],
   "Spelled.store.script.Scripts": [],
   "Ext.ux.ajax.SimManager": [],
   "Spelled.view.template.component.Edit": [],
-  "Spelled.view.scene.Create": [],
   "Spelled.proxy.StorageAction": [],
+  "Spelled.view.scene.Create": [],
   "Spelled.data.writer.ComponentTemplate": [],
   "Spelled.store.asset.KeyFrameAnimationPreviews": [],
   "Ext.ux.TabScrollerMenu": [],
@@ -297,6 +309,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.asset.inspector.Config": [],
   "Spelled.view.library.menu.Filter": [],
   "Spelled.data.writer.Project": [],
+  "Spelled.view.template.component.Script": [],
   "Spelled.store.template.component.AttributeTypes": [],
   "Spelled.store.system.Types": [],
   "Ext.ux.event.Maker": [],
@@ -336,6 +349,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.library.menu.Context": [
     "widget.librarycontextmenu"
   ],
+  "Spelled.platform.Adapter": [],
   "Spelled.controller.Scripts": [],
   "Spelled.view.library.menu.item.Edit": [
     "widget.menuitemedit"
@@ -344,10 +358,14 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.projectsettings"
   ],
   "Ext.ux.DataView.DragSelector": [],
+  "Spelled.MessageBox": [],
   "Spelled.base.view.GroupedTreeList": [
     "widget.groupedtree"
   ],
   "Spelled.StoreHelper": [],
+  "Spelled.view.library.menu.item.ShowItemInFolder": [
+    "widget.menuitemshowinfolder"
+  ],
   "Ext.ux.grid.menu.ListMenu": [],
   "Spelled.view.template.component.attribute.Translation": [
     "widget.spelledtranslationfield"
@@ -358,6 +376,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.asset.create.Sound": [
     "widget.soundasset"
   ],
+  "Spelled.store.BlacklistedComponentAttributes": [],
   "Spelled.view.script.Editor": [
     "widget.scripteditor"
   ],
@@ -377,6 +396,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.ajax.SimXhr": [],
   "Spelled.view.asset.ColorField": [
     "widget.colorfield"
+  ],
+  "Spelled.base.grid.column.Action": [
+    "widget.spelledactioncolumn"
   ],
   "Ext.ux.CellDragDrop": [
     "plugin.celldragdrop"
@@ -506,10 +528,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.template.system.Details": [
     "widget.systemtemplatedetails"
   ],
+  "Spelled.Logger": [],
   "Spelled.view.scene.TreeList": [
     "widget.scenetreelist"
   ],
-  "Spelled.Logger": [],
   "Spelled.view.template.system.input.ComboBox": [
     "widget.systemtemplateinputgridcombobox"
   ],
@@ -560,6 +582,7 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.scriptfolderpicker"
   ],
   "Ext.ux.event.Player": [],
+  "Spelled.platform.target.Abstract": [],
   "Spelled.view.template.component.Details": [
     "widget.componenttemplatedetails"
   ],
@@ -574,6 +597,9 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.convertentity"
   ],
   "Spelled.store.Library": [],
+  "Spelled.view.library.menu.item.CopyIdentifier": [
+    "widget.menuitemcopyid"
+  ],
   "Ext.ux.ToolbarDroppable": [],
   "Spelled.view.ui.StartScreen": [
     "widget.startscreen"
@@ -586,10 +612,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.library.menu.item.Remove": [
     "widget.menuitemremove"
   ],
+  "Ext.ux.DataView.Draggable": [],
   "Spelled.view.scene.plugin.TreeViewDragDrop": [
     "plugin.scenetreedragdrop"
   ],
-  "Ext.ux.DataView.Draggable": [],
   "Ext.ux.TabCloseMenu": [
     "plugin.tabclosemenu"
   ],
@@ -666,6 +692,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.menu.contextmenu.SystemTemplateInputList": [
     "widget.systemtemplateinputcontextmenu"
   ],
+  "Spelled.controller.NodeWebKit": [],
+  "Spelled.platform.target.NodeWebKit": [],
+  "Spelled.view.asset.create.LocalizedFileField": [
+    "widget.localizedfilefield"
+  ],
   "Spelled.controller.templates.Components": [],
   "Spelled.store.FoldersTree": [],
   "Ext.ux.form.MultiSelect": [
@@ -729,16 +760,17 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.model.assets.Appearance": [],
   "Spelled.base.view.Menu": [],
+  "Spelled.platform.target.Cloud": [],
   "Spelled.store.script.Scripts": [],
   "Ext.ux.ajax.SimManager": [],
   "Spelled.view.template.component.Edit": [
     "widget.componenttemplateedit"
   ],
-  "Spelled.view.scene.Create": [
-    "widget.createscene"
-  ],
   "Spelled.proxy.StorageAction": [
     "proxy.storageaction"
+  ],
+  "Spelled.view.scene.Create": [
+    "widget.createscene"
   ],
   "Spelled.data.writer.ComponentTemplate": [
     "writer.componentTemplate"
@@ -916,6 +948,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.data.writer.Project": [
     "writer.project"
+  ],
+  "Spelled.view.template.component.Script": [
+    "widget.componenttemplatescript"
   ],
   "Spelled.store.template.component.AttributeTypes": [],
   "Spelled.store.system.Types": [],
