@@ -56,6 +56,10 @@ Ext.define('Spelled.controller.Templates', {
 		{
 			ref: 'TemplatesTree',
 			selector: '#LibraryTree'
+		},
+		{
+			ref : 'SecondTabPanel',
+			selector: '#SecondTabPanel'
 		}
     ],
 
@@ -222,8 +226,9 @@ Ext.define('Spelled.controller.Templates', {
                 return
         }
 
-		var template = store.getById( record.getId() ),
-			foundTab = this.application.findActiveTabByTitle( this.getTemplateEditor(), template.getFullName() )
+		var tabPanel = this.getMainPanel().down( 'splitlayout').isHidden() ? this.getTemplateEditor() : this.getSecondTabPanel(),
+			template = store.getById( record.getId() ),
+			foundTab = this.application.findActiveTabByTitle( tabPanel, template.getFullName() )
 
 		if( foundTab ) return foundTab
 
