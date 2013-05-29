@@ -10,7 +10,9 @@ Ext.define('Spelled.view.library.field.Name', {
 		var text = parts.shift()
 
 		if( text ) {
-			var childNode = node.findChild( 'text', text )
+			var childNode = node.findChildBy( function() {
+				return this.get( 'text' ).toLowerCase() == text.toLowerCase()
+			} )
 
 			if( !childNode ) return false
 			else if( childNode && parts.length === 0 ) return true
