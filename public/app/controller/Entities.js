@@ -133,8 +133,11 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
 	updateEntityComponent:function( id, componentId, config ){
-		var entity           = this.getConfigEntitiesStore().getById( id ),
-			component        = entity.getComponentByTemplateId( componentId ),
+		var entity           = this.getConfigEntitiesStore().getById( id )
+
+		if( !entity ) return
+
+		var	component        = entity.getComponentByTemplateId( componentId ),
 			componentConfig  = component.get( 'config' ),
 			tree             = this.getScenesTree(),
 			lastSelectedNode = this.application.getLastSelectedNode( tree )
