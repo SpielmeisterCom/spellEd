@@ -362,7 +362,14 @@ Ext.define('Spelled.controller.Templates', {
 					Ext.Msg.alert('Success', 'Your Template "' + result.get( 'templateId' ) + '" has been created.')
 
 					//Needed for template conversion
-					this.loadTemplateStores( Ext.bind( function() { if( values.owner ) this.application.fireEvent( 'refreshentitynode', values.owner ) }, this) )
+					this.loadTemplateStores( Ext.bind( function() {
+						if( values.owner ) {
+							var entity = Ext.getStore( 'config.Entities' ).getById( values.owner )
+
+							entity.setDirty()
+							this.application.fireEvent( 'refreshentitynode', values.owner )
+						}
+					}, this) )
 
 					window.close()
 				},

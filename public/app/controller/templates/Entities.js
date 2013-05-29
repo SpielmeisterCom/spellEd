@@ -101,7 +101,6 @@ Ext.define('Spelled.controller.templates.Entities', {
 
 		entity.set( 'templateId', template.getFullName() )
 		entity.resetConfig()
-		entity.setDirty()
 	},
 
 	createEntityTemplatePreviewItem: function( entityTemplate ) {
