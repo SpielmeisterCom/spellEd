@@ -167,6 +167,10 @@ Ext.define('Spelled.controller.templates.Systems', {
             componentTemplateStore = Ext.getStore('template.Components'),
 			systemTemplate         = this.getRightPanel().down( 'systemtemplatedetails').getForm().getRecord()
 
+		if( components.length == 0 ) {
+			return Spelled.MessageBox.alert( 'Missing component', 'Select a component from the tree.' )
+		}
+
         var inputDefinition = Ext.create(
             'Spelled.model.template.SystemInputDefinition',
             {
