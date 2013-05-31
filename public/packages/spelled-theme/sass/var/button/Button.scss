@@ -1,7 +1,9 @@
-$button-default-base-color: #f8f8f8 !default;
-$button-default-base-color-over: #f3f3f3 !default;
+$button-default-color: #f8f8f8 !default;
+
+$button-default-base-color: #292929 !default;
+$button-default-base-color-over: #292929 !default;
 $button-default-base-color-focus: $button-default-base-color-over !default;
-$button-default-base-color-pressed: #d6d6d6 !default;
+$button-default-base-color-pressed: #292929 !default;
 $button-default-base-color-disabled: adjust-color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%) !default; //F7F7F7
 
 $button-default-border-color: #bbbbbb !default;
@@ -21,6 +23,8 @@ $button-default-background-gradient-color-stops-over: null !default;
 $button-default-background-gradient-color-stops-focus: null !default;
 $button-default-background-gradient-color-stops-pressed: null !default;
 $button-default-background-gradient-color-stops-disabled: null !default;
+
+$button-toolbar-color: #f8f8f8 !default;
 
 $button-toolbar-border-color-over: $button-default-border-color-over !default;
 $button-toolbar-border-color-focus: $button-default-border-color-focus !default;
