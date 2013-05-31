@@ -6036,7 +6036,7 @@ a.x-tab {
  */
 /* line 246, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-small {
-  border-color: #bbbbbb;
+  border-color: #363636;
 }
 
 /* line 137, ../../../../ext/packages/ext-theme-base/sass/etc/mixins/frame.scss */
@@ -6050,19 +6050,19 @@ a.x-tab {
   border-width: 1px;
   border-style: solid;
   background-image: none;
-  background-color: #f8f8f8;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #eeeeee));
-  background-image: -webkit-linear-gradient(top, #ffffff, #eeeeee);
-  background-image: -moz-linear-gradient(top, #ffffff, #eeeeee);
-  background-image: -o-linear-gradient(top, #ffffff, #eeeeee);
-  background-image: linear-gradient(top, #ffffff, #eeeeee);
+  background-color: #363636;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #3e3e3e), color-stop(100%, #2c2c2c));
+  background-image: -webkit-linear-gradient(top, #3e3e3e, #2c2c2c);
+  background-image: -moz-linear-gradient(top, #3e3e3e, #2c2c2c);
+  background-image: -o-linear-gradient(top, #3e3e3e, #2c2c2c);
+  background-image: linear-gradient(top, #3e3e3e, #2c2c2c);
 }
 
 /* line 189, ../../../../ext/packages/ext-theme-base/sass/etc/mixins/frame.scss */
 .x-btn-default-small-mc {
   background-image: url(images/btn/btn-default-small-fbg.gif);
   background-position: 0 top;
-  background-color: #f8f8f8;
+  background-color: #363636;
 }
 
 /* line 212, ../../../../ext/packages/ext-theme-base/sass/etc/mixins/frame.scss */
@@ -6199,7 +6199,7 @@ body.x-nbr .x-btn-default-small-frameInfo {
   font-size: 11px;
   font-weight: normal;
   font-family: tahoma, arial, verdana, sans-serif;
-  color: #333333;
+  color: white;
   padding: 0 4px;
 }
 /* line 261, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -6218,12 +6218,12 @@ body.x-nbr .x-btn-default-small-frameInfo {
 .x-btn-default-small .x-btn-glyph {
   font-size: 16px;
   line-height: 16px;
-  color: #333333;
+  color: white;
   opacity: 0.5;
 }
 /* line 303, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-ie8m .x-btn-default-small .x-btn-glyph {
-  color: #959595;
+  color: #9a9a9a;
 }
 
 /* line 309, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -6335,39 +6335,36 @@ body.x-nbr .x-btn-default-small-frameInfo {
 
 /* line 492, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-small-over {
-  border-color: #9d9d9d;
   background-image: none;
-  background-color: #f3f3f3;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fbfbfb), color-stop(100%, #e9e9e9));
-  background-image: -webkit-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: -moz-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: -o-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: linear-gradient(top, #fbfbfb, #e9e9e9);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2a2a2), color-stop(100%, #909090));
+  background-image: -webkit-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -moz-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -o-linear-gradient(top, #a2a2a2, #909090);
+  background-image: linear-gradient(top, #a2a2a2, #909090);
 }
 
 /* line 516, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-small-focus {
-  border-color: #9d9d9d;
   background-image: none;
-  background-color: #f3f3f3;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fbfbfb), color-stop(100%, #e9e9e9));
-  background-image: -webkit-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: -moz-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: -o-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: linear-gradient(top, #fbfbfb, #e9e9e9);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2a2a2), color-stop(100%, #909090));
+  background-image: -webkit-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -moz-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -o-linear-gradient(top, #a2a2a2, #909090);
+  background-image: linear-gradient(top, #a2a2a2, #909090);
 }
 
 /* line 541, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-small-menu-active,
 .x-btn-default-small-pressed {
-  border-color: #9d9d9d;
   background-image: none;
-  background-color: #d6d6d6;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c7c7c7), color-stop(100%, #e0e0e0));
-  background-image: -webkit-linear-gradient(top, #c7c7c7, #e0e0e0);
-  background-image: -moz-linear-gradient(top, #c7c7c7, #e0e0e0);
-  background-image: -o-linear-gradient(top, #c7c7c7, #e0e0e0);
-  background-image: linear-gradient(top, #c7c7c7, #e0e0e0);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2a2a2), color-stop(100%, #909090));
+  background-image: -webkit-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -moz-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -o-linear-gradient(top, #a2a2a2, #909090);
+  background-image: linear-gradient(top, #a2a2a2, #909090);
 }
 
 /* line 573, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -6386,7 +6383,7 @@ body.x-nbr .x-btn-default-small-frameInfo {
 }
 /* line 580, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-small-over .x-frame-mc {
-  background-color: #f3f3f3;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-small-over-fbg.gif);
 }
 
@@ -6406,7 +6403,7 @@ body.x-nbr .x-btn-default-small-frameInfo {
 }
 /* line 602, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-small-focus .x-frame-mc {
-  background-color: #f3f3f3;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-small-focus-fbg.gif);
 }
 
@@ -6435,7 +6432,7 @@ body.x-nbr .x-btn-default-small-frameInfo {
 /* line 625, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-small-menu-active .x-frame-mc,
 .x-btn-default-small-pressed .x-frame-mc {
-  background-color: #d6d6d6;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-small-pressed-fbg.gif);
 }
 
@@ -6550,7 +6547,7 @@ body.x-nbr .x-btn-default-small-frameInfo {
 /* */
 /* line 246, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-medium {
-  border-color: #bbbbbb;
+  border-color: #363636;
 }
 
 /* line 137, ../../../../ext/packages/ext-theme-base/sass/etc/mixins/frame.scss */
@@ -6564,19 +6561,19 @@ body.x-nbr .x-btn-default-small-frameInfo {
   border-width: 1px;
   border-style: solid;
   background-image: none;
-  background-color: #f8f8f8;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #eeeeee));
-  background-image: -webkit-linear-gradient(top, #ffffff, #eeeeee);
-  background-image: -moz-linear-gradient(top, #ffffff, #eeeeee);
-  background-image: -o-linear-gradient(top, #ffffff, #eeeeee);
-  background-image: linear-gradient(top, #ffffff, #eeeeee);
+  background-color: #363636;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #3e3e3e), color-stop(100%, #2c2c2c));
+  background-image: -webkit-linear-gradient(top, #3e3e3e, #2c2c2c);
+  background-image: -moz-linear-gradient(top, #3e3e3e, #2c2c2c);
+  background-image: -o-linear-gradient(top, #3e3e3e, #2c2c2c);
+  background-image: linear-gradient(top, #3e3e3e, #2c2c2c);
 }
 
 /* line 189, ../../../../ext/packages/ext-theme-base/sass/etc/mixins/frame.scss */
 .x-btn-default-medium-mc {
   background-image: url(images/btn/btn-default-medium-fbg.gif);
   background-position: 0 top;
-  background-color: #f8f8f8;
+  background-color: #363636;
 }
 
 /* line 212, ../../../../ext/packages/ext-theme-base/sass/etc/mixins/frame.scss */
@@ -6713,7 +6710,7 @@ body.x-nbr .x-btn-default-medium-frameInfo {
   font-size: 11px;
   font-weight: normal;
   font-family: tahoma, arial, verdana, sans-serif;
-  color: #333333;
+  color: white;
   padding: 0 3px;
 }
 /* line 261, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -6732,12 +6729,12 @@ body.x-nbr .x-btn-default-medium-frameInfo {
 .x-btn-default-medium .x-btn-glyph {
   font-size: 24px;
   line-height: 24px;
-  color: #333333;
+  color: white;
   opacity: 0.5;
 }
 /* line 303, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-ie8m .x-btn-default-medium .x-btn-glyph {
-  color: #959595;
+  color: #9a9a9a;
 }
 
 /* line 309, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -6849,39 +6846,36 @@ body.x-nbr .x-btn-default-medium-frameInfo {
 
 /* line 492, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-medium-over {
-  border-color: #9d9d9d;
   background-image: none;
-  background-color: #f3f3f3;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fbfbfb), color-stop(100%, #e9e9e9));
-  background-image: -webkit-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: -moz-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: -o-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: linear-gradient(top, #fbfbfb, #e9e9e9);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2a2a2), color-stop(100%, #909090));
+  background-image: -webkit-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -moz-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -o-linear-gradient(top, #a2a2a2, #909090);
+  background-image: linear-gradient(top, #a2a2a2, #909090);
 }
 
 /* line 516, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-medium-focus {
-  border-color: #9d9d9d;
   background-image: none;
-  background-color: #f3f3f3;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fbfbfb), color-stop(100%, #e9e9e9));
-  background-image: -webkit-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: -moz-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: -o-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: linear-gradient(top, #fbfbfb, #e9e9e9);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2a2a2), color-stop(100%, #909090));
+  background-image: -webkit-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -moz-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -o-linear-gradient(top, #a2a2a2, #909090);
+  background-image: linear-gradient(top, #a2a2a2, #909090);
 }
 
 /* line 541, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-medium-menu-active,
 .x-btn-default-medium-pressed {
-  border-color: #9d9d9d;
   background-image: none;
-  background-color: #d6d6d6;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c7c7c7), color-stop(100%, #e0e0e0));
-  background-image: -webkit-linear-gradient(top, #c7c7c7, #e0e0e0);
-  background-image: -moz-linear-gradient(top, #c7c7c7, #e0e0e0);
-  background-image: -o-linear-gradient(top, #c7c7c7, #e0e0e0);
-  background-image: linear-gradient(top, #c7c7c7, #e0e0e0);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2a2a2), color-stop(100%, #909090));
+  background-image: -webkit-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -moz-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -o-linear-gradient(top, #a2a2a2, #909090);
+  background-image: linear-gradient(top, #a2a2a2, #909090);
 }
 
 /* line 573, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -6900,7 +6894,7 @@ body.x-nbr .x-btn-default-medium-frameInfo {
 }
 /* line 580, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-medium-over .x-frame-mc {
-  background-color: #f3f3f3;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-medium-over-fbg.gif);
 }
 
@@ -6920,7 +6914,7 @@ body.x-nbr .x-btn-default-medium-frameInfo {
 }
 /* line 602, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-medium-focus .x-frame-mc {
-  background-color: #f3f3f3;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-medium-focus-fbg.gif);
 }
 
@@ -6949,7 +6943,7 @@ body.x-nbr .x-btn-default-medium-frameInfo {
 /* line 625, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-medium-menu-active .x-frame-mc,
 .x-btn-default-medium-pressed .x-frame-mc {
-  background-color: #d6d6d6;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-medium-pressed-fbg.gif);
 }
 
@@ -7064,7 +7058,7 @@ body.x-nbr .x-btn-default-medium-frameInfo {
 /* */
 /* line 246, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-large {
-  border-color: #bbbbbb;
+  border-color: #363636;
 }
 
 /* line 137, ../../../../ext/packages/ext-theme-base/sass/etc/mixins/frame.scss */
@@ -7078,19 +7072,19 @@ body.x-nbr .x-btn-default-medium-frameInfo {
   border-width: 1px;
   border-style: solid;
   background-image: none;
-  background-color: #f8f8f8;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #eeeeee));
-  background-image: -webkit-linear-gradient(top, #ffffff, #eeeeee);
-  background-image: -moz-linear-gradient(top, #ffffff, #eeeeee);
-  background-image: -o-linear-gradient(top, #ffffff, #eeeeee);
-  background-image: linear-gradient(top, #ffffff, #eeeeee);
+  background-color: #363636;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #3e3e3e), color-stop(100%, #2c2c2c));
+  background-image: -webkit-linear-gradient(top, #3e3e3e, #2c2c2c);
+  background-image: -moz-linear-gradient(top, #3e3e3e, #2c2c2c);
+  background-image: -o-linear-gradient(top, #3e3e3e, #2c2c2c);
+  background-image: linear-gradient(top, #3e3e3e, #2c2c2c);
 }
 
 /* line 189, ../../../../ext/packages/ext-theme-base/sass/etc/mixins/frame.scss */
 .x-btn-default-large-mc {
   background-image: url(images/btn/btn-default-large-fbg.gif);
   background-position: 0 top;
-  background-color: #f8f8f8;
+  background-color: #363636;
 }
 
 /* line 212, ../../../../ext/packages/ext-theme-base/sass/etc/mixins/frame.scss */
@@ -7227,7 +7221,7 @@ body.x-nbr .x-btn-default-large-frameInfo {
   font-size: 11px;
   font-weight: normal;
   font-family: tahoma, arial, verdana, sans-serif;
-  color: #333333;
+  color: white;
   padding: 0 3px;
 }
 /* line 261, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -7246,12 +7240,12 @@ body.x-nbr .x-btn-default-large-frameInfo {
 .x-btn-default-large .x-btn-glyph {
   font-size: 32px;
   line-height: 32px;
-  color: #333333;
+  color: white;
   opacity: 0.5;
 }
 /* line 303, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-ie8m .x-btn-default-large .x-btn-glyph {
-  color: #959595;
+  color: #9a9a9a;
 }
 
 /* line 309, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -7363,39 +7357,36 @@ body.x-nbr .x-btn-default-large-frameInfo {
 
 /* line 492, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-large-over {
-  border-color: #9d9d9d;
   background-image: none;
-  background-color: #f3f3f3;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fbfbfb), color-stop(100%, #e9e9e9));
-  background-image: -webkit-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: -moz-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: -o-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: linear-gradient(top, #fbfbfb, #e9e9e9);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2a2a2), color-stop(100%, #909090));
+  background-image: -webkit-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -moz-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -o-linear-gradient(top, #a2a2a2, #909090);
+  background-image: linear-gradient(top, #a2a2a2, #909090);
 }
 
 /* line 516, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-large-focus {
-  border-color: #9d9d9d;
   background-image: none;
-  background-color: #f3f3f3;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fbfbfb), color-stop(100%, #e9e9e9));
-  background-image: -webkit-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: -moz-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: -o-linear-gradient(top, #fbfbfb, #e9e9e9);
-  background-image: linear-gradient(top, #fbfbfb, #e9e9e9);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2a2a2), color-stop(100%, #909090));
+  background-image: -webkit-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -moz-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -o-linear-gradient(top, #a2a2a2, #909090);
+  background-image: linear-gradient(top, #a2a2a2, #909090);
 }
 
 /* line 541, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-large-menu-active,
 .x-btn-default-large-pressed {
-  border-color: #9d9d9d;
   background-image: none;
-  background-color: #d6d6d6;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c7c7c7), color-stop(100%, #e0e0e0));
-  background-image: -webkit-linear-gradient(top, #c7c7c7, #e0e0e0);
-  background-image: -moz-linear-gradient(top, #c7c7c7, #e0e0e0);
-  background-image: -o-linear-gradient(top, #c7c7c7, #e0e0e0);
-  background-image: linear-gradient(top, #c7c7c7, #e0e0e0);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2a2a2), color-stop(100%, #909090));
+  background-image: -webkit-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -moz-linear-gradient(top, #a2a2a2, #909090);
+  background-image: -o-linear-gradient(top, #a2a2a2, #909090);
+  background-image: linear-gradient(top, #a2a2a2, #909090);
 }
 
 /* line 573, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -7414,7 +7405,7 @@ body.x-nbr .x-btn-default-large-frameInfo {
 }
 /* line 580, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-large-over .x-frame-mc {
-  background-color: #f3f3f3;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-large-over-fbg.gif);
 }
 
@@ -7434,7 +7425,7 @@ body.x-nbr .x-btn-default-large-frameInfo {
 }
 /* line 602, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-large-focus .x-frame-mc {
-  background-color: #f3f3f3;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-large-focus-fbg.gif);
 }
 
@@ -7463,7 +7454,7 @@ body.x-nbr .x-btn-default-large-frameInfo {
 /* line 625, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-large-menu-active .x-frame-mc,
 .x-btn-default-large-pressed .x-frame-mc {
-  background-color: #d6d6d6;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-large-pressed-fbg.gif);
 }
 
@@ -7715,7 +7706,7 @@ body.x-nbr .x-btn-default-toolbar-small-frameInfo {
   font-size: 11px;
   font-weight: normal;
   font-family: tahoma, arial, verdana, sans-serif;
-  color: #333333;
+  color: white;
   padding: 0 4px;
 }
 /* line 261, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -7734,12 +7725,12 @@ body.x-nbr .x-btn-default-toolbar-small-frameInfo {
 .x-btn-default-toolbar-small .x-btn-glyph {
   font-size: 16px;
   line-height: 16px;
-  color: #333333;
+  color: white;
   opacity: 0.5;
 }
 /* line 303, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-ie8m .x-btn-default-toolbar-small .x-btn-glyph {
-  color: #999999;
+  color: white;
 }
 
 /* line 309, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -7747,10 +7738,6 @@ body.x-nbr .x-btn-default-toolbar-small-frameInfo {
   border-color: #6f6f6f;
   background-image: none;
   background-color: transparent;
-}
-/* line 317, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
-.x-btn-default-toolbar-small-disabled .x-btn-inner {
-  color: #8c8c8c;
 }
 
 /* line 335, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -7850,39 +7837,39 @@ body.x-nbr .x-btn-default-toolbar-small-frameInfo {
 
 /* line 492, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-small-over {
-  border-color: #9d9d9d;
+  border-color: #363636;
   background-image: none;
-  background-color: #f3f3f3;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f3f3f3), color-stop(48%, #ededed), color-stop(52%, #dbdbdb), color-stop(100%, #e0e0e0));
-  background-image: -webkit-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: -moz-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: -o-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #9a9a9a), color-stop(48%, #949494), color-stop(52%, #828282), color-stop(100%, #878787));
+  background-image: -webkit-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: -moz-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: -o-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
 }
 
 /* line 516, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-small-focus {
-  border-color: #9d9d9d;
+  border-color: #363636;
   background-image: none;
-  background-color: #f3f3f3;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f3f3f3), color-stop(48%, #ededed), color-stop(52%, #dbdbdb), color-stop(100%, #e0e0e0));
-  background-image: -webkit-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: -moz-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: -o-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #9a9a9a), color-stop(48%, #949494), color-stop(52%, #828282), color-stop(100%, #878787));
+  background-image: -webkit-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: -moz-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: -o-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
 }
 
 /* line 541, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-small-menu-active,
 .x-btn-default-toolbar-small-pressed {
-  border-color: #9d9d9d;
+  border-color: #363636;
   background-image: none;
-  background-color: #d6d6d6;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #d6d6d6), color-stop(48%, #dcdcdc), color-stop(52%, #deb6b7), color-stop(100%, #e1bebf));
-  background-image: -webkit-linear-gradient(top, #d6d6d6, #dcdcdc 48%, #deb6b7 52%, #e1bebf);
-  background-image: -moz-linear-gradient(top, #d6d6d6, #dcdcdc 48%, #deb6b7 52%, #e1bebf);
-  background-image: -o-linear-gradient(top, #d6d6d6, #dcdcdc 48%, #deb6b7 52%, #e1bebf);
-  background-image: linear-gradient(top, #d6d6d6, #dcdcdc 48%, #deb6b7 52%, #e1bebf);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #9a9a9a), color-stop(48%, #a0a0a0), color-stop(52%, #b96366), color-stop(100%, #bb6c6f));
+  background-image: -webkit-linear-gradient(top, #9a9a9a, #a0a0a0 48%, #b96366 52%, #bb6c6f);
+  background-image: -moz-linear-gradient(top, #9a9a9a, #a0a0a0 48%, #b96366 52%, #bb6c6f);
+  background-image: -o-linear-gradient(top, #9a9a9a, #a0a0a0 48%, #b96366 52%, #bb6c6f);
+  background-image: linear-gradient(top, #9a9a9a, #a0a0a0 48%, #b96366 52%, #bb6c6f);
 }
 
 /* line 573, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -7901,7 +7888,7 @@ body.x-nbr .x-btn-default-toolbar-small-frameInfo {
 }
 /* line 580, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-small-over .x-frame-mc {
-  background-color: #f3f3f3;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-toolbar-small-over-fbg.gif);
 }
 
@@ -7921,7 +7908,7 @@ body.x-nbr .x-btn-default-toolbar-small-frameInfo {
 }
 /* line 602, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-small-focus .x-frame-mc {
-  background-color: #f3f3f3;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-toolbar-small-focus-fbg.gif);
 }
 
@@ -7950,7 +7937,7 @@ body.x-nbr .x-btn-default-toolbar-small-frameInfo {
 /* line 625, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-small-menu-active .x-frame-mc,
 .x-btn-default-toolbar-small-pressed .x-frame-mc {
-  background-color: #d6d6d6;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-toolbar-small-pressed-fbg.gif);
 }
 
@@ -8195,7 +8182,7 @@ body.x-nbr .x-btn-default-toolbar-medium-frameInfo {
   font-size: 11px;
   font-weight: normal;
   font-family: tahoma, arial, verdana, sans-serif;
-  color: #333333;
+  color: white;
   padding: 0 3px;
 }
 /* line 261, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -8214,12 +8201,12 @@ body.x-nbr .x-btn-default-toolbar-medium-frameInfo {
 .x-btn-default-toolbar-medium .x-btn-glyph {
   font-size: 24px;
   line-height: 24px;
-  color: #333333;
+  color: white;
   opacity: 0.5;
 }
 /* line 303, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-ie8m .x-btn-default-toolbar-medium .x-btn-glyph {
-  color: #999999;
+  color: white;
 }
 
 /* line 309, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -8227,10 +8214,6 @@ body.x-nbr .x-btn-default-toolbar-medium-frameInfo {
   border-color: #6f6f6f;
   background-image: none;
   background-color: transparent;
-}
-/* line 317, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
-.x-btn-default-toolbar-medium-disabled .x-btn-inner {
-  color: #8c8c8c;
 }
 
 /* line 335, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -8330,39 +8313,39 @@ body.x-nbr .x-btn-default-toolbar-medium-frameInfo {
 
 /* line 492, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-medium-over {
-  border-color: #9d9d9d;
+  border-color: #363636;
   background-image: none;
-  background-color: #f3f3f3;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f3f3f3), color-stop(48%, #ededed), color-stop(52%, #dbdbdb), color-stop(100%, #e0e0e0));
-  background-image: -webkit-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: -moz-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: -o-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #9a9a9a), color-stop(48%, #949494), color-stop(52%, #828282), color-stop(100%, #878787));
+  background-image: -webkit-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: -moz-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: -o-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
 }
 
 /* line 516, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-medium-focus {
-  border-color: #9d9d9d;
+  border-color: #363636;
   background-image: none;
-  background-color: #f3f3f3;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f3f3f3), color-stop(48%, #ededed), color-stop(52%, #dbdbdb), color-stop(100%, #e0e0e0));
-  background-image: -webkit-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: -moz-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: -o-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #9a9a9a), color-stop(48%, #949494), color-stop(52%, #828282), color-stop(100%, #878787));
+  background-image: -webkit-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: -moz-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: -o-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
 }
 
 /* line 541, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-medium-menu-active,
 .x-btn-default-toolbar-medium-pressed {
-  border-color: #9d9d9d;
+  border-color: #363636;
   background-image: none;
-  background-color: #d6d6d6;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #d6d6d6), color-stop(48%, #dcdcdc), color-stop(52%, #deb6b7), color-stop(100%, #e1bebf));
-  background-image: -webkit-linear-gradient(top, #d6d6d6, #dcdcdc 48%, #deb6b7 52%, #e1bebf);
-  background-image: -moz-linear-gradient(top, #d6d6d6, #dcdcdc 48%, #deb6b7 52%, #e1bebf);
-  background-image: -o-linear-gradient(top, #d6d6d6, #dcdcdc 48%, #deb6b7 52%, #e1bebf);
-  background-image: linear-gradient(top, #d6d6d6, #dcdcdc 48%, #deb6b7 52%, #e1bebf);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #9a9a9a), color-stop(48%, #a0a0a0), color-stop(52%, #b96366), color-stop(100%, #bb6c6f));
+  background-image: -webkit-linear-gradient(top, #9a9a9a, #a0a0a0 48%, #b96366 52%, #bb6c6f);
+  background-image: -moz-linear-gradient(top, #9a9a9a, #a0a0a0 48%, #b96366 52%, #bb6c6f);
+  background-image: -o-linear-gradient(top, #9a9a9a, #a0a0a0 48%, #b96366 52%, #bb6c6f);
+  background-image: linear-gradient(top, #9a9a9a, #a0a0a0 48%, #b96366 52%, #bb6c6f);
 }
 
 /* line 573, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -8381,7 +8364,7 @@ body.x-nbr .x-btn-default-toolbar-medium-frameInfo {
 }
 /* line 580, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-medium-over .x-frame-mc {
-  background-color: #f3f3f3;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-toolbar-medium-over-fbg.gif);
 }
 
@@ -8401,7 +8384,7 @@ body.x-nbr .x-btn-default-toolbar-medium-frameInfo {
 }
 /* line 602, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-medium-focus .x-frame-mc {
-  background-color: #f3f3f3;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-toolbar-medium-focus-fbg.gif);
 }
 
@@ -8430,7 +8413,7 @@ body.x-nbr .x-btn-default-toolbar-medium-frameInfo {
 /* line 625, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-medium-menu-active .x-frame-mc,
 .x-btn-default-toolbar-medium-pressed .x-frame-mc {
-  background-color: #d6d6d6;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-toolbar-medium-pressed-fbg.gif);
 }
 
@@ -8675,7 +8658,7 @@ body.x-nbr .x-btn-default-toolbar-large-frameInfo {
   font-size: 11px;
   font-weight: normal;
   font-family: tahoma, arial, verdana, sans-serif;
-  color: #333333;
+  color: white;
   padding: 0 3px;
 }
 /* line 261, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -8694,12 +8677,12 @@ body.x-nbr .x-btn-default-toolbar-large-frameInfo {
 .x-btn-default-toolbar-large .x-btn-glyph {
   font-size: 32px;
   line-height: 32px;
-  color: #333333;
+  color: white;
   opacity: 0.5;
 }
 /* line 303, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-ie8m .x-btn-default-toolbar-large .x-btn-glyph {
-  color: #999999;
+  color: white;
 }
 
 /* line 309, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -8707,10 +8690,6 @@ body.x-nbr .x-btn-default-toolbar-large-frameInfo {
   border-color: #6f6f6f;
   background-image: none;
   background-color: transparent;
-}
-/* line 317, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
-.x-btn-default-toolbar-large-disabled .x-btn-inner {
-  color: #8c8c8c;
 }
 
 /* line 335, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -8810,39 +8789,39 @@ body.x-nbr .x-btn-default-toolbar-large-frameInfo {
 
 /* line 492, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-large-over {
-  border-color: #9d9d9d;
+  border-color: #363636;
   background-image: none;
-  background-color: #f3f3f3;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f3f3f3), color-stop(48%, #ededed), color-stop(52%, #dbdbdb), color-stop(100%, #e0e0e0));
-  background-image: -webkit-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: -moz-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: -o-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #9a9a9a), color-stop(48%, #949494), color-stop(52%, #828282), color-stop(100%, #878787));
+  background-image: -webkit-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: -moz-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: -o-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
 }
 
 /* line 516, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-large-focus {
-  border-color: #9d9d9d;
+  border-color: #363636;
   background-image: none;
-  background-color: #f3f3f3;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f3f3f3), color-stop(48%, #ededed), color-stop(52%, #dbdbdb), color-stop(100%, #e0e0e0));
-  background-image: -webkit-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: -moz-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: -o-linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
-  background-image: linear-gradient(top, #f3f3f3, #ededed 48%, #dbdbdb 52%, #e0e0e0);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #9a9a9a), color-stop(48%, #949494), color-stop(52%, #828282), color-stop(100%, #878787));
+  background-image: -webkit-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: -moz-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: -o-linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
+  background-image: linear-gradient(top, #9a9a9a, #949494 48%, #828282 52%, #878787);
 }
 
 /* line 541, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-large-menu-active,
 .x-btn-default-toolbar-large-pressed {
-  border-color: #9d9d9d;
+  border-color: #363636;
   background-image: none;
-  background-color: #d6d6d6;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #d6d6d6), color-stop(48%, #dcdcdc), color-stop(52%, #deb6b7), color-stop(100%, #e1bebf));
-  background-image: -webkit-linear-gradient(top, #d6d6d6, #dcdcdc 48%, #deb6b7 52%, #e1bebf);
-  background-image: -moz-linear-gradient(top, #d6d6d6, #dcdcdc 48%, #deb6b7 52%, #e1bebf);
-  background-image: -o-linear-gradient(top, #d6d6d6, #dcdcdc 48%, #deb6b7 52%, #e1bebf);
-  background-image: linear-gradient(top, #d6d6d6, #dcdcdc 48%, #deb6b7 52%, #e1bebf);
+  background-color: #9a9a9a;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #9a9a9a), color-stop(48%, #a0a0a0), color-stop(52%, #b96366), color-stop(100%, #bb6c6f));
+  background-image: -webkit-linear-gradient(top, #9a9a9a, #a0a0a0 48%, #b96366 52%, #bb6c6f);
+  background-image: -moz-linear-gradient(top, #9a9a9a, #a0a0a0 48%, #b96366 52%, #bb6c6f);
+  background-image: -o-linear-gradient(top, #9a9a9a, #a0a0a0 48%, #b96366 52%, #bb6c6f);
+  background-image: linear-gradient(top, #9a9a9a, #a0a0a0 48%, #b96366 52%, #bb6c6f);
 }
 
 /* line 573, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
@@ -8861,7 +8840,7 @@ body.x-nbr .x-btn-default-toolbar-large-frameInfo {
 }
 /* line 580, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-large-over .x-frame-mc {
-  background-color: #f3f3f3;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-toolbar-large-over-fbg.gif);
 }
 
@@ -8881,7 +8860,7 @@ body.x-nbr .x-btn-default-toolbar-large-frameInfo {
 }
 /* line 602, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-large-focus .x-frame-mc {
-  background-color: #f3f3f3;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-toolbar-large-focus-fbg.gif);
 }
 
@@ -8910,7 +8889,7 @@ body.x-nbr .x-btn-default-toolbar-large-frameInfo {
 /* line 625, ../../../../ext/packages/ext-theme-neutral/sass/src/button/Button.scss */
 .x-btn-default-toolbar-large-menu-active .x-frame-mc,
 .x-btn-default-toolbar-large-pressed .x-frame-mc {
-  background-color: #d6d6d6;
+  background-color: #9a9a9a;
   background-image: url(images/btn/btn-default-toolbar-large-pressed-fbg.gif);
 }
 
