@@ -64,13 +64,6 @@
 /* including package ext-theme-classic */
 /* including package spelled-theme */
 /* including package spelled-theme */
-/*
-$button-toolbar-background-color: $color2 !default;
-$button-toolbar-background-color-over: $color_selected !default;
-$button-toolbar-background-color-focus: $color_selected !default;
-$button-toolbar-background-color-pressed: $color_selected !default;
-$button-toolbar-background-color-disabled: color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%) !default;
-*/
 /* line 13, ../../sass/var/window/Window.scss */
 .x-window-item {
   background-color: #444444;
@@ -9702,12 +9695,12 @@ body.x-nbr .x-btn-default-toolbar-large-frameInfo {
   border-color: #544848;
   border-width: 0px;
   background-image: none;
-  background-color: #707070;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #707070), color-stop(48%, #6a6a6a), color-stop(52%, #525252), color-stop(100%, #575757));
-  background-image: -webkit-linear-gradient(top, #707070, #6a6a6a 48%, #525252 52%, #575757);
-  background-image: -moz-linear-gradient(top, #707070, #6a6a6a 48%, #525252 52%, #575757);
-  background-image: -o-linear-gradient(top, #707070, #6a6a6a 48%, #525252 52%, #575757);
-  background-image: linear-gradient(top, #707070, #6a6a6a 48%, #525252 52%, #575757);
+  background-color: #646464;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6c6c6c), color-stop(100%, #5a5a5a));
+  background-image: -webkit-linear-gradient(top, #6c6c6c, #5a5a5a);
+  background-image: -moz-linear-gradient(top, #6c6c6c, #5a5a5a);
+  background-image: -o-linear-gradient(top, #6c6c6c, #5a5a5a);
+  background-image: linear-gradient(top, #6c6c6c, #5a5a5a);
 }
 /* line 51, ../../../../ext/packages/ext-theme-neutral/sass/src/toolbar/Toolbar.scss */
 .x-toolbar-default .x-box-scroller {
