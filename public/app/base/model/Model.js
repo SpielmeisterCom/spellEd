@@ -33,10 +33,29 @@ Ext.define('Spelled.base.model.Model', {
 		this.fireEvent( 'dirty', this )
 	},
 
-	getDependencies: function() {
+	getDependencies: function( addMissing ) {
 		//TODO: should be changed if dependencies in spell are inserted
 		var oldDependencies = this.get( 'dependencies' ) || [],
-			newDependencies = this.getCalculatedDependencies()
+			newDependencies = this.getCalculatedDependencies(),
+			missing         = Ext.Array.difference( oldDependencies, newDependencies ),
+			libraryStore    = Ext.getStore( 'Library' ),
+			tmp = []
+
+		Ext.Array.each(
+			missing,
+			function( item ) {
+				var libraryItem = libraryStore.findLibraryItemByLibraryId( item )
+
+				if( addMissing && libraryItem ) {
+					Ext.Array.push( tmp, libraryItem.getDependencies( addMissing ) )
+				} else if( !libraryItem ) {
+					Ext.Array.remove( oldDependencies, item )
+				}
+			},
+			this
+		)
+
+		if( addMissing ) oldDependencies = Ext.Array.merge( oldDependencies, tmp )
 
 		return ( this.mergeDependencies ) ? Ext.Array.merge( oldDependencies, newDependencies ) : newDependencies
 	},

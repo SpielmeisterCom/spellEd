@@ -120,29 +120,7 @@ Ext.define('Spelled.view.library.Dependencies', {
 	reconfigureStores: function() {
 		if( !this.record ) return
 
-		var record              = this.record,
-			staticDependencies  = record.getCalculatedDependencies(),
-			dynamicDependencies = Ext.Array.difference( record.getDependencies(), staticDependencies ),
-			rootNode            = record.createDependencyNode(),
-			libraryStore        = Ext.getStore( 'Library' )
-
-		Spelled.Converter.addAdditionalInfoToDependencyNode( rootNode, true )
-
-		for ( var j = 0, l = dynamicDependencies.length; j < l; j++ ) {
-			var libraryId = dynamicDependencies[ j ],
-				item      = libraryStore.findLibraryItemByLibraryId( libraryId )
-
-			if( !item ) {
-				//Remove dependency which could not be resolved
-				Ext.Array.remove( record.get( 'dependencies' ), libraryId )
-				continue
-			}
-
-			var	node = item.createDependencyNode()
-
-			rootNode.children.push( node )
-			Spelled.Converter.addAdditionalInfoToDependencyNode( node )
-		}
+		var rootNode = Spelled.Converter.createDependencyNodeWithDynamicDependency( this.record )
 
 		rootNode.expanded = true
 		this.down( 'treepanel' ).setRootNode( rootNode )
