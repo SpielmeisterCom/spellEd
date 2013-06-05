@@ -1,21 +1,21 @@
-$button-default-color: #f8f8f8 !default;
+$button-default-color: #fff !default;
 
-$button-default-base-color: #292929 !default;
-$button-default-base-color-over: #292929 !default;
-$button-default-base-color-focus: $button-default-base-color-over !default;
-$button-default-base-color-pressed: #292929 !default;
+$button-default-base-color: $color2 !default;
+$button-default-base-color-over: $color_selected !default;
+$button-default-base-color-focus: $color_selected !default;
+$button-default-base-color-pressed: $color_selected !default;
 $button-default-base-color-disabled: adjust-color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%) !default; //F7F7F7
 
-$button-default-border-color: #bbbbbb !default;
-$button-default-border-color-over: #9d9d9d !default;
-$button-default-border-color-focus: $button-default-border-color-over !default;
-$button-default-border-color-pressed: $button-default-border-color-over !default;
+$button-default-border-color: $color2 !default;
+$button-default-border-color-over: $color2 !default;
+$button-default-border-color-focus: $color2 !default;
+$button-default-border-color-pressed: $color2 !default;
 $button-default-border-color-disabled: adjust-color($button-default-base-color-disabled, $hue: 0deg, $saturation: 0%, $lightness: -8.627%) !default;
 
 $button-default-background-gradient: 'matte' !default;
 $button-default-background-gradient-over: 'matte' !default;
 $button-default-background-gradient-focus: 'matte' !default;
-$button-default-background-gradient-pressed: 'matte-reverse' !default;
+$button-default-background-gradient-pressed: 'matte' !default;
 $button-default-background-gradient-disabled: 'matte' !default;
 
 $button-default-background-gradient-color-stops: null !default;
@@ -24,13 +24,33 @@ $button-default-background-gradient-color-stops-focus: null !default;
 $button-default-background-gradient-color-stops-pressed: null !default;
 $button-default-background-gradient-color-stops-disabled: null !default;
 
-$button-toolbar-color: #f8f8f8 !default;
 
-$button-toolbar-border-color-over: $button-default-border-color-over !default;
-$button-toolbar-border-color-focus: $button-default-border-color-focus !default;
-$button-toolbar-border-color-pressed: $button-default-border-color-pressed !default;
-$button-toolbar-border-color-disabled: $button-default-border-color-disabled !default;
+//Toolbar Buttons
+$button-toolbar-color: #fff !default;
 
-$button-toolbar-background-color-over: $button-default-base-color-over !default;
-$button-toolbar-background-color-focus: $button-default-base-color-focus !default;
-$button-toolbar-background-color-pressed: $button-default-base-color-pressed !default;
+$button-toolbar-base-color: $color2 !default;
+$button-toolbar-base-color-over: $color_selected !default;
+$button-toolbar-base-color-focus: $color_selected !default;
+$button-toolbar-base-color-pressed: $color_selected !default;
+$button-toolbar-base-color-disabled: adjust-color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%) !default; //F7F7F7
+
+
+$button-toolbar-border-color: $color1 !default;
+$button-toolbar-border-color-over: $color_selected !default;
+$button-toolbar-border-color-focus: $color_selected !default;
+$button-toolbar-border-color-pressed: $color_selected !default;
+$button-toolbar-border-color-disabled: adjust-color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%) !default; //F7F7F7
+
+$button-toolbar-background-gradient: 'matte' !default;
+$button-toolbar-background-gradient-over: 'matte' !default;
+$button-toolbar-background-gradient-focus: 'matte' !default;
+$button-toolbar-background-gradient-pressed: 'matte' !default;
+$button-toolbar-background-gradient-disabled: 'matte' !default;
+
+$button-toolbar-background-color: $color1 !default;
+$button-toolbar-background-color-over: $color_selected !default;
+$button-toolbar-background-color-focus: $color_selected !default;
+$button-toolbar-background-color-pressed: $color_selected !default;
+$button-toolbar-background-color-disabled: adjust-color($base-color, $hue: 0deg, $saturation: -55.556%, $lightness: 12.745%) !default; //F7F7F7
+
+
