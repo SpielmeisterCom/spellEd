@@ -102,7 +102,7 @@ Ext.define('Spelled.model.config.Scene', {
 		var systems     = [],
 			systemStore = Ext.getStore( 'template.Systems')
 
-		Ext.getStore( 'StaticLibraryDependencies' ).each(
+		Ext.getStore( 'dependencies.library.Static' ).each(
 			function( item ){
 				var id = item.get( 'id' )
 
@@ -126,7 +126,7 @@ Ext.define('Spelled.model.config.Scene', {
 		systems.debug = this.addDebugSystems( debug )
 
 		if( debug ) {
-			Ext.getStore( 'StaticLibraryDependencies' ).each(
+			Ext.getStore( 'dependencies.library.Static' ).each(
 				function( item ){ result.push( item.get( 'id' ) ) }
 			)
 		}

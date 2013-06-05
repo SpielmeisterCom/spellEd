@@ -16,7 +16,7 @@ Ext.define('Spelled.controller.Library', {
 
 		'Spelled.store.Library',
 		'Spelled.store.FoldersTree',
-		'Spelled.store.StaticLibraryDependencies',
+		'Spelled.store.dependencies.library.Static',
 
 		'Spelled.model.LibraryNode'
 	],
@@ -42,7 +42,7 @@ Ext.define('Spelled.controller.Library', {
     stores: [
 		'Library',
 		'FoldersTree',
-		'StaticLibraryDependencies'
+		'dependencies.library.Static'
     ],
 
 	models: [

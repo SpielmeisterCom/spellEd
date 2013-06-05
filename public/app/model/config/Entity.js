@@ -64,14 +64,14 @@ Ext.define('Spelled.model.config.Entity', {
 
 		if( !this.isAnonymous() ) {
 			this.mergeChildren( this.getEntityTemplate() )
-				}
+		}
 
 		this.mergeWithTemplateConfig()
 
 		this.getComponents().each(
-					function( component ) {
+			function( component ) {
 				ids.push( this.get( 'templateId' ) )
-		ids = merge( ids, component.getDependencies() )
+				ids = merge( ids, component.getDependencies() )
 			}
 		)
 

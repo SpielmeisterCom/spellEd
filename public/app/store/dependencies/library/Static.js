@@ -1,4 +1,4 @@
-Ext.define('Spelled.store.StaticLibraryDependencies', {
+Ext.define('Spelled.store.dependencies.library.Static', {
     extend: 'Ext.data.Store',
 
     fields: [ 'id', { type: 'boolean', name: 'debugOnly', defaultValue: false } ],
