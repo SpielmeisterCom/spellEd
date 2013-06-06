@@ -60,15 +60,30 @@ Ext.define('Spelled.base.model.Model', {
 		return ( this.mergeDependencies ) ? Ext.Array.merge( oldDependencies, newDependencies ) : newDependencies
 	},
 
+	calculateDependencyNode: function() {
+		var node = Spelled.Converter.createDependencyNodeWithDynamicDependency( this )
+		this.set( 'dependencyNode', node )
+
+		return node
+	},
+
+	getDependencyNode: function() {
+		var node = this.get( 'dependencyNode' ) || this.calculateDependencyNode()
+
+		return node
+	},
+
 	updateDependencies: function() {
 		var oldDependencies = this.get( 'dependencies' ) || [],
 			newDependencies = this.getCalculatedDependencies(),
-			ArrayHelper     = Ext.Array
+			ArrayHelper     = Ext.Array,
+			hasChanges      = oldDependencies.length != newDependencies.length || ArrayHelper.difference( oldDependencies, newDependencies ).length > 0
 
-		if( oldDependencies.length != newDependencies.length || ArrayHelper.difference( oldDependencies, newDependencies ).length > 0 ) {
+		if( hasChanges ) {
 			var allDependencies = ( this.mergeDependencies ) ? ArrayHelper.merge( oldDependencies, newDependencies ) : newDependencies
 
 			this.set( 'dependencies', ArrayHelper.unique( ArrayHelper.clean( allDependencies ) ).sort() )
+			this.calculateDependencyNode()
 		} else {
 			this.set( 'dependencies', oldDependencies )
 		}

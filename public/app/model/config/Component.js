@@ -62,7 +62,7 @@ Ext.define('Spelled.model.config.Component', {
 						libraryItem = library.findLibraryItemByLibraryId( myAssetId )
 
 					if( libraryItem ) {
-						children.push( libraryItem.createDependencyNode() )
+						children.push( libraryItem.getDependencyNode() )
 					}
 				}
 			}

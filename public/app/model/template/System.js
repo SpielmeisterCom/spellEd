@@ -68,7 +68,7 @@ Ext.define('Spelled.model.template.System', {
 			var input = range[j],
 				cmp   = store.getByTemplateId( input.get( 'componentId' ) )
 
-			children.push( cmp.createDependencyNode() )
+			children.push( cmp.getDependencyNode() )
 		}
 
 		return node

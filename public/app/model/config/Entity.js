@@ -97,13 +97,13 @@ Ext.define('Spelled.model.config.Entity', {
 
 		this.getComponents().each(
 			function( component ) {
-				children.push( component.createDependencyNode() )
+				children.push( component.getDependencyNode() )
 			}
 		)
 
 		this.getChildren().each(
 			function( entity ) {
-				children.push( entity.createDependencyNode() )
+				children.push( entity.getDependencyNode() )
 			}
 		)
 

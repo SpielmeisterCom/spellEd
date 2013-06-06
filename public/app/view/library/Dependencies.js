@@ -120,7 +120,7 @@ Ext.define('Spelled.view.library.Dependencies', {
 	reconfigureStores: function() {
 		if( !this.record ) return
 
-		var rootNode = Spelled.Converter.createDependencyNodeWithDynamicDependency( this.record )
+		var rootNode = Ext.clone( this.record.getDependencyNode() )
 
 		rootNode.expanded = true
 		this.down( 'treepanel' ).setRootNode( rootNode )

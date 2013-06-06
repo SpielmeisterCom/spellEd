@@ -70,7 +70,7 @@ Ext.define( 'Spelled.Converter' ,{
 			var libraryId = dynamicDependencies[ j ],
 				item      = libraryStore.findLibraryItemByLibraryId( libraryId )
 
-			var node = item.createDependencyNode()
+			var node = item.getDependencyNode()
 			rootNode.children.push( node )
 			Spelled.Converter.addAdditionalInfoToDependencyNode( node )
 		}

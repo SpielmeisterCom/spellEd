@@ -16,6 +16,7 @@ Ext.define('Spelled.model.config.Scene', {
         'name',
 		'namespace',
 		'dependencies',
+		'dependencyNode',
 		{ name: 'systems', type: 'object', defaultValue: { update: [], render: [] } }
     ],
 
@@ -170,7 +171,7 @@ Ext.define('Spelled.model.config.Scene', {
 					var system = store.findRecord( 'templateId', value[j].id )
 
 					if( system ) {
-						children.push( Spelled.Converter.createDependencyNodeWithDynamicDependency( system ) )
+						children.push( system.getDependencyNode() )
 					}
 				}
 			}
@@ -178,7 +179,7 @@ Ext.define('Spelled.model.config.Scene', {
 
 		this.getEntities().each(
 			function( entity ) {
-				children.push( Spelled.Converter.createDependencyNodeWithDynamicDependency( entity ) )
+				children.push( entity.getDependencyNode() )
 			}
 		)
 

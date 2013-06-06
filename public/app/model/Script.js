@@ -69,6 +69,7 @@ Ext.define('Spelled.model.Script', {
 		'path',
 		'content',
 	    'breakpoints',
-		'dependencies'
+		'dependencies',
+		'dependencyNode'
     ]
 });
