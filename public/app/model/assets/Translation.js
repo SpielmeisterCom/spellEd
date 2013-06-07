@@ -3,6 +3,8 @@ Ext.define('Spelled.model.assets.Translation', {
 
 	docString: '#!/guide/asset_type_translation',
 
+	iconCls: "tree-asset-translation-icon",
+
 	proxy: {
 		type: 'storageaction',
 		extraParams: {

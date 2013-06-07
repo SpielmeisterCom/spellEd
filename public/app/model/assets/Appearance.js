@@ -3,6 +3,8 @@ Ext.define('Spelled.model.assets.Appearance', {
 
 	docString: '#!/guide/asset_type_2d_static_appearance',
 
+	iconCls: "tree-asset-2dstaticappearance-icon",
+
 	proxy: {
 		type: 'storageaction',
 		extraParams: {

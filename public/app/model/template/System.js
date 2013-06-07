@@ -13,6 +13,8 @@ Ext.define('Spelled.model.template.System', {
 		{ name: "config", type: "object" }
     ],
 
+	iconCls: 'tree-system-icon',
+
 	mergeDependencies: true,
 
 	associations: [
@@ -60,7 +62,7 @@ Ext.define('Spelled.model.template.System', {
 
 	createDependencyNode: function() {
 		var children = [],
-			node     = { libraryId: this.getFullName(), children: children },
+			node     = { libraryId: this.getFullName(), children: children, iconCls: this.iconCls },
 			store    = Ext.getStore( 'template.Components' ),
 			range    = this.getInput().getRange()
 

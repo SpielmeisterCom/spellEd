@@ -9,6 +9,8 @@ Ext.define('Spelled.model.config.Component', {
 		'Spelled.EntityHelper'
 	],
 
+	iconCls: 'tree-component-icon',
+
 	fields: [
         'templateId',
         { name: 'config', type: 'object', defaultValue: {} },
@@ -50,7 +52,7 @@ Ext.define('Spelled.model.config.Component', {
 
 	createDependencyNode: function() {
 		var children = [],
-			node     = { libraryId: this.get( 'templateId' ), children: children },
+			node     = { libraryId: this.get( 'templateId' ), children: children, iconCls: this.iconCls },
 			library  = Ext.getStore( 'Library'),
 			getter   = Spelled.Converter.internalAssetIdToMyAssetId
 

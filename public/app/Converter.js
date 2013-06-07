@@ -79,11 +79,6 @@ Ext.define( 'Spelled.Converter' ,{
 	},
 
 	addAdditionalInfoToDependencyNode: function( node, isStatic ) {
-		var allLibraryIds = Ext.create( 'Ext.data.Store', {
-			fields: [ 'id', 'libraryId', 'type', 'sortOrder' ],
-			data: Ext.getStore( 'Library' ).getAllLibraryIds()
-			})
-
 		var mergeChildren = function( targetChild, sourceChild ) {
 			var targetChildren = targetChild.children,
 				sourceChildren = sourceChild.children
@@ -109,12 +104,9 @@ Ext.define( 'Spelled.Converter' ,{
 		}
 
 		var addInfo = function( childNode ) {
-			var found       = allLibraryIds.findRecord( 'libraryId', childNode.libraryId ),
-				children    = childNode.children,
+			var children    = childNode.children,
 				tmp         = {},
 				newChildren = []
-
-			if( found ) childNode.iconCls = childNode.iconCls || found.get( 'type' )
 
 			childNode.isStatic = isStatic
 
