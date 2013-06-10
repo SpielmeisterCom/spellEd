@@ -120,9 +120,21 @@ Ext.define('Spelled.view.library.Dependencies', {
 	reconfigureStores: function() {
 		if( !this.record ) return
 
-		var rootNode = Ext.clone( this.record.getDependencyNode() )
+		var me = this
 
-		rootNode.expanded = true
-		this.down( 'treepanel' ).setRootNode( rootNode )
+		Ext.Msg.show({
+			title: 'Please wait',
+			msg: 'Calculating dependencies...',
+			width: 300,
+			modal: true,
+			closable: false
+		})
+
+		setTimeout(
+			function() {
+				me.fireEvent( 'loaddependencies', me, me.record )
+			},
+			50
+		)
 	}
 })
