@@ -241,6 +241,8 @@ Ext.define('Spelled.controller.Projects', {
 				Ext.getStore( id ).each(
 					function( item ) {
 						if( item.dirty === true ) {
+							if( item.isReadonly && item.isReadonly() ) return true
+
 							dirty = true
 							return false
 						}
