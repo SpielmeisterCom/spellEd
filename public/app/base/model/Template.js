@@ -31,11 +31,15 @@ Ext.define('Spelled.base.model.Template', {
 	},
 
 	setDirty: function() {
+		if( this.isReadonly() ) return
+
 		this.fireDirtyEvent()
 		this.callParent()
 	},
 
 	save: function() {
+		if( this.isReadonly() ) return
+
 		if( !this.phantom ) this.updateDependencies()
 
 		return this.callParent( arguments )
