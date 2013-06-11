@@ -21,7 +21,7 @@ define(
 			componentResult.attributes = _.map(
 				component.getAttributes,
 				function( attribute ) {
-					var content = _.pick( attribute, 'name','default', 'engineInternal' )
+					var content = _.pick( attribute, 'name', 'default', 'doc', 'engineInternal' )
 
 					if( ( _.has( attribute, 'values' ) && attribute.values.length > 0 ) ) {
 						//TODO: is this the right place to do the split?
@@ -51,7 +51,7 @@ define(
 			result.attributes = _.reduce(
 				component.attributes,
 				function( memo, attributeConfig ) {
-					var content = _.pick( attributeConfig, 'name', 'type', 'default', 'engineInternal' )
+					var content = _.pick( attributeConfig, 'name', 'default', 'engineInternal', 'type', 'doc' )
 
 					if ( _.isObject( attributeConfig.type ) ) {
 						content.type   = attributeConfig.type.name
