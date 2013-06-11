@@ -225,6 +225,9 @@ the following three css lines fix the problem
     width: auto !important;
 }
 
+/* Super hack for Chrome 27 bug (prevent black boxes) */
+[style*="visibility: hidden"] { display: none !important; }
+
 /*For tree nodes dragging in scenes-navigator*/
 /*
 .dragged-node-highlight .x-grid-cell,
