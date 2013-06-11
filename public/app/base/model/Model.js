@@ -74,6 +74,7 @@ Ext.define('Spelled.base.model.Model', {
 	},
 
 	updateDependencies: function() {
+		Spelled.lockCmpChanged = true
 		var oldDependencies = this.get( 'dependencies' ) || [],
 			newDependencies = this.getCalculatedDependencies(),
 			ArrayHelper     = Ext.Array,
@@ -87,6 +88,7 @@ Ext.define('Spelled.base.model.Model', {
 		} else {
 			this.set( 'dependencies', oldDependencies )
 		}
+		Spelled.lockCmpChanged = false
 	},
 
 	getAccordingJSFileName: function() {
