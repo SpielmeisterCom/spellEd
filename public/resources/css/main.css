@@ -226,7 +226,7 @@ the following three css lines fix the problem
 }
 
 /* Super hack for Chrome 27 bug (prevent black boxes) */
-[style*="visibility: hidden"] { display: none !important; }
+[style*="visibility: hidden"] { z-index:-999999999999 !important; }
 
 /*For tree nodes dragging in scenes-navigator*/
 /*
