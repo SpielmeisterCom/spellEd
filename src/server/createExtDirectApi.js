@@ -4,6 +4,7 @@ define(
 		'server/extDirectApi/createStorageApi',
 		'server/extDirectApi/exportDeployment',
 		'server/extDirectApi/initDirectory',
+		'server/extDirectApi/notSupported',
 
 		'underscore'
 	],
@@ -11,6 +12,7 @@ define(
 		createStorageApi,
 		exportDeployment,
 		initDirectory,
+		notSupported,
 
 		_
 	) {
@@ -76,32 +78,32 @@ define(
 			exportDeployment( spellCorePath, projectsPath, spellCliPath, projectName, outputFileName, onComplete )
 		}
 
-        return function( projectsRoot, spellCorePath, spellCliPath ) {
+        return function( projectsRoot, spellCorePath, spellCliPath, demonstrationMode ) {
             return {
-				StorageActions    : createStorageApi( projectsRoot ),
+				StorageActions    : createStorageApi( projectsRoot, demonstrationMode ),
 				SpellBuildActions : [
 					{
 						name: "initDirectory",
 						len: 2,
-						func: _.bind(
+						func: !demonstrationMode ? _.bind(
 							initDirectoryWrapper,
 							null,
 							spellCorePath,
 							projectsRoot,
 							spellCliPath,
 							true
-						)
+						) : notSupported
 					},
 					{
 						name: "exportDeployment",
 						len: 2,
-						func: _.bind(
+						func: !demonstrationMode ? _.bind(
 							exportDeploymentWrapper,
 							null,
 							spellCorePath,
 							projectsRoot,
 							spellCliPath
-						)
+						) : notSupported
 					}
 				]
 			}

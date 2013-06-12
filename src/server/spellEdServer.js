@@ -36,6 +36,7 @@ define(
 
 		    var startServerCommand = function( command ) {
 			    var errors                 = [],
+					demo                   = command.demo || false,
 				    port                   = command.port || 3000,
 				    projectsPath           = path.resolve( path.join( cwd , command.projectsRoot ? '/' + command.projectsRoot : '/projects' ) ),
 					spellCliPath           = path.resolve( command.spellCliPath ),
@@ -64,7 +65,7 @@ define(
 							extDirect(
 								'/router/',
 								'Spelled',
-								createExtDirectApi( projectsPath, spellCorePath, spellCliPath )
+								createExtDirectApi( projectsPath, spellCorePath, spellCliPath, demo )
 							)
 						)
 						.use(
@@ -109,6 +110,7 @@ define(
 			    .option( '-p, --port [port number]', 'the port the server runs on' )
 			    .option( '-r, --projects-root [directory]', 'The path to the projects directory that contains the project directories. The default is the current working directory.' )
 				.option( '-c, --spell-cli-path [file]', 'The path to the spellCli executable.' )
+				.option( '-d, --demo', 'The editor is running as a demo version.' )
 			    .description( 'start the spelled server' )
 			    .action( startServerCommand )
 

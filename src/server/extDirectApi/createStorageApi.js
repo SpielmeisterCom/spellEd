@@ -5,6 +5,7 @@ define(
 		'fs',
 		'server/extDirectApi/createUtil',
 		'flob',
+		'server/extDirectApi/notSupported',
 
 		'underscore'
 	],
@@ -13,12 +14,13 @@ define(
 		fs,
 		createUtil,
 		flob,
+		notSupported,
 
 		_
 	) {
 		'use strict'
 
-		return function( root ) {
+		return function( root, demonstrationMode ) {
 			var util          = createUtil( root ),
 				libraryPrefix = "library"
 
@@ -219,12 +221,12 @@ define(
                 {
                     name: "create",
                     len: 1,
-                    func: create
+                    func: !demonstrationMode ? create : notSupported
                 },
 				{
 					name: "createNamespaceFolder",
 					len: 1,
-					func: createNamespaceFolder
+					func: !demonstrationMode ? createNamespaceFolder : notSupported
 				},
                 {
                     name: "read",
@@ -234,12 +236,12 @@ define(
                 {
                     name: "update",
                     len: 1,
-                    func: update
+                    func: !demonstrationMode ? update : notSupported
                 },
                 {
                     name: "destroy",
                     len: 1,
-                    func: destroy
+                    func: !demonstrationMode ? destroy : notSupported
                 },
 				{
 					name: "getNamespaces",
@@ -249,7 +251,7 @@ define(
 				{
 					name: "deleteFolder",
 					len: 1,
-					func: deleteFolder
+					func: !demonstrationMode ? deleteFolder : notSupported
 				}
 			]
         }

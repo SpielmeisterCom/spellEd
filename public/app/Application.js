@@ -322,8 +322,21 @@ Ext.define('Spelled.Application', {
 		Ext.Direct.addProvider( this.platform.createRemoteProvider() )
 	},
 
+	checkForProjectOverWrite: function() {
+		var queryString = document.location.search
+
+		if( queryString) {
+			var params = Ext.Object.fromQueryString( queryString )
+
+			if( params.projectName ) {
+				Ext.state.Manager.set( 'projectName', params.projectName )
+			}
+		}
+	},
+
 	loadProjects: function() {
 		var loadingComplete = function() {
+			this.checkForProjectOverWrite()
 			this.getController( 'Projects').loadLastProject()
 		}
 
