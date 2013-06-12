@@ -33,7 +33,7 @@ Ext.define('Spelled.model.Script', {
 	},
 
 	createDependencyNode: function() {
-		return { libraryId: this.getFullName(), children:[] }
+		return { libraryId: this.getFullName(), children:[], iconCls: this.iconCls }
 	},
 
 	listeners: {
@@ -69,6 +69,7 @@ Ext.define('Spelled.model.Script', {
 		'path',
 		'content',
 	    'breakpoints',
-		'dependencies'
+		'dependencies',
+		'dependencyNode'
     ]
 });

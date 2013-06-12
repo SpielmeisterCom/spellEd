@@ -3,6 +3,8 @@ Ext.define('Spelled.model.assets.TileMap', {
 
 	docString: '#!/guide/asset_type_tile_map',
 
+	iconCls: "tree-asset-2dtilemap-icon",
+
 	proxy: {
 		type: 'storageaction',
 		extraParams: {

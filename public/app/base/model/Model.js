@@ -33,23 +33,57 @@ Ext.define('Spelled.base.model.Model', {
 		this.fireEvent( 'dirty', this )
 	},
 
-	getDependencies: function() {
+	getDependencies: function( addMissing ) {
 		//TODO: should be changed if dependencies in spell are inserted
 		var oldDependencies = this.get( 'dependencies' ) || [],
-			newDependencies = this.getCalculatedDependencies()
+			newDependencies = this.getCalculatedDependencies(),
+			missing         = Ext.Array.difference( oldDependencies, newDependencies ),
+			libraryStore    = Ext.getStore( 'Library' ),
+			tmp = []
+
+		Ext.Array.each(
+			missing,
+			function( item ) {
+				var libraryItem = libraryStore.findLibraryItemByLibraryId( item )
+
+				if( addMissing && libraryItem ) {
+					Ext.Array.push( tmp, libraryItem.getDependencies( addMissing ) )
+				} else if( !libraryItem ) {
+					Ext.Array.remove( oldDependencies, item )
+				}
+			},
+			this
+		)
+
+		if( addMissing ) oldDependencies = Ext.Array.merge( oldDependencies, tmp )
 
 		return ( this.mergeDependencies ) ? Ext.Array.merge( oldDependencies, newDependencies ) : newDependencies
+	},
+
+	calculateDependencyNode: function() {
+		var node = Spelled.Converter.createDependencyNodeWithDynamicDependency( this )
+		this.set( 'dependencyNode', node )
+
+		return node
+	},
+
+	getDependencyNode: function() {
+		var node = this.get( 'dependencyNode' ) || this.calculateDependencyNode()
+
+		return node
 	},
 
 	updateDependencies: function() {
 		var oldDependencies = this.get( 'dependencies' ) || [],
 			newDependencies = this.getCalculatedDependencies(),
-			ArrayHelper     = Ext.Array
+			ArrayHelper     = Ext.Array,
+			hasChanges      = oldDependencies.length != newDependencies.length || ArrayHelper.difference( oldDependencies, newDependencies ).length > 0
 
-		if( oldDependencies.length != newDependencies.length || ArrayHelper.difference( oldDependencies, newDependencies ).length > 0 ) {
+		if( hasChanges ) {
 			var allDependencies = ( this.mergeDependencies ) ? ArrayHelper.merge( oldDependencies, newDependencies ) : newDependencies
 
 			this.set( 'dependencies', ArrayHelper.unique( ArrayHelper.clean( allDependencies ) ).sort() )
+			this.calculateDependencyNode()
 		} else {
 			this.set( 'dependencies', oldDependencies )
 		}

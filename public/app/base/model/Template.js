@@ -20,7 +20,8 @@ Ext.define('Spelled.base.model.Template', {
 		{ name: 'type', type: 'string', defaultValue: 'entity' },
 		{ name: 'readonly', type: 'boolean', defaultValue: false },
 		{ name: 'engineInternal', type: 'boolean', defaultValue: false },
-		{ name: 'dependencies', type: 'array' }
+		{ name: 'dependencies', type: 'array' },
+		{ name: 'dependencyNode' }
 	],
 
 	listeners: {

@@ -3,6 +3,8 @@ Ext.define('Spelled.model.assets.KeyFrameAnimation', {
 
 	docString: '#!/guide/asset_type_key_frame_animation',
 
+	iconCls: "tree-asset-keyframeanimation-icon",
+
 	proxy: {
 		type: 'storageaction',
 		extraParams: {

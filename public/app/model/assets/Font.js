@@ -2,6 +2,8 @@ Ext.define('Spelled.model.assets.Font', {
     extend: 'Spelled.model.Asset',
 	docString: '#!/guide/asset_type_text_appearance',
 
+	iconCls: "tree-asset-2dtextappearance-icon",
+
 	proxy: {
 		type: 'storageaction',
 		extraParams: {

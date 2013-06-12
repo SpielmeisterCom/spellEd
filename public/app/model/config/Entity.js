@@ -64,14 +64,14 @@ Ext.define('Spelled.model.config.Entity', {
 
 		if( !this.isAnonymous() ) {
 			this.mergeChildren( this.getEntityTemplate() )
-				}
+		}
 
 		this.mergeWithTemplateConfig()
 
 		this.getComponents().each(
-					function( component ) {
+			function( component ) {
 				ids.push( this.get( 'templateId' ) )
-		ids = merge( ids, component.getDependencies() )
+				ids = merge( ids, component.getDependencies() )
 			}
 		)
 
@@ -97,13 +97,13 @@ Ext.define('Spelled.model.config.Entity', {
 
 		this.getComponents().each(
 			function( component ) {
-				children.push( component.createDependencyNode() )
+				children.push( component.getDependencyNode() )
 			}
 		)
 
 		this.getChildren().each(
 			function( entity ) {
-				children.push( entity.createDependencyNode() )
+				children.push( entity.getDependencyNode() )
 			}
 		)
 
@@ -183,10 +183,11 @@ Ext.define('Spelled.model.config.Entity', {
 			function( component ) {
 				var cmp = Ext.create( 'Spelled.model.config.Component', {
 					templateId: component.get( 'templateId' ),
-					additional: component.get( 'additional' )
+					additional: component.get( 'additional' ),
+					config: Ext.clone( component.get( 'config' ) )
 				})
 
-				cmp.set( 'config', component.getConfigMergedWithTemplateConfig() )
+				cmp.set( 'config', cmp.getConfigMergedWithTemplateConfig() )
 				entity.getComponents().add( cmp )
 				cmp.setEntity( entity )
 

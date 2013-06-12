@@ -63,14 +63,14 @@ Ext.define('Spelled.model.Asset', {
 
 	createDependencyNode: function() {
 		var children = [],
-			node     = { libraryId: this.getFullName(), children: children }
+			node     = { libraryId: this.getFullName(), children: children, iconCls: this.iconCls }
 
 		if( this.get( 'assetId' ) ) {
 			var myAssetId = Spelled.Converter.internalAssetIdToMyAssetId( this.get( 'assetId' ) )
 
 			if( myAssetId ) {
 				var asset = Ext.getStore( 'Library').findLibraryItemByLibraryId( myAssetId )
-				if( asset ) children.push( asset.createDependencyNode() )
+				if( asset ) children.push( asset.getDependencyNode() )
 			}
 		}
 

@@ -3,6 +3,8 @@ Ext.define('Spelled.model.assets.Sound', {
 
 	docString: '#!/guide/asset_type_sound',
 
+	iconCls: "tree-asset-sound-icon",
+
 	proxy: {
 		type: 'storageaction',
 		extraParams: {

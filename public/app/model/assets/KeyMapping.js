@@ -3,6 +3,8 @@ Ext.define('Spelled.model.assets.KeyMapping', {
 
 	docString: '#!/guide/asset_type_key_to_action_map',
 
+	iconCls: "tree-asset-keytoactionmap-icon",
+
 	proxy: {
 		type: 'storageaction',
 		extraParams: {

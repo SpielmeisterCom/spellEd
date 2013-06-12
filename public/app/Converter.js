@@ -58,12 +58,27 @@ Ext.define( 'Spelled.Converter' ,{
 		return ( !!namespace && namespace.length > 0 ) ? namespace +"."+ name : name
 	},
 
-	addAdditionalInfoToDependencyNode: function( node, isStatic ) {
-		var allLibraryIds = Ext.create( 'Ext.data.Store', {
-			fields: [ 'id', 'libraryId', 'type', 'sortOrder' ],
-			data: Ext.getStore( 'Library' ).getAllLibraryIds()
-			})
+	createDependencyNodeWithDynamicDependency: function( record ) {
+		var staticDependencies  = record.getCalculatedDependencies(),
+			dynamicDependencies = Ext.Array.difference( record.getDependencies(), staticDependencies ),
+			rootNode            = record.createDependencyNode(),
+			libraryStore        = Ext.getStore( 'Library' )
 
+		Spelled.Converter.addAdditionalInfoToDependencyNode( rootNode, true )
+
+		for ( var j = 0, l = dynamicDependencies.length; j < l; j++ ) {
+			var libraryId = dynamicDependencies[ j ],
+				item      = libraryStore.findLibraryItemByLibraryId( libraryId )
+
+			var node = item.getDependencyNode()
+			rootNode.children.push( node )
+			Spelled.Converter.addAdditionalInfoToDependencyNode( node )
+		}
+
+		return rootNode
+	},
+
+	addAdditionalInfoToDependencyNode: function( node, isStatic ) {
 		var mergeChildren = function( targetChild, sourceChild ) {
 			var targetChildren = targetChild.children,
 				sourceChildren = sourceChild.children
@@ -89,12 +104,9 @@ Ext.define( 'Spelled.Converter' ,{
 		}
 
 		var addInfo = function( childNode ) {
-			var found       = allLibraryIds.findRecord( 'libraryId', childNode.libraryId ),
-				children    = childNode.children,
+			var children    = childNode.children,
 				tmp         = {},
 				newChildren = []
-
-			if( found ) childNode.iconCls = childNode.iconCls || found.get( 'type' )
 
 			childNode.isStatic = isStatic
 

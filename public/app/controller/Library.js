@@ -16,7 +16,7 @@ Ext.define('Spelled.controller.Library', {
 
 		'Spelled.store.Library',
 		'Spelled.store.FoldersTree',
-		'Spelled.store.StaticLibraryDependencies',
+		'Spelled.store.dependencies.library.Static',
 
 		'Spelled.model.LibraryNode'
 	],
@@ -42,7 +42,7 @@ Ext.define('Spelled.controller.Library', {
     stores: [
 		'Library',
 		'FoldersTree',
-		'StaticLibraryDependencies'
+		'dependencies.library.Static'
     ],
 
 	models: [
@@ -79,6 +79,9 @@ Ext.define('Spelled.controller.Library', {
     init: function() {
 		this.listen({
 			component: {
+				'spelldependencies': {
+					loaddependencies: this.loadLibraryDependency
+				},
 				'menuitemshowinfolder': {
 					click: this.showItemInFolder
 				},
@@ -130,6 +133,15 @@ Ext.define('Spelled.controller.Library', {
 			}
 		})
     },
+
+	loadLibraryDependency: function( panel, record ) {
+		var rootNode = Ext.clone( record.getDependencyNode() )
+
+		rootNode.expanded = true
+		panel.down( 'treepanel' ).setRootNode( rootNode )
+
+		Ext.Msg.close()
+	},
 
 	showItemInFolder: function() {
 		var project    = this.application.getActiveProject(),

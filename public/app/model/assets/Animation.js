@@ -3,6 +3,8 @@ Ext.define('Spelled.model.assets.Animation', {
 
 	docString: '#!/guide/asset_type_2d_animated_appearance',
 
+	iconCls: "tree-asset-2danimation-icon",
+
 	proxy: {
 		type: 'storageaction',
 		extraParams: {

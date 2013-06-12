@@ -241,6 +241,8 @@ Ext.define('Spelled.controller.Projects', {
 				Ext.getStore( id ).each(
 					function( item ) {
 						if( item.dirty === true ) {
+							if( item.isReadonly && item.isReadonly() ) return true
+
 							dirty = true
 							return false
 						}
@@ -447,7 +449,7 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
 	PROGRESS_STEP: function() {
-		return 1 / ( this.storesForSave.length - 1 + 4 )
+		return 1 / ( this.storesForSave.length + 2 )
 	},
 
 	iterateLoadingProgress: function( text ) {
@@ -493,13 +495,20 @@ Ext.define('Spelled.controller.Projects', {
 			{
 				scope: this,
 				success: function( project ) {
-					this.iterateLoadingProgress()
+					this.iterateLoadingProgress( "Preparing project..." )
 
-					//Needed because scenes got fetched
-					this.application.setActiveProject( project )
-					Ext.state.Manager.set( 'projectName', project.get('name') )
+					setTimeout(
+						Ext.bind( function() {
+								//Needed because scenes got fetched
+								this.application.setActiveProject( project )
+								Ext.state.Manager.set( 'projectName', project.get('name') )
 
-					this.projectLoadedCallback( project )
+								this.projectLoadedCallback( project )
+							},
+							this
+						),
+						50
+					)
 				}
 			}
 		)
@@ -546,8 +555,6 @@ Ext.define('Spelled.controller.Projects', {
 
 		this.application.fireEvent( 'renderscene', startScene )
 		this.application.fireEvent( 'buildnamespacenodes' )
-
-		this.iterateLoadingProgress()
 	},
 
 	closeAllTabsFromProject: function() {

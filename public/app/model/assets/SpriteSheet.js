@@ -3,6 +3,8 @@ Ext.define('Spelled.model.assets.SpriteSheet', {
 
 	docString: '#!/guide/asset_type_sprite_sheet',
 
+	iconCls: "tree-asset-spritesheet-icon",
+
 	proxy: {
 		type: 'storageaction',
 		extraParams: {

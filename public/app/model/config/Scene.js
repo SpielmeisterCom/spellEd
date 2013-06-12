@@ -16,6 +16,7 @@ Ext.define('Spelled.model.config.Scene', {
         'name',
 		'namespace',
 		'dependencies',
+		'dependencyNode',
 		{ name: 'systems', type: 'object', defaultValue: { update: [], render: [] } }
     ],
 
@@ -102,7 +103,7 @@ Ext.define('Spelled.model.config.Scene', {
 		var systems     = [],
 			systemStore = Ext.getStore( 'template.Systems')
 
-		Ext.getStore( 'StaticLibraryDependencies' ).each(
+		Ext.getStore( 'dependencies.library.Static' ).each(
 			function( item ){
 				var id = item.get( 'id' )
 
@@ -120,12 +121,13 @@ Ext.define('Spelled.model.config.Scene', {
 		var	result  = [],
 			systems = Ext.clone( this.get( 'systems' ) ),
 			merge   = Ext.Array.merge,
-			store   = Ext.getStore( 'template.Systems' )
+			store   = Ext.getStore( 'template.Systems'),
+			addMissing = true
 
 		systems.debug = this.addDebugSystems( debug )
 
 		if( debug ) {
-			Ext.getStore( 'StaticLibraryDependencies' ).each(
+			Ext.getStore( 'dependencies.library.Static' ).each(
 				function( item ){ result.push( item.get( 'id' ) ) }
 			)
 		}
@@ -138,7 +140,7 @@ Ext.define('Spelled.model.config.Scene', {
 
 					if( system ) {
 						result.push( system.getFullName() )
-						Ext.Array.push( result, system.getDependencies() )
+						Ext.Array.push( result, system.getDependencies( addMissing ) )
 					}
 				}
 			}
@@ -147,7 +149,7 @@ Ext.define('Spelled.model.config.Scene', {
 		this.getEntities().each(
 			function( entity ) {
 				result.push( entity.get( 'templateId' ) )
-				result = merge( result, entity.getDependencies() )
+				result = merge( result, entity.getDependencies( addMissing ) )
 			}
 		)
 
@@ -169,7 +171,7 @@ Ext.define('Spelled.model.config.Scene', {
 					var system = store.findRecord( 'templateId', value[j].id )
 
 					if( system ) {
-						children.push( system.createDependencyNode() )
+						children.push( system.getDependencyNode() )
 					}
 				}
 			}
@@ -177,7 +179,7 @@ Ext.define('Spelled.model.config.Scene', {
 
 		this.getEntities().each(
 			function( entity ) {
-				children.push( entity.createDependencyNode() )
+				children.push( entity.getDependencyNode() )
 			}
 		)
 
