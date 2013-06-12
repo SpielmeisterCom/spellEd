@@ -183,7 +183,8 @@ Ext.define('Spelled.model.config.Entity', {
 			function( component ) {
 				var cmp = Ext.create( 'Spelled.model.config.Component', {
 					templateId: component.get( 'templateId' ),
-					additional: component.get( 'additional' )
+					additional: component.get( 'additional' ),
+					config: Ext.clone( component.get( 'config' ) )
 				})
 
 				cmp.set( 'config', cmp.getConfigMergedWithTemplateConfig() )
