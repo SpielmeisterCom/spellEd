@@ -176,8 +176,7 @@ Ext.define('Spelled.model.config.Component', {
 
 				if( templateEntityComponent ) {
 					config = Ext.Object.merge( config, templateEntityComponent.get('config') )
-					//Don't mark as additional if we only want to get the configuration
-					if( !Spelled.lockCmpChanged ) this.set( 'additional', false )
+					this.set( 'additional', false )
 				}
 			}
 		}
@@ -223,8 +222,7 @@ Ext.define('Spelled.model.config.Component', {
 
 		if( component ) {
 			config = Ext.Object.merge( config, component.get( 'config' ) )
-			//Don't mark as additional if we only want to get the configuration
-			if( !Spelled.lockCmpChanged ) this.set( 'additional', false )
+			 this.set( 'additional', false )
 		}
 		return config
 	},

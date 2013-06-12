@@ -186,7 +186,7 @@ Ext.define('Spelled.model.config.Entity', {
 					additional: component.get( 'additional' )
 				})
 
-				cmp.set( 'config', component.getConfigMergedWithTemplateConfig() )
+				cmp.set( 'config', cmp.getConfigMergedWithTemplateConfig() )
 				entity.getComponents().add( cmp )
 				cmp.setEntity( entity )
 

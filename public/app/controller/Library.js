@@ -135,12 +135,11 @@ Ext.define('Spelled.controller.Library', {
     },
 
 	loadLibraryDependency: function( panel, record ) {
-		Spelled.lockCmpChanged = true
 		var rootNode = Ext.clone( record.getDependencyNode() )
 
 		rootNode.expanded = true
 		panel.down( 'treepanel' ).setRootNode( rootNode )
-		Spelled.lockCmpChanged = false
+
 		Ext.Msg.close()
 	},
 
