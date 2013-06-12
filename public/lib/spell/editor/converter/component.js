@@ -32,6 +32,8 @@ define(
 						content.type = attribute.type
 					}
 
+					if( _.isString( content.default ) && !content.default ) delete content.default
+
 					return content
 				}
 			)
