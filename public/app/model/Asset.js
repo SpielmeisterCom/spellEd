@@ -31,7 +31,7 @@ Ext.define('Spelled.model.Asset', {
 
 	listeners: {
 		dirty: function() {
-			this.updateDependencies()
+			this.needToCalcCependency()
 		}
 	},
 

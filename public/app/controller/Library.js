@@ -135,6 +135,8 @@ Ext.define('Spelled.controller.Library', {
     },
 
 	loadLibraryDependency: function( panel, record ) {
+		if( record.dirtyDep ) record.updateDependencies()
+
 		var rootNode = Ext.clone( record.getDependencyNode() )
 
 		rootNode.expanded = true

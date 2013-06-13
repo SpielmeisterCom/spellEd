@@ -2,6 +2,8 @@ Ext.define('Spelled.base.model.Model', {
 
 	sortOrder: 9,
 
+	dirtyDep: true,
+
 	insertMetaData: function( storeId, type ) {
 		var metaData = Ext.getStore( storeId ).findRecord( 'type', type )
 
@@ -27,6 +29,10 @@ Ext.define('Spelled.base.model.Model', {
 				id     : this.getId()
 			} )
 		)
+	},
+
+	needToCalcCependency: function() {
+		this.dirtyDep = true
 	},
 
 	fireDirtyEvent: function() {
@@ -83,10 +89,12 @@ Ext.define('Spelled.base.model.Model', {
 			var allDependencies = ( this.mergeDependencies ) ? ArrayHelper.merge( oldDependencies, newDependencies ) : newDependencies
 
 			this.set( 'dependencies', ArrayHelper.unique( ArrayHelper.clean( allDependencies ) ).sort() )
-			this.calculateDependencyNode()
+			if( this.dirtyDep ) this.calculateDependencyNode()
 		} else {
 			this.set( 'dependencies', oldDependencies )
 		}
+
+		this.dirtyDep = false
 	},
 
 	getAccordingJSFileName: function() {

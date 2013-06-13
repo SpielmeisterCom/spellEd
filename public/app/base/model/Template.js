@@ -26,7 +26,7 @@ Ext.define('Spelled.base.model.Template', {
 
 	listeners: {
 		dirty: function() {
-			this.updateDependencies()
+			this.needToCalcCependency()
 		}
 	},
 

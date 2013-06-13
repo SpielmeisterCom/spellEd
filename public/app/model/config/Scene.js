@@ -48,7 +48,7 @@ Ext.define('Spelled.model.config.Scene', {
 			this.unDirty()
 		},
 		dirty: function() {
-			this.updateDependencies()
+			this.needToCalcCependency()
 		}
 	},
 
