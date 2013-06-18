@@ -187,11 +187,8 @@ Ext.define('Spelled.model.config.Entity', {
 					config: Ext.clone( component.get( 'config' ) )
 				})
 
-				cmp.set( 'config', cmp.getConfigMergedWithTemplateConfig() )
 				entity.getComponents().add( cmp )
 				cmp.setEntity( entity )
-
-				cmp.stripRedundantData()
 			}
 		)
 	},
