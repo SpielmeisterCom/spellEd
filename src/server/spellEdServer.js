@@ -31,28 +31,31 @@ define(
 	    }
 
 
-	    return function( argv, cwd, spellPath ) {
-		    var executableName  = 'server'
+		return function( argv, cwd, spellPath ) {
+			var executableName  = 'server'
 
-		    var startServerCommand = function( command ) {
-			    var errors                 = [],
-					demo                   = command.demo || false,
-				    port                   = command.port || 3000,
-				    projectsPath           = path.resolve( path.join( cwd , command.projectsRoot ? '/' + command.projectsRoot : '/projects' ) ),
-					spellCliPath           = path.resolve( command.spellCliPath ),
-					spellEngineModulesPath = path.resolve( spellPath, '../' ),
-					nodeModulesPath        = path.resolve( spellPath, '../node_modules' ),
-					spellCorePath          = path.resolve( spellPath, '../spellCore' )
+			var startServerCommand = function( command ) {
+				var errors          = [],
+					demo            = command.demo || false,
+					port            = command.port || 3000,
+					projectsPath    = path.resolve( command.projectsRoot || path.join( cwd, 'projects' ) ),
+					nodeModulesPath = path.resolve( spellPath, '../node_modules' ),
+					spellCorePath   = path.resolve( spellPath, '../spellCore' ),
+					spellCliPath    = path.resolve( command.spellCliPath || path.join( spellCorePath, 'spellcli' ) )
 
 
-                if( !fs.existsSync( nodeModulesPath ) ) {
-                    nodeModulesPath        = path.resolve( spellPath, '../../node_modules' )
-                }
+				if( !fs.existsSync( nodeModulesPath ) ) {
+					nodeModulesPath = path.resolve( spellPath, '../../node_modules' )
+				}
 
-			    if( !fs.existsSync( projectsPath ) ) {
-				    errors.push( 'Error: No valid projects directory supplied. Unable to start spelled server. ' +
-					    'See \'' + executableName + ' start-server --help\'.' )
-			    }
+				if( !fs.existsSync( projectsPath ) ) {
+					errors.push( 'Error: "' + projectsPath + '" is not a valid projects directory. Unable to start server. ' +
+						'See \'' + executableName + ' start-server --help\'.' )
+				}
+
+				if( !fs.existsSync( spellCliPath ) ) {
+					errors.push( 'Error: "' + spellCliPath + '" is not a valid spellcli path. Unable to start server.' )
+				}
 
 			    if( errors.length > 0 ) {
 				    printErrors( errors )
@@ -89,7 +92,7 @@ define(
 						.use( connect.static( projectsPath ) )
 
 						// SpellEd public directory
-						.use( connect.static( 'public' ) )
+						.use( connect.static( path.join( spellPath, 'public' ) ) )
 
 						// Because the modules ace, requirejs and underscore are located outside of the regular webserver root they have to be added manually.
 					    .use( connect.static( path.resolve( nodeModulesPath, 'requirejs' ) ) )
