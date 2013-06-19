@@ -1,6 +1,16 @@
 Ext.define( 'Spelled.Configuration', {
 	singleton              : true,
 
+	isDemoInstance: function() {
+		var host = location.hostname
+
+		return host === this.demoServerHostname
+	},
+
+	getDemoTooltipText: function() {
+		return Spelled.Configuration.isDemoInstance() ? 'Not supported in demo version' : ''
+	},
+
 	getStateProvider: function() {
 		return Ext.state.Manager.getProvider()
 	},
@@ -32,6 +42,7 @@ Ext.define( 'Spelled.Configuration', {
 		return this.documentationServerURL + this.version + '/'
 	},
 
+	demoServerHostname     : 'spelled-demo.spelljs.com',
 	version                : '0.8.21',
 	buildNumber	       : '99999',
 	buildTimeStamp	       : '2099-01-01T01:00:00.000+01:00',

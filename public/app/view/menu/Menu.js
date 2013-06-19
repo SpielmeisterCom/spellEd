@@ -65,9 +65,10 @@ Ext.define('Spelled.view.menu.Menu', {
 		menu: {
 			items: [{
 				text   : 'New Project...',
-				tooltip: 'Creates a new Spell-Project',
+				tooltip: Spelled.Configuration.isDemoInstance() ? Spelled.Configuration.getDemoTooltipText() : 'Creates a new Spell-Project',
 				action: 'showCreateProject',
-				keyEquivalent: 'n'
+				keyEquivalent: 'n',
+				disabled: Spelled.Configuration.isDemoInstance()
 			},{
 				text   : 'Open Project...',
 				tooltip: 'Opens an existing Spell-Project',
@@ -75,11 +76,14 @@ Ext.define('Spelled.view.menu.Menu', {
 			},{
 				text: "Save",
 				action: "saveProject",
-				keyEquivalent: 's'
-
+				keyEquivalent: 's',
+				disabled: Spelled.Configuration.isDemoInstance(),
+				tooltip: Spelled.Configuration.getDemoTooltipText()
 			},{
 				text: "Export for deployment",
-				action: "exportProject"
+				action: "exportProject",
+				disabled: Spelled.Configuration.isDemoInstance(),
+				tooltip: Spelled.Configuration.getDemoTooltipText()
 			},{
 				text   : 'Settings',
 				tooltip: 'Edit the project settings',

@@ -44,9 +44,11 @@ Ext.define('Spelled.view.asset.Form', {
 
 	buttons: [
 		{
-			formBind: true,
+			disabled: Spelled.Configuration.isDemoInstance(),
+			formBind: !Spelled.Configuration.isDemoInstance(),
 			text: 'Upload',
-			action: 'createAsset'
+			action: 'createAsset',
+			tooltip: Spelled.Configuration.getDemoTooltipText()
 		}
 	]
 

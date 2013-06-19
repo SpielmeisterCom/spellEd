@@ -15,6 +15,8 @@ Ext.define('Spelled.view.library.menu.Buttons' ,{
 			items: [
 				{
 					text: "Create namespace",
+					tooltip: Spelled.Configuration.getDemoTooltipText(),
+					disabled: Spelled.Configuration.isDemoInstance(),
 					action: "showCreateFolder",
 					icon: 'resources/images/spelled/tree/folder.gif'
 				}

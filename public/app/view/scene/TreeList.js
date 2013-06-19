@@ -24,6 +24,8 @@ Ext.define('Spelled.view.scene.TreeList' ,{
 			menu: [
 				{
 					text: "Add new scene",
+					tooltip: Spelled.Configuration.getDemoTooltipText(),
+					disabled: Spelled.Configuration.isDemoInstance(),
 					action: "showCreateScene",
 					icon: 'resources/images/icons/scene-add.png'
 				},
