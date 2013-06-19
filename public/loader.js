@@ -48,6 +48,7 @@ function registerGlobalErrorHandler(isNWRuntime, isDevelEnv) {
 
         window.onerror = function(errorMsg, url, lineNumber) {
             var msg = url + ':' + lineNumber + "\n" + errorMsg;
+			window._error_handler = true
             window.location.href = 'error.html?errorMsg=' + encodeURIComponent(msg)
         }
 

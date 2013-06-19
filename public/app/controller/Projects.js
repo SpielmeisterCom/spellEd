@@ -228,7 +228,7 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
 	projectCloseWarning: function() {
-		if( this.checkIfDirty() ) return "You have unsaved changes!"
+		if( this.checkIfDirty() && ( !Spelled.Configuration.isDemoInstance() && !window._error_handler ) ) return "You have unsaved changes!"
 	},
 
 	checkIfDirty: function() {
