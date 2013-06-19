@@ -122,6 +122,12 @@ Ext.define('Spelled.controller.Projects', {
 				loadProjects: function() {
 					this.application.loadProjects()
 				}
+			},
+			'buildtargetsmenu': {
+				click: this.dispatchBuildTargetClick
+			},
+			'spelledmenu [action="callCleanBuild"]': {
+				click: this.callCleanBuild
 			}
         })
 
@@ -155,6 +161,14 @@ Ext.define('Spelled.controller.Projects', {
 			selector: 'spelledmenu button[action="saveProject"]'
 		}
 	],
+
+	callCleanBuild: function( menu, item, e ) {
+		console.log( "Call 'callCleanBuild'" )
+	},
+
+	dispatchBuildTargetClick: function( menu, item, e ) {
+		console.log( "Called '" + menu.action + "' for target '" + item.target + "'" )
+	},
 
 	removeLanguage: function( button ){
 		var view     = button.up( 'menu' ),

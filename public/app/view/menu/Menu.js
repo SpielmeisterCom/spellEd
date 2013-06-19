@@ -1,7 +1,7 @@
 Ext.define('Spelled.view.menu.Menu', {
     extend: 'Ext.panel.Panel',
     alias : 'widget.spelledmenu',
-	requires: ['Spelled.nw.Toolbar', 'Spelled.view.ui.SpelledAboutDialog'],
+	requires: ['Spelled.nw.Toolbar', 'Spelled.view.ui.SpelledAboutDialog', 'Spelled.view.build.menu.Targets'],
 
 	border: false,
 
@@ -92,6 +92,41 @@ Ext.define('Spelled.view.menu.Menu', {
 
 		}
 	},
+
+	buildMenu:{
+		text: 'Build',
+		menu: {
+			ignoreParentClicks: true,
+			items: [{
+				text   : 'Clean',
+				disabled: true,
+				tooltip: 'Cleans up the build directory.',
+				action: 'callCleanBuild'
+			},{
+				text   : 'Debug',
+				tooltip: 'Generates a debug build for a specified target.',
+				menu: {
+					xtype: 'buildtargetsmenu',
+					action: 'callDebugTarget'
+				}
+			},{
+				text   : 'Release',
+				tooltip: 'Generates a debug build for a specified target.',
+				menu: {
+					xtype: 'buildtargetsmenu',
+					action: 'callReleaseTarget'
+				}
+			},{
+				text   : 'Export',
+				tooltip: 'Generates a release build for a specified target packages it.',
+				menu: {
+					xtype: 'buildtargetsmenu',
+					action: 'callExportTarget'
+				}
+			}
+			]
+		}
+	},
 	spellEdGeneralMenu: {
 		text: 'SpellEd',
 		menu: {
@@ -145,6 +180,7 @@ Ext.define('Spelled.view.menu.Menu', {
 			menuItems = [
 				this.spellEdGeneralMenu,
 				this.projectMenu,
+				this.buildMenu,
 				Spelled.platform.Adapter.isMacOs() ? this.editMenu : null,
 				this.layoutMenu
 			]
