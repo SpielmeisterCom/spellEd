@@ -163,11 +163,11 @@ Ext.define('Spelled.controller.Projects', {
 	],
 
 	callCleanBuild: function( menu, item, e ) {
-		console.log( "Call 'callCleanBuild'" )
+		//console.log( "Call 'callCleanBuild'" )
 	},
 
 	dispatchBuildTargetClick: function( menu, item, e ) {
-		console.log( "Called '" + menu.action + "' for target '" + item.target + "'" )
+		//console.log( "Called '" + menu.action + "' for target '" + item.target + "'" )
 	},
 
 	removeLanguage: function( button ){
