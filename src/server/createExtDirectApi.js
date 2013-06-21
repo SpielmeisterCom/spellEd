@@ -58,6 +58,8 @@ define(
 						writeResponse( 200, res, createResponseData( actionName, payload, req.extDirectId ) )
 					}
 				}
+				//Mark request as async
+				req.async = true
 
 				actionHandler.apply( null, [ spellCorePath, projectsPath, spellCliPath, isDevEnvironment, onComplete ].concat( payload ) )
 			}

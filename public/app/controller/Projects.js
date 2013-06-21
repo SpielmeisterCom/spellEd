@@ -163,10 +163,13 @@ Ext.define('Spelled.controller.Projects', {
 	callCleanBuild: function( menu, item, e ) {
 		var project = this.application.getActiveProject()
 
+		Ext.Msg.wait( 'Please wait...', 'Cleaning project' )
+
 		Spelled.SpellBuildActions.buildClean(
 			project.get( 'name' ),
 			function( provider, response ) {
 				console.log( "Cleaning done" )
+				Ext.Msg.close()
 			}
 		)
 	},
@@ -174,10 +177,13 @@ Ext.define('Spelled.controller.Projects', {
 	callBuildTarget: function( buildActionName, target ) {
 		var project = this.application.getActiveProject()
 
+		Ext.Msg.wait( 'Please wait...', 'Building target "' +target +'"' )
+
 		Spelled.SpellBuildActions[ buildActionName ](
 			project.get( 'name' ),
 			target,
 			function( provider, response ) {
+				Ext.Msg.close()
 				console.log( "Building complete done" )
 			}
 		)

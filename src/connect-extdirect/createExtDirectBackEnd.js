@@ -150,7 +150,7 @@ define(
 										extdirect_res['result'] = result;
 										responses.push(extdirect_res);
 										complited_req++;
-										if (complited_req == data.length) {
+										if (complited_req == data.length && !request.async ) {
 											if (!extdirect_res.isUpload) {
 												response.writeHead(200, {'Content-type': 'application/json'});
 											} else {
