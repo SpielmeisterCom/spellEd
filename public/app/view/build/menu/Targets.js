@@ -2,14 +2,11 @@ Ext.define('Spelled.view.build.menu.Targets' ,{
     extend: 'Ext.menu.Menu',
     alias: 'widget.buildtargetsmenu',
 
-	defaults: {
-		disabled: true
-	},
-
 	items:[
 		{
 			text   : 'All',
-			target : 'all'
+			target : 'all',
+			disabled: true
 		},
 		{
 			text   : 'Web',
@@ -17,11 +14,13 @@ Ext.define('Spelled.view.build.menu.Targets' ,{
 		},
 		{
 			text   : 'Android',
-			target : 'android'
+			target : 'android',
+			disabled: true
 		},
 		{
 			text   : 'iOS',
-			target : 'ios'
+			target : 'ios',
+			disabled: true
 		}
 	]
 });

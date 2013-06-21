@@ -1,20 +1,22 @@
 define(
 	'server/createExtDirectApi',
 	[
+		'server/extDirectApi/build/clean',
+		'server/extDirectApi/build/debug',
+		'server/extDirectApi/build/export',
+		'server/extDirectApi/build/release',
 		'server/extDirectApi/createStorageApi',
-		'server/extDirectApi/exportDeployment',
 		'server/extDirectApi/initDirectory',
-		'server/extDirectApi/notSupported',
-
-		'underscore'
+		'server/extDirectApi/notSupported'
 	],
 	function(
+		buildClean,
+		buildDebug,
+		buildExport,
+		buildRelease,
 		createStorageApi,
-		exportDeployment,
 		initDirectory,
-		notSupported,
-
-		_
+		notSupported
 	) {
 	'use strict'
 
@@ -45,65 +47,58 @@ define(
 		/*
 		 * private
 		 */
-		var initDirectoryWrapper = function( spellCorePath, projectsPath, spellCliPath, isDevEnvironment, req, res, payload ) {
-			var projectName = payload[ 0 ]
+		var createWrapper = function( spellCorePath, projectsPath, spellCliPath, isDevEnvironment, actionName, actionHandler ) {
+			return function( req, res, payload ) {
+				var onComplete = function( error ) {
+					if( error !== null ) {
+						console.log( 'childProcess.execFile ' + error )
+						writeResponse( 500, res )
 
-			var onComplete = function( error ) {
-
-				if ( error !== null) {
-					console.log( 'childProcess.execFile ' + error )
-					writeResponse( 500, res )
-				} else {
-					writeResponse( 200, res, createResponseData( "initDirectory", payload, req.extDirectId ) )
+					} else {
+						writeResponse( 200, res, createResponseData( actionName, payload, req.extDirectId ) )
+					}
 				}
+
+				actionHandler.apply( null, [ spellCorePath, projectsPath, spellCliPath, isDevEnvironment, onComplete ].concat( payload ) )
 			}
-
-			initDirectory( spellCorePath, projectsPath, spellCliPath, isDevEnvironment, projectName, onComplete )
-		}
-
-		var exportDeploymentWrapper = function( spellCorePath, projectsPath, spellCliPath, req, res, payload  ) {
-			var projectName    = payload[ 0 ],
-				outputFileName = payload[ 1 ]
-
-			var onComplete = function( error ) {
-
-				if ( error !== null) {
-					console.log( 'childProcess.execFile ' + error )
-					writeResponse( 500, res )
-				} else {
-					writeResponse( 200, res, createResponseData( "exportDeployment", payload, req.extDirectId ) )
-				}
-			}
-
-			exportDeployment( spellCorePath, projectsPath, spellCliPath, projectName, outputFileName, onComplete )
 		}
 
         return function( projectsRoot, spellCorePath, spellCliPath, demonstrationMode ) {
+			//TODO: detect if its the devEnvironment
+			var isDevEnvironment = true
+
+			var createAction = function( actionHandler ) {
+
+				return !demonstrationMode ?	actionHandler : notSupported
+			}
+
             return {
 				StorageActions    : createStorageApi( projectsRoot, demonstrationMode ),
 				SpellBuildActions : [
 					{
 						name: "initDirectory",
 						len: 2,
-						func: !demonstrationMode ? _.bind(
-							initDirectoryWrapper,
-							null,
-							spellCorePath,
-							projectsRoot,
-							spellCliPath,
-							true
-						) : notSupported
+						func: createAction( createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'initDirectory', initDirectory ) )
 					},
 					{
-						name: "exportDeployment",
+						name: "buildExport",
 						len: 2,
-						func: !demonstrationMode ? _.bind(
-							exportDeploymentWrapper,
-							null,
-							spellCorePath,
-							projectsRoot,
-							spellCliPath
-						) : notSupported
+						func: createAction( createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'buildExport', buildExport ) )
+					},
+					{
+						name: "buildClean",
+						len: 1,
+						func: createAction( createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'buildClean', buildClean ) )
+					},
+					{
+						name: "buildDebug",
+						len: 2,
+						func: createAction( createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'buildDebug', buildDebug ) )
+					},
+					{
+						name: "buildRelease",
+						len: 2,
+						func: createAction( createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'buildRelease', buildRelease ) )
 					}
 				]
 			}

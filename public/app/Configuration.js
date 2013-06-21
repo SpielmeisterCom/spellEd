@@ -7,8 +7,8 @@ Ext.define( 'Spelled.Configuration', {
 		return host === this.demoServerHostname
 	},
 
-	getDemoTooltipText: function() {
-		return Spelled.Configuration.isDemoInstance() ? 'Not supported in demo version' : ''
+	getDemoTooltipText: function( text ) {
+		return Spelled.Configuration.isDemoInstance() ? 'Not supported in demo version' : text || ''
 	},
 
 	getStateProvider: function() {

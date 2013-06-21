@@ -90,14 +90,10 @@ Ext.define('Spelled.controller.Projects', {
 			'spelledmenu [action="saveProject"]': {
 				click: this.globalSave
 			},
-			'spelledmenu [action="exportProject"]': {
-				click: this.exportActiveProject
-			},
 			nwtoolbar: {
 				showLoadProject    : this.showLoadProject,
 				showProjectSettings: this.showProjectSettings,
 				showCreateProject  : this.showCreateProject,
-				exportProject      : this.exportActiveProject,
 				saveProject        : this.globalSave
 			},
             'createproject button[action="createProject"]': {
@@ -132,7 +128,6 @@ Ext.define('Spelled.controller.Projects', {
         })
 
 		this.application.on( {
-			'exportproject': this.exportActiveProject,
 			'globalsave'   : this.globalSave,
 			'revertmodel'  : this.revertModel,
 			scope: this
@@ -162,12 +157,47 @@ Ext.define('Spelled.controller.Projects', {
 		}
 	],
 
+	BUILD_RELEASE: 'buildRelease',
+	BUILD_DEBUG  : 'buildDebug',
+
 	callCleanBuild: function( menu, item, e ) {
-		//console.log( "Call 'callCleanBuild'" )
+		var project = this.application.getActiveProject()
+
+		Spelled.SpellBuildActions.buildClean(
+			project.get( 'name' ),
+			function( provider, response ) {
+				console.log( "Cleaning done" )
+			}
+		)
+	},
+
+	callBuildTarget: function( buildActionName, target ) {
+		var project = this.application.getActiveProject()
+
+		Spelled.SpellBuildActions[ buildActionName ](
+			project.get( 'name' ),
+			target,
+			function( provider, response ) {
+				console.log( "Building complete done" )
+			}
+		)
 	},
 
 	dispatchBuildTargetClick: function( menu, item, e ) {
-		//console.log( "Called '" + menu.action + "' for target '" + item.target + "'" )
+		var action = menu.action,
+			target = item.target
+
+		switch( action ) {
+			case 'callExportTarget':
+				this.exportActiveProject()
+				break
+			case 'callDebugTarget':
+				this.callBuildTarget( this.BUILD_DEBUG, target )
+				break
+			case 'callReleaseTarget':
+				this.callBuildTarget( this.BUILD_RELEASE, target )
+				break
+		}
 	},
 
 	removeLanguage: function( button ){
@@ -403,26 +433,19 @@ Ext.define('Spelled.controller.Projects', {
 	exportActiveProject: function() {
 		var project        = this.application.getActiveProject(),
 			projectName    = project.get( 'name' ),
-			exportFileName = projectName +".zip",
-			me             = this
+			exportFileName = projectName +".zip"
 
 		var progress = Ext.Msg.wait( 'Please wait...', 'Exporting project' )
 
-		Spelled.SpellBuildActions.exportDeployment(
+		Spelled.SpellBuildActions.buildExport(
 			projectName,
 			exportFileName,
 			function( provider, response ) {
+				progress.close()
+
 				if( !!response.data ) {
-					// WORKAROUND: delaying the download a little bit to mitigate asynchronous race condition
-					var task = new Ext.util.DelayedTask( function() {
-						progress.close()
-						window.location = Spelled.Converter.toWorkspaceUrl( '/' + exportFileName )
-					} )
-
-					task.delay( 5000 )
-
+					window.location = Spelled.Converter.toWorkspaceUrl( '/' + exportFileName )
 				} else {
-					progress.close()
 					Spelled.MessageBox.showBuildServerConnectError()
 				}
 			}

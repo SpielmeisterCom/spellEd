@@ -80,11 +80,6 @@ Ext.define('Spelled.view.menu.Menu', {
 				disabled: Spelled.Configuration.isDemoInstance(),
 				tooltip: Spelled.Configuration.getDemoTooltipText()
 			},{
-				text: "Export for deployment",
-				action: "exportProject",
-				disabled: Spelled.Configuration.isDemoInstance(),
-				tooltip: Spelled.Configuration.getDemoTooltipText()
-			},{
 				text   : 'Settings',
 				tooltip: 'Edit the project settings',
 				action: 'showProjectSettings'
@@ -99,26 +94,29 @@ Ext.define('Spelled.view.menu.Menu', {
 			ignoreParentClicks: true,
 			items: [{
 				text   : 'Clean',
-				disabled: true,
-				tooltip: 'Cleans up the build directory.',
+				disabled: Spelled.Configuration.isDemoInstance(),
+				tooltip: Spelled.Configuration.getDemoTooltipText( 'Cleans up the build directory.' ),
 				action: 'callCleanBuild'
 			},{
 				text   : 'Debug',
-				tooltip: 'Generates a debug build for a specified target.',
+				disabled: Spelled.Configuration.isDemoInstance(),
+				tooltip: Spelled.Configuration.getDemoTooltipText( 'Generates a debug build for a specified target.' ),
 				menu: {
 					xtype: 'buildtargetsmenu',
 					action: 'callDebugTarget'
 				}
 			},{
 				text   : 'Release',
-				tooltip: 'Generates a debug build for a specified target.',
+				disabled: Spelled.Configuration.isDemoInstance(),
+				tooltip: Spelled.Configuration.getDemoTooltipText( 'Generates a debug build for a specified target.' ),
 				menu: {
 					xtype: 'buildtargetsmenu',
 					action: 'callReleaseTarget'
 				}
 			},{
 				text   : 'Export',
-				tooltip: 'Generates a release build for a specified target packages it.',
+				disabled: Spelled.Configuration.isDemoInstance(),
+				tooltip: Spelled.Configuration.getDemoTooltipText( 'Generates a release build for a specified target packages it.' ),
 				menu: {
 					xtype: 'buildtargetsmenu',
 					action: 'callExportTarget'

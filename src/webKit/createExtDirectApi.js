@@ -3,51 +3,40 @@ define(
 	[
 		'path',
 		'server/extDirectApi/createStorageApi',
-		'server/extDirectApi/exportDeployment',
-		'server/extDirectApi/initDirectory',
-
-		'underscore'
+		'server/extDirectApi/build/clean',
+		'server/extDirectApi/build/debug',
+		'server/extDirectApi/build/export',
+		'server/extDirectApi/build/release',
+		'server/extDirectApi/initDirectory'
 	],
 	function(
 		path,
 		createStorageApi,
-		exportDeployment,
-		initDirectory,
-
-		_
+		buildClean,
+		buildDebug,
+		buildExport,
+		buildRelease,
+		initDirectory
 	) {
 	'use strict'
 		/*
 		 * private
 		 */
-		var initDirectoryWrapper = function( spellCorePath, projectsPath, spellCliPath, isDevEnvironment, req, res, payload ) {
-			var projectName = payload[ 0 ]
 
-			var onComplete = function( error ) {
-
-				if ( error !== null) {
-					console.log( 'childProcess.execFile ' + error )
+		var createWrapper = function( spellCorePath, projectsPath, spellCliPath, isDevEnvironment, actionName, actionHandler ) {
+			return function( req, res, payload ) {
+				var onComplete = function( error ) {
+					if ( error !== null) {
+						console.log( 'childProcess.execFile ' + error )
+					}
 				}
+
+				actionHandler.apply( null, [ spellCorePath, projectsPath, spellCliPath, isDevEnvironment, onComplete ].concat( payload ) )
 			}
-
-			initDirectory( spellCorePath, projectsPath, spellCliPath, isDevEnvironment, projectName, onComplete )
-		}
-
-		var exportDeploymentWrapper = function( spellCorePath, projectsPath, spellCliPath, req, res, payload  ) {
-			var projectName    = payload[ 0 ],
-				outputFileName = payload[ 1 ]
-
-			var onComplete = function( error ) {
-
-				if ( error !== null) {
-					console.log( 'childProcess.execFile ' + error )
-				}
-			}
-
-			exportDeployment( spellCorePath, projectsPath, spellCliPath, projectName, outputFileName, onComplete )
 		}
 
         return function( projectsRoot, spellCorePath, spellCliPath ) {
+			var isDevEnvironment = true
 			var execDir = path.dirname( process.execPath )
 
 			spellCorePath = path.join( execDir, spellCorePath )
@@ -59,25 +48,27 @@ define(
 					{
 						name: "initDirectory",
 						len: 2,
-						func: _.bind(
-							initDirectoryWrapper,
-							null,
-							spellCorePath,
-							projectsRoot,
-							spellCliPath,
-							true
-						)
+						func: createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'initDirectory', initDirectory )
 					},
 					{
-						name: "exportDeployment",
+						name: "buildExport",
 						len: 2,
-						func: _.bind(
-							exportDeploymentWrapper,
-							null,
-							spellCorePath,
-							projectsRoot,
-							spellCliPath
-						)
+						func: createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'buildExport', buildExport )
+					},
+					{
+						name: "buildClean",
+						len: 1,
+						func: createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'buildClean', buildClean )
+					},
+					{
+						name: "buildDebug",
+						len: 2,
+						func: createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'buildDebug', buildDebug )
+					},
+					{
+						name: "buildRelease",
+						len: 2,
+						func: createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'buildRelease', buildRelease )
 					}
 				]
 			}
