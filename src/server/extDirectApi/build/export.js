@@ -12,11 +12,11 @@ define(
 
 		var appendExtension = process.platform == 'win32' ? '.exe' : ''
 
-		return function( spellCorePath, workspacePath, spellCliPath, isDevEnvironment, onComplete, projectName, outputFileName ) {
+		return function( spellCorePath, workspacePath, spellCliPath, isDevEnvironment, onComplete, projectName, outputFileName, target ) {
 			var projectPath    = path.join( workspacePath, path.normalize( projectName ) ),
 				outputFilePath = path.join( workspacePath, path.normalize( outputFileName ) )
 
-			childProcess.execFile( spellCliPath + appendExtension, [ 'export','-p', projectPath, '-f', outputFilePath ], {}, onComplete )
+			childProcess.execFile( spellCliPath + appendExtension, [ 'export', target, '-p', projectPath, '-f', outputFilePath ], {}, onComplete )
 		}
     }
 )

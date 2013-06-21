@@ -94,7 +94,11 @@ Ext.define('Spelled.controller.Projects', {
 				showLoadProject    : this.showLoadProject,
 				showProjectSettings: this.showProjectSettings,
 				showCreateProject  : this.showCreateProject,
-				saveProject        : this.globalSave
+				saveProject        : this.globalSave,
+				callCleanBuild     : this.callCleanBuild,
+				callExportTarget   : this.dispatchBuildTargetClick,
+				callDebugTarget    : this.dispatchBuildTargetClick,
+				callReleaseTarget  : this.dispatchBuildTargetClick
 			},
             'createproject button[action="createProject"]': {
                 click: this.createProject
@@ -160,7 +164,7 @@ Ext.define('Spelled.controller.Projects', {
 	BUILD_RELEASE: 'buildRelease',
 	BUILD_DEBUG  : 'buildDebug',
 
-	callCleanBuild: function( menu, item, e ) {
+	callCleanBuild: function() {
 		var project = this.application.getActiveProject()
 
 		Ext.Msg.wait( 'Please wait...', 'Cleaning project' )
@@ -189,13 +193,13 @@ Ext.define('Spelled.controller.Projects', {
 		)
 	},
 
-	dispatchBuildTargetClick: function( menu, item, e ) {
+	dispatchBuildTargetClick: function( menu, item ) {
 		var action = menu.action,
 			target = item.target
 
 		switch( action ) {
 			case 'callExportTarget':
-				this.exportActiveProject()
+				this.exportActiveProject( target )
 				break
 			case 'callDebugTarget':
 				this.callBuildTarget( this.BUILD_DEBUG, target )
@@ -436,7 +440,7 @@ Ext.define('Spelled.controller.Projects', {
 		project.save( {	callback: callback } )
 	},
 
-	exportActiveProject: function() {
+	exportActiveProject: function( target ) {
 		var project        = this.application.getActiveProject(),
 			projectName    = project.get( 'name' ),
 			exportFileName = projectName +".zip"
@@ -446,6 +450,7 @@ Ext.define('Spelled.controller.Projects', {
 		Spelled.SpellBuildActions.buildExport(
 			projectName,
 			exportFileName,
+			target,
 			function( provider, response ) {
 				progress.close()
 

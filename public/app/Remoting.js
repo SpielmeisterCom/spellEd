@@ -19,7 +19,7 @@ Ext.define( 'Spelled.Remoting', {
 		],
 		"SpellBuildActions":[
 			{"name":"initDirectory","len":2},
-			{"name":"buildExport","len":2},
+			{"name":"buildExport","len":3},
 			{"name":"buildClean","len":1},
 			{"name":"buildDebug","len":2},
 			{"name":"buildRelease","len":2}

@@ -52,7 +52,7 @@ define(
 					},
 					{
 						name: "buildExport",
-						len: 2,
+						len: 3,
 						func: createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'buildExport', buildExport )
 					},
 					{
