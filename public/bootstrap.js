@@ -86,13 +86,13 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.asset.create.KeyFrameAnimation": [],
   "Spelled.view.template.component.Property": [],
   "Spelled.model.template.Component": [],
-  "Spelled.store.StaticLibraryDependencies": [],
   "Spelled.view.menu.contextmenu.ScriptsList": [],
   "Spelled.model.Script": [],
   "Spelled.model.assets.TileMap": [],
   "Spelled.controller.Scenes": [],
   "Spelled.data.writer.Scene": [],
   "Ext.ux.FieldReplicator": [],
+  "Spelled.view.build.menu.Targets": [],
   "Spelled.view.template.component.attribute.Number": [],
   "Spelled.view.template.component.attribute.SpriteSheet": [],
   "Ext.ux.grid.filter.ListFilter": [],
@@ -127,6 +127,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.statusbar.StatusBar": [
     "Ext.ux.StatusBar"
   ],
+  "Spelled.store.dependencies.library.Static": [],
   "Spelled.view.script.Properties": [],
   "Spelled.view.script.FolderPicker": [],
   "Ext.ux.event.Player": [],
@@ -488,7 +489,6 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.componenttemplateproperty"
   ],
   "Spelled.model.template.Component": [],
-  "Spelled.store.StaticLibraryDependencies": [],
   "Spelled.view.menu.contextmenu.ScriptsList": [
     "widget.scriptslistcontextmenu"
   ],
@@ -499,6 +499,9 @@ Ext.ClassManager.addNameAliasMappings({
     "writer.scene"
   ],
   "Ext.ux.FieldReplicator": [],
+  "Spelled.view.build.menu.Targets": [
+    "widget.buildtargetsmenu"
+  ],
   "Spelled.view.template.component.attribute.Number": [
     "widget.spellednumberfield"
   ],
@@ -575,6 +578,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.statusbar.StatusBar": [
     "widget.statusbar"
   ],
+  "Spelled.store.dependencies.library.Static": [],
   "Spelled.view.script.Properties": [
     "widget.scriptproperties"
   ],

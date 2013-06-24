@@ -1,7 +1,22 @@
 Ext.define('Spelled.nw.Toolbar', {
 	alias: 'widget.nwtoolbar',
 	extend: 'Ext.container.Container',
+	requires: [ 'Spelled.view.build.menu.Targets' ],
 	isToolbar: true,
+
+	mergeWithXtype: function( menu ) {
+		if( !menu.xtype ) return
+
+		var cmp = Ext.create( 'widget.' + menu.xtype )
+
+		menu.items = Ext.Array.map(
+			cmp.items.items,
+			function( item ) {
+				if( !item.action ) item.action = menu.action
+				return item
+			}
+		)
+	},
 
 	initComponent: function() {
 		var me = this
@@ -13,26 +28,42 @@ Ext.define('Spelled.nw.Toolbar', {
 			menubar = new gui.Menu( { type: 'menubar' } ),
 			events  = {}
 
-		Ext.each(me.items.items, function(item) {
-			if(item.menu) {
-				var subMenu = new gui.Menu();
+		var generateSubMenu = function( menu ) {
+			var subMenu  = new gui.Menu()
 
-				Ext.each(item.menu.items, function(subItem) {
-					var hidden = !!subItem.hidden
+			me.mergeWithXtype( menu )
 
+			Ext.each( menu.items, function(subItem) {
+				var hidden = !!subItem.hidden
+
+				if( subItem.menu ) {
+					subMenu.append(new gui.MenuItem({
+						label: subItem.text,
+						submenu: generateSubMenu( subItem.menu )
+					}));
+				} else {
 					events[ subItem.action ] = true
 
 					if( !hidden ) {
 						subMenu.append(new gui.MenuItem({
+							enabled: !subItem.disabled,
 							label: subItem.text,
 							keyEquivalent: subItem.keyEquivalent,
 							appleSelector: (subItem.appleSelector) ? subItem.appleSelector : 'invoke:',
 							click: function() {
-								me.fireEvent( subItem.action, me )
+								me.fireEvent( subItem.action, me, subItem )
 							}
 						}));
 					}
-				});
+				}
+			});
+
+			return subMenu
+		}
+
+		Ext.each(me.items.items, function(item) {
+			if(item.menu) {
+				var subMenu = generateSubMenu( item.menu )
 
 				menubar.append(
 					new gui.MenuItem({

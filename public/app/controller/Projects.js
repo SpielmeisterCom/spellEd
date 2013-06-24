@@ -96,9 +96,15 @@ Ext.define('Spelled.controller.Projects', {
 				showCreateProject  : this.showCreateProject,
 				saveProject        : this.globalSave,
 				callCleanBuild     : this.callCleanBuild,
-				callExportTarget   : this.dispatchBuildTargetClick,
-				callDebugTarget    : this.dispatchBuildTargetClick,
-				callReleaseTarget  : this.dispatchBuildTargetClick
+				callExportTarget   : function( menu, item ){
+					this.exportActiveProject( item.target )
+				},
+				callDebugTarget    : function( menu, item ){
+					this.callBuildTarget( this.BUILD_DEBUG, item.target )
+				},
+				callReleaseTarget  : function( menu, item ){
+					this.callBuildTarget( this.BUILD_RELEASE, item.target )
+				}
 			},
             'createproject button[action="createProject"]': {
                 click: this.createProject
