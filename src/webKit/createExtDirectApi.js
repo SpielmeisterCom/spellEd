@@ -32,7 +32,8 @@ define(
 				var onComplete = function( error, result ) {
 
 					if ( error !== null) {
-						console.log( 'childProcess.execFile ' + error )
+						result += '\nchildProcess.execFile ' + error
+						console.log( result )
 					}
 
 					var response = {
