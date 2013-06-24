@@ -225,6 +225,12 @@ the following three css lines fix the problem
     width: auto !important;
 }
 
+.console-message-info {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+}
+
 /* Super hack for Chrome 27 bug (prevent black boxes) */
 [style*="visibility: hidden"] { z-index:-999999999999 !important; }
 
