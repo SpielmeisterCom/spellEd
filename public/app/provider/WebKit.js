@@ -75,7 +75,10 @@ Ext.define( 'Spelled.provider.WebKit', {
 
 		if( !neededFunc ) throw "Method: '" + method +"' not found in: '" +action + "' not supported in WebKit Provider."
 
-		var result = neededFunc.func( null, null, args )
+		var result = neededFunc.func( request, this, args )
+
+		//HACK: For detecting spellCli calls. They're async and will answer for themselves
+		if( action === 'SpellBuildActions' ) return
 
 		var response = {
 			responseText: Ext.encode( [ Ext.Object.merge( {}, request.jsonData, { result: result } ) ] )

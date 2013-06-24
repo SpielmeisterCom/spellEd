@@ -7,7 +7,9 @@ define(
 		'server/extDirectApi/build/debug',
 		'server/extDirectApi/build/export',
 		'server/extDirectApi/build/release',
-		'server/extDirectApi/initDirectory'
+		'server/extDirectApi/initDirectory',
+
+		'underscore'
 	],
 	function(
 		path,
@@ -16,7 +18,9 @@ define(
 		buildDebug,
 		buildExport,
 		buildRelease,
-		initDirectory
+		initDirectory,
+
+		_
 	) {
 	'use strict'
 		/*
@@ -24,11 +28,18 @@ define(
 		 */
 
 		var createWrapper = function( spellCorePath, projectsPath, spellCliPath, isDevEnvironment, actionName, actionHandler ) {
-			return function( req, res, payload ) {
-				var onComplete = function( error ) {
+			return function( req, extProvider, payload ) {
+				var onComplete = function( error, result ) {
+
 					if ( error !== null) {
 						console.log( 'childProcess.execFile ' + error )
 					}
+
+					var response = {
+						responseText: JSON.stringify( [ _.extend( {}, req.jsonData, { output: result } ) ] )
+					}
+
+					extProvider.onData( req.transaction.callbackOptions, true, response )
 				}
 
 				actionHandler.apply( null, [ spellCorePath, projectsPath, spellCliPath, isDevEnvironment, onComplete ].concat( payload ) )
