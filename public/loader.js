@@ -31,6 +31,10 @@ var nwExceptionHandler = function(errorMsg) {
     }, 'png');
 }
 
+var cleanUpStorage = function() {
+	Spelled.Configuration.getStateProvider().set( 'projectName', '' )
+}
+
 function registerGlobalErrorHandler(isNWRuntime, isDevelEnv) {
 	if( isDevelEnv ) return
 
@@ -41,12 +45,14 @@ function registerGlobalErrorHandler(isNWRuntime, isDevelEnv) {
     if( isNWRuntime ) {
         process.on('uncaughtException', nwExceptionHandler);
         window.onerror = function(errorMsg, url, lineNumber) {
-              nwExceptionHandler(url + ':' + lineNumber + "\n" + errorMsg);
+			cleanUpStorage()
+            nwExceptionHandler(url + ':' + lineNumber + "\n" + errorMsg);
         }
 
     } else {
 
         window.onerror = function(errorMsg, url, lineNumber) {
+			cleanUpStorage()
             var msg = url + ':' + lineNumber + "\n" + errorMsg;
 			window._error_handler = true
             window.location.href = 'error.html?errorMsg=' + encodeURIComponent(msg)
