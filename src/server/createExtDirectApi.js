@@ -32,13 +32,14 @@ define(
 			res.end()
 		}
 
-		var createResponseData = function( method, payload, id ) {
+		var createResponseData = function( method, payload, id, result ) {
 			var post_data = {
 				action : "ProjectActions",
 				method : method,
 				data   : payload,
 				type   : "rpc",
-				tid    : id
+				tid    : id,
+				output : result
 			}
 
 			return JSON.stringify( post_data )
@@ -49,13 +50,14 @@ define(
 		 */
 		var createWrapper = function( spellCorePath, projectsPath, spellCliPath, isDevEnvironment, actionName, actionHandler ) {
 			return function( req, res, payload ) {
-				var onComplete = function( error ) {
+				var onComplete = function( error, result ) {
+
 					if( error !== null ) {
 						console.log( 'childProcess.execFile ' + error )
 						writeResponse( 500, res )
 
 					} else {
-						writeResponse( 200, res, createResponseData( actionName, payload, req.extDirectId ) )
+						writeResponse( 200, res, createResponseData( actionName, payload, req.extDirectId, result ) )
 					}
 				}
 				//Mark request as async

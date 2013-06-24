@@ -170,32 +170,40 @@ Ext.define('Spelled.controller.Projects', {
 	BUILD_RELEASE: 'buildRelease',
 	BUILD_DEBUG  : 'buildDebug',
 
-	callCleanBuild: function() {
-		var project = this.application.getActiveProject()
+	buildActionsCallback: function( msg, response ){
+		Spelled.Logger.log( 'INFO', response.output )
+		Ext.Msg.alert( 'Finished', "Finished: " + msg )
+	},
 
-		Ext.Msg.wait( 'Please wait...', 'Cleaning project' )
+	callCleanBuild: function() {
+		var project = this.application.getActiveProject(),
+			name    = project.get( 'name'),
+			msg     = 'Cleaning project: "' + name + '"'
+
+		Ext.Msg.wait( 'Please wait...', msg )
 
 		Spelled.SpellBuildActions.buildClean(
-			project.get( 'name' ),
+			name,
 			function( provider, response ) {
-				console.log( "Cleaning done" )
-				Ext.Msg.close()
-			}
+				this.buildActionsCallback( msg, response )
+			},
+			this
 		)
 	},
 
 	callBuildTarget: function( buildActionName, target ) {
-		var project = this.application.getActiveProject()
+		var project = this.application.getActiveProject(),
+			msg     = 'Building target "' +target +'"'
 
-		Ext.Msg.wait( 'Please wait...', 'Building target "' +target +'"' )
+		Ext.Msg.wait( 'Please wait...', msg )
 
 		Spelled.SpellBuildActions[ buildActionName ](
 			project.get( 'name' ),
 			target,
 			function( provider, response ) {
-				Ext.Msg.close()
-				console.log( "Building complete done" )
-			}
+				this.buildActionsCallback( msg, response )
+			},
+			this
 		)
 	},
 
