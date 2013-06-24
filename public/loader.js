@@ -23,12 +23,18 @@ var nwExceptionHandler = function(errorMsg) {
 
 	win.menu = new gui.Menu({ type: 'menubar' })
 
+	cleanUpStorage()
+
     win.capturePage(function(img) {
         // code to run when error has occured on page
         window.location.href = 'error.html?' +
             'errorMsg='         + encodeURIComponent(errorMsg) +
             '&screenCapture='   + encodeURIComponent(img)
     }, 'png');
+}
+
+var cleanUpStorage = function() {
+	Ext.state.Manager.clear( 'projectName' )
 }
 
 function registerGlobalErrorHandler(isNWRuntime, isDevelEnv) {
@@ -41,12 +47,13 @@ function registerGlobalErrorHandler(isNWRuntime, isDevelEnv) {
     if( isNWRuntime ) {
         process.on('uncaughtException', nwExceptionHandler);
         window.onerror = function(errorMsg, url, lineNumber) {
-              nwExceptionHandler(url + ':' + lineNumber + "\n" + errorMsg);
+            nwExceptionHandler(url + ':' + lineNumber + "\n" + errorMsg);
         }
 
     } else {
 
         window.onerror = function(errorMsg, url, lineNumber) {
+			cleanUpStorage()
             var msg = url + ':' + lineNumber + "\n" + errorMsg;
 			window._error_handler = true
             window.location.href = 'error.html?errorMsg=' + encodeURIComponent(msg)
@@ -81,7 +88,6 @@ if( isDevelEnv ) {
 	)
 
 	JSincludes.push( 'bootstrap.js' )
-	JSincludes.push( 'app/app.js' )
 
 	if( isNWRuntime ) {
 		JSincludes.push('libs.js')
@@ -89,6 +95,8 @@ if( isDevelEnv ) {
 	}
 
 	CSSincludes.push('packages/spelled-theme/build/resources/spelled-theme-all.css');
+
+	JSincludes.push( 'app/app.js' )
 } else {
 	JSincludes.push('libs.js')
 
