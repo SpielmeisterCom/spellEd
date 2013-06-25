@@ -79,8 +79,8 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				iconCls: 'debug-icon',
 				action: "debug",
 				tooltip: {
-					text:'Open Developer Console',
-					title:'Useful for debugging',
+					title:'Open Developer Console',
+					text:'Useful for debugging',
 					dismissDelay: dismissDelay
 				}
 			},
