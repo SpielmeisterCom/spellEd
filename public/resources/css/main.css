@@ -130,6 +130,10 @@
     background-image:  url( '../images/icons/arrow_out.png' ) !important;
 }
 
+.debug-icon {
+    background-image:  url( '../images/icons/bug.png' ) !important;
+}
+
 .pause-icon {
     background-image:  url( '../images/icons/pause.png' ) !important;
 }

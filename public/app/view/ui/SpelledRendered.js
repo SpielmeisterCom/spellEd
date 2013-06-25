@@ -76,6 +76,15 @@ Ext.define('Spelled.view.ui.SpelledRendered', {
 				}
 			},
 			{
+				iconCls: 'debug-icon',
+				action: "debug",
+				tooltip: {
+					text:'Open Developer Console',
+					title:'Useful for debugging',
+					dismissDelay: dismissDelay
+				}
+			},
+			{
 				name: 'aspectRatioSelector',
 				width: 400,
 				editable: false,

@@ -248,6 +248,9 @@ Ext.define('Spelled.controller.Scenes', {
 			'renderedscene > toolbar button[action="fullscreen"]': {
 				click: me.activateFullscreen
 			},
+			'renderedscene > toolbar button[action="debug"]': {
+				click: me.activateDebug
+			},
 			'spelldependencies': {
 				showStaticLibraryItemContextMenu: me.showStaticLibraryItemContextMenu,
 				showDynamicLibraryItemContextMenu: me.showDynamicLibraryItemContextMenu,
@@ -1054,6 +1057,14 @@ Ext.define('Spelled.controller.Scenes', {
 			//inform the user if this function is not available
 			Spelled.MessageBox.alert( 'Not supported', 'Sorry, the fullscreen function is not yet supported in your browser. Try using another browser.')
 		}
+	},
+
+	activateDebug: function( button, state ) {
+                var tab      = this.getSpelledIframe()
+
+		var gui = require('nw.gui');
+		var win = gui.Window.get();
+		win.showDevTools( tab.el.id );
 	},
 
 	createSpellTab: function( title, projectName, sceneId ) {
