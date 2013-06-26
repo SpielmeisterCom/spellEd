@@ -20,6 +20,10 @@ Ext.define( 'Spelled.platform.target.Cloud', {
 		return Spelled.Remoting.createSpellEdCloudProvider()
 	},
 
+	toggleDevTools: function() {
+		Spelled.MessageBox.info( 'Not supported', 'Please open the development toolbar manually (for example hit F12 on Windows)' )
+	},
+
 	enterFullScreen: function( dom ) {
 		var success  = false,
 			prefixes = ["moz", "webkit", "ms", "o", ""]

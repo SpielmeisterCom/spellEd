@@ -19,6 +19,13 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 		return 'nwtoolbar'
 	},
 
+	toggleDevTools: function( id ) {
+		var gui = require('nw.gui'),
+			win = gui.Window.get()
+
+		win.showDevTools( id )
+	},
+
 	enterFullScreen: function( dom ) {
 		var gui = require('nw.gui'),
 			win = gui.Window.get()

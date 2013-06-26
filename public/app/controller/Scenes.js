@@ -1060,11 +1060,9 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	activateDebug: function( button, state ) {
-                var tab      = this.getSpelledIframe()
+        var tab = this.getSpelledIframe()
 
-		var gui = require('nw.gui');
-		var win = gui.Window.get();
-		win.showDevTools( tab.el.id );
+		Spelled.app.platform.toggleDevTools( tab.el.id )
 	},
 
 	createSpellTab: function( title, projectName, sceneId ) {

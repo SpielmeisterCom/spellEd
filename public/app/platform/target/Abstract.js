@@ -12,6 +12,8 @@ Ext.define( 'Spelled.platform.target.Abstract', {
 		return 'toolbar'
 	},
 
+	toggleDevTools: function() {},
+
 	enterFullScreen: function( dom ) {},
 
 	normalizeUrl: function( url ) {
