@@ -135,12 +135,16 @@ Ext.define('Spelled.controller.Library', {
     },
 
 	loadLibraryDependency: function( panel, record ) {
+		var treePanel = panel.down( 'treepanel' )
+
+		if( !treePanel ) return
+
 		if( record.dirtyDep ) record.updateDependencies()
 
 		var rootNode = Ext.clone( record.getDependencyNode() )
 
 		rootNode.expanded = true
-		panel.down( 'treepanel' ).setRootNode( rootNode )
+		treePanel.setRootNode( rootNode )
 
 		Ext.Msg.close()
 	},
