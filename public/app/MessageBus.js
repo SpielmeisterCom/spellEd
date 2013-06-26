@@ -13,6 +13,10 @@ Ext.define(
 			this.handlers = Ext.Object.merge( {}, this.handlers, handlers )
 		},
 
+		unInitialize: function( targetId ) {
+			if( this.queue[ targetId ] ) this.queue[ targetId ].initialized = false
+		},
+
 		config : {
 			handlers : {},
 			queue : {}

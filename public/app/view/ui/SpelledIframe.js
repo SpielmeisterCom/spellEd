@@ -1,18 +1,9 @@
 Ext.define('Spelled.view.ui.SpelledIframe', {
-    extend: 'Ext.Component',
+    extend: 'Spelled.base.view.IFrame',
     alias : 'widget.spellediframe',
 
-    width : '100%',
-    height: '100%',
-    autoEl : {
-		tag : 'iframe',
-		border: '0',
-		frameborder: '0',
-		scrolling: 'no'
-    },
-
-    afterRender: function() {
-        this.el.dom.src = Spelled.Converter.toWorkspaceUrl( this.projectName + '/public/spellEdShim.html?iframeId='+this.id )
+	reload: function() {
+		this.load( Spelled.Converter.toWorkspaceUrl( this.projectName + '/public/spellEdShim.html?iframeId='+this.id ) )
 	},
 
 	focus: function() {

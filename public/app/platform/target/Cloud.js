@@ -32,7 +32,7 @@ Ext.define( 'Spelled.platform.target.Cloud', {
 			var fnName = ( prefix.length > 0 ) ? "RequestFullScreen" : "requestFullScreen"
 
 			if (dom[prefix + fnName] !== undefined) {
-				dom.contentWindow.focus()
+				dom.focus()
 
 				//we need to call this function directly here, because Firefox does
 				//not accept calling this function from another context

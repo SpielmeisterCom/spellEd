@@ -852,21 +852,10 @@ Ext.define('Spelled.controller.Scenes', {
 			iframe  = panel.down( 'spellediframe' ),
 			scene   = this.application.getRenderedScene()
 
-		iframe.destroy()
+		this.application.engineMessageBus.unInitialize( iframe.getId() )
 
 		scene.updateDependencies()
 		scene.checkForComponentChanges()
-
-		panel.add(
-			{
-				xtype: 'spellediframe',
-				projectName : project.get('name'),
-				sceneId : scene.getId(),
-				hidden: true
-			}
-		)
-
-		if( !panel.down( 'spellprogressbar' ) ) panel.add( { xtype: 'spellprogressbar'} )
 
 		var applicationModule = Ext.amdModules.createProjectInEngineFormat( project )
 		applicationModule.startScene = scene.get( 'sceneId' )
@@ -904,6 +893,8 @@ Ext.define('Spelled.controller.Scenes', {
 			'settings.drawTitleSafeOutline',
 			panel.down( '[action="toggleTitleSafe"]' ).pressed
 		)
+
+		iframe.reload()
 	},
 
 	generateUnsavedCacheContent: function() {
@@ -961,37 +952,6 @@ Ext.define('Spelled.controller.Scenes', {
 
 	updateRenderProgress: function( targetId, value ) {
 		if( value >= 1 ) this.application.fireEvent( 'spellfinishedloading', targetId )
-
-		var progressBar = this.getProgressBar()
-
-		if( !progressBar ) return
-
-		var panel = progressBar.up( 'renderedscene' )
-
-		progressBar.updateProgress( value )
-
-		if( value >= 1 && panel ){
-			panel.remove( progressBar )
-			panel.down( 'spellediframe').show()
-
-			this.setSceneDevelopmentEnvironment()
-		}
-	},
-
-	setSceneDevelopmentEnvironment: function() {
-		var cameraState = this.getRenderedScene().down( '[action="toggleDevCam"]' ).pressed
-
-		this.getSpelledIframe().focus()
-
-		this.sendChangeToEngine(
-			"system.add",
-			{
-				executionGroupId: 'update',
-				systemConfig: { active: cameraState },
-				systemId: 'spell.system.debug.camera',
-				index: 0
-			}
-		)
 	},
 
 	toggleDevCam: function( button, state ) {
@@ -1062,7 +1022,7 @@ Ext.define('Spelled.controller.Scenes', {
 	activateDebug: function( button, state ) {
         var tab = this.getSpelledIframe()
 
-		Spelled.app.platform.toggleDevTools( tab.el.id )
+		Spelled.app.platform.toggleDevTools( tab.getFrame().id )
 	},
 
 	createSpellTab: function( title, projectName, sceneId ) {
@@ -1115,7 +1075,6 @@ Ext.define('Spelled.controller.Scenes', {
 			}
 		} )
 
-		this.setSceneDevelopmentEnvironment()
 		this.application.setRenderedScene( scene )
 	},
 
