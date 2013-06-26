@@ -172,7 +172,13 @@ Ext.define('Spelled.controller.Projects', {
 
 	buildActionsCallback: function( msg, response ){
 		Spelled.Logger.log( 'INFO', response.output )
-		Ext.Msg.alert( 'Finished', "Finished: " + msg )
+
+		Ext.Msg.show({
+			title: 'Finished',
+			msg: "Finished: " + msg + "\n\n" + response.output,
+			buttons: Ext.Msg.OK,
+			cls: 'console-message-info'
+		})
 	},
 
 	callCleanBuild: function() {
