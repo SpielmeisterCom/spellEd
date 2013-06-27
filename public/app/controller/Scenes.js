@@ -4,7 +4,6 @@ Ext.define('Spelled.controller.Scenes', {
 	requires: [
 		'Spelled.Logger',
 		'Spelled.MessageBus',
-		'Spelled.view.scene.ProgressBar',
 		'Spelled.view.scene.Properties',
 		'Spelled.view.scene.AddLibraryId',
 		'Spelled.view.scene.dependencies.StaticContextMenu',
@@ -39,8 +38,7 @@ Ext.define('Spelled.controller.Scenes', {
 		'scene.dependencies.StaticContextMenu',
 		'scene.dependencies.DynamicContextMenu',
 		'scene.AddLibraryId',
-		'ui.SpelledRendered',
-		'scene.ProgressBar'
+		'ui.SpelledRendered'
 	],
 
 	TREE_ITEM_TYPE_SCENE         : 1,
@@ -75,10 +73,6 @@ Ext.define('Spelled.controller.Scenes', {
 		{
 			ref : 'Scenes',
 			selector: '#Scenes'
-		},
-		{
-			ref : 'ProgressBar',
-			selector: 'spellprogressbar'
 		},
 		{
 			ref: 'SpelledIframe',
