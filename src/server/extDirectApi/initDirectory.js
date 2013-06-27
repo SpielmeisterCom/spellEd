@@ -41,10 +41,10 @@ define(
 		 * @param onComplete
 		 * @return {*}
 		 */
-		return function( spellCorePath, workspacePath, spellCliPath, isDevEnvironment, onComplete, projectName ) {
+		return function( spellCorePath, workspacePath, spellCliPath, isDevEnvironment, onComplete, projectName, deleteFolder ) {
 			var projectPath = path.join( workspacePath, projectName )
 
-			deleteFolderRecursive( projectPath)
+			if( deleteFolder ) deleteFolderRecursive( projectPath )
 
 			childProcess.execFile( spellCliPath + appendExtension, [ 'init', '-p', projectPath ], {}, onComplete )
 		}

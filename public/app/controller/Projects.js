@@ -558,7 +558,8 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
     loadProject: function( projectName, initialize ) {
-		var record  = this.getProjectsStore().findRecord( 'name', projectName )
+		var record = this.getProjectsStore().findRecord( 'name', projectName ),
+			me     = this
 
 		if( !record ) return this.showStartScreen()
 
@@ -570,10 +571,18 @@ Ext.define('Spelled.controller.Projects', {
 			progress: true
 		})
 
-		this.prepareStores( projectName )
-		this.closeAllTabsFromProject()
+		var callback = function() {
+			me.prepareStores( projectName )
+			me.closeAllTabsFromProject()
 
-		this.loadStores( projectName, initialize )
+			me.loadStores( projectName, initialize )
+		}
+
+		if( !initialize ) {
+			Spelled.SpellBuildActions.initDirectory( projectName, false, callback )
+		} else {
+			callback()
+		}
 	},
 
 	storesReadyCallback: function( projectName, initialize ) {
