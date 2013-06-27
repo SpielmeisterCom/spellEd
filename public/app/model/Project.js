@@ -36,6 +36,14 @@ Ext.define('Spelled.model.Project', {
 		}
 	],
 
+	save: function() {
+		var config = this.get( 'config' )
+
+		if( !config.projectId ) config.projectId = this.get( 'name' )
+
+		this.callParent( arguments )
+	},
+
 	getDefaultLanguageKey: function() {
 		return this.get( 'config' ).defaultLanguage
 	},
