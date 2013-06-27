@@ -8,6 +8,9 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 	init: function() {
 		this.listen({
 			component: {
+				'button[action="showBuildResult"]': {
+					click: this.showBuildResult
+				},
 				'spelledmenu [action="showSetWorkspace"]': {
 					click: this.showSpellEdConfig
 				},
@@ -20,6 +23,16 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 				checkForUpdate : this.checkForUpdate
 			}
 		})
+	},
+
+	showBuildResult: function( button ) {
+		var project    = this.application.getActiveProject(),
+			gui        = require('nw.gui'),
+			path       = require( 'path' ),
+			tmp        = button.buildTarget == Spelled.controller.Projects.BUILD_DEBUG ? 'debug' : 'release',
+			folderPath = path.join( project.get( 'name' ), 'build', tmp, button.target )
+
+		gui.Shell.openItem( Spelled.Converter.toWorkspaceUrl( folderPath ) )
 	},
 
 	showSpellEdConfig: function() {

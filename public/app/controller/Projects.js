@@ -170,18 +170,44 @@ Ext.define('Spelled.controller.Projects', {
 	BUILD_RELEASE: 'buildRelease',
 	BUILD_DEBUG  : 'buildDebug',
 
-	buildActionsCallback: function( msg, response ){
+	buildActionsCallback: function( buildType, target, msg, response ){
 		Spelled.Logger.log( 'INFO', response.output )
+		Ext.Msg.close()
 
-		Ext.Msg.show({
+		var buttons = [
+			{
+				text: 'Ok',
+				handler: function() {
+					this.up('window').close()
+				}
+			}
+		]
+
+		if( Spelled.platform.Adapter.isNodeWebKit() && target ) {
+			buttons.push(
+				{
+					text: 'Show result',
+					action: 'showBuildResult',
+					target: target,
+					buildType: buildType
+				}
+			)
+		}
+
+		Ext.create('Ext.window.Window', {
 			title: 'Finished',
-			msg: "Finished: " + msg + "\n\n" + response.output,
-			buttons: Ext.Msg.OK,
-			cls: 'console-message-info'
-		})
+			height: 200,
+			width: 400,
+			layout: 'fit',
+			cls: 'console-message-info',
+			items: {
+				html: "Finished: " + msg + "\n\n" + response.output
+			},
+			buttons: buttons
+		}).show()
 	},
 
-	callCleanBuild: function() {
+	callCleanBuild: function( menu ) {
 		var project = this.application.getActiveProject(),
 			name    = project.get( 'name'),
 			msg     = 'Cleaning project: "' + name + '"'
@@ -191,7 +217,7 @@ Ext.define('Spelled.controller.Projects', {
 		Spelled.SpellBuildActions.buildClean(
 			name,
 			function( provider, response ) {
-				this.buildActionsCallback( msg, response )
+				this.buildActionsCallback( menu.action, null, msg, response )
 			},
 			this
 		)
@@ -207,7 +233,7 @@ Ext.define('Spelled.controller.Projects', {
 			project.get( 'name' ),
 			target,
 			function( provider, response ) {
-				this.buildActionsCallback( msg, response )
+				this.buildActionsCallback( buildActionName, target, msg, response )
 			},
 			this
 		)
