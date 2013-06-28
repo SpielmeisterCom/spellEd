@@ -6,6 +6,16 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 	],
 
 	init: function() {
+		if( Spelled.platform.Adapter.isNodeWebKit() ) {
+			var me = this
+
+			var task = new Ext.util.DelayedTask(function(){
+				me.checkForUpdate( true )
+			})
+
+			task.delay( 60000 )
+		}
+
 		this.listen({
 			component: {
 				'button[action="showBuildResult"]': {
