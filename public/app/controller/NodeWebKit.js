@@ -79,7 +79,7 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 		}
 
 		if( newer ) {
-			Ext.Msg.confirm( 'New version is available', "Do you want to download the new version?",
+			Ext.Msg.confirm( 'A new version is available', "There is a newer version (" + version + ") of this software available.\nDo you want to download it now?",
 				function( button ) {
 					if( button == 'yes' ) {
 						me.redirectToDownloadServer( url )
