@@ -85,7 +85,7 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 		var me = this
 
 		Ext.Ajax.request({
-			url: 'http://localhost:3000/spellEdVersion.json',
+			url: Spelled.Configuration.updateServerUrl,
 			method: 'GET',
 			success: Ext.bind( me.checkVersion, me, [ silent ], true ),
 			failure: function( response, opts ) {
