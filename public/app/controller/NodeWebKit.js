@@ -29,7 +29,7 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 		var project    = this.application.getActiveProject(),
 			gui        = require('nw.gui'),
 			path       = require( 'path' ),
-			tmp        = button.buildTarget == Spelled.controller.Projects.BUILD_DEBUG ? 'debug' : 'release',
+			tmp        = button.buildType == this.application.getController( 'Projects' ).BUILD_DEBUG ? 'debug' : 'release',
 			folderPath = path.join( project.get( 'name' ), 'build', tmp, button.target )
 
 		gui.Shell.openItem( Spelled.Converter.toWorkspaceUrl( folderPath ) )

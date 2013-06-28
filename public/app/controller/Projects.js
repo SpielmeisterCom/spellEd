@@ -124,6 +124,9 @@ Ext.define('Spelled.controller.Projects', {
 					this.showLoadProject()
 				}
 			},
+			'button[action="showBuildResultInBrowser"]': {
+				click: this.showBuildResultInBrowser
+			},
 			'spelledconfigure': {
 				loadProjects: function() {
 					this.application.loadProjects()
@@ -170,6 +173,14 @@ Ext.define('Spelled.controller.Projects', {
 	BUILD_RELEASE: 'buildRelease',
 	BUILD_DEBUG  : 'buildDebug',
 
+	showBuildResultInBrowser: function( button ) {
+		var project    = this.application.getActiveProject(),
+			tmp        = button.buildType === this.BUILD_DEBUG ? 'debug' : 'release',
+			folderPath = [ project.get( 'name' ), 'build', tmp, button.target ]
+
+		window.open( folderPath.join( '/') )
+	},
+
 	buildActionsCallback: function( buildType, target, msg, response ){
 		Spelled.Logger.log( 'INFO', response.output )
 		Ext.Msg.close()
@@ -183,16 +194,28 @@ Ext.define('Spelled.controller.Projects', {
 			}
 		]
 
-		if( Spelled.platform.Adapter.isNodeWebKit() && target ) {
+		if( target ) {
 			buttons.push(
 				{
-					text: 'Show result',
-					action: 'showBuildResult',
+					text: 'Open in browser',
+					action: 'showBuildResultInBrowser',
 					target: target,
 					buildType: buildType
 				}
 			)
+
+			if( Spelled.platform.Adapter.isNodeWebKit() ) {
+				buttons.push(
+					{
+						text: 'Show result',
+						action: 'showBuildResult',
+						target: target,
+						buildType: buildType
+					}
+				)
+			}
 		}
+
 
 		Ext.create('Ext.window.Window', {
 			title: 'Finished',
