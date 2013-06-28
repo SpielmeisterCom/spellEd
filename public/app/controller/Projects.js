@@ -201,6 +201,7 @@ Ext.define('Spelled.controller.Projects', {
 			layout: 'fit',
 			cls: 'console-message-info',
 			items: {
+				autoScroll:true,
 				html: "Finished: " + msg + "\n\n" + response.output
 			},
 			buttons: buttons
