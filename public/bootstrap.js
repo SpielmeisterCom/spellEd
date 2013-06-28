@@ -7,6 +7,7 @@
 Ext.Loader.addClassPathMappings({
   " Ext.Msg": "ext/src/window/MessageBox.js",
   "Ext": "ext/src",
+  "Spelled.base.view.IFrame": "app/base/view/Iframe.js",
   "Ext.rtl.EventObjectImpl": "ext/src/rtl/EventObject.js",
   "Spelled": "app"
 });
@@ -101,7 +102,6 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.menu.contextmenu.SceneSystemsItemList": [],
   "Spelled.view.asset.create.KeyToActionMap": [],
   "Spelled.data.writer.Writer": [],
-  "Spelled.view.scene.ProgressBar": [],
   "Ext.ux.dd.PanelFieldDragZone": [],
   "Spelled.view.template.system.Details": [],
   "Spelled.Logger": [],
@@ -147,6 +147,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.library.menu.item.Remove": [],
   "Ext.ux.DataView.Draggable": [],
   "Spelled.view.scene.plugin.TreeViewDragDrop": [],
+  "Spelled.base.view.IFrame": [],
   "Ext.ux.TabCloseMenu": [],
   "Spelled.model.config.Entity": [],
   "Spelled.view.menu.contextmenu.KeyToActionMapping": [],
@@ -524,9 +525,6 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.keytoactionconfig"
   ],
   "Spelled.data.writer.Writer": [],
-  "Spelled.view.scene.ProgressBar": [
-    "widget.spellprogressbar"
-  ],
   "Ext.ux.dd.PanelFieldDragZone": [],
   "Spelled.view.template.system.Details": [
     "widget.systemtemplatedetails"
@@ -619,6 +617,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.DataView.Draggable": [],
   "Spelled.view.scene.plugin.TreeViewDragDrop": [
     "plugin.scenetreedragdrop"
+  ],
+  "Spelled.base.view.IFrame": [
+    "widget.iframe"
   ],
   "Ext.ux.TabCloseMenu": [
     "plugin.tabclosemenu"
