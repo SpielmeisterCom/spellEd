@@ -11,6 +11,12 @@ Ext.define('Spelled.store.dependencies.library.Static', {
 			"id": "spell.component.entityComposite.parent"
 		},
 		{
+			"id": "spell.component.entityComposite.children"
+		},
+		{
+			"id": "spell.component.entityComposite.root"
+		},
+		{
 			"id": "spell.component.eventHandlers"
 		},
 		{

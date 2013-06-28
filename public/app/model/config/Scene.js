@@ -126,11 +126,11 @@ Ext.define('Spelled.model.config.Scene', {
 
 		systems.debug = this.addDebugSystems( debug )
 
-		if( debug ) {
-			Ext.getStore( 'dependencies.library.Static' ).each(
-				function( item ){ result.push( item.get( 'id' ) ) }
-			)
-		}
+		Ext.getStore( 'dependencies.library.Static' ).each(
+			function( item ){
+				if( debug || !item.get( 'debugOnly' ) ) result.push( item.get( 'id' ) )
+			}
+		)
 
 		Ext.Object.each(
 			systems,
