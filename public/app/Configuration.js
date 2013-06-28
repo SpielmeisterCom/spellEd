@@ -42,7 +42,7 @@ Ext.define( 'Spelled.Configuration', {
 		return this.documentationServerURL + this.version + '/'
 	},
 
-	updateServerUrl        : 'http://localhost:3000/spellEdVersion.json',
+	updateServerUrl        : 'http://cdn.spelljs.com/version.json',
 	demoServerHostname     : 'spelled-demo.spelljs.com',
 	version                : '0.8.25',
 	buildNumber	       : '99999',
