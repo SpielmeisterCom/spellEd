@@ -87,20 +87,6 @@
 
         }
 
-        .restartButton {
-            width: 220px;
-            cursor: pointer;
-            font-size: 18px;
-
-            background-color: #ff5c00;
-            display: inline-block;
-            padding: 5px 10px 6px;
-            color: #fff;
-            text-decoration: none;
-            line-height: 1;
-
-        }
-
             /* color */
         input, textarea {
             background: #fff;
@@ -414,19 +400,6 @@
             createBugReport(bugReportData, bugReportData, urlParams[ 'screenCapture' ]);
         }
 
-        var restartSpellEd = function() {
-            if( urlParams[ 'startLocation' ] ) {
-
-                window.location.href = urlParams[ 'startLocation' ]
-
-            } else {
-
-            	window.alert('An error occured. Please restart SpellEd manually.')
-
-            }
-        }
-
-
     </script>
 </head>
 <body>
@@ -440,9 +413,6 @@
 
     We received your bug report and assigned the identifier <strong id="jiraKey" style="color:#f00;"></strong> to it.<br/><br/>
     Please use this identifier for any future reference to this bug report.<br/><br/>
-
-
-    <input type="submit" class="restartButton" onclick="restartSpellEd()" value="Restart SpellEd" />
 
 </div>
 <div id="errorReportForm" style="display:none;">
@@ -486,7 +456,6 @@
 
             <fieldset>
                 <input name="submit" type="submit" class="submitButton" onclick="this.disabled=true;this.value='Sending, please wait...';sendBugReport();" value="Submit Bug Report" />
-                <input type="submit" class="restartButton" onclick="restartSpellEd()" value="Restart SpellEd" />
             </fieldset>
         </form>
     </div>
