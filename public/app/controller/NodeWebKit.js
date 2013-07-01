@@ -45,9 +45,9 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 		gui.Shell.openItem( Spelled.Converter.toWorkspaceUrl( folderPath ) )
 	},
 
-	showSpellEdConfig: function() {
+	showSpellEdConfig: function( closeable ) {
 		Ext.state.Manager.clear( 'workspacePath' )
-		Ext.create( 'Spelled.view.ui.SpelledConfiguration' ).show()
+		Ext.create( 'Spelled.view.ui.SpelledConfiguration', { closable: closeable } ).show()
 	},
 
 	redirectToDownloadServer: function( url ) {
@@ -115,8 +115,16 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 			fs            = require( 'fs'),
 			path          = require( 'path' )
 
-		if( !workspacePath || !fs.existsSync( workspacePath ) ) {
-			Spelled.Configuration.setWorkspacePath( path.join( process.execPath, Spelled.Configuration.demoProjectsFolder ) )
+		if( !workspacePath ) {
+			workspacePath = path.join( process.execPath, Spelled.Configuration.demoProjectsFolder )
+
+			if( fs.existsSync( workspacePath ) ) {
+				Spelled.Configuration.setWorkspacePath( workspacePath )
+			} else {
+				this.showSpellEdConfig( false )
+			}
+		} else if( !fs.existsSync( workspacePath ) ) {
+			this.showSpellEdConfig( false )
 		} else {
 			var provider = Ext.direct.Manager.getProvider( 'webkitProvider')
 
