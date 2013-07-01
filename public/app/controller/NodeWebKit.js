@@ -112,12 +112,12 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 
 	checkWorkspaceSettings: function() {
 		var workspacePath = Spelled.Configuration.getWorkspacePath(),
-			fs            = require( 'fs' )
+			fs            = require( 'fs'),
+			path          = require( 'path' )
 
-		if( !workspacePath || !fs.existsSync( workspacePath ) )
-			this.showSpellEdConfig()
-
-		else {
+		if( !workspacePath || !fs.existsSync( workspacePath ) ) {
+			Spelled.Configuration.setWorkspacePath( path.join( process.execPath, Spelled.Configuration.demoProjectsFolder ) )
+		} else {
 			var provider = Ext.direct.Manager.getProvider( 'webkitProvider')
 
 			provider.createWebKitExtDirectApi( Ext.bind( function() { this.loadProjects() }, this.application ) )

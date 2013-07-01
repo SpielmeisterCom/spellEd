@@ -7,7 +7,7 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 	layout: 'fit',
 
     modal : true,
-    closable: false,
+    closable: true,
 
 	initComponent: function() {
 

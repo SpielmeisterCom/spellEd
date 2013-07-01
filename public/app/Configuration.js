@@ -42,6 +42,7 @@ Ext.define( 'Spelled.Configuration', {
 		return this.documentationServerURL + this.version + '/'
 	},
 
+	demoProjectsFolder     : 'demo_projects',
 	updateServerUrl        : 'http://cdn.spelljs.com/version.json',
 	demoServerHostname     : 'spelled-demo.spelljs.com',
 	version                : '0.8.26',
