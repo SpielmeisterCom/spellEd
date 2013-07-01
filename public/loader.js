@@ -25,11 +25,13 @@ var nwExceptionHandler = function(errorMsg) {
 
 	cleanUpStorage()
 
+
     win.capturePage(function(img) {
         // code to run when error has occured on page
         window.location.href = 'error.html?' +
-            'errorMsg='         + encodeURIComponent(errorMsg) +
-            '&screenCapture='   + encodeURIComponent(img)
+            'errorMsg='         + encodeURIComponent( errorMsg ) +
+            '&startLocation='   + encodeURIComponent( window.location.href ) +
+            '&screenCapture='   + encodeURIComponent( img )
     }, 'png');
 }
 
@@ -56,7 +58,7 @@ function registerGlobalErrorHandler(isNWRuntime, isDevelEnv) {
 			cleanUpStorage()
             var msg = url + ':' + lineNumber + "\n" + errorMsg;
 			window._error_handler = true
-            window.location.href = 'error.html?errorMsg=' + encodeURIComponent(msg)
+            window.location.href = 'error.html?errorMsg=' + encodeURIComponent(msg) + '&startLocation=' + encodeURIComponent( window.location.href )
         }
 
     }

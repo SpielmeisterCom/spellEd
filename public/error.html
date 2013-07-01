@@ -414,6 +414,18 @@
             createBugReport(bugReportData, bugReportData, urlParams[ 'screenCapture' ]);
         }
 
+        var restartSpellEd = function() {
+            if( urlParams[ 'startLocation' ] ) {
+
+                window.location.href = urlParams[ 'startLocation' ]
+
+            } else {
+
+            	window.alert('An error occured. Please restart SpellEd manually.')
+
+            }
+        }
+
 
     </script>
 </head>
@@ -430,7 +442,7 @@
     Please use this identifier for any future reference to this bug report.<br/><br/>
 
 
-    <input type="submit" class="restartButton" onclick="window.location.href='index.html'" value="Restart SpellEd" />
+    <input type="submit" class="restartButton" onclick="restartSpellEd()" value="Restart SpellEd" />
 
 </div>
 <div id="errorReportForm" style="display:none;">
@@ -474,6 +486,7 @@
 
             <fieldset>
                 <input name="submit" type="submit" class="submitButton" onclick="this.disabled=true;this.value='Sending, please wait...';sendBugReport();" value="Submit Bug Report" />
+                <input type="submit" class="restartButton" onclick="restartSpellEd()" value="Restart SpellEd" />
             </fieldset>
         </form>
     </div>
