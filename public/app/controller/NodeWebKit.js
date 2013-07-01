@@ -46,7 +46,6 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 	},
 
 	showSpellEdConfig: function( closeable ) {
-		Ext.state.Manager.clear( 'workspacePath' )
 		Ext.create( 'Spelled.view.ui.SpelledConfiguration', { closable: closeable } ).show()
 	},
 
