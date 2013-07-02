@@ -9,6 +9,7 @@ Ext.Loader.addClassPathMappings({
   "Ext": "ext/src",
   "Spelled.base.view.IFrame": "app/base/view/Iframe.js",
   "Ext.rtl.EventObjectImpl": "ext/src/rtl/EventObject.js",
+  "Spelled.view.register.Window": "app/view/register/window.js",
   "Spelled": "app"
 });
 Ext.ClassManager.addNameAlternateMappings({
@@ -195,6 +196,7 @@ Ext.ClassManager.addNameAlternateMappings({
   ],
   "Spelled.view.ui.SpelledConsole": [],
   "Spelled.controller.Components": [],
+  "Spelled.view.register.Window": [],
   "Spelled.store.asset.Sounds": [],
   "Spelled.view.doc.Tool": [],
   "Spelled.view.template.Create": [],
@@ -254,6 +256,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.model.assets.KeyMapping": [],
   "Spelled.base.validator.General": [],
   "Ext.ux.BoxReorderer": [],
+  "Spelled.controller.Register": [],
   "Spelled.data.reader.Asset": [],
   "Ext.ux.grid.filter.Filter": [],
   "Spelled.store.asset.Appearances": [],
@@ -712,6 +715,9 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.console"
   ],
   "Spelled.controller.Components": [],
+  "Spelled.view.register.Window": [
+    "widget.registerwindow"
+  ],
   "Spelled.store.asset.Sounds": [],
   "Spelled.view.doc.Tool": [
     "widget.tool-documentation"
@@ -839,6 +845,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.model.assets.KeyMapping": [],
   "Spelled.base.validator.General": [],
   "Ext.ux.BoxReorderer": [],
+  "Spelled.controller.Register": [],
   "Spelled.data.reader.Asset": [
     "reader.asset"
   ],
