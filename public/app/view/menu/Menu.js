@@ -129,6 +129,10 @@ Ext.define('Spelled.view.menu.Menu', {
 		text: 'SpellEd',
 		menu: {
 			items: [{
+				text    : 'Register',
+				nwType  : 'normal',
+				action  : 'showRegister'
+			},{
 				text    : 'Change  workspace',
 				nwType  : 'normal',
 				action  : 'showSetWorkspace',

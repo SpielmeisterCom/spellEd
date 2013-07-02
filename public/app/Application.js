@@ -29,7 +29,8 @@ Ext.define('Spelled.Application', {
 		'Library',
 		'templates.Components',
 		'templates.Entities',
-		'templates.Systems'
+		'templates.Systems',
+		'Register'
 	],
 
 	storeIds: [
