@@ -76,6 +76,7 @@ Ext.define('Spelled.view.register.Window' ,{
 						},
 						{
 							text: "Cancel",
+							disabled: !this.closable ? true : false,
 							handler: function() {
 								this.up('window').close()
 							}
