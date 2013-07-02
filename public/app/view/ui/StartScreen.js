@@ -22,7 +22,9 @@ Ext.define('Spelled.view.ui.StartScreen' ,{
                 {
                     xtype: 'button',
                     text: 'Create a new Project',
-                    action: "showCreateProject"
+                    action: "showCreateProject",
+					tooltip: Spelled.Configuration.getDemoTooltipText(),
+					disabled: Spelled.Configuration.isDemoInstance()
                 }
             ]
         }
