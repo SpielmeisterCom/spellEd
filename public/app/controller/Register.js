@@ -37,6 +37,8 @@ Ext.define('Spelled.controller.Register', {
 	},
 
 	showRegister: function( closable ) {
+		if( Spelled.Configuration.isDemoInstance() ) return
+
 		var view = Ext.widget( 'registerwindow', { closable: closable } ),
 			form = view.down( 'form').getForm(),
 			stateProvider = Spelled.Configuration.getStateProvider()

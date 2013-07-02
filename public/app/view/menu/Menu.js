@@ -131,7 +131,9 @@ Ext.define('Spelled.view.menu.Menu', {
 			items: [{
 				text    : 'Register',
 				nwType  : 'normal',
-				action  : 'showRegister'
+				action  : 'showRegister',
+				disabled: Spelled.Configuration.isDemoInstance(),
+				tooltip: Spelled.Configuration.getDemoTooltipText()
 			},{
 				text    : 'Change  workspace',
 				nwType  : 'normal',
