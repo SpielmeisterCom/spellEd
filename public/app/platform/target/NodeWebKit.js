@@ -4,6 +4,25 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 		'Spelled.Remoting'
 	],
 
+	writeLicence: function( licenceData ) {
+		var fs = require( 'fs' )
+
+		fs.writeFileSync( Spelled.Configuration.licenceFileName, licenceData )
+	},
+
+	readLicence: function() {
+		var fs = require( 'fs' )
+
+		return fs.readFileSync( Spelled.Configuration.licenceFileName )
+	},
+
+	getLicencePayload: function( licenceData ) {
+		var spellLicenceApi = require( 'spell-licence' ),
+			fs              = require( 'fs' )
+
+		return spellLicenceApi.createPayload( licenceData )
+	},
+
 	copyToClipboard: function( text ) {
 		var gui       = require('nw.gui'),
 			clipboard = gui.Clipboard.get()

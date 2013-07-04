@@ -12,6 +12,12 @@ Ext.define( 'Spelled.platform.target.Abstract', {
 		return 'toolbar'
 	},
 
+	getLicencePayload: function( licenceData ) {},
+
+	writeLicence: function( licenceData ) {},
+
+	readLicence: function() {},
+
 	toggleDevTools: function() {},
 
 	enterFullScreen: function( dom ) {},

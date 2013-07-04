@@ -33,7 +33,9 @@ Ext.define('Spelled.controller.Register', {
 	setLicenceData: function( view, values ) {
 		var stateProvider = Spelled.Configuration.getStateProvider()
 
-		stateProvider.set( 'licenceData', values )
+		stateProvider.set( 'userName', values.name )
+
+		this.application.platform.writeLicence( Ext.encode( values ) )
 	},
 
 	showRegister: function( closable ) {
@@ -43,6 +45,11 @@ Ext.define('Spelled.controller.Register', {
 			form = view.down( 'form').getForm(),
 			stateProvider = Spelled.Configuration.getStateProvider()
 
-		form.setValues( stateProvider.get( 'licenceData' ) )
+		var values = {
+			name: stateProvider.get( 'userName' ),
+			licence: this.application.platform.readLicence()
+		}
+
+		form.setValues( values )
 	}
 })
