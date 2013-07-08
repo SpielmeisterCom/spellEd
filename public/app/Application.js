@@ -362,6 +362,7 @@ Ext.define('Spelled.Application', {
 		Ext.create( 'Spelled.view.ui.SpelledViewport' )
 
 		if( Spelled.platform.Adapter.isNodeWebKit() ) {
+			this.fireEvent( 'checklicensefile' )
 			this.getController( 'NodeWebKit').checkWorkspaceSettings()
 		} else {
 			this.loadProjects()

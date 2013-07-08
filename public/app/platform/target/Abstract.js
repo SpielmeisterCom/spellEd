@@ -12,11 +12,11 @@ Ext.define( 'Spelled.platform.target.Abstract', {
 		return 'toolbar'
 	},
 
-	getLicencePayload: function( licenceData ) {},
+	getLicenseInformation: function( callback ) {},
 
-	writeLicence: function( licenceData ) {},
+	writeLicense: function() {},
 
-	readLicence: function() {},
+	readLicense: function() {},
 
 	toggleDevTools: function() {},
 

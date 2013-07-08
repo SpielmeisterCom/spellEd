@@ -4,23 +4,36 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 		'Spelled.Remoting'
 	],
 
-	writeLicence: function( licenceData ) {
+	writeLicense: function( licenceData ) {
 		var fs = require( 'fs' )
 
-		fs.writeFileSync( Spelled.Configuration.licenceFileName, licenceData )
+		fs.writeFileSync( Spelled.Configuration.licenseFileName, licenceData )
 	},
 
-	readLicence: function() {
-		var fs = require( 'fs' )
+	readLicense: function() {
+		var fs = require( 'fs')
 
-		return fs.readFileSync( Spelled.Configuration.licenceFileName )
+		try {
+			var content = fs.readFileSync( Spelled.Configuration.licenseFileName )
+
+			return content.toString()
+		} catch ( e ) {
+			return null
+		}
 	},
 
-	getLicencePayload: function( licenceData ) {
-		var spellLicenceApi = require( 'spell-licence' ),
-			fs              = require( 'fs' )
+	getLicenseInformation: function( licenseData, callback ) {
+		var fs              = require( 'fs' ),
+			path            = require( 'path'),
+			childProcess    = require( 'child_process'),
+			onComplete      = function( error, result ) {
+				Spelled.app.fireEvent( 'licensecallback', licenseData, result, callback )
+			}
 
-		return spellLicenceApi.createPayload( licenceData )
+		var appendExtension = process.platform == 'win32' ? '.exe' : '',
+			base64Value     = new Buffer( licenseData ).toString( 'base64' )
+
+		childProcess.execFile( 'spellcli' + appendExtension, [ 'license', base64Value, '-j' ], { cwd: path.normalize("c:/Users/Ioannis/Desktop/win-ia32/") }, onComplete )
 	},
 
 	copyToClipboard: function( text ) {

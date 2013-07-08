@@ -9,8 +9,10 @@ Ext.define('Spelled.view.register.Window' ,{
 	layout: 'fit',
 	autoShow: true,
 
-    title : 'Select the licence you want to use',
+    title : 'Please enter your license information',
     modal : true,
+
+	width: 650,
 
    	initComponent: function() {
 		Ext.applyIf(this, {
@@ -20,51 +22,31 @@ Ext.define('Spelled.view.register.Window' ,{
 					xtype: 'form',
 					items: [
 						{
-							xtype: 'radiofield',
-							name: 'type',
-							inputValue: 'personal',
-							boxLabel: 'Personal licence (for commercial usage)',
-							handler: Ext.bind( this.showDetails, this )
+							xtype: 'textfield',
+							validateOnBlur: false,
+							name: 'name',
+							fieldLabel: 'User name',
+							anchor: '100%',
+							validator: this.validator
 						},
 						{
-							name: 'details',
-							xtype: 'container',
-							margin: '0 0 0 20',
-							width: 500,
-							layout: 'fit',
-							items: [
-								{
-									xtype: 'textfield',
-									name: 'name',
-									fieldLabel: 'User name',
-									flex: 1,
-									anchor: '100%',
-									validator: this.validator
-								},
-								{
-									xtype: "textarea",
-									anchor    : '100%',
-									rows: 7,
-									name: 'licence',
-									fieldLabel: 'Licence key',
-									flex: 3,
-									validator: this.validator
-								}
-							]
+							xtype: "textarea",
+							validateOnBlur: false,
+							anchor    : '100%',
+							rows: 9,
+							name: 'license',
+							fieldLabel: 'License key',
+							validator: this.validator
 						},
 						{
-							xtype: 'radiofield',
-							name: 'type',
-							inputValue: 'free',
-							boxLabel: 'Free licence (non commercial usage)',
-							handler: Ext.bind( function( me, value ) {
-								if( value ) {
-									//TODO: refactor after implementing licencing
-									this.down( 'textfield').reset()
-									this.down( 'textarea').reset()
-									this.toggleSubmitButton( true )
-								}
-							}, this )
+							xtype: 'textfield',
+							name: 'licenceType',
+							fieldLabel: 'Type'
+						},
+						{
+							xtype: 'textfield',
+							name: 'date',
+							fieldLabel: 'Date'
 						}
 					],
 					buttons: [
@@ -72,7 +54,7 @@ Ext.define('Spelled.view.register.Window' ,{
 							itemId: 'okRegisterButton',
 							text: "Ok",
 							handler: Ext.bind( this.submit, this ),
-							disabled: true
+							formBind: true
 						},
 						{
 							text: "Cancel",
@@ -86,40 +68,52 @@ Ext.define('Spelled.view.register.Window' ,{
 			]
 		})
 
-
 		this.callParent( arguments )
 	},
 
-	validator: function() {
-		return "Not enabled"
+	validateForm: function( result, insertIntoForm ) {
+		var registerWindow = this,
+			form           = registerWindow.down( 'form' ).getForm(),
+			invalid        = true
+
+		var values = Ext.isObject( result ) ? {
+			name: result.uid,
+			license: result.licenseData
+		}: {}
+
+		if( insertIntoForm ) {
+			form.setValues( values )
+		}
+
+		if( Ext.isObject( result ) && result.status == 'valid' ) {
+			form.clearInvalid()
+			invalid = false
+		} else {
+			form.markInvalid( { name: 'Invalid', license: 'Invalid' } )
+		}
+
+		registerWindow.down( '#okRegisterButton').setDisabled( invalid )
+	},
+
+	validator: function( value ) {
+		var regWindow  = this.up( 'window' ),
+			form    = this.up( 'form' ),
+			license = form.down( 'textarea[name="license"]')
+
+		var callback = function( result ) {
+			regWindow.validateForm( result, false )
+		}
+
+		Spelled.app.platform.getLicenseInformation( license.getValue(), callback )
+
+		return true
 	},
 
 	submit: function() {
 		var form = this.down( 'form' ).getForm()
 
-		this.fireEvent( 'setlicence', this, form.getValues() )
+		this.fireEvent( 'setlicense', this, form.getValues() )
 
 		this.close()
-	},
-
-	checkData: function() {
-		//TODO: to be implemented
-		return false
-	},
-
-	toggleSubmitButton: function( enabled ) {
-		var button = this.down( '#okRegisterButton' )
-
-		enabled ? button.enable() : button.disable()
-	},
-
-	showDetails: function( checkbox, visible ) {
-		var details = this.down( 'container[name="details"]' )
-
-		if( !visible || this.checkData() ) {
-			this.toggleSubmitButton( true )
-		} else {
-			this.toggleSubmitButton( false )
-		}
 	}
 });

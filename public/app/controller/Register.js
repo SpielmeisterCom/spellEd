@@ -19,36 +19,84 @@ Ext.define('Spelled.controller.Register', {
 					showRegister: this.showRegister
 				},
 				'registerwindow': {
-					setlicence: this.setLicenceData
+					setlicense: this.setLicenseData
 				}
 			},
 			controller:{
 				'*': {
-					showregister: this.showRegister
+					showregister: this.showRegister,
+					licensecallback: this.licenseCallback,
+					checklicensefile: this.checkLicenseFile
 				}
 			}
 		})
     },
 
-	setLicenceData: function( view, values ) {
+	refs: [
+		{
+			ref : 'RegisterWindow',
+			selector: 'registerwindow'
+		}
+	],
+
+	licenseCallback: function( licenseData, result, callback ) {
+		var result = Ext.decode( result, true )
+
+		if( result ) {
+			result.licenseData = licenseData
+		}
+
+		Ext.callback( Ext.Function.pass( callback, [ result ] ) )
+	},
+
+	validateLicenseInformation: function( license ) {
+		if( Ext.isObject( license ) && license.status == 'valid' ) {
+			return true
+		} else {
+			false
+		}
+	},
+
+	checkLicenseFile: function() {
+		var licenseData = this.application.platform.readLicense()
+
+		if( licenseData ) {
+			var callback = Ext.bind( function( result ) {
+				var stateProvider = Spelled.Configuration.getStateProvider()
+
+				if( this.validateLicenseInformation( result ) ) {
+					stateProvider.set( 'license', result )
+				} else {
+					this.application.fireEvent( 'showregister', false )
+				}
+			}, this )
+
+			this.application.platform.getLicenseInformation( licenseData, callback )
+		} else {
+			this.application.fireEvent( 'showregister', false )
+		}
+	},
+
+	setLicenseData: function( view, values ) {
 		var stateProvider = Spelled.Configuration.getStateProvider()
 
-		stateProvider.set( 'userName', values.name )
+		stateProvider.set( 'license', values )
 
-		this.application.platform.writeLicence( Ext.encode( values ) )
+		this.application.platform.writeLicense( Ext.encode( values ) )
 	},
 
 	showRegister: function( closable ) {
-		if( Spelled.Configuration.isDemoInstance() ) return
+		if( Spelled.Configuration.isDemoInstance() || !Spelled.platform.Adapter.isNodeWebKit() ) return
 
-		var view = Ext.widget( 'registerwindow', { closable: closable } ),
-			form = view.down( 'form').getForm(),
-			stateProvider = Spelled.Configuration.getStateProvider()
+		var stateProvider = Spelled.Configuration.getStateProvider(),
+			view          = Ext.widget( 'registerwindow', { closable: closable } ),
+			form          = view.down( 'form').getForm(),
+			license       = stateProvider.get( 'license' )
 
-		var values = {
-			name: stateProvider.get( 'userName' ),
-			licence: this.application.platform.readLicence()
-		}
+		var values = Ext.isObject( license ) ? {
+			name: license.uid,
+			license: license.licenseData
+		}: {}
 
 		form.setValues( values )
 	}
