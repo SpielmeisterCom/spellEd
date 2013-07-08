@@ -1,6 +1,10 @@
 Ext.define( 'Spelled.Converter' ,{
 	singleton: true,
 
+	getLicenseExpireDate: function( start, days ) {
+		return Ext.Date.add( new Date( start ), Ext.Date.DAY, days )
+	},
+
 	libraryIdToRelativePath: function( libraryId ) {
 		return libraryId.replace( /\./g, "/" )
 	},

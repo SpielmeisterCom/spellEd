@@ -2,7 +2,8 @@ Ext.define('Spelled.controller.Register', {
     extend: 'Ext.app.Controller',
 
 	requires: [
-		'Spelled.view.register.Window'
+		'Spelled.view.register.Window',
+		'Spelled.Validator'
 	],
 
     views: [
@@ -49,14 +50,6 @@ Ext.define('Spelled.controller.Register', {
 		Ext.callback( Ext.Function.pass( callback, [ result ] ) )
 	},
 
-	validateLicenseInformation: function( license ) {
-		if( Ext.isObject( license ) && license.status == 'valid' ) {
-			return true
-		} else {
-			false
-		}
-	},
-
 	checkLicenseFile: function() {
 		var licenseData = this.application.platform.readLicense()
 
@@ -64,7 +57,7 @@ Ext.define('Spelled.controller.Register', {
 			var callback = Ext.bind( function( result ) {
 				var stateProvider = Spelled.Configuration.getStateProvider()
 
-				if( this.validateLicenseInformation( result ) ) {
+				if( Spelled.Validator.validateLicenseInformation( result ) ) {
 					stateProvider.set( 'license', result )
 				} else {
 					this.application.fireEvent( 'showregister', false )
@@ -82,7 +75,7 @@ Ext.define('Spelled.controller.Register', {
 
 		stateProvider.set( 'license', values )
 
-		this.application.platform.writeLicense( Ext.encode( values ) )
+		this.application.platform.writeLicense( values.license )
 	},
 
 	showRegister: function( closable ) {
@@ -90,11 +83,11 @@ Ext.define('Spelled.controller.Register', {
 
 		var stateProvider = Spelled.Configuration.getStateProvider(),
 			view          = Ext.widget( 'registerwindow', { closable: closable } ),
-			form          = view.down( 'form').getForm(),
+			form          = view.down( 'form' ).getForm(),
 			license       = stateProvider.get( 'license' )
 
 		var values = Ext.isObject( license ) ? {
-			name: license.uid,
+			name: license.payload.uid,
 			license: license.licenseData
 		}: {}
 

@@ -39,14 +39,13 @@ Ext.define('Spelled.view.register.Window' ,{
 							validator: this.validator
 						},
 						{
-							xtype: 'textfield',
-							name: 'licenceType',
-							fieldLabel: 'Type'
+							xtype: 'displayfield',
+							name: 'pid',
+							fieldLabel: 'License type'
 						},
 						{
-							xtype: 'textfield',
-							name: 'date',
-							fieldLabel: 'Date'
+							xtype: 'displayfield',
+							name: 'information'
 						}
 					],
 					buttons: [
@@ -71,37 +70,52 @@ Ext.define('Spelled.view.register.Window' ,{
 		this.callParent( arguments )
 	},
 
-	validateForm: function( result, insertIntoForm ) {
+	validateForm: function( result ) {
 		var registerWindow = this,
 			form           = registerWindow.down( 'form' ).getForm(),
-			invalid        = true
+			invalid        = true,
+			hasResult      = Ext.isObject( result ),
+			pidField       = this.down( 'displayfield[name="pid"]'),
+			infoField      = this.down( 'displayfield[name="information"]'),
+			nameField      = this.down( 'textfield[name="name"]')
 
-		var values = Ext.isObject( result ) ? {
-			name: result.uid,
-			license: result.licenseData
-		}: {}
+		pidField.reset()
+		infoField.reset()
 
-		if( insertIntoForm ) {
-			form.setValues( values )
-		}
-
-		if( Ext.isObject( result ) && result.status == 'valid' ) {
+		if( Spelled.Validator.validateLicenseInformation( result ) ){
 			form.clearInvalid()
 			invalid = false
 		} else {
 			form.markInvalid( { name: 'Invalid', license: 'Invalid' } )
 		}
 
+		if( hasResult && nameField.getValue() == result.payload.uid ) {
+			var information = this.down( 'displayfield[name="information"]'),
+				payload     = result.payload
+
+			if( Spelled.Validator.validateLicenseSubscription( payload ) ) {
+				var expireDate = Spelled.Converter.getLicenseExpireDate( payload.isd, payload.days )
+
+				infoField.setValue( 'Entitles for free updates and upgrades until ' + Ext.Date.format( expireDate, 'F j, Y' ) )
+			} else {
+				infoField.setValue( 'License expired.' )
+			}
+
+			pidField.setValue( payload.pid )
+		} else {
+			form.markInvalid( { name: 'Invalid' } )
+		}
+
 		registerWindow.down( '#okRegisterButton').setDisabled( invalid )
 	},
 
 	validator: function( value ) {
-		var regWindow  = this.up( 'window' ),
-			form    = this.up( 'form' ),
-			license = form.down( 'textarea[name="license"]')
+		var regWindow = this.up( 'window' ),
+			form      = this.up( 'form' ),
+			license   = form.down( 'textarea[name="license"]')
 
 		var callback = function( result ) {
-			regWindow.validateForm( result, false )
+			regWindow.validateForm( result )
 		}
 
 		Spelled.app.platform.getLicenseInformation( license.getValue(), callback )
