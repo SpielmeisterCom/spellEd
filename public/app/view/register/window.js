@@ -9,7 +9,7 @@ Ext.define('Spelled.view.register.Window' ,{
 	layout: 'fit',
 	autoShow: true,
 
-    title : 'Select the licence you want to use',
+    title : 'Select the license you want to use',
     modal : true,
 
    	initComponent: function() {
@@ -23,7 +23,7 @@ Ext.define('Spelled.view.register.Window' ,{
 							xtype: 'radiofield',
 							name: 'type',
 							inputValue: 'personal',
-							boxLabel: 'Personal licence (for commercial usage)',
+							boxLabel: 'Personal license (for commercial use)',
 							handler: Ext.bind( this.showDetails, this )
 						},
 						{
@@ -46,7 +46,7 @@ Ext.define('Spelled.view.register.Window' ,{
 									anchor    : '100%',
 									rows: 7,
 									name: 'licence',
-									fieldLabel: 'Licence key',
+									fieldLabel: 'License key',
 									flex: 3,
 									validator: this.validator
 								}
@@ -56,7 +56,7 @@ Ext.define('Spelled.view.register.Window' ,{
 							xtype: 'radiofield',
 							name: 'type',
 							inputValue: 'free',
-							boxLabel: 'Free licence (non commercial usage)',
+							boxLabel: 'Free license (non-commercial use only)',
 							handler: Ext.bind( function( me, value ) {
 								if( value ) {
 									//TODO: refactor after implementing licencing
