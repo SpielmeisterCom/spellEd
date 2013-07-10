@@ -53,6 +53,7 @@ Ext.define('Spelled.view.register.Window' ,{
 					buttons: [
 						{
 							itemId: 'okRegisterButton',
+							disabled: true,
 							text: "Ok",
 							handler: Ext.bind( this.submit, this )
 						},

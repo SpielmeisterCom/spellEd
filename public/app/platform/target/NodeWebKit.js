@@ -33,7 +33,7 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 			}
 
 		var appendExtension = process.platform == 'win32' ? '.exe' : ''
-		var child = childProcess.spawn( 'spellcli' + appendExtension, [ 'license', '-s', '-j' ], { cwd: path.normalize("c:/Users/Ioannis/Desktop/win-ia32/") } )
+		var child = childProcess.spawn( 'spellcli' + appendExtension, [ 'license', '-s', '-j' ] )
 
 		child.stdout.on('data', onData)
 		child.stderr.on('data', onData)
