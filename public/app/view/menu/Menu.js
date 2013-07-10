@@ -133,7 +133,8 @@ Ext.define('Spelled.view.menu.Menu', {
 				nwType  : 'normal',
 				action  : 'showRegister',
 				disabled: Spelled.Configuration.isDemoInstance(),
-				tooltip: Spelled.Configuration.getDemoTooltipText()
+				tooltip : Spelled.Configuration.getDemoTooltipText(),
+				hidden  : !Spelled.platform.Adapter.isNodeWebKit()
 			},{
 				text    : 'Change  workspace',
 				nwType  : 'normal',
