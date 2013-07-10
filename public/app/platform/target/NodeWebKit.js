@@ -14,26 +14,31 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 		var fs = require( 'fs')
 
 		try {
-			var content = fs.readFileSync( Spelled.Configuration.licenseFileName )
-
-			return content.toString()
+			return fs.readFileSync( Spelled.Configuration.licenseFileName,  'utf8' )
 		} catch ( e ) {
 			return null
 		}
 	},
 
 	getLicenseInformation: function( licenseData, callback ) {
-		var fs              = require( 'fs' ),
+		var result          = '',
+			fs              = require( 'fs' ),
 			path            = require( 'path'),
 			childProcess    = require( 'child_process'),
-			onComplete      = function( error, result ) {
+			onFinish        = function() {
 				Spelled.app.fireEvent( 'licensecallback', licenseData, result, callback )
+			},
+			onData      = function( data ) {
+				result += data.toString()
 			}
 
-		var appendExtension = process.platform == 'win32' ? '.exe' : '',
-			base64Value     = new Buffer( licenseData ).toString( 'base64' )
+		var appendExtension = process.platform == 'win32' ? '.exe' : ''
+		var child = childProcess.spawn( 'spellcli' + appendExtension, [ 'license', '-s', '-j' ], { cwd: path.normalize("c:/Users/Ioannis/Desktop/win-ia32/") } )
 
-		childProcess.execFile( 'spellcli' + appendExtension, [ 'license', base64Value, '-j' ], { cwd: path.normalize("c:/Users/Ioannis/Desktop/win-ia32/") }, onComplete )
+		child.stdout.on('data', onData)
+		child.stderr.on('data', onData)
+		child.on('close', onFinish)
+		child.stdin.write( licenseData, 'utf8', function() { child.stdin.end( ) } )
 	},
 
 	copyToClipboard: function( text ) {

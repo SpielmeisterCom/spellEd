@@ -41,41 +41,39 @@ Ext.define('Spelled.controller.Register', {
 	],
 
 	licenseCallback: function( licenseData, result, callback ) {
-		var result = Ext.decode( result, true )
+		var result = Ext.decode( result, true ) || {}
 
-		if( result ) {
-			result.licenseData = licenseData
-		}
+		result.licenseData = licenseData
 
 		Ext.callback( Ext.Function.pass( callback, [ result ] ) )
 	},
 
 	checkLicenseFile: function() {
-		var licenseData = this.application.platform.readLicense()
+		var licenseData   = this.application.platform.readLicense(),
+			stateProvider = Spelled.Configuration.getStateProvider(),
+			callback      = Ext.bind( function( result ) {
+
+			stateProvider.set( 'license', Ext.merge( {}, stateProvider.get( 'license' ), result ) )
+
+			if( !Spelled.Validator.validateLicenseInformation( result ) ) {
+				this.application.fireEvent( 'showregister', false )
+			}
+		}, this )
+
 
 		if( licenseData ) {
-			var callback = Ext.bind( function( result ) {
-				var stateProvider = Spelled.Configuration.getStateProvider()
-
-				if( Spelled.Validator.validateLicenseInformation( result ) ) {
-					stateProvider.set( 'license', result )
-				} else {
-					this.application.fireEvent( 'showregister', false )
-				}
-			}, this )
-
 			this.application.platform.getLicenseInformation( licenseData, callback )
 		} else {
+			stateProvider.clear( 'license' )
 			this.application.fireEvent( 'showregister', false )
 		}
 	},
 
-	setLicenseData: function( view, values ) {
+	setLicenseData: function( view, license ) {
 		var stateProvider = Spelled.Configuration.getStateProvider()
 
-		stateProvider.set( 'license', values )
-
-		this.application.platform.writeLicense( values.license )
+		stateProvider.set( 'license', license )
+		this.application.platform.writeLicense( license.licenseData )
 	},
 
 	showRegister: function( closable ) {
@@ -92,5 +90,6 @@ Ext.define('Spelled.controller.Register', {
 		}: {}
 
 		form.setValues( values )
+		view.validateForm( license )
 	}
 })
