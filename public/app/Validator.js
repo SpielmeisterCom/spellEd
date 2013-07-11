@@ -2,7 +2,7 @@ Ext.define( 'Spelled.Validator', {
 	singleton: true,
 
 	validateLicenseInformation: function( license ) {
-		if( Ext.isObject( license ) && license.status == 'valid' && this.validateLicenseSubscription( license.payload ) ) {
+		if( Ext.isObject( license ) && license.isValid === true && this.validateLicenseSubscription( license.payload ) ) {
 			return true
 		} else {
 			return false

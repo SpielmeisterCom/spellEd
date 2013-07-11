@@ -82,10 +82,11 @@ Ext.define('Spelled.controller.Register', {
 		var stateProvider = Spelled.Configuration.getStateProvider(),
 			view          = Ext.widget( 'registerwindow', { closable: closable } ),
 			form          = view.down( 'form' ).getForm(),
-			license       = stateProvider.get( 'license' )
+			license       = stateProvider.get( 'license'),
+			payload       = license.payload ||{}
 
 		var values = Ext.isObject( license ) ? {
-			name: license.payload.uid,
+			name: payload.uid,
 			license: license.licenseData
 		}: {}
 
