@@ -326,10 +326,13 @@ Ext.define('Spelled.controller.Projects', {
 		var window        = button.up( 'window' ),
 			generalConfig = window.down( 'projectgeneralsettings' ),
 			languageConf  = window.down( 'projectlanguagesettings' ),
+            androidConf   = window.down( 'projectandroidsettings' ),
 			project       = generalConfig.getRecord(),
 			generalValues = generalConfig.getValues(),
 			languageValues = languageConf.getValues(),
 			config        = {}
+
+        config.android = Ext.clone( androidConf.getValues() )
 
 		config.screenSize = [
 			parseInt( generalValues.screenSizeX, 10 ),
