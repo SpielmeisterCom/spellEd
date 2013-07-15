@@ -6,7 +6,8 @@ Ext.define('Spelled.view.project.Settings' ,{
 		'Ext.form.FieldContainer'
 	],
 
-    width: 300,
+    width: 500,
+    height: 500,
 
     title : 'Project settings',
     modal : true,
@@ -21,7 +22,7 @@ Ext.define('Spelled.view.project.Settings' ,{
 						padding:5
 					},
 					xtype: 'tabpanel',
-					items: [
+                    items: [
 						{
 							xtype: 'projectgeneralsettings'
 						},
