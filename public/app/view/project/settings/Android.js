@@ -76,23 +76,11 @@ Ext.define('Spelled.view.project.settings.Android' ,{
                     },
                     {
                         xtype:'fieldset',
-                        title: 'Signing options',
+                        title: 'Signing options (for release build)',
                         defaults: {
                             labelWidth: 130
                         },
                         items: [
-                            {
-                                xtype: 'textfield',
-                                name: 'signingKeyAlias',
-                                fieldLabel: 'Key Alias',
-                                anchor: '100%'
-                            },
-                            {
-                                xtype: 'textfield',
-                                name: 'signingKeyPass',
-                                fieldLabel: 'Key Password',
-                                anchor: '100%'
-                            },
                             {
                                 xtype: 'textfield',
                                 name: 'signingKeyStore',
@@ -103,6 +91,18 @@ Ext.define('Spelled.view.project.settings.Android' ,{
                                 xtype: 'textfield',
                                 name: 'signingKeyStorePass',
                                 fieldLabel: 'Keystore Password',
+                                anchor: '100%'
+                            },
+                            {
+                                xtype: 'textfield',
+                                name: 'signingKeyAlias',
+                                fieldLabel: 'Key Alias',
+                                anchor: '100%'
+                            },
+                            {
+                                xtype: 'textfield',
+                                name: 'signingKeyPass',
+                                fieldLabel: 'Key Password',
                                 anchor: '100%'
                             }
                         ]
