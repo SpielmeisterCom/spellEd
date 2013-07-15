@@ -6,7 +6,9 @@ Ext.define('Spelled.controller.Projects', {
 		'Spelled.view.project.Settings',
 		'Spelled.view.project.settings.General',
 		'Spelled.view.project.settings.Language',
-		'Spelled.view.project.settings.AddLanguage',
+        'Spelled.view.project.settings.Android',
+        'Spelled.view.project.settings.iOS',
+        'Spelled.view.project.settings.AddLanguage',
 		'Spelled.view.project.settings.SupportedLanguageContextMenu',
 
 		'Spelled.store.Projects',

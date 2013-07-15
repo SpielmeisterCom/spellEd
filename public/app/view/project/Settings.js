@@ -27,7 +27,13 @@ Ext.define('Spelled.view.project.Settings' ,{
 						},
 						{
 							xtype: 'projectlanguagesettings'
-						}
+						},
+                        {
+                            xtype: 'projectandroidsettings'
+                        },
+                        {
+                            xtype: 'projectiossettings'
+                        }
 					]
 				}
 			]
