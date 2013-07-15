@@ -14,13 +14,5 @@ Ext.define('Spelled.view.project.settings.iOS' ,{
         )
 
         this.callParent( arguments )
-    },
-
-    handleEditClick: function( view, rowIndex, colIndex, item, e, record ) {
-        this.fireEvent( 'showContextMenu', record, e )
-    },
-
-    addHandler: function() {
-        this.fireEvent( 'showAddLanguage', this )
     }
 })
