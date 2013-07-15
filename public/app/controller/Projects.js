@@ -453,6 +453,7 @@ Ext.define('Spelled.controller.Projects', {
 				config   = project.get( 'config' ),
 				general  = view.down( 'projectgeneralsettings' ),
 				language = view.down( 'projectlanguagesettings'),
+                android  = view.down( 'projectandroidsettings'),
 				store    = project.getSupportedLanguages()
 
 			store.sort( 'name' )
@@ -466,6 +467,8 @@ Ext.define('Spelled.controller.Projects', {
 			language.getForm().setValues( config )
 
 			if( config.screenSize ) general.getForm().setValues( { screenSizeX: config.screenSize[0], screenSizeY: config.screenSize[1] } )
+
+            if( config.android ) android.getForm().setValues( config.android )
 		}
 	},
 
