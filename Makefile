@@ -114,7 +114,7 @@ build/nw-package: build/spelledjs/public build/spelledjs/public/nwlibs.js
 	cp -aR nw-package/* build/nw-package/
 	mkdir -p build/nw-package/node_modules
 	cp -aR src build/nw-package/
-	cp -aR ../../node_modules build/nw-package/
+	cp -aR modules/node_modules build/nw-package/
 
 build/app.nw: build/nw-package
 	cd build/nw-package && zip -9 -r app.nw *
