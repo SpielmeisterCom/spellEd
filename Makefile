@@ -31,9 +31,9 @@ build/spelledserver:
 	
 	echo >>build/spelledserver/tmp.js
 
-	$(NODE) ../spellCore/tools/n.js -s src -m server/spellEdServer -i "connect,http,querystring,formidable,fs,underscore,path,flob,child_process,commander" >>build/spelledserver/tmp.js
+	$(NODE) modules/spellCore/tools/n.js -s src -m server/spellEdServer -i "connect,http,querystring,formidable,fs,underscore,path,flob,child_process,commander" >>build/spelledserver/tmp.js
 	
-	$(NODE) ../spellCore/tools/n.js mangle build/spelledserver/tmp.js -a >build/spelledserver/spellEdServer.js
+	$(NODE) modules/spellCore/tools/n.js mangle build/spelledserver/tmp.js -a >build/spelledserver/spellEdServer.js
 	rm build/spelledserver/tmp.js
 
 	chmod +x build/spelledserver/spellEdServer.js
@@ -56,32 +56,32 @@ ace:
 	$(SED) 's/window\.require/window\.requirejs/g' public/lib/ace/ace.js
 
 nw-debug:
-	$(NODE) ../spellCore/tools/n.js -s public/lib -m spellEdDeps \
+	$(NODE) modules/spellCore/tools/n.js -s public/lib -m spellEdDeps \
 -i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark"\
 >public/libs.js
-	$(NODE) ../spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "flob,path,http,fs,child_process,underscore" >public/nwlibs.js
+	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "flob,path,http,fs,child_process,underscore" >public/nwlibs.js
 
 	mkdir -p public/lib || true
 	cp -aR build/spelledjs/public/lib/ace/ public/lib/
 
 build/libs.js: 
-	$(NODE) ../spellCore/tools/n.js -s public/lib -m spellEdDeps \
+	$(NODE) modules/spellCore/tools/n.js -s public/lib -m spellEdDeps \
 -i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark"\
 >>build/libs.js
 
 build/nwlibs.js:
-	$(NODE) ../spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "flob,path,http,fs,child_process,underscore" >>build/nwlibs.js
+	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "flob,path,http,fs,child_process,underscore" >>build/nwlibs.js
 
 build/spelledjs/public/nwlibs.js: build/nwlibs.js
-	$(NODE) ../spellCore/tools/n.js mangle build/nwlibs.js -a >build/spelledjs/public/nwlibs.js
+	$(NODE) modules/spellCore/tools/n.js mangle build/nwlibs.js -a >build/spelledjs/public/nwlibs.js
 
 build/spelledjs/public/libs.js: build/libs.js
 	# minify concatenated libs.js
-	$(NODE) ../spellCore/tools/n.js mangle build/libs.js -a >build/spelledjs/public/libs.js
+	$(NODE) modules/spellCore/tools/n.js mangle build/libs.js -a >build/spelledjs/public/libs.js
 
 build/spelledjs/public/loader.js:
 	# minifing loader
-	$(NODE) ../spellCore/tools/n.js mangle public/loader.js -a >build/spelledjs/public/loader.js
+	$(NODE) modules/spellCore/tools/n.js mangle public/loader.js -a >build/spelledjs/public/loader.js
 
 build/spelledjs/public/all-classes.js:
 	mv public/index.html.orig public/index.html || true
