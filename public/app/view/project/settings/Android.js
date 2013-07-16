@@ -4,6 +4,13 @@ Ext.define('Spelled.view.project.settings.Android' ,{
 
     title : 'Android',
 
+	getImagePrefix: function( postfix ) {
+		var projectName = Spelled.Configuration.getStateProvider().get( 'projectName' ),
+			path        = '/' + projectName + '/resources/android/drawable-' + postfix
+
+		return path
+	},
+
 	initComponent: function() {
 
 		Ext.applyIf( this, {
@@ -14,7 +21,7 @@ Ext.define('Spelled.view.project.settings.Android' ,{
                         items: [
                             {
                                 xtype: 'image',
-                                src: '/superkumba/resources/android/drawable-ldpi/icon.png',
+                                src: this.getImagePrefix( 'ldpi/icon.png' ),
                                 width: 36,
                                 height: 36,
                                 style: 'cursor:pointer',
@@ -29,7 +36,7 @@ Ext.define('Spelled.view.project.settings.Android' ,{
                             },
                             {
                                 xtype: 'image',
-                                src: '/superkumba/resources/android/drawable-mdpi/icon.png',
+                                src: this.getImagePrefix( 'mdpi/icon.png' ),
                                 width: 48,
                                 height: 48,
                                 style: 'cursor:pointer',
@@ -44,7 +51,7 @@ Ext.define('Spelled.view.project.settings.Android' ,{
                             },
                             {
                                 xtype: 'image',
-                                src: '/superkumba/resources/android/drawable-hdpi/icon.png',
+                                src: this.getImagePrefix( 'hdpi/icon.png' ),
                                 width: 72,
                                 height: 72,
                                 style: 'cursor:pointer',
@@ -59,7 +66,7 @@ Ext.define('Spelled.view.project.settings.Android' ,{
                             },
                             {
                                 xtype: 'image',
-                                src: '/superkumba/resources/android/drawable-xhdpi/icon.png',
+                                src: this.getImagePrefix( 'xhdpi/icon.png' ),
                                 width: 96,
                                 height: 96,
                                 style: 'cursor:pointer',
