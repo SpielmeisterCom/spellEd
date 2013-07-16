@@ -7,3 +7,6 @@
 [submodule "modules/SenchaCmd"]
 	path = modules/SenchaCmd
 	url = ssh://git@stash.spielmeister.com:7999/spelled/senchacmd.git
+[submodule "modules/spellCore"]
+	path = modules/spellCore
+	url = ssh://git@stash.spielmeister.com:7999/spelljs/spellcore.git
