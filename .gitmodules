@@ -1,0 +1,9 @@
+[submodule "modules/ace"]
+	path = modules/ace
+	url = ssh://git@stash.spielmeister.com:7999/spelled/ace.git
+[submodule "modules/extjs"]
+	path = modules/extjs
+	url = ssh://git@stash.spielmeister.com:7999/spelled/extjs.git
+[submodule "modules/SenchaCmd"]
+	path = modules/SenchaCmd
+	url = ssh://git@stash.spielmeister.com:7999/spelled/senchacmd.git
