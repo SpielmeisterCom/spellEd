@@ -10,3 +10,6 @@
 [submodule "modules/node-webkit"]
 	path = modules/node-webkit
 	url = ssh://git@stash.spielmeister.com:7999/spelled/node-webkit.git
+[submodule "modules/nodejs"]
+	path = modules/nodejs
+	url = ssh://git@stash.spielmeister.com:7999/spellcommon/nodejs.git
