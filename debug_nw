@@ -2,4 +2,4 @@
 
 
 make nw-debug
-../node-webkit/nw nw-debug-package
+modules/node-webkit/nw nw-debug-package

@@ -1,7 +1,7 @@
 UNAME_S := $(shell uname -s)
 CWD=$(shell pwd)
-SENCHA=$(CWD)/../SenchaCmd/sencha
-NODE=$(CWD)/../nodejs/node
+SENCHA=$(CWD)/modules/SenchaCmd/sencha
+NODE=$(CWD)/modules/nodejs/node
 
 ifeq ($(UNAME_S),Darwin)
 SED = sed -i "" -e
@@ -17,7 +17,7 @@ all: clean build/spelledjs/public build/app.nw build/spelledserver
 clean:
 	# cleaning up and creating directory tree
 	rm -Rf build public/build || true
-	cd ../ace && make clean
+	cd modules/ace && make clean
 
 .PHONY: theme
 theme:
@@ -52,7 +52,7 @@ ace:
 
 	rm -Rf public/lib/ace || true
 	mkdir -p public/lib/ace || true
-	cp -aR ../ace/build/src-min/* public/lib/ace/
+	cp -aR modules/ace/build/src-min/* public/lib/ace/
 	$(SED) 's/window\.require/window\.requirejs/g' public/lib/ace/ace.js
 
 nw-debug:
