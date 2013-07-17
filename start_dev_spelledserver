@@ -1,0 +1,2 @@
+#!/bin/sh
+modules/nodejs/node ./server start-server -r ../demo_projects -c modules/spellCore/spellcli
