@@ -3,7 +3,7 @@
 var requirejs = require( 'requirejs' ),
 	fs        = require( 'fs' ),
 	path      = require( 'path' ),
-	spellPath = path.resolve( process.mainModule.filename , '..' ),
+	spellPath = path.resolve( process.mainModule.filename, '..' ),
 	define    = requirejs.define
 
 requirejs.config( {

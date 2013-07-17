@@ -39,7 +39,7 @@ define(
 					demo            = command.demo || false,
 					port            = command.port || 3000,
 					projectsPath    = path.resolve( command.projectsRoot || path.join( cwd, 'projects' ) ),
-					nodeModulesPath = path.resolve( spellPath, '../node_modules' ),
+					nodeModulesPath = path.resolve( spellPath, 'modules/node_modules' ),
 					spellCorePath   = path.resolve( spellPath, '../spellCore' ),
 					spellCliPath    = path.resolve( command.spellCliPath || path.join( spellCorePath, 'spellcli' ) )
 
