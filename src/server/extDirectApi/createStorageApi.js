@@ -2,18 +2,18 @@ define(
 	'server/extDirectApi/createStorageApi',
 	[
 		'path',
+		'pathUtil',
 		'fs',
 		'server/extDirectApi/createUtil',
-		'flob',
 		'server/extDirectApi/notSupported',
 
 		'underscore'
 	],
 	function(
 		path,
+		pathUtil,
 		fs,
 		createUtil,
-		flob,
 		notSupported,
 
 		_
@@ -54,14 +54,14 @@ define(
 			}
 
 			var getAllByType = function( params ) {
-				var searchPath = util.getPath( params.projectName || root ),
-					type       = params.type,
-					subtype    = params.subtype,
-					pattern    = ( params.projectName ) ? searchPath + "/library/**/*" : searchPath + "/*/*",
-					files      = flob.byTypes( pattern, [ '.json' ] )
+				var searchPath    = util.getPath( params.projectName || root ),
+					type          = params.type,
+					subtype       = params.subtype,
+					basePath      = path.join( searchPath, params.projectName ? 'library' : ''),
+					jsonFilePaths = pathUtil.createFilePathsFromDirSync( basePath, [ 'json' ] )
 
 				var result = _.map(
-					files,
+					jsonFilePaths,
 					function( filePath ) {
 						try{
 							var content = generateExtModel( filePath )
