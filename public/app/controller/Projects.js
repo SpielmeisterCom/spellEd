@@ -433,11 +433,6 @@ Ext.define('Spelled.controller.Projects', {
 		} else {
 			this.showStartScreen()
 		}
-
-
-		if( !Ext.isObject( Spelled.Configuration.getStateProvider().get( 'licenceData' )  ) ) {
-			this.application.fireEvent( 'showregister', false )
-		}
 	},
 
 	showStartScreen: function() {

@@ -33,7 +33,7 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 			}
 
 		var execDir      = path.dirname( process.execPath ),
-			spellCliPath = path.join( execDir, 'spellcli' ),
+			spellCliPath = path.join( execDir, Spelled.Configuration.getSpellCliPath() ),
 			extension    = process.platform == 'win32' ? '.exe' : ''
 
 		var child = childProcess.spawn( spellCliPath + extension, [ 'license', '-s', '-j' ] )
