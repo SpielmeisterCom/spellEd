@@ -25,3 +25,6 @@
 [submodule "modules/spellcli"]
 	path = modules/spellcli
 	url = ssh://git@stash.spielmeister.com:7999/spellcli/spellcli.git
+[submodule "moduls/demo_projects"]
+	path = moduls/demo_projects
+	url = ssh://git@stash.spielmeister.com:7999/spellcommon/demo_projects.git
