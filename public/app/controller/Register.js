@@ -77,7 +77,7 @@ Ext.define('Spelled.controller.Register', {
 	},
 
 	showRegister: function( closable ) {
-		if( Spelled.Configuration.isDemoInstance() || !Spelled.platform.Adapter.isNodeWebKit() ) return
+		if( Spelled.Configuration.isDemoInstance() || !Spelled.platform.Adapter.isNodeWebKit() || Ext.ComponentQuery.query( 'registerwindow').length > 0 ) return
 
 		var stateProvider = Spelled.Configuration.getStateProvider(),
 			view          = Ext.widget( 'registerwindow', { closable: closable } ),
