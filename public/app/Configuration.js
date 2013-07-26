@@ -7,6 +7,18 @@ Ext.define( 'Spelled.Configuration', {
 		return host === this.demoServerHostname
 	},
 
+	isDevEnvironment: function() {
+		var host   = location.hostname
+
+		return host === 'localhost' || this.isInNodeWebkitDevEnvironment()
+	},
+
+	isInNodeWebkitDevEnvironment: function() {
+		var params = Ext.Object.fromQueryString( location.search )
+
+		return ( Ext.isObject( params ) && params.isDevelEnv )
+	},
+
 	getDemoTooltipText: function( text ) {
 		return Spelled.Configuration.isDemoInstance() ? 'Not supported in demo version' : text || ''
 	},
@@ -29,12 +41,12 @@ Ext.define( 'Spelled.Configuration', {
 
 	getSpellCliPath: function() {
 		var spellCliPath = 'spellcli'
-		return spellCliPath
+		return !this.isInNodeWebkitDevEnvironment() ? spellCliPath : '../../spellcli/' +spellCliPath
 	},
 
 	getSpellCorePath: function() {
 		var spellCorePath = 'spellCore'
-		return spellCorePath
+		return !this.isInNodeWebkitDevEnvironment() ? spellCorePath : '../../' +spellCorePath
 
 	},
 
