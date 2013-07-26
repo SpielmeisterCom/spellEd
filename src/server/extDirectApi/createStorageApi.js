@@ -58,7 +58,7 @@ define(
 					type          = params.type,
 					subtype       = params.subtype,
 					basePath      = path.join( searchPath, params.projectName ? 'library' : ''),
-					jsonFilePaths = pathUtil.createFilePathsFromDirSync( basePath, [ 'json' ] )
+					jsonFilePaths = pathUtil.createFilePathsFromDirSync( basePath, [ 'json' ], 'absolute' )
 
 				var result = _.map(
 					jsonFilePaths,
