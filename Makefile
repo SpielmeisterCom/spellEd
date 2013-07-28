@@ -11,7 +11,7 @@ endif
 
 
 .PHONY: all
-all: clean build/spelledjs/public build/app.nw build/spelledserver
+all: clean build/spelledjs/public build/win-ia32 build/spelledserver
 
 .PHONY: clean
 clean:
@@ -115,6 +115,19 @@ build/nw-package: build/spelledjs/public build/spelledjs/public/nwlibs.js
 	cp -aR src build/nw-package/
 	cp -aR node_modules build/nw-package/
 
-build/app.nw: build/nw-package
-	cd build/nw-package && zip -9 -r app.nw *
-	mv build/nw-package/app.nw build/app.nw
+build/package.nw: build/nw-package
+	cd build/nw-package && zip -9 -r package.nw *
+	mv build/nw-package/package.nw build/package.nw
+
+build/win-ia32: build/package.nw
+	mkdir -p build/win-ia32 || true
+	cp -aR modules/node-webkit/win-ia32/ffmpegsumo.dll build/win-ia32
+	cp -aR modules/node-webkit/win-ia32/libEGL.dll build/win-ia32 
+	cp -aR modules/node-webkit/win-ia32/icudt.dll build/win-ia32
+	cp -aR modules/node-webkit/win-ia32/libGLESv2.dll build/win-ia32 
+	cp -aR modules/node-webkit/win-ia32/nw.pak build/win-ia32 
+	
+	cp -aR build/package.nw build/win-ia32
+	
+	chmod +x build/win-ia32/spelled.exe
+
