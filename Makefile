@@ -130,7 +130,7 @@ build/linux-x64: build/package.nw
 build/osx-ia32: build/package.nw
 	mkdir -p build/osx-ia32 || true
 	cp -aR modules/node-webkit/osx-ia32/node-webkit.app/ build/osx-ia32/spellEd.app
-	cp build/package.nw build/osx-ia32/spellEd.app/Contents/Resources/
+	cp build/package.nw build/osx-ia32/spellEd.app/Contents/Resources/app.nw
 
 build/win-ia32: build/package.nw
 	mkdir -p build/win-ia32 || true
