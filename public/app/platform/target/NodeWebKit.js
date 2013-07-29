@@ -4,6 +4,14 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 		'Spelled.Remoting'
 	],
 
+	getConfig: function() {
+		var fs             = require( 'fs' ),
+			pathUtil       = require( 'pathUtil'),
+			configFilePath = pathUtil.createConfigFilePath( process.execPath, 'spell', 'spellConfig.json' )
+
+		return Ext.decode( fs.readFileSync( configFilePath, 'utf8' ) )
+	},
+
 	writeLicense: function( licenceData ) {
 		var fs = require( 'fs' )
 

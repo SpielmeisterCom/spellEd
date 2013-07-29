@@ -22,6 +22,8 @@ Ext.define( 'Spelled.platform.target.Abstract', {
 
 	enterFullScreen: function( dom ) {},
 
+	getConfig: function() { return {} },
+
 	normalizeUrl: function( url ) {
 		return url
 	}

@@ -40,14 +40,15 @@ Ext.define( 'Spelled.Configuration', {
 	},
 
 	getSpellCliPath: function() {
-		var spellCliPath = 'spellcli'
-		return !this.isInNodeWebkitDevEnvironment() ? spellCliPath : '../../spellcli/' +spellCliPath
+		var spellCliPath = Spelled.app.platform.getConfig().spellCliPath
+
+		return !this.isInNodeWebkitDevEnvironment() ? spellCliPath : '../../../' + spellCliPath
 	},
 
 	getSpellCorePath: function() {
-		var spellCorePath = 'spellCore'
-		return !this.isInNodeWebkitDevEnvironment() ? spellCorePath : '../../' +spellCorePath
+		var spellCorePath =  Spelled.app.platform.getConfig().spellCorePath
 
+		return !this.isInNodeWebkitDevEnvironment() ? spellCorePath : '../../../' + spellCorePath
 	},
 
 	getDocumentationServerUrl: function() {
