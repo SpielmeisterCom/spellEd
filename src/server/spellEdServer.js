@@ -1,6 +1,7 @@
 define(
 	'server/spellEdServer',
 	[
+		'pathUtil',
 		'connect',
 		'http',
 		'connect-extdirect/extDirect',
@@ -11,6 +12,7 @@ define(
 		'path'
 	],
 	function(
+		pathUtil,
 		connect,
 		http,
 		extDirect,
@@ -30,18 +32,29 @@ define(
 		    console.error( tmp.join( '\n' ) )
 	    }
 
+		var parseConfigFile = function( configFilePath ) {
+			var config = fs.readFileSync( configFilePath, 'utf8' )
+
+			if( config ) return JSON.parse( config )
+		}
+
 
 		return function( argv, cwd, spellPath ) {
-			var executableName  = 'server'
+			var configFilePath = pathUtil.createConfigFilePath( cwd, 'spell', 'spellConfig.json' ),
+				executableName = 'server'
+
+			if( !fs.existsSync( configFilePath ) ) return console.error( "Error: Missing spellConfig file" )
+
+			var config = parseConfigFile( configFilePath )
 
 			var startServerCommand = function( command ) {
 				var errors          = [],
 					demo            = command.demo || false,
 					port            = command.port || 3000,
-					projectsPath    = path.resolve( command.projectsRoot || path.join( cwd, 'projects' ) ),
+					projectsPath    = path.resolve( command.projectsRoot || path.resolve( spellPath, config.workspacePath ) ),
 					nodeModulesPath = path.resolve( spellPath, 'node_modules' ),
-					spellCorePath   = path.resolve( spellPath, '../spellCore' ),
-					spellCliPath    = path.resolve( command.spellCliPath || path.join( spellPath, 'modules/spellcli' ) )
+					spellCorePath   = path.resolve( spellPath, config.spellCorePath ),
+					spellCliPath    = path.resolve( command.spellCliPath || path.join( spellPath, config.spellCliPath ) )
 
 				if( !fs.existsSync( nodeModulesPath ) ) {
 					nodeModulesPath = path.resolve( spellPath, '../../node_modules' )

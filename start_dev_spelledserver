@@ -1,2 +1,2 @@
 #!/bin/sh
-modules/nodejs/node ./server start-server -r modules/demo_projects -c modules/spellcli/spellcli
+modules/nodejs/node ./server start-server
