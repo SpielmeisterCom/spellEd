@@ -32,11 +32,12 @@ Ext.define( 'Spelled.Configuration', {
 	},
 
 	setWorkspacePath: function( path ) {
-		this.getStateProvider().set( 'workspacePath', path )
+		Spelled.app.platform.getConfig().workspacePath = path
+		Spelled.app.platform.writeConfigFile()
 	},
 
 	getWorkspacePath: function() {
-		return this.getStateProvider().get( 'workspacePath' )
+		return Spelled.app.platform.getConfig().workspacePath
 	},
 
 	getSpellCliPath: function() {

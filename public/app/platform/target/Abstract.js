@@ -24,7 +24,12 @@ Ext.define( 'Spelled.platform.target.Abstract', {
 
 	getConfig: function() { return {} },
 
+	getConfigFilePath: function() { return '' },
+
+	writeConfigFile: function() {},
+
 	normalizeUrl: function( url ) {
 		return url
 	}
 })
+

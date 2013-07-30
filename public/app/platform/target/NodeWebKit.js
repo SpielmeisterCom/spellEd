@@ -4,13 +4,22 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 		'Spelled.Remoting'
 	],
 
-	getConfig: function() {
-		var fs             = require( 'fs' ),
-			path           = require( 'path' ),
-			pathUtil       = require( 'pathUtil'),
-			configFilePath = pathUtil.createConfigFilePath( path.dirname( process.execPath ), 'spell', 'spellConfig.json' )
+	getConfigFilePath: function() {
+		var pathUtil = require( 'pathUtil'),
+			path     = require( 'path' )
 
-		return Ext.decode( fs.readFileSync( configFilePath, 'utf8' ) )
+		return pathUtil.createConfigFilePath( path.dirname( process.execPath ), 'spell', 'spellConfig.json' )
+	},
+
+	getConfig: function() {
+		if( this.spellConfig ) return this.spellConfig
+
+		var fs             = require( 'fs' ),
+			configFilePath = this.getConfigFilePath()
+
+		this.spellConfig = Ext.decode( fs.readFileSync( configFilePath, 'utf8' ) )
+
+		return this.spellConfig
 	},
 
 	writeLicense: function( licenceData ) {
@@ -58,6 +67,13 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 			clipboard = gui.Clipboard.get()
 
 		clipboard.set( text, 'text')
+	},
+
+	writeConfigFile: function() {
+		var configFilePath = this.getConfigFilePath(),
+			fs             = require( 'fs' )
+
+		fs.writeFileSync( configFilePath, JSON.stringify( this.getConfig(), '', '\t' ) )
 	},
 
 	createRemoteProvider: function() {
