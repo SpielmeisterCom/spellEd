@@ -136,9 +136,9 @@ Ext.define('Spelled.view.menu.Menu', {
 				tooltip : Spelled.Configuration.getDemoTooltipText(),
 				hidden  : !Spelled.platform.Adapter.isNodeWebKit()
 			},{
-				text    : 'Change  workspace',
+				text    : 'Settings',
 				nwType  : 'normal',
-				action  : 'showSetWorkspace',
+				action  : 'showSettings',
 				hidden  : !Spelled.platform.Adapter.isNodeWebKit()
 			}, {
 				text    : 'About SpellEd',

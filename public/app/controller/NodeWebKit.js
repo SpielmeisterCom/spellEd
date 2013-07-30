@@ -21,11 +21,11 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 				'button[action="showBuildResult"]': {
 					click: this.showBuildResult
 				},
-				'spelledmenu [action="showSetWorkspace"]': {
+				'spelledmenu [action="showSettings"]': {
 					click: this.showSpellEdConfig
 				},
 				nwtoolbar: {
-					showSetWorkspace: this.showSpellEdConfig,
+					showSettings: this.showSpellEdConfig,
 					showUpdateDialog   : this.showUpdateDialog
 				}
 			},
@@ -46,7 +46,7 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 	},
 
 	showSpellEdConfig: function( closeable ) {
-		Ext.create( 'Spelled.view.ui.SpelledConfiguration', { closable: closeable } ).show()
+		Ext.create( 'Spelled.view.ui.SpelledConfiguration', { closable: closeable, spellConfig: Spelled.app.platform.getConfig() } ).show()
 	},
 
 	redirectToDownloadServer: function( url ) {

@@ -9,23 +9,88 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
     modal : true,
     closable: true,
 
-	initComponent: function() {
+	setValues: function() {
+		var fields = Ext.ComponentQuery.query( 'displayfield'),
+			config = this.spellConfig
 
+		Ext.each(
+			fields,
+			function( field ) {
+				field.setValue( config[ field.configName ] )
+			}
+		)
+	},
+
+	initComponent: function() {
 		Ext.applyIf(
 			this,{
+				listeners: {
+					afterrender: this.setValues
+				},
 				items: [
 					{
 						bodyPadding: 10,
 						xtype: 'form',
 						items: [
 							{
-								xtype: 'field',
-								inputType: 'file',
-								inputAttrTpl: 'nwdirectory',
-								name: 'workspacePath',
-								labelWidth: 150,
-								fieldLabel: 'Path to the projects folder',
-								allowBlank: false
+								xtype: 'fieldset',
+								title: 'Path to the projects folder',
+								items: [
+									{
+										xtype: 'displayfield',
+										configName: 'workspacePath',
+										fieldLabel: 'Current configuration'
+									},
+									{
+										xtype: 'field',
+										inputType: 'file',
+										inputAttrTpl: 'nwdirectory',
+										name: 'workspacePath',
+										labelWidth: 150,
+										allowBlank: false,
+										fieldLabel: 'Select a new location'
+									}
+								]
+							},
+							{
+								xtype: 'fieldset',
+								title: 'Path to the JDK folder (optional)',
+								items: [
+									{
+										xtype: 'displayfield',
+										configName: 'jdkPath',
+										fieldLabel: 'Current configuration'
+									},
+									{
+										xtype: 'field',
+										inputType: 'file',
+										inputAttrTpl: 'nwdirectory',
+										name: 'jdkPath',
+										labelWidth: 150,
+										allowBlank: true,
+										fieldLabel: 'Select a new location'
+									}
+								]
+							},
+							{
+								xtype: 'fieldset',
+								title: 'Path to the Android SDK folder (optional)',
+								items: [
+									{
+										xtype: 'displayfield',
+										configName: 'androidSdkPath',
+										fieldLabel: 'Current configuration'
+									},
+									{
+										xtype: 'field',
+										inputType: 'file',
+										inputAttrTpl: 'nwdirectory',
+										name: 'androidSdkPath',
+										labelWidth: 150,
+										allowBlank: true,
+										fieldLabel: 'Select a new location'
+									}
+								]
 							}
 						],
 						buttons: [
@@ -44,25 +109,39 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 	},
 
 	setConfigHandler: function() {
-		var window        = this.up( 'spelledconfigure' ),
-			field         = this.up( 'form' ).down( 'field[name="workspacePath"]' ),
-			workspacePath = field.getValue(),
-			fs            = require( 'fs' ),
-			provider      = Ext.direct.Manager.getProvider( 'webkitProvider' )
+		var window         = this.up( 'spelledconfigure' ),
+			form           = this.up( 'form' ),
+			values         = form.getForm().getValues(),
+			workspaceField = form.down( 'field[name="workspacePath"]' ),
+			workspacePath  = workspaceField.getValue(),
+			androidSdkPath = form.down( 'field[name="androidSdkPath"]' ).getValue(),
+			jdkPath        = form.down( 'field[name="jdkPath"]' ).getValue(),
+			fs             = require( 'fs' ),
+			provider       = Ext.direct.Manager.getProvider( 'webkitProvider'),
+			spellConfig    = window.spellConfig
 
-		var exists = fs.existsSync( workspacePath )
+		var exists   = fs.existsSync( workspacePath ),
+			callback = function() {
+				Spelled.app.platform.writeConfigFile()
+				window.close()
+			}
+
+		if( androidSdkPath ) spellConfig.androidSdkPath = androidSdkPath
+		if( jdkPath ) spellConfig.jdkPath = jdkPath
 
 		if( exists ) {
 			Spelled.Configuration.setWorkspacePath( workspacePath )
 
 			provider.createWebKitExtDirectApi( function() {
 				window.fireEvent( 'loadProjects' )
-				window.close()
+				Ext.callback( callback )
 			} )
 
+		} else if( workspacePath ) {
+			workspaceField.markInvalid( 'No such folder' )
+			workspaceField.textValid = false
 		} else {
-			field.markInvalid( 'No such folder' )
-			field.textValid = false
+			Ext.callback( callback )
 		}
 	}
 });
