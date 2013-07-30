@@ -1,52 +1,40 @@
 define(
 	'server/extDirectApi/initDirectory',
 	[
+		'child_process',
 		'fs',
 		'path',
-		'child_process'
+		'wrench'
 	],
 	function(
+		childProcess,
 		fs,
 		path,
-		childProcess
+		wrench
 	) {
 		'use strict'
 
-		var appendExtension = process.platform == 'win32' ? '.exe' : ''
-
-		var deleteFolderRecursive = function(path) {
-			var files = [];
-			if( fs.existsSync(path) ) {
-				files = fs.readdirSync(path);
-				files.forEach(function(file,index){
-					var curPath = path + "/" + file;
-					if(fs.statSync(curPath).isDirectory()) { // recurse
-						deleteFolderRecursive(curPath);
-					} else { // delete file
-						fs.unlinkSync(curPath);
-					}
-				});
-				fs.rmdirSync(path);
-			}
-		}
 
 		/*
 		 * RPC call handler
 		 *
 		 * @param spellCorePath
 		 * @param workspacePath
-		 * @param spellCliPath
+		 * @param spellCliExecutablePath
 		 * @param isDevEnvironment
-		 * @param projectName
 		 * @param onComplete
+		 * @param projectName
+		 * @param deleteFolder
 		 * @return {*}
 		 */
-		return function( spellCorePath, workspacePath, spellCliPath, isDevEnvironment, onComplete, projectName, deleteFolder ) {
+		return function( spellCorePath, workspacePath, spellCliExecutablePath, isDevEnvironment, onComplete, projectName, deleteFolder ) {
 			var projectPath = path.join( workspacePath, projectName )
 
-			if( deleteFolder ) deleteFolderRecursive( projectPath )
+			if( deleteFolder ) {
+				wrench.rmdirSyncRecursive( projectPath, true )
+			}
 
-			childProcess.execFile( spellCliPath + appendExtension, [ 'init', '-p', projectPath ], {}, onComplete )
+			childProcess.execFile( spellCliExecutablePath, [ 'init', '-p', projectPath ], {}, onComplete )
 		}
     }
 )
