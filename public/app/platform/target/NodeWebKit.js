@@ -6,8 +6,9 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 
 	getConfig: function() {
 		var fs             = require( 'fs' ),
+			path           = require( 'path' ),
 			pathUtil       = require( 'pathUtil'),
-			configFilePath = pathUtil.createConfigFilePath( process.execPath, 'spell', 'spellConfig.json' )
+			configFilePath = pathUtil.createConfigFilePath( path.dirname( process.execPath ), 'spell', 'spellConfig.json' )
 
 		return Ext.decode( fs.readFileSync( configFilePath, 'utf8' ) )
 	},

@@ -115,10 +115,13 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 			path          = require( 'path' )
 
 		if( !workspacePath ) {
-			workspacePath = path.join( process.execPath, Spelled.Configuration.demoProjectsFolder )
+			var execPathDir      = path.dirname( process.execPath ),
+				demoProjectsPath = fs.existsSync( path.join( execPathDir, Spelled.Configuration.demoProjectsFolder ) )
+				? path.join( execPathDir, Spelled.Configuration.demoProjectsFolder )
+				: path.join( execPathDir, '..' ,Spelled.Configuration.demoProjectsFolder )
 
-			if( fs.existsSync( workspacePath ) ) {
-				Spelled.Configuration.setWorkspacePath( workspacePath )
+			if( fs.existsSync( demoProjectsPath ) ) {
+				Spelled.Configuration.setWorkspacePath( demoProjectsPath )
 			} else {
 				this.showSpellEdConfig( false )
 			}
