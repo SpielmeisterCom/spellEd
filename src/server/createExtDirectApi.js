@@ -67,42 +67,43 @@ define(
 			}
 		}
 
-        return function( projectsRoot, spellCorePath, spellCliPath, demonstrationMode ) {
-			//TODO: detect if its the devEnvironment
+		return function( projectsRoot, spellCorePath, spellCliPath, demonstrationMode ) {
+			// TODO: detect if its the devEnvironment
 			var isDevEnvironment = true
 
 			var createAction = function( actionHandler ) {
-
 				return !demonstrationMode ?	actionHandler : notSupported
 			}
 
-            return {
-				StorageActions    : createStorageApi( projectsRoot, demonstrationMode ),
+			var spellCliExecutablePath = spellCliPath + ( process.platform == 'win32' ? '.exe' : '' )
+
+			return {
+				StorageActions : createStorageApi( projectsRoot, demonstrationMode ),
 				SpellBuildActions : [
 					{
 						name: "initDirectory",
 						len: 2,
-						func: createAction( createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'initDirectory', initDirectory ) )
+						func: createAction( createWrapper( spellCorePath, projectsRoot, spellCliExecutablePath, isDevEnvironment, 'initDirectory', initDirectory ) )
 					},
 					{
 						name: "buildExport",
 						len: 3,
-						func: createAction( createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'buildExport', buildExport ) )
+						func: createAction( createWrapper( spellCorePath, projectsRoot, spellCliExecutablePath, isDevEnvironment, 'buildExport', buildExport ) )
 					},
 					{
 						name: "buildClean",
 						len: 1,
-						func: createAction( createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'buildClean', buildClean ) )
+						func: createAction( createWrapper( spellCorePath, projectsRoot, spellCliExecutablePath, isDevEnvironment, 'buildClean', buildClean ) )
 					},
 					{
 						name: "buildDebug",
 						len: 2,
-						func: createAction( createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'buildDebug', buildDebug ) )
+						func: createAction( createWrapper( spellCorePath, projectsRoot, spellCliExecutablePath, isDevEnvironment, 'buildDebug', buildDebug ) )
 					},
 					{
 						name: "buildRelease",
 						len: 2,
-						func: createAction( createWrapper( spellCorePath, projectsRoot, spellCliPath, isDevEnvironment, 'buildRelease', buildRelease ) )
+						func: createAction( createWrapper( spellCorePath, projectsRoot, spellCliExecutablePath, isDevEnvironment, 'buildRelease', buildRelease ) )
 					}
 				]
 			}
