@@ -32,7 +32,7 @@ build/spelledserver:
 	echo >> build/spelledserver/tmp.js
 
 	$(NODE) modules/spellCore/tools/n.js -s src -m server/spellEdServer \
--i "connect,http,querystring,formidable,fs,underscore,path,child_process,commander,pathUtil" >> build/spelledserver/tmp.js
+-i "connect,http,querystring,formidable,fs,underscore,path,child_process,commander,pathUtil,wrench" >> build/spelledserver/tmp.js
 
 	$(NODE) modules/spellCore/tools/n.js mangle build/spelledserver/tmp.js -a > build/spelledserver/spellEdServer.js
 	rm build/spelledserver/tmp.js
@@ -59,7 +59,7 @@ ace:
 nw-debug:
 	$(NODE) modules/spellCore/tools/n.js -s public/lib -m spellEdDeps \
 -i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark" > public/libs.js
-	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "path,http,fs,child_process,underscore,pathUtil" > public/nwlibs.js
+	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "path,http,fs,child_process,underscore,pathUtil,wrench" > public/nwlibs.js
 
 	mkdir -p public/lib || true
 	cp -aR build/spelledjs/public/lib/ace/ public/lib/
@@ -69,7 +69,7 @@ build/libs.js:
 -i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark" >> build/libs.js
 
 build/nwlibs.js:
-	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "path,http,fs,child_process,underscore,pathUtil" >> build/nwlibs.js
+	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "path,http,fs,child_process,underscore,pathUtil,wrench" >> build/nwlibs.js
 
 build/spelledjs/public/nwlibs.js: build/nwlibs.js
 	$(NODE) modules/spellCore/tools/n.js mangle build/nwlibs.js -a > build/spelledjs/public/nwlibs.js
@@ -122,7 +122,7 @@ build/package.nw: build/nw-package
 build/linux-x64: build/package.nw
 	mkdir -p build/linux-x64 || true
 	cp -aR modules/node-webkit/linux-x64/nw.pak build/linux-x64
-	cp -aR modules/node-webkit/linux-x64/libffmpegsumo.so build/linux-x64 
+	cp -aR modules/node-webkit/linux-x64/libffmpegsumo.so build/linux-x64
 	cp -aR modules/node-webkit/linux-x64/nw build/linux-x64/spelled
 	cp -aR build/package.nw build/linux-x64
 	chmod +x build/linux-x64/spelled
@@ -135,13 +135,13 @@ build/osx-ia32: build/package.nw
 build/win-ia32: build/package.nw
 	mkdir -p build/win-ia32 || true
 	cp -aR modules/node-webkit/win-ia32/ffmpegsumo.dll build/win-ia32
-	cp -aR modules/node-webkit/win-ia32/libEGL.dll build/win-ia32 
+	cp -aR modules/node-webkit/win-ia32/libEGL.dll build/win-ia32
 	cp -aR modules/node-webkit/win-ia32/icudt.dll build/win-ia32
-	cp -aR modules/node-webkit/win-ia32/libGLESv2.dll build/win-ia32 
+	cp -aR modules/node-webkit/win-ia32/libGLESv2.dll build/win-ia32
 	cp -aR modules/node-webkit/win-ia32/nw.pak build/win-ia32
 	cp -aR modules/node-webkit/win-ia32/nw.exe build/win-ia32/spelled.exe
 
 	cp -aR build/package.nw build/win-ia32
-	
+
 	chmod +x build/win-ia32/spelled.exe
 
