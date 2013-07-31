@@ -5,10 +5,16 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 	],
 
 	getFilePath: function( fileName ) {
-		var pathUtil = require( 'pathUtil'),
-			path     = require( 'path' )
+		var pathUtil = require( 'pathUtil' ),
+			path     = require( 'path' ),
+			appName  = Spelled.Configuration.appName,
+			filePath = pathUtil.createConfigFilePath( path.dirname( process.execPath ), appName, fileName )
 
-		return pathUtil.createConfigFilePath( path.dirname( process.execPath ), 'spell', fileName )
+		if( filePath ) return filePath
+
+		var appDataPath = pathUtil.createOsPath().createAppDataPath( appName )
+
+		return path.join( appDataPath, fileName )
 	},
 
 	getConfigFilePath: function() {
@@ -16,7 +22,7 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 	},
 
 	getLicenseFilePath: function() {
-		return this.getFilePath( Spelled.Configuration.licenseFileName ) || Spelled.Configuration.licenseFileName
+		return this.getFilePath( Spelled.Configuration.licenseFileName )
 	},
 
 	getConfig: function() {
@@ -30,10 +36,19 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 		return this.spellConfig
 	},
 
-	writeLicense: function( licenceData ) {
-		var fs = require( 'fs' )
+	writeFile: function( filePath, content ) {
+		var fs       = require( 'fs'),
+			path     = require( 'path' )
 
-		fs.writeFileSync( this.getLicenseFilePath(), licenceData )
+		if( !fs.existsSync( filePath ) ) {
+			fs.mkdirSync( path.dirname( filePath ) )
+		}
+
+		fs.writeFileSync( filePath, content )
+	},
+
+	writeLicense: function( licenceData ) {
+		this.writeFile( this.getLicenseFilePath(), licenceData )
 	},
 
 	readLicense: function() {
@@ -78,10 +93,7 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 	},
 
 	writeConfigFile: function() {
-		var configFilePath = this.getConfigFilePath(),
-			fs             = require( 'fs' )
-
-		fs.writeFileSync( configFilePath, JSON.stringify( this.getConfig(), '', '\t' ) )
+		this.writeFile( this.getConfigFilePath(), JSON.stringify( this.getConfig(), '', '\t' ) )
 	},
 
 	createRemoteProvider: function() {

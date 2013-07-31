@@ -56,6 +56,7 @@ Ext.define( 'Spelled.Configuration', {
 		return this.documentationServerURL + this.version + '/'
 	},
 
+	appName                : 'spell',
 	configFileName         : 'spellConfig.json',
 	licenseFileName        : 'license.txt',
 	demoProjectsFolder     : 'demo_projects',
