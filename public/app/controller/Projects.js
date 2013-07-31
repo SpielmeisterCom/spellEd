@@ -496,14 +496,6 @@ Ext.define('Spelled.controller.Projects', {
 		})
     },
 
-	initProject: function( project ) {
-		var sceneController = this.application.getController( 'Scenes' ),
-			scene           = sceneController.createScene( { name: 'Scene1', namespace: 'root' } )
-
-		project.set('startScene', scene.getFullName() )
-		project.save()
-	},
-
     showLoadProject: function( ) {
         var View = this.getProjectLoadView(),
 			view = new View()
@@ -605,24 +597,22 @@ Ext.define('Spelled.controller.Projects', {
 		var callback = function() {
 			me.prepareStores( projectName )
 			me.closeAllTabsFromProject()
-
-			me.loadStores( projectName, initialize )
+			me.loadStores( projectName )
 		}
 
 		if( !initialize ) {
 			Spelled.SpellBuildActions.initDirectory( projectName, false, callback )
+
 		} else {
 			callback()
 		}
 	},
 
-	storesReadyCallback: function( projectName, initialize ) {
+	storesReadyCallback: function( projectName ) {
 		var Project = this.getProjectModel(),
 			record  = this.getProjectsStore().findRecord( 'name', projectName )
 
 		this.application.setActiveProject( record )
-
-		if( initialize ) this.initProject( record )
 
 		Project.load(
 			record.getId(),
@@ -648,7 +638,7 @@ Ext.define('Spelled.controller.Projects', {
 		)
 	},
 
-	loadStores: function( project, initialize ) {
+	loadStores: function( project ) {
 		var me        = this,
 			stores    = Ext.clone( this.storesForSave ),
 			getStore  = Ext.getStore,
@@ -656,7 +646,8 @@ Ext.define('Spelled.controller.Projects', {
 				var store = stores.shift()
 
 				if( !store ) {
-					me.storesReadyCallback( project, initialize )
+					me.storesReadyCallback( project )
+
 				} else {
 					me.iterateLoadingProgress( "Loading '" + store + "' ... " )
 					getStore( store ).load( { callback: loadStore } )
