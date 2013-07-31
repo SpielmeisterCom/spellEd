@@ -56,6 +56,7 @@ Ext.define( 'Spelled.Configuration', {
 		return this.documentationServerURL + this.version + '/'
 	},
 
+	configFileName         : 'spellConfig.json',
 	licenseFileName        : 'license.txt',
 	demoProjectsFolder     : 'demo_projects',
 	updateServerUrl        : 'http://cdn.spelljs.com/spelljs-desktop-latest-version.json',

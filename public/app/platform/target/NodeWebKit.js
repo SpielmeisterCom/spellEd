@@ -4,11 +4,19 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 		'Spelled.Remoting'
 	],
 
-	getConfigFilePath: function() {
+	getFilePath: function( fileName ) {
 		var pathUtil = require( 'pathUtil'),
 			path     = require( 'path' )
 
-		return pathUtil.createConfigFilePath( path.dirname( process.execPath ), 'spell', 'spellConfig.json' )
+		return pathUtil.createConfigFilePath( path.dirname( process.execPath ), 'spell', fileName )
+	},
+
+	getConfigFilePath: function() {
+		return this.getFilePath( Spelled.Configuration.configFileName )
+	},
+
+	getLicenseFilePath: function() {
+		return this.getFilePath( Spelled.Configuration.licenseFileName ) || Spelled.Configuration.licenseFileName
 	},
 
 	getConfig: function() {
@@ -25,14 +33,14 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 	writeLicense: function( licenceData ) {
 		var fs = require( 'fs' )
 
-		fs.writeFileSync( Spelled.Configuration.licenseFileName, licenceData )
+		fs.writeFileSync( this.getLicenseFilePath(), licenceData )
 	},
 
 	readLicense: function() {
 		var fs = require( 'fs')
 
 		try {
-			return fs.readFileSync( Spelled.Configuration.licenseFileName,  'utf8' )
+			return fs.readFileSync( this.getLicenseFilePath(),  'utf8' )
 		} catch ( e ) {
 			return null
 		}
