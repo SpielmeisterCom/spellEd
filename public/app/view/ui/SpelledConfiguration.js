@@ -21,6 +21,11 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 		)
 	},
 
+	onChangeHandler: function( field, newValue ) {
+		var field = this.up( 'window' ).down( 'displayfield[configName="'+ this.name +'"]' )
+		field.setValue( newValue )
+	},
+
 	initComponent: function() {
 		Ext.applyIf(
 			this,{
@@ -34,7 +39,7 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 						items: [
 							{
 								xtype: 'fieldset',
-								title: 'Path to the projects folder',
+								title: 'Path to your workspace',
 								items: [
 									{
 										xtype: 'displayfield',
@@ -42,6 +47,9 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 										fieldLabel: 'Current configuration'
 									},
 									{
+										listeners: {
+											change: this.onChangeHandler
+										},
 										xtype: 'field',
 										inputType: 'file',
 										inputAttrTpl: 'nwdirectory',
@@ -62,6 +70,9 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 										fieldLabel: 'Current configuration'
 									},
 									{
+										listeners: {
+											change: this.onChangeHandler
+										},
 										xtype: 'field',
 										inputType: 'file',
 										inputAttrTpl: 'nwdirectory',
@@ -82,6 +93,9 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 										fieldLabel: 'Current configuration'
 									},
 									{
+										listeners: {
+											change: this.onChangeHandler
+										},
 										xtype: 'field',
 										inputType: 'file',
 										inputAttrTpl: 'nwdirectory',
