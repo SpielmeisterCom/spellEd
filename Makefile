@@ -49,7 +49,7 @@ rebuild-nw: clean-nw build/nw-package build/app.nw
 .PHONY: ace
 ace:
 	# building ace lib
-	cd ../ace && ../nodejs/node ./Makefile.dryice.js normal
+	cd modules/ace && ../nodejs/node ./Makefile.dryice.js normal
 
 	rm -Rf public/lib/ace || true
 	mkdir -p public/lib/ace || true
