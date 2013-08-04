@@ -12,6 +12,7 @@
 		"fullscreen": false,
 		"frame": true,
 		"show": true,
-		"toolbar": false
+		"toolbar": false,
+		"icon": "spelled-icon.png"
 	}
 }
