@@ -78,12 +78,9 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 			path            = require( 'path'),
 			childProcess    = require( 'child_process'),
 			onFinish        = function() {
-console.log( result )
 				Spelled.app.fireEvent( 'licensecallback', licenseData, result, callback )
 			},
 			onData      = function( data ) {
-console.log( data.toString() )
-alert( data )
 				result += data.toString()
 			}
 
