@@ -54,10 +54,16 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 	},
 
 	copyDefaultConfig: function() {
-		var fs            = require( 'fs' ),
-			defaultConfig = this.getFilePath( Spelled.Configuration.defaultConfigFileName )
+		var fs             = require( 'fs' ),
+			path           = require( 'path' ),
+			wrench         = require( 'wrench' ),
+			defaultConfig  = fs.readFileSync( this.getFilePath( Spelled.Configuration.defaultConfigFileName ) ),
+			configFilePath = this.getConfigFilePath(),
+			appDirName     = path.dirname( configFilePath )
 
-		fs.writeFileSync( this.getConfigFilePath() , fs.readFileSync( defaultConfig,  'utf8' ) )
+		if( !fs.existsSync( appDirName ) ) wrench.mkdirSyncRecursive( appDirName )
+
+		fs.writeFileSync( configFilePath, defaultConfig )
 	},
 
 	readLicense: function() {

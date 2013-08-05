@@ -41,7 +41,7 @@ Ext.define( 'Spelled.Configuration', {
 	},
 
 	getSpellCliPath: function() {
-		var spellCliPath = Spelled.app.platform.getConfig().spellCliPath
+		var spellCliPath = Spelled.app.platform.getConfig().spellCliPath + '/spellcli'
 
 		return !this.isInNodeWebkitDevEnvironment() ? spellCliPath : '../../../' + spellCliPath
 	},

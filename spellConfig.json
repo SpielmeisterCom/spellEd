@@ -2,7 +2,7 @@
 	"workspacePath"  : "modules/demo_projects",
 	"spellFlashPath" : "modules/spellFlash",
 	"spellCorePath"  : "modules/spellCore",
-	"spellCliPath"   : "modules/spellcli/spellcli",
+	"spellCliPath"   : "modules/spellcli",
 	"jdkPath"        : "",
 	"androidSdkPath" : ""
 }
