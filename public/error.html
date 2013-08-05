@@ -294,7 +294,7 @@
 
             var reportType = urlParams[ 'type' ]
 
-            document.getElementById('version').innerHTML    = navigator.userAgent + ' (build ' + urlParams['buildNumber'] + ' from ' + urlParams['buildTimeStamp'] + ')' ;
+            document.getElementById('version').innerHTML    = navigator.userAgent + ' (SpellEd version ' + urlParams['version'] + '; build ' + urlParams['buildNumber'] + ' from ' + urlParams['buildTimeStamp'] + ')' ;
 
             if( reportType == 'manual' ) {
                 document.getElementById( 'errorReportForm' ).style.display = "block";
