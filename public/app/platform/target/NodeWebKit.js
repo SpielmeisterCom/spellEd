@@ -42,10 +42,6 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 		var fs       = require( 'fs'),
 			path     = require( 'path' )
 
-		if( !fs.existsSync( filePath ) ) {
-			fs.mkdirSync( path.dirname( filePath ) )
-		}
-
 		fs.writeFileSync( filePath, content )
 	},
 
@@ -82,9 +78,12 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 			path            = require( 'path'),
 			childProcess    = require( 'child_process'),
 			onFinish        = function() {
+console.log( result )
 				Spelled.app.fireEvent( 'licensecallback', licenseData, result, callback )
 			},
 			onData      = function( data ) {
+console.log( data.toString() )
+alert( data )
 				result += data.toString()
 			}
 
