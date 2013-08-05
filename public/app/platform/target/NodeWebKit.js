@@ -31,6 +31,8 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 		var fs             = require( 'fs' ),
 			configFilePath = this.getConfigFilePath()
 
+		if( !fs.existsSync( configFilePath ) ) this.copyDefaultConfig()
+
 		this.spellConfig = Ext.decode( fs.readFileSync( configFilePath, 'utf8' ) )
 
 		return this.spellConfig
@@ -40,15 +42,24 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 		var fs       = require( 'fs'),
 			path     = require( 'path' )
 
-		if( !fs.existsSync( filePath ) ) {
-			fs.mkdirSync( path.dirname( filePath ) )
-		}
-
 		fs.writeFileSync( filePath, content )
 	},
 
 	writeLicense: function( licenceData ) {
 		this.writeFile( this.getLicenseFilePath(), licenceData )
+	},
+
+	copyDefaultConfig: function() {
+		var fs             = require( 'fs' ),
+			path           = require( 'path' ),
+			wrench         = require( 'wrench' ),
+			defaultConfig  = fs.readFileSync( this.getFilePath( Spelled.Configuration.defaultConfigFileName ) ),
+			configFilePath = this.getConfigFilePath(),
+			appDirName     = path.dirname( configFilePath )
+
+		if( !fs.existsSync( appDirName ) ) wrench.mkdirSyncRecursive( appDirName )
+
+		fs.writeFileSync( configFilePath, defaultConfig )
 	},
 
 	readLicense: function() {

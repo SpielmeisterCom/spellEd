@@ -41,7 +41,7 @@ Ext.define( 'Spelled.Configuration', {
 	},
 
 	getSpellCliPath: function() {
-		var spellCliPath = Spelled.app.platform.getConfig().spellCliPath
+		var spellCliPath = Spelled.app.platform.getConfig().spellCliPath + '/spellcli'
 
 		return !this.isInNodeWebkitDevEnvironment() ? spellCliPath : '../../../' + spellCliPath
 	},
@@ -58,6 +58,7 @@ Ext.define( 'Spelled.Configuration', {
 
 	appName                : 'spell',
 	configFileName         : 'spellConfig.json',
+	defaultConfigFileName  : 'defaultSpellConfig.json',
 	licenseFileName        : 'license.txt',
 	demoProjectsFolder     : 'demo_projects',
 	updateServerUrl        : 'http://cdn.spelljs.com/spelljs-desktop-latest-version.json',

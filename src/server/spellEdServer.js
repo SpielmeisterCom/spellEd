@@ -54,7 +54,7 @@ define(
 					projectsPath    = path.resolve( command.projectsRoot || path.resolve( spellPath, config.workspacePath ) ),
 					nodeModulesPath = path.resolve( spellPath, 'node_modules' ),
 					spellCorePath   = path.resolve( spellPath, config.spellCorePath ),
-					spellCliPath    = path.resolve( command.spellCliPath || path.join( spellPath, config.spellCliPath ) )
+					spellCliPath    = path.resolve( command.spellCliPath || path.join( spellPath, config.spellCliPath, 'spellcli' ) )
 
 				if( !fs.existsSync( nodeModulesPath ) ) {
 					nodeModulesPath = path.resolve( spellPath, '../../node_modules' )
