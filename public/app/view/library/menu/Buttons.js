@@ -79,7 +79,7 @@ Ext.define('Spelled.view.library.menu.Buttons' ,{
 				{
 					text: "Keyboard mapping",
 					action: "showCreateAsset",
-					type: 'keyToActionMap',
+					type: 'inputMap',
 					icon: 'resources/images/icons/keyboard.png'
 				},
 				{

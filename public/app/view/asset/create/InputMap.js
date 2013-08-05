@@ -1,4 +1,4 @@
-Ext.define('Spelled.view.asset.create.KeyToActionMap', {
+Ext.define('Spelled.view.asset.create.InputMap', {
     extend: 'Ext.container.Container',
     alias: 'widget.keytoactionconfig',
 

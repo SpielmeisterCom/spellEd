@@ -42,7 +42,7 @@ Ext.define('Spelled.controller.Projects', {
 		'asset.Fonts',
 		'asset.SpriteSheets',
 		'asset.KeyFrameAnimations',
-		'asset.KeyToActionMappings',
+		'asset.InputMappings',
 		'asset.TileMaps',
 		'asset.Translations',
 		'template.Components',
