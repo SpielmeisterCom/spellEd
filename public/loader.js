@@ -30,8 +30,10 @@ var nwExceptionHandler = function(errorMsg) {
         // code to run when error has occured on page
         window.location.href = 'error.html?' +
             'errorMsg='         + encodeURIComponent( errorMsg ) +
-            '&startLocation='   + encodeURIComponent( window.location.href ) +
-            '&screenCapture='   + encodeURIComponent( img )
+	        '&version='         + encodeURIComponent( Spelled.Configuration.version ) +
+	        '&buildNumber='     + encodeURIComponent( Spelled.Configuration.buildNumber ) +
+	        '&buildTimeStamp='  + encodeURIComponent( Spelled.Configuration.buildTimeStamp ) +
+	        '&screenCapture='   + encodeURIComponent( img )
     }, 'png');
 }
 
@@ -58,7 +60,11 @@ function registerGlobalErrorHandler(isNWRuntime, isDevelEnv) {
 			cleanUpStorage()
             var msg = url + ':' + lineNumber + "\n" + errorMsg;
 			window._error_handler = true
-            window.location.href = 'error.html?errorMsg=' + encodeURIComponent(msg) + '&startLocation=' + encodeURIComponent( window.location.href )
+            window.location.href = 'error.html?' +
+	            'errorMsg='         + encodeURIComponent(msg) +
+	            '&version='         + encodeURIComponent( Spelled.Configuration.version ) +
+	            '&buildNumber='     + encodeURIComponent( Spelled.Configuration.buildNumber ) +
+	            '&buildTimeStamp='  + encodeURIComponent( Spelled.Configuration.buildTimeStamp )
         }
 
     }

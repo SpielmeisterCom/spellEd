@@ -14,5 +14,5 @@ if [ -z "$BUILDTIMESTAMP" ] ; then
 fi
 
 #setting version and build of spelled
-perl -pi -e "s/buildNumber(\s*):(\s*)\'[^\']*\',/buildNumber\1:\2\'$BUILDNUMBER\',/g" modules/spellEd/public/app/Configuration.js
-perl -pi -e "s/buildTimeStamp(\s*):(\s*)\'[^\']*\',/buildTimeStamp\1:\2\'$BUILDTIMESTAMP\',/g" modules/spellEd/public/app/Configuration.js
+perl -pi -e "s/buildNumber(\s*):(\s*)\'[^\']*\',/buildNumber\1:\2\'$BUILDNUMBER\',/g" public/app/Configuration.js
+perl -pi -e "s/buildTimeStamp(\s*):(\s*)\'[^\']*\',/buildTimeStamp\1:\2\'$BUILDTIMESTAMP\',/g" public/app/Configuration.js
