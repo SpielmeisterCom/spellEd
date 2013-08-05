@@ -112,7 +112,12 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 	checkWorkspaceSettings: function() {
 		var workspacePath = Spelled.Configuration.getWorkspacePath(),
 			fs            = require( 'fs'),
-			path          = require( 'path' )
+			path          = require( 'path' ),
+			updateAPI     = function() {
+				var provider = Ext.direct.Manager.getProvider( 'webkitProvider' )
+				provider.createWebKitExtDirectApi( Ext.bind( function() { this.loadProjects() }, this.application ) )
+			}
+
 
 		if( !workspacePath ) {
 			var execPathDir      = path.dirname( process.execPath ),
@@ -122,15 +127,15 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 
 			if( fs.existsSync( demoProjectsPath ) ) {
 				Spelled.Configuration.setWorkspacePath( demoProjectsPath )
+
+				Ext.callback( updateAPI )
 			} else {
 				this.showSpellEdConfig( false )
 			}
 		} else if( !fs.existsSync( workspacePath ) ) {
 			this.showSpellEdConfig( false )
 		} else {
-			var provider = Ext.direct.Manager.getProvider( 'webkitProvider')
-
-			provider.createWebKitExtDirectApi( Ext.bind( function() { this.loadProjects() }, this.application ) )
+			Ext.callback( updateAPI )
 		}
 	}
 })
