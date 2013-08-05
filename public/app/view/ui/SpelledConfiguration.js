@@ -125,8 +125,8 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 	setConfigHandler: function() {
 		var window         = this.up( 'spelledconfigure' ),
 			form           = this.up( 'form' ),
-			values         = form.getForm().getValues(),
 			workspaceField = form.down( 'field[name="workspacePath"]' ),
+			oldWorkspace   = form.down( 'displayfield[configName="workspacePath"]' ).getValue(),
 			workspacePath  = workspaceField.getValue(),
 			androidSdkPath = form.down( 'field[name="androidSdkPath"]' ).getValue(),
 			jdkPath        = form.down( 'field[name="jdkPath"]' ).getValue(),
@@ -151,7 +151,8 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 				Ext.callback( callback )
 			} )
 
-		} else if( workspacePath ) {
+		} else if( workspacePath || !fs.existsSync( oldWorkspace ) ) {
+			Spelled.MessageBox.alert( "Wrong workspace", "Your workspace doesn't exist!" )
 			workspaceField.markInvalid( 'No such folder' )
 			workspaceField.textValid = false
 		} else {

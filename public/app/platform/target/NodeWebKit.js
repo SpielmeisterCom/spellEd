@@ -6,6 +6,8 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 
 	getFilePath: function( fileName ) {
 		var pathUtil = require( 'pathUtil' ),
+			fs       = require( 'fs' ),
+			wrench   = require( 'wrench' ),
 			path     = require( 'path' ),
 			appName  = Spelled.Configuration.appName,
 			filePath = pathUtil.createConfigFilePath( path.dirname( process.execPath ), appName, fileName )
@@ -13,6 +15,8 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 		if( filePath ) return filePath
 
 		var appDataPath = pathUtil.createOsPath().createAppDataPath( appName )
+
+		if( !fs.existsSync( appDataPath ) ) wrench.mkdirSyncRecursive( appDataPath )
 
 		return path.join( appDataPath, fileName )
 	},
@@ -50,13 +54,8 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 
 	copyDefaultConfig: function() {
 		var fs             = require( 'fs' ),
-			path           = require( 'path' ),
-			wrench         = require( 'wrench' ),
 			defaultConfig  = fs.readFileSync( this.getFilePath( Spelled.Configuration.defaultConfigFileName ) ),
-			configFilePath = this.getConfigFilePath(),
-			appDirName     = path.dirname( configFilePath )
-
-		if( !fs.existsSync( appDirName ) ) wrench.mkdirSyncRecursive( appDirName )
+			configFilePath = this.getConfigFilePath()
 
 		fs.writeFileSync( configFilePath, defaultConfig )
 	},

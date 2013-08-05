@@ -71,7 +71,7 @@ Ext.define('Spelled.view.register.Window' ,{
 	},
 
 	validateForm: function( result ) {
-		if( !this.down( 'form' ) ) return
+		if( !this.down( 'form' ) || !result ) return
 
 		var registerWindow = this,
 			form           = registerWindow.down( 'form' ).getForm(),
