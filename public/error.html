@@ -294,7 +294,7 @@
 
             var reportType = urlParams[ 'type' ]
 
-            document.getElementById('version').innerHTML    = navigator.userAgent;
+            document.getElementById('version').innerHTML    = navigator.userAgent + ' (build ' + urlParams['buildNumber'] + ' from ' + urlParams['buildTimeStamp'] + ')' ;
 
             if( reportType == 'manual' ) {
                 document.getElementById( 'errorReportForm' ).style.display = "block";
@@ -388,11 +388,13 @@
 
         var sendBugReport = function() {
             var descriptionEl   = document.getElementById('description'),
-                description     = descriptionEl.value
+                description     = descriptionEl.value,
+		        versionEl       = document.getElementById('version'),
+		        version         = versionEl.innerHTML
 
             var bugReportData = {
                 action:         'createIssue',
-                version:        navigator.userAgent,
+                version:        version,
                 description:    description,
                 errorMsg:       urlParams[ 'errorMsg' ]
             };
