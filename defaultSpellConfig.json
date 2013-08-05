@@ -1,0 +1,7 @@
+{
+	"spellFlashPath": "modules/spellFlash",
+	"spellCorePath": "modules/spellCore",
+	"spellCliPath": "modules/spellcli/spellcli",
+	"jdkPath": "",
+	"androidSdkPath": ""
+}

@@ -31,6 +31,8 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 		var fs             = require( 'fs' ),
 			configFilePath = this.getConfigFilePath()
 
+		if( !fs.existsSync( configFilePath ) ) this.copyDefaultConfig()
+
 		this.spellConfig = Ext.decode( fs.readFileSync( configFilePath, 'utf8' ) )
 
 		return this.spellConfig
@@ -49,6 +51,13 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 
 	writeLicense: function( licenceData ) {
 		this.writeFile( this.getLicenseFilePath(), licenceData )
+	},
+
+	copyDefaultConfig: function() {
+		var fs            = require( 'fs' ),
+			defaultConfig = this.getFilePath( Spelled.Configuration.defaultConfigFileName )
+
+		fs.writeFileSync( this.getConfigFilePath() , fs.readFileSync( defaultConfig,  'utf8' ) )
 	},
 
 	readLicense: function() {
