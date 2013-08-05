@@ -12,7 +12,7 @@ Ext.define('Spelled.controller.Menu', {
 		'Spelled.view.menu.contextmenu.templatesList.Entity',
 		'Spelled.view.menu.contextmenu.ComponentTemplateAttributesList',
 		'Spelled.view.menu.contextmenu.SystemTemplateInputList',
-		'Spelled.view.menu.contextmenu.KeyToActionMapping',
+		'Spelled.view.menu.contextmenu.InputMapping',
 		'Spelled.view.doc.Tool',
 		'Spelled.view.ui.SpelledConsole',
 		'Spelled.view.ui.SpelledRightPanel',
@@ -32,7 +32,7 @@ Ext.define('Spelled.controller.Menu', {
 		'menu.contextmenu.templatesList.Entity',
         'menu.contextmenu.ComponentTemplateAttributesList',
         'menu.contextmenu.SystemTemplateInputList',
-		'menu.contextmenu.KeyToActionMapping',
+		'menu.contextmenu.InputMapping',
 		'doc.Tool',
         'ui.SpelledConsole',
 		'ui.SpelledRightPanel',
@@ -189,7 +189,7 @@ Ext.define('Spelled.controller.Menu', {
             },
 
 
-			'keytoactionmappingcontextmenu [action="remove"]': {
+			'inputmappingcontextmenu [action="remove"]': {
 				click: this.removeKeyMapping
 			},
 
@@ -210,7 +210,7 @@ Ext.define('Spelled.controller.Menu', {
         })
 
 		this.application.on({
-			showkeymappingcontextmenu: this.showKeyToActionMappingContextMenu,
+			showkeymappingcontextmenu: this.showInputMappingContextMenu,
 			showcontextmenu: this.createAndShowView,
 			scope: this
 		})
@@ -326,9 +326,9 @@ Ext.define('Spelled.controller.Menu', {
         )
     },
 
-	showKeyToActionMappingContextMenu: function( view, row, column, index, e, options ) {
+	showInputMappingContextMenu: function( view, row, column, index, e, options ) {
 		var contextMenu = this.createAndShowView(
-			this.getMenuContextmenuKeyToActionMappingView(),
+			this.getMenuContextmenuInputMappingView(),
 			e
 		)
 

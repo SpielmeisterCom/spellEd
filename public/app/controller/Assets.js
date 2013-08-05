@@ -8,7 +8,7 @@ Ext.define('Spelled.controller.Assets', {
 	TYPE_KEY_FRAME_ANIMATION: 'keyFrameAnimation',
 	TYPE_FONT: 'font',
 	TYPE_SOUND: 'sound',
-	TYPE_KEY_TO_ACTION: 'keyToActionMap',
+	TYPE_KEY_TO_ACTION: 'InputMap',
 	TYPE_TRANSLATION: 'translation',
 
 	requires: [
@@ -21,7 +21,7 @@ Ext.define('Spelled.controller.Assets', {
 		'Spelled.view.asset.create.SpriteSheet',
 		'Spelled.view.asset.create.Animation',
 		'Spelled.view.asset.create.Font',
-		'Spelled.view.asset.create.KeyToActionMap',
+		'Spelled.view.asset.create.InputMap',
 		'Spelled.view.asset.create.KeyFrameAnimation',
 		'Spelled.view.asset.edit.Edit',
 		'Spelled.view.asset.inspector.Config',
@@ -43,7 +43,7 @@ Ext.define('Spelled.controller.Assets', {
 		'Spelled.store.template.component.KeyFrameComponents',
 		'Spelled.store.asset.KeyFrameAnimations',
         'Spelled.store.asset.KeyFrameAnimationPreviews',
-		'Spelled.store.asset.KeyToActionMappings',
+		'Spelled.store.asset.InputMappings',
 		'Spelled.store.asset.InterpolationFunctions',
 		'Spelled.store.asset.Assets',
 		'Spelled.store.asset.TileMaps',
@@ -69,7 +69,7 @@ Ext.define('Spelled.controller.Assets', {
 		'asset.create.SpriteSheet',
 		'asset.create.Animation',
 		'asset.create.Font',
-		'asset.create.KeyToActionMap',
+		'asset.create.InputMap',
 		'asset.create.KeyFrameAnimation',
 		'asset.create.2dTileMap',
 		'asset.create.Sound',
@@ -86,7 +86,7 @@ Ext.define('Spelled.controller.Assets', {
 		'asset.SpriteSheets',
 		'asset.Animations',
 		'asset.KeyFrameAnimations',
-		'asset.KeyToActionMappings',
+		'asset.InputMappings',
 	    'asset.TileMaps',
 
 		'asset.ActionKeys',
@@ -390,7 +390,7 @@ Ext.define('Spelled.controller.Assets', {
 				fieldSet.add( { xtype: 'spritesheetconfig', edit: !!asset } )
 				break
 			case this.TYPE_KEY_TO_ACTION:
-				this.addKeyToActionMapForm( fieldSet, asset )
+				this.addInputMapForm( fieldSet, asset )
 				break
 			case this.TYPE_KEY_FRAME_ANIMATION:
 				this.addKeyFrameAnimationForm( fieldSet, asset )
@@ -418,11 +418,11 @@ Ext.define('Spelled.controller.Assets', {
 		panel.createLanguageTabs( localized, project.getSupportedLanguages() )
 	},
 
-	addKeyToActionMapForm: function( fieldSet, asset ) {
-		var keyToActionMapConfig = fieldSet.add( { xtype: 'keytoactionconfig' } )
+	addInputMapForm: function( fieldSet, asset ) {
+		var inputMapConfig = fieldSet.add( { xtype: 'keytoactionconfig' } )
 
 		if( !!asset ) {
-			var grid   = keyToActionMapConfig.down('gridpanel'),
+			var grid   = inputMapConfig.down('gridpanel'),
 				store  = grid.getStore(),
 				config = asset.get( 'config' )
 
@@ -434,7 +434,7 @@ Ext.define('Spelled.controller.Assets', {
 				}
 			)
 
-			keyToActionMapConfig.down('gridpanel').reconfigure( store )
+			inputMapConfig.down('gridpanel').reconfigure( store )
 		}
 	},
 

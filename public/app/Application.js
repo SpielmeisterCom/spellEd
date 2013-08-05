@@ -40,7 +40,7 @@ Ext.define('Spelled.Application', {
 		'asset.Animations',
 		'asset.Fonts',
 		'asset.KeyFrameAnimations',
-		'asset.KeyToActionMappings',
+		'asset.InputMappings',
 		'asset.Sounds',
 		'asset.SpriteSheets',
 		'asset.Appearances',

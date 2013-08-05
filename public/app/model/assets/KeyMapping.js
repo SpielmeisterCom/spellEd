@@ -3,20 +3,20 @@ Ext.define('Spelled.model.assets.KeyMapping', {
 
 	docString: '#!/guide/asset_type_key_to_action_map',
 
-	iconCls: "tree-asset-keytoactionmap-icon",
+	iconCls: "tree-asset-inputmap-icon",
 
 	proxy: {
 		type: 'storageaction',
 		extraParams: {
 			type: 'asset',
-			subtype: 'keyToActionMap'
+			subtype: 'inputMap'
 		},
 		writer: 'asset',
 		reader: 'asset'
 	},
 
 	fields: [
-		{ name: 'subtype', type: 'string', defaultValue: 'keyToActionMap' },
+		{ name: 'subtype', type: 'string', defaultValue: 'inputMap' },
 		{ name: 'config', type: 'object' }
 	],
 

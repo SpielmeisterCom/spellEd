@@ -53,11 +53,11 @@ Ext.define('Spelled.store.asset.Types', {
 			"storeId": "asset.Sounds"
 		},
 		{
-			"type":"keyToActionMap",
+			"type":"inputMap",
 			"name":"Keyboard mapping",
-			"iconCls": "tree-asset-keytoactionmap-icon",
+			"iconCls": "tree-asset-inputmap-icon",
 			"sortOrder": 70,
-			"storeId": "asset.KeyToActionMappings"
+			"storeId": "asset.InputMappings"
 		},
 		{
 			"type":"2dTileMap",

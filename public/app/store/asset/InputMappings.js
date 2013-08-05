@@ -1,4 +1,4 @@
-Ext.define('Spelled.store.asset.KeyToActionMappings', {
+Ext.define('Spelled.store.asset.InputMappings', {
 	extend: 'Ext.data.Store',
 
 	mixins: [ 'Spelled.store.asset.Assets' ],
@@ -8,5 +8,4 @@ Ext.define('Spelled.store.asset.KeyToActionMappings', {
 	],
 
 	model: 'Spelled.model.assets.KeyMapping'
-
 })

@@ -79,7 +79,7 @@ Ext.define('Spelled.store.template.component.AttributeTypes', {
 		},
 		{
 			"type":"spelledkeyaction",
-			"name":"assetId:keyToActionMap"
+			"name":"assetId:inputMap"
 		},
 		{
 			"type":"spelledkeyframeanimationfield",
