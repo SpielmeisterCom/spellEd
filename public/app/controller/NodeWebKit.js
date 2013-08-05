@@ -110,12 +110,13 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 	},
 
 	checkWorkspaceSettings: function() {
-		var workspacePath = Spelled.Configuration.getWorkspacePath(),
+		var app           = this.application,
+			workspacePath = Spelled.Configuration.getWorkspacePath(),
 			fs            = require( 'fs'),
 			path          = require( 'path' ),
 			updateAPI     = function() {
 				var provider = Ext.direct.Manager.getProvider( 'webkitProvider' )
-				provider.createWebKitExtDirectApi( Ext.bind( function() { this.loadProjects() }, this.application ) )
+				provider.createWebKitExtDirectApi( Ext.bind( function() { this.loadProjects() }, app ) )
 			}
 
 
