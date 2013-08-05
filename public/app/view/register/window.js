@@ -25,7 +25,6 @@ Ext.define('Spelled.view.register.Window' ,{
 					items: [
 						{
 							xtype: 'textfield',
-							validateOnChange: false,
 							name: 'name',
 							fieldLabel: 'User name',
 							anchor: '100%',
@@ -33,7 +32,6 @@ Ext.define('Spelled.view.register.Window' ,{
 						},
 						{
 							xtype: "textarea",
-							validateOnChange: false,
 							anchor    : '100%',
 							rows: 9,
 							name: 'license',
@@ -73,35 +71,42 @@ Ext.define('Spelled.view.register.Window' ,{
 	},
 
 	validateForm: function( result ) {
+		if( !this.down( 'form' ) ) return
+
 		var registerWindow = this,
 			form           = registerWindow.down( 'form' ).getForm(),
 			invalid        = true,
 			pidField       = this.down( 'displayfield[name="pid"]'),
 			infoField      = this.down( 'displayfield[name="information"]'),
-			nameField      = this.down( 'textfield[name="name"]')
+			nameField      = this.down( 'textfield[name="name"]'),
+			hasPayload     = Ext.isObject( result.payload ),
+			isCorrectUser  = hasPayload && nameField.getValue() == result.payload.uid
 
 		pidField.reset()
 		infoField.reset()
 
-		if( Spelled.Validator.validateLicenseInformation( result ) && nameField.getValue() == result.payload.uid ) {
+		if( Spelled.Validator.validateLicenseInformation( result ) && isCorrectUser ) {
 			var information = this.down( 'displayfield[name="information"]'),
 				payload     = result.payload
 
 			pidField.setValue( payload.pid )
+			form.clearInvalid()
+			invalid = false
 
-			if( Spelled.Validator.validateLicenseSubscription( payload ) ) {
-				var expireDate = Spelled.Converter.getLicenseExpireDate( payload.isd, payload.days )
+			var expireDate = Spelled.Converter.getLicenseExpireDate( payload.isd, payload.days )
 
-				form.clearInvalid()
-				invalid = false
+			infoField.setValue( 'Entitles for free updates and upgrades until ' + Ext.Date.format( expireDate, 'F j, Y' ) )
 
-				infoField.setValue( 'Entitles for free updates and upgrades until ' + Ext.Date.format( expireDate, 'F j, Y' ) )
-			} else {
-				infoField.setValue( 'License expired.' )
-			}
-
-		} else {
+		} else if( hasPayload ) {
 			form.markInvalid( { name: 'Invalid', license: 'Invalid' } )
+
+			if( Spelled.Validator.validateLicenseSubscription( result.payload ) ) {
+				infoField.setValue( 'License expired.' )
+			} else if( !isCorrectUser ){
+				infoField.setValue( 'Wrong username.' )
+			}
+		} else {
+			infoField.setValue( "Your license signature is invalid." )
 		}
 
 		registerWindow.down( '#okRegisterButton').setDisabled( invalid )

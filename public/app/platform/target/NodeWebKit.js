@@ -39,8 +39,7 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 	},
 
 	writeFile: function( filePath, content ) {
-		var fs       = require( 'fs'),
-			path     = require( 'path' )
+		var fs       = require( 'fs')
 
 		fs.writeFileSync( filePath, content )
 	},
