@@ -4,7 +4,7 @@ Ext.define( 'Spelled.Configuration', {
 	isDemoInstance: function() {
 		var host = location.hostname
 
-		return host === this.demoServerHostname
+		return host === this.demoServerHostname || host === this.demoStagingServer
 	},
 
 	isDevEnvironment: function() {
@@ -63,6 +63,7 @@ Ext.define( 'Spelled.Configuration', {
 	demoProjectsFolder     : 'demo_projects',
 	updateServerUrl        : 'http://cdn.spelljs.com/spelljs-desktop-latest-version.json',
 	demoServerHostname     : 'spelled-demo.spelljs.com',
+	demoStagingServer      : 'spelled-demo.spelljs.staging',
 	version                : '0.8.29',
 	buildNumber	       : '99999',
 	buildTimeStamp	       : '2099-01-01T01:00:00.000+01:00',
