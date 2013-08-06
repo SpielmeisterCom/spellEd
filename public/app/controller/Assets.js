@@ -8,7 +8,7 @@ Ext.define('Spelled.controller.Assets', {
 	TYPE_KEY_FRAME_ANIMATION: 'keyFrameAnimation',
 	TYPE_FONT: 'font',
 	TYPE_SOUND: 'sound',
-	TYPE_KEY_TO_ACTION: 'InputMap',
+	TYPE_KEY_TO_ACTION: 'inputMap',
 	TYPE_TRANSLATION: 'translation',
 
 	requires: [

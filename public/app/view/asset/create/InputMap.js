@@ -60,7 +60,7 @@ Ext.define('Spelled.view.asset.create.InputMap', {
 							}
 						},
 						{
-							header: 'Action',
+							header: 'Command',
 							width: 120,
 							dataIndex: 'action',
 							editor: {

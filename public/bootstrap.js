@@ -56,7 +56,6 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.TabReorderer": [],
   "Ext.ux.grid.filter.NumericFilter": [],
   "Spelled.model.config.Scene": [],
-  "Spelled.store.asset.KeyToActionMappings": [],
   "Ext.ux.event.Recorder": [],
   "Spelled.view.asset.create.2dTileMap": [],
   "Spelled.view.menu.Menu": [],
@@ -73,7 +72,6 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.IFrame": [],
   "Spelled.view.template.component.attribute.Appearance": [],
   "Spelled.store.grouping.Components": [],
-  "Spelled.view.template.component.attribute.KeyToActionMap": [],
   "Ext.ux.form.SearchField": [],
   "Ext.ux.dd.CellFieldDropZone": [],
   "Spelled.model.template.SystemConfigItem": [],
@@ -83,16 +81,19 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.ui.SpelledAboutDialog": [],
   "Spelled.view.template.component.attribute.TextAppearance": [],
   "Spelled.view.library.field.Name": [],
+  "Spelled.store.asset.InputMappings": [],
   "Spelled.base.field.AssetId": [],
   "Spelled.view.template.system.Configuration": [],
   "Spelled.view.asset.create.KeyFrameAnimation": [],
   "Spelled.view.template.component.Property": [],
   "Spelled.model.template.Component": [],
+  "Spelled.view.project.settings.Android": [],
   "Spelled.view.menu.contextmenu.ScriptsList": [],
   "Spelled.model.Script": [],
   "Spelled.model.assets.TileMap": [],
   "Spelled.controller.Scenes": [],
   "Spelled.data.writer.Scene": [],
+  "Spelled.view.template.component.attribute.InputMap": [],
   "Ext.ux.FieldReplicator": [],
   "Spelled.view.build.menu.Targets": [],
   "Spelled.view.template.component.attribute.Number": [],
@@ -101,7 +102,6 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.asset.create.Translation": [],
   "Spelled.view.template.component.Attributes": [],
   "Spelled.view.menu.contextmenu.SceneSystemsItemList": [],
-  "Spelled.view.asset.create.KeyToActionMap": [],
   "Spelled.data.writer.Writer": [],
   "Ext.ux.dd.PanelFieldDragZone": [],
   "Spelled.view.template.system.Details": [],
@@ -142,6 +142,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.library.menu.item.CopyIdentifier": [],
   "Ext.ux.ToolbarDroppable": [],
   "Spelled.view.ui.StartScreen": [],
+  "Spelled.view.project.settings.iOS": [],
   "Spelled.data.reader.Reader": [],
   "Spelled.view.entity.ComponentsList": [],
   "Spelled.store.config.Scenes": [],
@@ -151,7 +152,6 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.base.view.IFrame": [],
   "Ext.ux.TabCloseMenu": [],
   "Spelled.model.config.Entity": [],
-  "Spelled.view.menu.contextmenu.KeyToActionMapping": [],
   "Spelled.store.template.Systems": [],
   "Spelled.view.asset.create.Animation": [],
   "Spelled.view.ui.SpelledConfiguration": [],
@@ -197,6 +197,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.ui.SpelledConsole": [],
   "Spelled.controller.Components": [],
   "Spelled.view.register.Window": [],
+  "Spelled.view.asset.create.InputMap": [],
   "Spelled.store.asset.Sounds": [],
   "Spelled.view.doc.Tool": [],
   "Spelled.view.template.Create": [],
@@ -264,6 +265,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.GroupTabRenderer": [],
   "Spelled.store.asset.Assets": [],
   "Spelled.view.component.AddButton": [],
+  "Spelled.Validator": [],
   "Spelled.controller.assets.Translations": [],
   "Spelled.controller.Templates": [],
   "Spelled.view.scene.plugin.CellEditing": [],
@@ -272,6 +274,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.controller.Systems": [],
   "Spelled.store.asset.KeyFrameAnimations": [],
   "Spelled.model.Asset": [],
+  "Spelled.view.menu.contextmenu.InputMapping": [],
   "Spelled.view.template.system.Edit": [],
   "Spelled.store.ScenesTree": [],
   "Spelled.view.template.component.attribute.Vec2": [],
@@ -421,7 +424,6 @@ Ext.ClassManager.addNameAliasMappings({
     "gridfilter.numeric"
   ],
   "Spelled.model.config.Scene": [],
-  "Spelled.store.asset.KeyToActionMappings": [],
   "Ext.ux.event.Recorder": [],
   "Spelled.view.asset.create.2dTileMap": [
     "widget.2dtilemapconfig"
@@ -458,9 +460,6 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.spelledappearancefield"
   ],
   "Spelled.store.grouping.Components": [],
-  "Spelled.view.template.component.attribute.KeyToActionMap": [
-    "widget.spelledkeyaction"
-  ],
   "Ext.ux.form.SearchField": [
     "widget.searchfield"
   ],
@@ -482,6 +481,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.library.field.Name": [
     "widget.spellednamefield"
   ],
+  "Spelled.store.asset.InputMappings": [],
   "Spelled.base.field.AssetId": [],
   "Spelled.view.template.system.Configuration": [
     "widget.systemtemplateconfiguration"
@@ -493,6 +493,9 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.componenttemplateproperty"
   ],
   "Spelled.model.template.Component": [],
+  "Spelled.view.project.settings.Android": [
+    "widget.projectandroidsettings"
+  ],
   "Spelled.view.menu.contextmenu.ScriptsList": [
     "widget.scriptslistcontextmenu"
   ],
@@ -501,6 +504,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.controller.Scenes": [],
   "Spelled.data.writer.Scene": [
     "writer.scene"
+  ],
+  "Spelled.view.template.component.attribute.InputMap": [
+    "widget.spelledkeyaction"
   ],
   "Ext.ux.FieldReplicator": [],
   "Spelled.view.build.menu.Targets": [
@@ -523,9 +529,6 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.menu.contextmenu.SceneSystemsItemList": [
     "widget.scenesystemsitemlistcontextmenu"
-  ],
-  "Spelled.view.asset.create.KeyToActionMap": [
-    "widget.keytoactionconfig"
   ],
   "Spelled.data.writer.Writer": [],
   "Ext.ux.dd.PanelFieldDragZone": [],
@@ -609,6 +612,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.ui.StartScreen": [
     "widget.startscreen"
   ],
+  "Spelled.view.project.settings.iOS": [
+    "widget.projectiossettings"
+  ],
   "Spelled.data.reader.Reader": [],
   "Spelled.view.entity.ComponentsList": [
     "widget.entitycomponentslist"
@@ -628,9 +634,6 @@ Ext.ClassManager.addNameAliasMappings({
     "plugin.tabclosemenu"
   ],
   "Spelled.model.config.Entity": [],
-  "Spelled.view.menu.contextmenu.KeyToActionMapping": [
-    "widget.keytoactionmappingcontextmenu"
-  ],
   "Spelled.store.template.Systems": [],
   "Spelled.view.asset.create.Animation": [
     "widget.animationassetconfig"
@@ -717,6 +720,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.controller.Components": [],
   "Spelled.view.register.Window": [
     "widget.registerwindow"
+  ],
+  "Spelled.view.asset.create.InputMap": [
+    "widget.keytoactionconfig"
   ],
   "Spelled.store.asset.Sounds": [],
   "Spelled.view.doc.Tool": [
@@ -859,6 +865,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.component.AddButton": [
     "widget.addcomponentbutton"
   ],
+  "Spelled.Validator": [],
   "Spelled.controller.assets.Translations": [],
   "Spelled.controller.Templates": [],
   "Spelled.view.scene.plugin.CellEditing": [
@@ -869,6 +876,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.controller.Systems": [],
   "Spelled.store.asset.KeyFrameAnimations": [],
   "Spelled.model.Asset": [],
+  "Spelled.view.menu.contextmenu.InputMapping": [
+    "widget.inputmappingcontextmenu"
+  ],
   "Spelled.view.template.system.Edit": [
     "widget.systemtemplateedit"
   ],
