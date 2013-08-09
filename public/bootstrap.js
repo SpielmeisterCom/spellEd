@@ -5,11 +5,13 @@
  * metadata-driven class system features 
  */
 Ext.Loader.addClassPathMappings({
+  "Spelled.view.ui.SpelledAboutComponents": "app/view/ui/SpellEdAboutComponents.js",
   " Ext.Msg": "ext/src/window/MessageBox.js",
   "Ext": "ext/src",
   "Spelled.base.view.IFrame": "app/base/view/Iframe.js",
   "Ext.rtl.EventObjectImpl": "ext/src/rtl/EventObject.js",
   "Spelled.view.register.Window": "app/view/register/window.js",
+  "Spelled.view.ui.SpelledAboutPaths": "app/view/ui/SpellEdAboutPaths.js",
   "Spelled": "app"
 });
 Ext.ClassManager.addNameAlternateMappings({
@@ -114,6 +116,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.data.reader.Component": [],
   "Spelled.view.layout.Main": [],
   "Ext.ux.GroupTabPanel": [],
+  "Spelled.view.ui.SpelledAboutPaths": [],
   "Spelled.model.assets.Translation": [],
   "Ext.ux.statusbar.ValidationStatus": [],
   "Spelled.view.template.system.config.Items": [],
@@ -222,10 +225,12 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.platform.target.Cloud": [],
   "Spelled.store.script.Scripts": [],
   "Ext.ux.ajax.SimManager": [],
+  "Spelled.view.ui.SpelledAboutTheProduct": [],
   "Spelled.view.template.component.Edit": [],
   "Spelled.proxy.StorageAction": [],
   "Spelled.view.scene.Create": [],
   "Spelled.data.writer.ComponentTemplate": [],
+  "Spelled.view.ui.SpelledAboutComponents": [],
   "Spelled.store.asset.KeyFrameAnimationPreviews": [],
   "Ext.ux.TabScrollerMenu": [],
   "Spelled.view.template.component.attribute.Integer": [],
@@ -558,6 +563,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.GroupTabPanel": [
     "widget.grouptabpanel"
   ],
+  "Spelled.view.ui.SpelledAboutPaths": [
+    "widget.spelledaboutpaths"
+  ],
   "Spelled.model.assets.Translation": [],
   "Ext.ux.statusbar.ValidationStatus": [],
   "Spelled.view.template.system.config.Items": [
@@ -780,6 +788,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.platform.target.Cloud": [],
   "Spelled.store.script.Scripts": [],
   "Ext.ux.ajax.SimManager": [],
+  "Spelled.view.ui.SpelledAboutTheProduct": [
+    "widget.spelledabouttheproduct"
+  ],
   "Spelled.view.template.component.Edit": [
     "widget.componenttemplateedit"
   ],
@@ -791,6 +802,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.data.writer.ComponentTemplate": [
     "writer.componentTemplate"
+  ],
+  "Spelled.view.ui.SpelledAboutComponents": [
+    "widget.spelledaboutcomponents"
   ],
   "Spelled.store.asset.KeyFrameAnimationPreviews": [],
   "Ext.ux.TabScrollerMenu": [
