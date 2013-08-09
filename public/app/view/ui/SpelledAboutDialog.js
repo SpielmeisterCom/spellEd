@@ -1,8 +1,13 @@
 Ext.define('Spelled.view.ui.SpelledAboutDialog' ,{
     extend: 'Ext.Window',
     title : 'About SpellEd',
-
     alias: 'widget.spelledabout',
+
+    requires: [
+        'widget.spelledabouttheproduct',
+        'widget.spelledaboutconfiguration',
+        'widget.spelledaboutmodules'
+    ],
 
 	autoShow: true,
     modal : true,
@@ -25,10 +30,10 @@ Ext.define('Spelled.view.ui.SpelledAboutDialog' ,{
                                 xtype: 'spelledabouttheproduct'
                             },
                             {
-                                xtype: 'spelledaboutmodules'
+                                xtype: 'spelledaboutconfiguration'
                             },
                             {
-                                xtype: 'spelledaboutconfiguration'
+                                xtype: 'spelledaboutmodules'
                             }
                         ]
                     }]
