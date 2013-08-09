@@ -4,6 +4,14 @@ Ext.define('Spelled.view.ui.SpelledAboutConfiguration' ,{
 
     title : 'SpellEd Configuration',
 
+    listeners: {
+        'beforeedit': {
+            fn: function(){
+                return false;
+            }
+        }
+    },
+
     initComponent: function() {
         Ext.applyIf( this, {
             source: {
