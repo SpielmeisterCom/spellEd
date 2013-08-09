@@ -1,4 +1,4 @@
-Ext.define('Spelled.view.ui.SpelledAboutTheProduct' ,{
+Ext.define('Spelled.view.ui.about.TheProduct' ,{
     extend: 'Ext.form.Panel',
     alias: 'widget.spelledabouttheproduct',
 
