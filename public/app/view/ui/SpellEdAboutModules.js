@@ -1,8 +1,8 @@
-Ext.define('Spelled.view.ui.SpelledAboutPaths' ,{
+Ext.define('Spelled.view.ui.SpelledAboutComponents' ,{
     extend: 'Ext.form.Panel',
-    alias: 'widget.spelledaboutpaths',
+    alias: 'widget.spelledaboutmodules',
 
-    title : 'Paths',
+    title : 'Modules',
 
     initComponent: function() {
 

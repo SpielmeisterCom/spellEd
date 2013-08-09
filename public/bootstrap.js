@@ -5,13 +5,13 @@
  * metadata-driven class system features 
  */
 Ext.Loader.addClassPathMappings({
-  "Spelled.view.ui.SpelledAboutComponents": "app/view/ui/SpellEdAboutComponents.js",
+  "Spelled.view.ui.SpelledAboutComponents": "app/view/ui/SpellEdAboutModules.js",
+  "Spelled.view.ui.SpelledAboutConfiguration": "app/view/ui/SpellEdAboutConfiguration.js",
   " Ext.Msg": "ext/src/window/MessageBox.js",
   "Ext": "ext/src",
   "Spelled.base.view.IFrame": "app/base/view/Iframe.js",
   "Ext.rtl.EventObjectImpl": "ext/src/rtl/EventObject.js",
   "Spelled.view.register.Window": "app/view/register/window.js",
-  "Spelled.view.ui.SpelledAboutPaths": "app/view/ui/SpellEdAboutPaths.js",
   "Spelled": "app"
 });
 Ext.ClassManager.addNameAlternateMappings({
@@ -116,7 +116,6 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.data.reader.Component": [],
   "Spelled.view.layout.Main": [],
   "Ext.ux.GroupTabPanel": [],
-  "Spelled.view.ui.SpelledAboutPaths": [],
   "Spelled.model.assets.Translation": [],
   "Ext.ux.statusbar.ValidationStatus": [],
   "Spelled.view.template.system.config.Items": [],
@@ -158,6 +157,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.store.template.Systems": [],
   "Spelled.view.asset.create.Animation": [],
   "Spelled.view.ui.SpelledConfiguration": [],
+  "Spelled.view.ui.SpelledAboutConfiguration": [],
   "Spelled.model.LibraryNode": [],
   "Ext.ux.grid.filter.DateTimeFilter": [],
   "Spelled.EntityHelper": [],
@@ -563,9 +563,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.GroupTabPanel": [
     "widget.grouptabpanel"
   ],
-  "Spelled.view.ui.SpelledAboutPaths": [
-    "widget.spelledaboutpaths"
-  ],
   "Spelled.model.assets.Translation": [],
   "Ext.ux.statusbar.ValidationStatus": [],
   "Spelled.view.template.system.config.Items": [
@@ -648,6 +645,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.ui.SpelledConfiguration": [
     "widget.spelledconfigure"
+  ],
+  "Spelled.view.ui.SpelledAboutConfiguration": [
+    "widget.spelledaboutconfiguration"
   ],
   "Spelled.model.LibraryNode": [],
   "Ext.ux.grid.filter.DateTimeFilter": [
@@ -804,7 +804,7 @@ Ext.ClassManager.addNameAliasMappings({
     "writer.componentTemplate"
   ],
   "Spelled.view.ui.SpelledAboutComponents": [
-    "widget.spelledaboutcomponents"
+    "widget.spelledaboutmodules"
   ],
   "Spelled.store.asset.KeyFrameAnimationPreviews": [],
   "Ext.ux.TabScrollerMenu": [

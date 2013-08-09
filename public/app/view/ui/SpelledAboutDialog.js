@@ -25,10 +25,10 @@ Ext.define('Spelled.view.ui.SpelledAboutDialog' ,{
                                 xtype: 'spelledabouttheproduct'
                             },
                             {
-                                xtype: 'spelledaboutcomponents'
+                                xtype: 'spelledaboutmodules'
                             },
                             {
-                                xtype: 'spelledaboutpaths'
+                                xtype: 'spelledaboutconfiguration'
                             }
                         ]
                     }]
