@@ -133,6 +133,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.script.FolderPicker": [],
   "Ext.ux.event.Player": [],
   "Spelled.platform.target.Abstract": [],
+  "Spelled.view.ui.about.License": [],
   "Spelled.view.template.component.Details": [],
   "Spelled.view.library.menu.item.Rename": [],
   "Spelled.view.template.component.attribute.List": [],
@@ -594,6 +595,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.ux.event.Player": [],
   "Spelled.platform.target.Abstract": [],
+  "Spelled.view.ui.about.License": [
+    "widget.spelledaboutlicense"
+  ],
   "Spelled.view.template.component.Details": [
     "widget.componenttemplatedetails"
   ],
