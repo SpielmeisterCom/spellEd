@@ -1,8 +1,13 @@
 Ext.define('Spelled.view.ui.SpelledAboutDialog' ,{
     extend: 'Ext.Window',
-    title : 'SpellEd',
-
+    title : 'About SpellEd',
     alias: 'widget.spelledabout',
+
+    requires: [
+        'widget.spelledabouttheproduct',
+        'widget.spelledaboutconfiguration',
+        'widget.spelledaboutmodules'
+    ],
 
 	autoShow: true,
     modal : true,
@@ -11,17 +16,27 @@ Ext.define('Spelled.view.ui.SpelledAboutDialog' ,{
 	initComponent: function() {
 
 		Ext.applyIf(
-			this,{
-                bodyPadding: '5 5 0',
-                width: 300,
-                height: 195,
-                html:
-                    '<img src="resources/images/logo-spell-js.png"/><br/>' +
-                    '<strong>SpellJS Version ' + Spelled.Configuration.version + '</strong> ' +
-                    '&nbsp;&nbsp;&nbsp;Build ' + Spelled.Configuration.buildNumber + '<br/>' +
-                    'Built on ' + Spelled.Configuration.buildTimeStamp + '<br/><br/>' +
-                    '&copy; 2011-2013 Spielmeister GmbH, Germany<br/><br/>' +
-                    'Parts of this product use open source software.<br/>Please consult the product licence for more details.'
+			this, {
+                width: 500,
+                height: 300,
+                defaults: {
+                    padding:5
+                },
+                items: [{
+                        xtype: 'tabpanel',
+                        items: [
+
+                            {
+                                xtype: 'spelledabouttheproduct'
+                            },
+                            {
+                                xtype: 'spelledaboutconfiguration'
+                            },
+                            {
+                                xtype: 'spelledaboutmodules'
+                            }
+                        ]
+                    }]
             }
 		)
 
