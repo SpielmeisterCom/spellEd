@@ -5,6 +5,13 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 		'Spelled.view.ui.SpelledConfiguration'
 	],
 
+	refs: [
+		{
+			ref : 'ToolBar',
+			selector: 'nwtoolbar'
+		}
+	],
+
 	init: function() {
 		if( Spelled.platform.Adapter.isNodeWebKit() ) {
 			var me = this
@@ -24,15 +31,33 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 				'spelledmenu [action="showSettings"]': {
 					click: this.showSpellEdConfig
 				},
+				'spelledconfigure' : {
+					close: this.setToolBarVisible
+				},
 				nwtoolbar: {
 					showSettings: this.showSpellEdConfig,
 					showUpdateDialog   : this.showUpdateDialog
+				}
+			},
+			controller:{
+				'*': {
+					initwebkitversion: this.initWebkitVersion
 				}
 			},
 			global: {
 				checkForUpdate : this.checkForUpdate
 			}
 		})
+	},
+
+	setToolBarVisible: function() {
+		var toolbar = this.getToolBar()
+
+		if( toolbar && !toolbar.generated ) toolbar.generateMenu()
+	},
+
+	initWebkitVersion: function() {
+		this.checkWorkspaceSettings()
 	},
 
 	showBuildResult: function( button ) {
@@ -119,23 +144,11 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 				provider.createWebKitExtDirectApi( Ext.bind( function() { this.loadProjects() }, app ) )
 			}
 
-
-		if( !workspacePath ) {
-			var execPathDir      = path.dirname( process.execPath ),
-				demoProjectsPath = fs.existsSync( path.join( execPathDir, Spelled.Configuration.demoProjectsFolder ) )
-				? path.join( execPathDir, Spelled.Configuration.demoProjectsFolder )
-				: path.join( execPathDir, '..' ,Spelled.Configuration.demoProjectsFolder )
-
-			if( fs.existsSync( demoProjectsPath ) ) {
-				Spelled.Configuration.setWorkspacePath( demoProjectsPath )
-
-				Ext.callback( updateAPI )
-			} else {
-				this.showSpellEdConfig( false )
-			}
-		} else if( !fs.existsSync( workspacePath ) ) {
+		if( !workspacePath || !fs.existsSync( workspacePath ) ) {
 			this.showSpellEdConfig( false )
+
 		} else {
+			this.setToolBarVisible()
 			Ext.callback( updateAPI )
 		}
 	}

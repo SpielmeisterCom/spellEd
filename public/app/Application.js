@@ -363,7 +363,6 @@ Ext.define('Spelled.Application', {
 
 		if( Spelled.platform.Adapter.isNodeWebKit() ) {
 			this.fireEvent( 'checklicensefile' )
-			this.getController( 'NodeWebKit').checkWorkspaceSettings()
 		} else {
 			this.loadProjects()
 		}

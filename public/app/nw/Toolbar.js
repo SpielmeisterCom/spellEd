@@ -18,10 +18,9 @@ Ext.define('Spelled.nw.Toolbar', {
 		)
 	},
 
-	initComponent: function() {
+	generateMenu: function() {
 		var me = this
-
-		me.callParent( arguments )
+		me.generated = true
 
 		var gui     = require('nw.gui'),
 			win     = gui.Window.get(),
