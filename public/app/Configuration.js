@@ -61,6 +61,7 @@ Ext.define( 'Spelled.Configuration', {
 	defaultConfigFileName  : 'defaultSpellConfig.json',
 	licenseFileName        : 'license.txt',
 	demoProjectsFolder     : 'demo_projects',
+	defaultWorkspaceName   : 'spellWorkspace',
 	updateServerUrl        : 'http://cdn.spelljs.com/spelljs-desktop-latest-version.json',
 	demoServerHostname     : 'spelled-demo.spelljs.com',
 	demoStagingServer      : 'spelled-demo.spelljs.staging',

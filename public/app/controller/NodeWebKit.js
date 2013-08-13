@@ -32,6 +32,7 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 					click: this.showSpellEdConfig
 				},
 				'spelledconfigure' : {
+					setspelledconfig: this.setSpelledConfig,
 					close: this.setToolBarVisible
 				},
 				nwtoolbar: {
@@ -71,7 +72,17 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 	},
 
 	showSpellEdConfig: function( closeable ) {
-		Ext.create( 'Spelled.view.ui.SpelledConfiguration', { closable: closeable, spellConfig: Spelled.app.platform.getConfig() } ).show()
+		var fs            = require( 'fs' ),
+			path          = require( 'path' ),
+			pathUtil      = require( 'pathUtil' ),
+			config        = Spelled.app.platform.getConfig()
+
+		//Overwrite this with the home dir
+		if( !closeable && !fs.existsSync( config.workspacePath ) ) {
+			config.workspacePath = path.join( pathUtil.createOsPath().getHomePath() , Spelled.Configuration.defaultWorkspaceName )
+		}
+
+		Ext.create( 'Spelled.view.ui.SpelledConfiguration', { closable: closeable, spellConfig: config } ).show()
 	},
 
 	redirectToDownloadServer: function( url ) {
@@ -132,6 +143,74 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 		Ext.Msg.wait( 'Connecting to update server...' )
 
 		this.checkForUpdate()
+	},
+
+	copyDemoProjects: function( workspace ) {
+		var fs               = require( 'fs'),
+			path             = require( 'path' ),
+			wrench           = require( 'wrench' ),
+			execPathDir      = path.dirname( process.execPath ),
+			demoProjectsPath = fs.existsSync( path.join( execPathDir, Spelled.Configuration.demoProjectsFolder ) )
+				? path.join( execPathDir, Spelled.Configuration.demoProjectsFolder )
+				: path.join( execPathDir, '..', Spelled.Configuration.demoProjectsFolder )
+
+		if( fs.existsSync( demoProjectsPath ) ) {
+			wrench.copyDirSyncRecursive( demoProjectsPath , workspace )
+		} else {
+			Spelled.MessageBox.alert( "Missing demo_projects", "Your demo_project folder is missing at: " + demoProjectsPath )
+		}
+	},
+
+	setSpelledConfig: function( window ) {
+		var	me             = this,
+			form           = window.down( 'form' ),
+			workspaceField = form.down( 'field[name="workspacePath"]' ),
+			oldWorkspace   = form.down( 'displayfield[configName="workspacePath"]' ).getValue(),
+			workspacePath  = workspaceField.getValue(),
+			androidSdkPath = form.down( 'field[name="androidSdkPath"]' ).getValue(),
+			jdkPath        = form.down( 'field[name="jdkPath"]' ).getValue(),
+			copyDemos      = form.down( 'checkbox[name="copyDemoProjects"]' ).getValue(),
+			fs             = require( 'fs' ),
+			path           = require( 'path' ),
+			provider       = Ext.direct.Manager.getProvider( 'webkitProvider'),
+			spellConfig    = window.spellConfig
+
+		var exists             = fs.existsSync( workspacePath ),
+			existsOldWorkspace = fs.existsSync( oldWorkspace ),
+			setWorkspace       = function( newWorkspace ) {
+				Spelled.Configuration.setWorkspacePath( newWorkspace )
+
+				if( copyDemos ) me.copyDemoProjects( newWorkspace )
+
+				provider.createWebKitExtDirectApi( function() {
+					window.fireEvent( 'loadProjects' )
+					Ext.callback( callback )
+				} )
+			},
+			callback = function() {
+				Spelled.app.platform.writeConfigFile()
+				window.close()
+			}
+
+		if( androidSdkPath ) spellConfig.androidSdkPath = androidSdkPath
+		if( jdkPath ) spellConfig.jdkPath = jdkPath
+
+		if( exists ) {
+			setWorkspace( workspacePath )
+
+		} else if( existsOldWorkspace && copyDemos ) {
+			setWorkspace( oldWorkspace )
+
+		} else if( !existsOldWorkspace && fs.existsSync( path.dirname( oldWorkspace ) ) ) {
+			setWorkspace( oldWorkspace )
+
+		} else if( workspacePath || !fs.existsSync( oldWorkspace ) ) {
+			Spelled.MessageBox.alert( "Wrong workspace", "Your workspace doesn't exist!" )
+			workspaceField.markInvalid( 'No such folder' )
+			workspaceField.textValid = false
+		} else {
+			Ext.callback( callback )
+		}
 	},
 
 	checkWorkspaceSettings: function() {

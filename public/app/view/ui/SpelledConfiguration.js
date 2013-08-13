@@ -57,6 +57,13 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 										labelWidth: 150,
 										allowBlank: false,
 										fieldLabel: 'Select a new location'
+									},
+									{
+										xtype: 'checkbox',
+										name: 'copyDemoProjects',
+										checked: !this.closable,
+										labelWidth: 250,
+										fieldLabel: 'Copy demo projects to the workspace'
 									}
 								]
 							},
@@ -123,40 +130,8 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 	},
 
 	setConfigHandler: function() {
-		var window         = this.up( 'spelledconfigure' ),
-			form           = this.up( 'form' ),
-			workspaceField = form.down( 'field[name="workspacePath"]' ),
-			oldWorkspace   = form.down( 'displayfield[configName="workspacePath"]' ).getValue(),
-			workspacePath  = workspaceField.getValue(),
-			androidSdkPath = form.down( 'field[name="androidSdkPath"]' ).getValue(),
-			jdkPath        = form.down( 'field[name="jdkPath"]' ).getValue(),
-			fs             = require( 'fs' ),
-			provider       = Ext.direct.Manager.getProvider( 'webkitProvider'),
-			spellConfig    = window.spellConfig
+		var	window = this.up( 'spelledconfigure' )
 
-		var exists   = fs.existsSync( workspacePath ),
-			callback = function() {
-				Spelled.app.platform.writeConfigFile()
-				window.close()
-			}
-
-		if( androidSdkPath ) spellConfig.androidSdkPath = androidSdkPath
-		if( jdkPath ) spellConfig.jdkPath = jdkPath
-
-		if( exists ) {
-			Spelled.Configuration.setWorkspacePath( workspacePath )
-
-			provider.createWebKitExtDirectApi( function() {
-				window.fireEvent( 'loadProjects' )
-				Ext.callback( callback )
-			} )
-
-		} else if( workspacePath || !fs.existsSync( oldWorkspace ) ) {
-			Spelled.MessageBox.alert( "Wrong workspace", "Your workspace doesn't exist!" )
-			workspaceField.markInvalid( 'No such folder' )
-			workspaceField.textValid = false
-		} else {
-			Ext.callback( callback )
-		}
+		window.fireEvent( 'setspelledconfig', window )
 	}
 });
