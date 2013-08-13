@@ -202,6 +202,7 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 			setWorkspace( oldWorkspace )
 
 		} else if( !existsOldWorkspace && fs.existsSync( path.dirname( oldWorkspace ) ) ) {
+			fs.mkdirSync( oldWorkspace )
 			setWorkspace( oldWorkspace )
 
 		} else if( workspacePath || !fs.existsSync( oldWorkspace ) ) {
