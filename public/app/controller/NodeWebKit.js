@@ -147,15 +147,19 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 
 	copyDemoProjects: function( workspace ) {
 		var fs               = require( 'fs'),
+			fsUtil           = require( 'fsUtil' ),
 			path             = require( 'path' ),
-			wrench           = require( 'wrench' ),
+			pathUtil         = require( 'pathUtil' ),
 			execPathDir      = path.dirname( process.execPath ),
-			demoProjectsPath = fs.existsSync( path.join( execPathDir, Spelled.Configuration.demoProjectsFolder ) )
-				? path.join( execPathDir, Spelled.Configuration.demoProjectsFolder )
-				: path.join( execPathDir, '..', Spelled.Configuration.demoProjectsFolder )
+			demoFolderName   = Spelled.Configuration.demoProjectsFolder,
+			demoProjectsPath = fs.existsSync( path.join( execPathDir, demoFolderName ) )
+				? path.join( execPathDir, demoFolderName )
+				: path.join( execPathDir, '..', demoFolderName )
 
 		if( fs.existsSync( demoProjectsPath ) ) {
-			wrench.copyDirSyncRecursive( demoProjectsPath , workspace )
+			var files = pathUtil.createPathsFromDirSync( demoProjectsPath )
+
+			fsUtil.copyFiles( demoProjectsPath, workspace, files )
 		} else {
 			Spelled.MessageBox.alert( "Missing demo_projects", "Your demo_project folder is missing at: " + demoProjectsPath )
 		}
@@ -202,7 +206,8 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 			setWorkspace( oldWorkspace )
 
 		} else if( !existsOldWorkspace && fs.existsSync( path.dirname( oldWorkspace ) ) ) {
-			fs.mkdirSync( oldWorkspace )
+			if( !copyDemos ) fs.mkdirSync( oldWorkspace )
+
 			setWorkspace( oldWorkspace )
 
 		} else if( workspacePath || !fs.existsSync( oldWorkspace ) ) {

@@ -63,7 +63,7 @@ Ext.define('Spelled.view.ui.SpelledConfiguration' ,{
 										name: 'copyDemoProjects',
 										checked: !this.closable,
 										labelWidth: 250,
-										fieldLabel: 'Copy demo projects to the workspace'
+										fieldLabel: 'Copy demo projects into workspace'
 									}
 								]
 							},
