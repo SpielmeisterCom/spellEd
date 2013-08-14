@@ -82,11 +82,17 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 				result += data.toString()
 			}
 
-		var execDir      = path.dirname( process.execPath ),
-			spellCliPath = path.join( execDir, Spelled.Configuration.getSpellCliPath() ),
-			extension    = process.platform == 'win32' ? '.exe' : ''
+		var execDir                = path.dirname( process.execPath ),
+			spellCliPath           = path.join( execDir, Spelled.Configuration.getSpellCliPath() ),
+			spellCliExecutablePath = spellCliPath + ( process.platform == 'win32' ? '.exe' : '' )
 
-		var child = childProcess.spawn( spellCliPath + extension, [ 'license', '-s', '-j' ] )
+		if( !fs.existsSync( spellCliExecutablePath ) ) {
+			Spelled.MessageBox.error( 'Error', 'Could not find spellcli executable in "' + spellCliExecutablePath + '".', true )
+
+			return
+		}
+
+		var child = childProcess.spawn( spellCliExecutablePath, [ 'license', '-s', '-j' ] )
 
 		child.stdout.on('data', onData)
 		child.stderr.on('data', onData)
