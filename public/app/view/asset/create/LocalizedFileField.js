@@ -2,6 +2,8 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
     extend: 'Ext.container.Container',
     alias: 'widget.localizedfilefield',
 
+	fileFields: false,
+
 	generateLanguageFileField: function( languages ) {
 		languages.each(
 			function( language ){
@@ -32,20 +34,27 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
 	},
 
 	createLanguageTab: function( name, id ) {
-		var panel = this.down( 'tabpanel' )
+		var panel     = this.down( 'tabpanel' ),
+			fileField = { xtype: 'assetfilefield', name: id	},
+			items     = []
+
+		if( this.fileFields && Ext.isArray( this.fileFields ) ) {
+			Ext.each(
+				this.fileFields,
+				function( item ) {
+					items.push( item )
+				}
+			)
+		} else {
+			items = [
+				fileField,
+				{ height: 5000, xtype: 'assetiframe', workspacePrefix: false }
+			]
+		}
 
 		return panel.add({
 			title: name,
-			items: [
-				{
-					xtype: 'assetfilefield',
-					name: id
-				},
-				{
-					height: 5000,
-					xtype: 'assetiframe', workspacePrefix: false
-				}
-			]
+			items: items
 		})
 	},
 
@@ -66,7 +75,7 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
 			iframe = newCard.down( 'assetiframe'),
 			field  = newCard.down( 'assetfilefield')
 
-		if( field && asset ) this.fireEvent( 'updatepreview', iframe, asset, field.getName() )
+		if( field && asset && iframe ) this.fireEvent( 'updatepreview', iframe, asset, field.getName() )
 	},
 
 	initComponent: function() {

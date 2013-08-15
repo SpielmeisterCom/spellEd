@@ -252,7 +252,7 @@ Ext.define('Spelled.controller.Assets', {
 				me.application.selectNode( tree, node )
 			}
 
-			iframe.load()
+			if( iframe ) iframe.load()
 		}
 
 		this.saveFileUploadFromAsset( fileField, asset, callback )
@@ -682,11 +682,11 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	saveAsset: function( form, asset ) {
-		var fileField = form.down( 'assetfilefield' ),
-			window    = form.up( 'window' ),
-			id        = this.application.generateFileIdFromObject( asset.data ),
-			type      = asset.get( 'subtype'),
-			store     = this.getAssetStoreByType( type )
+		var fileFields = Ext.ComponentQuery.query( 'assetfilefield', form ),
+			window     = form.up( 'window' ),
+			id         = this.application.generateFileIdFromObject( asset.data ),
+			type       = asset.get( 'subtype'),
+			store      = this.getAssetStoreByType( type )
 
 		this.setAssetConfigFromForm( form, asset )
 
@@ -698,8 +698,16 @@ Ext.define('Spelled.controller.Assets', {
 			store.add( asset )
 		},this)
 
-		if( fileField && fileField.isValid() ) {
-			this.saveFileUploadFromAsset( fileField, asset, successCallback )
+		if( Ext.isArray( fileFields ) && fileFields.length > 0 ) {
+
+			Ext.each(
+				fileFields,
+				function( fileField ) {
+					this.saveFileUploadFromAsset( fileField, asset, successCallback )
+				},
+				this
+			)
+
 		} else {
 			asset.save({ success: successCallback })
 		}
@@ -736,7 +744,7 @@ Ext.define('Spelled.controller.Assets', {
 					extension = "." + theFile.type.split( "/").pop()
 
 				me.saveBase64AssetFile( id + Spelled.Converter.localizeExtension( fileField.getName(), extension ), result )
-				asset.set( 'file', name + extension )
+				asset.setFile( name + extension )
 				asset.save({ success: callback })
 			}
 		})( file )

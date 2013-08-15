@@ -97,6 +97,10 @@ Ext.define('Spelled.model.Asset', {
 		)
 	},
 
+	setFile: function( filePath ) {
+		this.set( 'file', filePath )
+	},
+
 	getFullName: function() {
 		return this.get( 'myAssetId' )
 	},

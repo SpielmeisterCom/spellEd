@@ -3,7 +3,8 @@ Ext.define('Spelled.view.asset.create.Sound', {
     alias: 'widget.soundasset',
 
 	requires: [
-		'Ext.form.field.File'
+		'Ext.form.field.File',
+		'Spelled.view.asset.create.SoundFileField'
 	],
 
 	items: [
@@ -13,7 +14,17 @@ Ext.define('Spelled.view.asset.create.Sound', {
 			width: 'null'
 		},
 		{
-			xtype: 'localizedfilefield'
+			xtype: 'localizedfilefield',
+			fileFields: [
+				{
+					xtype: 'soundfilefield',
+					fieldLabel: 'Mp3-File'
+				},
+				{
+					xtype: 'soundfilefield',
+					fieldLabel: 'Ogg-File'
+				}
+			]
 		}
 	]
 });
