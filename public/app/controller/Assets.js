@@ -703,7 +703,8 @@ Ext.define('Spelled.controller.Assets', {
 			Ext.each(
 				fileFields,
 				function( fileField ) {
-					this.saveFileUploadFromAsset( fileField, asset, successCallback )
+					if( fileField && fileField.isValid() )
+						this.saveFileUploadFromAsset( fileField, asset, successCallback )
 				},
 				this
 			)

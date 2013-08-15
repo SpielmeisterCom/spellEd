@@ -3,7 +3,7 @@ Ext.define('Spelled.controller.assets.Sound', {
 
 	requires: [
 		'Spelled.store.asset.Sounds',
-		'Spelled.model.assets.Sounds',
+		'Spelled.model.assets.Sound',
 		'Spelled.view.asset.create.Sound'
 	],
 
@@ -40,12 +40,44 @@ Ext.define('Spelled.controller.assets.Sound', {
 
     init: function() {
         this.control({
-			'soundasset': {
-
+			'soundfilefield': {
+				soundchange: this.updateInfoField,
+				play: this.playSound
 			}
         })
+    },
 
-    }
+	playSound: function( soundFileField, asset, extension ) {
+		var projectName = this.application.getActiveProject().get( 'name'),
+			filePath    = asset.getFilePath( projectName ),
+			parts       = filePath.split('.')
 
+		parts.pop()
+		parts.push( extension )
+
+		var audio = new Audio( parts.join('.') )
+
+		audio.play()
+	},
+
+	updateInfoField: function( view, fileField ) {
+		var localizationContainer = view.up( 'localizedfilefield' ),
+			oggFileField          = localizationContainer.down( 'soundfilefield[extension="ogg"]' ).down( 'assetfilefield' ),
+			mp3FileField          = localizationContainer.down( 'soundfilefield[extension="mp3"]' ).down( 'assetfilefield' ),
+			infoText              = localizationContainer.down( 'text' ),
+			hasMp3File            = !Ext.isEmpty( mp3FileField.getValue() ),
+			hasOggFile            = !Ext.isEmpty( oggFileField.getValue() )
+
+		if( hasMp3File && hasOggFile ) {
+			infoText.setText( 'Mp3 and Ogg inserted manually' )
+
+		} else if( hasMp3File ) {
+			infoText.setText( 'Automatically Generating ogg file from mp3' )
+
+		} else if( hasOggFile ) {
+			infoText.setText( 'Automatically Generating mp3 file from ogg' )
+		}
+	}
 
 })
+

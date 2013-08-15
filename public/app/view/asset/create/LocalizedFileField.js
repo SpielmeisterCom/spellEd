@@ -42,6 +42,7 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
 			Ext.each(
 				this.fileFields,
 				function( item ) {
+					item.name = id
 					items.push( item )
 				}
 			)

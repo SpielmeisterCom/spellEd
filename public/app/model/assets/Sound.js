@@ -17,8 +17,7 @@ Ext.define('Spelled.model.assets.Sound', {
 
 	fields: [
 		{ name: 'localized', type: 'boolean', defaultValue: false },
-		{ name: 'subtype', type: 'string', defaultValue: 'sound' }
-	],
-
-	setFile: function( name ) {}
+		{ name: 'subtype', type: 'string', defaultValue: 'sound' },
+		'file'
+	]
 })

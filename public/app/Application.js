@@ -8,7 +8,8 @@ Ext.define('Spelled.Application', {
 		'Spelled.Configuration',
 		'Spelled.MessageBox',
 		'Spelled.platform.Adapter',
-		'Spelled.controller.NodeWebKit'
+		'Spelled.controller.NodeWebKit',
+		'Spelled.controller.assets.Sound'
 	],
 
 	appFolder: 'app',
@@ -23,6 +24,7 @@ Ext.define('Spelled.Application', {
 		'Components',
 		'Assets',
 		'assets.Translations',
+		'assets.Sound',
 		'Templates',
 		'Scripts',
 		'Systems',
@@ -304,6 +306,8 @@ Ext.define('Spelled.Application', {
 				}
 			}
 		)
+
+		Ext.apply( Ext.form.field.VTypes, Spelled.Validator.vTypes )
 
 		//load configuration from global CONFIGURATION variable that is defined in app-initialize
 		this.configuration = Spelled.Configuration
