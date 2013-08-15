@@ -517,7 +517,7 @@ Ext.define('Spelled.controller.Entities', {
 
 		contentPanel.add( view )
 
-		contentPanel.setTitle( 'Components in entity "' + entity.get('name') +'"' )
+		contentPanel.setTitle( 'Components of Entity "' + entity.get('name') +'"' )
 
 		return view
 	}
