@@ -78,9 +78,19 @@ Ext.define('Spelled.model.Asset', {
 	},
 
 	destroy: function( options ) {
-		if( this.get( 'file' ) ) Spelled.StorageActions.destroy({ id: this.getAbsoluteFilePath() } )
+		this.removeResource()
 
 		this.callParent( arguments )
+	},
+
+	removeResource: function() {
+		if( this.getFile() ) Spelled.StorageActions.destroy({ id: this.getAbsoluteFilePath() } )
+	},
+
+	removeLocalizedResource: function( language, extension ) {
+		var filePath = Spelled.Converter.getLocalizedFilePath( this.getAbsoluteFilePath(), extension, language )
+
+		if( filePath ) Spelled.StorageActions.destroy({ id: filePath } )
 	},
 
 	createTreeNode: function( node ) {
@@ -101,6 +111,18 @@ Ext.define('Spelled.model.Asset', {
 		this.set( 'file', filePath )
 	},
 
+	setLocalizedFileInfo: function(  extension, language ) {
+		var localization = this.get( 'localization' ) || {}
+
+		localization[ language ] = extension
+
+		this.set( 'localization', localization )
+	},
+
+	getFile: function() {
+		return this.get( 'file' )
+	},
+
 	getFullName: function() {
 		return this.get( 'myAssetId' )
 	},
@@ -119,11 +141,20 @@ Ext.define('Spelled.model.Asset', {
 	},
 
 	getAbsoluteFilePath: function() {
-		return this.getId().replace( ".json", "." + this.get( 'file' ).split( "." ).pop() )
+		return this.getId().replace( ".json", "." + this.getFile().split( "." ).pop() )
 	},
 
-    getFilePath: function( projectName ) {
-		return Spelled.Converter.toWorkspaceUrl( projectName + "/library/" + this.get( 'namespace').split( "." ).join( "/" ) + "/" + this.get( 'file' ) )
+    getFilePath: function( projectName, language ) {
+		var filePath = Spelled.Converter.toWorkspaceUrl( projectName + "/library/" + this.get( 'namespace').split( "." ).join( "/" ) + "/" + this.getFile() )
+
+		if( this.get( 'localized' ) && language && language != 'default' ) {
+			var localization = this.get( 'localization'),
+				extension    = localization[ language ]
+
+			return Spelled.Converter.getLocalizedFilePath( filePath, extension, language )
+		} else {
+			return filePath
+		}
     },
 
     toSpellEngineMessageFormat: function() {

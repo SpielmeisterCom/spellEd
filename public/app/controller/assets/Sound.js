@@ -56,11 +56,7 @@ Ext.define('Spelled.controller.assets.Sound', {
 
 	playSound: function( soundFileField, asset, extension, language ) {
 		var projectName = this.application.getActiveProject().get( 'name'),
-			src         = asset.getFilePath( projectName )
-
-		if( language != 'default' ) {
-			src = Spelled.Converter.getLocalizedFilePath( src, language )
-		}
+			src         = asset.getFilePath( projectName, language )
 
 		var parts = src.split('.')
 

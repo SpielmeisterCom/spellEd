@@ -9,19 +9,20 @@ Ext.define( 'Spelled.Converter' ,{
 		return libraryId.replace( /\./g, "/" )
 	},
 
-	getLocalizedFilePath: function( filePath, language ) {
-		var parts     = filePath.split( '.' ),
-			extension = parts.pop()
+	getLocalizedFilePath: function( filePath, extension, language ) {
+		var parts = filePath.split( '.' )
 
-		parts.push( this.localizeExtension( language, "." + extension ) )
+		parts.pop()
 
-		return parts.join( '' )
+		parts.push( this.localizeExtension( language, extension ) )
+
+		return parts.join( '.' )
 	},
 
 	localizeExtension: function( language, extension ) {
-		if( language == 'default' ) return extension
+		if( language == 'default' ) language = ''
 
-		return "." + language + extension
+		return [ language , extension ].join( '.' )
 	},
 
 	toWorkspaceUrl: function( url ) {

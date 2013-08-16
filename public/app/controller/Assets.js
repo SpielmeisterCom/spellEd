@@ -606,17 +606,13 @@ Ext.define('Spelled.controller.Assets', {
 			View           = this.getAssetInspectorConfigView(),
 			view           = new View(),
 			project        = this.application.getActiveProject(),
-			src            = asset.getFilePath( project.get('name') )
+			src            = asset.getFilePath( project.get('name'), project.getDefaultLanguageKey() )
 
 		view.loadRecord( asset )
 
 		inspectorPanel.setTitle( 'Asset information of "' + asset.get('name') +'"' )
 
 		view.docString = asset.docString
-
-		if( asset.get( 'localized' ) ){
-			src = Spelled.Converter.getLocalizedFilePath( src, project.getDefaultLanguageKey() )
-		}
 
 		switch( asset.get('subtype') ) {
 			case this.TYPE_APPEARANCE:
@@ -742,10 +738,25 @@ Ext.define('Spelled.controller.Assets', {
 		reader.onload = (function(theFile) {
 			return function( e ) {
 				var result    = e.target.result,
-					extension = "." + theFile.type.split( "/").pop()
+					extension = theFile.type.split( "/").pop()
 
-				me.saveBase64AssetFile( id + Spelled.Converter.localizeExtension( fileField.getName(), extension ), result )
-				asset.setFile( name + extension )
+				if( localized ) {
+					var language      = fileField.getName(),
+						localizations = asset.get( 'localization' )
+
+					if( Ext.isObject( localizations ) ) {
+						asset.removeLocalizedResource( language, localizations[language] )
+					}
+
+					asset.setLocalizedFileInfo( extension, language )
+					extension = Spelled.Converter.localizeExtension( language, extension )
+
+				} else {
+					asset.removeResource()
+					asset.setFile( [ name , extension ].join( '.' ) )
+				}
+
+				me.saveBase64AssetFile( id + '.' + extension, result )
 				asset.save({ success: callback })
 			}
 		})( file )
@@ -808,11 +819,7 @@ Ext.define('Spelled.controller.Assets', {
 
 	updateLocalizationPreview: function( container, asset, language ) {
 		var project = this.application.getActiveProject(),
-			src     = asset.getFilePath( project.get('name') )
-
-		if( language != 'default' ) {
-			src = Spelled.Converter.getLocalizedFilePath( src, language )
-		}
+			src     = asset.getFilePath( project.get('name'), language )
 
 		container.load( src )
 	},
