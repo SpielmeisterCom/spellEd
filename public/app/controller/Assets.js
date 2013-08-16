@@ -732,7 +732,8 @@ Ext.define('Spelled.controller.Assets', {
 			reader    = new FileReader(),
 			file      = fileField.fileRawInput,
 			name      = asset.get( 'name' ),
-			localized = asset.get( 'localized' )
+			localized = asset.get( 'localized'),
+			isSound   = asset.isSound
 
 		// Closure to capture the file information.
 		reader.onload = (function(theFile) {
@@ -744,14 +745,14 @@ Ext.define('Spelled.controller.Assets', {
 					var language      = fileField.getName(),
 						localizations = asset.get( 'localization' )
 
-					if( Ext.isObject( localizations ) ) {
+					if( Ext.isObject( localizations ) && !isSound ) {
 						asset.removeLocalizedResource( language, localizations[language] )
 					}
 
 					asset.setLocalizedFileInfo( extension, language )
 					extension = Spelled.Converter.localizeExtension( language, extension )
 
-				} else {
+				} else if( !isSound ) {
 					asset.removeResource()
 					asset.setFile( [ name , extension ].join( '.' ) )
 				}
