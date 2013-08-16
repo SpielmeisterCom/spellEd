@@ -12,7 +12,7 @@ Ext.define( 'Spelled.Converter' ,{
 	getLocalizedFilePath: function( filePath, extension, language ) {
 		var parts = filePath.split( '.' )
 
-		parts.pop()
+		if( extension ) parts.pop()
 
 		parts.push( this.localizeExtension( language, extension ) )
 
@@ -22,7 +22,7 @@ Ext.define( 'Spelled.Converter' ,{
 	localizeExtension: function( language, extension ) {
 		if( language == 'default' ) language = ''
 
-		return [ language , extension ].join( '.' )
+		return Ext.Array.clean( [ language , extension ] ).join( '.' )
 	},
 
 	toWorkspaceUrl: function( url ) {

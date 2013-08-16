@@ -60,7 +60,6 @@ Ext.define('Spelled.controller.assets.Sound', {
 
 		var parts = src.split('.')
 
-		parts.pop()
 		parts.push( extension )
 
 		if( soundFileField.audio ) soundFileField.audio.pause()

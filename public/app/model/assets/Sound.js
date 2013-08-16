@@ -29,6 +29,10 @@ Ext.define('Spelled.model.assets.Sound', {
 
 	setFile: function() {},
 
+	setLocalizedFileInfo: function(  extension, language ) {
+		this.callParent( [ '', language ] )
+	},
+
 	removeResource: function() {
 		var absFilePath = this.getAbsoluteFilePath(),
 			parts       = absFilePath.split( '.' )
