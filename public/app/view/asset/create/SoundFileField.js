@@ -11,13 +11,14 @@ Ext.define('Spelled.view.asset.create.SoundFileField', {
 	},
 
 	initComponent: function() {
-		var language = this.isContained.name
+		var language = this.isContained.name,
+			me       = this
 
 		Ext.applyIf(
 			this,
 			{
 				items: [
-					{ xtype: 'assetfilefield', hideLabel: true, flex: 1, vtype: 'audioFileUpload', name: language,
+					{ xtype: 'assetfilefield', hideLabel: true, flex: 2, vtype: 'audioFileUpload', name: language,
 						validator: function( value ) {
 							var extension = this.up( 'soundfilefield' ).extension,
 								rgx       = new RegExp( "^.*\.(" + extension + ")$", "i" )
@@ -35,19 +36,19 @@ Ext.define('Spelled.view.asset.create.SoundFileField', {
 					{ xtype: 'splitter' },
 					{
 						hidden: !this.showToolbar,
-						text: 'toolbar', flex: 1, items: [
+						text: 'toolbar', items: [
 						{
 							xtype: 'button',
 							text: 'Play',
 							handler: function() {
-								var soundfilefield = this.up( 'soundfilefield' )
-
-								soundfilefield.fireEvent(
-									'play',
-									soundfilefield,
-									this.up( 'form').getForm().getRecord(),
-									soundfilefield.extension
-								)
+								me.fireAudioEvent( "play" )
+							}
+						},
+						{
+							xtype: 'button',
+							text: 'Stop',
+							handler: function() {
+								me.fireAudioEvent( "stop" )
 							}
 						}
 					]
@@ -57,6 +58,15 @@ Ext.define('Spelled.view.asset.create.SoundFileField', {
 		)
 
 		this.callParent()
+	},
+
+	fireAudioEvent: function( name ) {
+		this.fireEvent(
+			name,
+			this,
+			this.up( 'form').getForm().getRecord(),
+			this.extension
+		)
 	}
 
 });

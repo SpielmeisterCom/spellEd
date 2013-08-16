@@ -42,10 +42,17 @@ Ext.define('Spelled.controller.assets.Sound', {
         this.control({
 			'soundfilefield': {
 				soundchange: this.updateInfoField,
-				play: this.playSound
+				play: this.playSound,
+				stop: this.stopSound
 			}
         })
     },
+
+	stopSound: function( soundFileField, asset, extension ) {
+		var audio = soundFileField.audio
+
+		if( audio ) audio.pause()
+	},
 
 	playSound: function( soundFileField, asset, extension ) {
 		var projectName = this.application.getActiveProject().get( 'name'),
@@ -55,7 +62,10 @@ Ext.define('Spelled.controller.assets.Sound', {
 		parts.pop()
 		parts.push( extension )
 
+		if( soundFileField.audio ) soundFileField.audio.pause()
+
 		var audio = new Audio( parts.join('.') )
+		soundFileField.audio = audio
 
 		audio.play()
 	},
