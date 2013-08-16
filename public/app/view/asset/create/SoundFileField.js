@@ -61,11 +61,14 @@ Ext.define('Spelled.view.asset.create.SoundFileField', {
 	},
 
 	fireAudioEvent: function( name ) {
+		var language = this.up( 'fieldset' ).name
+
 		this.fireEvent(
 			name,
 			this,
 			this.up( 'form').getForm().getRecord(),
-			this.extension
+			this.extension,
+			language
 		)
 	}
 

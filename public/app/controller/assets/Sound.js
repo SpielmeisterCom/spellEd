@@ -48,16 +48,21 @@ Ext.define('Spelled.controller.assets.Sound', {
         })
     },
 
-	stopSound: function( soundFileField, asset, extension ) {
+	stopSound: function( soundFileField, asset, extension, language ) {
 		var audio = soundFileField.audio
 
 		if( audio ) audio.pause()
 	},
 
-	playSound: function( soundFileField, asset, extension ) {
+	playSound: function( soundFileField, asset, extension, language ) {
 		var projectName = this.application.getActiveProject().get( 'name'),
-			filePath    = asset.getFilePath( projectName ),
-			parts       = filePath.split('.')
+			src         = asset.getFilePath( projectName )
+
+		if( language != 'default' ) {
+			src = Spelled.Converter.getLocalizedFilePath( src, language )
+		}
+
+		var parts = src.split('.')
 
 		parts.pop()
 		parts.push( extension )
