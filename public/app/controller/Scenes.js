@@ -347,6 +347,7 @@ Ext.define('Spelled.controller.Scenes', {
 		Ext.Array.remove( dependencies, value )
 		record.set( 'dependencies', dependencies )
 		record.setDirty()
+		record.needToCalcCependency()
 
 		recordToRemove.remove()
 	},
