@@ -13,12 +13,12 @@ Ext.define('Spelled.view.menu.contextmenu.EntitiesList', {
     items: [
 		{
 			icon: 'resources/images/icons/entity-add.png',
-			text: 'Add new child entity',
+			text: 'Add Child Entity',
 			action: 'create'
 		},
 		{
 			icon: 'resources/images/icons/entity-convert.png',
-			text: 'Convert to template',
+			text: 'Create Template from Entity',
 			action: 'showConvertEntity'
 		},
 		{
