@@ -34,20 +34,13 @@ Ext.define('Spelled.view.library.Dependencies', {
 					},
 					fields: [ 'libraryId', 'isStatic' ],
 					columns: [
-//						{
-//							dataIndex: 'type',
-//							width: 25,
-//							renderer: function( value, style, record ) {
-//								style.tdCls += value + " library-img-icon"
-//
-//								var css = ( record.get( 'static' ) ) ? 'linked-icon' : ""
-//
-//								return "<img src='" + Ext.BLANK_IMAGE_URL + "' class='" + css +"'/>"
-//							}
-//						},
 						{
 							xtype: 'treecolumn',
-							text: 'Dynamic library items', dataIndex: 'libraryId', flex: 1
+							text: 'Dynamic library items', dataIndex: 'libraryId', flex: 1,
+							renderer: function( value, style, record ) {
+								var css = ( record.get( 'isStatic' ) ) ? 'locked-icon' : ""
+								return "<img src='" + Ext.BLANK_IMAGE_URL + "' class='" + css +"'/>" + value
+							}
 						},
 						{
 							xtype: 'actioncolumn',

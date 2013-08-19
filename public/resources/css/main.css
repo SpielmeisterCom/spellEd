@@ -191,6 +191,14 @@
     background:  url( '../images/icons/link.png' );
 }
 
+.locked-icon {
+    width: 16px;
+    position: relative;
+    margin-right: -15px;
+    left: -15px;
+    background:  url( '../images/icons/lock.png' ) no-repeat;
+}
+
 .console-message-error {
     color: red;
 }
