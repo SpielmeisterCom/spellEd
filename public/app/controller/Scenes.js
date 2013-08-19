@@ -371,6 +371,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		record.set( 'dependencies', dependencies )
 		record.setDirty()
+		record.needToCalcCependency()
 
 		dependencyView.reconfigureStores()
 
