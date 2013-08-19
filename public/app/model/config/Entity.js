@@ -350,7 +350,7 @@ Ext.define('Spelled.model.config.Entity', {
 	},
 
     mergeWithTemplateConfig: function() {
-		if( !this.isAnonymous() ) {
+		if( !this.isAnonymous() && this.getEntityTemplate() ) {
 			this.mergeEntityTemplateWithTemplateConfig( this.getEntityTemplate() )
 
 		} else if( this.hasEntity() ) {

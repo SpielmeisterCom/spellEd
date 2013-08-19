@@ -9,8 +9,10 @@ Ext.define( 'Spelled.EntityHelper', {
 	},
 
 	missingTemplateError: function( model ) {
+		var text = 'The Template "' + model.get('templateId') + '" could not be found.'
+
 		Ext.Msg.confirm(
-			'Error', 'The Template "' + model.get('templateId') + '" could not be found. Should the reference to this template be removed?',
+			'Error', text + 'Should the reference to this template be removed?',
 			function( button ) {
 				if( button === "yes" ) {
 					model.set( 'templateId', '' )
@@ -18,6 +20,8 @@ Ext.define( 'Spelled.EntityHelper', {
 				}
 			}
 		)
+
+		Spelled.Logger.log( 'ERROR', text )
 	},
 
 	getRootTemplateEntityFromEntity: function( entity ) {
