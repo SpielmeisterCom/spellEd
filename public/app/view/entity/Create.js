@@ -2,7 +2,7 @@ Ext.define('Spelled.view.entity.Create' ,{
     extend: 'Ext.Window',
     alias: 'widget.createentity',
 
-    title : 'Add a new Entity to the Scene',
+    title : 'Add Entity to Scene',
     modal : true,
 	layout: 'fit',
 
@@ -67,8 +67,8 @@ Ext.define('Spelled.view.entity.Create' ,{
 
                     typeAhead: true,
                     name: 'templateId',
-                    fieldLabel: 'Select a Template',
-					emptyText: " -- Is Optional --",
+                    fieldLabel: 'Entity Template',
+					emptyText: "none",
                     anchor: '100%',
 					allowBlank: true
                 }

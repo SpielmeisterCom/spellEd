@@ -46,8 +46,8 @@ Ext.define('Spelled.view.template.entity.Add' ,{
 
                     typeAhead: true,
                     name: 'templateId',
-                    fieldLabel: 'Select a Template',
-					emptyText: " -- Is Optional --",
+                    fieldLabel: 'Entity Template',
+					emptyText: "none",
                     anchor: '100%',
 					allowBlank: true
                 }
