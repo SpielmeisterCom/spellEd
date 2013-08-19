@@ -2,7 +2,7 @@ Ext.define('Spelled.view.project.Create' ,{
     extend: 'Ext.Window',
     alias: 'widget.createproject',
 
-    title : 'Create a new Project',
+    title : 'Create new Project',
     modal : true,
 
 	layout: 'fit',

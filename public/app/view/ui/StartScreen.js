@@ -1,6 +1,6 @@
 Ext.define('Spelled.view.ui.StartScreen' ,{
     extend: 'Ext.Window',
-    title : 'Open or Create a Project',
+    title : 'Open or Create Project',
 
     alias: 'widget.startscreen',
 
@@ -16,12 +16,12 @@ Ext.define('Spelled.view.ui.StartScreen' ,{
             items: [
                 {
                     xtype: 'button',
-                    text: 'Open an existing Project',
+                    text: 'Open Project',
                     action: "showLoadProject"
                 },
                 {
                     xtype: 'button',
-                    text: 'Create a new Project',
+                    text: 'Create new Project',
                     action: "showCreateProject",
 					tooltip: Spelled.Configuration.getDemoTooltipText(),
 					disabled: Spelled.Configuration.isDemoInstance()
