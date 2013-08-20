@@ -63,11 +63,9 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
 		var cmp   = this.up( 'form' ),
 			asset = cmp.getRecord()
 
-		if( !asset ) return
+		if( asset ) asset.set( 'localized', newValue )
 
-		asset.set( 'localized', newValue )
-
-		this.fireEvent( 'localizechange', cmp, asset )
+		this.fireEvent( 'localizechange', cmp, newValue )
 	},
 
 	updatePreview: function( tabPanel, newCard ) {

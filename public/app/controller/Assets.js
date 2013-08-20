@@ -379,6 +379,8 @@ Ext.define('Spelled.controller.Assets', {
 	fieldRenderHelper: function( type, fieldSet, asset ) {
 		if( asset && asset.isReadonly() ) return
 
+		var localized = asset && asset.get( 'localized' )
+
 		switch( type ) {
 			case this.TYPE_ANIMATION:
 				fieldSet.add( { xtype: 'animationassetconfig' } )
@@ -399,10 +401,10 @@ Ext.define('Spelled.controller.Assets', {
 				fieldSet.add( { xtype: '2dtilemapconfig', edit: !!asset } )
 				break
 			case this.TYPE_APPEARANCE:
-				this.addLocalizationFileFields( fieldSet.add( { xtype: 'appearanceasset', edit: !!asset } ), asset )
+				this.addLocalizationFileFields( fieldSet.add( { xtype: 'appearanceasset', edit: !!asset } ), localized )
 				break
 			case this.TYPE_SOUND:
-				this.addLocalizationFileFields( fieldSet.add( { xtype: 'soundasset', edit: !!asset } ), asset )
+				this.addLocalizationFileFields( fieldSet.add( { xtype: 'soundasset', edit: !!asset } ), localized )
 				break
 			case this.TYPE_TRANSLATION:
 				if( asset ) fieldSet.add( { xtype: 'translationasset', asset: asset, project: this.application.getActiveProject() } )
@@ -410,10 +412,10 @@ Ext.define('Spelled.controller.Assets', {
 		}
 	},
 
-	addLocalizationFileFields: function( cmp, asset ) {
+	addLocalizationFileFields: function( cmp, localized ) {
 		var panel     = cmp.down( 'localizedfilefield'),
 			project   = this.application.getActiveProject(),
-			localized = asset ? asset.get( 'localized' ) : false
+			localized = !!localized
 
 		panel.createLanguageTabs( localized, project.getSupportedLanguages() )
 	},
