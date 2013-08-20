@@ -26,7 +26,7 @@ Ext.define('Spelled.model.assets.Appearance', {
 		var extension = this.get( 'extension' ),
 			parts     = [ this.getFullName(), extension ]
 
-		return parts.join( '.' )
+		return extension ? parts.join( '.' ) : ''
 	},
 
 	setFile: function( filePath ) {
