@@ -56,7 +56,7 @@ Ext.define( 'Spelled.Configuration', {
 		return this.documentationServerURL + this.version + '/'
 	},
 
-	appName                : 'spell',
+	appName                : 'SpellJS',
 	configFileName         : 'spellConfig.json',
 	defaultConfigFileName  : 'defaultSpellConfig.json',
 	licenseFileName        : 'license.txt',
@@ -66,7 +66,7 @@ Ext.define( 'Spelled.Configuration', {
 	demoServerHostname     : 'spelled-demo.spelljs.com',
 	demoStagingServer      : 'spelled-demo.spelljs.staging',
 	version                : '0.8.35',
-	buildNumber	       : '99999',
+	buildNumber	           : '99999',
 	buildTimeStamp	       : '2099-01-01T01:00:00.000+01:00',
 	storageVersion         : 1,
 	extDirectRouterUrl     : '/router/',
