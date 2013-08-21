@@ -24,7 +24,7 @@ Ext.define('Spelled.model.assets.Sound', {
 	isSound: true,
 
 	getFile: function() {
-		return this.getFullName()
+		return this.get( 'name' )
 	},
 
 	setFile: function() {},
