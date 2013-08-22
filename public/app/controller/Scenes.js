@@ -899,10 +899,16 @@ Ext.define('Spelled.controller.Scenes', {
 			cacheContent = []
 
 		var generateCacheContent = function( item ) {
-			if( item.dirty === true && item.toSpellEngineMessageFormat ) {
-				var filePath = Spelled.Converter.libraryIdToRelativePath( item.getFullName() ) + ".json"
+			if( item.dirty === true ) {
+				var filePath = Spelled.Converter.libraryIdToRelativePath( item.getFullName() )
 
-				cacheContent.push( { content: item.toSpellEngineMessageFormat(), filePath: filePath } )
+				if( item.toSpellEngineMessageFormat ) {
+					cacheContent.push( { content: item.toSpellEngineMessageFormat(), filePath: filePath + ".json" } )
+				}
+
+				if( item.get( 'content' ) ) {
+					cacheContent.push( { content: item.get( 'content' ), filePath: filePath + ".js" } )
+				}
 			}
 		}
 
