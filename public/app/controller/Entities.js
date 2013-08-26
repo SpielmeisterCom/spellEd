@@ -489,9 +489,10 @@ Ext.define('Spelled.controller.Entities', {
 		var view = new View()
 
 		if( !!entity.isAnonymous ) {
-			view.docString = ( entity.isAnonymous() ) ? view.docString : "#!/guide/" + entity.getEntityTemplate().getDocumentationName()
 
-			if( !entity.isAnonymous() ) {
+			if( !entity.isAnonymous() && entity.getEntityTemplate() ) {
+				view.docString = "#!/guide/" + entity.getEntityTemplate().getDocumentationName()
+
 				view.add( {
 						xtype: 'entityhastemplateheader',
 						entityTemplateId: entity.getEntityTemplate().getId(),
@@ -499,6 +500,7 @@ Ext.define('Spelled.controller.Entities', {
 					}
 				)
 			}
+
 		} else {
 			view.docString = "#!/guide/" + entity.getDocumentationName()
 		}
