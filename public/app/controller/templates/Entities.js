@@ -250,8 +250,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 		var node      = this.getTemplatesTree().getStore().getNodeById( entity.getId() ),
 			ownerNode = this.getOwnerNode( node ),
 			template  = this.getTemplateEntitiesStore().getById( ownerNode.getId()),
-			store     = Ext.getStore( 'config.Entities' ),
-			entities  = store.query( 'templateId', template.getFullName() )
+			entities  = Spelled.EntityHelper.getEntitesByTemplateId( template.getFullName() )
 
 		if( copyIntoReferences ) {
 			entities.each(
@@ -325,8 +324,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
 	removeEntityTemplate: function( entityTemplate, copyIntoReferences ) {
-		var store              = Ext.getStore( 'config.Entities' ),
-			entities           = store.query( 'templateId', entityTemplate.getFullName() ),
+		var entities           = Spelled.EntityHelper.getEntitesByTemplateId( entityTemplate.getFullName() ),
 			entitiesController = this.application.getController( 'Entities' )
 
 		if( !copyIntoReferences ) {

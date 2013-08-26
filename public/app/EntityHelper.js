@@ -1,6 +1,10 @@
 Ext.define( 'Spelled.EntityHelper', {
 	singleton: true,
 
+	getEntitesByTemplateId: function( templateId ) {
+		return Ext.getStore( 'config.Entities' ).query( 'templateId', templateId )
+	},
+
 	hasOwnerAnChildWithThisName: function( owner, name ) {
 		var entities = ( owner.self.getName() == Spelled.model.config.Scene.getName() ) ? owner.getEntities() : owner.getChildren(),
 			child    = entities.findRecord( 'name', name, null, null, null, true )

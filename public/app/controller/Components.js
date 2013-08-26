@@ -197,12 +197,33 @@ Ext.define('Spelled.controller.Components', {
 		}
 	},
 
+	removeComponentFromEntites: function( templateId, componentId ) {
+		var entities = Spelled.EntityHelper.getEntitesByTemplateId( templateId )
+
+		entities.each(
+			function( entity ) {
+				var component = entity.getComponentByTemplateId( componentId )
+
+				if( component && !Ext.Object.isEmpty( component.get( 'config' ) ) ) {
+					component.set( 'additional', true )
+
+				} else {
+					entity.getComponents().remove( component )
+				}
+			}
+		)
+	},
+
 	removeComponent: function( panel ) {
 		var store     = this.getConfigComponentsStore(),
 			component = store.getById( panel.componentConfigId ),
 			entity    = component.getEntity()
 
 		this.application.fireEvent( 'sendToEngine', 'component.remove' ,{ entityId: entity.getId(), componentId: component.get( 'templateId' ) } )
+
+		if( entity.get( 'type' ) === "entityTemplate" ) {
+			this.removeComponentFromEntites( entity.getFullName(), component.get( 'templateId' ) )
+		}
 
 		entity.getComponents().remove( component )
 		entity.setDirty()
