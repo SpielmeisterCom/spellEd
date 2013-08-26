@@ -80,7 +80,7 @@ Ext.define('Spelled.nw.Toolbar', {
 		})
 
 		this.addEvents( events );
-
+/*
 		var subMenu = new gui.Menu();
 
 		subMenu.append(new gui.MenuItem({
@@ -116,7 +116,7 @@ Ext.define('Spelled.nw.Toolbar', {
 				submenu: subMenu
 			})
 		);
-
+*/
 		win.menu = menubar;
 	}
 
