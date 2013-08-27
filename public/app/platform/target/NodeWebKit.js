@@ -74,9 +74,18 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 		var result          = '',
 			fs              = require( 'fs' ),
 			path            = require( 'path'),
-			childProcess    = require( 'child_process'),
-			onFinish        = function() {
-				Spelled.app.fireEvent( 'licensecallback', licenseData, result, callback )
+			childProcess    = require( 'child_process' ),
+			onFinish        = function( code ) {
+				if( code === 0 ) {
+					Spelled.app.fireEvent( 'licensecallback', licenseData, result, callback )
+
+				} else {
+					Spelled.MessageBox.error(
+						'Error',
+						'The spellcli executable terminated with exit code ' + code + '. ' + result,
+						true
+					)
+				}
 			},
 			onData      = function( data ) {
 				result += data.toString()
@@ -94,9 +103,9 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 
 		var child = childProcess.spawn( spellCliExecutablePath, [ 'license', '-s', '-j' ] )
 
-		child.stdout.on('data', onData)
-		child.stderr.on('data', onData)
-		child.on('close', onFinish)
+		child.stdout.on( 'data', onData )
+		child.stderr.on( 'data', onData )
+		child.on( 'close', onFinish )
 		child.stdin.write( licenseData, 'utf8', function() { child.stdin.end( ) } )
 	},
 
