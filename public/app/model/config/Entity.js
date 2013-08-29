@@ -82,7 +82,7 @@ Ext.define('Spelled.model.config.Entity', {
 			}
 		)
 
-	return Ext.Array.clean( ids )
+		return Ext.Array.clean( ids )
 	},
 
 	createDependencyNode: function() {
@@ -283,7 +283,9 @@ Ext.define('Spelled.model.config.Entity', {
 	},
 
 	setDirty: function() {
-		this.getOwner().setDirty()
+		var owner = this.getOwner()
+
+		if( owner ) owner.setDirty()
 
 		this.callParent()
 	},
