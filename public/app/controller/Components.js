@@ -207,7 +207,7 @@ Ext.define('Spelled.controller.Components', {
 				if( component && !Ext.Object.isEmpty( component.get( 'config' ) ) ) {
 					component.set( 'additional', true )
 
-				} else {
+				} else if( component ){
 					entity.getComponents().remove( component )
 				}
 			}
