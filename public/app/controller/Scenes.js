@@ -488,8 +488,8 @@ Ext.define('Spelled.controller.Scenes', {
 				this.application.fireEvent( 'showSystemItem', treePanel, record )
 				break
 			case this.TREE_ITEM_TYPE_SCENE:
-				var scene = this.application.getLastSelectedScene()
-				if( scene.getFullName() !== this.application.getActiveProject().get( 'startScene' ) ) this.renderScene( scene )
+				var app = this.application
+				if( !app.isRenderedSceneLastSelectedScene() ) this.renderScene( app.getLastSelectedScene() )
 				break
 			default:
 				return
