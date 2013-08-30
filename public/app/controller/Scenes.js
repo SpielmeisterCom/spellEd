@@ -417,8 +417,8 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	sendSystemChangeToEngine: function( model ) {
-		var scene        = this.application.getActiveProject().getStartScene(),
-			systemConfig = false,
+		var scene            = this.application.getRenderedScene(),
+			systemConfig     = false,
 			executionGroupId = false
 
 		Ext.Object.each(
