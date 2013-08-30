@@ -52,7 +52,7 @@ Ext.define('Spelled.view.asset.create.InputMap', {
 								emptyText    : '-- Select a Key --',
 								queryMode	 : 'local',
 								store        : 'asset.ActionKeys',
-								name         : 'name',
+								name         : 'actionKey',
 								displayField : 'name',
 								valueField   : 'name',
 								listClass    : 'x-combo-list-small',
