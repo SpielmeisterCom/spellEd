@@ -127,7 +127,7 @@ Ext.define('Spelled.view.library.Dependencies', {
 			function() {
 				me.fireEvent( 'loaddependencies', me, me.record )
 			},
-			50
+			0
 		)
 	}
 })
