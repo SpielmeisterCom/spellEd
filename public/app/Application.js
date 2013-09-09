@@ -82,7 +82,12 @@ Ext.define('Spelled.Application', {
 	},
 
 	generateFileIdFromObject: function( object ) {
-		return this.getActiveProject().get('name') + "/library/" + (( object.namespace.length > 0 ) ? object.namespace.replace( /\./g, "/" ) +"/"+ object.name : object.name)
+		var activeProject = this.getActiveProject(),
+			projectId     = activeProject.getId(),
+			projectPath   = projectId.substr( 0, projectId.length - 12 ), // remove "project.json" from the project id's tail
+			libraryId     = object.namespace ? object.namespace + '.' + object.name : object.name
+
+		return projectPath + 'library/' + libraryId.replace( /\./g, '/' )
 	},
 
 	showDocumentation: function( docString ) {
