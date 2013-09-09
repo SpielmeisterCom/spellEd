@@ -348,33 +348,43 @@ Ext.define('Spelled.controller.Templates', {
 					"default": true,
 					"doc": "if active is false the system will be skipped during processing"
 				} )
+
 			} else if( values.type === this.TEMPLATE_TYPE_COMPONENT ) {
 				model.set( 'content', this.application.getController( 'templates.Components' ).createComponentScaffolding( model.getFullName(), model.get( 'name' ) ) )
 			}
 
-			if( values.owner ) this.application.getController( 'templates.Entities' ).convertEntity( values.owner, model )
+			if( values.owner ) {
+				this.application.getController( 'templates.Entities' ).convertEntity( values.owner, model )
+			}
 
 			this.application.getActiveProject().setDirty()
 			model.phantom = true
 
-			model.save({
+			model.save( {
 				success: function( result ) {
-					Ext.Msg.alert('Success', 'Your Template "' + result.get( 'templateId' ) + '" has been created.')
+					Ext.Msg.alert( 'Success', 'Your Template "' + result.get( 'templateId' ) + '" has been created.' )
 
-					//Needed for template conversion
+					// needed for template conversion
 					this.loadTemplateStores( Ext.bind( function() {
 						if( values.owner ) {
 							var entity = Ext.getStore( 'config.Entities' ).getById( values.owner )
 
 							entity.setDirty()
 							this.application.fireEvent( 'refreshentitynode', values.owner )
+
+							// notify engine instances of entity template update
+							var entityTemplate = entity.getEntityTemplate()
+
+							if( entityTemplate ) {
+								this.application.getController( 'Components' ).sendUpdateToAllEntitiesBasedOnTemplate( entityTemplate )
+							}
 						}
-					}, this) )
+					}, this ) )
 
 					window.close()
 				},
 				scope: this
-			})
+			} )
 		}
     },
 
