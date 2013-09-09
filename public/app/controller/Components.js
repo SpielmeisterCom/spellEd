@@ -389,26 +389,29 @@ Ext.define('Spelled.controller.Components', {
 		var componentConfigId = e.grid.componentConfigId,
 			record            = e.record,
 			component         = this.getConfigComponentsStore().getById( componentConfigId ),
-			config            = Ext.Object.merge( {}, component.get('config') ),
+			config            = Ext.Object.merge( {}, component.get( 'config' ) ),
 			defaultConfig     = Ext.Object.merge( {}, component.getComponentTemplateConfig(), component.getTemplateConfig() ),
-			name              = record.get('name'),
+			name              = record.get( 'name' ),
 			entity            = component.getEntity(),
-			value             = Spelled.Converter.decodeFieldValue( record.get( 'value'), component.getAttributeByName( name ).get( 'type' ) )
+			value             = Spelled.Converter.decodeFieldValue( record.get( 'value' ), component.getAttributeByName( name ).get( 'type' ) )
 
 		if( !Spelled.Compare.isEqual( value, config[ name ] ) ) {
-
-			if( value === null || Spelled.Compare.isEqual( value, defaultConfig[ name ] ) ) {
+			if( value === null ||
+				Spelled.Compare.isEqual( value, defaultConfig[ name ] ) ) {
 				delete config[ name ]
+
 			} else {
 				config[ name ] = value
 			}
 
-			component.set( 'config', config)
+			component.set( 'config', config )
 			component.setChanged()
 
 			entity.setDirty()
 
-			this.sendUpdateToAllEntitiesOnTemplateComponent( component )
+			var entityTemplate = Spelled.EntityHelper.getRootTemplateOwnerFromComponent( component )
+
+			this.sendUpdateToAllEntitiesBasedOnTemplate( entityTemplate )
 		}
 	},
 
@@ -499,21 +502,19 @@ Ext.define('Spelled.controller.Components', {
 		this.sendComponentUpdate( component, name, newValue )
 	},
 
-	sendUpdateToAllEntitiesOnTemplateComponent: function( component ) {
-		var entityTemplate = Spelled.EntityHelper.getRootTemplateOwnerFromComponent( component )
+	sendUpdateToAllEntitiesBasedOnTemplate: function( entityTemplate ) {
+		if( !entityTemplate ) return
 
-		if( entityTemplate ) {
-			var previewTab = this.application.findTabByTitle( this.getSceneEditor(), entityTemplate.getFullName() ),
-				type       = 'library.updateEntityTemplate',
-				message    = { definition: entityTemplate.toSpellEngineMessageFormat() }
+		var previewTab = this.application.findTabByTitle( this.getSceneEditor(), entityTemplate.getFullName() ),
+			type       = 'library.updateEntityTemplate',
+			message    = { definition: entityTemplate.toSpellEngineMessageFormat() }
 
-			if( previewTab ) {
-				var iframe = previewTab.down( 'component[name="entityPreviewContainer"]' )
-				this.application.sendDebugMessage( iframe.getId(), type, message )
-			}
-
-			this.application.fireEvent( 'sendToEngine', type, message )
+		if( previewTab ) {
+			var iframe = previewTab.down( 'component[name="entityPreviewContainer"]' )
+			this.application.sendDebugMessage( iframe.getId(), type, message )
 		}
+
+		this.application.fireEvent( 'sendToEngine', type, message )
 	},
 
 	sendComponentUpdate: function( component, name, value, merge ) {

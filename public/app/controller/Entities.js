@@ -192,10 +192,10 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
 	showConvertEntity: function() {
-		var node   = this.application.getLastSelectedNode( this.getScenesTree() ),
-			view   = Ext.widget( 'convertentity' )
+		var node = this.application.getLastSelectedNode( this.getScenesTree() ),
+			view = Ext.widget( 'convertentity' )
 
-		view.down('form').getForm().setValues( { type:'entityTemplate', owner: node.getId() } )
+		view.down( 'form' ).getForm().setValues( { type: 'entityTemplate', owner: node.getId() } )
 	},
 
 	cloneEntityConfig: function( id, node, forced ) {
@@ -203,12 +203,13 @@ Ext.define('Spelled.controller.Entities', {
 			entity     = store.getById( id ),
 			owner      = entity.getOwner(),
 			clone      = entity.clone(),
-			clonedNode = clone.createTreeNode(node),
+			clonedNode = clone.createTreeNode( node ),
 			ownerStore = undefined
 
 		if( entity.hasScene() ) {
 			ownerStore = owner.getEntities()
 			clone.setScene( owner )
+
 		} else {
 			ownerStore = owner.getChildren()
 			clone.setEntity( owner )
@@ -237,11 +238,11 @@ Ext.define('Spelled.controller.Entities', {
 	moveEntity: function( targetId, entityId, dropPosition ) {
 		var store         = this.getConfigEntitiesStore(),
 			isSceneTarget = this.isSceneTarget( targetId ),
-			target        = ( isSceneTarget ) ? null : store.getById( targetId ),
+			target        = isSceneTarget ? null : store.getById( targetId ),
 			entity        = store.getById( entityId ),
 			owner         = entity.getOwner(),
-			targetOwner   = ( isSceneTarget ) ? null : target.getOwner(),
-			entities      = ( entity.hasScene() ) ? owner.getEntities() : owner.getChildren(),
+			targetOwner   = isSceneTarget ? null : target.getOwner(),
+			entities      = entity.hasScene() ? owner.getEntities() : owner.getChildren(),
 			renderedScene = this.application.getRenderedScene(),
 			targetScene   = this.application.getLastSelectedScene(),
 			fromScene     = entity.getOwningScene()
@@ -259,21 +260,29 @@ Ext.define('Spelled.controller.Entities', {
 
 			target.getEntities().add( entity )
 			entity.setScene( target )
+
 		} else if( dropPosition === "append" ) {
 			entity.setEntity( target )
 			target.getChildren().add( entity )
-		} else {
-			var offset         = ( dropPosition === 'after' ) ? 1 : 0,
-				hasScene       = target.hasScene(),
-				targetEntities = ( hasScene ) ? targetOwner.getEntities() : targetOwner.getChildren()
 
-			if( hasScene ) entity.setScene( targetOwner )
-			else entity.setEntity( targetOwner )
+		} else {
+			var offset         = dropPosition === 'after' ? 1 : 0,
+				hasScene       = target.hasScene(),
+				targetEntities = hasScene ? targetOwner.getEntities() : targetOwner.getChildren()
+
+			if( hasScene ) {
+				entity.setScene( targetOwner )
+
+			} else {
+				entity.setEntity( targetOwner )
+			}
 
 			targetEntities.insert( targetEntities.indexOf( target ) + offset, entity )
 		}
 
-		if( fromScene == targetScene && renderedScene == targetScene ) {
+		if( fromScene == targetScene &&
+			renderedScene == targetScene ) {
+
 			this.sendEntityEventToEngine( 'entity.reassign', {
 				entityId: entity.getId(),
 				parentEntityId: ( entity.hasEntity() ) ? entity.getEntity().getId() : undefined

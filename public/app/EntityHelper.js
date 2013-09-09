@@ -29,9 +29,13 @@ Ext.define( 'Spelled.EntityHelper', {
 	},
 
 	getRootTemplateEntityFromEntity: function( entity ) {
-		if( entity.hasOwnerEntity && entity.hasOwnerEntity() ) return entity.getOwnerEntity()
-		else if( entity.hasEntity && entity.hasEntity() ) return this.getRootTemplateEntityFromEntity( entity.getEntity() )
-		else if( entity.get( 'type' ) === "entityTemplate" ) {
+		if( entity.hasOwnerEntity && entity.hasOwnerEntity() ) {
+			return entity.getOwnerEntity()
+
+		} else if( entity.hasEntity && entity.hasEntity() ) {
+			return this.getRootTemplateEntityFromEntity( entity.getEntity() )
+
+		} else if( entity.get( 'type' ) === 'entityTemplate' ) {
 			return Ext.getStore( 'template.Entities' ).getByTemplateId( entity.get( 'templateId' ) )
 		}
 
