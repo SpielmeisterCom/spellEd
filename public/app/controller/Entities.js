@@ -283,10 +283,13 @@ Ext.define('Spelled.controller.Entities', {
 		if( fromScene == targetScene &&
 			renderedScene == targetScene ) {
 
-			this.sendEntityEventToEngine( 'entity.reassign', {
-				entityId: entity.getId(),
-				parentEntityId: ( entity.hasEntity() ) ? entity.getEntity().getId() : undefined
-			} )
+			this.sendEntityEventToEngine(
+				'component.update' , {
+					entityId    : entity.getId(),
+					componentId : 'spell.component.entityComposite.parent',
+					config      : { id : entity.hasEntity() ? entity.getEntity().getId() : '0' }
+				}
+			)
 
 		} else if( renderedScene == targetScene ) {
 			this.sendCreateMessage( entity )

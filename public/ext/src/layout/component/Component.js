@@ -96,7 +96,7 @@ Ext.define('Ext.layout.component.Component', {
                 dirty = firstCycle ? owner[widthName] !== lastSize.width
                                    : widthModel.constrained;
             }
-            
+
             ownerContext.setWidth(owner[widthName], dirty);
         } else if (ownerContext.isTopLevel) {
             if (widthModel.calculated) {
@@ -151,7 +151,7 @@ Ext.define('Ext.layout.component.Component', {
 
         // Cache the currently layed out size
         me.lastComponentSize = owner.el.lastBox = props = ownerContext.props;
-        
+
         // lastBox is a copy of the defined props to allow save/restore of these (panel
         // collapse needs this)
         lastBox = owner.lastBox || (owner.lastBox = {});
@@ -160,10 +160,10 @@ Ext.define('Ext.layout.component.Component', {
         lastBox.width = props.width;
         lastBox.height = props.height;
         lastBox.invalid = false;
-        
+
         me.callParent(arguments);
     },
-    
+
     notifyOwner: function(ownerContext) {
         var me = this,
             currentSize = me.lastComponentSize,
@@ -215,7 +215,7 @@ Ext.define('Ext.layout.component.Component', {
 
     measureAutoDimensions: function (ownerContext, dimensions) {
         // Subtle But Important:
-        // 
+        //
         // We don't want to call getProp/hasProp et.al. unless we in fact need that value
         // for our results! If we call it and don't need it, the layout manager will think
         // we depend on it and will schedule us again should it change.
@@ -387,6 +387,10 @@ Ext.define('Ext.layout.component.Component', {
                             // may have a better idea of how to do it even with no items:
                             temp = containerLayout.measureContentHeight(ownerContext);
                         } else {
+							if( !me ) {
+								debugger
+							}
+
                             temp = me.measureContentHeight(ownerContext);
                         }
 
