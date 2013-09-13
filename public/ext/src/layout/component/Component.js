@@ -387,10 +387,6 @@ Ext.define('Ext.layout.component.Component', {
                             // may have a better idea of how to do it even with no items:
                             temp = containerLayout.measureContentHeight(ownerContext);
                         } else {
-							if( !me ) {
-								debugger
-							}
-
                             temp = me.measureContentHeight(ownerContext);
                         }
 
