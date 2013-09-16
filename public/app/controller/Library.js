@@ -186,15 +186,15 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	deepLinkComponentProperty: function( name, propertyMapping, property ) {
-		var value  = property.get( 'value'),
-			record = undefined
+		var value  = property.get( 'value' ),
+			record
 
 		switch( propertyMapping.get( 'target' ) ) {
 			case 'asset':
 				record = this.application.getController( 'Assets' ).getAssetByAssetId( value )
 				break
 			case 'script':
-				var scriptId = value.split( ':').pop()
+				var scriptId = value.split( ':' ).pop()
 				record = this.getStore( 'script.Scripts' ).findRecord( 'scriptId', scriptId )
 				break
 		}
@@ -203,12 +203,11 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	deepLink: function( record ) {
-		var tree  = this.getLibraryTree(),
-			node  = tree.getStore().getById( record.getId() )
+		if( !record ) return
 
-		if( node ) {
-			this.dispatchLibraryNodeDoubleClick( tree, node )
-		}
+		var tree = this.getLibraryTree()
+
+		this.dispatchLibraryNodeDoubleClick( tree, tree.getStore().getById( record.getId() ) )
 	},
 
 	removeFolder: function() {
@@ -387,6 +386,7 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	dispatchLibraryNodeDoubleClick: function( tree, node ) {
+		if( !node ) return
 
 		switch( this.getNodeType( node ) ) {
 			case this.TYPE_ASSET:
