@@ -184,8 +184,12 @@ Ext.define('Spelled.Application', {
 	showActionColumnIcons: function( icons ) {
 		Ext.each(
 			icons,
-			function(icon){
-				Ext.get(icon).removeCls('x-hidden')
+			function( icon ){
+				var el = Ext.get( icon )
+
+				if( el ) {
+					el.removeCls( 'x-hidden' )
+				}
 			}
 		)
 	},

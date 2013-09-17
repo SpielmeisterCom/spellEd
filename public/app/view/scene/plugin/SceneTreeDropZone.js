@@ -47,22 +47,30 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 
 
 	onNodeOut: function( nodeData, source, e, data ) {
-		var el = Ext.fly( nodeData )
-		if( el && el.hasCls( this.nodeOverCls ) ) el.removeCls( this.nodeOverCls )
+		var el          = Ext.fly( nodeData ),
+			nodeOverCls = this.nodeOverCls
+
+		if( el && el.hasCls( nodeOverCls ) ) {
+			el.removeCls( nodeOverCls )
+		}
 	},
 
 	onNodeOver: function( nodeData, source, e, data ) {
-		var result =  this.callParent(arguments);
+		var el     = Ext.fly( nodeData ),
+			result = this.callParent( arguments )
 
-		var el = Ext.fly( nodeData )
+		if( el ) {
+			var nodeOverCls = this.nodeOverCls
 
-		if (result == 'x-tree-drop-ok-append' && el) {
+			if( result == 'x-tree-drop-ok-append' ) {
+				// mark the currently targeted node as active
+				if( !el.hasCls( nodeOverCls ) ) {
+					el.addCls( nodeOverCls )
+				}
 
-			//mark the currently targeted node as active
-			if (!el.hasCls( this.nodeOverCls ) ) el.addCls( this.nodeOverCls )
-
-		} else {
-			el.removeCls( this.nodeOverCls )
+			} else {
+				el.removeCls( nodeOverCls )
+			}
 		}
 
 		return result
