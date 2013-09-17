@@ -274,7 +274,6 @@
         var urlParams = parseURLParams();
 
         window.onload = function() {
-
             if( urlParams[ 'screenCapture' ]) {
                 var imgOverlay = document.getElementById('screenCaptureOverlay');
                 imgOverlay.src = urlParams[ 'screenCapture' ]
@@ -314,7 +313,7 @@
                 requestAnimationFrame ( animateTiles.bind( window, tileLayer, tiles, startTime, 1 ) )
             },500)
 
-            document.getElementById('errorMsg').innerHTML = urlParams[ 'errorMsg' ];
+            document.getElementById( 'errorMsg' ).innerHTML = urlParams[ 'errorMsg' ];
         }
 
         function toggleScreenshot(el) {
@@ -444,10 +443,10 @@
                 <strong>Software Version</strong><br/>
                 <div class="errorMsg" id="version"/>
             </fieldset>
-	    
+
 	        <fieldset id="errorMsgFieldSet">
                 <strong>Error Message</strong><br/>
-                <div class="errorMsg" id="errorMsg"/>
+				<pre class="errorMsg" id="errorMsg"></pre>
             </fieldset>
 
 

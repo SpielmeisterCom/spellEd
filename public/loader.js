@@ -17,57 +17,58 @@ function loadCSSFile(filename){
 	document.getElementsByTagName("head")[0].appendChild(fileref)
 }
 
-var nwExceptionHandler = function(errorMsg) {
-    var gui = require('nw.gui'),
-        win = gui.Window.get()
+var nwExceptionHandler = function( errorMsg ) {
+	var gui = require( 'nw.gui' ),
+		win = gui.Window.get()
 
-	win.menu = new gui.Menu({ type: 'menubar' })
+	win.menu = new gui.Menu( { type: 'menubar' } )
 
 	cleanUpStorage()
 
-
-    win.capturePage(function(img) {
-        // code to run when error has occured on page
-        window.location.href = 'error.html?' +
-            'errorMsg='         + encodeURIComponent( errorMsg ) +
-	        '&version='         + encodeURIComponent( Spelled.Configuration.version ) +
-	        '&buildNumber='     + encodeURIComponent( Spelled.Configuration.buildNumber ) +
-	        '&buildTimeStamp='  + encodeURIComponent( Spelled.Configuration.buildTimeStamp ) +
-	        '&screenCapture='   + encodeURIComponent( img )
-    }, 'png');
+	win.capturePage(
+		function( img ) {
+			// code to run when error has occured on page
+			window.location.href = 'error.html?' +
+				'errorMsg='        + encodeURIComponent( errorMsg.stack ? errorMsg.stack : errorMsg ) +
+				'&version='        + encodeURIComponent( Spelled.Configuration.version ) +
+				'&buildNumber='    + encodeURIComponent( Spelled.Configuration.buildNumber ) +
+				'&buildTimeStamp=' + encodeURIComponent( Spelled.Configuration.buildTimeStamp ) +
+				'&screenCapture='  + encodeURIComponent( img )
+		},
+		'png'
+	);
 }
 
 var cleanUpStorage = function() {
 	Ext.state.Manager.clear( 'projectName' )
 }
 
+var createErrorMessage = function( error, lineNumber, url ) {
+	return error + '\n' + url + ':' + lineNumber;
+}
+
 function registerGlobalErrorHandler(isNWRuntime, isDevelEnv) {
 	if( isDevelEnv ) return
 
-	window.triggerError = function(message) {
-		throw message
-	}
+	if( isNWRuntime ) {
+		process.on( 'uncaughtException', nwExceptionHandler );
 
-    if( isNWRuntime ) {
-        process.on('uncaughtException', nwExceptionHandler);
-        window.onerror = function(errorMsg, url, lineNumber) {
-            nwExceptionHandler(url + ':' + lineNumber + "\n" + errorMsg);
-        }
+		window.onerror = function( error, url, lineNumber ) {
+			nwExceptionHandler( createErrorMessage( error, lineNumber, url ) );
+		}
 
-    } else {
-
-        window.onerror = function(errorMsg, url, lineNumber) {
+	} else {
+		window.onerror = function( error, url, lineNumber ) {
 			cleanUpStorage()
-            var msg = url + ':' + lineNumber + "\n" + errorMsg;
-			window._error_handler = true
-            window.location.href = 'error.html?' +
-	            'errorMsg='         + encodeURIComponent(msg) +
-	            '&version='         + encodeURIComponent( Spelled.Configuration.version ) +
-	            '&buildNumber='     + encodeURIComponent( Spelled.Configuration.buildNumber ) +
-	            '&buildTimeStamp='  + encodeURIComponent( Spelled.Configuration.buildTimeStamp )
-        }
 
-    }
+			window._error_handler = true
+			window.location.href = 'error.html?' +
+				'errorMsg='        + encodeURIComponent( createErrorMessage( error, lineNumber, url ) ) +
+				'&version='        + encodeURIComponent( Spelled.Configuration.version ) +
+				'&buildNumber='    + encodeURIComponent( Spelled.Configuration.buildNumber ) +
+				'&buildTimeStamp=' + encodeURIComponent( Spelled.Configuration.buildTimeStamp )
+		}
+	}
 }
 
 
