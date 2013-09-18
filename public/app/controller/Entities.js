@@ -166,10 +166,11 @@ Ext.define('Spelled.controller.Entities', {
 		entity.setDirty()
 
 		this.sendEntityEventToEngine(
-			'component.update' , {
+			'component.update',
+			{
 				entityId    : entity.getId(),
-				componentId : 'spell.component.entityMetaData',
-				config      : { name: entity.get( 'name' ) }
+				componentId : 'spell.component.metaData',
+				config      : { name : entity.get( 'name' ) }
 			}
 		)
 
@@ -284,10 +285,11 @@ Ext.define('Spelled.controller.Entities', {
 			renderedScene == targetScene ) {
 
 			this.sendEntityEventToEngine(
-				'component.update' , {
+				'component.update',
+				{
 					entityId    : entity.getId(),
-					componentId : 'spell.component.entityComposite.parent',
-					config      : { id : entity.hasEntity() ? entity.getEntity().getId() : '0' }
+					componentId : 'spell.component.composite',
+					config      : { parentId : entity.hasEntity() ? entity.getEntity().getId() : '0' }
 				}
 			)
 
