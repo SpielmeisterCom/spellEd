@@ -280,6 +280,7 @@ Ext.define('Spelled.controller.Library', {
 
 	clearStore: function() {
 		this.getLibraryStore().getRootNode().removeAll()
+		this.getFoldersTreeStore().getRootNode().removeAll()
 	},
 
 	removeFromLibrary: function( node, callback ) {
