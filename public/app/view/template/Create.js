@@ -46,7 +46,13 @@ Ext.define('Spelled.view.template.Create', {
                     name: 'namespace',
                     fieldLabel: 'Namespace',
                     displayField: 'text',
-                    valueField: 'id'
+                    valueField: 'id',
+					listeners: {
+						select: function() {
+							var form = this.up( 'form' )
+							if( form ) form.getForm().isValid()
+						}
+					}
                 }
             ],
 
