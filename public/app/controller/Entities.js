@@ -185,7 +185,7 @@ Ext.define('Spelled.controller.Entities', {
 			index    = parent.indexOf( node ),
 			entity   = this.getConfigEntitiesStore().getById( id )
 
-		node.remove( true )
+		node.remove()
 
 		var newNode = entity.createTreeNode( parent )
 		parent.insertChild( index, newNode )
