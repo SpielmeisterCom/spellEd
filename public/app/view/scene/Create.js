@@ -7,6 +7,8 @@ Ext.define('Spelled.view.scene.Create' ,{
     title : 'Add a new Scene to the Project',
     modal : true,
 
+	width: 300,
+
     items: [
         {
             bodyPadding: 10,
