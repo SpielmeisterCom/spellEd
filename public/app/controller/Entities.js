@@ -226,6 +226,12 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
 	sendCreateMessage: function( entity, forced ) {
+		var entityTemplate = entity.getEntityTemplate()
+
+		if( entityTemplate ) {
+			this.application.fireEvent( 'addtocache', entityTemplate )
+		}
+
 		this.sendEntityEventToEngine( 'entity.create', { entityConfig: entity.getMessageData() }, forced )
 	},
 

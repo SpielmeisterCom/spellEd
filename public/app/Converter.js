@@ -19,6 +19,22 @@ Ext.define( 'Spelled.Converter' ,{
 		return parts.join( '.' )
 	},
 
+	generateCacheContent: function( item ) {
+		var content = []
+
+		var filePath = this.libraryIdToRelativePath( item.getFullName() )
+
+		if( item.toSpellEngineMessageFormat ) {
+			content.push( { content: item.toSpellEngineMessageFormat(), filePath: filePath + ".json" } )
+		}
+
+		if( item.get( 'content' ) ) {
+			content.push( { content: item.get( 'content' ), filePath: filePath + ".js" } )
+		}
+
+		return content
+	},
+
 	localizeExtension: function( language, extension ) {
 		if( language == 'default' ) language = ''
 

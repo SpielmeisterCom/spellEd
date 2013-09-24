@@ -124,6 +124,7 @@ Ext.define('Spelled.controller.Library', {
 			},
 			controller:{
 				'*': {
+					addtocache: this.addToCache,
 					deeplink : this.deepLink,
 					selectnamespacefrombutton : this.selectLibraryNamespace,
 					buildnamespacenodes       : this.buildNamespaceNodes,
@@ -133,6 +134,35 @@ Ext.define('Spelled.controller.Library', {
 			}
 		})
     },
+
+	addToCache: function( item ) {
+		var cacheContent = Spelled.Converter.generateCacheContent( item ),
+			store        = this.getLibraryStore(),
+			exists       = {},
+			helperFunc   = function( record ) {
+				Ext.Array.each(
+					record.getDependencies(),
+					function( libraryId ) {
+						var tmp = store.findLibraryItemByLibraryId( libraryId )
+
+						if( tmp && !exists[ libraryId ] ) {
+							exists[ libraryId ] = true
+							Ext.Array.push( cacheContent, Spelled.Converter.generateCacheContent( tmp ) )
+						}
+
+						helperFunc( tmp )
+					}
+				)
+			}
+
+		helperFunc( item )
+
+		this.application.fireEvent( 'sendToEngine',
+			'application.addToCache', {
+				cacheContent: Ext.amdModules.createCacheContent( Ext.Array.clean( cacheContent ) )
+			}
+		)
+	},
 
 	loadLibraryDependency: function( panel, record ) {
 		var treePanel = panel.down( 'treepanel' )

@@ -900,15 +900,9 @@ Ext.define('Spelled.controller.Scenes', {
 
 		var generateCacheContent = function( item ) {
 			if( item.dirty === true ) {
-				var filePath = Spelled.Converter.libraryIdToRelativePath( item.getFullName() )
+				var tmp = Spelled.Converter.generateCacheContent( item )
 
-				if( item.toSpellEngineMessageFormat ) {
-					cacheContent.push( { content: item.toSpellEngineMessageFormat(), filePath: filePath + ".json" } )
-				}
-
-				if( item.get( 'content' ) ) {
-					cacheContent.push( { content: item.get( 'content' ), filePath: filePath + ".js" } )
-				}
+				if( tmp.length > 0 ) cacheContent = Ext.Array.merge( cacheContent, tmp )
 			}
 		}
 
