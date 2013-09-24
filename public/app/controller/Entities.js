@@ -132,8 +132,8 @@ Ext.define('Spelled.controller.Entities', {
 		this.showCreateEntity( scene )
 	},
 
-	updateEntityComponent:function( id, componentId, config ){
-		var entity           = this.getConfigEntitiesStore().getById( id )
+	updateEntityComponent: function( id, componentId, config ){
+		var entity = this.getConfigEntitiesStore().getById( id )
 
 		if( !entity ) return
 
@@ -149,7 +149,7 @@ Ext.define('Spelled.controller.Entities', {
 			}
 		)
 
-		entity.setDirty()
+		component.setChanged()
 
 		if( lastSelectedNode.getId() === id ) this.application.fireEvent( 'componentpropertygridupdate', component, componentConfig, false )
 	},
