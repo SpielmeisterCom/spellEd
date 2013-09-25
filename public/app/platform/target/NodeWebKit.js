@@ -76,15 +76,15 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 			path            = require( 'path'),
 			childProcess    = require( 'child_process' ),
 			onFinish        = function( code ) {
-				if( code === 0 ) {
-					Spelled.app.fireEvent( 'licensecallback', licenseData, result, callback )
-
-				} else {
+				if( code === 1 ) {
 					Spelled.MessageBox.error(
 						'Error',
 						'The spellcli executable terminated with exit code ' + code + '. ' + result,
 						true
 					)
+
+				} else {
+					Spelled.app.fireEvent( 'licensecallback', licenseData, result, callback )
 				}
 			},
 			onData      = function( data ) {
