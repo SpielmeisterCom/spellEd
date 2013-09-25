@@ -9,6 +9,8 @@ Ext.define('Spelled.view.script.Create' ,{
 
     closeable: true,
 
+	width: 300,
+
     items: [
         {
             defaults: {
