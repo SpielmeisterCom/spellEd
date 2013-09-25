@@ -29,7 +29,7 @@ define(
 					fileParts = filePath.substr( filePath.indexOf( libraryPrefix ) + libraryPrefix.length + 1 ).split( path.sep ),
 					baseName  = fileParts.pop()
 
-				content.id = filePath
+				content.id = filePath.replace( /\\/g, '/' )
 
 				if( content.type === 'project' ) {
 					content.name = fileParts.pop()
