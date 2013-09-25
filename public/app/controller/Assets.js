@@ -625,6 +625,9 @@ Ext.define('Spelled.controller.Assets', {
 		}
 
 		inspectorPanel.add( view )
+
+		//TODO: workaround because extjs won't detect correctly fields which were initialized in the constructor
+		view.down( 'displayfield[name="internalAssetId"]' ).setValue( asset.get( 'internalAssetId' ) )
 	},
 
     showListContextMenu: function( view, record, item, index, e, options ) {
