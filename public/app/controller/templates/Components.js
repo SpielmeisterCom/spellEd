@@ -23,6 +23,7 @@ Ext.define('Spelled.controller.templates.Components', {
 		'Spelled.view.template.component.attribute.TextAppearance',
 		'Spelled.view.template.component.attribute.Sound',
         'Spelled.view.template.component.attribute.Script',
+		'Spelled.view.template.component.attribute.SpriteSheet',
 		'Spelled.view.template.component.attribute.InputMap',
 		'Spelled.view.template.component.attribute.Translation',
 		'Spelled.view.template.component.attribute.TileMap',
