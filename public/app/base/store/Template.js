@@ -23,6 +23,9 @@ Ext.define('Spelled.base.store.Template', {
 	listeners: {
 		load: function( store, records ) {
 			Ext.getStore( 'Library' ).generateNodesFromRecords( records )
+		},
+		add: function( me, records, successful ) {
+			Ext.getStore( 'Library' ).generateNodesFromRecords( records )
 		}
 	}
 });

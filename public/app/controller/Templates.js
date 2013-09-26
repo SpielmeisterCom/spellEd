@@ -317,6 +317,7 @@ Ext.define('Spelled.controller.Templates', {
             window  = button.up( 'window' ),
 			values  = form.getValues(),
 			Model   = undefined,
+			store   = undefined,
 			content = {
 				name: values.name,
 				namespace: ( values.namespace === 'root' ) ? '' : values.namespace.substring( 5 ),
@@ -326,12 +327,15 @@ Ext.define('Spelled.controller.Templates', {
 		switch( values.type ) {
 			case this.TEMPLATE_TYPE_COMPONENT:
 				Model = this.getTemplateComponentModel()
+				store = this.getTemplateComponentsStore()
 				break
 			case this.TEMPLATE_TYPE_SYSTEM:
 				Model = this.getTemplateSystemModel()
+				store = this.getTemplateSystemsStore()
 				break
 			case this.TEMPLATE_TYPE_ENTITY:
 				Model = this.getTemplateEntityModel()
+				store = this.getTemplateEntitiesStore()
 				break
 		}
 
@@ -358,28 +362,28 @@ Ext.define('Spelled.controller.Templates', {
 			}
 
 			this.application.getActiveProject().setDirty()
-			model.phantom = true
+			model.justCreated = true
 
 			model.save( {
 				success: function( result ) {
 					Ext.Msg.alert( 'Success', 'Your Template "' + result.get( 'templateId' ) + '" has been created.' )
 
+					model.justCreated = false
+					store.add( result )
 					// needed for template conversion
-					this.loadTemplateStores( Ext.bind( function() {
-						if( values.owner ) {
-							var entity = Ext.getStore( 'config.Entities' ).getById( values.owner )
+					if( values.owner ) {
+						var entity = Ext.getStore( 'config.Entities' ).getById( values.owner )
 
-							entity.setDirty()
-							this.application.fireEvent( 'refreshentitynode', values.owner )
+						entity.setDirty()
+						this.application.fireEvent( 'refreshentitynode', values.owner )
 
-							// notify engine instances of entity template update
-							var entityTemplate = entity.getEntityTemplate()
+						// notify engine instances of entity template update
+						var entityTemplate = entity.getEntityTemplate()
 
-							if( entityTemplate ) {
-								this.application.getController( 'Components' ).sendUpdateToAllEntitiesBasedOnTemplate( entityTemplate )
-							}
+						if( entityTemplate ) {
+							this.application.getController( 'Components' ).sendUpdateToAllEntitiesBasedOnTemplate( entityTemplate )
 						}
-					}, this ) )
+					}
 
 					window.close()
 				},
