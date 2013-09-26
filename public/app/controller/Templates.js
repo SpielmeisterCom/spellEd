@@ -226,7 +226,7 @@ Ext.define('Spelled.controller.Templates', {
                 return
         }
 
-		var tabPanel = this.getMainPanel().down( 'splitlayout').isHidden() ? this.getTemplateEditor() : this.getSecondTabPanel(),
+		var tabPanel = this.getTabPanel(),
 			template = store.getById( record.getId() ),
 			foundTab = this.application.findActiveTabByTitle( tabPanel, template.getFullName() )
 
@@ -234,6 +234,10 @@ Ext.define('Spelled.controller.Templates', {
 
 		Controller.openTemplate( template )
     },
+
+	getTabPanel: function() {
+		return this.getMainPanel().down( 'splitlayout').isHidden() ? this.getTemplateEditor() : this.getSecondTabPanel()
+	},
 
     removeTemplateCallback: function( template ) {
 
@@ -248,6 +252,7 @@ Ext.define('Spelled.controller.Templates', {
 
     removeTemplate: function( template ) {
         this.closeOpenedTabs( template )
+		this.getRightPanel().removeAll()
 
         template.destroy({
 			callback: this.refreshStores,
@@ -257,7 +262,7 @@ Ext.define('Spelled.controller.Templates', {
     },
 
     closeOpenedTabs: function( template ) {
-        var editorTab = this.getTemplateEditor()
+        var editorTab = this.getTabPanel()
 
         editorTab.items.each(
             function( tab ) {
