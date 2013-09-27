@@ -127,9 +127,11 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 	},
 
 	checkForUpdate: function( silent ) {
-		var me      = this,
-			license = Spelled.Configuration.getStateProvider().get( 'license' ),
-			payload = Ext.isObject( license ) && license.payload ? license.payload : {}
+		var me        = this,
+			license   = Spelled.Configuration.getStateProvider().get( 'license' ),
+			payload   = Ext.isObject( license ) && license.payload ? license.payload : {}
+
+		if( !payload.lid ) return
 
 		Ext.Ajax.request({
 			url: Spelled.Configuration.updateServerUrl + '?license_id=' + payload.lid,
