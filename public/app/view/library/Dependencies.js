@@ -23,6 +23,7 @@ Ext.define('Spelled.view.library.Dependencies', {
 					xtype: 'treepanel',
 					animate: false,
 					animCollapse: false,
+					height: 300,
 
 					hideHeaders: true,
 					rootVisible: false,
