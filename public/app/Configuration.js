@@ -62,7 +62,7 @@ Ext.define( 'Spelled.Configuration', {
 	licenseFileName        : 'license.txt',
 	demoProjectsFolder     : 'demo_projects',
 	defaultWorkspaceName   : 'spellWorkspace',
-	updateServerUrl        : 'http://cdn.spelljs.com/spelljs-desktop-latest-version.json',
+	updateServerUrl        : 'http://backoffice.spielmeister.com/spelljs-desktop-latest-version.json',
 	demoServerHostname     : 'spelled-demo.spelljs.com',
 	demoStagingServer      : 'spelled-demo.spelljs.staging',
 	version                : '0.8.45',
