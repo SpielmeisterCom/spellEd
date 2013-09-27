@@ -28,6 +28,7 @@ Ext.define('Spelled.view.register.Window' ,{
 							name: 'name',
 							fieldLabel: 'User name',
 							anchor: '100%',
+							validateOnBlur: false,
 							validator: Ext.bind( this.validator, this)
 						},
 						{
@@ -36,6 +37,7 @@ Ext.define('Spelled.view.register.Window' ,{
 							rows: 9,
 							name: 'license',
 							fieldLabel: 'License key',
+							validateOnBlur: false,
 							validator: Ext.bind( this.validator, this)
 						},
 						{
@@ -105,7 +107,10 @@ Ext.define('Spelled.view.register.Window' ,{
 			} else if( !isCorrectUser ){
 				infoField.setValue( 'Wrong username.' )
 			}
+
 		} else {
+			form.markInvalid( { name: 'Invalid', license: 'Invalid' } )
+
 			infoField.setValue( "Your license signature is invalid." )
 		}
 
@@ -120,8 +125,6 @@ Ext.define('Spelled.view.register.Window' ,{
 		var regWindow = this,
 			form      = this.down( 'form' ),
 			license   = form.down( 'textarea[name="license"]')
-
-		if( !value ) return "Missing field."
 
 		if( regWindow.runningValidation ) return
 		regWindow.runningValidation = true
@@ -140,8 +143,10 @@ Ext.define('Spelled.view.register.Window' ,{
 			values = form.getValues()
 
 		var overridingCallback = Ext.bind( function( result ) {
-			this.fireEvent( 'setlicense', this, result )
-			this.close()
+			if( !this.validateForm( result ) ) {
+				this.fireEvent( 'setlicense', this, result )
+				this.close()
+			}
 		}, this)
 
 		this.validator( values, overridingCallback )
