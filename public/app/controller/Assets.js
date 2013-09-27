@@ -570,19 +570,16 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	editAsset: function( button ) {
-		var form   = button.up('form'),
-			record = form.getRecord(),
-			iframe = button.up( 'editasset' ).down( 'assetiframe' )
+		var form          = button.up('form'),
+			record        = form.getRecord(),
+			previewIframe = button.up( 'editasset' ).down( 'assetiframe' )
 
 		if( record && form.getForm().isValid() ) {
 			this.setAssetConfigFromForm( form, record )
 
-			this.application.fireEvent( 'assetchange', record )
+			this.application.fireEvent( 'assetchange', record, previewIframe )
 
 			record.setDirty()
-
-            if( iframe)
-				this.application.sendDebugMessage( iframe.getId(), "library.updateAsset", { definition: record.toSpellEngineMessageFormat() } )
 		}
 	},
 

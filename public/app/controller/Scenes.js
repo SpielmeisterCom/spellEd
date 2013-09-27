@@ -397,8 +397,13 @@ Ext.define('Spelled.controller.Scenes', {
 		node.expand( true, function() { node.collapse( true ) } )
 	},
 
-	sendAssetChangeToEngine: function( asset ) {
-		this.sendChangeToEngine( "library.updateAsset", { definition: asset.toSpellEngineMessageFormat() } )
+	sendAssetChangeToEngine: function( asset, previewIframe ) {
+		var message = { definition: asset.toSpellEngineMessageFormat() }
+
+		this.sendChangeToEngine( "library.updateAsset", message )
+
+		if( previewIframe )
+			this.application.sendDebugMessage( previewIframe.getId(), "library.updateAsset", message )
 	},
 
     /**
