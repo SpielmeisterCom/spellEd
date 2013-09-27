@@ -10,6 +10,7 @@ Ext.define('Spelled.controller.Scenes', {
 		'Spelled.view.scene.dependencies.DynamicContextMenu',
 		'Spelled.store.system.Defaults',
 		'Spelled.store.system.EditMode',
+		'Spelled.view.scene.library.ContextMenu',
 
 		'Spelled.view.ui.SpelledIframe',
 
@@ -38,6 +39,7 @@ Ext.define('Spelled.controller.Scenes', {
 		'scene.dependencies.StaticContextMenu',
 		'scene.dependencies.DynamicContextMenu',
 		'scene.AddLibraryId',
+		'scene.library.ContextMenu',
 		'ui.SpelledRendered'
 	],
 
@@ -294,10 +296,14 @@ Ext.define('Spelled.controller.Scenes', {
 				toggle: this.renderedSceneToggleButton,
 				fullscreen: this.fullScreenKeyEvent,
 				scriptvalidation: this.sendScriptChangeToEngine
+			},
+			'scenelibrarycontextmenu [action="remove"]': {
+				click: this.removeSceneFromLibrary
 			}
 		})
 
 		this.application.on({
+			scenelibrarycontextmenu: this.showSceneLibraryContextMenu,
 			deletescene: this.deleteScene,
 			clearstores: this.clearScenesStore,
 			scenescriptbeforeclose: this.checkIfSceneScriptIsDirty,
@@ -309,6 +315,28 @@ Ext.define('Spelled.controller.Scenes', {
 			sendToEngine: this.sendChangeToEngine,
 			scope: this
 		})
+	},
+
+	removeSceneFromLibrary: function( menuItem ) {
+		var parentMenu = menuItem.parentMenu,
+			node       = parentMenu.ownerView,
+			sceneId    = node.getId(),
+			scene      = this.getConfigScenesStore().getById( sceneId ),
+			project    = this.application.getActiveProject()
+
+		if( project.getScenesStore.getById( sceneId ) ) {
+			Spelled.MessageBox.alert( "Can't remove scene", 'This Scene is in use. Remove it from the scenes list first.' )
+
+		} else {
+			this.application.fireEvent( 'removefromlibrary', node, function() {
+				scene.destroy()
+				node.remove()
+			} )
+		}
+	},
+
+	showSceneLibraryContextMenu: function( view, record, item, index, e, options ) {
+		this.application.fireEvent( 'showcontextmenu', this.getSceneLibraryContextMenuView(), e, record )
 	},
 
 	libraryDeepLinkHelper: function( button ) {

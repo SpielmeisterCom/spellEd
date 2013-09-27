@@ -25,6 +25,7 @@ Ext.define('Spelled.controller.Library', {
 	TYPE_TEMPLATE     : 2,
 	TYPE_SCRIPT       : 3,
 	TYPE_SCENE_SCRIPT : 4,
+	TYPE_SCENE        : 5,
 
     views: [
         'library.Navigator',
@@ -335,6 +336,9 @@ Ext.define('Spelled.controller.Library', {
 
 		} else if( Ext.getStore( 'template.Types' ).findRecord( 'type', type ) || type === this.application.getController( 'Templates' ).TYPE_ENTITY_COMPOSITE ) {
 			return this.TYPE_TEMPLATE
+
+		} else if( type === 'scene' ) {
+			return this.TYPE_SCENE
 		}
 
 		return type
@@ -394,6 +398,9 @@ Ext.define('Spelled.controller.Library', {
 				break
 			case this.TYPE_SCRIPT:
 				this.application.fireEvent( 'scriptcontextmenu', view, record, item, index, e, options )
+				break
+			case this.TYPE_SCENE:
+				this.application.fireEvent( 'scenelibrarycontextmenu', view, record, item, index, e, options )
 				break
 			default:
 				this.showLibraryFolderContextMenu( node, e )
