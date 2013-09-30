@@ -48,6 +48,36 @@ Ext.define('Spelled.view.register.Window' ,{
 						{
 							xtype: 'displayfield',
 							name: 'information'
+						},
+						{
+							xtype: 'fieldcontainer',
+							layout: 'hbox',
+							items: [
+								{
+									xtype: 'displayfield',
+									value: 'For a license visit the: '
+								},
+								{
+									xtype: 'container',
+//									cls: 'x-form-display-field',
+									margin: '4 5',
+									autoEl: {
+										tag: 'a',
+										href: 'http://www.spelljs.com/buy',
+										html: 'SpellJS website'
+									},
+									listeners: {
+										render: function( component ) {
+											component.getEl().on( 'click', function( e ) {
+												e.stopEvent()
+
+												var gui = require('nw.gui')
+												gui.Shell.openExternal( 'http://www.spelljs.com/buy' )
+											})
+										}
+									}
+								}
+							]
 						}
 					],
 					buttons: [
