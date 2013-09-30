@@ -236,9 +236,14 @@ Ext.define('Spelled.controller.Library', {
 	deepLink: function( record ) {
 		if( !record ) return
 
-		var tree = this.getLibraryTree()
+		var tree = this.getLibraryTree(),
+			node = tree.getStore().getById( record.getId() )
 
-		this.dispatchLibraryNodeDoubleClick( tree, tree.getStore().getById( record.getId() ) )
+		this.getNavigator().setActiveTab( this.getLibrary() )
+		this.application.selectNode( tree, node )
+
+		this.dispatchLibraryNodeSelect( tree, node )
+		this.dispatchLibraryNodeDoubleClick( tree, node )
 	},
 
 	removeFolder: function() {

@@ -359,12 +359,7 @@ Ext.define('Spelled.controller.Entities', {
 			node           = tree.getRootNode().findChild( 'id', entityTemplateId, true )
 
 		if( entityTemplate && node ) {
-			this.getNavigator().setActiveTab( this.getLibrary() )
-
-			if( node ) {
-				this.application.selectNode( tree, node )
-				this.application.fireEvent( 'templatedblclick', this.getNavigator(), node )
-			}
+			this.application.fireEvent( 'deeplink', entityTemplate )
 		}
 	},
 
