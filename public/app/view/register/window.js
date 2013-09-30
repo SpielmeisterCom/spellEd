@@ -55,7 +55,7 @@ Ext.define('Spelled.view.register.Window' ,{
 							items: [
 								{
 									xtype: 'displayfield',
-									value: 'For a license visit the: '
+									value: 'Don\'t have license yet? Get your free license at the '
 								},
 								{
 									xtype: 'container',
