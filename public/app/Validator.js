@@ -11,7 +11,7 @@ Ext.define( 'Spelled.Validator', {
 	},
 
 	validateLicenseInformation: function( license ) {
-		if( Ext.isObject( license ) && license.isValid === true ) {
+		if( Ext.isObject( license ) && license.isSignatureValid === true ) {
 			return true
 		} else {
 			return false
