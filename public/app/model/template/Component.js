@@ -55,12 +55,14 @@ Ext.define('Spelled.model.template.Component', {
 	getCalculatedDependencies: function() {
 		var cmp = Ext.create( 'Spelled.model.config.Component', { templateId: this.getFullName() } )
 
+		cmp.store.remove( cmp )
 		return cmp.getCalculatedDependencies()
 	},
 
 	createDependencyNode: function() {
 		var cmp = Ext.create( 'Spelled.model.config.Component', { templateId: this.getFullName() } )
 
+		cmp.store.remove( cmp )
 		return cmp.createDependencyNode()
 	},
 
