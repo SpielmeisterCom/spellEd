@@ -4,12 +4,7 @@ Ext.define('Spelled.view.template.component.attribute.List', {
 
 	mixins: [ 'Spelled.base.grid.Property' ],
 
-	validator: function( value ) {
-//		var regexp = /^\[ ?\w*?\]$/
-//		if( !regexp.test( value ) )	return "This is not a valid list. List example: '[blue,green]'"
-//		else return true
-		return true
-	},
+	vtype: 'list',
 
 	initComponent: function() {
 		this.addEditPropertyEvent()
