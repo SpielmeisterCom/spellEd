@@ -25,7 +25,7 @@ Ext.define( 'Spelled.Validator', {
 
 			return false
 		},
-		listText: "This is not a valid list. List example: '[blue,green]'. These Characters are not allowed: [ ] \" ' ",
+		listText: "This is not a valid list. List example: 'blue,green,red'. These Characters are not allowed: [ ] \" ' ",
 		audioFileUpload: function(val, field) {
 			var fileName = /^.*\.(mp3|ogg)$/i
 
