@@ -256,7 +256,7 @@ Ext.define('Spelled.controller.templates.Components', {
 
 		if( field.isValid() ) {
 			attribute.set( 'default', field.getValue() )
-		} else if( attributeType.get( 'defaultValue' ) ) {
+		} else if( attributeType.get( 'defaultValue' ) !== "" ) {
 			var defaultValue = attributeType.get( 'defaultValue' )
 
 			field.setValue( defaultValue )
