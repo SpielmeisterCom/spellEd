@@ -5,6 +5,7 @@ Ext.define('Spelled.view.template.entity.Add' ,{
     title : 'Add a new Template-Entity to the Template',
     modal : true,
 	layout: 'fit',
+	width: 300,
 
     items: [
         {
