@@ -90,6 +90,8 @@ Ext.define('Spelled.controller.templates.Entities', {
 		var entity   = Ext.getStore( 'config.Entities' ).getById( entityId ),
 			children = []
 
+		entity.mergeWithTemplateConfig()
+
 		entity.getChildren().each(
 			function( child ) {
 				children.push( child.clone( true ) )
