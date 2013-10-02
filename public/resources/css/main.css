@@ -78,6 +78,10 @@
     background-image: url( '../images/icons/bullet-orange.png' ) !important;
 }
 
+.tree-component-attribute-engine-internal-icon {
+    background-image: url( '../images/icons/bullet-orange.png' ) !important;
+}
+
 .tree-asset-spritesheet-icon {
     background-image: url( '../images/icons/asset-spritesheet.png' ) !important;
 }
