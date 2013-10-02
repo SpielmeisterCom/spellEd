@@ -94,10 +94,10 @@ Ext.define('Spelled.model.template.Entity', {
 		var entityNode       = this.mixins.abstractModel.createTreeNode.call( this, node ),
 			sortOrder        = this.sortOrder,
 			markAsComposites = function( compositeNode ) {
-			compositeNode.set( 'cls', 'templateEntityComposite' )
-			compositeNode.set( 'sortOrder', sortOrder )
-			compositeNode.eachChild( markAsComposites )
-		}
+				compositeNode.set( 'cls', 'templateEntityComposite' )
+				compositeNode.set( 'sortOrder', sortOrder )
+				compositeNode.eachChild( markAsComposites )
+			}
 
 		this.getChildren().each( function( entity ) {
 			var childNode = entity.createTreeNode( entityNode )
