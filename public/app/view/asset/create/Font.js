@@ -65,14 +65,24 @@ Ext.define('Spelled.view.asset.create.Font', {
 							name: 'firstChar',
 							minValue: 0,
 							value: 0,
-							fieldLabel: 'Starting character code'
+							fieldLabel: 'Starting character code',
+							validator: function( value ) {
+								var lastCharField = this.up( 'form' ).down( 'numberfield[name="lastChar"]' )
+
+								return lastCharField.getValue() <= value ? "Must be smaller then the ending character code." : true
+							}
 						},
 						{
 							xtype: "numberfield",
 							name: 'lastChar',
 							minValue: 0,
 							value: 255,
-							fieldLabel: 'Ending character code'
+							fieldLabel: 'Ending character code',
+							validator: function( value ) {
+								var firstCharField = this.up( 'form' ).down( 'numberfield[name="firstChar"]' )
+
+								return firstCharField.getValue() >= value ? "Must be greater then the ending character code." : true
+							}
 						},
 						{
 							xtype: "numberfield",

@@ -362,7 +362,7 @@ Ext.define('Spelled.controller.Assets', {
 			imageField = form.down( 'image' ),
 			values     = form.getValues()
 
-		imageField.setSrc( this.createFontMap( values, true ).imageDataUrl )
+		if( form.isValid() ) imageField.setSrc( this.createFontMap( values, true ).imageDataUrl )
 	},
 
 	showDocumentation: function( docString ) {
