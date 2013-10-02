@@ -189,7 +189,8 @@ Ext.define('Spelled.controller.Entities', {
 
 		var newNode = entity.createTreeNode( parent )
 		parent.insertChild( index, newNode )
-		tree.selectPath( newNode.getPath() )
+
+		this.application.selectNode( tree, newNode )
 	},
 
 	showConvertEntity: function() {
@@ -450,9 +451,9 @@ Ext.define('Spelled.controller.Entities', {
 		node.set( 'leaf', false )
 
 		var entityNode = record.createTreeNode( node ),
-			newNode    = node.appendChild( entityNode ).getPath()
+			newNode    = node.appendChild( entityNode )
 
-		this.getScenesTree().selectPath( newNode )
+		this.application.selectNode( this.getScenesTree(), newNode )
 		window.close()
     },
 
