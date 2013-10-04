@@ -992,8 +992,7 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	toggleEditScene: function( button, state ) {
-		var spelledIframe   = this.getSpelledIframe(),
-			scene           = this.getConfigScenesStore().getById( spelledIframe.sceneId ),
+		var scene           = this.application.getRenderedScene(),
 			systemsStore    = Ext.getStore( 'template.Systems' ),
 			editModeSystems = this.getSystemEditModeStore()
 
@@ -1006,7 +1005,9 @@ Ext.define('Spelled.controller.Scenes', {
 						value,
 						function( sceneSystem ) {
 							var system       = systemsStore.getByTemplateId( sceneSystem.id ),
-								systemConfig = Ext.merge( {}, system.getConfigForScene(), { active: !state } ),
+								origConfig   = sceneSystem.config,
+								active       = origConfig.active ? !state : false,
+								systemConfig = Ext.merge( {}, system.getConfigForScene(), origConfig, { active: active } ),
 								editSystem   = editModeSystems.findRecord( 'systemId', sceneSystem.id )
 
 							if( editSystem ) {
