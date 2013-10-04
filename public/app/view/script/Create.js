@@ -9,6 +9,8 @@ Ext.define('Spelled.view.script.Create' ,{
 
     closeable: true,
 
+	width: 300,
+
     items: [
         {
             defaults: {
@@ -28,7 +30,7 @@ Ext.define('Spelled.view.script.Create' ,{
                 {
                     xtype: "scriptfolderpicker",
                     name: 'folder',
-                    fieldLabel: 'Import into',
+                    fieldLabel: 'Namespace',
                     displayField: 'text',
                     valueField: 'id'
                 }

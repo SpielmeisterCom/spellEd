@@ -11,7 +11,7 @@ Ext.define('Spelled.view.template.component.attribute.Script', {
 //        else return "No such script"
 //    },
 //
-//    emptyText       : '-- Select a existing Script --',
+//    emptyText       : 'none',
 //    displayField    : 'scriptId'
 
 
@@ -46,7 +46,7 @@ Ext.define('Spelled.view.template.component.attribute.Script', {
     forceSelection  : true,
     queryMode       : 'local',
     editable        : true,
-    emptyText       : '-- Select a existing Script --',
+    emptyText       : 'none',
     name            : 'assetId',
     displayField    : 'scriptId',
     valueField      : 'internalAssetId',

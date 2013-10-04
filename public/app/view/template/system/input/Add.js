@@ -2,7 +2,7 @@ Ext.define('Spelled.view.template.system.input.Add' ,{
     extend: 'Ext.window.Window',
     alias: 'widget.addinputtotemplate',
 
-    title: "Register additional component dictionary for system input",
+    title: "Add component map as system input",
     modal: true,
     closable: true,
 
@@ -40,7 +40,7 @@ Ext.define('Spelled.view.template.system.input.Add' ,{
                 {
 					flex:1,
                     xtype: 'groupedtree',
-                    title: 'Choose component dictionary that will be mapped',
+                    title: 'Choose component map',
                     rootVisible: false,
 					listeners: {
 						checkchange: function( node, checked ) {

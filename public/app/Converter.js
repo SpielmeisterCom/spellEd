@@ -9,19 +9,36 @@ Ext.define( 'Spelled.Converter' ,{
 		return libraryId.replace( /\./g, "/" )
 	},
 
-	getLocalizedFilePath: function( filePath, language ) {
-		var parts     = filePath.split( '.' ),
-			extension = parts.pop()
+	getLocalizedFilePath: function( filePath, extension, language ) {
+		var parts = filePath.split( '.' )
 
-		parts.push( this.localizeExtension( language, "." + extension ) )
+		if( extension ) parts.pop()
 
-		return parts.join( '' )
+		parts.push( this.localizeExtension( language, extension ) )
+
+		return parts.join( '.' )
+	},
+
+	generateCacheContent: function( item ) {
+		var content = []
+
+		var filePath = this.libraryIdToRelativePath( item.getFullName() )
+
+		if( item.toSpellEngineMessageFormat ) {
+			content.push( { content: item.toSpellEngineMessageFormat(), filePath: filePath + ".json" } )
+		}
+
+		if( item.get( 'content' ) ) {
+			content.push( { content: item.get( 'content' ), filePath: filePath + ".js" } )
+		}
+
+		return content
 	},
 
 	localizeExtension: function( language, extension ) {
-		if( language == 'default' ) return extension
+		if( language == 'default' ) language = ''
 
-		return "." + language + extension
+		return Ext.Array.clean( [ language , extension ] ).join( '.' )
 	},
 
 	toWorkspaceUrl: function( url ) {

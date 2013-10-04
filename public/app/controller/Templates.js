@@ -226,7 +226,7 @@ Ext.define('Spelled.controller.Templates', {
                 return
         }
 
-		var tabPanel = this.getMainPanel().down( 'splitlayout').isHidden() ? this.getTemplateEditor() : this.getSecondTabPanel(),
+		var tabPanel = this.getTabPanel(),
 			template = store.getById( record.getId() ),
 			foundTab = this.application.findActiveTabByTitle( tabPanel, template.getFullName() )
 
@@ -234,6 +234,10 @@ Ext.define('Spelled.controller.Templates', {
 
 		Controller.openTemplate( template )
     },
+
+	getTabPanel: function() {
+		return this.getMainPanel().down( 'splitlayout').isHidden() ? this.getTemplateEditor() : this.getSecondTabPanel()
+	},
 
     removeTemplateCallback: function( template ) {
 
@@ -248,6 +252,7 @@ Ext.define('Spelled.controller.Templates', {
 
     removeTemplate: function( template ) {
         this.closeOpenedTabs( template )
+		this.getRightPanel().removeAll()
 
         template.destroy({
 			callback: this.refreshStores,
@@ -257,7 +262,7 @@ Ext.define('Spelled.controller.Templates', {
     },
 
     closeOpenedTabs: function( template ) {
-        var editorTab = this.getTemplateEditor()
+        var editorTab = this.getTabPanel()
 
         editorTab.items.each(
             function( tab ) {
@@ -317,6 +322,7 @@ Ext.define('Spelled.controller.Templates', {
             window  = button.up( 'window' ),
 			values  = form.getValues(),
 			Model   = undefined,
+			store   = undefined,
 			content = {
 				name: values.name,
 				namespace: ( values.namespace === 'root' ) ? '' : values.namespace.substring( 5 ),
@@ -326,12 +332,15 @@ Ext.define('Spelled.controller.Templates', {
 		switch( values.type ) {
 			case this.TEMPLATE_TYPE_COMPONENT:
 				Model = this.getTemplateComponentModel()
+				store = this.getTemplateComponentsStore()
 				break
 			case this.TEMPLATE_TYPE_SYSTEM:
 				Model = this.getTemplateSystemModel()
+				store = this.getTemplateSystemsStore()
 				break
 			case this.TEMPLATE_TYPE_ENTITY:
 				Model = this.getTemplateEntityModel()
+				store = this.getTemplateEntitiesStore()
 				break
 		}
 
@@ -348,33 +357,43 @@ Ext.define('Spelled.controller.Templates', {
 					"default": true,
 					"doc": "if active is false the system will be skipped during processing"
 				} )
+
 			} else if( values.type === this.TEMPLATE_TYPE_COMPONENT ) {
 				model.set( 'content', this.application.getController( 'templates.Components' ).createComponentScaffolding( model.getFullName(), model.get( 'name' ) ) )
 			}
 
-			if( values.owner ) this.application.getController( 'templates.Entities' ).convertEntity( values.owner, model )
+			if( values.owner ) {
+				this.application.getController( 'templates.Entities' ).convertEntity( values.owner, model )
+			}
 
 			this.application.getActiveProject().setDirty()
-			model.phantom = true
+			model.justCreated = true
 
-			model.save({
+			model.save( {
 				success: function( result ) {
-					Ext.Msg.alert('Success', 'Your Template "' + result.get( 'templateId' ) + '" has been created.')
+					Ext.Msg.alert( 'Success', 'Your Template "' + result.get( 'templateId' ) + '" has been created.' )
 
-					//Needed for template conversion
-					this.loadTemplateStores( Ext.bind( function() {
-						if( values.owner ) {
-							var entity = Ext.getStore( 'config.Entities' ).getById( values.owner )
+					model.justCreated = false
+					store.add( result )
+					// needed for template conversion
+					if( values.owner ) {
+						var entity = Ext.getStore( 'config.Entities' ).getById( values.owner )
 
-							entity.setDirty()
-							this.application.fireEvent( 'refreshentitynode', values.owner )
+						entity.setDirty()
+						this.application.fireEvent( 'refreshentitynode', values.owner )
+
+						// notify engine instances of entity template update
+						var entityTemplate = entity.getEntityTemplate()
+
+						if( entityTemplate ) {
+							this.application.getController( 'Components' ).sendUpdateToAllEntitiesBasedOnTemplate( entityTemplate )
 						}
-					}, this) )
+					}
 
 					window.close()
 				},
 				scope: this
-			})
+			} )
 		}
     },
 

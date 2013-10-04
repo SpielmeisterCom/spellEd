@@ -82,7 +82,7 @@ Ext.define('Spelled.model.config.Entity', {
 			}
 		)
 
-	return Ext.Array.clean( ids )
+		return Ext.Array.clean( ids )
 	},
 
 	createDependencyNode: function() {
@@ -137,37 +137,45 @@ Ext.define('Spelled.model.config.Entity', {
 			components = this.getComponents(),
 			children   = this.getChildren()
 
+		if( template ) {
+			template.getComponents().each(
+				function( component ) {
+					var componentId = component.get( 'templateId' ),
+						cmp         = components.findRecord( 'templateId', componentId ) || Ext.create( 'Spelled.model.config.Component', {
+							templateId: component.get( 'templateId' )
+						})
+
+					cmp.set( 'additional', true )
+					cmp.set( 'config', Ext.Object.merge( {}, component.getConfigMergedWithTemplateConfig(), cmp.get( 'config' ) ) )
+
+					this.getComponents().add( cmp )
+					cmp.setEntity( this )
+
+					cmp.stripRedundantData()
+				},
+				this
+			)
+
+			template.getChildren().each(
+				function( item ) {
+					var child = this.getChildren().findRecord( 'name', item.get( 'name' ) ) || item.clone( true )
+
+					child.convertToAnonymousEntity()
+
+					children.add( child )
+				},
+				this
+			)
+		}
+
+		components.each(
+			function( component ) {
+				component.set( 'additional', true )
+			}
+		)
+
 		this.set( 'templateId', '' )
 		this.set( 'removable', true )
-
-		template.getComponents().each(
-			function( component ) {
-				var componentId = component.get( 'templateId' ),
-					cmp         = components.findRecord( 'templateId', componentId ) || Ext.create( 'Spelled.model.config.Component', {
-						templateId: component.get( 'templateId' )
-					})
-
-				cmp.set( 'additional', true )
-				cmp.set( 'config', Ext.Object.merge( {}, component.getConfigMergedWithTemplateConfig(), cmp.get( 'config' ) ) )
-
-				this.getComponents().add( cmp )
-				cmp.setEntity( this )
-
-				cmp.stripRedundantData()
-			},
-			this
-		)
-
-		template.getChildren().each(
-			function( item ) {
-				var child = this.getChildren().findRecord( 'name', item.get( 'name' ) ) || item.clone( true )
-
-				child.convertToAnonymousEntity()
-
-				children.add( child )
-			},
-			this
-		)
 
 		this.setDirty()
 	},
@@ -184,9 +192,10 @@ Ext.define('Spelled.model.config.Entity', {
 				var cmp = Ext.create( 'Spelled.model.config.Component', {
 					templateId: component.get( 'templateId' ),
 					additional: component.get( 'additional' ),
-					config: Ext.clone( component.get( 'config' ) )
+					config: Ext.clone( component.getConfigMergedWithTemplateConfig() )
 				})
 
+				cmp.stripRedundantData()
 				entity.getComponents().add( cmp )
 				cmp.setEntity( entity )
 			}
@@ -275,7 +284,9 @@ Ext.define('Spelled.model.config.Entity', {
 	},
 
 	setDirty: function() {
-		this.getOwner().setDirty()
+		var owner = this.getOwner()
+
+		if( owner ) owner.setDirty()
 
 		this.callParent()
 	},
@@ -330,9 +341,10 @@ Ext.define('Spelled.model.config.Entity', {
 	},
 
 	getEntityTemplate: function() {
-		var template = Ext.getStore( 'template.Entities' ).getByTemplateId( this.get('templateId') )
+		var templateId = this.get('templateId'),
+			template   = Ext.getStore( 'template.Entities' ).getByTemplateId( templateId )
 
-		if( !template ) Spelled.EntityHelper.missingTemplateError( this )
+		if( !template && templateId ) Spelled.EntityHelper.missingTemplateError( this )
 
 		return template
 	},
@@ -350,18 +362,21 @@ Ext.define('Spelled.model.config.Entity', {
 	},
 
     mergeWithTemplateConfig: function() {
-		if( !this.isAnonymous() ) {
+		if( !this.isAnonymous() && this.getEntityTemplate() ) {
 			this.mergeEntityTemplateWithTemplateConfig( this.getEntityTemplate() )
 
 		} else if( this.hasEntity() ) {
 			var owner = this.getOwner()
 
 			if( owner && owner.isAnonymous && !owner.isAnonymous() ) {
-				var ownerTemplate = owner.getEntityTemplate(),
-					entity        = ownerTemplate.getChildren().findRecord( 'name', this.get('name') )
+				var ownerTemplate = owner.getEntityTemplate()
 
-				if( entity ) {
-					this.mergeEntityTemplateWithTemplateConfig( entity )
+				if( ownerTemplate ) {
+					var entity = ownerTemplate.getChildren().findRecord( 'name', this.get('name') )
+
+					if( entity ) {
+						this.mergeEntityTemplateWithTemplateConfig( entity )
+					}
 				}
 			}
 		}

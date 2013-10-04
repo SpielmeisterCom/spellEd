@@ -38,6 +38,7 @@ Ext.define('Spelled.view.component.Properties', {
 
 		if( cellIndex === 0 && link ){
 			this.fireEvent( 'propertydeeplinkclick', name, link, record )
+			return false
 		}
 	},
 
@@ -45,7 +46,7 @@ Ext.define('Spelled.view.component.Properties', {
 		var propertyNames = this.sourceConfig
 
 		this.addEvents( 'propertydeeplinkclick' )
-		this.addListener( 'cellclick', this.checkIfDeepLinkClick, this )
+		this.addListener( 'beforecellclick', this.checkIfDeepLinkClick, this )
 
 		Ext.Object.each(
 			this.propertyDeepLinked,

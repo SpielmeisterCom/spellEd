@@ -22,7 +22,7 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 					case 'tree-scene-entity-icon':
 					case 'tree-scene-entity-linked-icon':
 					case 'tree-scene-entity-readonly-icon':
-						valid = this.checkEntityDrag( targetNode, position )
+						valid = this.checkEntityDrag( record, targetNode, position )
 						if( valid ) {
 							var owner = ( position == 'append' ) ? targetNode : targetNode.parentNode
 
@@ -47,22 +47,30 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 
 
 	onNodeOut: function( nodeData, source, e, data ) {
-		var el = Ext.fly( nodeData )
-		if( el && el.hasCls( this.nodeOverCls ) ) el.removeCls( this.nodeOverCls )
+		var el          = Ext.fly( nodeData ),
+			nodeOverCls = this.nodeOverCls
+
+		if( el && el.hasCls( nodeOverCls ) ) {
+			el.removeCls( nodeOverCls )
+		}
 	},
 
 	onNodeOver: function( nodeData, source, e, data ) {
-		var result =  this.callParent(arguments);
+		var el     = Ext.fly( nodeData ),
+			result = this.callParent( arguments )
 
-		var el = Ext.fly( nodeData )
+		if( el ) {
+			var nodeOverCls = this.nodeOverCls
 
-		if (result == 'x-tree-drop-ok-append' && el) {
+			if( result == 'x-tree-drop-ok-append' ) {
+				// mark the currently targeted node as active
+				if( !el.hasCls( nodeOverCls ) ) {
+					el.addCls( nodeOverCls )
+				}
 
-			//mark the currently targeted node as active
-			if (!el.hasCls( this.nodeOverCls ) ) el.addCls( this.nodeOverCls )
-
-		} else {
-			el.removeCls( this.nodeOverCls )
+			} else {
+				el.removeCls( nodeOverCls )
+			}
 		}
 
 		return result
@@ -88,12 +96,35 @@ Ext.define('Spelled.view.scene.plugin.SceneTreeDropZone' ,{
 		return false
 	},
 
-	checkEntityDrag: function( targetNode, position ) {
-		var targetNodeType = targetNode.get( 'iconCls' )
+	checkEntityDrag: function( draggedNode, dropNode, position ) {
+		var dropNodeId = dropNode.getId()
 
-		return ( targetNodeType === 'tree-scene-entity-icon'
-			|| targetNodeType === 'tree-scene-entity-linked-icon'
-			|| targetNodeType === 'tree-scene-entity-readonly-icon'
-			|| ( targetNodeType === 'tree-entities-folder-icon' && position === 'append' ) )
+		if( draggedNode.getId() === dropNodeId ) return false
+
+		// check if the dropNode is already a descendant of draggedNode
+		if( this.hasDescendantNode( draggedNode, dropNodeId ) ) return false
+
+		var targetNodeType = dropNode.get( 'iconCls' )
+
+		return ( targetNodeType === 'tree-scene-entity-icon' ||
+			targetNodeType === 'tree-scene-entity-linked-icon' ||
+			targetNodeType === 'tree-scene-entity-readonly-icon' ||
+			( targetNodeType === 'tree-entities-folder-icon' && position === 'append' ) )
+	},
+
+	hasDescendantNode: function( node, soughtAfterNodeId ) {
+		var childNodes = node.childNodes
+
+		for( var i = 0, childNode, n = childNodes.length; i < n; i++ ) {
+			childNode = childNodes[ i ]
+
+			if( childNode.getId() === soughtAfterNodeId ||
+				this.hasDescendantNode( childNode, soughtAfterNodeId ) ) {
+
+				return true
+			}
+		}
+
+		return false
 	}
 })

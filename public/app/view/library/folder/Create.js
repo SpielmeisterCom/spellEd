@@ -7,6 +7,8 @@ Ext.define('Spelled.view.library.folder.Create', {
 	autoShow: true,
 	modal: true,
 
+	width: 300,
+
     title: "Create a new library namespace",
 
     layout: {

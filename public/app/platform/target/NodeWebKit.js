@@ -74,23 +74,38 @@ Ext.define( 'Spelled.platform.target.NodeWebKit', {
 		var result          = '',
 			fs              = require( 'fs' ),
 			path            = require( 'path'),
-			childProcess    = require( 'child_process'),
-			onFinish        = function() {
-				Spelled.app.fireEvent( 'licensecallback', licenseData, result, callback )
+			childProcess    = require( 'child_process' ),
+			onFinish        = function( code ) {
+				if( code === 1 ) {
+					Spelled.MessageBox.error(
+						'Error',
+						'The spellcli executable terminated with exit code ' + code + '. ' + result,
+						true
+					)
+
+				} else {
+					Spelled.app.fireEvent( 'licensecallback', licenseData, result, callback )
+				}
 			},
 			onData      = function( data ) {
 				result += data.toString()
 			}
 
-		var execDir      = path.dirname( process.execPath ),
-			spellCliPath = path.join( execDir, Spelled.Configuration.getSpellCliPath() ),
-			extension    = process.platform == 'win32' ? '.exe' : ''
+		var execDir                = path.dirname( process.execPath ),
+			spellCliPath           = path.join( execDir, Spelled.Configuration.getSpellCliPath() ),
+			spellCliExecutablePath = spellCliPath + ( process.platform == 'win32' ? '.exe' : '' )
 
-		var child = childProcess.spawn( spellCliPath + extension, [ 'license', '-s', '-j' ] )
+		if( !fs.existsSync( spellCliExecutablePath ) ) {
+			Spelled.MessageBox.error( 'Error', 'Could not find spellcli executable in "' + spellCliExecutablePath + '".', true )
 
-		child.stdout.on('data', onData)
-		child.stderr.on('data', onData)
-		child.on('close', onFinish)
+			return
+		}
+
+		var child = childProcess.spawn( spellCliExecutablePath, [ 'license', '-s', '-j' ] )
+
+		child.stdout.on( 'data', onData )
+		child.stderr.on( 'data', onData )
+		child.on( 'close', onFinish )
 		child.stdin.write( licenseData, 'utf8', function() { child.stdin.end( ) } )
 	},
 

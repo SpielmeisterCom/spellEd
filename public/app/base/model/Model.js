@@ -89,10 +89,11 @@ Ext.define('Spelled.base.model.Model', {
 			var allDependencies = ( this.mergeDependencies ) ? ArrayHelper.merge( oldDependencies, newDependencies ) : newDependencies
 
 			this.set( 'dependencies', ArrayHelper.unique( ArrayHelper.clean( allDependencies ) ).sort() )
-			if( this.dirtyDep ) this.calculateDependencyNode()
 		} else {
 			this.set( 'dependencies', oldDependencies )
 		}
+
+		if( this.dirtyDep ) this.calculateDependencyNode()
 
 		this.dirtyDep = false
 	},

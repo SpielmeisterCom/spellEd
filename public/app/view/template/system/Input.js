@@ -25,7 +25,7 @@ Ext.define('Spelled.view.template.system.Input' ,{
 				}
 			},
 			{
-				header: 'Mapped component dictionary',
+				header: 'Component map',
 				dataIndex: 'componentId',
 				flex:1,
 				editor: {
@@ -53,7 +53,7 @@ Ext.define('Spelled.view.template.system.Input' ,{
 
     bbar: [
         {
-            text: "Register component dictionary",
+            text: "Add input",
             action: "showAddInput"
         }
     ]

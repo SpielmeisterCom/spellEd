@@ -132,8 +132,8 @@ Ext.define('Spelled.controller.Entities', {
 		this.showCreateEntity( scene )
 	},
 
-	updateEntityComponent:function( id, componentId, config ){
-		var entity           = this.getConfigEntitiesStore().getById( id )
+	updateEntityComponent: function( id, componentId, config ){
+		var entity = this.getConfigEntitiesStore().getById( id )
 
 		if( !entity ) return
 
@@ -149,7 +149,7 @@ Ext.define('Spelled.controller.Entities', {
 			}
 		)
 
-		entity.setDirty()
+		component.setChanged()
 
 		if( lastSelectedNode.getId() === id ) this.application.fireEvent( 'componentpropertygridupdate', component, componentConfig, false )
 	},
@@ -166,10 +166,11 @@ Ext.define('Spelled.controller.Entities', {
 		entity.setDirty()
 
 		this.sendEntityEventToEngine(
-			'component.update' , {
+			'component.update',
+			{
 				entityId    : entity.getId(),
-				componentId : 'spell.component.entityMetaData',
-				config      : { name: entity.get( 'name' ) }
+				componentId : 'spell.component.metaData',
+				config      : { name : entity.get( 'name' ) }
 			}
 		)
 
@@ -184,18 +185,19 @@ Ext.define('Spelled.controller.Entities', {
 			index    = parent.indexOf( node ),
 			entity   = this.getConfigEntitiesStore().getById( id )
 
-		node.remove( true )
+		node.remove()
 
 		var newNode = entity.createTreeNode( parent )
 		parent.insertChild( index, newNode )
-		tree.selectPath( newNode.getPath() )
+
+		this.application.selectNode( tree, newNode )
 	},
 
 	showConvertEntity: function() {
-		var node   = this.application.getLastSelectedNode( this.getScenesTree() ),
-			view   = Ext.widget( 'convertentity' )
+		var node = this.application.getLastSelectedNode( this.getScenesTree() ),
+			view = Ext.widget( 'convertentity' )
 
-		view.down('form').getForm().setValues( { type:'entityTemplate', owner: node.getId() } )
+		view.down( 'form' ).getForm().setValues( { type: 'entityTemplate', owner: node.getId() } )
 	},
 
 	cloneEntityConfig: function( id, node, forced ) {
@@ -203,12 +205,13 @@ Ext.define('Spelled.controller.Entities', {
 			entity     = store.getById( id ),
 			owner      = entity.getOwner(),
 			clone      = entity.clone(),
-			clonedNode = clone.createTreeNode(node),
+			clonedNode = clone.createTreeNode( node ),
 			ownerStore = undefined
 
 		if( entity.hasScene() ) {
 			ownerStore = owner.getEntities()
 			clone.setScene( owner )
+
 		} else {
 			ownerStore = owner.getChildren()
 			clone.setEntity( owner )
@@ -224,6 +227,12 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
 	sendCreateMessage: function( entity, forced ) {
+		var entityTemplate = entity.getEntityTemplate()
+
+		if( entityTemplate ) {
+			this.application.fireEvent( 'addtocache', entityTemplate )
+		}
+
 		this.sendEntityEventToEngine( 'entity.create', { entityConfig: entity.getMessageData() }, forced )
 	},
 
@@ -237,11 +246,11 @@ Ext.define('Spelled.controller.Entities', {
 	moveEntity: function( targetId, entityId, dropPosition ) {
 		var store         = this.getConfigEntitiesStore(),
 			isSceneTarget = this.isSceneTarget( targetId ),
-			target        = ( isSceneTarget ) ? null : store.getById( targetId ),
+			target        = isSceneTarget ? null : store.getById( targetId ),
 			entity        = store.getById( entityId ),
 			owner         = entity.getOwner(),
-			targetOwner   = ( isSceneTarget ) ? null : target.getOwner(),
-			entities      = ( entity.hasScene() ) ? owner.getEntities() : owner.getChildren(),
+			targetOwner   = isSceneTarget ? null : target.getOwner(),
+			entities      = entity.hasScene() ? owner.getEntities() : owner.getChildren(),
 			renderedScene = this.application.getRenderedScene(),
 			targetScene   = this.application.getLastSelectedScene(),
 			fromScene     = entity.getOwningScene()
@@ -259,25 +268,37 @@ Ext.define('Spelled.controller.Entities', {
 
 			target.getEntities().add( entity )
 			entity.setScene( target )
+
 		} else if( dropPosition === "append" ) {
 			entity.setEntity( target )
 			target.getChildren().add( entity )
-		} else {
-			var offset         = ( dropPosition === 'after' ) ? 1 : 0,
-				hasScene       = target.hasScene(),
-				targetEntities = ( hasScene ) ? targetOwner.getEntities() : targetOwner.getChildren()
 
-			if( hasScene ) entity.setScene( targetOwner )
-			else entity.setEntity( targetOwner )
+		} else {
+			var offset         = dropPosition === 'after' ? 1 : 0,
+				hasScene       = target.hasScene(),
+				targetEntities = hasScene ? targetOwner.getEntities() : targetOwner.getChildren()
+
+			if( hasScene ) {
+				entity.setScene( targetOwner )
+
+			} else {
+				entity.setEntity( targetOwner )
+			}
 
 			targetEntities.insert( targetEntities.indexOf( target ) + offset, entity )
 		}
 
-		if( fromScene == targetScene && renderedScene == targetScene ) {
-			this.sendEntityEventToEngine( 'entity.reassign', {
-				entityId: entity.getId(),
-				parentEntityId: ( entity.hasEntity() ) ? entity.getEntity().getId() : undefined
-			} )
+		if( fromScene == targetScene &&
+			renderedScene == targetScene ) {
+
+			this.sendEntityEventToEngine(
+				'component.update',
+				{
+					entityId    : entity.getId(),
+					componentId : 'spell.component.composite',
+					config      : { parentId : entity.hasEntity() ? entity.getEntity().getId() : '0' }
+				}
+			)
 
 		} else if( renderedScene == targetScene ) {
 			this.sendCreateMessage( entity )
@@ -339,12 +360,7 @@ Ext.define('Spelled.controller.Entities', {
 			node           = tree.getRootNode().findChild( 'id', entityTemplateId, true )
 
 		if( entityTemplate && node ) {
-			this.getNavigator().setActiveTab( this.getLibrary() )
-
-			if( node ) {
-				this.application.selectNode( tree, node )
-				this.application.fireEvent( 'templatedblclick', this.getNavigator(), node )
-			}
+			this.application.fireEvent( 'deeplink', entityTemplate )
 		}
 	},
 
@@ -435,9 +451,9 @@ Ext.define('Spelled.controller.Entities', {
 		node.set( 'leaf', false )
 
 		var entityNode = record.createTreeNode( node ),
-			newNode    = node.appendChild( entityNode ).getPath()
+			newNode    = node.appendChild( entityNode )
 
-		this.getScenesTree().selectPath( newNode )
+		this.application.selectNode( this.getScenesTree(), newNode )
 		window.close()
     },
 
@@ -489,9 +505,10 @@ Ext.define('Spelled.controller.Entities', {
 		var view = new View()
 
 		if( !!entity.isAnonymous ) {
-			view.docString = ( entity.isAnonymous() ) ? view.docString : "#!/guide/" + entity.getEntityTemplate().getDocumentationName()
 
-			if( !entity.isAnonymous() ) {
+			if( !entity.isAnonymous() && entity.getEntityTemplate() ) {
+				view.docString = "#!/guide/" + entity.getEntityTemplate().getDocumentationName()
+
 				view.add( {
 						xtype: 'entityhastemplateheader',
 						entityTemplateId: entity.getEntityTemplate().getId(),
@@ -499,6 +516,7 @@ Ext.define('Spelled.controller.Entities', {
 					}
 				)
 			}
+
 		} else {
 			view.docString = "#!/guide/" + entity.getDocumentationName()
 		}
@@ -517,7 +535,7 @@ Ext.define('Spelled.controller.Entities', {
 
 		contentPanel.add( view )
 
-		contentPanel.setTitle( 'Components in entity "' + entity.get('name') +'"' )
+		contentPanel.setTitle( 'Components of Entity "' + entity.get('name') +'"' )
 
 		return view
 	}

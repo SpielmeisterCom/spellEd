@@ -34,6 +34,6 @@ Ext.define('Spelled.model.assets.Font', {
 	setFontMapInfo: function( fontMap ) {
 		this.set( 'charset', fontMap.charset )
 		this.set( 'baseline', parseInt( fontMap.baseline, 10 ) )
-		this.set( 'file', this.get( 'name' ) + ".png" )
+		this.setFile( this.get( 'name' ) + ".png" )
 	}
 })

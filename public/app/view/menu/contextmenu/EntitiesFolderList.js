@@ -5,7 +5,7 @@ Ext.define('Spelled.view.menu.contextmenu.EntitiesFolderList', {
     items: [
 		{
 			icon: 'images/icons/add.png',
-			text: 'Add a new Entity',
+			text: 'Add Entity',
 			action: 'create'
 		}
     ]

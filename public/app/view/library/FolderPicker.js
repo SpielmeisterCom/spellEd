@@ -76,6 +76,7 @@ Ext.define('Spelled.view.library.FolderPicker', {
             picker = Ext.create('Ext.tree.Panel', {
                 store: me.store,
                 floating: true,
+				width: 100,
                 hidden: true,
                 displayField: me.displayField,
                 columns: me.columns,

@@ -7,12 +7,7 @@ Ext.define('Spelled.data.writer.Script', {
 		var records = request.operation.records || [],
 			data    = this.convertRequest( request,  Ext.amdModules.scriptConverter.toEngineFormat )
 
-		Ext.Array.each(
-			records,
-			function( record ) {
-				Spelled.StorageActions.update( { id: record.get('path'), content: record.get( 'content' ) } )
-			}
-		)
+		this.updateJSFiles( request, records )
 
 		return this.writeRecords( request, data )
 	}

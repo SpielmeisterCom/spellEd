@@ -18,10 +18,9 @@ Ext.define('Spelled.nw.Toolbar', {
 		)
 	},
 
-	initComponent: function() {
+	generateMenu: function() {
 		var me = this
-
-		me.callParent( arguments )
+		me.generated = true
 
 		var gui     = require('nw.gui'),
 			win     = gui.Window.get(),
@@ -71,54 +70,50 @@ Ext.define('Spelled.nw.Toolbar', {
 						submenu: subMenu
 					})
 				);
+
 			} else {
-
-				//not supported by node-webkit
+				// not supported by node-webkit
 			}
-
-
-
 		})
 
 		this.addEvents( events );
 
-		var subMenu = new gui.Menu();
-
-		subMenu.append(new gui.MenuItem({
-			label: 'Open Development Console',
-            keyEquivalent: 'c',
-			click: function() {
-				var gui = require('nw.gui');
-				var win = gui.Window.get();
-				win.showDevTools();
-			}
-		}));
-
-		subMenu.append(new gui.MenuItem({
-			label: 'Eject Warp Core [WebKit]',
-			click: function() {
-
-				window.setTimeout( function() {
-					window.triggerError('WebKit Warp Core Ejection');
-				}, 1);
-			}
-		}));
-
-		subMenu.append(new gui.MenuItem({
-			label: 'Eject Warp Core [Node]',
-			click: function() {
-				window.triggerError('Node WebKit Warp Core Ejection');
-			}
-		}));
-
-		menubar.append(
-			new gui.MenuItem({
-				label: 'Debug',
-				submenu: subMenu
-			})
-		);
+//		var subMenu = new gui.Menu();
+//
+//		subMenu.append(new gui.MenuItem({
+//			label: 'Open Development Console',
+//            keyEquivalent: 'c',
+//			click: function() {
+//				var gui = require('nw.gui');
+//				var win = gui.Window.get();
+//				win.showDevTools();
+//			}
+//		}));
+//
+//		subMenu.append(new gui.MenuItem({
+//			label: 'Eject Warp Core [WebKit]',
+//			click: function() {
+//
+//				window.setTimeout( function() {
+//					throw new Error( 'WebKit Warp Core Ejection' )
+//				}, 1);
+//			}
+//		}));
+//
+//		subMenu.append(new gui.MenuItem({
+//			label: 'Eject Warp Core [Node]',
+//			click: function() {
+//				throw new Error( 'Node WebKit Warp Core Ejection' )
+//			}
+//		}));
+//
+//		menubar.append(
+//			new gui.MenuItem({
+//				label: 'Debug',
+//				submenu: subMenu
+//			})
+//		);
 
 		win.menu = menubar;
 	}
-
 });

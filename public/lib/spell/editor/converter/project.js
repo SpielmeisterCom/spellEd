@@ -20,7 +20,7 @@ define(
 		 * @param {Object} project
 		 */
 		var toEngineFormat = function( project ) {
-			var result = _.pick( project, 'version', 'config', 'startScene', 'type' )
+			var result = _.pick( project, 'version', 'config', 'startScene', 'type', 'apiVersion' )
 
 			result.scenes = _.map(
 				project.getScenes,
@@ -47,7 +47,7 @@ define(
 		 * @param {Object} project
 		 */
 		var toEditorFormat = function( project ) {
-			var result = _.pick( project, 'config', 'name', 'startScene', 'id', 'type', 'scenes' )
+			var result = _.pick( project, 'config', 'name', 'startScene', 'id', 'type', 'scenes', 'apiVersion' )
 
 			initConfig( result )
 

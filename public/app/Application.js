@@ -8,7 +8,8 @@ Ext.define('Spelled.Application', {
 		'Spelled.Configuration',
 		'Spelled.MessageBox',
 		'Spelled.platform.Adapter',
-		'Spelled.controller.NodeWebKit'
+		'Spelled.controller.NodeWebKit',
+		'Spelled.controller.assets.Sound'
 	],
 
 	appFolder: 'app',
@@ -23,6 +24,7 @@ Ext.define('Spelled.Application', {
 		'Components',
 		'Assets',
 		'assets.Translations',
+		'assets.Sound',
 		'Templates',
 		'Scripts',
 		'Systems',
@@ -80,7 +82,12 @@ Ext.define('Spelled.Application', {
 	},
 
 	generateFileIdFromObject: function( object ) {
-		return this.getActiveProject().get('name') + "/library/" + (( object.namespace.length > 0 ) ? object.namespace.replace( /\./g, "/" ) +"/"+ object.name : object.name)
+		var activeProject = this.getActiveProject(),
+			projectId     = activeProject.getId(),
+			projectPath   = projectId.substr( 0, projectId.length - 12 ), // remove "project.json" from the project id's tail
+			libraryId     = object.namespace ? object.namespace + '.' + object.name : object.name
+
+		return projectPath + 'library/' + libraryId.replace( /\./g, '/' )
 	},
 
 	showDocumentation: function( docString ) {
@@ -177,8 +184,12 @@ Ext.define('Spelled.Application', {
 	showActionColumnIcons: function( icons ) {
 		Ext.each(
 			icons,
-			function(icon){
-				Ext.get(icon).removeCls('x-hidden')
+			function( icon ){
+				var el = Ext.get( icon )
+
+				if( el ) {
+					el.removeCls( 'x-hidden' )
+				}
 			}
 		)
 	},
@@ -305,6 +316,8 @@ Ext.define('Spelled.Application', {
 			}
 		)
 
+		Ext.apply( Ext.form.field.VTypes, Spelled.Validator.vTypes )
+
 		//load configuration from global CONFIGURATION variable that is defined in app-initialize
 		this.configuration = Spelled.Configuration
 
@@ -363,7 +376,6 @@ Ext.define('Spelled.Application', {
 
 		if( Spelled.platform.Adapter.isNodeWebKit() ) {
 			this.fireEvent( 'checklicensefile' )
-			this.getController( 'NodeWebKit').checkWorkspaceSettings()
 		} else {
 			this.loadProjects()
 		}

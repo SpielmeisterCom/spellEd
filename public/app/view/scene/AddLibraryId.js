@@ -7,13 +7,12 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 	modal: true,
 	multiple: false,
 
-	title: "Add a new library item to scene",
-
 	initComponent: function() {
 		var me    = this,
 			store = this.generateStore()
 
 		Ext.applyIf( me, {
+			title: this.multiple ? "Add dependencies" : "Add dependency",
 			items: [
 				{
 					xtype: 'form',

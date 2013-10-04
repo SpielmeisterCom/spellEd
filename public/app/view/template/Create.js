@@ -44,9 +44,15 @@ Ext.define('Spelled.view.template.Create', {
                 {
                     xtype: "templatefolderpicker",
                     name: 'namespace',
-                    fieldLabel: 'Import into',
+                    fieldLabel: 'Namespace',
                     displayField: 'text',
-                    valueField: 'id'
+                    valueField: 'id',
+					listeners: {
+						select: function() {
+							var form = this.up( 'form' )
+							if( form ) form.getForm().isValid()
+						}
+					}
                 }
             ],
 

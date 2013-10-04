@@ -2,7 +2,7 @@ Ext.define('Spelled.view.entity.Convert' ,{
     extend: 'Spelled.view.template.Create',
     alias: 'widget.convertentity',
 
-    title : 'Convert to template',
+    title : 'Create Template from Entity',
 	autoShow: true,
 
 	initComponent: function() {

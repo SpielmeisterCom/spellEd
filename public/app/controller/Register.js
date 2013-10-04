@@ -53,12 +53,14 @@ Ext.define('Spelled.controller.Register', {
 			stateProvider = Spelled.Configuration.getStateProvider(),
 			callback      = Ext.bind( function( result ) {
 
-			stateProvider.set( 'license', Ext.merge( {}, stateProvider.get( 'license' ), result ) )
+				stateProvider.set( 'license', Ext.merge( {}, stateProvider.get( 'license' ), result ) )
 
-			if( !Spelled.Validator.validateLicenseInformation( result ) ) {
-				this.application.fireEvent( 'showregister', false )
-			}
-		}, this )
+				if( !Spelled.Validator.validateLicenseInformation( result ) ) {
+					this.application.fireEvent( 'showregister', false )
+				} else {
+					this.initEditor()
+				}
+			}, this )
 
 
 		if( licenseData ) {
@@ -74,6 +76,17 @@ Ext.define('Spelled.controller.Register', {
 
 		stateProvider.set( 'license', license )
 		this.application.platform.writeLicense( license.licenseData )
+
+		//Means that the editor started and the webkit version needs now to be initialized
+		if( view.closable === false ) {
+			this.initEditor()
+		}
+	},
+
+	initEditor: function() {
+		if( Spelled.platform.Adapter.isNodeWebKit() ) {
+			this.fireEvent( 'initwebkitversion' )
+		}
 	},
 
 	showRegister: function( closable ) {

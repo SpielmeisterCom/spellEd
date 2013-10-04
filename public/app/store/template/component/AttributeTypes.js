@@ -5,7 +5,7 @@ Ext.define('Spelled.store.template.component.AttributeTypes', {
 
 	data : [
 		{
-			"defaultValue": "0",
+			"defaultValue": 0,
 			"type":"spellednumberfield",
 			"name":"number"
 		},
@@ -48,7 +48,7 @@ Ext.define('Spelled.store.template.component.AttributeTypes', {
 			"name":"enum"
 		},
 		{
-			"defaultValue": "0",
+			"defaultValue": 0,
 			"type":"spelledintegerfield",
 			"name":"integer"
 		},

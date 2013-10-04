@@ -1,6 +1,10 @@
 Ext.define( 'Spelled.EntityHelper', {
 	singleton: true,
 
+	getEntitesByTemplateId: function( templateId ) {
+		return Ext.getStore( 'config.Entities' ).query( 'templateId', templateId )
+	},
+
 	hasOwnerAnChildWithThisName: function( owner, name ) {
 		var entities = ( owner.self.getName() == Spelled.model.config.Scene.getName() ) ? owner.getEntities() : owner.getChildren(),
 			child    = entities.findRecord( 'name', name, null, null, null, true )
@@ -9,8 +13,10 @@ Ext.define( 'Spelled.EntityHelper', {
 	},
 
 	missingTemplateError: function( model ) {
+		var text = 'The Template "' + model.get('templateId') + '" could not be found.'
+
 		Ext.Msg.confirm(
-			'Error', 'The Template "' + model.get('templateId') + '" could not be found. Should the reference to this template be removed?',
+			'Error', text + 'Should the reference to this template be removed?',
 			function( button ) {
 				if( button === "yes" ) {
 					model.set( 'templateId', '' )
@@ -18,12 +24,18 @@ Ext.define( 'Spelled.EntityHelper', {
 				}
 			}
 		)
+
+		Spelled.Logger.log( 'ERROR', text )
 	},
 
 	getRootTemplateEntityFromEntity: function( entity ) {
-		if( entity.hasOwnerEntity && entity.hasOwnerEntity() ) return entity.getOwnerEntity()
-		else if( entity.hasEntity && entity.hasEntity() ) return this.getRootTemplateEntityFromEntity( entity.getEntity() )
-		else if( entity.get( 'type' ) === "entityTemplate" ) {
+		if( entity.hasOwnerEntity && entity.hasOwnerEntity() ) {
+			return entity.getOwnerEntity()
+
+		} else if( entity.hasEntity && entity.hasEntity() ) {
+			return this.getRootTemplateEntityFromEntity( entity.getEntity() )
+
+		} else if( entity.get( 'type' ) === 'entityTemplate' ) {
 			return Ext.getStore( 'template.Entities' ).getByTemplateId( entity.get( 'templateId' ) )
 		}
 

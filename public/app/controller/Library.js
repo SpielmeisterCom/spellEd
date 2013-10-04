@@ -25,6 +25,7 @@ Ext.define('Spelled.controller.Library', {
 	TYPE_TEMPLATE     : 2,
 	TYPE_SCRIPT       : 3,
 	TYPE_SCENE_SCRIPT : 4,
+	TYPE_SCENE        : 5,
 
     views: [
         'library.Navigator',
@@ -124,6 +125,7 @@ Ext.define('Spelled.controller.Library', {
 			},
 			controller:{
 				'*': {
+					addtocache: this.addToCache,
 					deeplink : this.deepLink,
 					selectnamespacefrombutton : this.selectLibraryNamespace,
 					buildnamespacenodes       : this.buildNamespaceNodes,
@@ -134,17 +136,46 @@ Ext.define('Spelled.controller.Library', {
 		})
     },
 
+	addToCache: function( item ) {
+		var cacheContent = Spelled.Converter.generateCacheContent( item ),
+			store        = this.getLibraryStore(),
+			exists       = {},
+			helperFunc   = function( record ) {
+				Ext.Array.each(
+					record.getDependencies(),
+					function( libraryId ) {
+						var tmp = store.findLibraryItemByLibraryId( libraryId )
+
+						if( tmp && !exists[ libraryId ] ) {
+							exists[ libraryId ] = true
+							Ext.Array.push( cacheContent, Spelled.Converter.generateCacheContent( tmp ) )
+						}
+
+						helperFunc( tmp )
+					}
+				)
+			}
+
+		helperFunc( item )
+
+		this.application.fireEvent( 'sendToEngine',
+			'application.addToCache', {
+				cacheContent: Ext.amdModules.createCacheContent( Ext.Array.clean( cacheContent ) )
+			}
+		)
+	},
+
 	loadLibraryDependency: function( panel, record ) {
 		var treePanel = panel.down( 'treepanel' )
 
-		if( !treePanel ) return
+		if( treePanel ) {
+			if( record.dirtyDep ) record.updateDependencies()
 
-		if( record.dirtyDep ) record.updateDependencies()
+			var rootNode = Ext.clone( record.getDependencyNode() )
 
-		var rootNode = Ext.clone( record.getDependencyNode() )
-
-		rootNode.expanded = true
-		treePanel.setRootNode( rootNode )
+			rootNode.expanded = true
+			treePanel.setRootNode( rootNode )
+		}
 
 		Ext.Msg.close()
 	},
@@ -186,15 +217,15 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	deepLinkComponentProperty: function( name, propertyMapping, property ) {
-		var value  = property.get( 'value'),
-			record = undefined
+		var value  = property.get( 'value' ),
+			record
 
 		switch( propertyMapping.get( 'target' ) ) {
 			case 'asset':
 				record = this.application.getController( 'Assets' ).getAssetByAssetId( value )
 				break
 			case 'script':
-				var scriptId = value.split( ':').pop()
+				var scriptId = value.split( ':' ).pop()
 				record = this.getStore( 'script.Scripts' ).findRecord( 'scriptId', scriptId )
 				break
 		}
@@ -203,12 +234,16 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	deepLink: function( record ) {
-		var tree  = this.getLibraryTree(),
-			node  = tree.getStore().getById( record.getId() )
+		if( !record ) return
 
-		if( node ) {
-			this.dispatchLibraryNodeDoubleClick( tree, node )
-		}
+		var tree = this.getLibraryTree(),
+			node = tree.getStore().getById( record.getId() )
+
+		this.getNavigator().setActiveTab( this.getLibrary() )
+		this.application.selectNode( tree, node )
+
+		this.dispatchLibraryNodeSelect( tree, node )
+		this.dispatchLibraryNodeDoubleClick( tree, node )
 	},
 
 	removeFolder: function() {
@@ -281,6 +316,7 @@ Ext.define('Spelled.controller.Library', {
 
 	clearStore: function() {
 		this.getLibraryStore().getRootNode().removeAll()
+		this.getFoldersTreeStore().getRootNode().removeAll()
 	},
 
 	removeFromLibrary: function( node, callback ) {
@@ -305,6 +341,9 @@ Ext.define('Spelled.controller.Library', {
 
 		} else if( Ext.getStore( 'template.Types' ).findRecord( 'type', type ) || type === this.application.getController( 'Templates' ).TYPE_ENTITY_COMPOSITE ) {
 			return this.TYPE_TEMPLATE
+
+		} else if( type === 'scene' ) {
+			return this.TYPE_SCENE
 		}
 
 		return type
@@ -365,6 +404,9 @@ Ext.define('Spelled.controller.Library', {
 			case this.TYPE_SCRIPT:
 				this.application.fireEvent( 'scriptcontextmenu', view, record, item, index, e, options )
 				break
+			case this.TYPE_SCENE:
+				this.application.fireEvent( 'scenelibrarycontextmenu', view, record, item, index, e, options )
+				break
 			default:
 				this.showLibraryFolderContextMenu( node, e )
 		}
@@ -387,6 +429,7 @@ Ext.define('Spelled.controller.Library', {
 	},
 
 	dispatchLibraryNodeDoubleClick: function( tree, node ) {
+		if( !node ) return
 
 		switch( this.getNodeType( node ) ) {
 			case this.TYPE_ASSET:

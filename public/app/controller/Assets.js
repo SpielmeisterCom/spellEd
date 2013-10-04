@@ -252,7 +252,7 @@ Ext.define('Spelled.controller.Assets', {
 				me.application.selectNode( tree, node )
 			}
 
-			iframe.load()
+			if( iframe ) iframe.load()
 		}
 
 		this.saveFileUploadFromAsset( fileField, asset, callback )
@@ -362,7 +362,7 @@ Ext.define('Spelled.controller.Assets', {
 			imageField = form.down( 'image' ),
 			values     = form.getValues()
 
-		imageField.setSrc( this.createFontMap( values, true ).imageDataUrl )
+		if( form.isValid() ) imageField.setSrc( this.createFontMap( values, true ).imageDataUrl )
 	},
 
 	showDocumentation: function( docString ) {
@@ -378,6 +378,8 @@ Ext.define('Spelled.controller.Assets', {
 
 	fieldRenderHelper: function( type, fieldSet, asset ) {
 		if( asset && asset.isReadonly() ) return
+
+		var localized = asset && asset.get( 'localized' )
 
 		switch( type ) {
 			case this.TYPE_ANIMATION:
@@ -399,10 +401,10 @@ Ext.define('Spelled.controller.Assets', {
 				fieldSet.add( { xtype: '2dtilemapconfig', edit: !!asset } )
 				break
 			case this.TYPE_APPEARANCE:
-				this.addLocalizationFileFields( fieldSet.add( { xtype: 'appearanceasset', edit: !!asset } ), asset )
+				this.addLocalizationFileFields( fieldSet.add( { xtype: 'appearanceasset', edit: !!asset } ), localized )
 				break
 			case this.TYPE_SOUND:
-				this.addLocalizationFileFields( fieldSet.add( { xtype: 'soundasset', edit: !!asset } ), asset )
+				this.addLocalizationFileFields( fieldSet.add( { xtype: 'soundasset', edit: !!asset } ), localized )
 				break
 			case this.TYPE_TRANSLATION:
 				if( asset ) fieldSet.add( { xtype: 'translationasset', asset: asset, project: this.application.getActiveProject() } )
@@ -410,10 +412,10 @@ Ext.define('Spelled.controller.Assets', {
 		}
 	},
 
-	addLocalizationFileFields: function( cmp, asset ) {
+	addLocalizationFileFields: function( cmp, localized ) {
 		var panel     = cmp.down( 'localizedfilefield'),
 			project   = this.application.getActiveProject(),
-			localized = asset ? asset.get( 'localized' ) : false
+			localized = !!localized
 
 		panel.createLanguageTabs( localized, project.getSupportedLanguages() )
 	},
@@ -568,19 +570,16 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	editAsset: function( button ) {
-		var form   = button.up('form'),
-			record = form.getRecord(),
-			iframe = button.up( 'editasset' ).down( 'assetiframe' )
+		var form          = button.up('form'),
+			record        = form.getRecord(),
+			previewIframe = button.up( 'editasset' ).down( 'assetiframe' )
 
 		if( record && form.getForm().isValid() ) {
 			this.setAssetConfigFromForm( form, record )
 
-			this.application.fireEvent( 'assetchange', record )
+			this.application.fireEvent( 'assetchange', record, previewIframe )
 
 			record.setDirty()
-
-            if( iframe)
-				this.application.sendDebugMessage( iframe.getId(), "library.updateAsset", { definition: record.toSpellEngineMessageFormat() } )
 		}
 	},
 
@@ -606,17 +605,13 @@ Ext.define('Spelled.controller.Assets', {
 			View           = this.getAssetInspectorConfigView(),
 			view           = new View(),
 			project        = this.application.getActiveProject(),
-			src            = asset.getFilePath( project.get('name') )
+			src            = asset.getFilePath( project.get('name'), project.getDefaultLanguageKey() )
 
 		view.loadRecord( asset )
 
 		inspectorPanel.setTitle( 'Asset information of "' + asset.get('name') +'"' )
 
 		view.docString = asset.docString
-
-		if( asset.get( 'localized' ) ){
-			src = Spelled.Converter.getLocalizedFilePath( src, project.getDefaultLanguageKey() )
-		}
 
 		switch( asset.get('subtype') ) {
 			case this.TYPE_APPEARANCE:
@@ -627,6 +622,9 @@ Ext.define('Spelled.controller.Assets', {
 		}
 
 		inspectorPanel.add( view )
+
+		//TODO: workaround because extjs won't detect correctly fields which were initialized in the constructor
+		view.down( 'displayfield[name="internalAssetId"]' ).setValue( asset.get( 'internalAssetId' ) )
 	},
 
     showListContextMenu: function( view, record, item, index, e, options ) {
@@ -682,11 +680,11 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	saveAsset: function( form, asset ) {
-		var fileField = form.down( 'assetfilefield' ),
-			window    = form.up( 'window' ),
-			id        = this.application.generateFileIdFromObject( asset.data ),
-			type      = asset.get( 'subtype'),
-			store     = this.getAssetStoreByType( type )
+		var fileFields = Ext.ComponentQuery.query( 'assetfilefield', form ),
+			window     = form.up( 'window' ),
+			id         = this.application.generateFileIdFromObject( asset.data ),
+			type       = asset.get( 'subtype'),
+			store      = this.getAssetStoreByType( type )
 
 		this.setAssetConfigFromForm( form, asset )
 
@@ -698,8 +696,17 @@ Ext.define('Spelled.controller.Assets', {
 			store.add( asset )
 		},this)
 
-		if( fileField && fileField.isValid() ) {
-			this.saveFileUploadFromAsset( fileField, asset, successCallback )
+		if( Ext.isArray( fileFields ) && fileFields.length > 0 ) {
+
+			Ext.each(
+				fileFields,
+				function( fileField ) {
+					if( fileField && fileField.isValid() )
+						this.saveFileUploadFromAsset( fileField, asset, successCallback )
+				},
+				this
+			)
+
 		} else {
 			asset.save({ success: successCallback })
 		}
@@ -727,16 +734,32 @@ Ext.define('Spelled.controller.Assets', {
 			reader    = new FileReader(),
 			file      = fileField.fileRawInput,
 			name      = asset.get( 'name' ),
-			localized = asset.get( 'localized' )
+			localized = asset.get( 'localized'),
+			isSound   = asset.isSound
 
 		// Closure to capture the file information.
 		reader.onload = (function(theFile) {
 			return function( e ) {
 				var result    = e.target.result,
-					extension = "." + theFile.type.split( "/").pop()
+					extension = theFile.type.split( "/").pop()
 
-				me.saveBase64AssetFile( id + Spelled.Converter.localizeExtension( fileField.getName(), extension ), result )
-				asset.set( 'file', name + extension )
+				if( localized ) {
+					var language      = fileField.getName(),
+						localizations = asset.get( 'localization' )
+
+					if( Ext.isObject( localizations ) && !isSound ) {
+						asset.removeLocalizedResource( language, localizations[language] )
+					}
+
+					asset.setLocalizedFileInfo( extension, language )
+					extension = Spelled.Converter.localizeExtension( language, extension )
+
+				} else if( !isSound ) {
+					asset.removeResource()
+					asset.setFile( [ name , extension ].join( '.' ) )
+				}
+
+				me.saveBase64AssetFile( id + '.' + extension, result )
 				asset.save({ success: callback })
 			}
 		})( file )
@@ -799,11 +822,7 @@ Ext.define('Spelled.controller.Assets', {
 
 	updateLocalizationPreview: function( container, asset, language ) {
 		var project = this.application.getActiveProject(),
-			src     = asset.getFilePath( project.get('name') )
-
-		if( language != 'default' ) {
-			src = Spelled.Converter.getLocalizedFilePath( src, language )
-		}
+			src     = asset.getFilePath( project.get('name'), language )
 
 		container.load( src )
 	},

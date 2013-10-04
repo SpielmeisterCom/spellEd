@@ -10,6 +10,7 @@ Ext.define('Spelled.controller.Scenes', {
 		'Spelled.view.scene.dependencies.DynamicContextMenu',
 		'Spelled.store.system.Defaults',
 		'Spelled.store.system.EditMode',
+		'Spelled.view.scene.library.ContextMenu',
 
 		'Spelled.view.ui.SpelledIframe',
 
@@ -38,6 +39,7 @@ Ext.define('Spelled.controller.Scenes', {
 		'scene.dependencies.StaticContextMenu',
 		'scene.dependencies.DynamicContextMenu',
 		'scene.AddLibraryId',
+		'scene.library.ContextMenu',
 		'ui.SpelledRendered'
 	],
 
@@ -186,7 +188,7 @@ Ext.define('Spelled.controller.Scenes', {
                     me.selectEntityTreeItem( payload.id )
 				},
 				'spelled.debug.application.startScene': function( sourceId, payload ) {
-					var sceneId = payload.startSceneId,
+					var sceneId = payload.targetSceneId,
 						scene   = me.getConfigScenesStore().findRecord( 'sceneId', sceneId, 0, false, false, true )
 
 					if( !scene ) {
@@ -294,10 +296,14 @@ Ext.define('Spelled.controller.Scenes', {
 				toggle: this.renderedSceneToggleButton,
 				fullscreen: this.fullScreenKeyEvent,
 				scriptvalidation: this.sendScriptChangeToEngine
+			},
+			'scenelibrarycontextmenu [action="remove"]': {
+				click: this.removeSceneFromLibrary
 			}
 		})
 
 		this.application.on({
+			scenelibrarycontextmenu: this.showSceneLibraryContextMenu,
 			deletescene: this.deleteScene,
 			clearstores: this.clearScenesStore,
 			scenescriptbeforeclose: this.checkIfSceneScriptIsDirty,
@@ -309,6 +315,28 @@ Ext.define('Spelled.controller.Scenes', {
 			sendToEngine: this.sendChangeToEngine,
 			scope: this
 		})
+	},
+
+	removeSceneFromLibrary: function( menuItem ) {
+		var parentMenu = menuItem.parentMenu,
+			node       = parentMenu.ownerView,
+			sceneId    = node.getId(),
+			scene      = this.getConfigScenesStore().getById( sceneId ),
+			project    = this.application.getActiveProject()
+
+		if( project.getScenesStore.getById( sceneId ) ) {
+			Spelled.MessageBox.alert( "Can't remove scene", 'This Scene is in use. Remove it from the scenes list first.' )
+
+		} else {
+			this.application.fireEvent( 'removefromlibrary', node, function() {
+				scene.destroy()
+				node.remove()
+			} )
+		}
+	},
+
+	showSceneLibraryContextMenu: function( view, record, item, index, e, options ) {
+		this.application.fireEvent( 'showcontextmenu', this.getSceneLibraryContextMenuView(), e, record )
 	},
 
 	libraryDeepLinkHelper: function( button ) {
@@ -347,6 +375,7 @@ Ext.define('Spelled.controller.Scenes', {
 		Ext.Array.remove( dependencies, value )
 		record.set( 'dependencies', dependencies )
 		record.setDirty()
+		record.needToCalcCependency()
 
 		recordToRemove.remove()
 	},
@@ -371,6 +400,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		record.set( 'dependencies', dependencies )
 		record.setDirty()
+		record.needToCalcCependency()
 
 		dependencyView.reconfigureStores()
 
@@ -395,8 +425,13 @@ Ext.define('Spelled.controller.Scenes', {
 		node.expand( true, function() { node.collapse( true ) } )
 	},
 
-	sendAssetChangeToEngine: function( asset ) {
-		this.sendChangeToEngine( "library.updateAsset", { definition: asset.toSpellEngineMessageFormat() } )
+	sendAssetChangeToEngine: function( asset, previewIframe ) {
+		var message = { definition: asset.toSpellEngineMessageFormat() }
+
+		this.sendChangeToEngine( "library.updateAsset", message )
+
+		if( previewIframe )
+			this.application.sendDebugMessage( previewIframe.getId(), "library.updateAsset", message )
 	},
 
     /**
@@ -415,8 +450,8 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	sendSystemChangeToEngine: function( model ) {
-		var scene        = this.application.getActiveProject().getStartScene(),
-			systemConfig = false,
+		var scene            = this.application.getRenderedScene(),
+			systemConfig     = false,
 			executionGroupId = false
 
 		Ext.Object.each(
@@ -486,8 +521,8 @@ Ext.define('Spelled.controller.Scenes', {
 				this.application.fireEvent( 'showSystemItem', treePanel, record )
 				break
 			case this.TREE_ITEM_TYPE_SCENE:
-				var scene = this.application.getLastSelectedScene()
-				if( scene.getFullName() !== this.application.getActiveProject().get( 'startScene' ) ) this.renderScene( scene )
+				var app = this.application
+				if( !app.isRenderedSceneLastSelectedScene() ) this.renderScene( app.getLastSelectedScene() )
 				break
 			default:
 				return
@@ -897,10 +932,10 @@ Ext.define('Spelled.controller.Scenes', {
 			cacheContent = []
 
 		var generateCacheContent = function( item ) {
-			if( item.dirty === true && item.toSpellEngineMessageFormat ) {
-				var filePath = Spelled.Converter.libraryIdToRelativePath( item.getFullName() ) + ".json"
+			if( item.dirty === true ) {
+				var tmp = Spelled.Converter.generateCacheContent( item )
 
-				cacheContent.push( { content: item.toSpellEngineMessageFormat(), filePath: filePath } )
+				if( tmp.length > 0 ) cacheContent = Ext.Array.merge( cacheContent, tmp )
 			}
 		}
 
@@ -957,8 +992,7 @@ Ext.define('Spelled.controller.Scenes', {
 	},
 
 	toggleEditScene: function( button, state ) {
-		var spelledIframe   = this.getSpelledIframe(),
-			scene           = this.getConfigScenesStore().getById( spelledIframe.sceneId ),
+		var scene           = this.application.getRenderedScene(),
 			systemsStore    = Ext.getStore( 'template.Systems' ),
 			editModeSystems = this.getSystemEditModeStore()
 
@@ -971,7 +1005,9 @@ Ext.define('Spelled.controller.Scenes', {
 						value,
 						function( sceneSystem ) {
 							var system       = systemsStore.getByTemplateId( sceneSystem.id ),
-								systemConfig = Ext.merge( {}, system.getConfigForScene(), { active: !state } ),
+								origConfig   = sceneSystem.config,
+								active       = origConfig.active ? !state : false,
+								systemConfig = Ext.merge( {}, system.getConfigForScene(), origConfig, { active: active } ),
 								editSystem   = editModeSystems.findRecord( 'systemId', sceneSystem.id )
 
 							if( editSystem ) {

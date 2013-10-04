@@ -5,7 +5,7 @@ Ext.define('Spelled.store.system.Defaults', {
 
     data : [
 		{
-			systemId: 'spell.system.processKeyInput',
+			systemId: 'spell.system.processInputCommands',
 			executionGroupId: 'update'
 		},
 		{

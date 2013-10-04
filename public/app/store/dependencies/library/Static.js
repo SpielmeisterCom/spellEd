@@ -5,16 +5,10 @@ Ext.define('Spelled.store.dependencies.library.Static', {
 
     data : [
 		{
-			"id": "spell.component.entityMetaData"
+			"id": "spell.component.metaData"
 		},
 		{
-			"id": "spell.component.entityComposite.parent"
-		},
-		{
-			"id": "spell.component.entityComposite.children"
-		},
-		{
-			"id": "spell.component.entityComposite.root"
+			"id": "spell.component.composite"
 		},
 		{
 			"id": "spell.component.eventHandlers"
