@@ -15,10 +15,10 @@ Ext.define('Spelled.view.ui.about.License' ,{
     initComponent: function() {
         var me = this
 
-        Spelled.app.platform.getLicenseInformation('', function(licenseData) {
+        /*Spelled.app.platform.getLicenseInformation('', function(licenseData) {
             console.log(licenseData)
 
-        })
+        })*/
 
         this.callParent( arguments )
     }
