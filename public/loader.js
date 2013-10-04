@@ -134,7 +134,9 @@ if( isNWRuntime ) {
 	//Maximize window
 	var gui = require('nw.gui'),
 	    win = gui.Window.get();
-	win.maximize();
+
+    win.maximize();
+    win.show();
 
 	loadSpellEd()
 
