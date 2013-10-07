@@ -2,7 +2,7 @@
 	"name": "SpellEd",
 	"main": "public/index.html",
 
-    "version": "0.8.51",
+    "version": "0.8.52",
     "user-agent": "%name/%ver (%osinfo) AppleWebKit/%webkit_ver nw/%nwver",
 
     "webkit": {
