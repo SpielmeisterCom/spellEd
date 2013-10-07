@@ -237,16 +237,19 @@ Ext.define('Spelled.controller.templates.Components', {
 					change: function( field ) {
 						var value    = field.getValue(),
 							combobox = this.up( 'componenttemplateproperty' ).down( attributeType.get('type') ),
-							store    = ( Ext.isString( value ) ) ? value.split(',') : []
+							store    = combobox.getStore(),
+							items    = ( Ext.isString( value ) ) ? value.split(',') : []
 
-						if( value ) {
-							combobox.bindStore( store )
+						if( value && !store ) {
+							combobox.bindStore( items )
+						} else if( value ) {
+							store.loadRawData( Ext.Array.map( items, function( item ) { return [item] } ) )
 						}
 					}
 				}
 			})
 
-			defaultValueField.store = attribute.get( 'values' )
+			defaultValueField.store = Ext.isArray( attribute.get( 'values' ) ) ? attribute.get( 'values' ) : attribute.get( 'values' ).split(",")
 		}
 
 		var field = propertyView.add( defaultValueField )
@@ -256,7 +259,7 @@ Ext.define('Spelled.controller.templates.Components', {
 
 		if( field.isValid() ) {
 			attribute.set( 'default', field.getValue() )
-		} else if( attributeType.get( 'defaultValue' ) ) {
+		} else if( attributeType.get( 'defaultValue' ) !== "" ) {
 			var defaultValue = attributeType.get( 'defaultValue' )
 
 			field.setValue( defaultValue )

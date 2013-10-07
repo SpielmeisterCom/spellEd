@@ -90,6 +90,8 @@ Ext.define('Spelled.controller.templates.Entities', {
 		var entity   = Ext.getStore( 'config.Entities' ).getById( entityId ),
 			children = []
 
+		entity.mergeWithTemplateConfig()
+
 		entity.getChildren().each(
 			function( child ) {
 				children.push( child.clone( true ) )
@@ -158,13 +160,17 @@ Ext.define('Spelled.controller.templates.Entities', {
 			record = form.getRecord(),
 			values = form.getValues(),
 			me     = this,
-			node   = me.application.getLastSelectedNode( me.getTemplatesTree() )
+			node   = me.application.getLastSelectedNode( me.getTemplatesTree()),
+			markAsComposite = function( node ) {
+				node.set( 'cls', me.application.getController('Templates').TYPE_ENTITY_COMPOSITE )
+			}
 
 		record = this.application.getController( 'Entities' ).createEntityHelper( record, values )
 
 		node.set( 'leaf', false )
 		var entityNode = record.createTreeNode( node )
-		entityNode.set( 'cls', me.application.getController('Templates').TYPE_ENTITY_COMPOSITE )
+		markAsComposite( entityNode )
+		entityNode.cascadeBy( markAsComposite )
 
 		me.getTemplatesTree().selectPath( node.appendChild( entityNode ).getPath() )
 

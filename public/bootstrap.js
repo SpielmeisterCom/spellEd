@@ -5,8 +5,6 @@
  * metadata-driven class system features 
  */
 Ext.Loader.addClassPathMappings({
-  "Spelled.view.ui.SpelledAboutComponents": "app/view/ui/SpellEdAboutModules.js",
-  "Spelled.view.ui.SpelledAboutConfiguration": "app/view/ui/SpellEdAboutConfiguration.js",
   " Ext.Msg": "ext/src/window/MessageBox.js",
   "Ext": "ext/src",
   "Spelled.base.view.IFrame": "app/base/view/Iframe.js",
@@ -135,6 +133,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.script.FolderPicker": [],
   "Ext.ux.event.Player": [],
   "Spelled.platform.target.Abstract": [],
+  "Spelled.view.ui.about.License": [],
   "Spelled.view.template.component.Details": [],
   "Spelled.view.library.menu.item.Rename": [],
   "Spelled.view.template.component.attribute.List": [],
@@ -157,13 +156,13 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.store.template.Systems": [],
   "Spelled.view.asset.create.Animation": [],
   "Spelled.view.ui.SpelledConfiguration": [],
-  "Spelled.view.ui.SpelledAboutConfiguration": [],
   "Spelled.model.LibraryNode": [],
   "Ext.ux.grid.filter.DateTimeFilter": [],
   "Spelled.EntityHelper": [],
   "Ext.ux.form.ItemSelector": [
     "Ext.ux.ItemSelector"
   ],
+  "Spelled.view.ui.about.TheProduct": [],
   "Spelled.Remoting": [],
   "Ext.ux.Spotlight": [],
   "Ext.ux.grid.FiltersFeature": [],
@@ -182,6 +181,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.data.reader.Scene": [],
   "Spelled.view.scene.AddLibraryId": [],
   "Spelled.nw.Toolbar": [],
+  "Spelled.view.ui.about.Modules": [],
   "Spelled.view.script.Create": [],
   "Spelled.store.template.component.Attributes": [],
   "Spelled.view.asset.create.Font": [],
@@ -218,6 +218,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.library.FolderPicker": [],
   "Spelled.view.template.component.attribute.Boolean": [],
   "Spelled.view.template.component.attribute.Mat3": [],
+  "Spelled.view.ui.about.Configuration": [],
   "Spelled.view.menu.contextmenu.TemplatesList": [],
   "Spelled.view.library.Navigator": [],
   "Spelled.model.assets.Appearance": [],
@@ -225,12 +226,10 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.platform.target.Cloud": [],
   "Spelled.store.script.Scripts": [],
   "Ext.ux.ajax.SimManager": [],
-  "Spelled.view.ui.SpelledAboutTheProduct": [],
   "Spelled.view.template.component.Edit": [],
   "Spelled.proxy.StorageAction": [],
   "Spelled.view.scene.Create": [],
   "Spelled.data.writer.ComponentTemplate": [],
-  "Spelled.view.ui.SpelledAboutComponents": [],
   "Spelled.store.asset.KeyFrameAnimationPreviews": [],
   "Ext.ux.TabScrollerMenu": [],
   "Spelled.view.template.component.attribute.Integer": [],
@@ -596,6 +595,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.ux.event.Player": [],
   "Spelled.platform.target.Abstract": [],
+  "Spelled.view.ui.about.License": [
+    "widget.spelledaboutlicense"
+  ],
   "Spelled.view.template.component.Details": [
     "widget.componenttemplatedetails"
   ],
@@ -646,9 +648,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.ui.SpelledConfiguration": [
     "widget.spelledconfigure"
   ],
-  "Spelled.view.ui.SpelledAboutConfiguration": [
-    "widget.spelledaboutconfiguration"
-  ],
   "Spelled.model.LibraryNode": [],
   "Ext.ux.grid.filter.DateTimeFilter": [
     "gridfilter.datetime"
@@ -657,6 +656,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.form.ItemSelector": [
     "widget.itemselector",
     "widget.itemselectorfield"
+  ],
+  "Spelled.view.ui.about.TheProduct": [
+    "widget.spelledabouttheproduct"
   ],
   "Spelled.Remoting": [],
   "Ext.ux.Spotlight": [],
@@ -695,6 +697,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.nw.Toolbar": [
     "widget.nwtoolbar"
+  ],
+  "Spelled.view.ui.about.Modules": [
+    "widget.spelledaboutmodules"
   ],
   "Spelled.view.script.Create": [
     "widget.createscript"
@@ -777,6 +782,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.template.component.attribute.Mat3": [
     "widget.spelledmat3field"
   ],
+  "Spelled.view.ui.about.Configuration": [
+    "widget.spelledaboutconfiguration"
+  ],
   "Spelled.view.menu.contextmenu.TemplatesList": [
     "widget.templateslistcontextmenu"
   ],
@@ -788,9 +796,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.platform.target.Cloud": [],
   "Spelled.store.script.Scripts": [],
   "Ext.ux.ajax.SimManager": [],
-  "Spelled.view.ui.SpelledAboutTheProduct": [
-    "widget.spelledabouttheproduct"
-  ],
   "Spelled.view.template.component.Edit": [
     "widget.componenttemplateedit"
   ],
@@ -802,9 +807,6 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.data.writer.ComponentTemplate": [
     "writer.componentTemplate"
-  ],
-  "Spelled.view.ui.SpelledAboutComponents": [
-    "widget.spelledaboutmodules"
   ],
   "Spelled.store.asset.KeyFrameAnimationPreviews": [],
   "Ext.ux.TabScrollerMenu": [

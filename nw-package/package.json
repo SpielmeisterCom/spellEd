@@ -2,7 +2,7 @@
 	"name": "SpellEd",
 	"main": "public/index.html",
 
-    "version": "0.8.48",
+    "version": "0.8.52",
     "user-agent": "%name/%ver (%osinfo) AppleWebKit/%webkit_ver nw/%nwver",
 
     "webkit": {
@@ -12,6 +12,7 @@
 		"fullscreen": false,
 		"frame": true,
 		"toolbar": false,
+        "show": false,
 		"icon": "spelled-icon.png"
 	}
 }

@@ -1,4 +1,4 @@
-Ext.define('Spelled.view.ui.SpelledAboutConfiguration' ,{
+Ext.define('Spelled.view.ui.about.Configuration' ,{
     extend: 'Ext.grid.property.Grid',
     alias: 'widget.spelledaboutconfiguration',
 

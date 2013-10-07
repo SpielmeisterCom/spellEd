@@ -6,7 +6,8 @@ Ext.define('Spelled.view.ui.SpelledAboutDialog' ,{
     requires: [
         'widget.spelledabouttheproduct',
         'widget.spelledaboutconfiguration',
-        'widget.spelledaboutmodules'
+        'widget.spelledaboutmodules',
+        'widget.spelledaboutlicense'
     ],
 
 	autoShow: true,
@@ -28,6 +29,9 @@ Ext.define('Spelled.view.ui.SpelledAboutDialog' ,{
 
                             {
                                 xtype: 'spelledabouttheproduct'
+                            },
+                            {
+                                xtype: 'spelledaboutlicense'
                             },
                             {
                                 xtype: 'spelledaboutconfiguration'

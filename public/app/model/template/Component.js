@@ -55,12 +55,14 @@ Ext.define('Spelled.model.template.Component', {
 	getCalculatedDependencies: function() {
 		var cmp = Ext.create( 'Spelled.model.config.Component', { templateId: this.getFullName() } )
 
+		cmp.store.remove( cmp )
 		return cmp.getCalculatedDependencies()
 	},
 
 	createDependencyNode: function() {
 		var cmp = Ext.create( 'Spelled.model.config.Component', { templateId: this.getFullName() } )
 
+		cmp.store.remove( cmp )
 		return cmp.createDependencyNode()
 	},
 
@@ -75,12 +77,12 @@ Ext.define('Spelled.model.template.Component', {
 		blacklist = Ext.isArray( blacklist ) ? blacklist : []
 
         this.getAttributes().each( function( attribute ) {
-			if( attribute.isEngineInternal() || contains( blacklist, attribute.get('name') ) ) return
+			if( contains( blacklist, attribute.get('name') ) ) return
 
 			var newNode = node.createNode ( {
 				text      : attribute.get('name'),
 				id        : attribute.getId(),
-				iconCls   : "tree-component-attribute-icon",
+				iconCls   : attribute.isEngineInternal() ? "tree-component-attribute-engine-internal-icon" : "tree-component-attribute-icon",
 				leaf      : true
 			} )
 
