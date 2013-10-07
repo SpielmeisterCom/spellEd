@@ -188,22 +188,45 @@ Ext.define('Spelled.model.config.Component', {
 
 	getTemplateCompositeConfig: function() {
 		var componentEntity = this.getEntity(),
-			parents         = [],
 			config          = {}
 
 		if( !componentEntity || !componentEntity.hasEntity || !componentEntity.hasEntity() ) return {}
 
-		var owner         = componentEntity.getOwner(),
-			ownerIsEntity = !!owner.hasEntity
+		var owner = componentEntity.getOwner()
 
 		if( owner.isAnonymous && owner.isAnonymous() && owner.removable === true ) return {}
 
-		var	rootOwner = ( ownerIsEntity || owner.isReadonly ) ? Spelled.EntityHelper.getRootOwnerFromChildren( componentEntity.get( 'name' ), owner, parents ) : owner
+		var findCompositeEntity = function( component ) {
+			var getNextEntityBasedTemplate = function( entity, parents ) {
 
-		if( !rootOwner ) return {}
+				if( !entity.isAnonymous() ) {
+					return entity
 
-		var template = Ext.getStore( 'template.Entities' ).getByTemplateId( rootOwner.get('templateId') ),
-			entity   = Spelled.EntityHelper.findNeededEntity( template, parents )
+				} else if( entity.hasEntity() ) {
+					parents.push( entity.get( 'name' ) )
+					return getNextEntityBasedTemplate( entity.getEntity(), parents )
+				}
+			}
+
+			var recursion = function( entity, parents ) {
+				var entityBasedTemplate = getNextEntityBasedTemplate( entity, parents )
+
+				if( entityBasedTemplate ) {
+					var template = entityBasedTemplate.getEntityTemplate(),
+						found    = Spelled.EntityHelper.findNeededEntity( template, parents )
+
+					if( found ) {
+						return found
+					} else if( entity.hasEntity() ) {
+						return recursion( entity.getEntity(), parents )
+					}
+				}
+			}
+
+			return recursion( component.getEntity(), [] )
+		}
+
+		var entity = findCompositeEntity( this )
 
 		if( !entity ) return {}
 
@@ -222,7 +245,7 @@ Ext.define('Spelled.model.config.Component', {
 
 		if( component ) {
 			config = Ext.Object.merge( config, component.get( 'config' ) )
-			 this.set( 'additional', false )
+			this.set( 'additional', false )
 		}
 		return config
 	},
