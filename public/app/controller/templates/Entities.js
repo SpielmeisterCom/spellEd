@@ -258,6 +258,8 @@ Ext.define('Spelled.controller.templates.Entities', {
 			template  = this.getTemplateEntitiesStore().getById( ownerNode.getId()),
 			entities  = Spelled.EntityHelper.getEntitesByTemplateId( template.getFullName() )
 
+		if( !entity.isRemovable() ) return this.application.fireEvent( 'showentityremovealert', entity )
+
 		if( copyIntoReferences ) {
 			entities.each(
 				function( item ) {
@@ -303,7 +305,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 		var parents            = [],
 			owner              = Spelled.EntityHelper.getRootOwnerFromChildren( composite.get( 'name' ), entity, parents ),
 			entityToRemove     = Spelled.EntityHelper.findNeededEntity( owner, parents )
-
+debugger
 		if( entityToRemove ) this.application.getController( 'Entities' ).removeEntityHelper( entityToRemove )
 	},
 
@@ -313,8 +315,6 @@ Ext.define('Spelled.controller.templates.Entities', {
 			owner      = ( entity.hasEntity() ) ? entity.getEntity() : template,
             parentNode = node.parentNode,
 			ownerNode  = this.getOwnerNode( node )
-
-		if( !entity.isRemovable() ) return this.application.fireEvent( 'showentityremovealert', entity )
 
 		owner.getChildren().remove( entity )
 		Ext.getStore( 'config.Entities' ).remove( entity )
