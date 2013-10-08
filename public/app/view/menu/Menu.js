@@ -161,21 +161,21 @@ Ext.define('Spelled.view.menu.Menu', {
 				text    : 'Hide SpellEd',
 				appleSelector  : 'hide:',
 				keyEquivalent: 'h',
-				hidden  : !Spelled.platform.Adapter.isMacOs()
+				hidden  : true /*!Spelled.platform.Adapter.isMacOs()*/
 			}, {
 				text    : 'Hide Others',
 				appleSelector  : 'hideOtherApplications:',
 				keyEquivalent: 'h',
-				hidden  : !Spelled.platform.Adapter.isMacOs()
+				hidden  : true /*!Spelled.platform.Adapter.isMacOs()*/
 			}, {
 				text    : 'Show All',
 				appleSelector  : 'unhideAllApplications:',
-				hidden  : !Spelled.platform.Adapter.isMacOs()
+				hidden  : true /*!Spelled.platform.Adapter.isMacOs()*/
 			}, {
 				text    : 'Quit SpellEd',
 				appleSelector  : 'closeAllWindows:',
 				keyEquivalent: 'q',
-				hidden  : !Spelled.platform.Adapter.isMacOs()
+				hidden  : true /*!Spelled.platform.Adapter.isMacOs()*/
 			}]
 		}
 	},
@@ -186,7 +186,7 @@ Ext.define('Spelled.view.menu.Menu', {
 				this.spellEdGeneralMenu,
 				this.projectMenu,
 				this.buildMenu,
-				Spelled.platform.Adapter.isMacOs() ? this.editMenu : null,
+				/*Spelled.platform.Adapter.isMacOs() ? this.editMenu : */ null,
 				this.layoutMenu
 			]
 

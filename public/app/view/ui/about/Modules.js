@@ -1,4 +1,4 @@
-Ext.define('Spelled.view.ui.SpelledAboutComponents' ,{
+Ext.define('Spelled.view.ui.about.Modules' ,{
     extend: 'Ext.form.Panel',
     alias: 'widget.spelledaboutmodules',
 
