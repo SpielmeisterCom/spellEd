@@ -374,20 +374,27 @@ Ext.define('Spelled.controller.Templates', {
 					Ext.Msg.alert( 'Success', 'Your Template "' + result.get( 'templateId' ) + '" has been created.' )
 
 					model.justCreated = false
-					store.add( result )
+
 					// needed for template conversion
 					if( values.owner ) {
-						var entity = Ext.getStore( 'config.Entities' ).getById( values.owner )
+						Model.load( result.getId(), {
+							success: function( convertedTemplate ) {
+								store.add( convertedTemplate )
+								var entity = Ext.getStore( 'config.Entities' ).getById( values.owner )
 
-						entity.setDirty()
-						this.application.fireEvent( 'refreshentitynode', values.owner )
+								entity.setDirty()
+								this.application.fireEvent( 'refreshentitynode', values.owner )
 
-						// notify engine instances of entity template update
-						var entityTemplate = entity.getEntityTemplate()
+								// notify engine instances of entity template update
+								if( convertedTemplate ) {
+									this.application.getController( 'Components' ).sendUpdateToAllEntitiesBasedOnTemplate( convertedTemplate )
+								}
+							},
+							scope: this
+						} )
 
-						if( entityTemplate ) {
-							this.application.getController( 'Components' ).sendUpdateToAllEntitiesBasedOnTemplate( entityTemplate )
-						}
+					} else {
+						store.add( result )
 					}
 
 					window.close()
