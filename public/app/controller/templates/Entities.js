@@ -305,7 +305,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 		var parents            = [],
 			owner              = Spelled.EntityHelper.getRootOwnerFromChildren( composite.get( 'name' ), entity, parents ),
 			entityToRemove     = Spelled.EntityHelper.findNeededEntity( owner, parents )
-debugger
+
 		if( entityToRemove ) this.application.getController( 'Entities' ).removeEntityHelper( entityToRemove )
 	},
 
