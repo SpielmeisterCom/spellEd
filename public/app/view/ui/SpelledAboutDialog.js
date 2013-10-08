@@ -10,37 +10,42 @@ Ext.define('Spelled.view.ui.SpelledAboutDialog' ,{
         'widget.spelledaboutlicense'
     ],
 
+	width: 500,
+	height: 400,
+
 	autoShow: true,
     modal : true,
     closable: true,
 
+	layout: 'fit',
+
+	defaults: {
+		padding: 5
+	},
+
 	initComponent: function() {
+
+		var items = [
+			{ xtype: 'spelledabouttheproduct' },
+			{ xtype: 'spelledaboutconfiguration' }
+		]
+
+		if( Spelled.platform.Adapter.isNodeWebKit() ) {
+			Ext.Array.push(
+				items,
+				[
+					{ xtype: 'spelledaboutlicense' },
+					{ xtype: 'spelledaboutmodules' }
+				]
+			)
+		}
 
 		Ext.applyIf(
 			this, {
-                width: 500,
-                height: 300,
-                defaults: {
-                    padding:5
-                },
                 items: [{
-                        xtype: 'tabpanel',
-                        items: [
-
-                            {
-                                xtype: 'spelledabouttheproduct'
-                            },
-                            {
-                                xtype: 'spelledaboutlicense'
-                            },
-                            {
-                                xtype: 'spelledaboutconfiguration'
-                            },
-                            {
-                                xtype: 'spelledaboutmodules'
-                            }
-                        ]
-                    }]
+					xtype: 'tabpanel',
+					items: items
+				}]
             }
 		)
 
