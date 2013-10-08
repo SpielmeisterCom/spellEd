@@ -93,7 +93,7 @@ Ext.define( 'Spelled.EntityHelper', {
 		}
 	},
 
-	findCompositeEntity: function( component ) {
+	findCompositeEntity: function( entity ) {
 
 		var recursion = function( entity, parents ) {
 			var entityBasedTemplate = Spelled.EntityHelper.getNextEntityBasedTemplate( entity, parents )
@@ -112,6 +112,6 @@ Ext.define( 'Spelled.EntityHelper', {
 			}
 		}
 
-		return recursion( component.getEntity(), [] )
+		return recursion( entity, [] )
 	}
 })

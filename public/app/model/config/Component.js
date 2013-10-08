@@ -216,7 +216,7 @@ Ext.define('Spelled.model.config.Component', {
 
 		if( owner.isAnonymous && owner.isAnonymous() && owner.removable === true ) return {}
 
-		var entity = Spelled.EntityHelper.findCompositeEntity( this )
+		var entity = Spelled.EntityHelper.findCompositeEntity( this.getEntity() )
 
 		if( !entity ) return {}
 

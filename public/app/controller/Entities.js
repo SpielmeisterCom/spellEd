@@ -351,7 +351,9 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
 	showEntityRemoveAlert: function( entity ) {
-		Spelled.MessageBox.alert( "Can not remove: '" + entity.get( 'name' ) + "'", "Is linked to a entityTemplate: '" + entity.getOwner().get( 'name' ) + "'" )
+		var compositeEntity = Spelled.EntityHelper.findCompositeEntity( entity )
+
+		Spelled.MessageBox.alert( "Can not remove: '" + entity.get( 'name' ) + "'", "Is linked to a entityTemplate: '" + compositeEntity.getOwner().get( 'name' ) + "'" )
 	},
 
 	showTemplateEntity: function( entityTemplateId ) {
