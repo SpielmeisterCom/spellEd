@@ -80,5 +80,38 @@ Ext.define( 'Spelled.EntityHelper', {
 			parents.push( entity.get( 'name' ) )
 			return this.getRootOwnerFromChildren( name, entity.getEntity(), parents )
 		}
+	},
+
+	getNextEntityBasedTemplate: function( entity, parents ) {
+
+		if( !entity.isAnonymous() ) {
+			return entity
+
+		} else if( entity.hasEntity() ) {
+			parents.push( entity.get( 'name' ) )
+			return this.getNextEntityBasedTemplate( entity.getEntity(), parents )
+		}
+	},
+
+	findCompositeEntity: function( component ) {
+
+		var recursion = function( entity, parents ) {
+			var entityBasedTemplate = Spelled.EntityHelper.getNextEntityBasedTemplate( entity, parents )
+
+			if( entityBasedTemplate ) {
+				var template    = entityBasedTemplate.getEntityTemplate(),
+					copyParents = Ext.Array.clone( parents ),
+					found       = Spelled.EntityHelper.findNeededEntity( template, parents )
+
+				if( found ) {
+					return found
+
+				} else if( entity.hasEntity() ) {
+					return recursion( entity.getEntity(), copyParents )
+				}
+			}
+		}
+
+		return recursion( component.getEntity(), [] )
 	}
 })

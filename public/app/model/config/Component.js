@@ -166,22 +166,42 @@ Ext.define('Spelled.model.config.Component', {
 	},
 
 	getTemplateConfig: function() {
-		var config = {}
-
-		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && this.getEntity().isRemovable && !Ext.isEmpty( this.getEntity().get('templateId' ) )  ) {
-			var templateEntity = Ext.getStore( 'template.Entities' ).getByTemplateId( this.getEntity().get('templateId' ) )
-
-			if( templateEntity ){
-				var templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', this.get('templateId') )
+		var config      = {},
+			me          = this,
+			mergeConfig = function( templateEntity, componentId ) {
+				var templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', componentId )
 
 				if( templateEntityComponent ) {
 					config = Ext.Object.merge( config, templateEntityComponent.get('config') )
-					this.set( 'additional', false )
+					me.set( 'additional', false )
 				}
+			}
+
+		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) && this.getEntity().isRemovable && !Ext.isEmpty( this.getEntity().get('templateId' ) )  ) {
+			var templateEntity = this.getEntity().getEntityTemplate()
+
+			if( templateEntity ){
+				mergeConfig( templateEntity, this.get( 'templateId' ) )
 			}
 		}
 
 		config = Ext.Object.merge( config, this.getTemplateCompositeConfig() )
+
+		if( this.hasOwnProperty( 'Spelled.model.config.EntityBelongsToInstance' ) ) {
+			var parents = [],
+				entity  = this.getEntity(),
+				root    = Spelled.EntityHelper.getRootEntityOwnerFromEntity( entity, parents )
+
+			if( !root.isAnonymous() ){
+				//remove first, because its the overloaded template name in the scene
+				parents.shift()
+				var found = Spelled.EntityHelper.findNeededEntity( root.getEntityTemplate(), parents )
+
+				if( found ){
+					mergeConfig( found, this.get( 'templateId' ) )
+				}
+			}
+		}
 
 		return config
 	},
@@ -196,57 +216,18 @@ Ext.define('Spelled.model.config.Component', {
 
 		if( owner.isAnonymous && owner.isAnonymous() && owner.removable === true ) return {}
 
-		var findCompositeEntity = function( component ) {
-			var getNextEntityBasedTemplate = function( entity, parents ) {
-
-				if( !entity.isAnonymous() ) {
-					return entity
-
-				} else if( entity.hasEntity() ) {
-					parents.push( entity.get( 'name' ) )
-					return getNextEntityBasedTemplate( entity.getEntity(), parents )
-				}
-			}
-
-			var recursion = function( entity, parents ) {
-				var entityBasedTemplate = getNextEntityBasedTemplate( entity, parents )
-
-				if( entityBasedTemplate ) {
-					var template = entityBasedTemplate.getEntityTemplate(),
-						found    = Spelled.EntityHelper.findNeededEntity( template, parents )
-
-					if( found ) {
-						return found
-					} else if( entity.hasEntity() ) {
-						return recursion( entity.getEntity(), parents )
-					}
-				}
-			}
-
-			return recursion( component.getEntity(), [] )
-		}
-
-		var entity = findCompositeEntity( this )
+		var entity = Spelled.EntityHelper.findCompositeEntity( this )
 
 		if( !entity ) return {}
 
 		var	templateComponents = entity.getComponents(),
-			component          = undefined
-
-		templateComponents.each(
-			function( templateComponent ) {
-				if( templateComponent.get('templateId') === this.get( 'templateId' ) ) {
-					component = templateComponent
-					return false
-				}
-			},
-			this
-		)
+			component          = templateComponents.findRecord( 'templateId',  this.get( 'templateId' ) )
 
 		if( component ) {
 			config = Ext.Object.merge( config, component.get( 'config' ) )
 			this.set( 'additional', false )
 		}
+
 		return config
 	},
 
