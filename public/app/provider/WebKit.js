@@ -48,10 +48,21 @@ Ext.define( 'Spelled.provider.WebKit', {
 		for (i = 0, len = events.length; i < len; ++i) {
 			event = events[i];
 			transaction = me.getTransaction(event);
+
+			if( !success ) {
+				event = new Ext.direct.ExceptionEvent({
+					data: null,
+					transaction: transaction,
+					code: Ext.direct.Manager.exceptions.TRANSPORT,
+					message: 'Unable to connect to the server.',
+					xhr: response
+				});
+			}
+
 			me.fireEvent('data', me, event);
 
 			if (transaction && me.fireEvent('beforecallback', me, event, transaction) !== false) {
-				me.runCallback(transaction, event, true);
+				me.runCallback(transaction, event, success);
 				Ext.direct.Manager.removeTransaction(transaction);
 			}
 		}
