@@ -494,8 +494,6 @@ Ext.define('Spelled.controller.Projects', {
 			store  = this.getProjectsStore()
 
 		record.setId( values.name + '/project.json' )
-		values.config = { web: { html5: true } }
-
 		record.set( values )
 		store.add( record )
 
