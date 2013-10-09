@@ -11,7 +11,7 @@ define(
 		var toEngineFormat = function( asset ) {
 			var fields          = [ 'version', 'type', 'subtype', 'doc', 'dependencies' ],
 				content         = _.pick( asset, fields ),
-				forbiddenFields = _.union( fields, [ 'myAssetId', 'internalAssetId', 'id', 'name', 'namespace', 'assetId', 'file', 'dependencies', 'readonly' ] )
+				forbiddenFields = _.union( fields, [ 'dependencyNode', 'myAssetId', 'internalAssetId', 'id', 'name', 'namespace', 'assetId', 'file', 'dependencies', 'readonly' ] )
 
 			if( _.has( asset, 'config') ) {
 				content.config = asset.config
