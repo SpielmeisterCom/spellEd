@@ -9,6 +9,7 @@ Ext.define('Spelled.controller.Projects', {
         'Spelled.view.project.settings.Android',
         'Spelled.view.project.settings.iOS',
         'Spelled.view.project.settings.AddLanguage',
+		'Spelled.view.project.settings.Web',
 		'Spelled.view.project.settings.SupportedLanguageContextMenu',
 
 		'Spelled.store.Projects',
@@ -23,6 +24,7 @@ Ext.define('Spelled.controller.Projects', {
 		'project.settings.General',
 		'project.settings.Language',
 		'project.settings.AddLanguage',
+		'project.settings.Web',
 		'project.settings.SupportedLanguageContextMenu'
     ],
 
@@ -327,12 +329,14 @@ Ext.define('Spelled.controller.Projects', {
 			generalConfig = window.down( 'projectgeneralsettings' ),
 			languageConf  = window.down( 'projectlanguagesettings' ),
             androidConf   = window.down( 'projectandroidsettings' ),
+			webConf       = window.down( 'projectwebsettings' ),
 			project       = generalConfig.getRecord(),
 			generalValues = generalConfig.getValues(),
 			languageValues = languageConf.getValues(),
 			config        = {}
 
         config.android = Ext.clone( androidConf.getValues() )
+		config.web     = Ext.clone( webConf.getValues() )
 
 		config.screenSize = [
 			parseInt( generalValues.screenSizeX, 10 ),
@@ -449,6 +453,7 @@ Ext.define('Spelled.controller.Projects', {
 				general  = view.down( 'projectgeneralsettings' ),
 				language = view.down( 'projectlanguagesettings'),
                 android  = view.down( 'projectandroidsettings'),
+				web      = view.down( 'projectwebsettings'),
 				store    = project.getSupportedLanguages()
 
 			store.sort( 'name' )
@@ -464,6 +469,8 @@ Ext.define('Spelled.controller.Projects', {
 			if( config.screenSize ) general.getForm().setValues( { screenSizeX: config.screenSize[0], screenSizeY: config.screenSize[1] } )
 
             if( config.android ) android.getForm().setValues( config.android )
+
+			if( config.web ) web.getForm().setValues( config.web )
 		}
 	},
 
@@ -487,6 +494,8 @@ Ext.define('Spelled.controller.Projects', {
 			store  = this.getProjectsStore()
 
 		record.setId( values.name + '/project.json' )
+		values.config = { web: { html5: true } }
+
 		record.set( values )
 		store.add( record )
 

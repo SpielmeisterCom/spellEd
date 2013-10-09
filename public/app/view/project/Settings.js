@@ -7,7 +7,8 @@ Ext.define('Spelled.view.project.Settings' ,{
 	],
 
     width: 500,
-    height: 500,
+    height: 400,
+	layout: 'fit',
 
     title : 'Project settings',
     modal : true,
@@ -34,7 +35,10 @@ Ext.define('Spelled.view.project.Settings' ,{
                         },
                         {
                             xtype: 'projectiossettings'
-                        }
+                        },
+						{
+							xtype: 'projectwebsettings'
+						}
 					]
 				}
 			]
