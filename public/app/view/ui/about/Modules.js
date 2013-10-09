@@ -27,9 +27,10 @@ Ext.define('Spelled.view.ui.about.Modules' ,{
     initComponent: function() {
 		var me          = this,
 			configItems = [],
-			fs          = require( 'fs' )
+			fs          = require( 'fs'),
+			filePath    = Spelled.app.platform.getFilePath( 'moduleBuilds.json' )
 
-		var modules = Ext.decode( fs.readFileSync( Spelled.app.platform.getFilePath( 'moduleBuilds.json' ), 'utf8' ) )
+		var modules = fs.existsSync( filePath ) ? Ext.decode( fs.readFileSync( filePath, 'utf8' ) ) : false
 
 		if( modules ) {
 			Ext.Object.each(
