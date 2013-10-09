@@ -192,7 +192,7 @@ Ext.define('Spelled.model.config.Component', {
 				entity  = this.getEntity(),
 				root    = Spelled.EntityHelper.getRootEntityOwnerFromEntity( entity, parents )
 
-			if( !root.isAnonymous() ){
+			if( root && !root.isAnonymous() ){
 				//remove first, because its the overloaded template name in the scene
 				parents.shift()
 				var found = Spelled.EntityHelper.findNeededEntity( root.getEntityTemplate(), parents )
