@@ -261,7 +261,11 @@ Ext.define('Spelled.controller.Projects', {
 			project.get( 'name' ),
 			target,
 			function( provider, response ) {
-				this.buildActionsCallback( buildActionName, target, msg, response )
+				if( !!response.data ) {
+					this.buildActionsCallback( buildActionName, target, msg, response )
+				} else {
+					Spelled.MessageBox.showBuildServerConnectError()
+				}
 			},
 			this
 		)
