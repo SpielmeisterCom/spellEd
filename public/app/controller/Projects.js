@@ -180,9 +180,9 @@ Ext.define('Spelled.controller.Projects', {
 	showBuildResultInBrowser: function( button ) {
 		var project    = this.application.getActiveProject(),
 			tmp        = button.buildType === this.BUILD_DEBUG ? 'debug' : 'release',
-			folderPath = [ project.get( 'name' ), 'build', tmp, button.target ]
+			folderPath = [ project.get( 'name' ), 'build', tmp, button.target, 'index.html' ]
 
-		window.open( folderPath.join( '/') )
+		window.open( Spelled.Converter.toWorkspaceUrl( folderPath.join( '/') ) )
 	},
 
 	buildActionsCallback: function( buildType, target, msg, response ){
