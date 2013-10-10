@@ -12,6 +12,7 @@ Ext.define('Spelled.view.project.settings.Web' ,{
 						boxLabel: 'Generate HTML5 build',
 						xtype: 'checkbox',
 						inputValue: true,
+						readOnly: true,
 						name: 'html5'
 					},
 					{
