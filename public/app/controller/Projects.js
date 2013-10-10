@@ -201,7 +201,7 @@ Ext.define('Spelled.controller.Projects', {
 		if( target ) {
 			buttons.push(
 				{
-					text: 'Open in browser',
+					text: 'Preview',
 					action: 'showBuildResultInBrowser',
 					target: target,
 					buildType: buildType
