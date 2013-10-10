@@ -227,13 +227,18 @@ Ext.define('Spelled.controller.Entities', {
 	},
 
 	sendCreateMessage: function( entity, forced ) {
-		var entityTemplate = entity.getEntityTemplate()
+		var entityTemplate = entity.getEntityTemplate(),
+			owner          = entity.getOwner()
 
 		if( entityTemplate ) {
 			this.application.fireEvent( 'addtocache', entityTemplate )
 		}
 
-		this.sendEntityEventToEngine( 'entity.create', { entityConfig: entity.getMessageData() }, forced )
+		if( owner && owner.get( 'type' ) == 'entityTemplate' ) {
+			this.application.fireEvent( 'updateentitytemplatesenginewide', owner )
+		} else {
+			this.sendEntityEventToEngine( 'entity.create', { entityConfig: entity.getMessageData() }, forced )
+		}
 	},
 
 	isSceneTarget: function( targetId ) {

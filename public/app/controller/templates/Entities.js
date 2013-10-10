@@ -47,9 +47,25 @@ Ext.define('Spelled.controller.templates.Entities', {
 			initentitypreviewruntime: this.initEntityPreviewRuntime,
 			showtemplatecomponents : this.showEntityTemplateComponentsListHelper,
 			showcompositecomponents: this.showEntityCompositeComponentsListHelper,
+			updateentitytemplatesenginewide: this.sendUpdateToAllEntitiesBasedOnTemplate,
 			scope: this
 		})
     },
+
+	sendUpdateToAllEntitiesBasedOnTemplate: function( entityTemplate ) {
+		if( !entityTemplate ) return
+
+		var previewTab = this.application.findTabByTitle( this.getTemplateEditor(), entityTemplate.getFullName() ),
+			type       = 'library.updateEntityTemplate',
+			message    = { definition: entityTemplate.toSpellEngineMessageFormat() }
+
+		if( previewTab ) {
+			var iframe = previewTab.down( 'component[name="entityPreviewContainer"]' )
+			this.application.sendDebugMessage( iframe.getId(), type, message )
+		}
+
+		this.application.fireEvent( 'sendToEngine', type, message )
+	},
 
 	openTemplate: function( entityTemplate ) {
 		var templateEditor = this.getTemplateEditor(),

@@ -380,9 +380,14 @@ Ext.define('Spelled.controller.Components', {
 	},
 
 	sendAddComponentToEngine: function( component ) {
-		var entity = component.getEntity()
+		var entity = component.getEntity(),
+			owner  = entity.getOwner()
 
-		this.application.fireEvent( 'sendToEngine', 'component.add' ,{ entityId: entity.getId(), componentId: component.get( 'templateId' ) } )
+		if( owner && owner.get( 'type' ) == 'entityTemplate' ) {
+			this.application.fireEvent( 'updateentitytemplatesenginewide', owner )
+		} else {
+			this.application.fireEvent( 'sendToEngine', 'component.add' ,{ entityId: entity.getId(), componentId: component.get( 'templateId' ) } )
+		}
 	},
 
 	editProperty: function( editor, e ) {
@@ -411,7 +416,7 @@ Ext.define('Spelled.controller.Components', {
 
 			var entityTemplate = Spelled.EntityHelper.getRootTemplateOwnerFromComponent( component )
 
-			this.sendUpdateToAllEntitiesBasedOnTemplate( entityTemplate )
+			this.application.fireEvent( 'updateentitytemplatesenginewide', entityTemplate )
 		}
 	},
 
@@ -500,21 +505,6 @@ Ext.define('Spelled.controller.Components', {
 			name      = view.getSelectionModel().getLastSelected().get('name')
 
 		this.sendComponentUpdate( component, name, newValue )
-	},
-
-	sendUpdateToAllEntitiesBasedOnTemplate: function( entityTemplate ) {
-		if( !entityTemplate ) return
-
-		var previewTab = this.application.findTabByTitle( this.getSceneEditor(), entityTemplate.getFullName() ),
-			type       = 'library.updateEntityTemplate',
-			message    = { definition: entityTemplate.toSpellEngineMessageFormat() }
-
-		if( previewTab ) {
-			var iframe = previewTab.down( 'component[name="entityPreviewContainer"]' )
-			this.application.sendDebugMessage( iframe.getId(), type, message )
-		}
-
-		this.application.fireEvent( 'sendToEngine', type, message )
 	},
 
 	sendComponentUpdate: function( component, name, value, merge ) {

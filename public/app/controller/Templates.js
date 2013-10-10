@@ -387,7 +387,7 @@ Ext.define('Spelled.controller.Templates', {
 
 								// notify engine instances of entity template update
 								if( convertedTemplate ) {
-									this.application.getController( 'Components' ).sendUpdateToAllEntitiesBasedOnTemplate( convertedTemplate )
+									this.application.fireEvent( 'updateentitytemplatesenginewide', convertedTemplate )
 								}
 							},
 							scope: this

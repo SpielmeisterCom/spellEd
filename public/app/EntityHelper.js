@@ -84,7 +84,10 @@ Ext.define( 'Spelled.EntityHelper', {
 
 	getNextEntityBasedTemplate: function( entity, parents ) {
 
-		if( !entity.isAnonymous() ) {
+		if( entity.get( 'type' ) == 'entityTemplate' ) {
+			return false
+
+		} else if( !entity.isAnonymous() ) {
 			return entity
 
 		} else if( entity.hasEntity() ) {
