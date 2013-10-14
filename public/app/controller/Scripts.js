@@ -59,7 +59,7 @@ Ext.define('Spelled.controller.Scripts', {
 				'scripteditor': {
 					activate: this.reRenderAce,
 					save:     this.globalSaveHelper,
-					render:   this.addAceEditor
+					render:   this.addEditor
 				},
 				'librarymenu [action="showCreateScript"]' : {
 					click: this.showCreateScript
@@ -122,13 +122,7 @@ Ext.define('Spelled.controller.Scripts', {
 		if( model.dirty ) model.save()
 	},
 
-	addAceEditor: function( panel ) {
-		panel.aceEditor = Ext.amdModules.ace.edit( panel.id )
-
-		var JavaScriptMode = Ext.amdModules.aceModeJavaScript.Mode
-		panel.aceEditor.getSession().setMode( new JavaScriptMode() )
-		panel.aceEditor.setTheme( Ext.amdModules.aceThemePastelOnDark )
-
+	addEditor: function( panel ) {
 		panel.refreshContent()
 	},
 
@@ -242,7 +236,7 @@ Ext.define('Spelled.controller.Scripts', {
     },
 
 	refreshScriptTab: function( tab, model ) {
-		tab.aceEditor.setReadOnly( model.isReadonly() )
+		tab.setReadOnly( model.isReadonly() )
 		tab.setModel( model )
 		tab.refreshContent()
 	}

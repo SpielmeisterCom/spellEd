@@ -58,7 +58,7 @@ ace:
 
 nw-debug:
 	$(NODE) modules/spellCore/tools/n.js -s public/lib -m spellEdDeps \
--i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark" > public/libs.js
+-i "underscore,require,module,exports" > public/libs.js
 	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "path,http,fs,child_process,underscore,pathUtil,wrench" > public/nwlibs.js
 
 	mkdir -p public/lib || true
@@ -66,7 +66,7 @@ nw-debug:
 
 build/libs.js:
 	$(NODE) modules/spellCore/tools/n.js -s public/lib -m spellEdDeps \
--i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark" >> build/libs.js
+-i "underscore,require,module,exports" >> build/libs.js
 
 build/nwlibs.js:
 	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "path,http,fs,child_process,underscore,pathUtil,wrench" >> build/nwlibs.js

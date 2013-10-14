@@ -77,11 +77,11 @@ var isNWRuntime = (typeof process) !== 'undefined',
 					window.location.hostname === '127.0.0.1' ||
 					(window.location.search && window.location.search === '?isDevelEnv=true'),
 	JSincludes  = [
-        "lib/ace/ace.js",
-        "lib/ace/theme-pastel_on_dark.js",
-        "lib/ace/mode-javascript.js",
-        "lib/ace/mode-html.js"],
-	CSSincludes = []
+		"lib/codemirror/codemirror-compressed.js"
+	],
+	CSSincludes = [
+		"lib/codemirror/codemirror.css"
+	]
 
 registerGlobalErrorHandler(isNWRuntime, isDevelEnv);
 

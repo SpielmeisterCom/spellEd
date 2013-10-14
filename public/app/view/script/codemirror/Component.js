@@ -382,7 +382,6 @@ Ext.define('Spelled.view.script.codemirror.Component', {
 				me.fireEvent('keyevent', me, event);
 			}
 		});
-		//me.editor.setValue(me.rawValue);
 
 		me.setReadOnly(me.readOnly);
 		me.fireEvent('initialize', me);
@@ -516,8 +515,6 @@ Ext.define('Spelled.view.script.codemirror.Component', {
 	 */
 	doIndentSelection: function(){
 		var me = this;
-
-		me.reloadExtentions();
 
 		try{
 			var range = { from: me.editor.getCursor(true), to: me.editor.getCursor(false) };
