@@ -52,7 +52,7 @@ codemirror:
 	mkdir -p node_modules/codemirror/build || true
 
 	#should use: codemirror --local $(CWD)/node_modules/uglify-js/bin/uglifyjs instead
-	cd node_modules/codemirror && bin/compress codemirror javascript search matchbrackets closebrackets foldcode foldgutter brace-fold comment-fold show-hint javascript-hint match-highlighter active-line > build/tmp.js
+	cd node_modules/codemirror && bin/compress codemirror javascript search searchcursor dialog matchbrackets closebrackets foldcode foldgutter brace-fold comment-fold show-hint match-highlighter active-line > build/tmp.js
 
 	cp -a node_modules/codemirror/build/tmp.js public/lib/codemirror/codemirror.js
 	cp -a node_modules/codemirror/lib/codemirror.css public/lib/codemirror/codemirror.css
