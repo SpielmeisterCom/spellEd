@@ -46,15 +46,18 @@ clean-nw:
 .PHONY: rebuild-nw
 rebuild-nw: clean-nw build/nw-package build/app.nw
 
-.PHONY: ace
-ace:
-	# building ace lib
-	cd modules/ace && ../nodejs/node ./Makefile.dryice.js normal
+.PHONY: codemirror
+codemirror:
+	# building codemirror lib
+	mkdir -p node_modules/codemirror/build || true
 
-	rm -Rf public/lib/ace || true
-	mkdir -p public/lib/ace || true
-	cp -aR modules/ace/build/src-min/* public/lib/ace/
-	$(SED) 's/window\.require/window\.requirejs/g' public/lib/ace/ace.js
+	#should use: codemirror --local $(CWD)/node_modules/uglify-js/bin/uglifyjs instead
+	cd node_modules/codemirror && bin/compress codemirror javascript search matchbrackets closebrackets foldcode foldgutter brace-fold comment-fold show-hint javascript-hint match-highlighter active-line > build/tmp.js
+
+	cp -a node_modules/codemirror/build/tmp.js public/lib/codemirror/codemirror.js
+	cp -a node_modules/codemirror/lib/codemirror.css public/lib/codemirror/codemirror.css
+
+	rm -Rf node_modules/codemirror/build || true
 
 nw-debug:
 	$(NODE) modules/spellCore/tools/n.js -s public/lib -m spellEdDeps \

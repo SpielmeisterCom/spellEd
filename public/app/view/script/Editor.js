@@ -12,8 +12,16 @@ Ext.define('Spelled.view.script.Editor', {
     model : undefined,
 	value: '',
 
-	mode: 'javascript',
-	matchBrackets: true,
+	codemirrorConfig: {
+		mode: 'javascript',
+		matchBrackets: true,
+		autoClearEmptyLines:true,
+		lineNumbers: true,
+		foldGutter: {
+			rangeFinder: new CodeMirror.fold.combine(CodeMirror.fold.brace, CodeMirror.fold.comment)
+		},
+		gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+	},
 
 	listeners: {
 		resize: function() {

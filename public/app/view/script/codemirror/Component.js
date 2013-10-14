@@ -335,23 +335,7 @@ Ext.define('Spelled.view.script.codemirror.Component', {
 	initEditor : function(){
 		var me = this
 
-		me.editor = CodeMirror(me.editorEl, {
-			matchBrackets:      me.enableMatchBrackets,
-			electricChars:      me.enableElectricChars,
-			autoClearEmptyLines:true,
-			value:              me.rawValue,
-			indentUnit:         me.indentUnit,
-			smartIndent:        me.enableSmartIndent,
-			indentWithTabs:     me.indentWithTabs,
-			pollInterval:       me.pollInterval,
-			lineNumbers:        me.enableLineNumbers,
-			lineWrapping:       me.enableLineWrapping,
-			firstLineNumber:    me.firstLineNumber,
-			tabSize:            me.tabSize,
-			gutter:             me.enableGutter,
-			fixedGutter:        me.enableFixedGutter,
-			theme:              me.theme,
-			mode:               me.mode,
+		var events = {
 			onChange:           function(editor, tc){
 				me.checkChange();
 				//me.fireEvent('change', me, tc.from, tc.to, tc.text, tc.next || null);
@@ -381,7 +365,9 @@ Ext.define('Spelled.view.script.codemirror.Component', {
 				event.cancelBubble = true; // fix suggested by koblass user on Sencha forums (http://www.sencha.com/forum/showthread.php?167047-Ext.ux.form.field.CodeMirror-for-Ext-4.x&p=862029&viewfull=1#post862029)
 				me.fireEvent('keyevent', me, event);
 			}
-		});
+		}
+
+		me.editor = CodeMirror( me.editorEl, Ext.Object.merge( {}, me.codemirrorConfig, events ));
 
 		me.setReadOnly(me.readOnly);
 		me.fireEvent('initialize', me);
