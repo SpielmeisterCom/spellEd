@@ -19,6 +19,12 @@ clean:
 	rm -Rf build public/build || true
 	cd modules/ace && make clean
 
+.PHONY: refresh 
+refresh:
+	#regenerating bootstrap.js 
+	$(SENCHA) -cwd public app refresh
+	cd $(CWD)
+
 .PHONY: theme
 theme:
 	#regenerating theme only (useful for development)
