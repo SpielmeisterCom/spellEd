@@ -81,6 +81,46 @@ Ext.define('Spelled.view.project.settings.Android' ,{
                             }
                         ]
                     },
+					{
+						xtype:'fieldset',
+						title: 'Package settings',
+						defaults: {
+							labelWidth: 130
+						},
+						items: [
+							{
+								xtype: 'textfield',
+								name: 'package',
+								fieldLabel: 'Package identifier',
+								anchor: '100%'
+							},
+							{
+								xtype: 'textfield',
+								name: 'title',
+								fieldLabel: 'App Title',
+								anchor: '100%'
+							},
+							{
+								xtype: 'textfield',
+								name: 'version',
+								fieldLabel: 'App version',
+								anchor: '100%'
+							},
+							{
+								xtype: 'combobox',
+								store: 'SupportedOrientations',
+
+								valueField: 'type',
+								displayField:'name',
+								queryMode: 'local',
+								forceSelection: true,
+
+								editable: false,
+								name: 'orientation',
+								fieldLabel: 'Select the supported orientation'
+							}
+						]
+					},
                     {
                         xtype:'fieldset',
                         title: 'Signing options (for release build)',
