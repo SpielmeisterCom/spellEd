@@ -102,12 +102,14 @@ Ext.define('Spelled.view.script.Editor', {
 //			exec: Ext.bind( me.onFullSize, me)
 //		} )
 //
-		editor.on("gutterClick", function( cm, n ){
-			var info        = cm.lineInfo( n),
+		editor.on("gutterClick", function( cm, n, gutter ){
+			if( gutter != 'breakpoints' ) return
+
+			var info        = cm.lineInfo( n ),
 				model       = me.model,
 				breakpoints = model.get( 'breakpoints' ) || {}
 
-			cm.setGutterMarker( n, "breakpoints", info.gutterMarkers ? null : makeMarker() )
+			cm.setGutterMarker( n, "breakpoints", info.gutterMarkers && info.gutterMarkers.breakpoints ? null : makeMarker() )
 
 			var line = info.line
 
