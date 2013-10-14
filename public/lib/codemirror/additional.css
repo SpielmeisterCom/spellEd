@@ -19,3 +19,5 @@
 .CodeMirror-foldgutter-folded:after {
     content: "\25B8";
 }
+.breakpoints {width: .8em;}
+.breakpoint { color: #822; }

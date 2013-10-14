@@ -19,9 +19,9 @@ Ext.define('Spelled.view.script.Editor', {
 		lineNumbers: true,
 		styleActiveLine: true,
 		foldGutter: {
-			rangeFinder: new CodeMirror.fold.combine(CodeMirror.fold.brace, CodeMirror.fold.comment)
+			rangeFinder: new CodeMirror.fold.combine( CodeMirror.fold.brace, CodeMirror.fold.comment )
 		},
-		gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+		gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter", "breakpoints"]
 	},
 
 	listeners: {
@@ -41,14 +41,19 @@ Ext.define('Spelled.view.script.Editor', {
 	},
 
 	reRenderAce: function() {
-//		var editor = this.aceEditor
-//		editor.resize()
+
 	},
 
 	startEdit: function() {
 		var editor  = this.editor,
-//			session = editor.getSession(),
 			me      = this
+
+		function makeMarker() {
+			var marker = document.createElement("div");
+			marker.style.color = "#822";
+			marker.innerHTML = "●";
+			return marker;
+		}
 
 //		session.setUseSoftTabs( false )
 //
@@ -97,30 +102,27 @@ Ext.define('Spelled.view.script.Editor', {
 //			exec: Ext.bind( me.onFullSize, me)
 //		} )
 //
-//		editor.on("guttermousedown", function(e){
-//			var target = e.domEvent.target;
-//			if (target.className.indexOf("ace_gutter-cell") == -1)
-//				return;
-//			if (!editor.isFocused())
-//				return;
-//			if (e.clientX > 25 + target.getBoundingClientRect().left)
-//				return;
-//
-//			var row = e.getDocumentPosition().row,
-//				breakpoints = e.editor.session.getBreakpoints()
-//
-//			if ( breakpoints[row] !== undefined ) {
-//				e.editor.session.clearBreakpoint(row)
-//
-//			} else {
-//
-//				e.editor.session.setBreakpoint(row)
-//			}
-//
-//			e.stop()
-//		})
-//
-//		session.on( "changeBreakpoint", Ext.bind( me.onAceChangeBreakpoint, me) )
+		editor.on("gutterClick", function( cm, n ){
+			var info        = cm.lineInfo( n),
+				model       = me.model,
+				breakpoints = model.get( 'breakpoints' ) || {}
+
+			cm.setGutterMarker( n, "breakpoints", info.gutterMarkers ? null : makeMarker() )
+
+			var line = info.line
+
+			if ( breakpoints[line] !== undefined ) {
+				breakpoints[line] = undefined
+
+			} else {
+				breakpoints[line] =  true
+			}
+
+			model.set( 'breakpoints', breakpoints )
+
+			me.fireEvent( 'scriptvalidation', model, breakpoints )
+		})
+
 		editor.on( "change", Ext.bind( me.onAceEdit, me) )
 //		session.on( "changeAnnotation", Ext.bind( me.onAceChangeAnnotation, me ) )
 		this.addEvents(
