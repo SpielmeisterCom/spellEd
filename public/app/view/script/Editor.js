@@ -19,10 +19,11 @@ Ext.define('Spelled.view.script.Editor', {
 		autoCloseBrackets: true,
 		lineNumbers: true,
 		styleActiveLine: true,
+		lint: CodeMirror.lint.javascript,
 		foldGutter: {
 			rangeFinder: new CodeMirror.fold.combine( CodeMirror.fold.brace, CodeMirror.fold.comment )
 		},
-		gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter", "breakpoints"]
+		gutters: [ "CodeMirror-lint-markers", "CodeMirror-linenumbers", "CodeMirror-foldgutter", "breakpoints"]
 	},
 
 	listeners: {
