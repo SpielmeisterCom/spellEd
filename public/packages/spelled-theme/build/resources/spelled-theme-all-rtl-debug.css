@@ -15120,7 +15120,7 @@ textarea.x-form-empty-field {
 
 /* line 1, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
 .x-fieldset {
-  border: 1px solid #363636;
+  border: 1px solid white;
   padding: 0 10px;
   margin: 0 0 10px;
 }
@@ -15159,7 +15159,7 @@ textarea.x-form-empty-field {
 /* line 39, ../../../../ext/packages/ext-theme-neutral/sass/src/form/FieldSet.scss */
 .x-fieldset-header-text {
   font: 11px/14px bold tahoma, arial, verdana, sans-serif;
-  color: black;
+  color: white;
   padding: 1px 0;
 }
 
