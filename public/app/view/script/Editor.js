@@ -17,6 +17,7 @@ Ext.define('Spelled.view.script.Editor', {
 		matchBrackets: true,
 		autoClearEmptyLines:true,
 		lineNumbers: true,
+		styleActiveLine: true,
 		foldGutter: {
 			rangeFinder: new CodeMirror.fold.combine(CodeMirror.fold.brace, CodeMirror.fold.comment)
 		},
