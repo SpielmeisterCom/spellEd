@@ -16,6 +16,7 @@ Ext.define('Spelled.view.script.Editor', {
 		mode: 'javascript',
 		matchBrackets: true,
 		autoClearEmptyLines:true,
+		autoCloseBrackets: true,
 		lineNumbers: true,
 		styleActiveLine: true,
 		foldGutter: {
