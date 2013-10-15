@@ -51,6 +51,9 @@ Ext.define('Spelled.model.template.Entity', {
     },
 
 	getCalculatedDependencies: function() {
+		//Needed for templates which aren't used in a scene to merge their config
+		this.mergeChildrenComponentsConfig()
+
 		var entity = Ext.create( 'Spelled.model.config.Entity', { templateId: this.getFullName() } )
 
 		return entity.getCalculatedDependencies()
