@@ -12,18 +12,27 @@ Ext.define('Spelled.view.script.Editor', {
     model : undefined,
 	value: '',
 
-	codemirrorConfig: {
-		mode: 'javascript',
-		matchBrackets: true,
-		autoClearEmptyLines:true,
-		autoCloseBrackets: true,
-		lineNumbers: true,
-		styleActiveLine: true,
-		lint: CodeMirror.lint.javascript,
-		foldGutter: {
-			rangeFinder: new CodeMirror.fold.combine( CodeMirror.fold.brace, CodeMirror.fold.comment )
-		},
-		gutters: [ "CodeMirror-lint-markers", "CodeMirror-linenumbers", "CodeMirror-foldgutter", "breakpoints"]
+	initComponent: function() {
+		var me = this
+
+		Ext.applyIf( me,{
+			codemirrorConfig: {
+				mode: 'javascript',
+				matchBrackets: true,
+				autoClearEmptyLines:true,
+				autoCloseBrackets: true,
+				lineNumbers: true,
+				styleActiveLine: true,
+				lint: CodeMirror.lint.javascript,
+				foldGutter: {
+					rangeFinder: new CodeMirror.fold.combine( CodeMirror.fold.brace, CodeMirror.fold.comment )
+				},
+				gutters: [ "CodeMirror-lint-markers", "CodeMirror-linenumbers", "CodeMirror-foldgutter", "breakpoints"]
+			}
+		})
+
+
+		return this.callParent( arguments )
 	},
 
 	listeners: {
@@ -57,8 +66,25 @@ Ext.define('Spelled.view.script.Editor', {
 			return marker;
 		}
 
-//		session.setUseSoftTabs( false )
-//
+		Ext.Ajax.request({
+			url: 'lib/codemirror/tern/ecma5.json',
+			success: function( response ){
+				var code = response.responseText;
+
+				var server = new CodeMirror.TernServer( { defs: [ Ext.JSON.decode(code) ] } )
+
+				editor.setOption("extraKeys", {
+					"Ctrl-Space": function(cm) { server.complete(cm); },
+					"Ctrl-I": function(cm) { server.showType(cm); },
+					"Alt-.": function(cm) { server.jumpToDef(cm); },
+					"Alt-,": function(cm) { server.jumpBack(cm); },
+					"Ctrl-Q": function(cm) { server.rename(cm); }
+				})
+
+				editor.on("cursorActivity", function(cm) { server.updateArgHints(cm); })
+			}
+		})
+
 //		editor.commands.addCommand( {
 //			name: 'saveCommand',
 //			bindKey: {
