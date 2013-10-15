@@ -2,6 +2,7 @@ UNAME_S := $(shell uname -s)
 CWD=$(shell pwd)
 SENCHA=$(CWD)/modules/SenchaCmd/sencha
 NODE=$(CWD)/modules/nodejs/node
+ADDON=$(CWD)/node_modules/codemirror/addon/
 
 ifeq ($(UNAME_S),Darwin)
 SED = sed -i "" -e
@@ -52,10 +53,16 @@ codemirror:
 	mkdir -p node_modules/codemirror/build || true
 
 	#should use: codemirror --local $(CWD)/node_modules/uglify-js/bin/uglifyjs instead
-	cd node_modules/codemirror && bin/compress codemirror javascript search searchcursor dialog lint javascript-lint matchbrackets closebrackets foldcode foldgutter brace-fold comment-fold show-hint match-highlighter active-line > build/tmp.js
+	cd node_modules/codemirror && bin/compress codemirror javascript search searchcursor dialog lint javascript-lint matchbrackets closebrackets foldcode foldgutter brace-fold comment-fold show-hint tern match-highlighter active-line > build/tmp.js
+
+	cat $(ADDON)dialog/dialog.css > node_modules/codemirror/build/tmp.css
+	cat $(ADDON)lint/lint.css >> node_modules/codemirror/build/tmp.css
+	cat $(ADDON)hint/show-hint.css >> node_modules/codemirror/build/tmp.css
+	cat $(ADDON)tern/tern.css >> node_modules/codemirror/build/tmp.css
+	cat node_modules/codemirror/lib/codemirror.css >> node_modules/codemirror/build/tmp.css
 
 	cp -a node_modules/codemirror/build/tmp.js public/lib/codemirror/codemirror.js
-	cp -a node_modules/codemirror/lib/codemirror.css public/lib/codemirror/codemirror.css
+	cp -a node_modules/codemirror/build/tmp.css public/lib/codemirror/codemirror.css
 
 	rm -Rf node_modules/codemirror/build || true
 
