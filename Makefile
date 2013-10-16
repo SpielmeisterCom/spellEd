@@ -133,6 +133,9 @@ build/spelledjs/public: build/spelledjs/public/all-classes.js build/spelledjs/pu
 	mkdir -p build/spelledjs/public/lib/
 	cp -aR public/lib/fontDetect build/spelledjs/public/lib
 
+	# copy tern&codemirrir
+	cp -aR public/lib/codemirror public/lib/tern build/spelledjs/public/lib
+
 build/nw-package: build/spelledjs/public build/spelledjs/public/nwlibs.js
 	mkdir -p build/nw-package/public
 
