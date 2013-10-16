@@ -55,15 +55,28 @@ codemirror:
 	#should use: codemirror --local $(CWD)/node_modules/uglify-js/bin/uglifyjs instead
 	cd node_modules/codemirror && bin/compress codemirror javascript search searchcursor dialog lint javascript-lint matchbrackets closebrackets foldcode foldgutter brace-fold comment-fold show-hint tern match-highlighter active-line > build/tmp.js
 
-	cat $(ADDON)dialog/dialog.css > node_modules/codemirror/build/tmp.css
-	cat $(ADDON)lint/lint.css >> node_modules/codemirror/build/tmp.css
-	cat $(ADDON)hint/show-hint.css >> node_modules/codemirror/build/tmp.css
-	cat $(ADDON)tern/tern.css >> node_modules/codemirror/build/tmp.css
-	cat node_modules/codemirror/theme/lesser-dark.css >> node_modules/codemirror/build/tmp.css
-	cat node_modules/codemirror/lib/codemirror.css >> node_modules/codemirror/build/tmp.css
+	cat $(ADDON)dialog/dialog.css \
+$(ADDON)lint/lint.css \
+$(ADDON)hint/show-hint.css \
+$(ADDON)tern/tern.css \
+node_modules/codemirror/theme/lesser-dark.css \
+node_modules/codemirror/lib/codemirror.css > node_modules/codemirror/build/tmp.css
+
+	cat modules/acorn/acorn.js \
+modules/acorn/acorn_loose.js \
+modules/acorn/util/walk.js \
+modules/tern/lib/signal.js \
+modules/tern/lib/tern.js \
+modules/tern/lib/def.js \
+modules/tern/lib/comment.js \
+modules/tern/lib/infer.js \
+modules/tern/plugin/doc_comment.js > node_modules/codemirror/build/tern.js
 
 	cp -a node_modules/codemirror/build/tmp.js public/lib/codemirror/codemirror.js
 	cp -a node_modules/codemirror/build/tmp.css public/lib/codemirror/codemirror.css
+
+	cp -a node_modules/codemirror/build/tern.js public/lib/tern/tern.js
+	cp -a modules/tern/defs/ecma5.json public/lib/tern/defs/ecma5.json
 
 	rm -Rf node_modules/codemirror/build || true
 
