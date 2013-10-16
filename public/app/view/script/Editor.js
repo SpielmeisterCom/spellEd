@@ -23,7 +23,7 @@ Ext.define('Spelled.view.script.Editor', {
 					"Ctrl-B": Ext.bind( me.onToggleGrid, me),
 					"Ctrl-U": Ext.bind( me.onFullSize, me)
 				},
-				theme: 'lesser-dark',
+				theme: 'spelled',
 				mode: 'javascript',
 				matchBrackets: true,
 				autoClearEmptyLines:true,

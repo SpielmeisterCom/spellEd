@@ -59,7 +59,6 @@ codemirror:
 $(ADDON)lint/lint.css \
 $(ADDON)hint/show-hint.css \
 $(ADDON)tern/tern.css \
-node_modules/codemirror/theme/lesser-dark.css \
 node_modules/codemirror/lib/codemirror.css > node_modules/codemirror/build/tmp.css
 
 	cat modules/acorn/acorn.js \

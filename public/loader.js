@@ -81,6 +81,7 @@ var isNWRuntime = (typeof process) !== 'undefined',
 		"lib/codemirror/codemirror.js"
 	],
 	CSSincludes = [
+		"lib/codemirror/themes/spelled.css",
 		"lib/codemirror/codemirror.css",
 		"lib/codemirror/additional.css"
 	]
