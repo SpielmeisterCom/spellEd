@@ -10,6 +10,7 @@ Ext.define('Spelled.controller.Projects', {
         'Spelled.view.project.settings.iOS',
         'Spelled.view.project.settings.AddLanguage',
 		'Spelled.view.project.settings.Web',
+		'Spelled.view.project.settings.Plugins',
 		'Spelled.view.project.settings.SupportedLanguageContextMenu',
 
 		'Spelled.store.Projects',
@@ -26,12 +27,14 @@ Ext.define('Spelled.controller.Projects', {
 		'project.settings.Language',
 		'project.settings.AddLanguage',
 		'project.settings.Web',
+		'project.settings.Plugins',
 		'project.settings.SupportedLanguageContextMenu'
     ],
 
     stores: [
         'Projects',
-	    'SupportedOrientations'
+	    'SupportedOrientations',
+		'project.Plugins'
     ],
 
     models: [

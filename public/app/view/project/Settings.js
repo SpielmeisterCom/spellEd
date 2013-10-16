@@ -38,6 +38,9 @@ Ext.define('Spelled.view.project.Settings' ,{
                         },
 						{
 							xtype: 'projectwebsettings'
+						},
+						{
+							xtype: 'projectplugins'
 						}
 					]
 				}
