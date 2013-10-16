@@ -77,6 +77,7 @@ var isNWRuntime = (typeof process) !== 'undefined',
 					window.location.hostname === '127.0.0.1' ||
 					(window.location.search && window.location.search === '?isDevelEnv=true'),
 	JSincludes  = [
+		"lib/codemirror/jshint.js",
 		"lib/codemirror/codemirror.js"
 	],
 	CSSincludes = [

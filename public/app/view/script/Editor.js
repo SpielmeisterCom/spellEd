@@ -18,7 +18,7 @@ Ext.define('Spelled.view.script.Editor', {
 		Ext.applyIf( me,{
 			codemirrorConfig: {
 				extraKeys: {
-					"Ctrl-S": Ext.bind( me.onAceSave, me ),
+					"Ctrl-S": Ext.bind( me.onSave, me ),
 					"Ctrl-M": Ext.bind( me.onReloadScene, me),
 					"Ctrl-B": Ext.bind( me.onToggleGrid, me),
 					"Ctrl-U": Ext.bind( me.onFullSize, me)
@@ -30,7 +30,12 @@ Ext.define('Spelled.view.script.Editor', {
 				autoCloseBrackets: true,
 				lineNumbers: true,
 				styleActiveLine: true,
-				lint: CodeMirror.lint.javascript,
+				lint:{
+					getAnnotations: CodeMirror.javascriptValidator,
+					onUpdateLinting: Ext.bind( me.onChangeAnnotation, me ),
+					asi: true,
+					laxcomma: true, laxbreak: true
+				},
 				foldGutter: {
 					rangeFinder: new CodeMirror.fold.combine( CodeMirror.fold.brace, CodeMirror.fold.comment )
 				},
@@ -42,24 +47,12 @@ Ext.define('Spelled.view.script.Editor', {
 		return this.callParent( arguments )
 	},
 
-	listeners: {
-		resize: function() {
-			this.reRenderAce()
-		}
-	},
-
 	refreshContent: function() {
 
 		if( !!this.model ) {
 			this.setValue( this.model.get('content') )
 			this.startEdit()
 		}
-
-		this.reRenderAce()
-	},
-
-	reRenderAce: function() {
-
 	},
 
 	startEdit: function() {
@@ -119,8 +112,8 @@ Ext.define('Spelled.view.script.Editor', {
 			me.fireEvent( 'scriptvalidation', model, breakpoints )
 		})
 
-		editor.on( "change", Ext.bind( me.onAceEdit, me) )
-//		session.on( "changeAnnotation", Ext.bind( me.onAceChangeAnnotation, me ) )
+		editor.on( "change", Ext.bind( me.onEdit, me) )
+
 		this.addEvents(
 			'scriptedit',
 			'scriptvalidation',
@@ -136,13 +129,13 @@ Ext.define('Spelled.view.script.Editor', {
 		this.fireEvent( 'scriptvalidation', this.model, session.getAnnotations() )
 	},
 
-	onAceChangeAnnotation: function() {
-		var session = this.aceEditor.getSession()
+	onChangeAnnotation: function( annotationsNotSorted, annotations, cm ) {
+		if( !this.model ) return
 
-		this.fireEvent( 'scriptvalidation', this.model, session.getAnnotations() )
+		this.fireEvent( 'scriptvalidation', this.model, annotations )
 	},
 
-	onAceSave: function() {
+	onSave: function() {
 		this.fireEvent( "save" )
 	},
 
@@ -162,7 +155,7 @@ Ext.define('Spelled.view.script.Editor', {
 		this.fireEvent( "fullscreen" )
 	},
 
-	onAceEdit: function( e ) {
+	onEdit: function( e ) {
 		var model = this.model
 
 		if( !this.editor.options.readOnly ) {

@@ -494,8 +494,22 @@ Ext.define('Spelled.controller.Scenes', {
 			}
 		}
 
-		//don't send an update to the engine if we have no breakpoint enabled and active warnings/errors
-//		if( !hasBreakpoints && annotations.length > 0 ) return
+		var errors = []
+
+		Ext.Array.each(
+			annotations,
+			function( item ) {
+				Ext.Array.each(
+					item,
+					function( error ) {
+						if( error.severity == "error") errors.push( error )
+					}
+				)
+			}
+		)
+
+		//don't send an update to the engine if we have active errors
+		if( errors.length > 0 ) return
 
 		this.sendChangeToEngine( "library.updateScript", { id: model.getFullName(), moduleSource: lines.join("\n") } )
 	},

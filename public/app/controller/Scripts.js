@@ -57,7 +57,6 @@ Ext.define('Spelled.controller.Scripts', {
 		this.listen({
 			component: {
 				'scripteditor': {
-					activate: this.reRenderAce,
 					save:     this.globalSaveHelper,
 					render:   this.addEditor
 				},
@@ -92,10 +91,6 @@ Ext.define('Spelled.controller.Scripts', {
 		if( script ) {
 			this.showScriptDependencies( script )
 		}
-	},
-
-	reRenderAce: function( panel ) {
-		panel.reRenderAce()
 	},
 
 	checkIfScriptIsDirty: function( panel ) {
