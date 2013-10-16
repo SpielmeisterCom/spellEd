@@ -28,3 +28,9 @@
 [submodule "modules/demo_projects"]
 	path = modules/demo_projects
 	url = ssh://git@stash.spielmeister.com:7999/spellcommon/demo_projects.git
+[submodule "modules/acorn"]
+	path = modules/acorn
+	url = ssh://git@stash.spielmeister.com:7999/spelled/acorn.git
+[submodule "modules/tern"]
+	path = modules/tern
+	url = ssh://git@stash.spielmeister.com:7999/spelled/tern.git
