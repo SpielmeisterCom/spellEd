@@ -18,7 +18,10 @@ Ext.define('Spelled.view.script.Editor', {
 		Ext.applyIf( me,{
 			codemirrorConfig: {
 				extraKeys: {
-					"Ctrl-S": Ext.bind( me.onAceSave, me )
+					"Ctrl-S": Ext.bind( me.onAceSave, me ),
+					"Ctrl-M": Ext.bind( me.onReloadScene, me),
+					"Ctrl-B": Ext.bind( me.onToggleGrid, me),
+					"Ctrl-U": Ext.bind( me.onFullSize, me)
 				},
 				theme: 'lesser-dark',
 				mode: 'javascript',
@@ -93,42 +96,6 @@ Ext.define('Spelled.view.script.Editor', {
 			failure: responseCallback
 		})
 
-//		editor.commands.addCommand( {
-//			name: 'reloadScene',
-//			bindKey: {
-//				win: 'Ctrl-M',
-//				mac: 'Command-M'
-//			},
-//			exec: Ext.bind( me.onReloadScene, me)
-//		} )
-//
-//		editor.commands.addCommand( {
-//			name: 'toggleGrid',
-//			bindKey: {
-//				win: 'Ctrl-B',
-//				mac: 'Command-B'
-//			},
-//			exec: Ext.bind( me.onToggleGrid, me)
-//		} )
-//
-//		editor.commands.addCommand( {
-//			name: 'toggleTitleSaveArea',
-//			bindKey: {
-//				win: 'Ctrl-I',
-//				mac: 'Command-I'
-//			},
-//			exec: Ext.bind( me.onToggleTitleSaveArea, me)
-//		} )
-//
-//		editor.commands.addCommand( {
-//			name: 'fullSize',
-//			bindKey: {
-//				win: 'Ctrl-U',
-//				mac: 'Command-U'
-//			},
-//			exec: Ext.bind( me.onFullSize, me)
-//		} )
-//
 		editor.on("gutterClick", function( cm, n, gutter ){
 			if( gutter != 'breakpoints' ) return
 
