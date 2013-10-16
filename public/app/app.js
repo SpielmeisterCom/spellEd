@@ -1,12 +1,6 @@
 requirejs(
 	[
 		'requireToExt/inject',
-
-		'ace/ace',
-		'ace/mode/javascript',
-		'ace/mode/html',
-		'ace/theme/pastel_on_dark',
-
 		'spell/editor/createProjectInEngineFormat',
 		'spell/editor/converter/asset',
 		'spell/editor/converter/project',
@@ -24,10 +18,6 @@ requirejs(
 	],
 	function(
 		injectModulesIntoExt,
-		ace,
-		aceModeJavaScript,
-		aceModeHtml,
-		aceThemePastelOnDark,
 
 		createProjectInEngineFormat,
 		assetConverter,
@@ -47,10 +37,6 @@ requirejs(
 
 
 		injectModulesIntoExt( {
-			'ace'                         : ace,
-			'aceModeJavaScript'           : aceModeJavaScript,
-			'aceModeHtml'                 : aceModeHtml,
-			'aceThemePastelOnDark'        : aceThemePastelOnDark,
 			'assetConverter'              : assetConverter,
 			'createProjectInEngineFormat' : createProjectInEngineFormat,
 			'createCacheContent'          : createCacheContent,

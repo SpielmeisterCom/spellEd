@@ -2,6 +2,7 @@ UNAME_S := $(shell uname -s)
 CWD=$(shell pwd)
 SENCHA=$(CWD)/modules/SenchaCmd/sencha
 NODE=$(CWD)/modules/nodejs/node
+ADDON=$(CWD)/node_modules/codemirror/addon/
 
 ifeq ($(UNAME_S),Darwin)
 SED = sed -i "" -e
@@ -52,27 +53,48 @@ clean-nw:
 .PHONY: rebuild-nw
 rebuild-nw: clean-nw build/nw-package build/app.nw
 
-.PHONY: ace
-ace:
-	# building ace lib
-	cd modules/ace && ../nodejs/node ./Makefile.dryice.js normal
+.PHONY: codemirror
+codemirror:
+	# building codemirror lib
+	mkdir -p node_modules/codemirror/build || true
 
-	rm -Rf public/lib/ace || true
-	mkdir -p public/lib/ace || true
-	cp -aR modules/ace/build/src-min/* public/lib/ace/
-	$(SED) 's/window\.require/window\.requirejs/g' public/lib/ace/ace.js
+	#should use: codemirror --local $(CWD)/node_modules/uglify-js/bin/uglifyjs instead
+	cd node_modules/codemirror && bin/compress codemirror javascript search searchcursor dialog lint javascript-lint matchbrackets closebrackets foldcode foldgutter brace-fold comment-fold show-hint tern match-highlighter active-line > build/tmp.js
+
+	cat $(ADDON)dialog/dialog.css \
+$(ADDON)lint/lint.css \
+$(ADDON)hint/show-hint.css \
+$(ADDON)tern/tern.css \
+node_modules/codemirror/lib/codemirror.css > node_modules/codemirror/build/tmp.css
+
+	cat modules/acorn/acorn.js \
+modules/acorn/acorn_loose.js \
+modules/acorn/util/walk.js \
+modules/tern/lib/signal.js \
+modules/tern/lib/tern.js \
+modules/tern/lib/def.js \
+modules/tern/lib/comment.js \
+modules/tern/lib/infer.js \
+modules/tern/plugin/doc_comment.js > node_modules/codemirror/build/tern.js
+
+	cp -a node_modules/codemirror/build/tmp.js public/lib/codemirror/codemirror.js
+	cp -a node_modules/codemirror/build/tmp.css public/lib/codemirror/codemirror.css
+
+	cp -a node_modules/codemirror/build/tern.js public/lib/tern/tern.js
+	cp -a modules/tern/defs/ecma5.json public/lib/tern/defs/ecma5.json
+
+	rm -Rf node_modules/codemirror/build || true
 
 nw-debug:
 	$(NODE) modules/spellCore/tools/n.js -s public/lib -m spellEdDeps \
--i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark" > public/libs.js
+-i "underscore,require,module,exports" > public/libs.js
 	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "path,http,fs,child_process,underscore,pathUtil,wrench" > public/nwlibs.js
 
 	mkdir -p public/lib || true
-	cp -aR build/spelledjs/public/lib/ace/ public/lib/
 
 build/libs.js:
 	$(NODE) modules/spellCore/tools/n.js -s public/lib -m spellEdDeps \
--i "underscore,require,module,exports,ace/ace,ace/mode/html,ace/mode/javascript,ace/theme/pastel_on_dark" >> build/libs.js
+-i "underscore,require,module,exports" >> build/libs.js
 
 build/nwlibs.js:
 	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "path,http,fs,child_process,underscore,pathUtil,wrench" >> build/nwlibs.js

@@ -1,112 +1,133 @@
 Ext.define('Spelled.view.script.Editor', {
-    extend: 'Ext.Component',
+    extend: 'Spelled.view.script.codemirror.Component',
     alias : 'widget.scripteditor',
     closeAction: 'hide',
+
+	requires: [
+		'Spelled.view.script.codemirror.Component'
+	],
 
     closable: true,
 
     model : undefined,
+	value: '',
 
-	listeners: {
-		resize: function() {
-			this.reRenderAce()
+	toggleLinting: function() {
+		var editor = this.editor,
+			option = editor.getOption( "lint" )
+
+		if( option ) {
+			editor.setOption( "lint", false )
+		} else {
+			editor.setOption( "lint", this.lintingConfig() )
 		}
+	},
+
+	lintingConfig: function() {
+		return {
+			getAnnotations: CodeMirror.javascriptValidator,
+			onUpdateLinting: Ext.bind( this.onChangeAnnotation, this ),
+			asi: true
+		}
+	},
+
+	initComponent: function() {
+		var me = this
+
+		Ext.applyIf( me,{
+			codemirrorConfig: {
+				extraKeys: {
+					"Ctrl-S": Ext.bind( me.onSave, me ),
+					"Ctrl-M": Ext.bind( me.onReloadScene, me),
+					"Ctrl-B": Ext.bind( me.onToggleGrid, me),
+					"Ctrl-U": Ext.bind( me.onFullSize, me)
+				},
+				theme: 'spelled',
+				mode: 'javascript',
+				matchBrackets: true,
+				autoClearEmptyLines:true,
+				autoCloseBrackets: true,
+				lineNumbers: true,
+				styleActiveLine: true,
+				lint: me.lintingConfig(),
+				foldGutter: {
+					rangeFinder: new CodeMirror.fold.combine( CodeMirror.fold.brace, CodeMirror.fold.comment )
+				},
+				gutters: [ "CodeMirror-lint-markers", "CodeMirror-linenumbers", "CodeMirror-foldgutter", "breakpoints"]
+			}
+		})
+
+
+		return this.callParent( arguments )
 	},
 
 	refreshContent: function() {
-		var editor = this.aceEditor
 
 		if( !!this.model ) {
-			editor.getSession().setValue( this.model.get('content') )
+			this.setValue( this.model.get('content') )
 			this.startEdit()
 		}
-
-		this.reRenderAce()
-	},
-
-	reRenderAce: function() {
-		var editor = this.aceEditor
-		editor.resize()
 	},
 
 	startEdit: function() {
-		var editor  = this.aceEditor,
-			session = editor.getSession(),
+		var editor  = this.editor,
 			me      = this
 
-		session.setUseSoftTabs( false )
+		function makeMarker() {
+			var marker = document.createElement("div");
+			marker.style.color = "#822";
+			marker.innerHTML = "●";
+			return marker;
+		}
 
-		editor.commands.addCommand( {
-			name: 'saveCommand',
-			bindKey: {
-				win: 'Ctrl-S',
-				mac: 'Command-S'
-			},
-			exec: Ext.bind( me.onAceSave, me)
-		} )
+		var responseCallback = function( response ){
+			var code = response.responseText;
 
-		editor.commands.addCommand( {
-			name: 'reloadScene',
-			bindKey: {
-				win: 'Ctrl-M',
-				mac: 'Command-M'
-			},
-			exec: Ext.bind( me.onReloadScene, me)
-		} )
+			var server = new CodeMirror.TernServer( { defs: [ Ext.JSON.decode(code) ] } )
 
-		editor.commands.addCommand( {
-			name: 'toggleGrid',
-			bindKey: {
-				win: 'Ctrl-B',
-				mac: 'Command-B'
-			},
-			exec: Ext.bind( me.onToggleGrid, me)
-		} )
+			editor.setOption( "extraKeys", Ext.Object.merge( {}, editor.options.extraKeys, {
+				"Ctrl-Space": function(cm) { server.complete(cm); },
+				"Ctrl-I": function(cm) { server.showType(cm); },
+				"Alt-.": function(cm) { server.jumpToDef(cm); },
+				"Alt-,": function(cm) { server.jumpBack(cm); },
+				"Ctrl-Q": function(cm) { server.rename(cm); }
+			})
+			)
 
-		editor.commands.addCommand( {
-			name: 'toggleTitleSaveArea',
-			bindKey: {
-				win: 'Ctrl-I',
-				mac: 'Command-I'
-			},
-			exec: Ext.bind( me.onToggleTitleSaveArea, me)
-		} )
+			editor.on("cursorActivity", function(cm) { server.updateArgHints(cm); })
+		}
 
-		editor.commands.addCommand( {
-			name: 'fullSize',
-			bindKey: {
-				win: 'Ctrl-U',
-				mac: 'Command-U'
-			},
-			exec: Ext.bind( me.onFullSize, me)
-		} )
-
-		editor.on("guttermousedown", function(e){
-			var target = e.domEvent.target;
-			if (target.className.indexOf("ace_gutter-cell") == -1)
-				return;
-			if (!editor.isFocused())
-				return;
-			if (e.clientX > 25 + target.getBoundingClientRect().left)
-				return;
-
-			var row = e.getDocumentPosition().row,
-				breakpoints = e.editor.session.getBreakpoints()
-
-			if ( breakpoints[row] !== undefined ) {
-				e.editor.session.clearBreakpoint(row)
-
-			} else {
-
-				e.editor.session.setBreakpoint(row)
-			}
-
-			e.stop()
+		Ext.Ajax.request({
+			url: 'lib/tern/defs/ecma5.json',
+			success: responseCallback,
+			failure: responseCallback
 		})
 
-		session.on( "changeBreakpoint", Ext.bind( me.onAceChangeBreakpoint, me) )
-		session.on( "change", Ext.bind( me.onAceEdit, me) )
-		session.on( "changeAnnotation", Ext.bind( me.onAceChangeAnnotation, me ) )
+		editor.on("gutterClick", function( cm, n, gutter ){
+			if( gutter != 'breakpoints' ) return
+
+			var info        = cm.lineInfo( n ),
+				model       = me.model,
+				breakpoints = model.get( 'breakpoints' ) || {}
+
+			cm.setGutterMarker( n, "breakpoints", info.gutterMarkers && info.gutterMarkers.breakpoints ? null : makeMarker() )
+
+			var line = info.line
+
+			if ( breakpoints[line] !== undefined ) {
+				breakpoints[line] = undefined
+
+			} else {
+				breakpoints[line] =  true
+			}
+
+			model.set( 'breakpoints', breakpoints )
+
+			me.fireEvent( 'scriptvalidation', model, breakpoints )
+		})
+
+		editor.on( "change", Ext.bind( me.onEdit, me) )
+
 		this.addEvents(
 			'scriptedit',
 			'scriptvalidation',
@@ -122,13 +143,13 @@ Ext.define('Spelled.view.script.Editor', {
 		this.fireEvent( 'scriptvalidation', this.model, session.getAnnotations() )
 	},
 
-	onAceChangeAnnotation: function() {
-		var session = this.aceEditor.getSession()
+	onChangeAnnotation: function( annotationsNotSorted, annotations, cm ) {
+		if( !this.model ) return
 
-		this.fireEvent( 'scriptvalidation', this.model, session.getAnnotations() )
+		this.fireEvent( 'scriptvalidation', this.model, annotations )
 	},
 
-	onAceSave: function() {
+	onSave: function() {
 		this.fireEvent( "save" )
 	},
 
@@ -148,12 +169,13 @@ Ext.define('Spelled.view.script.Editor', {
 		this.fireEvent( "fullscreen" )
 	},
 
-	onAceEdit: function( e ) {
+	onEdit: function( e ) {
 		var model = this.model
 
-		if( !this.aceEditor.getReadOnly() ) {
+		if( !this.editor.options.readOnly ) {
+
 			model.setDirty()
-			model.set( 'content', this.aceEditor.getSession().getValue() )
+			model.set( 'content', this.getValue() )
 			this.fireEvent( "scriptchange", model, this, e )
 		}
 	},
