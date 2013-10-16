@@ -403,7 +403,7 @@ Ext.define('Spelled.view.script.codemirror.Component', {
 				iconCls: baseCSSPrefix + 'edit-'+id,
 				enableToggle:toggle !== false,
 				scope: editor,
-				handler:handler||editor.relayBtnCmd,
+				handler: handler,
 				clickEvent:'mousedown',
 				tooltip: tipsEnabled ? editor.buttonTips[id] || undef : undef,
 				overflowText: editor.buttonTips[id].title || undef,
@@ -411,13 +411,7 @@ Ext.define('Spelled.view.script.codemirror.Component', {
 			};
 		}
 
-		// auto indenting button
-		if(me.showAutoIndent)
-			items.push(btn('justifycenter', false));
-
-		// line numbers button
-		if(me.showLineNumbers)
-			items.push(btn('insertorderedlist'));
+		items.push( btn('sourceedit', true, me.toggleLinting ) );
 
 		toolbar = Ext.widget('toolbar', {
 			id: me.id + '-toolbar',
@@ -452,48 +446,11 @@ Ext.define('Spelled.view.script.codemirror.Component', {
 
 		try{
 			btns = me.getToolbar().items.map;
-			if(me.showLineNumbers){
-				btns['insertorderedlist'].toggle(me.enableLineNumbers);
-			}
+			btns['sourceedit'].toggle( true )
 		}catch(err){
 
 		}
 
-	},
-
-	/**
-	 * @private
-	 */
-	relayBtnCmd: function(btn){
-		this.relayCmd(btn.getItemId());
-	},
-
-	/**
-	 * @private
-	 */
-	relayCmd: function(cmd){
-		Ext.defer(function() {
-			var me = this;
-			me.editor.focus();
-			switch(cmd){
-				// auto formatting
-				case 'justifycenter':
-						me.doIndentSelection();
-					break;
-
-				// line numbers
-				case 'insertorderedlist':
-					me.doChangeLineNumbers();
-					break;
-			}
-		}, 10, this);
-	},
-
-	doChangeLineNumbers: function(){
-		var me = this;
-
-		me.enableLineNumbers = !me.enableLineNumbers;
-		me.editor.setOption('lineNumbers', me.enableLineNumbers);
 	},
 
 	/**
@@ -600,14 +557,9 @@ Ext.define('Spelled.view.script.codemirror.Component', {
 	 * @type Object
 	 */
 	buttonTips : {
-		justifycenter : {
-			title: 'Auto indent',
-			text: 'Applies automatic mode-aware indentation to the specified range.',
-			cls: Ext.baseCSSPrefix + 'html-editor-tip'
-		},
-		insertorderedlist : {
-			title: 'Line numbers',
-			text: 'Show line numbers.',
+		sourceedit : {
+			title: 'Auto valid JavaScript',
+			text: 'Applies automatic JavaScript validation and injects the validated JavaScript into the running SpellJS instance.',
 			cls: Ext.baseCSSPrefix + 'html-editor-tip'
 		}
 	}

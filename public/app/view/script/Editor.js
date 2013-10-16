@@ -12,6 +12,25 @@ Ext.define('Spelled.view.script.Editor', {
     model : undefined,
 	value: '',
 
+	toggleLinting: function() {
+		var editor = this.editor,
+			option = editor.getOption( "lint" )
+
+		if( option ) {
+			editor.setOption( "lint", false )
+		} else {
+			editor.setOption( "lint", this.lintingConfig() )
+		}
+	},
+
+	lintingConfig: function() {
+		return {
+			getAnnotations: CodeMirror.javascriptValidator,
+			onUpdateLinting: Ext.bind( this.onChangeAnnotation, this ),
+			asi: true
+		}
+	},
+
 	initComponent: function() {
 		var me = this
 
@@ -30,12 +49,7 @@ Ext.define('Spelled.view.script.Editor', {
 				autoCloseBrackets: true,
 				lineNumbers: true,
 				styleActiveLine: true,
-				lint:{
-					getAnnotations: CodeMirror.javascriptValidator,
-					onUpdateLinting: Ext.bind( me.onChangeAnnotation, me ),
-					asi: true,
-					laxcomma: true, laxbreak: true
-				},
+				lint: me.lintingConfig(),
 				foldGutter: {
 					rangeFinder: new CodeMirror.fold.combine( CodeMirror.fold.brace, CodeMirror.fold.comment )
 				},
