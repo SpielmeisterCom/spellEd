@@ -59,6 +59,7 @@ codemirror:
 	cat $(ADDON)lint/lint.css >> node_modules/codemirror/build/tmp.css
 	cat $(ADDON)hint/show-hint.css >> node_modules/codemirror/build/tmp.css
 	cat $(ADDON)tern/tern.css >> node_modules/codemirror/build/tmp.css
+	cat node_modules/codemirror/theme/lesser-dark.css >> node_modules/codemirror/build/tmp.css
 	cat node_modules/codemirror/lib/codemirror.css >> node_modules/codemirror/build/tmp.css
 
 	cp -a node_modules/codemirror/build/tmp.js public/lib/codemirror/codemirror.js
@@ -72,7 +73,6 @@ nw-debug:
 	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "path,http,fs,child_process,underscore,pathUtil,wrench" > public/nwlibs.js
 
 	mkdir -p public/lib || true
-	cp -aR build/spelledjs/public/lib/ace/ public/lib/
 
 build/libs.js:
 	$(NODE) modules/spellCore/tools/n.js -s public/lib -m spellEdDeps \

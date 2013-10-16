@@ -17,6 +17,10 @@ Ext.define('Spelled.view.script.Editor', {
 
 		Ext.applyIf( me,{
 			codemirrorConfig: {
+				extraKeys: {
+					"Ctrl-S": Ext.bind( me.onAceSave, me )
+				},
+				theme: 'lesser-dark',
 				mode: 'javascript',
 				matchBrackets: true,
 				autoClearEmptyLines:true,
@@ -71,13 +75,14 @@ Ext.define('Spelled.view.script.Editor', {
 
 			var server = new CodeMirror.TernServer( { defs: [ Ext.JSON.decode(code) ] } )
 
-			editor.setOption("extraKeys", {
+			editor.setOption( "extraKeys", Ext.Object.merge( {}, editor.options.extraKeys, {
 				"Ctrl-Space": function(cm) { server.complete(cm); },
 				"Ctrl-I": function(cm) { server.showType(cm); },
 				"Alt-.": function(cm) { server.jumpToDef(cm); },
 				"Alt-,": function(cm) { server.jumpBack(cm); },
 				"Ctrl-Q": function(cm) { server.rename(cm); }
 			})
+			)
 
 			editor.on("cursorActivity", function(cm) { server.updateArgHints(cm); })
 		}
@@ -88,15 +93,6 @@ Ext.define('Spelled.view.script.Editor', {
 			failure: responseCallback
 		})
 
-//		editor.commands.addCommand( {
-//			name: 'saveCommand',
-//			bindKey: {
-//				win: 'Ctrl-S',
-//				mac: 'Command-S'
-//			},
-//			exec: Ext.bind( me.onAceSave, me)
-//		} )
-//
 //		editor.commands.addCommand( {
 //			name: 'reloadScene',
 //			bindKey: {
