@@ -18,7 +18,6 @@ all: clean build/spelledjs/public build/win-ia32 build/osx-ia32 build/linux-x64 
 clean:
 	# cleaning up and creating directory tree
 	rm -Rf build public/build || true
-	cd modules/ace && make clean
 
 .PHONY: refresh 
 refresh:
@@ -130,9 +129,9 @@ build/spelledjs/public/all-classes.js:
 	cp public/error.html build/spelledjs/public
 
 build/spelledjs/public: build/spelledjs/public/all-classes.js build/spelledjs/public/libs.js build/spelledjs/public/loader.js
-	# copy ace & fontdetect library
+	# copy fontdetect library
 	mkdir -p build/spelledjs/public/lib/
-	cp -aR public/lib/fontDetect public/lib/ace build/spelledjs/public/lib
+	cp -aR public/lib/fontDetect build/spelledjs/public/lib
 
 build/nw-package: build/spelledjs/public build/spelledjs/public/nwlibs.js
 	mkdir -p build/nw-package/public
