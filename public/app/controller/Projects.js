@@ -252,6 +252,8 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
 	callCleanBuild: function( menu ) {
+		if( !this.application.hasActiveProject() ) return Spelled.MessageBox.showMissingProjectsError()
+
 		var project = this.application.getActiveProject(),
 			name    = project.get( 'name'),
 			msg     = 'Cleaning project: "' + name + '"'
@@ -268,6 +270,8 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
 	callBuildTarget: function( buildActionName, target ) {
+		if( !this.application.hasActiveProject() ) return Spelled.MessageBox.showMissingProjectsError()
+
 		var project = this.application.getActiveProject(),
 			msg     = 'Building target "' +target +'"'
 
@@ -493,12 +497,14 @@ Ext.define('Spelled.controller.Projects', {
             if( config.android ) android.getForm().setValues( config.android )
 
 			if( config.web ) web.getForm().setValues( config.web )
+		} else {
+			Spelled.MessageBox.showMissingProjectsError()
 		}
 	},
 
     showCreateProject: function() {
         var View = this.getProjectCreateView(),
-			view = new View(),
+			view = new View( { closable: this.application.hasActiveProject() } ),
 			Project = this.getProjectModel(),
 			form = view.down( 'form' )
 
@@ -527,18 +533,22 @@ Ext.define('Spelled.controller.Projects', {
 
     showLoadProject: function( ) {
         var View = this.getProjectLoadView(),
-			view = new View( { closable: !!this.application.getActiveProject() } )
+			view = new View( { closable: this.application.hasActiveProject() } )
 
         view.show()
     },
 
 	saveActiveProject: function( callback ) {
+		if( !this.application.hasActiveProject() ) return Spelled.MessageBox.showMissingProjectsError()
+
 		var project = this.application.getActiveProject()
 
 		project.save( {	callback: callback } )
 	},
 
 	exportActiveProject: function( target ) {
+		if( !this.application.hasActiveProject() ) return Spelled.MessageBox.showMissingProjectsError()
+
 		var project        = this.application.getActiveProject(),
 			projectName    = project.get( 'name' ),
 			exportFileName = projectName +".zip"

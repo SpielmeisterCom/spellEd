@@ -198,7 +198,9 @@ Ext.define('Spelled.Application', {
 		return this.project
 	},
 
-
+	hasActiveProject: function() {
+		return !!this.getActiveProject()
+	},
 
 	setActiveProject: function( project ) {
 		Ext.state.Manager.set( 'projectName', project.get('name') )
