@@ -146,6 +146,9 @@ Ext.define('Spelled.controller.Projects', {
 			},
 			'spelledmenu [action="callCleanBuild"]': {
 				click: this.callCleanBuild
+			},
+			'projectplugins': {
+				fillpluginform: this.fillPluginSettings
 			}
         })
 
@@ -181,6 +184,14 @@ Ext.define('Spelled.controller.Projects', {
 
 	BUILD_RELEASE: 'buildRelease',
 	BUILD_DEBUG  : 'buildDebug',
+
+	fillPluginSettings: function( view, plugin, form ) {
+		var project = this.application.getActiveProject(),
+			name    = plugin.get( 'name' ),
+			config  = project.getPlugin( name )
+
+		form.getForm().setValues( Ext.Object.merge( {}, config, { name: name } ) )
+	},
 
 	showBuildResultInBrowser: function( button ) {
 		var project    = this.application.getActiveProject(),
@@ -339,6 +350,7 @@ Ext.define('Spelled.controller.Projects', {
 			languageConf  = window.down( 'projectlanguagesettings' ),
             androidConf   = window.down( 'projectandroidsettings' ),
 			webConf       = window.down( 'projectwebsettings' ),
+			pluginConf    = window.down( 'projectplugins' ),
 			project       = generalConfig.getRecord(),
 			generalValues = generalConfig.getValues(),
 			languageValues = languageConf.getValues(),
@@ -346,6 +358,7 @@ Ext.define('Spelled.controller.Projects', {
 
         config.android = Ext.clone( androidConf.getValues() )
 		config.web     = Ext.clone( webConf.getValues() )
+		config.plugins = pluginConf.getPluginsConfig()
 
 		config.screenSize = [
 			parseInt( generalValues.screenSizeX, 10 ),

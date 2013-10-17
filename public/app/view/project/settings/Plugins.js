@@ -12,6 +12,15 @@ Ext.define('Spelled.view.project.settings.Plugins' ,{
 	initComponent: function() {
 		var me = this
 
+		var store = Ext.getStore( 'project.Plugins' )
+
+		var forms = []
+		store.each(
+			function( record ) {
+				forms.push( me.createPluginForm( record ) )
+			}
+		)
+
 		Ext.applyIf( this, {
 			items: [
 				{
@@ -25,14 +34,16 @@ Ext.define('Spelled.view.project.settings.Plugins' ,{
 					],
 					store: 'project.Plugins',
 					listeners: {
-						select: Ext.bind( me.selectPlugin, me )
+						select: Ext.bind( me.togglePluginVisibility, me ),
+						deselect: Ext.bind( me.togglePluginVisibility, me )
 					}
 				}, {
 					region: 'center',
 					layout: 'fit',
 					flex:3,
 					xtype: 'container',
-					name: 'plugincontainer'
+					name: 'plugincontainer',
+					items: forms
 				}
 			]
 		})
@@ -40,26 +51,47 @@ Ext.define('Spelled.view.project.settings.Plugins' ,{
 		this.callParent( arguments )
 	},
 
-	selectPlugin: function( rowModel, record ) {
-		var container = this.down( 'container[name="plugincontainer"]' )
-
-		container.removeAll()
-
+	createPluginForm: function( record ){
 		var fields = Ext.clone( record.get( 'fields' ) )
 
 		fields.unshift( {
 			xtype: 'checkbox',
 			name: 'active',
 			boxLabel  : 'Active',
+			inputValue: true,
+			uncheckedValue : false
 		} )
 
 		var form = Ext.widget( 'form', {
 			name: 'pluginform',
+			hidden: true,
+			pluginId: record.get( 'name' ),
 			items: fields
 		} )
 
-		container.add( form )
+		this.fireEvent( 'fillpluginform', this, record, form )
 
-		this.fireEvent( 'pluginselected', this, record )
+		return form
+	},
+
+	togglePluginVisibility: function( rowModel, record ) {
+		var form = this.down( 'form[pluginId="'+ record.get( 'name' ) +'"]' )
+
+		form.setVisible( !form.isVisible() )
+	},
+
+	getPluginsConfig: function() {
+		var container = this.down( 'container[name="plugincontainer"]' ),
+			forms     = container.query( 'form' ),
+			config    = {}
+
+		Ext.Array.each(
+			forms,
+			function( form ) {
+				config[ form.pluginId ] = form.getValues()
+			}
+		)
+
+		return config
 	}
 })

@@ -64,5 +64,19 @@ Ext.define('Spelled.model.Project', {
 
 	getStartScene: function() {
 		return Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', this.get( 'startScene' ) )
+	},
+
+	getPlugin: function( name ) {
+		var plugins = this.get( 'config').plugins
+
+		if( !plugins ) {
+			plugins = {}
+		}
+
+		if( !plugins[ name ] ) {
+			plugins[ name ] = {}
+		}
+
+		return plugins[ name ]
 	}
 })
