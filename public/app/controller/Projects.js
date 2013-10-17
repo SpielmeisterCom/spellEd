@@ -527,7 +527,7 @@ Ext.define('Spelled.controller.Projects', {
 
     showLoadProject: function( ) {
         var View = this.getProjectLoadView(),
-			view = new View()
+			view = new View( { closable: !!this.application.getActiveProject() } )
 
         view.show()
     },

@@ -7,40 +7,52 @@ Ext.define('Spelled.view.project.Load' ,{
 
 	layout: 'fit',
 
-    items: [
-        {
-            bodyPadding: 10,
-            xtype: 'form',
-            items: [
-                {
-                    xtype: 'combobox',
-                    store: 'Projects',
+	initComponent: function() {
+		var me = this
 
-                    valueField: 'name',
-                    displayField:'name',
-                    queryMode: 'proxy',
-                    forceSelection: true,
+		Ext.applyIf(
+			me,
+			{
+				items: [
+					{
+						bodyPadding: 10,
+						xtype: 'form',
+						items: [
+							{
+								xtype: 'combobox',
+								store: 'Projects',
 
-                    typeAhead: true,
-                    name: 'name',
-                    fieldLabel: 'Select a Project',
-                    anchor: '100%',
-                    allowBlank:false
-                }
-            ],
-            buttons: [
-                {
-                    text: "Open",
-                    action: "loadProject",
-                    formBind:true
-                },
-                {
-                    text: "Cancel",
-                    handler: function() {
-                        this.up('window').close()
-                    }
-                }
-            ]
-        }
-    ]
+								valueField: 'name',
+								displayField:'name',
+								queryMode: 'proxy',
+								forceSelection: true,
+
+								typeAhead: true,
+								name: 'name',
+								fieldLabel: 'Select a Project',
+								anchor: '100%',
+								allowBlank:false
+							}
+						],
+						buttons: [
+							{
+								text: "Open",
+								action: "loadProject",
+								formBind:true
+							},
+							{
+								text: "Cancel",
+								disabled: !this.closable,
+								handler: function() {
+									this.up('window').close()
+								}
+							}
+						]
+					}
+				]
+			}
+		)
+
+		this.callParent()
+	}
 });
