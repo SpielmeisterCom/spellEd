@@ -40,7 +40,8 @@ Ext.define('Spelled.view.script.Editor', {
 					"Ctrl-S": Ext.bind( me.onSave, me ),
 					"Ctrl-M": Ext.bind( me.onReloadScene, me),
 					"Ctrl-B": Ext.bind( me.onToggleGrid, me),
-					"Ctrl-U": Ext.bind( me.onFullSize, me)
+					"Ctrl-U": Ext.bind( me.onFullSize, me),
+					"Shift-Ctrl-C": Ext.bind( me.toggleComment, me)
 				},
 				theme: 'spelled',
 				mode: 'javascript',
@@ -147,6 +148,12 @@ Ext.define('Spelled.view.script.Editor', {
 		if( !this.model ) return
 
 		this.fireEvent( 'scriptvalidation', this.model, annotations )
+	},
+
+	toggleComment: function() {
+		var editor = this.editor
+
+		CodeMirror.commands.toggleComment( editor )
 	},
 
 	onSave: function() {

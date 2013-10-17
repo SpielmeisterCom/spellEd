@@ -58,7 +58,7 @@ codemirror:
 	mkdir -p node_modules/codemirror/build || true
 
 	#should use: codemirror --local $(CWD)/node_modules/uglify-js/bin/uglifyjs instead
-	cd node_modules/codemirror && bin/compress codemirror javascript search searchcursor dialog lint javascript-lint matchbrackets closebrackets foldcode foldgutter brace-fold comment-fold show-hint tern match-highlighter active-line > build/tmp.js
+	cd node_modules/codemirror && bin/compress codemirror javascript search searchcursor dialog lint javascript-lint matchbrackets closebrackets foldcode foldgutter brace-fold comment comment-fold show-hint tern match-highlighter active-line > build/tmp.js
 
 	cat $(ADDON)dialog/dialog.css \
 $(ADDON)lint/lint.css \
