@@ -49,6 +49,7 @@ Ext.define('Spelled.view.script.Editor', {
 				autoClearEmptyLines:true,
 				autoCloseBrackets: true,
 				lineNumbers: true,
+				indentWithTabs: true,
 				styleActiveLine: true,
 				lint: me.lintingConfig(),
 				foldGutter: {
@@ -134,14 +135,6 @@ Ext.define('Spelled.view.script.Editor', {
 			'scriptvalidation',
 			'save'
 		)
-	},
-
-	onAceChangeBreakpoint: function() {
-		var session = this.aceEditor.getSession()
-		this.model.set( 'breakpoints', session.getBreakpoints() )
-
-		//trigger a scriptvalidation event here to force a reload of the script
-		this.fireEvent( 'scriptvalidation', this.model, session.getAnnotations() )
 	},
 
 	onChangeAnnotation: function( annotationsNotSorted, annotations, cm ) {
