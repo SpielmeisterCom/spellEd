@@ -116,5 +116,11 @@ Ext.define( 'Spelled.EntityHelper', {
 		}
 
 		return recursion( entity, [] )
+	},
+
+	markAsTemplateComposites: function( compositeNode, sortOrder ) {
+		compositeNode.set( 'cls', 'templateEntityComposite' )
+		compositeNode.set( 'sortOrder', sortOrder )
+		compositeNode.eachChild( this.markAsTemplateComposites )
 	}
 })
