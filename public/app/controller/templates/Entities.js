@@ -300,6 +300,13 @@ Ext.define('Spelled.controller.templates.Entities', {
 			owner           = Spelled.EntityHelper.getRootOwnerFromChildren( composite.get( 'name' ), entity, parents ),
 			entityToConvert = Spelled.EntityHelper.findNeededEntity( owner, parents )
 
+		if ( !entityToConvert ) return
+
+		var nextTemplate = Spelled.EntityHelper.getNextEntityBasedTemplate( owner ,[] ),
+			rootOwner    = Spelled.EntityHelper.getRootEntityOwnerFromEntity( owner, [] )
+		//If next based template isn't the rootOwner and has a scene, its already existing as sibling in the nextTemplate
+		if ( nextTemplate && rootOwner && nextTemplate !== rootOwner && rootOwner.hasScene() ) return
+
 		entityToConvert.set( 'templateId', composite.get( 'templateId' ) )
 		entityToConvert.set( 'removable', true )
 		entityToConvert.setDirty()
