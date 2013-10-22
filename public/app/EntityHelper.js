@@ -123,6 +123,6 @@ Ext.define( 'Spelled.EntityHelper', {
 	markAsTemplateComposites: function( compositeNode, sortOrder ) {
 		compositeNode.set( 'cls', 'templateEntityComposite' )
 		compositeNode.set( 'sortOrder', sortOrder )
-		compositeNode.eachChild( this.markAsTemplateComposites )
+		compositeNode.eachChild( Spelled.EntityHelper.markAsTemplateComposites )
 	}
 })
