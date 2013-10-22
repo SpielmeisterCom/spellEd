@@ -50,6 +50,10 @@ Ext.define('Spelled.controller.Entities', {
 		{
 			ref: 'Library',
 			selector: '#Library'
+		},
+		{
+			ref : 'Scenes',
+			selector: '#Scenes'
 		}
 	],
 
@@ -64,8 +68,9 @@ Ext.define('Spelled.controller.Entities', {
 		    'entiteslist': {
 			    itemcontextmenu: this.showListContextMenu
 		    },
-		    'entityhastemplateheader tool[type="search"]': {
-			    showTemplateEntity: this.showTemplateEntity
+		    'entityhastemplateheader': {
+				showtemplateentity: this.showTemplateEntity,
+				unlink: this.unlinkEntityFromTemplate
 		    },
 		    'entitieslistcontextmenu [action="showConvertEntity"]': {
 			    click: this.showConvertEntity
@@ -114,8 +119,20 @@ Ext.define('Spelled.controller.Entities', {
 		)
     },
 
+	searchEntityNodeInAllTrees: function ( entityId ) {
+		var tree = this.getScenesTree(),
+			node = tree.getStore().getNodeById( entityId )
+
+		if( !node ) {
+			tree = this.getTemplatesTree()
+			node = tree.getStore().getNodeById( entityId )
+		}
+
+		return node
+	},
+
 	updateEntityNode: function( entity ) {
-		var node = this.getScenesTree().getStore().getNodeById( entity.getId() )
+		var node = this.searchEntityNodeInAllTrees( entity.getId() )
 
 		if( node ) {
 			var parent = node.parentNode
@@ -123,7 +140,13 @@ Ext.define('Spelled.controller.Entities', {
 			node.removeAll()
 			node.remove()
 
-			parent.appendChild( entity.createTreeNode( parent ) )
+			var childNode = parent.appendChild( entity.createTreeNode( parent ) )
+
+			if( entity.get( 'type' ) === 'entityTemplate' || parent.get( 'cls' ) === 'templateEntityComposite' || parent.get( 'cls' ) === 'entityTemplate' ) {
+				Spelled.EntityHelper.markAsTemplateComposites( childNode, entity.sortOrder )
+			}
+
+			return childNode
 		}
 	},
 
@@ -328,7 +351,8 @@ Ext.define('Spelled.controller.Entities', {
 
 		owner.setDirty()
 		this.deleteEntity( entity )
-		var node = this.getScenesTree().getStore().getNodeById( entity.getId() )
+
+		var node = this.searchEntityNodeInAllTrees( entity.getId() )
 
 		if( node ) node.remove()
 	},
@@ -359,6 +383,18 @@ Ext.define('Spelled.controller.Entities', {
 		var compositeEntity = Spelled.EntityHelper.findCompositeEntity( entity )
 
 		Spelled.MessageBox.alert( "Can not remove: '" + entity.get( 'name' ) + "'", "Is linked to a entityTemplate: '" + compositeEntity.getOwner().get( 'name' ) + "'" )
+	},
+
+	unlinkEntityFromTemplate: function( entityId  ) {
+		var entity = this.getConfigEntitiesStore().getById( entityId )
+
+		if( entity ) {
+			var tree = this.getNavigator().getActiveTab() === this.getScenes() ? this.getScenesTree() : this.getTemplatesTree()
+
+			entity.convertToAnonymousEntity()
+			this.application.selectNode( tree, this.updateEntityNode( entity ) )
+			this.application.fireEvent( 'checkforlibrarytemplateunlink', entity )
+		}
 	},
 
 	showTemplateEntity: function( entityTemplateId ) {
@@ -516,12 +552,17 @@ Ext.define('Spelled.controller.Entities', {
 			if( !entity.isAnonymous() && entity.getEntityTemplate() ) {
 				view.docString = "#!/guide/" + entity.getEntityTemplate().getDocumentationName()
 
-				view.add( {
-						xtype: 'entityhastemplateheader',
-						entityTemplateId: entity.getEntityTemplate().getId(),
-						html:  entity.getEntityTemplate().getFullName()
-					}
-				)
+				var header = {
+					xtype: 'entityhastemplateheader',
+					entityTemplateId: entity.getEntityTemplate().getId(),
+					html:  entity.getEntityTemplate().getFullName()
+				}
+
+				if( entity.isRemovable() ) {
+					header.entityId = entity.getId()
+				}
+
+				view.add( header )
 			}
 
 		} else {

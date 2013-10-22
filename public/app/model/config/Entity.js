@@ -150,8 +150,6 @@ Ext.define('Spelled.model.config.Entity', {
 
 					this.getComponents().add( cmp )
 					cmp.setEntity( this )
-
-					cmp.stripRedundantData()
 				},
 				this
 			)
@@ -484,9 +482,13 @@ Ext.define('Spelled.model.config.Entity', {
 
 		this.getChildren().each(
 			function( entity ) {
-				entityNode.appendChild(
-					entity.createTreeNode( entityNode )
-				)
+				var childNode = entity.createTreeNode( entityNode )
+
+				if( entity.get( 'type' ) === 'entityTemplate' || entityNode.get( 'cls' ) === 'templateEntityComposite' ) {
+					Spelled.EntityHelper.markAsTemplateComposites( childNode, entity.sortOrder )
+				}
+
+				entityNode.appendChild( childNode )
 			}
 		)
 

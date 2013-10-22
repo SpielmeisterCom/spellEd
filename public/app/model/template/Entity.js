@@ -95,19 +95,14 @@ Ext.define('Spelled.model.template.Entity', {
 
 	createTreeNode: function( node ) {
 		var entityNode       = this.mixins.abstractModel.createTreeNode.call( this, node ),
-			sortOrder        = this.sortOrder,
-			markAsComposites = function( compositeNode ) {
-				compositeNode.set( 'cls', 'templateEntityComposite' )
-				compositeNode.set( 'sortOrder', sortOrder )
-				compositeNode.eachChild( markAsComposites )
-			}
+			sortOrder        = this.sortOrder
 
 		this.getChildren().each( function( entity ) {
 			var childNode = entity.createTreeNode( entityNode )
 
 			entityNode.set( 'leaf', false )
 
-			markAsComposites( childNode )
+			Spelled.EntityHelper.markAsTemplateComposites( childNode, sortOrder )
 
 			entityNode.appendChild( childNode )
 		})

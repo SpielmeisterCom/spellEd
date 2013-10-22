@@ -48,9 +48,32 @@ Ext.define('Spelled.controller.templates.Entities', {
 			showtemplatecomponents : this.showEntityTemplateComponentsListHelper,
 			showcompositecomponents: this.showEntityCompositeComponentsListHelper,
 			updateentitytemplatesenginewide: this.sendUpdateToAllEntitiesBasedOnTemplate,
+			checkforlibrarytemplateunlink: this.checkForLibraryTemplateUnlink,
 			scope: this
 		})
     },
+
+	checkForLibraryTemplateUnlink: function( entity ) {
+		var parents  = [],
+			template = Spelled.EntityHelper.getRootTemplateEntityFromEntity( entity, parents )
+
+		if( template ) {
+			var entities   = Spelled.EntityHelper.getEntitiesByTemplateId( template.getFullName() )
+
+			entities.each(
+				function( entity ) {
+					var found = Spelled.EntityHelper.findNeededEntity( entity, Ext.clone( parents ) )
+
+					if( found ) {
+						found.convertToAnonymousEntity()
+					}
+				},
+				this
+			)
+
+			this.sendUpdateToAllEntitiesBasedOnTemplate( template )
+		}
+	},
 
 	sendUpdateToAllEntitiesBasedOnTemplate: function( entityTemplate ) {
 		if( !entityTemplate ) return
@@ -272,7 +295,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 		var node      = this.getTemplatesTree().getStore().getNodeById( entity.getId() ),
 			ownerNode = this.getOwnerNode( node ),
 			template  = this.getTemplateEntitiesStore().getById( ownerNode.getId()),
-			entities  = Spelled.EntityHelper.getEntitesByTemplateId( template.getFullName() )
+			entities  = Spelled.EntityHelper.getEntitiesByTemplateId( template.getFullName() )
 
 		if( !entity.isRemovable() ) return this.application.fireEvent( 'showentityremovealert', entity )
 
@@ -297,8 +320,15 @@ Ext.define('Spelled.controller.templates.Entities', {
 
 	convertEntityCompositeFromConfigEntity: function( entity, composite ) {
 		var parents         = [],
-			owner           = Spelled.EntityHelper.getRootOwnerFromChildren( composite.get( 'name' ), entity, parents ),
-			entityToConvert = Spelled.EntityHelper.findNeededEntity( owner, parents )
+			rootOwner       = Spelled.EntityHelper.getRootEntityOwnerFromEntity( composite, parents ),
+			entityToConvert = Spelled.EntityHelper.findNeededEntity( entity, parents )
+
+		if ( !entityToConvert ) return
+
+		var nextTemplate = Spelled.EntityHelper.getNextEntityBasedTemplate( entity ,[] ),
+			rootOwner    = Spelled.EntityHelper.getRootEntityOwnerFromEntity( entity, [] )
+		//If next based template isn't the rootOwner and has a scene, its already existing as sibling in the nextTemplate
+		if ( nextTemplate && rootOwner && nextTemplate !== rootOwner && rootOwner.hasScene() ) return
 
 		entityToConvert.set( 'templateId', composite.get( 'templateId' ) )
 		entityToConvert.set( 'removable', true )
@@ -318,9 +348,9 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
 	removeEntityCompositeFromConfigEntity: function( entity, composite ){
-		var parents            = [],
-			owner              = Spelled.EntityHelper.getRootOwnerFromChildren( composite.get( 'name' ), entity, parents ),
-			entityToRemove     = Spelled.EntityHelper.findNeededEntity( owner, parents )
+		var parents        = [],
+			rootOwner      = Spelled.EntityHelper.getRootEntityOwnerFromEntity( composite, parents ),
+			entityToRemove = Spelled.EntityHelper.findNeededEntity( entity, parents )
 
 		if( entityToRemove ) this.application.getController( 'Entities' ).removeEntityHelper( entityToRemove )
 	},
@@ -346,7 +376,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
 	removeEntityTemplate: function( entityTemplate, copyIntoReferences ) {
-		var entities           = Spelled.EntityHelper.getEntitesByTemplateId( entityTemplate.getFullName() ),
+		var entities           = Spelled.EntityHelper.getEntitiesByTemplateId( entityTemplate.getFullName() ),
 			entitiesController = this.application.getController( 'Entities' )
 
 		if( !copyIntoReferences ) {

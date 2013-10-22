@@ -198,7 +198,7 @@ Ext.define('Spelled.controller.Components', {
 	},
 
 	removeComponentFromEntites: function( templateId, componentId ) {
-		var entities = Spelled.EntityHelper.getEntitesByTemplateId( templateId )
+		var entities = Spelled.EntityHelper.getEntitiesByTemplateId( templateId )
 
 		entities.each(
 			function( entity ) {
