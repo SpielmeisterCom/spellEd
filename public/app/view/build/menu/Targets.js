@@ -14,8 +14,7 @@ Ext.define('Spelled.view.build.menu.Targets' ,{
 		},
 		{
 			text   : 'Android',
-			target : 'android',
-			disabled: true
+			target : 'android'
 		},
 		{
 			text   : 'iOS',
