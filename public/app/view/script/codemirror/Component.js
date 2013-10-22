@@ -532,25 +532,6 @@ Ext.define('Spelled.view.script.codemirror.Component', {
 	},
 
 	/**
-	 * @private
-	 */
-	onDestroy: function(){
-		var me = this;
-		if(me.rendered){
-			try {
-				Ext.EventManager.removeAll(me.editor);
-				for (prop in me.editor) {
-					if (me.editor.hasOwnProperty(prop)) {
-						delete me.editor[prop];
-					}
-				}
-			}catch(e){}
-			Ext.destroyMembers('tb', 'toolbarWrap', 'editorEl');
-		}
-		me.callParent();
-	},
-
-	/**
 	 * Object collection of toolbar tooltips for the buttons in the editor. The key
 	 * is the command id associated with that button and the value is a valid QuickTips object.
 	 * These are taken from the HtmlEditor to avoid including additional css.
