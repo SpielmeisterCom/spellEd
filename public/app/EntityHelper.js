@@ -1,7 +1,7 @@
 Ext.define( 'Spelled.EntityHelper', {
 	singleton: true,
 
-	getEntitesByTemplateId: function( templateId ) {
+	getEntitiesByTemplateId: function( templateId ) {
 		return Ext.getStore( 'config.Entities' ).query( 'templateId', templateId )
 	},
 
@@ -28,12 +28,14 @@ Ext.define( 'Spelled.EntityHelper', {
 		Spelled.Logger.log( 'ERROR', text )
 	},
 
-	getRootTemplateEntityFromEntity: function( entity ) {
+	getRootTemplateEntityFromEntity: function( entity, parents ) {
+		if( parents ) parents.push( entity.get( 'name' ) )
+
 		if( entity.hasOwnerEntity && entity.hasOwnerEntity() ) {
 			return entity.getOwnerEntity()
 
 		} else if( entity.hasEntity && entity.hasEntity() ) {
-			return this.getRootTemplateEntityFromEntity( entity.getEntity() )
+			return this.getRootTemplateEntityFromEntity( entity.getEntity(), parents )
 
 		} else if( entity.get( 'type' ) === 'entityTemplate' ) {
 			return Ext.getStore( 'template.Entities' ).getByTemplateId( entity.get( 'templateId' ) )

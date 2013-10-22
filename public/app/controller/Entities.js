@@ -142,7 +142,7 @@ Ext.define('Spelled.controller.Entities', {
 
 			var childNode = parent.appendChild( entity.createTreeNode( parent ) )
 
-			if( entity.get( 'type' ) === 'entityTemplate' || parent.get( 'cls' ) === 'templateEntityComposite' ) {
+			if( entity.get( 'type' ) === 'entityTemplate' || parent.get( 'cls' ) === 'templateEntityComposite' || parent.get( 'cls' ) === 'entityTemplate' ) {
 				Spelled.EntityHelper.markAsTemplateComposites( childNode, entity.sortOrder )
 			}
 
@@ -385,7 +385,7 @@ Ext.define('Spelled.controller.Entities', {
 		Spelled.MessageBox.alert( "Can not remove: '" + entity.get( 'name' ) + "'", "Is linked to a entityTemplate: '" + compositeEntity.getOwner().get( 'name' ) + "'" )
 	},
 
-	unlinkEntityFromTemplate: function( entityId, templateId ) {
+	unlinkEntityFromTemplate: function( entityId  ) {
 		var entity = this.getConfigEntitiesStore().getById( entityId )
 
 		if( entity ) {
@@ -393,6 +393,7 @@ Ext.define('Spelled.controller.Entities', {
 
 			entity.convertToAnonymousEntity()
 			this.application.selectNode( tree, this.updateEntityNode( entity ) )
+			this.application.fireEvent( 'checkforlibrarytemplateunlink', entity )
 		}
 	},
 

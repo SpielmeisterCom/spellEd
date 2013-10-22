@@ -48,9 +48,32 @@ Ext.define('Spelled.controller.templates.Entities', {
 			showtemplatecomponents : this.showEntityTemplateComponentsListHelper,
 			showcompositecomponents: this.showEntityCompositeComponentsListHelper,
 			updateentitytemplatesenginewide: this.sendUpdateToAllEntitiesBasedOnTemplate,
+			checkforlibrarytemplateunlink: this.checkForLibraryTemplateUnlink,
 			scope: this
 		})
     },
+
+	checkForLibraryTemplateUnlink: function( entity ) {
+		var parents  = [],
+			template = Spelled.EntityHelper.getRootTemplateEntityFromEntity( entity, parents )
+
+		if( template ) {
+			var entities   = Spelled.EntityHelper.getEntitiesByTemplateId( template.getFullName() )
+
+			entities.each(
+				function( entity ) {
+					var found = Spelled.EntityHelper.findNeededEntity( entity, Ext.clone( parents ) )
+
+					if( found ) {
+						found.convertToAnonymousEntity()
+					}
+				},
+				this
+			)
+
+			this.sendUpdateToAllEntitiesBasedOnTemplate( template )
+		}
+	},
 
 	sendUpdateToAllEntitiesBasedOnTemplate: function( entityTemplate ) {
 		if( !entityTemplate ) return
@@ -272,7 +295,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 		var node      = this.getTemplatesTree().getStore().getNodeById( entity.getId() ),
 			ownerNode = this.getOwnerNode( node ),
 			template  = this.getTemplateEntitiesStore().getById( ownerNode.getId()),
-			entities  = Spelled.EntityHelper.getEntitesByTemplateId( template.getFullName() )
+			entities  = Spelled.EntityHelper.getEntitiesByTemplateId( template.getFullName() )
 
 		if( !entity.isRemovable() ) return this.application.fireEvent( 'showentityremovealert', entity )
 
@@ -353,7 +376,7 @@ Ext.define('Spelled.controller.templates.Entities', {
 	},
 
 	removeEntityTemplate: function( entityTemplate, copyIntoReferences ) {
-		var entities           = Spelled.EntityHelper.getEntitesByTemplateId( entityTemplate.getFullName() ),
+		var entities           = Spelled.EntityHelper.getEntitiesByTemplateId( entityTemplate.getFullName() ),
 			entitiesController = this.application.getController( 'Entities' )
 
 		if( !copyIntoReferences ) {
