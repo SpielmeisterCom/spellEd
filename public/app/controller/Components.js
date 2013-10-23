@@ -381,7 +381,7 @@ Ext.define('Spelled.controller.Components', {
 
 	sendAddComponentToEngine: function( component ) {
 		var entity = component.getEntity(),
-			owner  = entity.getOwner()
+			owner  = entity.getOwner ? entity.getOwner() : entity
 
 		if( owner && owner.get( 'type' ) == 'entityTemplate' ) {
 			this.application.fireEvent( 'updateentitytemplatesenginewide', owner )
