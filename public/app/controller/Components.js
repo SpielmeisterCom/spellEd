@@ -247,7 +247,7 @@ Ext.define('Spelled.controller.Components', {
 
 		templateComponentsStore.each(
 			function( record ) {
-				var found = entity.getComponents().find( 'templateId', record.getFullName() )
+				var found = entity.getComponents().find( 'templateId', record.getFullName(), null, null, null, true )
 
 				if( found === -1 ) {
 					notAssignedComponents.add( record )
