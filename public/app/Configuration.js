@@ -65,7 +65,7 @@ Ext.define( 'Spelled.Configuration', {
 	updateServerUrl        : 'http://backoffice.spielmeister.com/spelljs-desktop-latest-version.json',
 	demoServerHostname     : 'spelled-demo.spelljs.com',
 	demoStagingServer      : 'spelled-demo.spelljs.staging',
-	version                : '0.8.60',
+	version                : '0.9.0',
 	buildNumber	           : '99999',
 	buildTimeStamp	       : '2099-01-01T01:00:00.000+01:00',
 	storageVersion         : 1,
