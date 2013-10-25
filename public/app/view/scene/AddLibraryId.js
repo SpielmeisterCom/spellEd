@@ -68,6 +68,10 @@ Ext.define('Spelled.view.scene.AddLibraryId', {
 							tmpNode.set( 'checked', false )
 							tmpNode.set( config )
 
+							if( tmpNode.get( 'cls' ) == 'entityTemplate' ) {
+								tmpNode.set( 'leaf', true )
+							}
+
 							copyNodes( child, tmpNode )
 						}
 					)
