@@ -45,6 +45,7 @@ define(
 			// draw hSpacing
 			var doubledhSpacing = hSpacing * 2,
 				doubledvSpacing = vSpacing * 2
+
 			context.fillStyle = '#090'
 
 			_.each(
@@ -101,8 +102,7 @@ define(
 
 		var createCharInfos = function( context, charSet, outline, size, hSpacing, vSpacing ) {
 			var doubledOutline = outline * 2,
-				doubledhSpacing = hSpacing * 2,
-				doubledvSpacing = vSpacing * 2
+				doubledhSpacing = hSpacing * 2
 
 			return _.reduce(
 				charSet,
@@ -120,7 +120,6 @@ define(
 					} )
 
 					memo.offsetX += width + doubledhSpacing
-					memo.offsetY += height + doubledvSpacing
 
 					return memo
 				},
@@ -133,22 +132,16 @@ define(
 		}
 
 		var createTiledCharInfos = function( charInfos, textureWidth, actualHeight, filteringGap, hSpacing, vSpacing ) {
-			var doubledhSpacing = hSpacing * 2,
-				doubledvSpacing = vSpacing * 2
+			var doubledhSpacing = hSpacing * 2
 
 			return _.reduce(
 				charInfos,
 				function( memo, charInfo ) {
-					var charWidthWithhSpacing  = charInfo.width + doubledhSpacing,
-						charHeightWithvSpacing = charInfo.height + doubledvSpacing
+					var charWidthWithhSpacing  = charInfo.width + doubledhSpacing
 
 					if( memo.offsetX + charWidthWithhSpacing > textureWidth ) {
 						memo.offsetX = hSpacing
-						memo.rowIndex += 1
-					}
-
-					if( memo.offsetY + charHeightWithvSpacing > actualHeight ) {
-						memo.offsetY = vSpacing
+						memo.offsetY += actualHeight + vSpacing + filteringGap
 					}
 
 					memo.charInfos.push( {
@@ -156,19 +149,17 @@ define(
 						width  : charInfo.width,
 						height : actualHeight,
 						x      : memo.offsetX,
-						y      : memo.rowIndex * ( actualHeight + memo.offsetY + filteringGap )
+						y      : memo.offsetY
 					} )
 
 					memo.offsetX += charWidthWithhSpacing
-					memo.offsetY += charHeightWithvSpacing
 
 					return memo
 				},
 				{
 					charInfos : [],
 					offsetX   : hSpacing,
-					offsetY   : vSpacing,
-					rowIndex  : 0
+					offsetY   : vSpacing
 				}
 			).charInfos
 		}
@@ -444,7 +435,7 @@ define(
 
 				setFont( tmpContext, settings.font, settings.style, settings.size )
 
-				var offsetY = Math.ceil( settings.size / 2 )
+				var offsetY = 0
 
 				renderCharSet(
 					tmpContext,
@@ -501,7 +492,6 @@ define(
 					settings.hSpacing
 				)
 
-
 				// transform the character information to a tiled representation
 				var tiledCharInfos = createTiledCharInfos(
 					charInfos,
@@ -511,7 +501,6 @@ define(
 					settings.hSpacing,
 					settings.vSpacing
 				)
-
 
 				// render character set again to produce final texture
 				var outputCanvas  = createCanvas( outputTextureDimensions.width, outputTextureDimensions.height ),
@@ -525,15 +514,13 @@ define(
 					settings.color,
 					settings.outlineColor,
 					settings.outline,
-					offsetY - margins.top
+					offsetY - margins.top + settings.vSpacing
 				)
-
 
 				// draw the debug overlay
 				if( debug ) {
 					drawDebugGrid( outputContext, settings.hSpacing, settings.vSpacing, tiledCharInfos )
 				}
-
 
 				return createResult(
 					outputCanvas,
@@ -542,7 +529,6 @@ define(
 				)
 			}
 		}
-
 
 		return function() {
 			return new FontGenerator()
