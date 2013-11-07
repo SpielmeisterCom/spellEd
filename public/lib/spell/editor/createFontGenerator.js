@@ -315,16 +315,23 @@ define(
 			var fitsInDimensions = _.reduce(
 				charInfos,
 				function( memo, charInfo ) {
-					var charWidthWithhSpacing = charInfo.width + doubledhSpacing,
-						maxY = memo.rowIndex * ( actualHeight + filteringGap ) + actualHeight
+					var charWidthWithhSpacing = charInfo.width + doubledhSpacing
 
-					if( maxY >= textureHeight ) {
+					memo.maxY = memo.rowIndex * ( actualHeight + filteringGap ) + actualHeight
+
+					if( memo.maxY >= textureHeight ) {
 						memo.fits = false
 					}
 
-					if( memo.offsetX + charWidthWithhSpacing > textureWidth ) {
+					var offsetX = memo.offsetX + charWidthWithhSpacing
+
+					if( offsetX > textureWidth ) {
 						memo.offsetX = hSpacing
 						memo.rowIndex += 1
+
+						if( offsetX > memo.maxX ) {
+							memo.maxX = offsetX
+						}
 					}
 
 					memo.offsetX += charWidthWithhSpacing
@@ -334,14 +341,16 @@ define(
 				{
 					fits     : true,
 					offsetX  : hSpacing,
+					maxX     : 0,
+					maxY     : 0,
 					rowIndex : 0
 				}
-			).fits
+			)
 
-			if( fitsInDimensions ) {
+			if( fitsInDimensions.fits ) {
 				return {
-					width  : textureWidth,
-					height : textureHeight
+					width  : fitsInDimensions.maxX,
+					height : fitsInDimensions.maxY
 				}
 
 			} else {
