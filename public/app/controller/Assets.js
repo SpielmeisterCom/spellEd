@@ -324,13 +324,15 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	removeKeyMapping: function( view, selectedRow ) {
-		var asset = view.up( 'form' ).getRecord(),
+		var form  = view.up( 'form'),
+			asset = form.getRecord(),
 			store = view.getStore()
 
 		if( Ext.isObject( selectedRow ) ) store.remove( selectedRow )
 		else store.removeAt( selectedRow )
 
 		if( asset ) asset.setDirty()
+		this.setAssetConfigFromForm( form, asset )
 	},
 
 	showKeyMappingContextMenu: function( view, row, column, index, e, options ) {
@@ -338,13 +340,15 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	addToGrid: function( grid, object ) {
-		var asset = grid.up( 'form' ).getRecord(),
+		var form  = grid.up( 'form' ),
+			asset = form.getRecord(),
 			store = grid.getStore()
 
 		store.add( object )
 		grid.reconfigure( store )
 
 		if( asset ) asset.setDirty()
+		this.setAssetConfigFromForm( form, asset )
 	},
 
 	addKeyMapping: function( button ) {
@@ -656,8 +660,6 @@ Ext.define('Spelled.controller.Assets', {
 		delete values.namespace
 		delete values.name
 
-		asset.set( values )
-
 		switch( asset.get( 'subtype' ) ) {
 			case this.TYPE_FONT:
 				asset.setFontMapInfo( this.createFontMap( values ) )
@@ -667,11 +669,15 @@ Ext.define('Spelled.controller.Assets', {
 				break
 			case this.TYPE_KEY_FRAME_ANIMATION:
 				asset.setKeyFrames( form.down( 'keyframeanimationconfig').keyFrameConfig )
+				delete values.time
+				delete values.value
 				break
 			case this.TYPE_TILE_MAP:
 				asset.calculateTileLayerData()
 				break
 		}
+
+		asset.set( values )
 	},
 
 	saveFontMap: function( id, values ) {
