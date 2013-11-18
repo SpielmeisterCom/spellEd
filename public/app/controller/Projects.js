@@ -8,6 +8,7 @@ Ext.define('Spelled.controller.Projects', {
 		'Spelled.view.project.settings.Language',
         'Spelled.view.project.settings.Android',
         'Spelled.view.project.settings.iOS',
+		'Spelled.view.project.settings.Tizen',
         'Spelled.view.project.settings.AddLanguage',
 		'Spelled.view.project.settings.Web',
 		'Spelled.view.project.settings.Plugins',
@@ -353,6 +354,7 @@ Ext.define('Spelled.controller.Projects', {
 			generalConfig = window.down( 'projectgeneralsettings' ),
 			languageConf  = window.down( 'projectlanguagesettings' ),
             androidConf   = window.down( 'projectandroidsettings' ),
+			tizenConf     = window.down( 'projecttizensettings' ),
 			webConf       = window.down( 'projectwebsettings' ),
 			pluginConf    = window.down( 'projectplugins' ),
 			project       = generalConfig.getRecord(),
@@ -361,6 +363,7 @@ Ext.define('Spelled.controller.Projects', {
 			config        = {}
 
         config.android = Ext.clone( androidConf.getValues() )
+		config.tizen   = Ext.clone( tizenConf.getValues() )
 		config.web     = Ext.clone( webConf.getValues() )
 		config.plugins = pluginConf.getPluginsConfig()
 
@@ -479,6 +482,7 @@ Ext.define('Spelled.controller.Projects', {
 				general  = view.down( 'projectgeneralsettings' ),
 				language = view.down( 'projectlanguagesettings'),
                 android  = view.down( 'projectandroidsettings'),
+				tizen    = view.down( 'projecttizensettings'),
 				web      = view.down( 'projectwebsettings'),
 				store    = project.getSupportedLanguages()
 
@@ -495,6 +499,8 @@ Ext.define('Spelled.controller.Projects', {
 			if( config.screenSize ) general.getForm().setValues( { screenSizeX: config.screenSize[0], screenSizeY: config.screenSize[1] } )
 
             if( config.android ) android.getForm().setValues( config.android )
+
+			if( config.tizen ) tizen.getForm().setValues( config.tizen )
 
 			if( config.web ) web.getForm().setValues( config.web )
 		} else {

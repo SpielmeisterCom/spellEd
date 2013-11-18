@@ -75,6 +75,19 @@ Ext.define('Spelled.view.project.settings.General' ,{
 					anchor: '100%'
 				},
 				{
+					xtype: 'combobox',
+					store: 'SupportedOrientations',
+
+					valueField: 'type',
+					displayField:'name',
+					queryMode: 'local',
+					forceSelection: true,
+
+					editable: false,
+					name: 'orientation',
+					fieldLabel: 'Orientation Lock'
+				},
+				{
 					xtype: 'combo',
 					queryMode: 'local',
 					store: 'config.Scenes',
