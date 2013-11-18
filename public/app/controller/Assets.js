@@ -332,7 +332,7 @@ Ext.define('Spelled.controller.Assets', {
 		else store.removeAt( selectedRow )
 
 		if( asset ) asset.setDirty()
-		this.setAssetConfigFromForm( form, asset )
+		this.editAsset( view )
 	},
 
 	showKeyMappingContextMenu: function( view, row, column, index, e, options ) {
@@ -348,7 +348,7 @@ Ext.define('Spelled.controller.Assets', {
 		grid.reconfigure( store )
 
 		if( asset ) asset.setDirty()
-		this.setAssetConfigFromForm( form, asset )
+		this.editAsset( grid )
 	},
 
 	addKeyMapping: function( button ) {
