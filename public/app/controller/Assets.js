@@ -673,6 +673,7 @@ Ext.define('Spelled.controller.Assets', {
 				delete values.value
 				break
 			case this.TYPE_TILE_MAP:
+				asset.set( values )
 				asset.calculateTileLayerData()
 				break
 		}

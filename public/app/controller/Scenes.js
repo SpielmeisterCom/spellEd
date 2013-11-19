@@ -430,7 +430,7 @@ Ext.define('Spelled.controller.Scenes', {
 
 		this.sendChangeToEngine( "library.updateAsset", message )
 
-		if( previewIframe )
+		if( previewIframe && previewIframe.getId )
 			this.application.sendDebugMessage( previewIframe.getId(), "library.updateAsset", message )
 	},
 
