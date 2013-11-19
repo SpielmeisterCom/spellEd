@@ -163,7 +163,7 @@ Ext.define('Spelled.controller.Systems', {
 		Ext.each(
 			records,
 			function( record ) {
-				var system       = store.findRecord( 'templateId', record.get('text') ),
+				var system       = store.findRecord( 'templateId', record.get('text'), null, null, null, true ),
 					systemConfig = { id: record.get('text'), config: system.getConfigForScene() }
 
 				systems[ values.type ].push( systemConfig )
@@ -197,7 +197,7 @@ Ext.define('Spelled.controller.Systems', {
 	refreshAvailableSystemsFromScene: function( combobox, sceneId ){
 		var availableSystemsView = combobox.up( 'addsystem' ).down( 'treepanel' ),
 			templateSystemsStore = Ext.getStore( 'template.Systems' ),
-			scene    			 = Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', sceneId ),
+			scene    			 = Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', sceneId, null, null, null, true ),
 			assignedSystems      = []
 
 		Ext.Object.each(

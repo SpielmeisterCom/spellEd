@@ -68,7 +68,7 @@ Ext.define('Spelled.model.template.Entity', {
 	getChild: function( id ) {
 
 		var helperFunction = function( entity ) {
-			var child = entity.getChildren().findRecord( 'id', id )
+			var child = entity.getChildren().findRecord( 'id', id, null, null, null, true )
 
 			if( !child ) {
 				entity.getChildren().each(

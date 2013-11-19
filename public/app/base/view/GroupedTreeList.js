@@ -15,7 +15,7 @@ Ext.define('Spelled.base.view.GroupedTreeList' ,{
 			{
 				formatName: function( value ) {
 					var store  = Ext.getStore( 'grouping.Components' ),
-						record = store.findRecord( 'name', value),
+						record = store.findRecord( 'name', value, null, null, null, true ),
 						name   = ( value == 'zzz' ) ? 'No Group assigned' : value
 
 					return ( record && record.get( 'icon' ) ) ?  '<img src="' + record.get( 'icon' ) + '"/>' + name : name

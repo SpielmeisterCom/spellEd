@@ -50,7 +50,7 @@ Ext.define('Spelled.view.template.system.config.Items' ,{
 		var tmp = Ext.clone( config )
 		Ext.iterate( tmp, function( key, value ) {
 			var type  = Ext.typeOf( value ),
-				xtype = knownTypes.findRecord( 'name', type )
+				xtype = knownTypes.findRecord( 'name', type, null, null, null, true )
 
 			tmp[ key ] = {
 				type: ( xtype ) ? xtype.get( 'type' ) : 'spelledtextfield',

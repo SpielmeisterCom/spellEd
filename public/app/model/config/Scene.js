@@ -82,7 +82,7 @@ Ext.define('Spelled.model.config.Scene', {
 			systems,
 			function( key, value ) {
 				for ( var j = 0, l = value.length; j < l; j++ ) {
-					var system = store.findRecord( 'templateId', value[j].id )
+					var system = store.findRecord( 'templateId', value[j].id, null, null, null, true )
 
 					if( system ) {
 						ids.push( system.getFullName() )
@@ -108,7 +108,7 @@ Ext.define('Spelled.model.config.Scene', {
 				var id = item.get( 'id' )
 
 				if( debug || item.get( 'debugOnly' ) === false ) {
-					var system = systemStore.findRecord( 'templateId', id )
+					var system = systemStore.findRecord( 'templateId', id, null, null, null, true )
 					if( system ) systems.push( { id: id } )
 				}
 			}
@@ -136,7 +136,7 @@ Ext.define('Spelled.model.config.Scene', {
 			systems,
 			function( key, value ) {
 				for ( var j = 0, l = value.length; j < l; j++ ) {
-					var system = store.findRecord( 'templateId', value[j].id )
+					var system = store.findRecord( 'templateId', value[j].id, null, null, null, true )
 
 					if( system ) {
 						result.push( system.getFullName() )
@@ -168,7 +168,7 @@ Ext.define('Spelled.model.config.Scene', {
 			systems,
 			function( key, value ) {
 				for (var j = 0, l = value.length; j < l; j++) {
-					var system = store.findRecord( 'templateId', value[j].id )
+					var system = store.findRecord( 'templateId', value[j].id, null, null, null, true )
 
 					if( system ) {
 						children.push( system.getDependencyNode() )

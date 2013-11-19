@@ -214,7 +214,7 @@ Ext.define('Spelled.controller.templates.Components', {
 	},
 
     fillAttributeConfigView: function( propertyView, attribute ) {
-		var attributeType = this.getTemplateComponentAttributeTypesStore().findRecord( 'name', attribute.get('type') )
+		var attributeType = this.getTemplateComponentAttributeTypesStore().findRecord( 'name', attribute.get('type'), null, null, null, true )
 
 		if( propertyView.down('[name="default"]') ) propertyView.remove( propertyView.down('[name="default"]') )
 		if( propertyView.down('[name="values"]') ) propertyView.remove( propertyView.down('[name="values"]') )

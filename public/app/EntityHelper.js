@@ -63,7 +63,7 @@ Ext.define( 'Spelled.EntityHelper', {
 		if( parents.length === 0 ) return source
 		var name = parents.shift()
 
-		var child = source.getChildren().findRecord( 'name', name )
+		var child = source.getChildren().findRecord( 'name', name, null, null, null, true )
 
 		if( child ) {
 			return this.findNeededEntity( child, parents )

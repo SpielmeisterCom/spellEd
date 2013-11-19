@@ -169,7 +169,7 @@ Ext.define('Spelled.model.config.Component', {
 		var config      = {},
 			me          = this,
 			mergeConfig = function( templateEntity, componentId ) {
-				var templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', componentId )
+				var templateEntityComponent = templateEntity.getComponents().findRecord( 'templateId', componentId, null, null, null, true )
 
 				if( templateEntityComponent ) {
 					config = Ext.Object.merge( config, templateEntityComponent.get('config') )
@@ -221,7 +221,7 @@ Ext.define('Spelled.model.config.Component', {
 		if( !entity ) return {}
 
 		var	templateComponents = entity.getComponents(),
-			component          = templateComponents.findRecord( 'templateId',  this.get( 'templateId' ) )
+			component          = templateComponents.findRecord( 'templateId',  this.get( 'templateId' ), null, null, null, true )
 
 		if( component ) {
 			config = Ext.Object.merge( config, component.get( 'config' ) )

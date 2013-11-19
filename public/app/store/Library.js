@@ -56,18 +56,18 @@ Ext.define('Spelled.store.Library', {
 					result = Ext.getStore( 'template.Entities' ).getByTemplateId( libraryId )
 					break
 				case 'scene':
-					result = Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', libraryId )
+					result = Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', libraryId, null, null, null, true )
 					break
 				case 'system':
 					result = Ext.getStore( 'template.Systems' ).getByTemplateId( libraryId )
 					break
 				case 'script':
-					result = Ext.getStore( 'script.Scripts' ).findRecord( 'scriptId', libraryId )
+					result = Ext.getStore( 'script.Scripts' ).findRecord( 'scriptId', libraryId, null, null, null, true )
 					break
 				default:
 					var store = Spelled.StoreHelper.getAssetStoreByType( type )
 
-					if( store ) result = store.findRecord( 'myAssetId', libraryId )
+					if( store ) result = store.findRecord( 'myAssetId', libraryId, null, null, null, true )
 			}
 		}
 

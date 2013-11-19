@@ -319,7 +319,7 @@ Ext.define('Spelled.controller.Assets', {
 	},
 
 	assetTabChange: function( tabPanel, newCard ) {
-		var asset  = this.getAssetAssetsStore().findRecord( 'myAssetId', newCard.title )
+		var asset  = this.getAssetAssetsStore().findRecord( 'myAssetId', newCard.title, null, null, null, true )
 		if( asset ) this.showConfig( asset )
 	},
 
@@ -503,7 +503,7 @@ Ext.define('Spelled.controller.Assets', {
 			var component   = this.getTemplateComponentKeyFrameComponentsStore().getById( parentId ),
 				componentId = component.getFullName(),
 				data        = [],
-				xtype       = Ext.getStore( 'template.component.AttributeTypes' ).findRecord( 'name',component.getAttributeByName( attributeName ).get('type') ).get('type')
+				xtype       = Ext.getStore( 'template.component.AttributeTypes' ).findRecord( 'name',component.getAttributeByName( attributeName ).get('type'), null, null, null, true ).get('type')
 
 			var componentConfig = config[ componentId ]
 

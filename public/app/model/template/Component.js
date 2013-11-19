@@ -67,7 +67,7 @@ Ext.define('Spelled.model.template.Component', {
 	},
 
 	getAttributeByName: function( name ) {
-		return this.getAttributes().findRecord( 'name', name )
+		return this.getAttributes().findRecord( 'name', name, null, null, null, true )
 	},
 
     appendOnTreeNode: function( node, blacklist ) {
