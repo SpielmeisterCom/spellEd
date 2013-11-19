@@ -13,8 +13,8 @@ Ext.define('Spelled.store.SupportedOrientations', {
 			"name":"Portrait Mode Lock"
 		},
 		{
-			"type":"unspecified",
-			"name":"No Mode Lock"
+			"type":"auto-rotation",
+			"name":"Auto rotation"
 		}
 	]
 });

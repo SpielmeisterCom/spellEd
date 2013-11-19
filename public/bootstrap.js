@@ -45,6 +45,9 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.store.config.Components": [],
   "Spelled.model.template.ComponentAttribute": [],
   "Ext.ux.PreviewPlugin": [],
+  "Spelled.view.script.codemirror.Component": [
+    "Ext.form.CodeMirror"
+  ],
   "Ext.ux.ajax.SimXhr": [],
   "Spelled.view.asset.ColorField": [],
   "Spelled.base.grid.column.Action": [],
@@ -101,11 +104,13 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.template.component.attribute.Number": [],
   "Spelled.view.template.component.attribute.SpriteSheet": [],
   "Ext.ux.grid.filter.ListFilter": [],
+  "Spelled.store.project.Plugins": [],
   "Spelled.view.asset.create.Translation": [],
   "Spelled.view.template.component.Attributes": [],
   "Spelled.view.menu.contextmenu.SceneSystemsItemList": [],
   "Spelled.data.writer.Writer": [],
   "Ext.ux.dd.PanelFieldDragZone": [],
+  "Spelled.view.project.settings.Tizen": [],
   "Spelled.view.template.system.Details": [],
   "Spelled.Logger": [],
   "Spelled.view.scene.TreeList": [],
@@ -121,6 +126,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.template.system.config.Items": [],
   "Ext.ux.layout.Center": [],
   "Spelled.view.scene.Navigator": [],
+  "Spelled.view.project.settings.Plugins": [],
   "Ext.ux.DataView.Animated": [],
   "Spelled.store.template.Components": [],
   "Spelled.model.template.Entity": [],
@@ -186,6 +192,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.nw.Toolbar": [],
   "Spelled.view.ui.about.Modules": [],
   "Spelled.view.script.Create": [],
+  "Spelled.view.script.codemirror.Layout": [],
   "Spelled.store.template.component.Attributes": [],
   "Spelled.view.asset.create.Font": [],
   "Ext.ux.ajax.XmlSimlet": [],
@@ -414,6 +421,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.PreviewPlugin": [
     "plugin.preview"
   ],
+  "Spelled.view.script.codemirror.Component": [
+    "widget.codemirror"
+  ],
   "Ext.ux.ajax.SimXhr": [],
   "Spelled.view.asset.ColorField": [
     "widget.colorfield"
@@ -534,6 +544,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.grid.filter.ListFilter": [
     "gridfilter.list"
   ],
+  "Spelled.store.project.Plugins": [],
   "Spelled.view.asset.create.Translation": [
     "widget.translationasset"
   ],
@@ -545,6 +556,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.data.writer.Writer": [],
   "Ext.ux.dd.PanelFieldDragZone": [],
+  "Spelled.view.project.settings.Tizen": [
+    "widget.projecttizensettings"
+  ],
   "Spelled.view.template.system.Details": [
     "widget.systemtemplatedetails"
   ],
@@ -581,6 +595,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.scene.Navigator": [
     "widget.scenesnavigator"
+  ],
+  "Spelled.view.project.settings.Plugins": [
+    "widget.projectplugins"
   ],
   "Ext.ux.DataView.Animated": [],
   "Spelled.store.template.Components": [],
@@ -715,6 +732,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.script.Create": [
     "widget.createscript"
+  ],
+  "Spelled.view.script.codemirror.Layout": [
+    "layout.codemirror"
   ],
   "Spelled.store.template.component.Attributes": [],
   "Spelled.view.asset.create.Font": [

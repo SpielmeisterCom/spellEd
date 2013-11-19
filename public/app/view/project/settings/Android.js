@@ -105,19 +105,6 @@ Ext.define('Spelled.view.project.settings.Android' ,{
 								name: 'version',
 								fieldLabel: 'App version',
 								anchor: '100%'
-							},
-							{
-								xtype: 'combobox',
-								store: 'SupportedOrientations',
-
-								valueField: 'type',
-								displayField:'name',
-								queryMode: 'local',
-								forceSelection: true,
-
-								editable: false,
-								name: 'orientation',
-								fieldLabel: 'Select the supported orientation'
 							}
 						]
 					},
