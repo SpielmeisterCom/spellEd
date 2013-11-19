@@ -172,8 +172,10 @@ Ext.define('Spelled.controller.Templates', {
 
 		switch( node.get('cls') ) {
 			case this.TEMPLATE_TYPE_ENTITY:
-			case this.TYPE_ENTITY_COMPOSITE:
 				this.application.getController('Menu').showTemplatesListEntityContextMenu( e )
+				break
+			case this.TYPE_ENTITY_COMPOSITE:
+				this.application.getController('Menu').showTemplatesListEntityCompositeContextMenu( e )
 				break
 			default:
 				this.application.getController('Menu').showTemplatesListContextMenu( e )

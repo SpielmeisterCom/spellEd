@@ -10,6 +10,7 @@ Ext.define('Spelled.controller.Menu', {
 		'Spelled.view.menu.contextmenu.SceneSystemsItemList',
 		'Spelled.view.menu.contextmenu.TemplatesList',
 		'Spelled.view.menu.contextmenu.templatesList.Entity',
+		'Spelled.view.menu.contextmenu.templatesList.EntityComposite',
 		'Spelled.view.menu.contextmenu.ComponentTemplateAttributesList',
 		'Spelled.view.menu.contextmenu.SystemTemplateInputList',
 		'Spelled.view.menu.contextmenu.InputMapping',
@@ -30,6 +31,7 @@ Ext.define('Spelled.controller.Menu', {
 		'menu.contextmenu.SceneSystemsItemList',
         'menu.contextmenu.TemplatesList',
 		'menu.contextmenu.templatesList.Entity',
+		'menu.contextmenu.templatesList.EntityComposite',
         'menu.contextmenu.ComponentTemplateAttributesList',
         'menu.contextmenu.SystemTemplateInputList',
 		'menu.contextmenu.InputMapping',
@@ -270,6 +272,13 @@ Ext.define('Spelled.controller.Menu', {
 	showTemplatesListEntityContextMenu: function( e ) {
 		this.createAndShowView(
 			this.getMenuContextmenuTemplatesListEntityView(),
+			e
+		)
+	},
+
+	showTemplatesListEntityCompositeContextMenu: function( e ) {
+		this.createAndShowView(
+			this.getMenuContextmenuTemplatesListEntityCompositeView(),
 			e
 		)
 	},
