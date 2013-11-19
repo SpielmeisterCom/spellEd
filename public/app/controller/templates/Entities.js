@@ -229,13 +229,24 @@ Ext.define('Spelled.controller.templates.Entities', {
 		var templateEntity = this.getTemplateEntitiesStore().getById( this.getOwnerNode( node ).getId() ),
             entity         = Ext.getStore( 'config.Entities' ).getById( node.getId() )
 
-        templateEntity.mergeChildrenComponentsConfig()
+		var merge = function( entity ) {
+			entity.mergeWithTemplateConfig()
+
+			var next = Spelled.EntityHelper.getNextEntityBasedTemplate( entity,[] )
+
+			if( next ) {
+				next.mergeWithTemplateConfig()
+				next.mergeChildren( next.getEntityTemplate() )
+
+				if( next.hasEntity() ) merge( next.getEntity() )
+			}
+		}
 
 		if( entity ) {
             entity.set( 'isTemplateComposite' , true )
             entity.setOwnerEntity( templateEntity )
 
-			if( !entity.isAnonymous() ) entity.mergeWithTemplateConfig()
+			merge( entity )
 
 			this.showEntityTemplateComponentsList( entity )
 		}
