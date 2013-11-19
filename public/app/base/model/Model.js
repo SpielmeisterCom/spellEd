@@ -5,7 +5,7 @@ Ext.define('Spelled.base.model.Model', {
 	dirtyDep: true,
 
 	insertMetaData: function( storeId, type ) {
-		var metaData = Ext.getStore( storeId ).findRecord( 'type', type )
+		var metaData = Ext.getStore( storeId ).findRecord( 'type', type, null, null, null, true )
 
 		if ( metaData ) {
 			this.iconCls   = metaData.data.iconCls

@@ -19,7 +19,7 @@ Ext.define('Spelled.data.reader.Project', {
 				record.getScenes().add( this.makeAssoc( record.raw.scenes,  'config.Scenes', 'sceneId' ) )
 
 				record.getSupportedLanguages().removeAll()
-				record.getSupportedLanguages().add( this.makeAssoc( record.raw.supportedLanguages,  'Languages', 'id' ) )
+				record.getSupportedLanguages().add( this.makeAssoc( record.raw.supportedLanguages,  'Languages', 'id', null, null, null, true ) )
 			},
 			this
 		)
@@ -31,7 +31,7 @@ Ext.define('Spelled.data.reader.Project', {
 		Ext.Array.each(
 			items,
 			function( id ) {
-				var record = Ext.getStore( storeId ).findRecord( idField, id )
+				var record = Ext.getStore( storeId ).findRecord( idField, id, null, null, null, true )
 				if( record ) results.push( record )
 			}
 		)

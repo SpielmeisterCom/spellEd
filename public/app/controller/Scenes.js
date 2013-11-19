@@ -1022,7 +1022,7 @@ Ext.define('Spelled.controller.Scenes', {
 								origConfig   = sceneSystem.config,
 								active       = origConfig.active ? !state : false,
 								systemConfig = Ext.merge( {}, system.getConfigForScene(), origConfig, { active: active } ),
-								editSystem   = editModeSystems.findRecord( 'systemId', sceneSystem.id )
+								editSystem   = editModeSystems.findRecord( 'systemId', sceneSystem.id, null, null, null, true )
 
 							if( editSystem ) {
 								if( state )

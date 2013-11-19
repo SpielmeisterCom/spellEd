@@ -482,7 +482,7 @@ Ext.define('Spelled.controller.Entities', {
             form   = window.down('form'),
             record = form.getRecord(),
             values = form.getValues(),
-			scene  = Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', values.scene )
+			scene  = Ext.getStore( 'config.Scenes' ).findRecord( 'sceneId', values.scene, null, null, null, true )
 
 		record = this.createEntityHelper( record, values )
 

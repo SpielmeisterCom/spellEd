@@ -31,6 +31,10 @@ Ext.define('Spelled.controller.templates.Entities', {
 			selector: '#SceneEditor'
 		},
 		{
+			ref: 'ScenesTree',
+			selector: '#ScenesTree'
+		},
+		{
 			ref: 'TemplatesTree',
 			selector: '#LibraryTree'
 		}
@@ -199,21 +203,49 @@ Ext.define('Spelled.controller.templates.Entities', {
 			record = form.getRecord(),
 			values = form.getValues(),
 			me     = this,
-			node   = me.application.getLastSelectedNode( me.getTemplatesTree()),
-			markAsComposite = function( node ) {
-				node.set( 'cls', me.application.getController('Templates').TYPE_ENTITY_COMPOSITE )
-			}
+			node   = me.application.getLastSelectedNode( me.getTemplatesTree())
 
 		record = this.application.getController( 'Entities' ).createEntityHelper( record, values )
 
 		node.set( 'leaf', false )
 		var entityNode = record.createTreeNode( node )
-		markAsComposite( entityNode )
-		entityNode.cascadeBy( markAsComposite )
+		Spelled.EntityHelper.markAsComposite( entityNode )
+		entityNode.cascadeBy( Spelled.EntityHelper.markAsComposite )
 
 		me.getTemplatesTree().selectPath( node.appendChild( entityNode ).getPath() )
 
+		this.updateNodesOfThisTemplate( record.getOwner() )
 		window.close()
+	},
+
+	updateNodesOfThisTemplate: function( template ) {
+		var libraryId   = template.getFullName(),
+			entities    = Ext.getStore( 'config.Entities' ).query( 'templateId', libraryId ),
+			libraryTree = this.getTemplatesTree(),
+			scenesTree  = this.getScenesTree()
+
+		var findNode = function( id ) {
+			var node = libraryTree.getStore().getNodeById( id )
+
+			if( node ) return node
+
+			return scenesTree.getStore().getNodeById( id )
+		}
+
+		entities.each(
+			function( entity ){
+				var node = findNode( entity.getId() )
+
+				if( node ) {
+					var parentNode = node.parentNode
+					node.remove()
+
+					var entityNode = entity.createTreeNode( parentNode )
+					entityNode.cascadeBy( Spelled.EntityHelper.markAsComposite )
+					parentNode.appendChild( entityNode )
+				}
+			}
+		)
 	},
 
 	showEntityTemplateComponentsListHelper: function( id ) {
@@ -230,7 +262,7 @@ Ext.define('Spelled.controller.templates.Entities', {
             entity         = Ext.getStore( 'config.Entities' ).getById( node.getId() )
 
 		var merge = function( entity ) {
-			entity.mergeWithTemplateConfig()
+			if( entity.mergeWithTemplateConfig ) entity.mergeWithTemplateConfig()
 
 			var next = Spelled.EntityHelper.getNextEntityBasedTemplate( entity,[] )
 

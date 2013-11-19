@@ -141,7 +141,7 @@ Ext.define('Spelled.model.config.Entity', {
 			template.getComponents().each(
 				function( component ) {
 					var componentId = component.get( 'templateId' ),
-						cmp         = components.findRecord( 'templateId', componentId ) || Ext.create( 'Spelled.model.config.Component', {
+						cmp         = components.findRecord( 'templateId', componentId, null, null, null, true ) || Ext.create( 'Spelled.model.config.Component', {
 							templateId: component.get( 'templateId' )
 						})
 
@@ -156,7 +156,7 @@ Ext.define('Spelled.model.config.Entity', {
 
 			template.getChildren().each(
 				function( item ) {
-					var child = this.getChildren().findRecord( 'name', item.get( 'name' ) ) || item.clone( true )
+					var child = this.getChildren().findRecord( 'name', item.get( 'name' ), null, null, null, true ) || item.clone( true )
 
 					child.convertToAnonymousEntity()
 
@@ -370,7 +370,7 @@ Ext.define('Spelled.model.config.Entity', {
 				var ownerTemplate = owner.getEntityTemplate()
 
 				if( ownerTemplate ) {
-					var entity = ownerTemplate.getChildren().findRecord( 'name', this.get('name') )
+					var entity = ownerTemplate.getChildren().findRecord( 'name', this.get('name'), null, null, null, true )
 
 					if( entity ) {
 						this.mergeEntityTemplateWithTemplateConfig( entity )

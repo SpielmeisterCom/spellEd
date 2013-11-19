@@ -226,7 +226,7 @@ Ext.define('Spelled.controller.Library', {
 				break
 			case 'script':
 				var scriptId = value.split( ':' ).pop()
-				record = this.getStore( 'script.Scripts' ).findRecord( 'scriptId', scriptId )
+				record = this.getStore( 'script.Scripts' ).findRecord( 'scriptId', scriptId, null, null, null, true )
 				break
 		}
 
@@ -336,10 +336,10 @@ Ext.define('Spelled.controller.Library', {
 		if( type === 'script' ) {
 			return this.TYPE_SCRIPT
 
-		}else if( Ext.getStore( 'asset.Types' ).findRecord( 'type', type ) ) {
+		}else if( Ext.getStore( 'asset.Types' ).findRecord( 'type', type, null, null, null, true ) ) {
 			return this.TYPE_ASSET
 
-		} else if( Ext.getStore( 'template.Types' ).findRecord( 'type', type ) || type === this.application.getController( 'Templates' ).TYPE_ENTITY_COMPOSITE ) {
+		} else if( Ext.getStore( 'template.Types' ).findRecord( 'type', type, null, null, null, true ) || type === this.application.getController( 'Templates' ).TYPE_ENTITY_COMPOSITE ) {
 			return this.TYPE_TEMPLATE
 
 		} else if( type === 'scene' ) {

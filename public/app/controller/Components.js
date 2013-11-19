@@ -121,7 +121,7 @@ Ext.define('Spelled.controller.Components', {
 		Ext.iterate(
 			this.transformConfigForGrid( component, newConfig ),
 			function( key, value ) {
-				var record = store.findRecord( 'name', key )
+				var record = store.findRecord( 'name', key, null, null, null, true )
 				record.set( value )
 				propertyGrid.fireEvent( 'edit', propertyGrid, { grid: propertyGrid, record: record } )
 				if( sendToEngine ) this.sendComponentUpdate( component, key, value.value )
@@ -422,7 +422,7 @@ Ext.define('Spelled.controller.Components', {
 
 	createPropertyFromAttribute: function ( attribute, name, value ) {
 		var typeName      = attribute.get( 'type' ),
-			attributeType = this.getStore( 'template.component.AttributeTypes' ).findRecord( 'name', typeName )
+			attributeType = this.getStore( 'template.component.AttributeTypes' ).findRecord( 'name', typeName, null, null, null, true )
 
 		return {
 			type: attributeType.get('type'),
@@ -455,7 +455,7 @@ Ext.define('Spelled.controller.Components', {
 		Ext.Object.each(
 			properties,
 			function( key, value ){
-				var record = store.findRecord( 'name', value.type )
+				var record = store.findRecord( 'name', value.type, null, null, null, true )
 
 				if( record ) { config[ key ] = record }
 			}

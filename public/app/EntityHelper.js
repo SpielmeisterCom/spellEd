@@ -1,6 +1,10 @@
 Ext.define( 'Spelled.EntityHelper', {
 	singleton: true,
 
+	markAsComposite: function( node ) {
+		node.set( 'cls', Spelled.app.getController('Templates').TYPE_ENTITY_COMPOSITE )
+	},
+
 	getEntitiesByTemplateId: function( templateId ) {
 		return Ext.getStore( 'config.Entities' ).query( 'templateId', templateId )
 	},
@@ -63,7 +67,7 @@ Ext.define( 'Spelled.EntityHelper', {
 		if( parents.length === 0 ) return source
 		var name = parents.shift()
 
-		var child = source.getChildren().findRecord( 'name', name )
+		var child = source.getChildren().findRecord( 'name', name, null, null, null, true )
 
 		if( child ) {
 			return this.findNeededEntity( child, parents )

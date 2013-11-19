@@ -626,7 +626,7 @@ Ext.define('Spelled.controller.Projects', {
 	},
 
     loadProject: function( projectName, initialize ) {
-		var record = this.getProjectsStore().findRecord( 'name', projectName ),
+		var record = this.getProjectsStore().findRecord( 'name', projectName, null, null, null, true ),
 			me     = this
 
 		if( !record ) return this.showStartScreen()
@@ -655,7 +655,7 @@ Ext.define('Spelled.controller.Projects', {
 
 	storesReadyCallback: function( projectName ) {
 		var Project = this.getProjectModel(),
-			record  = this.getProjectsStore().findRecord( 'name', projectName )
+			record  = this.getProjectsStore().findRecord( 'name', projectName, null, null, null, true )
 
 		this.application.setActiveProject( record )
 
