@@ -1,8 +1,8 @@
 Ext.define('Spelled.MessageBox', {
 	singleton: true,
 
-	showBuildServerConnectError: function() {
-		this.alert( 'Service unavailable', "SpellEd can't connect to the Build-Server." )
+	showBuildServerConnectError: function( response ) {
+		this.alert( 'Service unavailable', response.message + "<br/><br/>" + response.xhr.responseText )
 	},
 
 	showMissingProjectsError: function() {

@@ -55,7 +55,7 @@ Ext.define( 'Spelled.provider.WebKit', {
 					transaction: transaction,
 					code: Ext.direct.Manager.exceptions.TRANSPORT,
 					message: 'Unable to connect to the server.',
-					xhr: response
+					xhr: { responseText: event.output }
 				});
 			}
 

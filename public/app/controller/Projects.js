@@ -285,7 +285,7 @@ Ext.define('Spelled.controller.Projects', {
 				if( !!response.data ) {
 					this.buildActionsCallback( buildActionName, target, msg, response )
 				} else {
-					Spelled.MessageBox.showBuildServerConnectError()
+					Spelled.MessageBox.showBuildServerConnectError( response )
 				}
 			},
 			this
@@ -571,7 +571,7 @@ Ext.define('Spelled.controller.Projects', {
 				if( !!response.data ) {
 					window.location = Spelled.Converter.toWorkspaceUrl( '/' + exportFileName )
 				} else {
-					Spelled.MessageBox.showBuildServerConnectError()
+					Spelled.MessageBox.showBuildServerConnectError( response )
 				}
 			}
 		)

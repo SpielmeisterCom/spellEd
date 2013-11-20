@@ -54,7 +54,7 @@ define(
 
 					if( error !== null ) {
 						console.log( 'childProcess.execFile ' + error )
-						writeResponse( 500, res )
+						writeResponse( 500, res, error.toString() )
 
 					} else {
 						writeResponse( 200, res, createResponseData( actionName, payload, req.extDirectId, result ) )

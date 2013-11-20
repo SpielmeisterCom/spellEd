@@ -30,16 +30,16 @@ define(
 		var createWrapper = function( spellCorePath, projectsPath, spellCliPath, isDevEnvironment, actionName, actionHandler ) {
 			return function( req, extProvider, payload ) {
 				var onComplete = function( error, result ) {
-					var success = true
+					var success  = true,
+						response = {
+							responseText: JSON.stringify( [ _.extend( {}, req.jsonData, { output: result } ) ] )
+						}
 
 					if ( error !== null) {
 						result += '\nchildProcess.execFile ' + error
 						console.log( result )
+						response.responseText = JSON.stringify( [ _.extend( {}, req.jsonData, { output: result.toString() } ) ] )
 						success = false
-					}
-
-					var response = {
-						responseText: JSON.stringify( [ _.extend( {}, req.jsonData, { output: result } ) ] )
 					}
 
 					extProvider.onData( req.transaction.callbackOptions, success, response )
