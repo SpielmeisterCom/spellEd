@@ -145,7 +145,7 @@ Ext.define('Spelled.controller.Menu', {
 			'templateslistentitycontextmenu [action="create"]': {
 				click: this.showCreateTemplate
 			},
-			'templateslistentitycontextmenu [action="add"]': {
+			'templateslistentitycontextmenu [action="add"],templateslistentitycompositecontextmenu [action="add"]': {
 				click: this.showAddEntityToTemplate
 			},
 			'templateslistentitycontextmenu [action="remove"]': {
