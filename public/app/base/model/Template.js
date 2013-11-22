@@ -40,8 +40,6 @@ Ext.define('Spelled.base.model.Template', {
 	save: function() {
 		if( this.isReadonly() ) return
 
-		if( !this.phantom && !this.justCreated ) this.updateDependencies()
-
 		return this.callParent( arguments )
 	},
 

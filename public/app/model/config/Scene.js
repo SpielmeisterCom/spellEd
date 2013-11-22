@@ -63,8 +63,6 @@ Ext.define('Spelled.model.config.Scene', {
 	},
 
 	save: function() {
-		this.updateDependencies()
-
 		this.getEntities().each(
 			function( entity ) {
 				entity.stripRedundantData()

@@ -173,7 +173,6 @@ Ext.define('Spelled.controller.templates.Entities', {
 
 		tmpProjectCfg.startScene = scene.getFullName()
 		tmpProjectCfg.scenes     = [ tmpProjectCfg.startScene ]
-		scene.updateDependencies()
 
 		return {
 			applicationModule: tmpProjectCfg,

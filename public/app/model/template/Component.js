@@ -34,9 +34,6 @@ Ext.define('Spelled.model.template.Component', {
 	listeners: {
 		loadscript: function() {
 			this.readAccordingJSFile()
-		},
-		dirty: function() {
-			this.updateDependencies()
 		}
 	},
 
