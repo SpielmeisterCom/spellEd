@@ -6,6 +6,7 @@ define(
 		'server/extDirectApi/build/export',
 		'server/extDirectApi/build/release',
 		'server/extDirectApi/createStorageApi',
+		'server/extDirectApi/getStaticDependencies',
 		'server/extDirectApi/initDirectory',
 		'server/extDirectApi/notSupported'
 	],
@@ -15,6 +16,7 @@ define(
 		buildExport,
 		buildRelease,
 		createStorageApi,
+		getStaticDependencies,
 		initDirectory,
 		notSupported
 	) {
@@ -78,6 +80,17 @@ define(
 			var spellCliExecutablePath = spellCliPath + ( process.platform == 'win32' ? '.exe' : '' )
 
 			return {
+				DependencyActions : [
+					{
+						name: "getStaticDependencies",
+						len: 1,
+						func: function( req, res, payload ) {
+							var params = payload[ 0 ]
+
+							return getStaticDependencies( projectsRoot, params.projectName, params.node )
+						}
+					}
+				],
 				StorageActions : createStorageApi( projectsRoot, demonstrationMode ),
 				SpellBuildActions : [
 					{

@@ -169,15 +169,11 @@ Ext.define('Spelled.controller.Library', {
 		var treePanel = panel.down( 'treepanel' )
 
 		if( treePanel ) {
-			if( record.dirtyDep ) record.updateDependencies()
-
 			var rootNode = Ext.clone( record.getDependencyNode() )
 
 			rootNode.expanded = true
 			treePanel.setRootNode( rootNode )
 		}
-
-		Ext.Msg.close()
 	},
 
 	showItemInFolder: function() {

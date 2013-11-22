@@ -897,7 +897,6 @@ Ext.define('Spelled.controller.Scenes', {
 
 		this.application.engineMessageBus.unInitialize( iframe.getId() )
 
-		scene.updateDependencies()
 		scene.checkForComponentChanges()
 
 		var applicationModule = Ext.amdModules.createProjectInEngineFormat( project )

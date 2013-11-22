@@ -27,7 +27,7 @@ define(
 
 			var result = _.pick( scene, attributes )
 
-			result.libraryIds = scene.dependencies || []
+			result.dependencies = scene.dependencies || []
 
 			result.entities = _.map(
 				scene.getEntities,
@@ -47,7 +47,7 @@ define(
 		var toEditorFormat = function( scene ) {
 			var result = {
 				id: scene.id,
-				dependencies: scene.libraryIds,
+				dependencies: scene.dependencies,
 				name: scene.name,
 				namespace: scene.namespace,
 				systems: scene.systems

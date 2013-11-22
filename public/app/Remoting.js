@@ -8,6 +8,9 @@ Ext.define( 'Spelled.Remoting', {
 	],
 
 	actions: {
+		"DependencyActions": [
+			{"name":"getStaticDependencies","len":1}
+		],
 		"StorageActions":[
 			{"name":"create","len":1},
 			{"name":"createNamespaceFolder","len":1},

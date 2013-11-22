@@ -2,6 +2,10 @@ Ext.define('Spelled.view.library.Dependencies', {
     extend: 'Ext.container.Container',
     alias : 'widget.spelldependencies',
 
+	requires: [
+		'Spelled.model.DependencyNode'
+	],
+
 	layout: {
 		type: 'vbox',
 		align: 'center'
@@ -13,8 +17,39 @@ Ext.define('Spelled.view.library.Dependencies', {
 		hideHeaders: true
 	},
 
+	addAdditionalNodeInformation: function( node ) {
+		var store = Ext.getStore( 'Library' )
+
+		node.cascadeBy(
+			function() {
+				var record = store.findLibraryItemByLibraryId( this.get( 'libraryId' ) )
+
+				if( record ) {
+					this.set( 'iconCls', record.iconCls )
+					this.set( 'sortOrder', record.sortOrder )
+				}
+			}
+		)
+	},
+
 	initComponent: function() {
-		var me      = this
+		var me    = this,
+			store = Ext.create('Ext.data.TreeStore', {
+			model: 'Spelled.model.DependencyNode',
+			listeners: {
+				load: function( store, node, records, successful ) {
+					if( successful ) me.addAdditionalNodeInformation( node )
+				}
+			},
+			root: {
+				expanded: true
+			},
+			proxy: {
+				type: 'direct',
+				directFn: 'Spelled.DependencyActions.getStaticDependencies',
+				extraParams: { projectName: Spelled.app.getActiveProject().get( 'name' ) }
+			}
+		});
 
 		Ext.applyIf( me, {
 			items: [
@@ -24,6 +59,7 @@ Ext.define('Spelled.view.library.Dependencies', {
 					animate: false,
 					animCollapse: false,
 					height: 300,
+					store: store,
 
 					hideHeaders: true,
 					rootVisible: false,
@@ -116,19 +152,6 @@ Ext.define('Spelled.view.library.Dependencies', {
 
 		var me = this
 
-		Ext.Msg.show({
-			title: 'Please wait',
-			msg: 'Calculating dependencies...',
-			width: 300,
-			modal: true,
-			closable: false
-		})
-
-		setTimeout(
-			function() {
-				me.fireEvent( 'loaddependencies', me, me.record )
-			},
-			50
-		)
+		me.fireEvent( 'loaddependencies', me, me.record )
 	}
 })
