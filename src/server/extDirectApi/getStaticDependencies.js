@@ -63,7 +63,10 @@ define(
 			return result
 		}
 
-		var getSystemDependencies = function( system ) {
+		var getSystemDependencies = function( libraryId, system ) {
+			var children = [],
+				node     = createDependencyNode( libraryId, system )
+
 
 		}
 
@@ -100,24 +103,29 @@ define(
 			var children = [],
 				node     = createDependencyNode( libraryId, system )
 
-
-
 			return node
+		}
+
+		var readMetaData = function( filePath ) {
+			if( !fs.existsSync( filePath ) ) return null
+
+			return JSON.parse( fs.readFileSync( filePath, 'utf8' ) )
 		}
 
 		return function( projectsRoot, projectName, libraryId ) {
 			var filePath  = libraryIdToFilePath( projectsRoot, projectName, libraryId )
 console.log( filePath )
-			if( !fs.existsSync( filePath ) ) return
+			var metaData = readMetaData( filePath)
 
-			var metaData = JSON.parse( fs.readFileSync( filePath, 'utf8' ) ),
-				type     = metaData.type
+			if( !metaData ) return
+
+			var type     = metaData.type
 
 			if( type === SCENE ) {
 				return getSceneDependencies( libraryId, metaData )
 
 			} else if( type === SYSTEM ) {
-				return getSceneDependencies( libraryId, metaData )
+				return getSystemDependencies( libraryId, metaData )
 
 			}
 

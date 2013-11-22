@@ -39,14 +39,12 @@ Ext.define('Spelled.base.model.Model', {
 		this.fireEvent( 'dirty', this )
 	},
 
-	getDependencies: function( addMissing ) {
-		//TODO: should be changed if dependencies in spell are inserted
-		this.set( 'dependencies', [] )
+	getDependencies: function() {
 		return this.get( 'dependencies' ) || []
 	},
 
 	getDependencyNode: function() {
-		return { libraryId: this.getFullName(), id: this.getFullName() }
+		return { libraryId: this.getFullName(), id: this.getFullName(), type: this.get( 'type' ) }
 	},
 
 	getAccordingJSFileName: function() {

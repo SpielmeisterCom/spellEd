@@ -18,7 +18,27 @@ Ext.define('Spelled.view.library.Dependencies', {
 	},
 
 	addAdditionalNodeInformation: function( node ) {
-		var store = Ext.getStore( 'Library' )
+		var store      = Ext.getStore( 'Library'),
+			rootRecord = store.findLibraryItemByLibraryId( node.get( 'libraryId' ) )
+
+		if( rootRecord ) {
+			var dependencies = rootRecord.getDependencies()
+
+			if( dependencies && dependencies.length > 0 ) {
+				var dependencyNodes = Ext.Array.map(
+					dependencies,
+					function( item ) {
+						var record = store.findLibraryItemByLibraryId( item )
+
+						if( record ) {
+							return record.getDependencyNode()
+						}
+					}
+				)
+
+				node.appendChild( Ext.Array.clean( dependencyNodes ) )
+			}
+		}
 
 		node.cascadeBy(
 			function() {
