@@ -45,6 +45,8 @@ Ext.define('Spelled.view.library.Dependencies', {
 				var record = store.findLibraryItemByLibraryId( this.get( 'libraryId' ) )
 
 				if( record ) {
+					if( this.get( 'depth' ) > 1 ) this.set( 'isStatic', true )
+
 					this.set( 'iconCls', record.iconCls )
 					this.set( 'sortOrder', record.sortOrder )
 				}

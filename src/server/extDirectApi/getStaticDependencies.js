@@ -31,7 +31,7 @@ define(
 
 		var getComponentDependencies = function( libraryId, component ) {
 			var children = [],
-				node     = createDependencyNode( libraryId, SYSTEM )
+				node     = createDependencyNode( libraryId, COMPONENT )
 
 			_.each(
 				component.attributes,
@@ -108,7 +108,7 @@ define(
 
 		var getSceneDependencies = function( libraryId, scene ) {
 			var children = [],
-				node     = createDependencyNode( libraryId, scene )
+				node     = createDependencyNode( libraryId, SCENE )
 
 			_.each(
 				scene.systems,
