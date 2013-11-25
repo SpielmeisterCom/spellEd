@@ -22,24 +22,6 @@ Ext.define('Spelled.model.assets.KeyFrameAnimation', {
 		{ name: 'assetId', type: 'string' }
 	],
 
-	getCalculatedDependencies: function() {
-		var componentStore  = Ext.getStore( 'template.Components' ),
-			cmpDependencies = [ 'spell.component.2d.transform', 'spell.component.visualObject' ],
-			dependencies    = []
-
-		Ext.Array.each(
-			cmpDependencies,
-			function( componentId ) {
-				dependencies.push( componentId )
-
-				var component = componentStore.getByTemplateId( componentId )
-				Ext.Array.push( dependencies, component.getDependencies() )
-			}
-		)
-
-		return Ext.Array.clean( dependencies )
-	},
-
 	getKeyFrameFromComponentAttribute: function( componentId, attributeName ) {
 		var animate = this.get( 'animate')
 

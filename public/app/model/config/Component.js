@@ -27,52 +27,6 @@ Ext.define('Spelled.model.config.Component', {
 		}
 	],
 
-	getCalculatedDependencies: function() {
-		var ids     = [],
-			library = Ext.getStore( 'Library'),
-			getter  = Spelled.Converter.internalAssetIdToMyAssetId
-
-		Ext.Object.each(
-			this.getConfigMergedWithTemplateConfig(),
-			function( key, value ) {
-				if( key === "assetId" && value ) {
-					var myAssetId   = getter( value ),
-						libraryItem = library.findLibraryItemByLibraryId( myAssetId )
-
-					if( libraryItem ) {
-						ids.push( myAssetId )
-						Ext.Array.push( ids, libraryItem.getDependencies() )
-					}
-				}
-			}
-		)
-
-		return Ext.Array.clean( ids )
-	},
-
-	createDependencyNode: function() {
-		var children = [],
-			node     = { libraryId: this.get( 'templateId' ), children: children, iconCls: this.iconCls },
-			library  = Ext.getStore( 'Library'),
-			getter   = Spelled.Converter.internalAssetIdToMyAssetId
-
-		Ext.Object.each(
-			this.getConfigMergedWithTemplateConfig(),
-			function( key, value ) {
-				if( key === "assetId" && value ) {
-					var myAssetId   = getter( value ),
-						libraryItem = library.findLibraryItemByLibraryId( myAssetId )
-
-					if( libraryItem ) {
-						children.push( libraryItem.getDependencyNode() )
-					}
-				}
-			}
-		)
-
-		return node
-	},
-
 	getAttributeByName: function( name ) {
 		return this.getTemplate().getAttributeByName( name )
 	},

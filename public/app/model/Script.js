@@ -28,14 +28,6 @@ Ext.define('Spelled.model.Script', {
 		this.callParent( arguments )
 	},
 
-	getCalculatedDependencies: function() {
-		return []
-	},
-
-	createDependencyNode: function() {
-		return { libraryId: this.getFullName(), children:[], iconCls: this.iconCls }
-	},
-
 	listeners: {
 		loadscript: function() {
 			this.readAccordingJSFile()

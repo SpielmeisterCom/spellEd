@@ -58,58 +58,6 @@ Ext.define('Spelled.model.config.Entity', {
 		}
 	],
 
-	getCalculatedDependencies: function(){
-		var ids   = [],
-			merge = Ext.Array.merge
-
-		if( !this.isAnonymous() ) {
-			this.mergeChildren( this.getEntityTemplate() )
-		}
-
-		this.mergeWithTemplateConfig()
-
-		this.getComponents().each(
-			function( component ) {
-				ids.push( this.get( 'templateId' ) )
-				ids = merge( ids, component.getDependencies() )
-			}
-		)
-
-		this.getChildren().each(
-			function( entity ) {
-				ids.push( entity.get( 'templateId' ) )
-				ids = merge( ids, entity.getDependencies() )
-			}
-		)
-
-		return Ext.Array.clean( ids )
-	},
-
-	createDependencyNode: function() {
-		var children = [],
-			node     = { iconCls: 'tree-scene-entity-icon', libraryId: this.get( 'templateId' ) || 'Anonymous', children: children }
-
-		if( !this.isAnonymous() ) {
-			this.mergeChildren( this.getEntityTemplate() )
-		}
-
-		this.mergeWithTemplateConfig()
-
-		this.getComponents().each(
-			function( component ) {
-				children.push( component.getDependencyNode() )
-			}
-		)
-
-		this.getChildren().each(
-			function( entity ) {
-				children.push( entity.getDependencyNode() )
-			}
-		)
-
-		return node
-	},
-
 	getMessageData: function() {
 		var data = Ext.amdModules.entityConverter.toEngineFormat( this.getData(true), { includeEntityIds: true } )
 

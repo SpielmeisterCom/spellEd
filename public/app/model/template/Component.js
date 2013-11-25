@@ -49,20 +49,6 @@ Ext.define('Spelled.model.template.Component', {
 		if( arguments.length > 1 ) this.fireEvent( 'loadscript' )
 	},
 
-	getCalculatedDependencies: function() {
-		var cmp = Ext.create( 'Spelled.model.config.Component', { templateId: this.getFullName() } )
-
-		cmp.store.remove( cmp )
-		return cmp.getCalculatedDependencies()
-	},
-
-	createDependencyNode: function() {
-		var cmp = Ext.create( 'Spelled.model.config.Component', { templateId: this.getFullName() } )
-
-		cmp.store.remove( cmp )
-		return cmp.createDependencyNode()
-	},
-
 	getAttributeByName: function( name ) {
 		return this.getAttributes().findRecord( 'name', name, null, null, null, true )
 	},

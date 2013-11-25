@@ -72,31 +72,6 @@ Ext.define('Spelled.model.config.Scene', {
 		this.callParent( arguments )
 	},
 
-	getAssignedSystemDependencies: function( systems ) {
-		var ids     = [],
-			store   = Ext.getStore( 'template.Systems' )
-
-		Ext.Object.each(
-			systems,
-			function( key, value ) {
-				for ( var j = 0, l = value.length; j < l; j++ ) {
-					var system = store.findRecord( 'templateId', value[j].id, null, null, null, true )
-
-					if( system ) {
-						ids.push( system.getFullName() )
-						Ext.Array.push( ids, system.getDependencies() )
-					}
-				}
-			}
-		)
-
-		return Ext.Array.clean( ids )
-	},
-
-	getCalculatedDependencies: function() {
-		return this.getStaticLibraryIds()
-	},
-
 	addDebugSystems: function( debug ) {
 		var systems     = [],
 			systemStore = Ext.getStore( 'template.Systems')
@@ -117,10 +92,7 @@ Ext.define('Spelled.model.config.Scene', {
 
 	getStaticLibraryIds: function( debug ) {
 		var	result  = [],
-			systems = Ext.clone( this.get( 'systems' ) ),
-			merge   = Ext.Array.merge,
-			store   = Ext.getStore( 'template.Systems'),
-			addMissing = true
+			systems = Ext.clone( this.get( 'systems' ) )
 
 		systems.debug = this.addDebugSystems( debug )
 
@@ -130,58 +102,7 @@ Ext.define('Spelled.model.config.Scene', {
 			}
 		)
 
-		Ext.Object.each(
-			systems,
-			function( key, value ) {
-				for ( var j = 0, l = value.length; j < l; j++ ) {
-					var system = store.findRecord( 'templateId', value[j].id, null, null, null, true )
-
-					if( system ) {
-						result.push( system.getFullName() )
-						Ext.Array.push( result, system.getDependencies( addMissing ) )
-					}
-				}
-			}
-		)
-
-		this.getEntities().each(
-			function( entity ) {
-				result.push( entity.get( 'templateId' ) )
-				result = merge( result, entity.getDependencies( addMissing ) )
-			}
-		)
-
 		return Ext.Array.clean( result )
-	},
-
-	createDependencyNode: function() {
-		var children = [],
-			systems  = Ext.clone( this.get( 'systems' ) ),
-			node     = { libraryId: this.getFullName(), children: children },
-			store    = Ext.getStore( 'template.Systems' )
-
-		systems.debug = this.addDebugSystems()
-
-		Ext.Object.each(
-			systems,
-			function( key, value ) {
-				for (var j = 0, l = value.length; j < l; j++) {
-					var system = store.findRecord( 'templateId', value[j].id, null, null, null, true )
-
-					if( system ) {
-						children.push( system.getDependencyNode() )
-					}
-				}
-			}
-		)
-
-		this.getEntities().each(
-			function( entity ) {
-				children.push( entity.getDependencyNode() )
-			}
-		)
-
-		return node
 	},
 
 	checkForComponentChanges: function() {

@@ -45,37 +45,6 @@ Ext.define('Spelled.model.template.System', {
         }
     },
 
-	getCalculatedDependencies: function() {
-		var ids   = [],
-			store = Ext.getStore( 'template.Components')
-
-		this.getInput().each(
-			function( input ) {
-				var cmp = store.getByTemplateId( input.get( 'componentId' ) )
-				ids.push( input.get( 'componentId' ) )
-				Ext.Array.push( ids, cmp.getDependencies() )
-			}
-		)
-
-		return Ext.Array.clean( ids )
-	},
-
-	createDependencyNode: function() {
-		var children = [],
-			node     = { libraryId: this.getFullName(), children: children, iconCls: this.iconCls },
-			store    = Ext.getStore( 'template.Components' ),
-			range    = this.getInput().getRange()
-
-		for ( var j = 0, l = range.length; j < l; j++ ) {
-			var input = range[j],
-				cmp   = store.getByTemplateId( input.get( 'componentId' ) )
-
-			children.push( cmp.getDependencyNode() )
-		}
-
-		return node
-	},
-
 	destroy: function( options ) {
 		Spelled.StorageActions.destroy({ id: this.getAccordingJSFileName() } )
 
