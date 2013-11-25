@@ -44,7 +44,7 @@ Ext.define('Spelled.base.model.Model', {
 	},
 
 	getDependencyNode: function() {
-		return { libraryId: this.getFullName(), id: this.getFullName(), type: this.get( 'type' ) }
+		return Spelled.model.DependencyNode.create( { libraryId: this.getFullName(), type: this.get( 'type' ) } )
 	},
 
 	getAccordingJSFileName: function() {

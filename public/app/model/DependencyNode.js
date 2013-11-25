@@ -7,5 +7,11 @@ Ext.define('Spelled.model.DependencyNode', {
 		'sortOrder',
 		'isStatic',
 		'type'
-	]
+	],
+
+	constructor: function() {
+		this.callParent( arguments )
+		//TODO: remove this if the ext proxy on tree will correctly apply the clientIdProperty
+		this.setId( Ext.id( null, this.get( 'libraryId' ) + "###" ) )
+	}
 })

@@ -16,6 +16,9 @@ define(
 
 		var SCENE = 'scene'
 		var SYSTEM = 'system'
+		var COMPONENT = 'component'
+		var ASSET = 'asset'
+		var ENTITY = 'entityTemplate'
 
 		var libraryIdToFilePath = function( projectsRoot, projectName, libraryId ) {
 			return path.join( projectsRoot, projectName, "library", libraryId.replace( /\./g, path.sep ) + '.json' )
@@ -23,17 +26,31 @@ define(
 
 		var createDependencyNode = function( id, type ) {
 
-			return { id: id, libraryId: id, type: type, isStatic: true }
+			return { libraryId: id, id: id, type: type, isStatic: true }
 		}
 
-		var getComponentDependencies = function( component ) {
+		var getComponentDependencies = function( libraryId, component ) {
+			var children = [],
+				node     = createDependencyNode( libraryId, SYSTEM )
 
+			_.each(
+				component.attributes,
+				function( attribute ) {
+					//TODO: parse template correctly and check vor assetIds etc.
+//					if( attribute.type === 'assetId' ){
+//						children.push( createDependencyNode( input.default, ASSET ) )
+//					}
+				}
+			)
 
-			return []
+			node.children = children
+
+			return node
 		}
 
-		var getEntityDependencies = function( entity ) {
-			var result = {}
+		var getEntityDependencies = function( libraryId, entity ) {
+			var children = [],
+				node     = createDependencyNode( libraryId, ENTITY )
 //
 //			if( _.has( entity.entityTemplateId) ) {
 //				result.libraryId = entity.entityTemplateId
@@ -58,16 +75,35 @@ define(
 //				}
 //			)
 //
-//			result.children = children
+			node.children = children
 
-			return result
+			return node
 		}
 
 		var getSystemDependencies = function( libraryId, system ) {
 			var children = [],
-				node     = createDependencyNode( libraryId, system )
+				node     = createDependencyNode( libraryId, SYSTEM )
 
+			_.each(
+				system.input,
+				function( input ) {
+					children.push( createDependencyNode( input.componentId, COMPONENT ) )
+				}
+			)
 
+			node.children = children
+
+			return node
+		}
+
+		var getAssetDependencies = function( libraryId, asset ) {
+			var children = [],
+				node     = createDependencyNode( libraryId, ASSET )
+
+			//TODO: parse asset json
+			node.children = children
+
+			return node
 		}
 
 		var getSceneDependencies = function( libraryId, scene ) {
@@ -80,8 +116,7 @@ define(
 					_.each(
 						value,
 						function( system ) {
-							var node = createDependencyNode( system.id, SYSTEM )
-							children.push( node )
+							children.push( createDependencyNode( system.id, SYSTEM ) )
 						}
 					)
 				}
@@ -99,13 +134,6 @@ define(
 			return node
 		}
 
-		var getSystemDependencies = function( libraryId, system ) {
-			var children = [],
-				node     = createDependencyNode( libraryId, system )
-
-			return node
-		}
-
 		var readMetaData = function( filePath ) {
 			if( !fs.existsSync( filePath ) ) return null
 
@@ -113,13 +141,12 @@ define(
 		}
 
 		return function( projectsRoot, projectName, libraryId ) {
-			var filePath  = libraryIdToFilePath( projectsRoot, projectName, libraryId )
-console.log( filePath )
-			var metaData = readMetaData( filePath)
+			var filePath = libraryIdToFilePath( projectsRoot, projectName, libraryId ),
+				metaData = readMetaData( filePath)
 
 			if( !metaData ) return
 
-			var type     = metaData.type
+			var type = metaData.type
 
 			if( type === SCENE ) {
 				return getSceneDependencies( libraryId, metaData )
@@ -127,6 +154,14 @@ console.log( filePath )
 			} else if( type === SYSTEM ) {
 				return getSystemDependencies( libraryId, metaData )
 
+			} else if( type === COMPONENT ) {
+				return getComponentDependencies( libraryId, metaData )
+
+			} else if( type === ENTITY ) {
+				return getEntityDependencies( libraryId, metaData )
+
+			} else if( type === ASSET ) {
+				return getAssetDependencies( libraryId, metaData )
 			}
 
 		}

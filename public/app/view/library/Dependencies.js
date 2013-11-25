@@ -56,13 +56,11 @@ Ext.define('Spelled.view.library.Dependencies', {
 		var me    = this,
 			store = Ext.create('Ext.data.TreeStore', {
 			model: 'Spelled.model.DependencyNode',
+			nodeParam: 'libraryId',
 			listeners: {
 				load: function( store, node, records, successful ) {
 					if( successful ) me.addAdditionalNodeInformation( node )
 				}
-			},
-			root: {
-				expanded: true
 			},
 			proxy: {
 				type: 'direct',
