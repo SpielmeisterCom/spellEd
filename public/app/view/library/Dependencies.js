@@ -40,6 +40,8 @@ Ext.define('Spelled.view.library.Dependencies', {
 			}
 		}
 
+		var nodesWithUnknownLibraryIds = []
+
 		node.cascadeBy(
 			function() {
 				var record = store.findLibraryItemByLibraryId( this.get( 'libraryId' ) )
@@ -49,7 +51,17 @@ Ext.define('Spelled.view.library.Dependencies', {
 
 					this.set( 'iconCls', record.iconCls )
 					this.set( 'sortOrder', record.sortOrder )
+
+				} else {
+					nodesWithUnknownLibraryIds.push( this )
 				}
+			}
+		)
+
+		Ext.Array.each(
+			nodesWithUnknownLibraryIds,
+			function( node ) {
+				node.remove()
 			}
 		)
 	},
