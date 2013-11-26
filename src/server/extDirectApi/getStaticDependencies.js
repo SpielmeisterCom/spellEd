@@ -3,7 +3,9 @@ define(
 	[
 		'server/extDirectApi/dependency/createDependencyNode',
 		'server/extDirectApi/dependency/getComponentDependencies',
+		'server/extDirectApi/dependency/getModuleDependencies',
 		'server/extDirectApi/dependency/getSceneDependencies',
+		'server/extDirectApi/dependency/getScriptDependencies',
 		'server/extDirectApi/dependency/getSystemDependencies',
 
 		'fs',
@@ -12,7 +14,9 @@ define(
 	function(
 		createDependencyNode,
 		getComponentDependencies,
+		getModuleDependencies,
 		getSceneDependencies,
+		getScriptDependencies,
 		getSystemDependencies,
 
 		fs,
@@ -25,9 +29,10 @@ define(
 		var COMPONENT = 'component'
 		var ASSET = 'asset'
 		var ENTITY = 'entityTemplate'
+		var SCRIPT = 'script'
 
 		var libraryIdToFilePath = function( projectsRoot, projectName, libraryId ) {
-			return path.join( projectsRoot, projectName, "library", libraryId.replace( /\./g, path.sep ) + '.json' )
+			return path.join( projectsRoot, projectName, "library", libraryId.replace( /\./g, path.sep ) )
 		}
 
 		var readMetaData = function( filePath ) {
@@ -36,9 +41,17 @@ define(
 			return JSON.parse( fs.readFileSync( filePath, 'utf8' ) )
 		}
 
+		var readJavaScriptFileDependencies = function( filePath ) {
+			filePath += '.js'
+
+			if( !fs.existsSync( filePath ) ) return []
+
+			return getModuleDependencies( fs.readFileSync( filePath, 'utf8' ) )
+		}
+
 		return function( projectsRoot, projectName, libraryId ) {
-			var filePath = libraryIdToFilePath( projectsRoot, projectName, libraryId ),
-				metaData = readMetaData( filePath)
+			var filePathWithoutExtension = libraryIdToFilePath( projectsRoot, projectName, libraryId ),
+				metaData                 = readMetaData( filePathWithoutExtension + ".json" )
 
 			if( !metaData ) return
 
@@ -46,13 +59,20 @@ define(
 				node = createDependencyNode( libraryId, type )
 
 			if( type === SCENE ) {
-				node.children = getSceneDependencies( metaData )
+				var tmp = getSceneDependencies( metaData )
+				node.children = tmp.concat( readJavaScriptFileDependencies( filePathWithoutExtension ) )
 
 			} else if( type === SYSTEM ) {
-				node.children = getSystemDependencies( metaData )
+				var tmp = getSystemDependencies( metaData )
+				node.children = tmp.concat( readJavaScriptFileDependencies( filePathWithoutExtension ) )
 
 			} else if( type === COMPONENT ) {
-				node.children = getComponentDependencies( metaData )
+				var tmp = getComponentDependencies( metaData )
+				node.children = tmp.concat( readJavaScriptFileDependencies( filePathWithoutExtension ) )
+
+			} else if( type === SCRIPT ) {
+				var tmp = getScriptDependencies( metaData )
+				node.children = tmp.concat( readJavaScriptFileDependencies( filePathWithoutExtension ) )
 
 			} else if( type === ENTITY ) {
 				//TODO: implement
