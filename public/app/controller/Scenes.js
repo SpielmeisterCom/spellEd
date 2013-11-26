@@ -375,7 +375,6 @@ Ext.define('Spelled.controller.Scenes', {
 		Ext.Array.remove( dependencies, value )
 		record.set( 'dependencies', dependencies )
 		record.setDirty()
-		record.needToCalcCependency()
 
 		recordToRemove.remove()
 	},
@@ -383,24 +382,19 @@ Ext.define('Spelled.controller.Scenes', {
 	addToLibrary: function( window, records ) {
 		var dependencyView = this.getRightPanel().down( 'spelldependencies' ),
 			record         = dependencyView.record,
-			dependencies   = record.getDependencies(),
-			library        = Ext.getStore( 'Library' )
+			dependencies   = record.getDependencies()
 
 		Ext.Array.each(
 			records,
 			function( record ) {
-				var libraryId   = record.get( 'libraryId' ),
-					libraryItem = library.findLibraryItemByLibraryId( libraryId )
+				var libraryId   = record.get( 'libraryId' )
 
 				dependencies.push( libraryId )
-
-				if( libraryItem ) Ext.Array.push( dependencies, libraryItem.getDependencies() )
 			}
 		)
 
 		record.set( 'dependencies', dependencies )
 		record.setDirty()
-		record.needToCalcCependency()
 
 		dependencyView.reconfigureStores()
 

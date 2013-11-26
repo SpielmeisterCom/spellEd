@@ -29,12 +29,6 @@ Ext.define('Spelled.model.Asset', {
 		'name'
     ],
 
-	listeners: {
-		dirty: function() {
-			this.needToCalcCependency()
-		}
-	},
-
 	isReadonly: function() {
 		return ( this.get('readonly') === true )
 	},

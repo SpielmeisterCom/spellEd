@@ -2,8 +2,6 @@ Ext.define('Spelled.base.model.Model', {
 
 	sortOrder: 9,
 
-	dirtyDep: true,
-
 	insertMetaData: function( storeId, type ) {
 		var metaData = Ext.getStore( storeId ).findRecord( 'type', type, null, null, null, true )
 
@@ -29,10 +27,6 @@ Ext.define('Spelled.base.model.Model', {
 				id     : this.getId()
 			} )
 		)
-	},
-
-	needToCalcCependency: function() {
-		this.dirtyDep = true
 	},
 
 	fireDirtyEvent: function() {

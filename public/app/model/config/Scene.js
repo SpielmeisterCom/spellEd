@@ -46,9 +46,6 @@ Ext.define('Spelled.model.config.Scene', {
 		loadscript: function() {
 			this.readAccordingJSFile()
 			this.unDirty()
-		},
-		dirty: function() {
-			this.needToCalcCependency()
 		}
 	},
 

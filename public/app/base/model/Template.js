@@ -24,12 +24,6 @@ Ext.define('Spelled.base.model.Template', {
 		{ name: 'dependencyNode' }
 	],
 
-	listeners: {
-		dirty: function() {
-			this.needToCalcCependency()
-		}
-	},
-
 	setDirty: function() {
 		if( this.isReadonly() ) return
 
