@@ -46,13 +46,16 @@ Ext.define('Spelled.view.library.Dependencies', {
 			function() {
 				var record = store.findLibraryItemByLibraryId( this.get( 'libraryId' ) )
 
-				if( record ) {
+				if( this.get( 'type' ) == 'entity' && this.get( 'libraryId' ) == 'Anonymous' ) {
+					//TODO: some action for anon entities
+
+				} else if( record ) {
 					if( this.get( 'depth' ) > 1 ) this.set( 'isStatic', true )
 
 					this.set( 'iconCls', record.iconCls )
 					this.set( 'sortOrder', record.sortOrder )
 
-				} else {
+				} else  {
 					nodesWithUnknownLibraryIds.push( this )
 				}
 			}
