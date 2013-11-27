@@ -45,6 +45,15 @@ Ext.define('Spelled.base.model.Model', {
 		return this.get('id').replace( /\.json$/, ".js" )
 	},
 
+	transformToRawMetaData: function() {
+		var data    = this.getData( true ),
+			payload =  Ext.amdModules[ this.converterName ].toEngineFormat( data )
+
+		Ext.copyTo( payload, data, 'name,namespace' )
+
+		return payload
+	},
+
 	readAccordingJSFile: function() {
 		if( !this.get( 'id' ) ) return
 

@@ -9,6 +9,8 @@ Ext.define('Spelled.model.config.Scene', {
 
 	iconCls : "tree-scene-icon",
 
+	converterName: 'sceneConverter',
+
 	mergeDependencies: true,
 
     fields: [

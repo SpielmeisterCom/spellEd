@@ -15,6 +15,8 @@ Ext.define('Spelled.model.template.System', {
 
 	iconCls: 'tree-system-icon',
 
+	converterName: 'systemConverter',
+
 	mergeDependencies: true,
 
 	associations: [

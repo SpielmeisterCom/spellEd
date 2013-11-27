@@ -7,6 +7,8 @@ Ext.define('Spelled.model.template.Component', {
 		'Spelled.data.reader.Component'
 	],
 
+	converterName: 'componentConverter',
+
     fields: [
         "namespace",
 		{ name: 'group', type: 'string', defaultValue: 'zzz' },

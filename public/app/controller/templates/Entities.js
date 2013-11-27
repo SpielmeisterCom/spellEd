@@ -11,6 +11,8 @@ Ext.define('Spelled.controller.templates.Entities', {
 		'Spelled.view.template.entity.Edit'
 	],
 
+	converterName: 'templateConverter',
+
     models: [
         'template.Entity',
 		'config.Entity'

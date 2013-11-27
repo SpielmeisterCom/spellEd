@@ -85,10 +85,9 @@ define(
 						name: "getStaticDependencies",
 						len: 1,
 						func: function( req, res, payload ) {
-							var params    = payload[ 0 ],
-								libraryId = params.libraryId ? params.libraryId.split( '###' )[0] : null
-							//TODO: remove hack for detecting the node id. somehow ext can't be configurated to submit other keys as ids
-							return getStaticDependencies( projectsRoot, params.projectName, libraryId )
+							var params = payload[ 0 ]
+
+							return getStaticDependencies( projectsRoot, params.projectName, params.libraryId, params.metaData, params.scriptContent )
 						}
 					}
 				],

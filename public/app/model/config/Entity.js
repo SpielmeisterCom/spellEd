@@ -20,6 +20,8 @@ Ext.define('Spelled.model.config.Entity', {
 		{ name: 'isTemplateComposite', type: 'boolean', defaultValue: false}
     ],
 
+	converterName: 'entityConverter',
+
 	parsedData: false,
 
     idgen: {

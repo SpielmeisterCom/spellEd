@@ -67,20 +67,32 @@ Ext.define('Spelled.view.library.Dependencies', {
 	},
 
 	initComponent: function() {
-		var me    = this,
-			store = Ext.create('Ext.data.TreeStore', {
-			model: 'Spelled.model.DependencyNode',
-			nodeParam: 'libraryId',
-			listeners: {
-				load: function( store, node, records, successful ) {
-					if( successful ) me.addAdditionalNodeInformation( node )
+		var me           = this,
+			libraryStore = Ext.getStore( 'Library' ),
+			store        = Ext.create('Ext.data.TreeStore', {
+				model: 'Spelled.model.DependencyNode',
+				nodeParam: 'libraryId',
+				listeners: {
+					beforeload: function(  store, operation, eOpts ) {
+						var libraryId = operation.id.split( '###' )[0],
+							record    = libraryStore.findLibraryItemByLibraryId( libraryId )
+
+						if( !record ) return false
+
+						operation.params.libraryId = libraryId
+						operation.params.metaData = record.transformToRawMetaData()
+
+						if( record.get( 'content' ) ) operation.params.scriptContent = record.get( 'content' )
+					},
+					load: function( store, node, records, successful ) {
+						if( successful ) me.addAdditionalNodeInformation( node )
+					}
+				},
+				proxy: {
+					type: 'direct',
+					directFn: 'Spelled.DependencyActions.getStaticDependencies',
+					extraParams: { projectName: Spelled.app.getActiveProject().get( 'name' ) }
 				}
-			},
-			proxy: {
-				type: 'direct',
-				directFn: 'Spelled.DependencyActions.getStaticDependencies',
-				extraParams: { projectName: Spelled.app.getActiveProject().get( 'name' ) }
-			}
 		});
 
 		Ext.applyIf( me, {

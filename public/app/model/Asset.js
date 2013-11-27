@@ -29,6 +29,8 @@ Ext.define('Spelled.model.Asset', {
 		'name'
     ],
 
+	converterName: 'assetConverter',
+
 	isReadonly: function() {
 		return ( this.get('readonly') === true )
 	},

@@ -9,6 +9,8 @@ Ext.define('Spelled.model.Script', {
 
 	sortOrder: 310,
 
+	converterName: 'scriptConverter',
+
     proxy: {
         type: 'storageaction',
 	    extraParams: {

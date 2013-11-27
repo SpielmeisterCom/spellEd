@@ -13,6 +13,8 @@ Ext.define('Spelled.model.template.Entity', {
         "name"
     ],
 
+	converterName: 'entityTemplateConverter',
+
 	associations: [
 		{
 			type: 'hasMany',
