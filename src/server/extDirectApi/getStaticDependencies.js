@@ -3,6 +3,7 @@ define(
 	[
 		'server/extDirectApi/dependency/createDependencyNode',
 		'server/extDirectApi/dependency/getComponentDependencies',
+		'server/extDirectApi/dependency/getEntityConfigDependencies',
 		'server/extDirectApi/dependency/getModuleDependencies',
 		'server/extDirectApi/dependency/getSceneDependencies',
 		'server/extDirectApi/dependency/getScriptDependencies',
@@ -11,6 +12,7 @@ define(
 	function(
 		createDependencyNode,
 		getComponentDependencies,
+		getEntityConfigDependencies,
 		getModuleDependencies,
 		getSceneDependencies,
 		getScriptDependencies,
@@ -43,7 +45,7 @@ define(
 
 			} else if( type === ENTITY ) {
 				//TODO: implement
-				node.children = []
+				node.children = getEntityConfigDependencies( metaData )
 
 			} else if( type === ASSET ) {
 				//TODO: implement
