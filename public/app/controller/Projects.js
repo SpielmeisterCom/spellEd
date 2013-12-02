@@ -379,6 +379,8 @@ Ext.define('Spelled.controller.Projects', {
 		project.set( 'config', config )
 		project.setDirty()
 
+		project.save()
+
 		window.close()
 	},
 

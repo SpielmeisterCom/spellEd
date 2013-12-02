@@ -55,7 +55,7 @@ Ext.define('Spelled.view.project.Settings' ,{
 
 	buttons: [
 		{
-			text: "Set",
+			text: "Save",
 			action: "setProjectSettings",
 			formBind: true
 		},
