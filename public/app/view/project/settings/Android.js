@@ -99,12 +99,6 @@ Ext.define('Spelled.view.project.settings.Android' ,{
 								name: 'title',
 								fieldLabel: 'App Title',
 								anchor: '100%'
-							},
-							{
-								xtype: 'textfield',
-								name: 'version',
-								fieldLabel: 'App version',
-								anchor: '100%'
 							}
 						]
 					},

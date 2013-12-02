@@ -51,12 +51,6 @@ Ext.define('Spelled.view.project.settings.Tizen' ,{
 							},
 							{
 								xtype: 'textfield',
-								name: 'version',
-								fieldLabel: 'App version',
-								anchor: '100%'
-							},
-							{
-								xtype: 'textfield',
 								name: 'name',
 								fieldLabel: 'App Name',
 								anchor: '100%'

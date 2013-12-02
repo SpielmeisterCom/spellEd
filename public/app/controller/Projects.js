@@ -372,7 +372,7 @@ Ext.define('Spelled.controller.Projects', {
 			parseInt( generalValues.screenSizeY, 10)
 		]
 
-		Ext.copyTo( config, generalValues, 'loadingScene,screenMode,orientation,projectId' )
+		Ext.copyTo( config, generalValues, 'loadingScene,screenMode,orientation,projectId,version' )
 		config.quadTreeSize       = parseInt( generalValues.quadTreeSize, 10 )
 		config.defaultLanguage    = languageValues.defaultLanguage
 
