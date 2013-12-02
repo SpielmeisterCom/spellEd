@@ -8,7 +8,19 @@ Ext.define('Spelled.view.project.settings.iOS' ,{
 
         Ext.applyIf( this, {
                 items: [
-
+	                {
+		                xtype: 'textfield',
+		                name: 'bundleId',
+		                fieldLabel: 'Bundle ID',
+		                anchor: '100%'
+	                },
+	                {
+		                // Apple ID (a number) for your app from iTunes Connect.
+		                xtype: 'numberfield',
+		                name: 'appleId',
+		                fieldLabel: 'Apple ID',
+		                anchor: '100%'
+	                }
                 ]
             }
         )
