@@ -32,7 +32,7 @@ Ext.define('Spelled.view.project.settings.iOS' ,{
 	                },
 	                {
 		                xtype:'fieldset',
-		                title: 'Build Options',
+		                title: 'General Build Options',
 		                defaults: {
 			                labelWidth: 130
 		                },
@@ -42,6 +42,36 @@ Ext.define('Spelled.view.project.settings.iOS' ,{
 				                xtype: 'checkbox',
 				                inputValue: true,
 				                name: 'openXcode'
+			                }
+		                ]
+	                },
+	                {
+		                xtype:'fieldset',
+		                title: 'Signing options (for release build)',
+		                defaults: {
+			                labelWidth: 130
+		                },
+		                items: [
+			                {
+				                fieldLabel: 'Provisioning Profile',
+				                xtype: 'textfield',
+				                name: 'releaseProvisioningProfile',
+				                anchor: '100%'
+			                }
+		                ]
+	                },
+	                {
+		                xtype:'fieldset',
+		                title: 'Signing options (for debug build)',
+		                defaults: {
+			                labelWidth: 130
+		                },
+		                items: [
+			                {
+				                fieldLabel: 'Provisioning Profile',
+				                xtype: 'textfield',
+				                name: 'debugProvisioningProfile',
+				                anchor: '100%'
 			                }
 		                ]
 	                },
