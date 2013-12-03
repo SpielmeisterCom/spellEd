@@ -40,7 +40,7 @@ Ext.define('Spelled.view.project.settings.Plugins' ,{
 				}, {
 					region: 'center',
 					layout: 'fit',
-					flex:3,
+					flex: 3,
 					xtype: 'container',
 					name: 'plugincontainer',
 					items: forms
@@ -52,22 +52,36 @@ Ext.define('Spelled.view.project.settings.Plugins' ,{
 	},
 
 	createPluginForm: function( record ){
-		var fields = Ext.clone( record.get( 'fields' ) )
+		var fields    = Ext.clone( record.get( 'fields' ) ),
+			getValues = record.get( 'getValues'),
+			setValues = record.get( 'setValues' )
 
 		fields.unshift( {
 			xtype: 'checkbox',
 			name: 'active',
-			boxLabel  : 'Active',
+			boxLabel: 'Active',
 			inputValue: true,
-			uncheckedValue : false
+			uncheckedValue: false
 		} )
 
 		var form = Ext.widget( 'form', {
 			name: 'pluginform',
+			layout: 'form',
+			fieldDefaults: {
+				labelWidth: 150
+			},
 			hidden: true,
 			pluginId: record.get( 'name' ),
 			items: fields
 		} )
+
+		if( Ext.isFunction( getValues ) ) {
+			form.getValues = Ext.bind( getValues, form )
+		}
+
+		if( Ext.isFunction( setValues ) ) {
+			form.getForm().setValues = Ext.bind( setValues, form )
+		}
 
 		this.fireEvent( 'fillpluginform', this, record, form )
 

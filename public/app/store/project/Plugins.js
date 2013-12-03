@@ -3,11 +3,48 @@ Ext.define(
 	{
 		extend: 'Ext.data.Store',
 
-		fields: [ 'name', 'fields' ],
+		fields: [ 'name', 'fields', 'getValues', 'setValues' ],
 
 		data : [
 			{
 				name: 'AdMob',
+				getValues: function() {
+					var values = {}
+					values.active = this.down( 'checkbox[name="active"]' ).getValue()
+
+					this.down( 'tabpanel' ).items.each(
+						function( panel ) {
+							panel.items.each(
+								function( field ) {
+									if( !Ext.isObject( values[ field.name ] ) ) {
+										values[ field.name ] = {}
+									}
+
+									values[ field.name ][ panel.configId ] = field.getValue()
+								}
+							)
+						}
+					)
+
+					return values
+				},
+				setValues: function( values ) {
+					this.down( 'checkbox[name="active"]' ).setValue( values.active )
+
+					if( !Ext.isObject( values ) ) return
+
+					this.down( 'tabpanel' ).items.each(
+						function( panel ) {
+							panel.items.each(
+								function( field ) {
+									var tmp = values[ field.name ]
+
+									if( Ext.isObject( tmp ) ) field.setValue( tmp[ panel.configId ] )
+								}
+							)
+						}
+					)
+				},
 				fields: [
 					{
 						xtype: 'hiddenfield',
@@ -15,45 +52,100 @@ Ext.define(
 						value: 'admob'
 					},
 					{
-						xtype: 'textfield',
-						fieldLabel: 'Android AdMob Publisher Id (Debug)',
-						name: 'androidAdMobPublisherIdDebug',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'Android AdMob Publisher Id (Release)',
-						name: 'androidAdMobPublisherIdRelease',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'iPad AdMob Publisher Id (Debug)',
-						name: 'iPadAdMobPublisherIdDebug',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'iPad AdMob Publisher Id (Release)',
-						name: 'iPadAdMobPublisherIdRelease',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'iPhone AdMob Publisher Id (Debug)',
-						name: 'iPhoneAdMobPublisherIdDebug',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'iPhone AdMob Publisher Id (Release)',
-						name: 'iPhoneAdMobPublisherIdRelease',
-						value: ''
+						xtype: 'tabpanel',
+						items: [
+							{
+								title: 'Debug',
+								configId: 'debug',
+								items: [
+									{
+										xtype: 'textfield',
+										fieldLabel: 'Android AdMob Publisher Id',
+										name: 'androidAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPad AdMob Publisher Id',
+										name: 'iPadAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPhone AdMob Publisher Id',
+										name: 'iPhoneAdMobPublisherId',
+										value: ''
+									}
+								]
+							},
+							{
+								title: 'Release',
+								configId: 'release',
+								items: [
+									{
+										xtype: 'textfield',
+										fieldLabel: 'Android AdMob Publisher Id',
+										name: 'androidAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPad AdMob Publisher Id',
+										name: 'iPadAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPhone AdMob Publisher Id',
+										name: 'iPhoneAdMobPublisherId',
+										value: ''
+									}
+								]
+							}
+						]
 					}
+
 				]
 			},
 			{
 				name: 'AdMob (with Chartboost)',
+				getValues: function() {
+					var values = {}
+					values.active = this.down( 'checkbox[name="active"]' ).getValue()
+
+					this.down( 'tabpanel' ).items.each(
+						function( panel ) {
+							panel.items.each(
+								function( field ) {
+									if( !Ext.isObject( values[ field.name ] ) ) {
+										values[ field.name ] = {}
+									}
+
+									values[ field.name ][ panel.configId ] = field.getValue()
+								}
+							)
+						}
+					)
+
+					return values
+				},
+				setValues: function( values ) {
+					this.down( 'checkbox[name="active"]' ).setValue( values.active )
+
+					if( !Ext.isObject( values ) ) return
+
+					this.down( 'tabpanel' ).items.each(
+						function( panel ) {
+							panel.items.each(
+								function( field ) {
+									var tmp = values[ field.name ]
+
+									if( Ext.isObject( tmp ) ) field.setValue( tmp[ panel.configId ] )
+								}
+							)
+						}
+					)
+				},
 				fields: [
 					{
 						xtype: 'hiddenfield',
@@ -61,88 +153,105 @@ Ext.define(
 						value: 'admobWithChartboost'
 					},
 					{
-						xtype: 'textfield',
-						fieldLabel: 'Android AdMob Publisher Id (Debug)',
-						name: 'androidAdMobPublisherIdDebug',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'Android AdMob Publisher Id (Release)',
-						name: 'androidAdMobPublisherIdRelease',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'iPad AdMob Publisher Id (Debug)',
-						name: 'iPadAdMobPublisherIdDebug',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'iPad AdMob Publisher Id (Release)',
-						name: 'iPadAdMobPublisherIdRelease',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'iPhone AdMob Publisher Id (Debug)',
-						name: 'iPhoneAdMobPublisherIdDebug',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'iPhone AdMob Publisher Id (Release)',
-						name: 'iPhoneAdMobPublisherIdRelease',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'Android Chartboost App Id (Debug)',
-						name: 'androidChartboostAppIdDebug',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'Android Chartboost App Id (Release)',
-						name: 'androidChartboostAppIdRelease',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'Android Chartboost App Signature (Debug)',
-						name: 'androidChartboostAppSignatureDebug',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'Android Chartboost App Signature (Release)',
-						name: 'androidChartboostAppSignatureRelease',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'iOS Chartboost App Id (Debug)',
-						name: 'iOSChartboostAppIdDebug',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'iOS Chartboost App Id (Release)',
-						name: 'iOSChartboostAppIdRelease',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'iOS Chartboost App Signature (Debug)',
-						name: 'iOSChartboostAppSignatureDebug',
-						value: ''
-					},
-					{
-						xtype: 'textfield',
-						fieldLabel: 'iOS Chartboost App Signature (Release)',
-						name: 'iOSChartboostAppSignatureRelease',
-						value: ''
+						xtype: 'tabpanel',
+						items: [
+							{
+								title: 'Debug',
+								configId: 'debug',
+								items: [
+									{
+										xtype: 'textfield',
+										fieldLabel: 'Android AdMob Publisher Id',
+										name: 'androidAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPad AdMob Publisher Id',
+										name: 'iPadAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPhone AdMob Publisher Id',
+										name: 'iPhoneAdMobPublisherIdDebug',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'Android Chartboost App Id',
+										name: 'androidChartboostAppId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'Android Chartboost App Signature',
+										name: 'androidChartboostAppSignature',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iOS Chartboost App Id',
+										name: 'iOSChartboostAppId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iOS Chartboost App Signature',
+										name: 'iOSChartboostAppSignature',
+										value: ''
+									}
+								]
+							},
+							{
+								title: 'Release',
+								configId: 'release',
+								items: [
+									{
+										xtype: 'textfield',
+										fieldLabel: 'Android AdMob Publisher Id',
+										name: 'androidAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPad AdMob Publisher Id',
+										name: 'iPadAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPhone AdMob Publisher Id',
+										name: 'iPhoneAdMobPublisherIdDebug',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'Android Chartboost App Id',
+										name: 'androidChartboostAppId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'Android Chartboost App Signature',
+										name: 'androidChartboostAppSignature',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iOS Chartboost App Id',
+										name: 'iOSChartboostAppId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iOS Chartboost App Signature',
+										name: 'iOSChartboostAppSignature',
+										value: ''
+									}
+								]
+							}
+						]
 					}
 				]
 			}
