@@ -59,6 +59,12 @@ Ext.define('Spelled.view.project.settings.General' ,{
 					anchor: '100%'
 				},
 				{
+					xtype: 'textfield',
+					name: 'version',
+					fieldLabel: 'Version',
+					anchor: '100%'
+				},
+				{
 					xtype: 'combo',
 					queryMode: 'local',
 					store: {

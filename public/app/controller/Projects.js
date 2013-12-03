@@ -354,6 +354,7 @@ Ext.define('Spelled.controller.Projects', {
 			generalConfig = window.down( 'projectgeneralsettings' ),
 			languageConf  = window.down( 'projectlanguagesettings' ),
             androidConf   = window.down( 'projectandroidsettings' ),
+            iosConf       = window.down( 'projectiossettings' ),
 			tizenConf     = window.down( 'projecttizensettings' ),
 			webConf       = window.down( 'projectwebsettings' ),
 			pluginConf    = window.down( 'projectplugins' ),
@@ -363,6 +364,7 @@ Ext.define('Spelled.controller.Projects', {
 			config        = {}
 
         config.android = Ext.clone( androidConf.getValues() )
+        config.ios     = Ext.clone( iosConf.getValues() )
 		config.tizen   = Ext.clone( tizenConf.getValues() )
 		config.web     = Ext.clone( webConf.getValues() )
 		config.plugins = pluginConf.getPluginsConfig()
@@ -372,7 +374,7 @@ Ext.define('Spelled.controller.Projects', {
 			parseInt( generalValues.screenSizeY, 10)
 		]
 
-		Ext.copyTo( config, generalValues, 'loadingScene,screenMode,orientation,projectId' )
+		Ext.copyTo( config, generalValues, 'loadingScene,screenMode,orientation,projectId,version' )
 		config.quadTreeSize       = parseInt( generalValues.quadTreeSize, 10 )
 		config.defaultLanguage    = languageValues.defaultLanguage
 
@@ -483,6 +485,7 @@ Ext.define('Spelled.controller.Projects', {
 				config   = project.get( 'config' ),
 				general  = view.down( 'projectgeneralsettings' ),
 				language = view.down( 'projectlanguagesettings'),
+                ios      = view.down( 'projectiossettings'),
                 android  = view.down( 'projectandroidsettings'),
 				tizen    = view.down( 'projecttizensettings'),
 				web      = view.down( 'projectwebsettings'),
@@ -499,6 +502,8 @@ Ext.define('Spelled.controller.Projects', {
 			language.getForm().setValues( config )
 
 			if( config.screenSize ) general.getForm().setValues( { screenSizeX: config.screenSize[0], screenSizeY: config.screenSize[1] } )
+
+            if( config.ios ) ios.getForm().setValues( config.ios )
 
             if( config.android ) android.getForm().setValues( config.android )
 
