@@ -176,30 +176,6 @@ Ext.define(
 										fieldLabel: 'iPhone AdMob Publisher Id',
 										name: 'iPhoneAdMobPublisherIdDebug',
 										value: ''
-									},
-									{
-										xtype: 'textfield',
-										fieldLabel: 'Android Chartboost App Id',
-										name: 'androidChartboostAppId',
-										value: ''
-									},
-									{
-										xtype: 'textfield',
-										fieldLabel: 'Android Chartboost App Signature',
-										name: 'androidChartboostAppSignature',
-										value: ''
-									},
-									{
-										xtype: 'textfield',
-										fieldLabel: 'iOS Chartboost App Id',
-										name: 'iOSChartboostAppId',
-										value: ''
-									},
-									{
-										xtype: 'textfield',
-										fieldLabel: 'iOS Chartboost App Signature',
-										name: 'iOSChartboostAppSignature',
-										value: ''
 									}
 								]
 							},
@@ -223,30 +199,6 @@ Ext.define(
 										xtype: 'textfield',
 										fieldLabel: 'iPhone AdMob Publisher Id',
 										name: 'iPhoneAdMobPublisherIdDebug',
-										value: ''
-									},
-									{
-										xtype: 'textfield',
-										fieldLabel: 'Android Chartboost App Id',
-										name: 'androidChartboostAppId',
-										value: ''
-									},
-									{
-										xtype: 'textfield',
-										fieldLabel: 'Android Chartboost App Signature',
-										name: 'androidChartboostAppSignature',
-										value: ''
-									},
-									{
-										xtype: 'textfield',
-										fieldLabel: 'iOS Chartboost App Id',
-										name: 'iOSChartboostAppId',
-										value: ''
-									},
-									{
-										xtype: 'textfield',
-										fieldLabel: 'iOS Chartboost App Signature',
-										name: 'iOSChartboostAppSignature',
 										value: ''
 									}
 								]
