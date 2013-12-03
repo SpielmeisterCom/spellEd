@@ -71,7 +71,7 @@ Ext.define('Spelled.view.project.settings.Plugins' ,{
 				labelWidth: 150
 			},
 			hidden: true,
-			pluginId: record.get( 'name' ),
+			pluginId: record.get( 'pluginId' ),
 			items: fields
 		} )
 
@@ -89,7 +89,7 @@ Ext.define('Spelled.view.project.settings.Plugins' ,{
 	},
 
 	togglePluginVisibility: function( rowModel, record ) {
-		var form = this.down( 'form[pluginId="'+ record.get( 'name' ) +'"]' )
+		var form = this.down( 'form[pluginId="'+ record.get( 'pluginId' ) +'"]' )
 
 		form.setVisible( !form.isVisible() )
 	},

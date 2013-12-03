@@ -188,7 +188,7 @@ Ext.define('Spelled.controller.Projects', {
 
 	fillPluginSettings: function( view, plugin, form ) {
 		var project = this.application.getActiveProject(),
-			name    = plugin.get( 'name' ),
+			name    = plugin.get( 'pluginId' ),
 			config  = project.getPlugin( name )
 
 		form.getForm().setValues( Ext.Object.merge( {}, config, { name: name } ) )

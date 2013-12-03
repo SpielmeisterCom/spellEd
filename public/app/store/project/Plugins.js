@@ -3,10 +3,11 @@ Ext.define(
 	{
 		extend: 'Ext.data.Store',
 
-		fields: [ 'name', 'fields', 'getValues', 'setValues' ],
+		fields: [ 'name', 'pluginId', 'fields', 'getValues', 'setValues' ],
 
 		data : [
 			{
+				pluginId: 'admob',
 				name: 'AdMob',
 				getValues: function() {
 					var values = {}
@@ -46,11 +47,6 @@ Ext.define(
 					)
 				},
 				fields: [
-					{
-						xtype: 'hiddenfield',
-						name: 'id',
-						value: 'admob'
-					},
 					{
 						xtype: 'tabpanel',
 						items: [
@@ -108,6 +104,7 @@ Ext.define(
 				]
 			},
 			{
+				pluginId: 'admobWithChartboost',
 				name: 'AdMob (with Chartboost)',
 				getValues: function() {
 					var values = {}
@@ -147,11 +144,6 @@ Ext.define(
 					)
 				},
 				fields: [
-					{
-						xtype: 'hiddenfield',
-						name: 'id',
-						value: 'admobWithChartboost'
-					},
 					{
 						xtype: 'tabpanel',
 						items: [
