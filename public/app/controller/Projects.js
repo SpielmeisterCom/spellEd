@@ -378,6 +378,12 @@ Ext.define('Spelled.controller.Projects', {
 		config.quadTreeSize       = parseInt( generalValues.quadTreeSize, 10 )
 		config.defaultLanguage    = languageValues.defaultLanguage
 
+		//HACK: should be removed after qualityLevels support has been added
+		var projectConfig = project.get( 'config' )
+		if( projectConfig.qualityLevels ) {
+			config.qualityLevels = projectConfig.qualityLevels
+		}
+
 		project.set( 'config', config )
 		project.setDirty()
 
