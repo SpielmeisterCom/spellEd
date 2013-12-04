@@ -3,7 +3,8 @@ Ext.define('Spelled.view.project.Settings' ,{
     alias: 'widget.projectsettings',
 
 	requires: [
-		'Ext.form.FieldContainer'
+		'Ext.form.FieldContainer',
+		'Spelled.view.project.settings.Resources'
 	],
 
     width: 500,

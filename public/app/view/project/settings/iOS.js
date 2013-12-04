@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.project.settings.iOS' ,{
-    extend: 'Ext.form.Panel',
+    extend: 'Ext.tab.Panel',
     alias: 'widget.projectiossettings',
 
     title : 'iOS',
@@ -7,6 +7,8 @@ Ext.define('Spelled.view.project.settings.iOS' ,{
     initComponent: function() {
 
         Ext.applyIf( this, {
+	        items:[{
+		        title: 'General',
                 items: [
 	                {
 		                xtype:'fieldset',
@@ -44,40 +46,59 @@ Ext.define('Spelled.view.project.settings.iOS' ,{
 				                name: 'openXcode'
 			                }
 		                ]
-	                },
-	                {
-		                xtype:'fieldset',
-		                title: 'Signing options (for release build)',
-		                defaults: {
-			                labelWidth: 130
-		                },
-		                items: [
-			                {
-				                fieldLabel: 'Provisioning Profile',
-				                xtype: 'textfield',
-				                name: 'releaseProvisioningProfile',
-				                anchor: '100%'
-			                }
-		                ]
-	                },
-	                {
-		                xtype:'fieldset',
-		                title: 'Signing options (for debug build)',
-		                defaults: {
-			                labelWidth: 130
-		                },
-		                items: [
-			                {
-				                fieldLabel: 'Provisioning Profile',
-				                xtype: 'textfield',
-				                name: 'debugProvisioningProfile',
-				                anchor: '100%'
-			                }
-		                ]
-	                },
+	                }
                 ]
-            }
-        )
+	        }, {
+				title: 'Signing Options',
+		        items: [ {
+	                xtype:'fieldset',
+	                title: 'Signing options (for release build)',
+	                defaults: {
+		                labelWidth: 130
+	                },
+	                items: [
+		                {
+			                fieldLabel: 'Provisioning Profile',
+			                xtype: 'textfield',
+			                name: 'releaseProvisioningProfile',
+			                anchor: '100%'
+		                },
+		                {
+			                fieldLabel: 'Private key file (.p12)',
+			                xtype: 'textfield',
+			                name: 'releasePrivateKeyFile',
+			                anchor: '100%'
+		                }
+	                ]
+                },
+                {
+	                xtype:'fieldset',
+	                title: 'Signing options (for debug build)',
+	                defaults: {
+		                labelWidth: 130
+	                },
+	                items: [
+		                {
+			                fieldLabel: 'Provisioning Profile',
+			                xtype: 'textfield',
+			                name: 'debugProvisioningProfile',
+			                anchor: '100%'
+		                },
+		                {
+			                fieldLabel: 'Private key file (.p12)',
+			                xtype: 'textfield',
+			                name: 'debugPrivateKeyFile',
+			                anchor: '100%'
+		                }
+	                ]
+                }
+            ]
+	        },
+			{
+				xtype: 'projectresources',
+				storeName: 'project.IOSResources'
+			}]
+	   })
 
         this.callParent( arguments )
     }

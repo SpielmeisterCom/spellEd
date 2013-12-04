@@ -24,6 +24,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.library.menu.Context": [],
   "Spelled.platform.Adapter": [],
   "Spelled.controller.Scripts": [],
+  "Spelled.store.project.AndroidResources": [],
   "Spelled.controller.assets.Sound": [],
   "Spelled.view.library.menu.item.Edit": [],
   "Spelled.view.project.Settings": [],
@@ -66,6 +67,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.menu.Menu": [],
   "Spelled.view.template.component.attribute.Sound": [],
   "Spelled.view.project.settings.Language": [],
+  "Spelled.view.menu.contextmenu.templatesList.EntityComposite": [],
   "Spelled.controller.Library": [],
   "Ext.ux.grid.filter.BooleanFilter": [],
   "Spelled.view.template.component.attribute.Script": [],
@@ -92,6 +94,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.asset.create.KeyFrameAnimation": [],
   "Spelled.view.template.component.Property": [],
   "Spelled.model.template.Component": [],
+  "Spelled.store.project.TizenResources": [],
   "Spelled.view.project.settings.Android": [],
   "Spelled.view.menu.contextmenu.ScriptsList": [],
   "Spelled.model.Script": [],
@@ -159,6 +162,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.store.config.Scenes": [],
   "Ext.ux.DataView.Draggable": [],
   "Spelled.view.scene.plugin.TreeViewDragDrop": [],
+  "Spelled.view.project.settings.Resources": [],
   "Spelled.base.view.IFrame": [],
   "Ext.ux.TabCloseMenu": [],
   "Spelled.model.config.Entity": [],
@@ -204,6 +208,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.view.asset.create.LocalizedFileField": [],
   "Spelled.controller.templates.Components": [],
   "Spelled.store.FoldersTree": [],
+  "Spelled.store.project.IOSResources": [],
   "Ext.ux.form.MultiSelect": [
     "Ext.ux.Multiselect"
   ],
@@ -325,8 +330,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.grid.menu.RangeMenu": [],
   "Ext.ux.RowExpander": [],
   "Spelled.view.system.ContextMenu": [],
-  "Spelled.view.entity.Create": [],
   "Spelled.base.view.GroupedTreeView": [],
+  "Spelled.view.entity.Create": [],
   "Spelled.view.template.system.input.Add": [],
   "Spelled.view.library.folder.Create": [],
   "Spelled.view.asset.inspector.Config": [],
@@ -378,6 +383,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.platform.Adapter": [],
   "Spelled.controller.Scripts": [],
+  "Spelled.store.project.AndroidResources": [],
   "Spelled.controller.assets.Sound": [],
   "Spelled.view.library.menu.item.Edit": [
     "widget.menuitemedit"
@@ -460,6 +466,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.project.settings.Language": [
     "widget.projectlanguagesettings"
   ],
+  "Spelled.view.menu.contextmenu.templatesList.EntityComposite": [
+    "widget.templateslistentitycompositecontextmenu"
+  ],
   "Spelled.controller.Library": [],
   "Ext.ux.grid.filter.BooleanFilter": [
     "gridfilter.boolean"
@@ -516,6 +525,7 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.componenttemplateproperty"
   ],
   "Spelled.model.template.Component": [],
+  "Spelled.store.project.TizenResources": [],
   "Spelled.view.project.settings.Android": [
     "widget.projectandroidsettings"
   ],
@@ -663,6 +673,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.scene.plugin.TreeViewDragDrop": [
     "plugin.scenetreedragdrop"
   ],
+  "Spelled.view.project.settings.Resources": [
+    "widget.projectresources"
+  ],
   "Spelled.base.view.IFrame": [
     "widget.iframe"
   ],
@@ -755,6 +768,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.controller.templates.Components": [],
   "Spelled.store.FoldersTree": [],
+  "Spelled.store.project.IOSResources": [],
   "Ext.ux.form.MultiSelect": [
     "widget.multiselect",
     "widget.multiselectfield"
@@ -1001,11 +1015,11 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.view.system.ContextMenu": [
     "widget.scenesystemslistcontextmenu"
   ],
-  "Spelled.view.entity.Create": [
-    "widget.createentity"
-  ],
   "Spelled.base.view.GroupedTreeView": [
     "widget.groupedtreeview"
+  ],
+  "Spelled.view.entity.Create": [
+    "widget.createentity"
   ],
   "Spelled.view.template.system.input.Add": [
     "widget.addinputtotemplate"

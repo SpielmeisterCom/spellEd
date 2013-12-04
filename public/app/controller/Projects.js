@@ -15,6 +15,12 @@ Ext.define('Spelled.controller.Projects', {
 		'Spelled.view.project.settings.SupportedLanguageContextMenu',
 
 		'Spelled.store.Projects',
+
+		'Spelled.store.project.TizenResources',
+		'Spelled.store.project.AndroidResources',
+		'Spelled.store.project.IOSResources',
+
+
 		'Spelled.store.SupportedOrientations',
 
 		'Spelled.model.Project'
@@ -35,7 +41,10 @@ Ext.define('Spelled.controller.Projects', {
     stores: [
         'Projects',
 	    'SupportedOrientations',
-		'project.Plugins'
+		'project.Plugins',
+	    'project.TizenResources',
+	    'project.AndroidResources',
+	    'project.IOSResources',
     ],
 
     models: [
