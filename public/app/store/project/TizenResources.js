@@ -7,7 +7,7 @@ Ext.define(
 
 		data : [
 			{
-				name: 'icon',
+				name: 'app-icon',
 				xtype: 'image',
 				xdata: {
 					width:      117,
@@ -32,7 +32,7 @@ Ext.define(
 				}
 			},
 			{
-				name: 'tizen-dist1-ca-file',
+				name: 'dist1-ca-file',
 				description: 'cer file',
 				xtype: 'certificate',
 				xdata: {
@@ -41,7 +41,7 @@ Ext.define(
 				}
 			},
 			{
-				name: 'tizen-dist1-key-file',
+				name: 'dist1-key-file',
 				description: 'p12 file',
 				xtype: 'privatekey',
 				xdata: {
@@ -49,7 +49,7 @@ Ext.define(
 				}
 			},
 			{
-				name: 'tizen-dist2-ca-file',
+				name: 'dist2-ca-file',
 				description: 'cer file',
 				xtype: 'certificate',
 				xdata: {
@@ -58,7 +58,7 @@ Ext.define(
 				}
 			},
 			{
-				name: 'tizen-dist2-key-file',
+				name: 'dist2-key-file',
 				description: 'p12 file',
 				xtype: 'certificate',
 				xdata: {
