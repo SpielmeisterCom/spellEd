@@ -3,6 +3,7 @@ define(
 	[
 		'path',
 		'server/extDirectApi/createStorageApi',
+		'server/extDirectApi/getStaticDependencies',
 		'server/extDirectApi/build/clean',
 		'server/extDirectApi/build/debug',
 		'server/extDirectApi/build/export',
@@ -14,6 +15,7 @@ define(
 	function(
 		path,
 		createStorageApi,
+		getStaticDependencies,
 		buildClean,
 		buildDebug,
 		buildExport,
@@ -57,6 +59,17 @@ define(
 			spellCliPath  = path.join( execDir, spellCliPath )
 
             return {
+				DependencyActions : [
+					{
+						name: "getStaticDependencies",
+						len: 1,
+						func: function( req, res, payload ) {
+							var params = payload[ 0 ]
+
+							return getStaticDependencies( projectsRoot, params.projectName, params.libraryId, params.metaData, params.scriptContent )
+						}
+					}
+				],
 				StorageActions    : createStorageApi( projectsRoot ),
 				SpellBuildActions : [
 					{

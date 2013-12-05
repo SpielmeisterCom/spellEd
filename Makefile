@@ -87,7 +87,7 @@ modules/tern/plugin/doc_comment.js > node_modules/codemirror/build/tern.js
 nw-debug:
 	$(NODE) modules/spellCore/tools/n.js -s public/lib -m spellEdDeps \
 -i "underscore,require,module,exports" > public/libs.js
-	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "path,http,fs,child_process,underscore,pathUtil,wrench" > public/nwlibs.js
+	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "amd-helper,path,http,fs,child_process,underscore,pathUtil,wrench" > public/nwlibs.js
 
 	mkdir -p public/lib || true
 
@@ -96,7 +96,7 @@ build/libs.js:
 -i "underscore,require,module,exports" >> build/libs.js
 
 build/nwlibs.js:
-	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "path,http,fs,child_process,underscore,pathUtil,wrench" >> build/nwlibs.js
+	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "amd-helper,path,http,fs,child_process,underscore,pathUtil,wrench" >> build/nwlibs.js
 
 build/spelledjs/public/nwlibs.js: build/nwlibs.js
 	$(NODE) modules/spellCore/tools/n.js mangle build/nwlibs.js -a > build/spelledjs/public/nwlibs.js
