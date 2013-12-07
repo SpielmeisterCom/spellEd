@@ -14,6 +14,10 @@ Ext.define('Spelled.controller.Projects', {
 		'Spelled.view.project.settings.Plugins',
 		'Spelled.view.project.settings.SupportedLanguageContextMenu',
 
+		'Spelled.view.project.resources.Image',
+		'Spelled.view.project.resources.Certificate',
+		'Spelled.view.project.resources.PrivateKeyFile',
+
 		'Spelled.store.Projects',
 
 		'Spelled.store.project.TizenResources',
