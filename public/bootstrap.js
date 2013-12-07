@@ -28,6 +28,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.controller.assets.Sound": [],
   "Spelled.view.library.menu.item.Edit": [],
   "Spelled.view.project.Settings": [],
+  "Spelled.view.project.resources.Certificate": [],
   "Ext.ux.DataView.DragSelector": [],
   "Spelled.MessageBox": [],
   "Spelled.base.view.GroupedTreeList": [],
@@ -143,6 +144,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.store.dependencies.library.Static": [],
   "Spelled.view.script.Properties": [],
   "Spelled.view.script.FolderPicker": [],
+  "Spelled.view.project.resources.Image": [],
   "Ext.ux.event.Player": [],
   "Spelled.platform.target.Abstract": [],
   "Spelled.view.ui.about.License": [],
@@ -328,6 +330,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.model.assets.Animation": [],
   "Spelled.base.grid.property.Grid": [],
   "Ext.ux.grid.menu.RangeMenu": [],
+  "Spelled.view.project.resources.PrivateKeyFile": [],
   "Ext.ux.RowExpander": [],
   "Spelled.view.system.ContextMenu": [],
   "Spelled.base.view.GroupedTreeView": [],
@@ -390,6 +393,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.project.Settings": [
     "widget.projectsettings"
+  ],
+  "Spelled.view.project.resources.Certificate": [
+    "widget.projectresourcecertificate"
   ],
   "Ext.ux.DataView.DragSelector": [],
   "Spelled.MessageBox": [],
@@ -631,6 +637,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Spelled.view.script.FolderPicker": [
     "widget.scriptfolderpicker"
+  ],
+  "Spelled.view.project.resources.Image": [
+    "widget.projectresourceimage"
   ],
   "Ext.ux.event.Player": [],
   "Spelled.platform.target.Abstract": [],
@@ -1011,6 +1020,9 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.defaultpropertygrid"
   ],
   "Ext.ux.grid.menu.RangeMenu": [],
+  "Spelled.view.project.resources.PrivateKeyFile": [
+    "widget.projectresourceprivatekeyfile"
+  ],
   "Ext.ux.RowExpander": [],
   "Spelled.view.system.ContextMenu": [
     "widget.scenesystemslistcontextmenu"
