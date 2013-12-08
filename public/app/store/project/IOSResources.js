@@ -9,17 +9,27 @@ Ext.define(
 			name: 'app-icon-57',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'App icon',
+				title:				'iOS6 iPhone App Icon',
 				description:		'',
 				width:				57,
 				height:				57,
 				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon57.png'
 			}
 		}, {
+			name: 'app-icon-60',
+			xtype: 'projectresourceimage',
+			config: {
+				title:				'iOS7 iPhone App Icon',
+				description:		'',
+				width:				60,
+				height:				60,
+				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon60.png'
+			}
+		}, {
 			name: 'app-icon-72',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'App icon',
+				title:				'iOS6 iPad App Icon',
 				description:		'',
 				width:				72,
 				height:				72,
@@ -29,8 +39,8 @@ Ext.define(
 			name: 'app-icon-76',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'App icon (iOS7)',
-				description:		'App icon for iPad 2 and iPad mini on iOS7 (standard resolution)',
+				title:				'iOS7 iPad App Icon',
+				description:		'',
 				width:				76,
 				height:				76,
 				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon76.png'
@@ -39,7 +49,7 @@ Ext.define(
 			name: 'app-icon-114',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'App icon',
+				title:				'iOS6 iPhone App Icon for retina display',
 				description:		'',
 				width:				114,
 				height:				114,
@@ -49,8 +59,8 @@ Ext.define(
 			name: 'app-icon-120',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'App icon (iOS7)',
-				description:		'App icon for iPhone and iPod touch on iOS7 (high resolution)',
+				title:				'iOS7 iPhone App Icon for retina display',
+				description:		'',
 				width:				120,
 				height:				120,
 				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon120.png'
@@ -59,7 +69,7 @@ Ext.define(
 			name: 'app-icon-144',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'App icon',
+				title:				'iOS6 iPad App Icon for retina display',
 				description:		'',
 				width:				144,
 				height:				144,
@@ -69,8 +79,8 @@ Ext.define(
 			name: 'app-icon-120',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'App icon (iOS7)',
-				description:		'App icon for iPad and iPad mini on iOS7 (high resolution)',
+				title:				'iOS7 iPad App Icon for retina display',
+				description:		'',
 				width:				152,
 				height:				152,
 				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon152.png'
@@ -144,6 +154,26 @@ Ext.define(
 				width:				1536,
 				height:				2048,
 				path:				'resources/ios/Images.xcassets/LaunchImage.launchimage/Default-Landscape@2x~ipad.png'
+			}
+		}, {
+			name: 'appsubmission',
+			xtype: 'projectresourceimage',
+			config: {
+				title:				'App Submission',
+				description:		'',
+				width:				512,
+				height:				512,
+				path:				'resources/ios/Images.xcassets/iTunesArtwork.png'
+			}
+		}, {
+			name: 'appsubmission',
+			xtype: 'projectresourceimage',
+			config: {
+				title:				'App Submission (high resolution)',
+				description:		'',
+				width:				1024,
+				height:				1024,
+				path:				'resources/ios/Images.xcassets/iTunesArtwork@2x.png'
 			}
 		}, {
 			name: 'provisioningfile-adhoc',
