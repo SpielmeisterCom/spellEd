@@ -3,7 +3,7 @@ Ext.define(
 	{
 		extend: 'Ext.data.Store',
 
-		fields: [ 'name', 'xtype', 'xdata' ],
+		fields: [ 'name', 'xtype', 'config' ],
 
 		data : [
 

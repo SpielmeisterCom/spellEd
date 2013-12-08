@@ -16,37 +16,30 @@ Ext.define('Spelled.view.project.settings.Resources' ,{
 
 		this.store = Ext.getStore( this.storeName )
 
-		var forms = []
-		this.store.each(
-			function( record ) {
-				console.log(record)
-				//forms.push( me.createPluginForm( record ) )
-			}
-		)
-
 		Ext.applyIf( this, {
 			items: [
 				{
 					region: 'west',
 					flex: 1,
 					xtype: 'grid',
-					name: 'plugins',
+					name: 'resources',
 					sortableColumns: false,
 					columns: [
 						{ width: '100%',text: 'Name',  dataIndex: 'name', menuDisabled: true }
 					],
 					store: this.store,
 					listeners: {
-					//	select: Ext.bind( me.togglePluginVisibility, me ),
-					//	deselect: Ext.bind( me.togglePluginVisibility, me )
+						select: Ext.bind( me.toggleResourceVisibility, me ),
+						deselect: Ext.bind( me.toggleResourceVisibility, me )
 					}
 				}, {
 					region: 'center',
 					layout: 'fit',
 					flex: 3,
 					xtype: 'container',
-					name: 'plugincontainer',
-					items: forms
+					name: 'resourcescontainer',
+					items: [
+					]
 				}
 			]
 		})
@@ -54,61 +47,24 @@ Ext.define('Spelled.view.project.settings.Resources' ,{
 		this.callParent( arguments )
 	},
 
-	createPluginForm: function( record ){
-		var fields    = Ext.clone( record.get( 'fields' ) ),
-			getValues = record.get( 'getValues'),
-			setValues = record.get( 'setValues' )
 
-		fields.unshift( {
-			xtype: 'checkbox',
-			name: 'active',
-			boxLabel: 'Active',
-			inputValue: true,
-			uncheckedValue: false
-		} )
+	toggleResourceVisibility: function( rowModel, record ) {
+		var pluginContainer = this.down( 'container[name="resourcescontainer"]'),
+			xtype           = record.get( 'xtype' ),
+			config          = record.get( 'config' )
 
-		var form = Ext.widget( 'form', {
-			name: 'pluginform',
-			layout: 'form',
-			fieldDefaults: {
-				labelWidth: 150
-			},
-			hidden: true,
-			pluginId: record.get( 'pluginId' ),
-			items: fields
-		} )
+		var resourceWidget = Ext.widget( xtype, config )
 
-		if( Ext.isFunction( getValues ) ) {
-			form.getValues = Ext.bind( getValues, form )
-		}
-
-		if( Ext.isFunction( setValues ) ) {
-			form.getForm().setValues = Ext.bind( setValues, form )
-		}
-
-		this.fireEvent( 'fillpluginform', this, record, form )
-
-		return form
+		pluginContainer.removeAll( )
+		pluginContainer.add( resourceWidget )
 	},
 
-	togglePluginVisibility: function( rowModel, record ) {
-		var form = this.down( 'form[pluginId="'+ record.get( 'pluginId' ) +'"]' )
-
-		form.setVisible( !form.isVisible() )
+	getValues: function() {
+		return {}
 	},
 
-	getPluginsConfig: function() {
-		var container = this.down( 'container[name="plugincontainer"]' ),
-			forms     = container.query( 'form' ),
-			config    = {}
+	setValues: function( values ) {
 
-		Ext.Array.each(
-			forms,
-			function( form ) {
-				config[ form.pluginId ] = form.getValues()
-			}
-		)
-
-		return config
 	}
+
 })

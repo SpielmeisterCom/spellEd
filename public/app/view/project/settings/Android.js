@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.project.settings.Android' ,{
-	extend: 'Ext.tab.Panel',
+	extend: 'Spelled.view.project.settings.TabPanel',
     alias: 'widget.projectandroidsettings',
 
     title : 'Android',
@@ -9,6 +9,8 @@ Ext.define('Spelled.view.project.settings.Android' ,{
 		Ext.applyIf( this, {
 			items:[{
 				title: 'General',
+				xtype: 'projectsettingsform',
+
 				items: [
 					{
 						xtype:'fieldset',
@@ -33,35 +35,32 @@ Ext.define('Spelled.view.project.settings.Android' ,{
 					}
 				]
 			}, {
-				title: 'Release Signing',
+				title: 'Signing',
+				configId: 'signing',
+				xtype: 'projectsettingsform',
+
 				items: [{
 					xtype:'fieldset',
-					title: 'Signing options (for release build)',
+					title: 'Release builds',
 					defaults: {
 						labelWidth: 130
 					},
 					items: [
 						{
 							xtype: 'textfield',
-							name: 'signingKeyStore',
-							fieldLabel: 'Keystore',
-							anchor: '100%'
-						},
-						{
-							xtype: 'textfield',
-							name: 'signingKeyStorePass',
+							name: 'releaseKeyStorePassword',
 							fieldLabel: 'Keystore Password',
 							anchor: '100%'
 						},
 						{
 							xtype: 'textfield',
-							name: 'signingKeyAlias',
+							name: 'releaseKeyAlias',
 							fieldLabel: 'Key Alias',
 							anchor: '100%'
 						},
 						{
 							xtype: 'textfield',
-							name: 'signingKeyPass',
+							name: 'releaseKeyPassword',
 							fieldLabel: 'Key Password',
 							anchor: '100%'
 						}

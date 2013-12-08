@@ -3,13 +3,15 @@ Ext.define(
 	{
 		extend: 'Ext.data.Store',
 
-		fields: [ 'name', 'xtype', 'xdata' ],
+		fields: [ 'name', 'xtype', 'config' ],
 
 		data : [
 			{
 				name: 'app-icon',
-				xtype: 'image',
-				xdata: {
+				xtype: 'projectresourceimage',
+				config: {
+					title:       'Main Application Icon',
+					description: '',
 					width:      117,
 					height:     117,
 					path:       'resources/tizen/icon.png'
@@ -17,52 +19,63 @@ Ext.define(
 			},
 			{
 				name: 'author-ca-file',
-				description: 'cer file',
-				xtype: 'certificate',
-				xdata: {
-					path: 'resources/tizen/certs/tizen-developer-ca.cer'
+				xtype: 'projectresourcecertificate',
+				config: {
+					title:          'Author CA Certficate',
+					description:    '',
+					type:           'x509',
+					path:           'resources/tizen/certificates/tizen-developer-ca.cer'
 				}
 			},
 			{
 				name: 'author-key-file',
-				description: 'p12 file',
-				xtype: 'privatekey',
-				xdata: {
-
+				xtype: 'projectresourceprivatekeyfile',
+				config: {
+					title:          'Distribution 2 CA Private Key File',
+					description:    '',
+					type:           'p12',
+					path:           'resources/tizen/certificates/tizen-developer-signer.p12'
 				}
 			},
 			{
 				name: 'dist1-ca-file',
 				description: 'cer file',
-				xtype: 'certificate',
-				xdata: {
-					path: 'resources/tizen/certs/tizen-distributor-ca.cer'
-
+				xtype: 'projectresourcecertificate',
+				config: {
+					title:          'Distribution 1 CA Certficiate',
+					description:    '',
+					type:           'x509',
+					path:           'resources/tizen/certificates/tizen-distributor-1-ca.cer'
 				}
 			},
 			{
 				name: 'dist1-key-file',
-				description: 'p12 file',
-				xtype: 'privatekey',
-				xdata: {
-
+				xtype: 'projectresourceprivatekeyfile',
+				config: {
+					title:          'Distribution 1 CA Private Key File',
+					description:    '',
+					type:           'p12',
+					path:           'resources/tizen/certificates/tizen-distributor-1-signer.p12'
 				}
 			},
 			{
 				name: 'dist2-ca-file',
-				description: 'cer file',
-				xtype: 'certificate',
-				xdata: {
-					path: 'resources/tizen/certs/tizen-distributor-ca.cer'
-
+				xtype: 'projectresourcecertificate',
+				config: {
+					title:          'Distribution 2 CA Certficiate',
+					description:    '',
+					type:           'x509',
+					path:           'resources/tizen/certificates/tizen-distributor-2-ca.cer'
 				}
 			},
 			{
 				name: 'dist2-key-file',
-				description: 'p12 file',
-				xtype: 'certificate',
-				xdata: {
-
+				xtype: 'projectresourceprivatekeyfile',
+				config: {
+					title:          'Distribution 2 CA Private Key File',
+					description:    '',
+					type:           'p12',
+					path:           'resources/tizen/certificates/tizen-distributor-2-signer.p12'
 				}
 			}
 		]

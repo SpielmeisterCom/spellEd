@@ -3,13 +3,24 @@ Ext.define(
 	{
 		extend: 'Ext.data.Store',
 
-		fields: [ 'name', 'xtype', 'xdata' ],
+		fields: [ 'name', 'xtype', 'config' ],
 
 		data : [
 			{
+				name: 'release-keystore',
+				xtype: 'projectresourceprivatekeyfile',
+				config: {
+					title:          'KeyStore for release builds',
+					description:    '',
+					type:           'java-keystore',
+					path:           'resources/android/certificates/release.keystore'
+				}
+			},
+			{
 				name: 'ldpi-icon',
-				xtype: 'image',
-				xdata: {
+				xtype: 'projectresourceimage',
+				config: {
+					title:      'ldpi icon',
 					width:      36,
 					height:     36,
 					path:       'resources/android/drawable-ldpi/icon.png'
@@ -17,8 +28,9 @@ Ext.define(
 			},
 			{
 				name: 'mdpi-icon',
-				xtype: 'image',
-				xdata: {
+				xtype: 'projectresourceimage',
+				config: {
+					title:      'mdpi icon',
 					width:      48,
 					height:     48,
 					path:       'resources/android/drawable-mdpi/icon.png'
@@ -26,8 +38,9 @@ Ext.define(
 			},
 			{
 				name: 'hdpi-icon',
-				xtype: 'image',
-				xdata: {
+				xtype: 'projectresourceimage',
+				config: {
+					title:      'hdpi icon',
 					width:      72,
 					height:     72,
 					path:       'resources/android/drawable-hdpi/icon.png'
@@ -35,8 +48,9 @@ Ext.define(
 			},
 			{
 				name: 'xhdpi-icon',
-				xtype: 'image',
-				xdata: {
+				xtype: 'projectresourceimage',
+				config: {
+					title:      'xhdpi icon',
 					width:      96,
 					height:     96,
 					path:       'resources/android/drawable-xhdpi/icon.png'

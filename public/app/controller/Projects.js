@@ -6,6 +6,7 @@ Ext.define('Spelled.controller.Projects', {
 		'Spelled.view.project.Settings',
 		'Spelled.view.project.settings.General',
 		'Spelled.view.project.settings.Language',
+		'Spelled.view.project.settings.TabPanel',
         'Spelled.view.project.settings.Android',
         'Spelled.view.project.settings.iOS',
 		'Spelled.view.project.settings.Tizen',
@@ -13,6 +14,10 @@ Ext.define('Spelled.controller.Projects', {
 		'Spelled.view.project.settings.Web',
 		'Spelled.view.project.settings.Plugins',
 		'Spelled.view.project.settings.SupportedLanguageContextMenu',
+
+		'Spelled.view.project.resources.Image',
+		'Spelled.view.project.resources.Certificate',
+		'Spelled.view.project.resources.PrivateKeyFile',
 
 		'Spelled.store.Projects',
 
@@ -513,18 +518,19 @@ Ext.define('Spelled.controller.Projects', {
 			general.loadRecord( project )
 			language.loadRecord( project )
 
-			general.getForm().setValues( config )
-			language.getForm().setValues( config )
+			general.setValues( config )
+			language.setValues( config )
 
-			if( config.screenSize ) general.getForm().setValues( { screenSizeX: config.screenSize[0], screenSizeY: config.screenSize[1] } )
+			if( config.screenSize ) general.setValues( { screenSizeX: config.screenSize[0], screenSizeY: config.screenSize[1] } )
 
-            if( config.ios ) ios.getForm().setValues( config.ios )
+            if( config.ios ) ios.setValues( config.ios )
 
-            if( config.android ) android.getForm().setValues( config.android )
+            if( config.android ) android.setValues( config.android )
 
-			if( config.tizen ) tizen.getForm().setValues( config.tizen )
+			if( config.tizen ) tizen.setValues( config.tizen )
 
-			if( config.web ) web.getForm().setValues( config.web )
+			if( config.web ) web.setValues( config.web )
+
 		} else {
 			Spelled.MessageBox.showMissingProjectsError()
 		}

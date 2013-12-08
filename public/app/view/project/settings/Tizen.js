@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.project.settings.Tizen' ,{
-    extend: 'Ext.tab.Panel',
+    extend: 'Spelled.view.project.settings.TabPanel',
     alias: 'widget.projecttizensettings',
 
     title : 'Tizen',
@@ -7,13 +7,11 @@ Ext.define('Spelled.view.project.settings.Tizen' ,{
 	initComponent: function() {
 
 		Ext.applyIf( this, {
-			defaults: {
-				padding:5
-			},
-
 			items: [
 			{
 				title: 'General',
+				xtype: 'projectsettingsform',
+
 				items: [
 					{
 						xtype:'fieldset',
@@ -45,8 +43,9 @@ Ext.define('Spelled.view.project.settings.Tizen' ,{
 				]
 			},
 			{
-				title: 'Release Signing',
-				configId: 'releaseSigning',
+				title: 'Signing',
+				configId: 'signing',
+				xtype: 'projectsettingsform',
 
 				items: [
 				{
