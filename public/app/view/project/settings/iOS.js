@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.project.settings.iOS' ,{
-    extend: 'Ext.tab.Panel',
+    extend: 'Spelled.view.project.settings.TabPanel',
     alias: 'widget.projectiossettings',
 
     title : 'iOS',
@@ -9,7 +9,9 @@ Ext.define('Spelled.view.project.settings.iOS' ,{
         Ext.applyIf( this, {
 	        items:[{
 		        title: 'General',
-                items: [
+		        xtype: 'projectsettingsform',
+
+		        items: [
 	                {
 		                xtype:'fieldset',
 		                title: 'App settings',
@@ -49,7 +51,9 @@ Ext.define('Spelled.view.project.settings.iOS' ,{
 	                }
                 ]
 	        }, {
-				title: 'Signing Options',
+				title: 'Signing',
+		        xtype: 'projectsettingsform',
+
 		        items: [ {
 	                xtype:'fieldset',
 	                title: 'Signing options (for release build)',

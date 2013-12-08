@@ -8,25 +8,33 @@ Ext.define('Spelled.view.project.resources.Image', {
 		Ext.applyIf( this, {
 			items:[
 				{
-					xtype:      'displayfield',
-					fieldLabel: 'Dimensions',
-					value:      this.height + ' x ' + this.height,
-					anchor:     '100%'
-				},
-				{
-					xtype:      'displayfield',
-					fieldLabel: 'Path',
-					value:      this.path,
-					anchor:     '100%'
-				},
-				{
-					xtype:      'displayfield',
-					fieldLabel: 'Description',
-					value:      this.description,
-					anchor:     '100%'
+					xtype:      'form',
+					padding:    5,
+					border:     false,
+					items: [
+						{
+							xtype:      'displayfield',
+							fieldLabel: 'Dimensions',
+							value:      this.height + ' x ' + this.height,
+							anchor:     '100%'
+						},
+						{
+							xtype:      'displayfield',
+							fieldLabel: 'Path',
+							value:      this.path,
+							anchor:     '100%'
+						},
+						{
+							xtype:      'displayfield',
+							fieldLabel: 'Description',
+							value:      this.description,
+							anchor:     '100%'
+						}
+					]
 				},
 				{
 					xtype: 'image',
+					padding:    5,
 					src: Spelled.Converter.toWorkspaceUrl( projectName + '/' + this.path )
 				}
 			]

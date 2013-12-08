@@ -57,5 +57,14 @@ Ext.define('Spelled.view.project.settings.Resources' ,{
 
 		pluginContainer.removeAll( )
 		pluginContainer.add( resourceWidget )
+	},
+
+	getValues: function() {
+		return {}
+	},
+
+	setValues: function( values ) {
+
 	}
+
 })
