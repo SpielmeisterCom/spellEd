@@ -18,6 +18,7 @@ Ext.define('Spelled.controller.Projects', {
 		'Spelled.view.project.resources.Image',
 		'Spelled.view.project.resources.Certificate',
 		'Spelled.view.project.resources.PrivateKeyFile',
+		'Spelled.view.project.resources.ProvisionFile',
 
 		'Spelled.store.Projects',
 

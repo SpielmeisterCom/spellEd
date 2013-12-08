@@ -9,7 +9,7 @@ Ext.define(
 			name: 'app-icon-57',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'Main Application Icon',
+				title:				'App icon',
 				description:		'',
 				width:				57,
 				height:				57,
@@ -19,7 +19,7 @@ Ext.define(
 			name: 'app-icon-72',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'Main Application Icon',
+				title:				'App icon',
 				description:		'',
 				width:				72,
 				height:				72,
@@ -29,8 +29,8 @@ Ext.define(
 			name: 'app-icon-76',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'Main Application Icon',
-				description:		'iOS 7',
+				title:				'App icon (iOS7)',
+				description:		'App icon for iPad 2 and iPad mini on iOS7 (standard resolution)',
 				width:				76,
 				height:				76,
 				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon76.png'
@@ -39,7 +39,7 @@ Ext.define(
 			name: 'app-icon-114',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'Main Application Icon',
+				title:				'App icon',
 				description:		'',
 				width:				114,
 				height:				114,
@@ -49,8 +49,8 @@ Ext.define(
 			name: 'app-icon-120',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'Main Application Icon',
-				description:		'iOS7',
+				title:				'App icon (iOS7)',
+				description:		'App icon for iPhone and iPod touch on iOS7 (high resolution)',
 				width:				120,
 				height:				120,
 				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon120.png'
@@ -59,7 +59,7 @@ Ext.define(
 			name: 'app-icon-144',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'Main Application Icon',
+				title:				'App icon',
 				description:		'',
 				width:				144,
 				height:				144,
@@ -69,8 +69,8 @@ Ext.define(
 			name: 'app-icon-120',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'Main Application Icon',
-				description:		'iOS7',
+				title:				'App icon (iOS7)',
+				description:		'App icon for iPad and iPad mini on iOS7 (high resolution)',
 				width:				152,
 				height:				152,
 				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon152.png'
@@ -144,6 +144,22 @@ Ext.define(
 				width:				1536,
 				height:				2048,
 				path:				'resources/ios/Images.xcassets/LaunchImage.launchimage/Default-Landscape@2x~ipad.png'
+			}
+		}, {
+			name: 'provisioningfile-adhoc',
+			xtype: 'projectresourceprovisionfile',
+			config: {
+				title:          'AdHoc Provisioning Profile',
+				description:    '',
+				path:           'resources/ios/certificates/adhoc.mobileprovision'
+			}
+		}, {
+			name: 'provisioningfile-appstore',
+			xtype: 'projectresourceprovisionfile',
+			config: {
+				title:          'App Store Provisioning Profile',
+				description:    '',
+				path:           'resources/ios/certificates/store.mobileprovision'
 			}
 		}]
 	}
