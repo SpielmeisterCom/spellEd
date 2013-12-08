@@ -15,7 +15,7 @@ Ext.define('Spelled.view.project.resources.Image', {
 						{
 							xtype:      'displayfield',
 							fieldLabel: 'Dimensions',
-							value:      this.height + ' x ' + this.height,
+							value:      this.width + ' x ' + this.height,
 							anchor:     '100%'
 						},
 						{

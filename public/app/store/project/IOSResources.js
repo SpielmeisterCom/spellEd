@@ -143,7 +143,7 @@ Ext.define(
 				description:		'',
 				width:				768,
 				height:				1024,
-				path:				'resources/ios/Images.xcassets/LaunchImage.launchimage/Default-Landscape~ipad.png'
+				path:				'resources/ios/Images.xcassets/LaunchImage.launchimage/Default-Portrait~ipad.png'
 			}
 		}, {
 			name: 'launchimage-portrait-ipad-2x',
@@ -153,7 +153,7 @@ Ext.define(
 				description:		'',
 				width:				1536,
 				height:				2048,
-				path:				'resources/ios/Images.xcassets/LaunchImage.launchimage/Default-Landscape@2x~ipad.png'
+				path:				'resources/ios/Images.xcassets/LaunchImage.launchimage/Default-Portrait@2x~ipad.png'
 			}
 		}, {
 			name: 'appstore-icon',
