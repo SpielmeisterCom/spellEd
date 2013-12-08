@@ -63,6 +63,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.TabReorderer": [],
   "Ext.ux.grid.filter.NumericFilter": [],
   "Spelled.model.config.Scene": [],
+  "Spelled.view.project.settings.TabPanel": [],
   "Ext.ux.event.Recorder": [],
   "Spelled.view.asset.create.2dTileMap": [],
   "Spelled.view.menu.Menu": [],
@@ -290,6 +291,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Spelled.Validator": [],
   "Spelled.controller.assets.Translations": [],
   "Spelled.controller.Templates": [],
+  "Spelled.view.project.settings.Form": [],
   "Spelled.view.scene.plugin.CellEditing": [],
   "Spelled.model.assets.KeyFrameAnimation": [],
   "Spelled.controller.Layout": [],
@@ -459,6 +461,7 @@ Ext.ClassManager.addNameAliasMappings({
     "gridfilter.numeric"
   ],
   "Spelled.model.config.Scene": [],
+  "Spelled.view.project.settings.TabPanel": [],
   "Ext.ux.event.Recorder": [],
   "Spelled.view.asset.create.2dTileMap": [
     "widget.2dtilemapconfig"
@@ -942,6 +945,9 @@ Ext.ClassManager.addNameAliasMappings({
   "Spelled.Validator": [],
   "Spelled.controller.assets.Translations": [],
   "Spelled.controller.Templates": [],
+  "Spelled.view.project.settings.Form": [
+    "widget.projectsettingsform"
+  ],
   "Spelled.view.scene.plugin.CellEditing": [
     "plugin.renameplugin"
   ],
