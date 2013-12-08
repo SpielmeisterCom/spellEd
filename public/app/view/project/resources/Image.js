@@ -29,13 +29,23 @@ Ext.define('Spelled.view.project.resources.Image', {
 							fieldLabel: 'Description',
 							value:      this.description,
 							anchor:     '100%'
+						},
+						{
+							xtype:      'displayfield',
+							fieldLabel: 'Preview',
+							value:      '',
+							anchor:     '100%'
 						}
 					]
 				},
 				{
 					xtype: 'image',
 					padding:    5,
-					src: Spelled.Converter.toWorkspaceUrl( projectName + '/' + this.path )
+					style: {
+						maxWidth: '100%',
+						maxHeight: '100%'
+					},
+					src: Spelled.Converter.toWorkspaceUrl( projectName + '/' + this.path ) + "?t=" + Ext.Date.now()
 				}
 			]
 		})

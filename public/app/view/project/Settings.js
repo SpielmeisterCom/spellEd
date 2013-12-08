@@ -7,8 +7,8 @@ Ext.define('Spelled.view.project.Settings' ,{
 		'Spelled.view.project.settings.Resources'
 	],
 
-    width: 500,
-    height: 500,
+    width: 1000,
+    height: 700,
 	layout: 'fit',
 
     title : 'Project settings',

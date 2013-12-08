@@ -89,7 +89,7 @@ Ext.define(
 			name: 'launchimage',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'Main Application Launchimage',
+				title:				'iPhone and iPod Touch launch image',
 				description:		'',
 				width:				320,
 				height:				480,
@@ -99,7 +99,7 @@ Ext.define(
 			name: 'launchimage-2x',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'Main Application Launchimage',
+				title:				'iPhone and iPod Touch launch image for retina display',
 				description:		'',
 				width:				640,
 				height:				960,
@@ -109,7 +109,7 @@ Ext.define(
 			name: 'launchimage-568h-2x',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'Main Application Launchimage',
+				title:				'iPhone 5 and iPod Touch (5th generation) launch image',
 				description:		'',
 				width:				640,
 				height:				1136,
@@ -119,7 +119,7 @@ Ext.define(
 			name: 'launchimage-landscape-ipad',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'Main Application Launchimage',
+				title:				'iPad landscape launch image',
 				description:		'',
 				width:				1024,
 				height:				768,
@@ -129,7 +129,7 @@ Ext.define(
 			name: 'launchimage-landscape-ipad-2x',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'Main Application Launchimage',
+				title:				'iPad landscape launch image for retina display',
 				description:		'',
 				width:				2048,
 				height:				1536,
@@ -139,7 +139,7 @@ Ext.define(
 			name: 'launchimage-potrait-ipad',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'Main Application Launchimage',
+				title:				'iPad portrait launch image',
 				description:		'',
 				width:				768,
 				height:				1024,
@@ -149,27 +149,27 @@ Ext.define(
 			name: 'launchimage-portrait-ipad-2x',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'Main Application Launchimage',
+				title:				'iPad portrait launch image for retina display',
 				description:		'',
 				width:				1536,
 				height:				2048,
 				path:				'resources/ios/Images.xcassets/LaunchImage.launchimage/Default-Landscape@2x~ipad.png'
 			}
 		}, {
-			name: 'appsubmission',
+			name: 'appstore-icon',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'App Submission',
+				title:				'App icon for the App Store',
 				description:		'',
 				width:				512,
 				height:				512,
 				path:				'resources/ios/Images.xcassets/iTunesArtwork.png'
 			}
 		}, {
-			name: 'appsubmission',
+			name: 'appstore-icon-2x',
 			xtype: 'projectresourceimage',
 			config: {
-				title:				'App Submission (high resolution)',
+				title:				'App icon for the App Store (high resolution)',
 				description:		'',
 				width:				1024,
 				height:				1024,

@@ -20,7 +20,7 @@ Ext.define('Spelled.view.project.settings.Resources' ,{
 			items: [
 				{
 					region: 'west',
-					flex: 2,
+					flex: 1,
 					xtype: 'grid',
 					name: 'resources',
 					sortableColumns: false,
