@@ -10,11 +10,13 @@ Ext.define(
 				name: 'app-icon',
 				xtype: 'projectresourceimage',
 				config: {
-					title:       'Main Application Icon',
-					description: '',
-					width:      117,
-					height:     117,
-					path:       'resources/tizen/icon.png'
+					title:				'Main Application Icon',
+					description:		'This type of icon represents the application. It is recommend to have a circular shape ' +
+										'for the icons of the Tizen platform, but it is not mandatory. For more information visit ' +
+										'https://developer.tizen.org/documentation/ux-guide/visual-style/icons',
+					width:				117,
+					height:				117,
+					path:				'resources/tizen/icon.png'
 				}
 			},
 			{
