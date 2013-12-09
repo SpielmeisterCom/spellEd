@@ -373,6 +373,7 @@ Ext.define('Spelled.controller.Projects', {
             iosConf       = window.down( 'projectiossettings' ),
 			tizenConf     = window.down( 'projecttizensettings' ),
 			webConf       = window.down( 'projectwebsettings' ),
+			windowsConf   = window.down( 'projectwindowssettings' ),
 			pluginConf    = window.down( 'projectplugins' ),
 			project       = generalConfig.getRecord(),
 			generalValues = generalConfig.getValues(),
@@ -383,6 +384,7 @@ Ext.define('Spelled.controller.Projects', {
         config.ios     = Ext.clone( iosConf.getValues() )
 		config.tizen   = Ext.clone( tizenConf.getValues() )
 		config.web     = Ext.clone( webConf.getValues() )
+		config.windows = Ext.clone( windowsConf.getValues() )
 		config.plugins = pluginConf.getPluginsConfig()
 
 		config.screenSize = [

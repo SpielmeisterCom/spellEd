@@ -18,7 +18,7 @@ Ext.define(
 				}
 			},
 			{
-				name: 'smallLogo',
+				name: 'small-logo',
 				xtype: 'projectresourceimage',
 				config: {
 					title: 'Small Logo',
@@ -29,7 +29,7 @@ Ext.define(
 				}
 			},
 			{
-				name: 'storeLogo',
+				name: 'store-logo',
 				xtype: 'projectresourceimage',
 				config: {
 					title: 'Store Logo',
@@ -40,7 +40,7 @@ Ext.define(
 				}
 			},
 			{
-				name: 'splashScreen',
+				name: 'splash-screen',
 				xtype: 'projectresourceimage',
 				config: {
 					title: 'Splash Screen',
@@ -54,9 +54,9 @@ Ext.define(
 				name: 'author-pfx-file',
 				xtype: 'projectresourcecertificate',
 				config: {
-					title:          'Personal Information Exchange',
+					title:          'Personal information exchange',
 					description:    '',
-					type:           'x509',
+					type:           'pfx',
 					path:           'resources/windows/certificates/windows-store.pfx'
 				}
 			}
