@@ -513,6 +513,7 @@ Ext.define('Spelled.controller.Projects', {
                 android  = view.down( 'projectandroidsettings'),
 				tizen    = view.down( 'projecttizensettings'),
 				web      = view.down( 'projectwebsettings'),
+				windows  = view.down( 'projectwindowssettings'),
 				store    = project.getSupportedLanguages()
 
 			store.sort( 'name' )
@@ -534,6 +535,8 @@ Ext.define('Spelled.controller.Projects', {
 			if( config.tizen ) tizen.setValues( config.tizen )
 
 			if( config.web ) web.setValues( config.web )
+
+			if( config.windows ) windows.setValues( config.windows )
 
 		} else {
 			Spelled.MessageBox.showMissingProjectsError()
