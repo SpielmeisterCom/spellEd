@@ -8,7 +8,8 @@ Ext.define('Spelled.view.project.settings.Resources' ,{
 	requires: [
 		'Spelled.store.project.TizenResources',
 		'Spelled.store.project.AndroidResources',
-		'Spelled.store.project.IOSResources'
+		'Spelled.store.project.IOSResources',
+		'Spelled.store.project.WindowsResources'
 	],
 
 	initComponent: function() {

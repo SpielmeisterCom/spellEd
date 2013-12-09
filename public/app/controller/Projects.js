@@ -51,6 +51,7 @@ Ext.define('Spelled.controller.Projects', {
 	    'project.TizenResources',
 	    'project.AndroidResources',
 	    'project.IOSResources',
+		'project.WindowsResources'
     ],
 
     models: [
