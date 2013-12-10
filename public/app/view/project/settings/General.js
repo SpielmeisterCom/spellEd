@@ -71,7 +71,8 @@ Ext.define('Spelled.view.project.settings.General' ,{
 						fields: ['name'],
 						data : [
 							{ "name":"fit"},
-							{ "name":"fixed"}
+							{ "name":"fixed"},
+							{ "name":"fill"}
 						]
 					},
 					name: 'screenMode',
