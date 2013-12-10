@@ -373,7 +373,7 @@ Ext.define('Spelled.controller.Projects', {
             iosConf       = window.down( 'projectiossettings' ),
 			tizenConf     = window.down( 'projecttizensettings' ),
 			webConf       = window.down( 'projectwebsettings' ),
-			windowsConf   = window.down( 'projectwindowssettings' ),
+			winstoreConf  = window.down( 'projectwindowssettings' ),
 			pluginConf    = window.down( 'projectplugins' ),
 			project       = generalConfig.getRecord(),
 			generalValues = generalConfig.getValues(),
@@ -384,7 +384,7 @@ Ext.define('Spelled.controller.Projects', {
         config.ios     = Ext.clone( iosConf.getValues() )
 		config.tizen   = Ext.clone( tizenConf.getValues() )
 		config.web     = Ext.clone( webConf.getValues() )
-		config.windows = Ext.clone( windowsConf.getValues() )
+		config.winstore = Ext.clone( winstoreConf.getValues() )
 		config.plugins = pluginConf.getPluginsConfig()
 
 		config.screenSize = [
@@ -513,7 +513,7 @@ Ext.define('Spelled.controller.Projects', {
                 android  = view.down( 'projectandroidsettings'),
 				tizen    = view.down( 'projecttizensettings'),
 				web      = view.down( 'projectwebsettings'),
-				windows  = view.down( 'projectwindowssettings'),
+				winstore = view.down( 'projectwindowssettings'),
 				store    = project.getSupportedLanguages()
 
 			store.sort( 'name' )
@@ -536,7 +536,7 @@ Ext.define('Spelled.controller.Projects', {
 
 			if( config.web ) web.setValues( config.web )
 
-			if( config.windows ) windows.setValues( config.windows )
+			if( config.winstore ) winstore.setValues( config.winstore )
 
 		} else {
 			Spelled.MessageBox.showMissingProjectsError()

@@ -2,7 +2,7 @@ Ext.define('Spelled.view.project.settings.Windows' ,{
 	extend: 'Spelled.view.project.settings.TabPanel',
     alias: 'widget.projectwindowssettings',
 
-    title : 'Windows',
+    title : 'Windows Store',
 
 	requires: [
 		'Spelled.store.project.WindowsResources'
@@ -23,6 +23,18 @@ Ext.define('Spelled.view.project.settings.Windows' ,{
 							labelWidth: 130
 						},
 						items: [
+							{
+								xtype: 'textfield',
+								name: 'packageDisplayName',
+								fieldLabel: 'Package display name',
+								anchor: '100%'
+							},
+							{
+								xtype: 'textfield',
+								name: 'displayName',
+								fieldLabel: 'Display name',
+								anchor: '100%'
+							},
 							{
 								xtype: 'textfield',
 								name: 'publisher',
