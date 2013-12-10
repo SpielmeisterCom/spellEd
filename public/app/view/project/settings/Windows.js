@@ -56,7 +56,7 @@ Ext.define('Spelled.view.project.settings.Windows' ,{
 							{
 								xtype: "colorfield",
 								allowBlank: true,
-								value: "000",
+								value: "000000",
 								name: 'backgroundColor',
 								fieldLabel: 'Background color',
 								anchor: '100%'
