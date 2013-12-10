@@ -34,6 +34,38 @@ Ext.define('Spelled.view.project.settings.Windows' ,{
 								name: 'publisherDisplayName',
 								fieldLabel: 'Publisher display name',
 								anchor: '100%'
+							},
+							{
+								xtype: 'combobox',
+								store: {
+									fields: ['name'],
+									data : [
+										{"name":"light"},
+										{"name":"dark"}
+									]
+								},
+								forceSelection: true,
+								queryMode: 'local',
+								value: "dark",
+								displayField: 'name',
+								valueField: 'name',
+								name: 'foregroundText',
+								fieldLabel: 'Foreground text color',
+								anchor: '100%'
+							},
+							{
+								xtype: "colorfield",
+								allowBlank: true,
+								value: "000",
+								name: 'backgroundColor',
+								fieldLabel: 'Background color',
+								anchor: '100%'
+							},
+							{
+								xtype: 'textfield',
+								name: 'description',
+								fieldLabel: 'Description',
+								anchor: '100%'
 							}
 						]
 					}
