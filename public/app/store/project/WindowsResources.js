@@ -14,7 +14,7 @@ Ext.define(
 					description: '',
 					width: 150,
 					height: 150,
-					path: 'resources/windows/logo.png'
+					path: 'resources/winstore/logo.png'
 				}
 			},
 			{
@@ -25,7 +25,7 @@ Ext.define(
 					description: '',
 					width: 30,
 					height: 30,
-					path: 'resources/windows/smallLogo.png'
+					path: 'resources/winstore/smallLogo.png'
 				}
 			},
 			{
@@ -36,7 +36,7 @@ Ext.define(
 					description: '',
 					width: 50,
 					height: 50,
-					path: 'resources/windows/storeLogo.png'
+					path: 'resources/winstore/storeLogo.png'
 				}
 			},
 			{
@@ -47,7 +47,7 @@ Ext.define(
 					description: '',
 					width: 620,
 					height: 300,
-					path: 'resources/windows/splash.png'
+					path: 'resources/winstore/splash.png'
 				}
 			},
 			{
@@ -57,7 +57,7 @@ Ext.define(
 					title:          'Personal information exchange',
 					description:    '',
 					type:           'pfx',
-					path:           'resources/windows/certificates/windows-store.pfx'
+					path:           'resources/winstore/certificates/windows-store.pfx'
 				}
 			}
 		]
