@@ -57,14 +57,20 @@ Ext.define('Spelled.view.project.settings.Tizen' ,{
 					items: [
 						{
 							xtype: 'textfield',
-							name: 'deverloperKeyPassword',
-							fieldLabel: 'Developer Key Password',
+							name: 'developerKeyfilePassword',
+							fieldLabel: 'Author Keyfile Password',
 							anchor: '100%'
 						},
 						{
 							xtype: 'textfield',
-							name: 'distributorKeyPassword',
-							fieldLabel: 'Distributor Key Password',
+							name: 'distributor1KeyfilePassword',
+							fieldLabel: 'Distribution 1 Keyfile Password',
+							anchor: '100%'
+						},
+						{
+							xtype: 'textfield',
+							name: 'distributor2KeyfilePassword',
+							fieldLabel: 'Distribution 2 Keyfile Password',
 							anchor: '100%'
 						}
 					]
