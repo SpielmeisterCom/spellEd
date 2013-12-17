@@ -5,7 +5,8 @@ Ext.define('Spelled.view.project.Settings' ,{
 	requires: [
 		'Ext.form.FieldContainer',
 		'Spelled.view.project.settings.Resources',
-		'Spelled.view.project.settings.Windows'
+		'Spelled.view.project.settings.Windows',
+		'Spelled.view.project.settings.WindowsPhone'
 	],
 
     width: 1000,
@@ -46,6 +47,9 @@ Ext.define('Spelled.view.project.Settings' ,{
 						},
 						{
 							xtype: 'projectwindowssettings'
+						},
+						{
+							xtype: 'projectwindowsphonesettings'
 						},
 						{
 							xtype: 'projectplugins'

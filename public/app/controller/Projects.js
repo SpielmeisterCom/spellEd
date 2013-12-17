@@ -51,7 +51,8 @@ Ext.define('Spelled.controller.Projects', {
 	    'project.TizenResources',
 	    'project.AndroidResources',
 	    'project.IOSResources',
-		'project.WindowsResources'
+		'project.WindowsResources',
+		'project.WindowsPhoneResources'
     ],
 
     models: [
@@ -374,6 +375,7 @@ Ext.define('Spelled.controller.Projects', {
 			tizenConf     = window.down( 'projecttizensettings' ),
 			webConf       = window.down( 'projectwebsettings' ),
 			winstoreConf  = window.down( 'projectwindowssettings' ),
+			winphoneConf  = window.down( 'projectwindowsphonesettings' ),
 			pluginConf    = window.down( 'projectplugins' ),
 			project       = generalConfig.getRecord(),
 			generalValues = generalConfig.getValues(),
@@ -385,6 +387,7 @@ Ext.define('Spelled.controller.Projects', {
 		config.tizen   = Ext.clone( tizenConf.getValues() )
 		config.web     = Ext.clone( webConf.getValues() )
 		config.winstore = Ext.clone( winstoreConf.getValues() )
+		config.winphone = Ext.clone( winphoneConf.getValues() )
 		config.plugins = pluginConf.getPluginsConfig()
 
 		config.screenSize = [
@@ -514,6 +517,7 @@ Ext.define('Spelled.controller.Projects', {
 				tizen    = view.down( 'projecttizensettings'),
 				web      = view.down( 'projectwebsettings'),
 				winstore = view.down( 'projectwindowssettings'),
+				winphone = view.down( 'projectwindowsphonesettings'),
 				store    = project.getSupportedLanguages()
 
 			store.sort( 'name' )
@@ -537,6 +541,8 @@ Ext.define('Spelled.controller.Projects', {
 			if( config.web ) web.setValues( config.web )
 
 			if( config.winstore ) winstore.setValues( config.winstore )
+
+			if( config.winphone ) winphone.setValues( config.winphone )
 
 		} else {
 			Spelled.MessageBox.showMissingProjectsError()
