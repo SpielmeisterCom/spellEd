@@ -1,8 +1,8 @@
 {
-	"workspacePath"  : "modules/demo_projects",
-	"spellFlashPath" : "modules/spellFlash",
-	"spellCorePath"  : "modules/spellCore",
-	"spellCliPath"   : "modules/spellcli",
+	"workspacePath"  : "../spellWorkspace",
+	"spellFlashPath" : "../spellFlash",
+	"spellCorePath"  : "../spellCore",
+	"spellCliPath"   : "../spellCli",
 	"jdkPath"        : "",
 	"androidSdkPath" : ""
 }
