@@ -4,9 +4,6 @@
 [submodule "modules/SenchaCmd"]
 	path = modules/SenchaCmd
 	url = ssh://git@stash.spielmeister.com:7999/spelled/senchacmd.git
-[submodule "modules/spellCore"]
-	path = modules/spellCore
-	url = ssh://git@stash.spielmeister.com:7999/spellcore/spellcore.git
 [submodule "modules/node-webkit"]
 	path = modules/node-webkit
 	url = ssh://git@stash.spielmeister.com:7999/spelled/node-webkit.git
@@ -19,12 +16,6 @@
 [submodule "node_modules"]
 	path = node_modules
 	url = ssh://git@stash.spielmeister.com:7999/spellcommon/node_modules.git
-[submodule "modules/spellcli"]
-	path = modules/spellcli
-	url = ssh://git@stash.spielmeister.com:7999/spellcli/spellcli.git
-[submodule "modules/demo_projects"]
-	path = modules/demo_projects
-	url = ssh://git@stash.spielmeister.com:7999/spellcommon/demo_projects.git
 [submodule "modules/acorn"]
 	path = modules/acorn
 	url = ssh://git@stash.spielmeister.com:7999/spelled/acorn.git
