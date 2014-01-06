@@ -2,4 +2,6 @@
 
 
 make nw-debug
+rm -rf node_modules || true
+cp -aR modules/node_modules node_modules
 modules/node-webkit/nw nw-debug-package
