@@ -1,6 +1,3 @@
-[submodule "modules/extjs"]
-	path = modules/extjs
-	url = ssh://git@stash.spielmeister.com:7999/spelled/extjs.git
 [submodule "modules/node-webkit"]
 	path = modules/node-webkit
 	url = ssh://git@stash.spielmeister.com:7999/spelled/node-webkit.git
