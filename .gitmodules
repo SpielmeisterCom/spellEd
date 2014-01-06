@@ -1,17 +1,11 @@
 [submodule "modules/extjs"]
 	path = modules/extjs
 	url = ssh://git@stash.spielmeister.com:7999/spelled/extjs.git
-[submodule "modules/SenchaCmd"]
-	path = modules/SenchaCmd
-	url = ssh://git@stash.spielmeister.com:7999/spelled/senchacmd.git
 [submodule "modules/node-webkit"]
 	path = modules/node-webkit
 	url = ssh://git@stash.spielmeister.com:7999/spelled/node-webkit.git
 [submodule "modules/node_modules"]
 	path = modules/node_modules
-	url = ssh://git@stash.spielmeister.com:7999/spellcommon/node_modules.git
-[submodule "node_modules"]
-	path = node_modules
 	url = ssh://git@stash.spielmeister.com:7999/spellcommon/node_modules.git
 [submodule "modules/acorn"]
 	path = modules/acorn
