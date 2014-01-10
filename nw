@@ -62,7 +62,20 @@ if [ ! -f $DIRNAME/node-webkit/$EXEC ]; then
 	if [ "$PLATFORM" = "linux-x64" ]; then
 		curl -o nw.tar.gz $SRC_URL_LINUX
 		tar -xvzf nw.tar.gz
+		rm nw.tar.gz
 		mv node-webkit-v$CURRENT_VERSION-linux-x64 node-webkit
+
+	elif [ "$PLATFORM" = "win-ia32" ]; then
+		curl -o nw.zip $SRC_URL_WINDOWS
+		unzip nw.zip
+		rm nw.zip
+		mv node-webkit-v$CURRENT_VERSION-win-ia32 node-webkit
+
+	elif [ "$PLATFORM" = "osx-ia32" ]; then
+		curl -o nw.zip $SRC_URL_OSX
+		unzip nw.zip
+		rm nw.zip
+		mv node-webkit-v$CURRENT_VERSION-osx-ia32 node-webkit
 	fi
 
 fi
