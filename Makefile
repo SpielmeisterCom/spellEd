@@ -12,7 +12,7 @@ endif
 
 
 .PHONY: all
-all: clean build/spelledjs/public build/win-ia32 build/osx-ia32 build/linux-x64 build/spelledserver
+all: clean build/spelledjs/public build/spelledserver
 
 .PHONY: clean
 clean:
@@ -153,27 +153,27 @@ build/package.nw: build/nw-package
 build/linux-x64: build/package.nw
 	mkdir -p build/linux-x64 || true
 	./nw --download-only
-	cp -aR node-webkit/linux-x64/nw.pak build/linux-x64
-	cp -aR node-webkit/linux-x64/libffmpegsumo.so build/linux-x64
-	cp -aR node-webkit/linux-x64/nw build/linux-x64/spelled
+	cp -aR node-webkit/nw.pak build/linux-x64
+	cp -aR node-webkit/libffmpegsumo.so build/linux-x64
+	cp -aR node-webkit/nw build/linux-x64/spelled
 	cp -aR build/package.nw build/linux-x64
 	chmod +x build/linux-x64/spelled
 
 build/osx-ia32: build/package.nw
 	mkdir -p build/osx-ia32 || true
 	./nw --download-only
-	cp -aR node-webkit/osx-ia32/node-webkit.app/ build/osx-ia32/spellEd.app
+	cp -aR node-webkit/node-webkit.app/ build/osx-ia32/spellEd.app
 	cp build/package.nw build/osx-ia32/spellEd.app/Contents/Resources/app.nw
 
 build/win-ia32: build/package.nw
 	mkdir -p build/win-ia32 || true
 	./nw --download-only
-	cp -aR node-webkit/win-ia32/ffmpegsumo.dll build/win-ia32
-	cp -aR node-webkit/win-ia32/libEGL.dll build/win-ia32
-	cp -aR node-webkit/win-ia32/icudt.dll build/win-ia32
-	cp -aR node-webkit/win-ia32/libGLESv2.dll build/win-ia32
-	cp -aR node-webkit/win-ia32/nw.pak build/win-ia32
-	cp -aR node-webkit/win-ia32/nw.exe build/win-ia32/spelled.exe
+	cp -aR node-webkit/ffmpegsumo.dll build/win-ia32
+	cp -aR node-webkit/libEGL.dll build/win-ia32
+	cp -aR node-webkit/icudt.dll build/win-ia32
+	cp -aR node-webkit/libGLESv2.dll build/win-ia32
+	cp -aR node-webkit/nw.pak build/win-ia32
+	cp -aR node-webkit/nw.exe build/win-ia32/spelled.exe
 
 	cp -aR build/package.nw build/win-ia32
 
