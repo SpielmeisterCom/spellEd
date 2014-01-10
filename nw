@@ -73,9 +73,9 @@ if [ ! -f $DIRNAME/node-webkit/$EXEC ]; then
 
 	elif [ "$PLATFORM" = "osx-ia32" ]; then
 		curl -o nw.zip $SRC_URL_OSX
-		unzip nw.zip
+		mkdir node-webkit
+		unzip nw.zip -d node-webkit
 		rm nw.zip
-		mv node-webkit-v$CURRENT_VERSION-osx-ia32 node-webkit
 	fi
 
 fi
