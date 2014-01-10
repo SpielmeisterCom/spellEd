@@ -60,6 +60,8 @@ if [ -f $DIRNAME/node-webkit/VERSION ]; then
 		echo Deleting node-webkit
 		rm -rf node-webkit
 	fi
+else
+	rm -rf node-webkit
 fi
 
 if [ ! -f $DIRNAME/node-webkit/$EXEC ]; then
