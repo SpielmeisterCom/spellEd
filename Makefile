@@ -18,7 +18,6 @@ all: clean build/spelledjs/public build/spelledserver
 clean:
 	# cleaning up and creating directory tree
 	rm -Rf build public/build || true
-	rm -Rf node-webkit || true
 
 .PHONY: refresh 
 refresh:
