@@ -79,6 +79,7 @@ if [ ! -f $DIRNAME/node-webkit/$EXEC ]; then
 		curl -o nw.zip $SRC_URL_WINDOWS
 		mkdir node-webkit
 		unzip nw.zip -d node-webkit
+		chmod +x node-webkit/*
 		rm nw.zip
 
 	elif [ "$PLATFORM" = "osx-ia32" ]; then
