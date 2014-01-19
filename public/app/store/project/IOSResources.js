@@ -13,7 +13,7 @@ Ext.define(
 				description:		'',
 				width:				57,
 				height:				57,
-				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon57.png'
+				path:				'resources/ios/Icon.png'
 			}
 		}, {
 			name: 'app-icon-60',
@@ -23,7 +23,7 @@ Ext.define(
 				description:		'',
 				width:				60,
 				height:				60,
-				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon60.png'
+				path:				'resources/ios/Icon-60.png'
 			}
 		}, {
 			name: 'app-icon-72',
@@ -33,7 +33,7 @@ Ext.define(
 				description:		'',
 				width:				72,
 				height:				72,
-				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon72.png'
+				path:				'resources/ios/Icon-72.png'
 			}
 		}, {
 			name: 'app-icon-76',
@@ -43,7 +43,7 @@ Ext.define(
 				description:		'',
 				width:				76,
 				height:				76,
-				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon76.png'
+				path:				'resources/ios/Icon-76.png'
 			}
 		}, {
 			name: 'app-icon-114',
@@ -53,7 +53,7 @@ Ext.define(
 				description:		'',
 				width:				114,
 				height:				114,
-				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon114.png'
+				path:				'resources/ios/Icon@2x.png'
 			}
 		}, {
 			name: 'app-icon-120',
@@ -63,7 +63,7 @@ Ext.define(
 				description:		'',
 				width:				120,
 				height:				120,
-				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon120.png'
+				path:				'resources/ios/Icon-60@2x.png'
 			}
 		}, {
 			name: 'app-icon-144',
@@ -73,7 +73,7 @@ Ext.define(
 				description:		'',
 				width:				144,
 				height:				144,
-				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon144.png'
+				path:				'resources/ios/Icon-72@2x.png'
 			}
 		}, {
 			name: 'app-icon-120',
@@ -83,7 +83,7 @@ Ext.define(
 				description:		'',
 				width:				152,
 				height:				152,
-				path:				'resources/ios/Images.xcassets/AppIcon.appiconset/icon152.png'
+				path:				'resources/ios/Icon-76@2x.png'
 			}
 		}, {
 			name: 'launchimage',
