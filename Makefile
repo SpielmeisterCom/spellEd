@@ -1,8 +1,8 @@
 UNAME_S := $(shell uname -s)
 CWD=$(shell pwd)
 SENCHA=sencha
-NODE=NODE_PATH=modules/node_modules node
-ADDON=$(CWD)/modules/node_modules/codemirror/addon/
+NODE=node
+ADDON=$(CWD)/node_modules/codemirror/addon/
 
 ifeq ($(UNAME_S),Darwin)
 SED = sed -i "" -e
@@ -31,7 +31,7 @@ theme:
 	$(SENCHA) -cwd public/packages/spelled-theme package build
 	cd $(CWD)
 
-build/spelledserver:
+build/spelledserver: build/spelledjs/public
 	mkdir -p build/spelledserver
 	tail -n+2 server > build/spelledserver/tmp.js
 
@@ -44,6 +44,8 @@ build/spelledserver:
 	rm build/spelledserver/tmp.js
 
 	chmod +x build/spelledserver/spellEdServer.js
+	cp -aR build/spelledjs/public build/spelledserver
+
 
 .PHONY: clean-nw
 clean-nw:
@@ -55,16 +57,16 @@ rebuild-nw: clean-nw build/nw-package build/app.nw
 .PHONY: codemirror
 codemirror:
 	# building codemirror lib
-	mkdir -p modules/node_modules/codemirror/build || true
+	mkdir -p node_modules/codemirror/build || true
 
 	#should use: codemirror --local $(CWD)/node_modules/uglify-js/bin/uglifyjs instead
-	cd modules/node_modules/codemirror && bin/compress codemirror javascript search searchcursor dialog lint javascript-lint matchbrackets closebrackets foldcode foldgutter brace-fold comment comment-fold show-hint tern match-highlighter active-line > build/tmp.js
+	cd node_modules/codemirror && bin/compress codemirror javascript search searchcursor dialog lint javascript-lint matchbrackets closebrackets foldcode foldgutter brace-fold comment comment-fold show-hint tern match-highlighter active-line > build/tmp.js
 
 	cat $(ADDON)dialog/dialog.css \
 $(ADDON)lint/lint.css \
 $(ADDON)hint/show-hint.css \
 $(ADDON)tern/tern.css \
-modules/node_modules/codemirror/lib/codemirror.css > modules/node_modules/codemirror/build/tmp.css
+node_modules/codemirror/lib/codemirror.css > node_modules/codemirror/build/tmp.css
 
 	cat modules/acorn/acorn.js \
 modules/acorn/acorn_loose.js \
@@ -74,15 +76,15 @@ modules/tern/lib/tern.js \
 modules/tern/lib/def.js \
 modules/tern/lib/comment.js \
 modules/tern/lib/infer.js \
-modules/tern/plugin/doc_comment.js > modules/node_modules/codemirror/build/tern.js
+modules/tern/plugin/doc_comment.js > node_modules/codemirror/build/tern.js
 
-	cp -a modules/node_modules/codemirror/build/tmp.js public/lib/codemirror/codemirror.js
-	cp -a modules/node_modules/codemirror/build/tmp.css public/lib/codemirror/codemirror.css
+	cp -a node_modules/codemirror/build/tmp.js public/lib/codemirror/codemirror.js
+	cp -a node_modules/codemirror/build/tmp.css public/lib/codemirror/codemirror.css
 
-	cp -a modules/node_modules/codemirror/build/tern.js public/lib/tern/tern.js
+	cp -a node_modules/codemirror/build/tern.js public/lib/tern/tern.js
 	cp -a modules/tern/defs/ecma5.json public/lib/tern/defs/ecma5.json
 
-	rm -Rf modules/node_modules/codemirror/build || true
+	rm -Rf node_modules/codemirror/build || true
 
 nw-debug:
 	$(NODE) modules/spellCore/tools/n.js -s public/lib -m spellEdDeps \
@@ -143,7 +145,7 @@ build/nw-package: build/spelledjs/public build/spelledjs/public/nwlibs.js
 	cp -aR nw-package/* build/nw-package/
 	mkdir -p build/nw-package/node_modules
 	cp -aR src build/nw-package/
-	cp -aR modules/node_modules build/nw-package/
+	cp -aR node_modules build/nw-package/
 
 build/package.nw: build/nw-package
 	cd build/nw-package && zip -9 -r package.nw *
