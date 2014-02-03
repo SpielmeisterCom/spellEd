@@ -7,3 +7,6 @@
 [submodule "modules/spellCore"]
 	path = modules/spellCore
 	url = ssh://git@stash.spielmeister.com:7999/spellcore/spellcore.git
+[submodule "node_modules"]
+	path = node_modules
+	url = ssh://git@stash.spielmeister.com:7999/spellcommon/node_modules.git
