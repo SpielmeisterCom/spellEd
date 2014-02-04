@@ -9,5 +9,4 @@ fi
 
 PARAMS="-r $WORKSPACE"
 
-export NODE_PATH=modules/node_modules 
 node ./server start-server $PARAMS
