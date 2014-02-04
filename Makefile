@@ -46,6 +46,7 @@ build/spelledserver: build/spelledjs/public
 
 	chmod +x build/spelledserver/spellEdServer.js
 	cp -aR build/spelledjs/public build/spelledserver
+	cp -aR node_modules build/spelledserver
 
 
 .PHONY: clean-nw
