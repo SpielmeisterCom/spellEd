@@ -1,13 +1,13 @@
 define(
 	'server/extDirectApi/getStaticDependencies',
 	[
-		'server/extDirectApi/dependency/createDependencyNode',
-		'server/extDirectApi/dependency/getComponentDependencies',
-		'server/extDirectApi/dependency/getEntityConfigDependencies',
-		'server/extDirectApi/dependency/getModuleDependencies',
-		'server/extDirectApi/dependency/getSceneDependencies',
-		'server/extDirectApi/dependency/getScriptDependencies',
-		'server/extDirectApi/dependency/getSystemDependencies'
+		'spell-shared/dependency/createDependencyNode',
+		'spell-shared/dependency/getComponentDependencies',
+		'spell-shared/dependency/getEntityConfigDependencies',
+		'spell-shared/dependency/getModuleDependencies',
+		'spell-shared/dependency/getSceneDependencies',
+		'spell-shared/dependency/getScriptDependencies',
+		'spell-shared/dependency/getSystemDependencies'
 	],
 	function(
 		createDependencyNode,
