@@ -1,41 +1,204 @@
-Ext.define('Spelled.store.project.Plugins', {
-    extend: 'Ext.data.Store',
+Ext.define(
+	'Spelled.store.project.Plugins',
+	{
+		extend: 'Ext.data.Store',
 
-	fields: ['name', 'fields'],
+		fields: [ 'name', 'pluginId', 'fields', 'getValues', 'setValues' ],
 
-	data : [{
-		name: 'Gameclosure',
-		fields: [
+		data : [
 			{
-				xtype: 'textfield',
-				fieldLabel: 'Option1',
-				name: 'option1',
-				value: 'Default1'
+				pluginId: 'admob',
+				name: 'AdMob',
+				getValues: function() {
+					var values = {}
+					values.active = this.down( 'checkbox[name="active"]' ).getValue()
+
+					this.down( 'tabpanel' ).items.each(
+						function( panel ) {
+							panel.items.each(
+								function( field ) {
+									if( !Ext.isObject( values[ field.name ] ) ) {
+										values[ field.name ] = {}
+									}
+
+									values[ field.name ][ panel.configId ] = field.getValue()
+								}
+							)
+						}
+					)
+
+					return values
+				},
+				setValues: function( values ) {
+					this.down( 'checkbox[name="active"]' ).setValue( values.active )
+
+					if( !Ext.isObject( values ) ) return
+
+					this.down( 'tabpanel' ).items.each(
+						function( panel ) {
+							panel.items.each(
+								function( field ) {
+									var tmp = values[ field.name ]
+
+									if( Ext.isObject( tmp ) ) field.setValue( tmp[ panel.configId ] )
+								}
+							)
+						}
+					)
+				},
+				fields: [
+					{
+						xtype: 'tabpanel',
+						items: [
+							{
+								title: 'Debug',
+								configId: 'debug',
+								items: [
+									{
+										xtype: 'textfield',
+										fieldLabel: 'Android AdMob Publisher Id',
+										name: 'androidAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPad AdMob Publisher Id',
+										name: 'iPadAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPhone AdMob Publisher Id',
+										name: 'iPhoneAdMobPublisherId',
+										value: ''
+									}
+								]
+							},
+							{
+								title: 'Release',
+								configId: 'release',
+								items: [
+									{
+										xtype: 'textfield',
+										fieldLabel: 'Android AdMob Publisher Id',
+										name: 'androidAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPad AdMob Publisher Id',
+										name: 'iPadAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPhone AdMob Publisher Id',
+										name: 'iPhoneAdMobPublisherId',
+										value: ''
+									}
+								]
+							}
+						]
+					}
+
+				]
 			},
 			{
-				xtype: 'textfield',
-				fieldLabel: 'Option2',
-				name: 'option2',
-				value: 'Default2'
+				pluginId: 'admobWithChartboost',
+				name: 'AdMob (with Chartboost)',
+				getValues: function() {
+					var values = {}
+					values.active = this.down( 'checkbox[name="active"]' ).getValue()
+
+					this.down( 'tabpanel' ).items.each(
+						function( panel ) {
+							panel.items.each(
+								function( field ) {
+									if( !Ext.isObject( values[ field.name ] ) ) {
+										values[ field.name ] = {}
+									}
+
+									values[ field.name ][ panel.configId ] = field.getValue()
+								}
+							)
+						}
+					)
+
+					return values
+				},
+				setValues: function( values ) {
+					this.down( 'checkbox[name="active"]' ).setValue( values.active )
+
+					if( !Ext.isObject( values ) ) return
+
+					this.down( 'tabpanel' ).items.each(
+						function( panel ) {
+							panel.items.each(
+								function( field ) {
+									var tmp = values[ field.name ]
+
+									if( Ext.isObject( tmp ) ) field.setValue( tmp[ panel.configId ] )
+								}
+							)
+						}
+					)
+				},
+				fields: [
+					{
+						xtype: 'tabpanel',
+						items: [
+							{
+								title: 'Debug',
+								configId: 'debug',
+								items: [
+									{
+										xtype: 'textfield',
+										fieldLabel: 'Android AdMob Publisher Id',
+										name: 'androidAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPad AdMob Publisher Id',
+										name: 'iPadAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPhone AdMob Publisher Id',
+										name: 'iPhoneAdMobPublisherIdDebug',
+										value: ''
+									}
+								]
+							},
+							{
+								title: 'Release',
+								configId: 'release',
+								items: [
+									{
+										xtype: 'textfield',
+										fieldLabel: 'Android AdMob Publisher Id',
+										name: 'androidAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPad AdMob Publisher Id',
+										name: 'iPadAdMobPublisherId',
+										value: ''
+									},
+									{
+										xtype: 'textfield',
+										fieldLabel: 'iPhone AdMob Publisher Id',
+										name: 'iPhoneAdMobPublisherIdDebug',
+										value: ''
+									}
+								]
+							}
+						]
+					}
+				]
 			}
 		]
-	},
-		{
-			name: 'Ejecta',
-			fields: [
-				{
-					xtype: 'textfield',
-					fieldLabel: 'Option3',
-					name: 'option3',
-					value: 'Default3'
-				},
-				{
-					xtype: 'textfield',
-					fieldLabel: 'Option4',
-					name: 'option4',
-					value: 'Default4'
-				}
-			]
-		}
-	]
-});
+	}
+);

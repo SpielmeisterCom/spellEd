@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.project.settings.Web' ,{
-    extend: 'Ext.form.Panel',
+    extend: 'Spelled.view.project.settings.Form',
     alias: 'widget.projectwebsettings',
 
     title : 'Web',

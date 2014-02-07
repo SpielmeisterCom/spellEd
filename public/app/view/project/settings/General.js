@@ -1,5 +1,5 @@
 Ext.define('Spelled.view.project.settings.General' ,{
-    extend: 'Ext.form.Panel',
+    extend: 'Spelled.view.project.settings.Form',
     alias: 'widget.projectgeneralsettings',
 
     title : 'General',
@@ -59,13 +59,20 @@ Ext.define('Spelled.view.project.settings.General' ,{
 					anchor: '100%'
 				},
 				{
+					xtype: 'textfield',
+					name: 'version',
+					fieldLabel: 'Version',
+					anchor: '100%'
+				},
+				{
 					xtype: 'combo',
 					queryMode: 'local',
 					store: {
 						fields: ['name'],
 						data : [
 							{ "name":"fit"},
-							{ "name":"fixed"}
+							{ "name":"fixed"},
+							{ "name":"fill"}
 						]
 					},
 					name: 'screenMode',

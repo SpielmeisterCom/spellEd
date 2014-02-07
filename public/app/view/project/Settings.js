@@ -3,11 +3,14 @@ Ext.define('Spelled.view.project.Settings' ,{
     alias: 'widget.projectsettings',
 
 	requires: [
-		'Ext.form.FieldContainer'
+		'Ext.form.FieldContainer',
+		'Spelled.view.project.settings.Resources',
+		'Spelled.view.project.settings.Windows',
+		'Spelled.view.project.settings.WindowsPhone'
 	],
 
-    width: 500,
-    height: 500,
+    width: 1000,
+    height: 700,
 	layout: 'fit',
 
     title : 'Project settings',
@@ -43,6 +46,12 @@ Ext.define('Spelled.view.project.Settings' ,{
 							xtype: 'projectwebsettings'
 						},
 						{
+							xtype: 'projectwindowssettings'
+						},
+						{
+							xtype: 'projectwindowsphonesettings'
+						},
+						{
 							xtype: 'projectplugins'
 						}
 					]
@@ -55,7 +64,7 @@ Ext.define('Spelled.view.project.Settings' ,{
 
 	buttons: [
 		{
-			text: "Set",
+			text: "Save",
 			action: "setProjectSettings",
 			formBind: true
 		},

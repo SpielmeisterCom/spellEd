@@ -1,5 +1,4 @@
 #!/bin/sh
 
-
 make nw-debug
-modules/node-webkit/nw nw-debug-package
+./nw nw-debug-package

@@ -1,2 +1,12 @@
 #!/bin/sh
-modules/nodejs/node ./server start-server
+PARAMS=""
+WORKSPACE=$1
+
+if [ -z "$WORKSPACE" ]; then
+	echo Usage: $0 workspacePath
+	exit 1
+fi
+
+PARAMS="-r $WORKSPACE"
+
+node ./server start-server $PARAMS

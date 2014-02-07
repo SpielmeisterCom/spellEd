@@ -1,8 +1,9 @@
 UNAME_S := $(shell uname -s)
 CWD=$(shell pwd)
-SENCHA=$(CWD)/modules/SenchaCmd/sencha
-NODE=$(CWD)/modules/nodejs/node
+SENCHA=sencha
+NODE=node
 ADDON=$(CWD)/node_modules/codemirror/addon/
+N=node modules/spellCli/tools/n.js
 
 ifeq ($(UNAME_S),Darwin)
 SED = sed -i "" -e
@@ -12,7 +13,7 @@ endif
 
 
 .PHONY: all
-all: clean build/spelledjs/public build/win-ia32 build/osx-ia32 build/linux-x64 build/spelledserver
+all: clean build/spelledjs/public build/spelledserver
 
 .PHONY: clean
 clean:
@@ -31,19 +32,22 @@ theme:
 	$(SENCHA) -cwd public/packages/spelled-theme package build
 	cd $(CWD)
 
-build/spelledserver:
+build/spelledserver: build/spelledjs/public
 	mkdir -p build/spelledserver
 	tail -n+2 server > build/spelledserver/tmp.js
 
 	echo >> build/spelledserver/tmp.js
 
-	$(NODE) modules/spellCore/tools/n.js -s src -m server/spellEdServer \
+	$(N) -s src -m server/spellEdServer \
 -i "connect,http,querystring,formidable,fs,underscore,path,child_process,commander,pathUtil,wrench" >> build/spelledserver/tmp.js
 
-	$(NODE) modules/spellCore/tools/n.js mangle build/spelledserver/tmp.js -a > build/spelledserver/spellEdServer.js
+	$(N) mangle build/spelledserver/tmp.js -a > build/spelledserver/spellEdServer.js
 	rm build/spelledserver/tmp.js
 
 	chmod +x build/spelledserver/spellEdServer.js
+	cp -aR build/spelledjs/public build/spelledserver
+	cp -aR node_modules build/spelledserver
+
 
 .PHONY: clean-nw
 clean-nw:
@@ -85,29 +89,29 @@ modules/tern/plugin/doc_comment.js > node_modules/codemirror/build/tern.js
 	rm -Rf node_modules/codemirror/build || true
 
 nw-debug:
-	$(NODE) modules/spellCore/tools/n.js -s public/lib -m spellEdDeps \
+	$(N) -s public/lib -m spellEdDeps \
 -i "underscore,require,module,exports" > public/libs.js
-	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "amd-helper,path,http,fs,child_process,underscore,pathUtil,wrench" > public/nwlibs.js
+	$(N) -s src -m webKit/createExtDirectApi -i "path,http,fs,child_process,underscore,pathUtil,wrench" > public/nwlibs.js
 
 	mkdir -p public/lib || true
 
 build/libs.js:
-	$(NODE) modules/spellCore/tools/n.js -s public/lib -m spellEdDeps \
+	$(N) -s public/lib -m spellEdDeps \
 -i "underscore,require,module,exports" >> build/libs.js
 
 build/nwlibs.js:
-	$(NODE) modules/spellCore/tools/n.js -s src -m webKit/createExtDirectApi -i "amd-helper,path,http,fs,child_process,underscore,pathUtil,wrench" >> build/nwlibs.js
+	$(N) -s src -m webKit/createExtDirectApi -i "path,http,fs,child_process,underscore,pathUtil,wrench" >> build/nwlibs.js
 
 build/spelledjs/public/nwlibs.js: build/nwlibs.js
-	$(NODE) modules/spellCore/tools/n.js mangle build/nwlibs.js -a > build/spelledjs/public/nwlibs.js
+	$(N) mangle build/nwlibs.js -a > build/spelledjs/public/nwlibs.js
 
 build/spelledjs/public/libs.js: build/libs.js
 	# minify concatenated libs.js
-	$(NODE) modules/spellCore/tools/n.js mangle build/libs.js -a > build/spelledjs/public/libs.js
+	$(N) mangle build/libs.js -a > build/spelledjs/public/libs.js
 
 build/spelledjs/public/loader.js:
 	# minifing loader
-	$(NODE) modules/spellCore/tools/n.js mangle public/loader.js -a > build/spelledjs/public/loader.js
+	$(N) mangle public/loader.js -a > build/spelledjs/public/loader.js
 
 build/spelledjs/public/all-classes.js:
 	mv public/index.html.orig public/index.html || true
@@ -151,25 +155,28 @@ build/package.nw: build/nw-package
 
 build/linux-x64: build/package.nw
 	mkdir -p build/linux-x64 || true
-	cp -aR modules/node-webkit/linux-x64/nw.pak build/linux-x64
-	cp -aR modules/node-webkit/linux-x64/libffmpegsumo.so build/linux-x64
-	cp -aR modules/node-webkit/linux-x64/nw build/linux-x64/spelled
+	./nw --download-only
+	cp -aR node-webkit/nw.pak build/linux-x64
+	cp -aR node-webkit/libffmpegsumo.so build/linux-x64
+	cp -aR node-webkit/nw build/linux-x64/spelled
 	cp -aR build/package.nw build/linux-x64
 	chmod +x build/linux-x64/spelled
 
 build/osx-ia32: build/package.nw
 	mkdir -p build/osx-ia32 || true
-	cp -aR modules/node-webkit/osx-ia32/node-webkit.app/ build/osx-ia32/spellEd.app
+	./nw --download-only
+	cp -aR node-webkit/node-webkit.app/ build/osx-ia32/spellEd.app
 	cp build/package.nw build/osx-ia32/spellEd.app/Contents/Resources/app.nw
 
 build/win-ia32: build/package.nw
 	mkdir -p build/win-ia32 || true
-	cp -aR modules/node-webkit/win-ia32/ffmpegsumo.dll build/win-ia32
-	cp -aR modules/node-webkit/win-ia32/libEGL.dll build/win-ia32
-	cp -aR modules/node-webkit/win-ia32/icudt.dll build/win-ia32
-	cp -aR modules/node-webkit/win-ia32/libGLESv2.dll build/win-ia32
-	cp -aR modules/node-webkit/win-ia32/nw.pak build/win-ia32
-	cp -aR modules/node-webkit/win-ia32/nw.exe build/win-ia32/spelled.exe
+	./nw --download-only
+	cp -aR node-webkit/ffmpegsumo.dll build/win-ia32
+	cp -aR node-webkit/libEGL.dll build/win-ia32
+	cp -aR node-webkit/icudt.dll build/win-ia32
+	cp -aR node-webkit/libGLESv2.dll build/win-ia32
+	cp -aR node-webkit/nw.pak build/win-ia32
+	cp -aR node-webkit/nw.exe build/win-ia32/spelled.exe
 
 	cp -aR build/package.nw build/win-ia32
 

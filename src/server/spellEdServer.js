@@ -51,7 +51,7 @@ define(
 				var errors          = [],
 					demo            = command.demo || false,
 					port            = command.port || 3000,
-					projectsPath    = path.resolve( command.projectsRoot || path.resolve( spellPath, config.workspacePath ) ),
+					projectsPath    = path.resolve( command.projectsRoot ),
 					nodeModulesPath = path.resolve( spellPath, 'node_modules' ),
 					spellCorePath   = path.resolve( spellPath, config.spellCorePath ),
 					spellCliPath    = path.resolve( command.spellCliPath || path.join( spellPath, config.spellCliPath, 'spellcli' ) )

@@ -6,6 +6,7 @@ Ext.define('Spelled.controller.Projects', {
 		'Spelled.view.project.Settings',
 		'Spelled.view.project.settings.General',
 		'Spelled.view.project.settings.Language',
+		'Spelled.view.project.settings.TabPanel',
         'Spelled.view.project.settings.Android',
         'Spelled.view.project.settings.iOS',
 		'Spelled.view.project.settings.Tizen',
@@ -14,7 +15,18 @@ Ext.define('Spelled.controller.Projects', {
 		'Spelled.view.project.settings.Plugins',
 		'Spelled.view.project.settings.SupportedLanguageContextMenu',
 
+		'Spelled.view.project.resources.Image',
+		'Spelled.view.project.resources.Certificate',
+		'Spelled.view.project.resources.PrivateKeyFile',
+		'Spelled.view.project.resources.ProvisionFile',
+
 		'Spelled.store.Projects',
+
+		'Spelled.store.project.TizenResources',
+		'Spelled.store.project.AndroidResources',
+		'Spelled.store.project.IOSResources',
+
+
 		'Spelled.store.SupportedOrientations',
 
 		'Spelled.model.Project'
@@ -35,7 +47,12 @@ Ext.define('Spelled.controller.Projects', {
     stores: [
         'Projects',
 	    'SupportedOrientations',
-		'project.Plugins'
+		'project.Plugins',
+	    'project.TizenResources',
+	    'project.AndroidResources',
+	    'project.IOSResources',
+		'project.WindowsResources',
+		'project.WindowsPhoneResources'
     ],
 
     models: [
@@ -188,7 +205,7 @@ Ext.define('Spelled.controller.Projects', {
 
 	fillPluginSettings: function( view, plugin, form ) {
 		var project = this.application.getActiveProject(),
-			name    = plugin.get( 'name' ),
+			name    = plugin.get( 'pluginId' ),
 			config  = project.getPlugin( name )
 
 		form.getForm().setValues( Ext.Object.merge( {}, config, { name: name } ) )
@@ -354,8 +371,11 @@ Ext.define('Spelled.controller.Projects', {
 			generalConfig = window.down( 'projectgeneralsettings' ),
 			languageConf  = window.down( 'projectlanguagesettings' ),
             androidConf   = window.down( 'projectandroidsettings' ),
+            iosConf       = window.down( 'projectiossettings' ),
 			tizenConf     = window.down( 'projecttizensettings' ),
 			webConf       = window.down( 'projectwebsettings' ),
+			winstoreConf  = window.down( 'projectwindowssettings' ),
+			winphoneConf  = window.down( 'projectwindowsphonesettings' ),
 			pluginConf    = window.down( 'projectplugins' ),
 			project       = generalConfig.getRecord(),
 			generalValues = generalConfig.getValues(),
@@ -363,8 +383,11 @@ Ext.define('Spelled.controller.Projects', {
 			config        = {}
 
         config.android = Ext.clone( androidConf.getValues() )
+        config.ios     = Ext.clone( iosConf.getValues() )
 		config.tizen   = Ext.clone( tizenConf.getValues() )
 		config.web     = Ext.clone( webConf.getValues() )
+		config.winstore = Ext.clone( winstoreConf.getValues() )
+		config.winphone = Ext.clone( winphoneConf.getValues() )
 		config.plugins = pluginConf.getPluginsConfig()
 
 		config.screenSize = [
@@ -372,12 +395,20 @@ Ext.define('Spelled.controller.Projects', {
 			parseInt( generalValues.screenSizeY, 10)
 		]
 
-		Ext.copyTo( config, generalValues, 'loadingScene,screenMode,orientation,projectId' )
+		Ext.copyTo( config, generalValues, 'loadingScene,screenMode,orientation,projectId,version' )
 		config.quadTreeSize       = parseInt( generalValues.quadTreeSize, 10 )
 		config.defaultLanguage    = languageValues.defaultLanguage
 
+		//HACK: should be removed after qualityLevels support has been added
+		var projectConfig = project.get( 'config' )
+		if( projectConfig.qualityLevels ) {
+			config.qualityLevels = projectConfig.qualityLevels
+		}
+
 		project.set( 'config', config )
 		project.setDirty()
+
+		project.save()
 
 		window.close()
 	},
@@ -481,9 +512,12 @@ Ext.define('Spelled.controller.Projects', {
 				config   = project.get( 'config' ),
 				general  = view.down( 'projectgeneralsettings' ),
 				language = view.down( 'projectlanguagesettings'),
+                ios      = view.down( 'projectiossettings'),
                 android  = view.down( 'projectandroidsettings'),
 				tizen    = view.down( 'projecttizensettings'),
 				web      = view.down( 'projectwebsettings'),
+				winstore = view.down( 'projectwindowssettings'),
+				winphone = view.down( 'projectwindowsphonesettings'),
 				store    = project.getSupportedLanguages()
 
 			store.sort( 'name' )
@@ -493,16 +527,23 @@ Ext.define('Spelled.controller.Projects', {
 			general.loadRecord( project )
 			language.loadRecord( project )
 
-			general.getForm().setValues( config )
-			language.getForm().setValues( config )
+			general.setValues( config )
+			language.setValues( config )
 
-			if( config.screenSize ) general.getForm().setValues( { screenSizeX: config.screenSize[0], screenSizeY: config.screenSize[1] } )
+			if( config.screenSize ) general.setValues( { screenSizeX: config.screenSize[0], screenSizeY: config.screenSize[1] } )
 
-            if( config.android ) android.getForm().setValues( config.android )
+            if( config.ios ) ios.setValues( config.ios )
 
-			if( config.tizen ) tizen.getForm().setValues( config.tizen )
+            if( config.android ) android.setValues( config.android )
 
-			if( config.web ) web.getForm().setValues( config.web )
+			if( config.tizen ) tizen.setValues( config.tizen )
+
+			if( config.web ) web.setValues( config.web )
+
+			if( config.winstore ) winstore.setValues( config.winstore )
+
+			if( config.winphone ) winphone.setValues( config.winphone )
+
 		} else {
 			Spelled.MessageBox.showMissingProjectsError()
 		}

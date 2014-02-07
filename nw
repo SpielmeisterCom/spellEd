@@ -1,0 +1,98 @@
+#!/bin/sh
+
+CURRENT_VERSION=0.8.4
+SRC_URL_LINUX=http://files:download@files.spielmeister.com/node-webkit/node-webkit-v$CURRENT_VERSION-linux-x64.tar.gz
+SRC_URL_WINDOWS=http://files:download@files.spielmeister.com/node-webkit/node-webkit-v$CURRENT_VERSION-win-ia32.zip
+SRC_URL_OSX=http://files:download@files.spielmeister.com/node-webkit/node-webkit-v$CURRENT_VERSION-osx-ia32.zip
+
+UNAME=$(uname -sm)
+EXEC=nw
+
+if [ "$UNAME" = "Linux x86_64" ]; then
+	PLATFORM="linux-x64"
+
+elif [ "$UNAME" = "Darwin i386" ]; then
+	PLATFORM="osx-ia32"
+	EXEC="node-webkit.app/Contents/MacOS/node-webkit"
+
+elif [ "$UNAME" = "Darwin x86_64" ]; then
+	PLATFORM="osx-ia32"
+	EXEC="node-webkit.app/Contents/MacOS/node-webkit"
+
+elif [ "$UNAME" = "MINGW32_NT-6.2 i686" ]; then
+	PLATFORM="win-ia32"
+	EXEC=nw.exe
+
+elif [ "$UNAME" = "CYGWIN_NT-6.2-WOW64 i686" ]; then
+	PLATFORM="win-ia32"
+	EXEC=nw.exe
+
+elif [ "$UNAME" = "CYGWIN_NT-6.3-WOW64 i686" ]; then
+	PLATFORM="win-ia32"
+	EXEC=nw.exe
+
+elif [ "$UNAME" = "MINGW32_NT-6.1 i686" ]; then
+	PLATFORM="win-ia32"
+	EXEC=nw.exe
+
+elif [ "$UNAME" = "MINGW32_NT-6.0 i686" ]; then
+	PLATFORM="win-ia32"
+	EXEC=nw.exe
+fi
+
+if [ -z $PLATFORM ]; then
+
+	echo Your platform \"$UNAME\" is not supported.
+	exit
+fi
+
+if [ -L $0 ]; then
+	FILE=$(readlink $0)
+else
+	FILE=$0
+fi
+
+DIRNAME=$(dirname $FILE)
+if [ -f $DIRNAME/node-webkit/VERSION ]; then
+	INSTALLED_VERSION=$(cat $DIRNAME/node-webkit/VERSION)
+	if [ "$CURRENT_VERSION" != "$INSTALLED_VERSION" ]; then
+		echo Current version changed to $CURRENT_VERSION
+		echo Deleting node-webkit
+		rm -rf node-webkit
+	fi
+else
+	rm -rf node-webkit
+fi
+
+if [ ! -f $DIRNAME/node-webkit/$EXEC ]; then
+	echo Downloading node-webkit $CURRENT_VERSION...
+
+	rm -rf $DIRNAME/node-webkit || true
+
+	if [ "$PLATFORM" = "linux-x64" ]; then
+		curl -o nw.tar.gz $SRC_URL_LINUX
+		tar -xvzf nw.tar.gz
+		rm nw.tar.gz
+		mv node-webkit-v$CURRENT_VERSION-linux-x64 node-webkit
+
+	elif [ "$PLATFORM" = "win-ia32" ]; then
+		curl -o nw.zip $SRC_URL_WINDOWS
+		mkdir node-webkit
+		unzip nw.zip -d node-webkit
+		chmod +x node-webkit/*
+		rm nw.zip
+
+	elif [ "$PLATFORM" = "osx-ia32" ]; then
+		curl -o nw.zip $SRC_URL_OSX
+		mkdir node-webkit
+		unzip nw.zip -d node-webkit
+		rm nw.zip
+	fi
+
+	echo $CURRENT_VERSION >node-webkit/VERSION
+
+fi
+
+if [ "$1" != "--download-only" ]; then
+	$DIRNAME/node-webkit/$EXEC $*
+fi

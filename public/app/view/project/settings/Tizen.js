@@ -1,41 +1,18 @@
 Ext.define('Spelled.view.project.settings.Tizen' ,{
-    extend: 'Ext.form.Panel',
+    extend: 'Spelled.view.project.settings.TabPanel',
     alias: 'widget.projecttizensettings',
 
     title : 'Tizen',
 
-	getImagePathForImage: function( image ) {
-		var projectName = Spelled.Configuration.getStateProvider().get( 'projectName' ),
-			path        = '/' + projectName + '/resources/tizen/' + image
-
-		return path
-	},
-
 	initComponent: function() {
 
 		Ext.applyIf( this, {
+			items: [
+			{
+				title: 'General',
+				xtype: 'projectsettingsform',
+
 				items: [
-                    {
-                        xtype:'fieldset',
-                        title: 'App Icon',
-                        items: [
-                            {
-                                xtype: 'image',
-                                src: this.getImagePathForImage( 'icon.png' ),
-                                width: 117,
-                                height: 117,
-                                style: 'cursor:pointer',
-                                listeners: {
-                                    click: {
-                                        element: 'el',
-                                        fn: function(){
-                                            window.alert('exchange icon');
-                                        }
-                                    }
-                                }
-                            }
-                        ]
-                    },
 					{
 						xtype:'fieldset',
 						title: 'General',
@@ -51,12 +28,6 @@ Ext.define('Spelled.view.project.settings.Tizen' ,{
 							},
 							{
 								xtype: 'textfield',
-								name: 'version',
-								fieldLabel: 'App version',
-								anchor: '100%'
-							},
-							{
-								xtype: 'textfield',
 								name: 'name',
 								fieldLabel: 'App Name',
 								anchor: '100%'
@@ -68,43 +39,51 @@ Ext.define('Spelled.view.project.settings.Tizen' ,{
 								anchor: '100%'
 							}
 						]
+					}
+				]
+			},
+			{
+				title: 'Signing',
+				configId: 'signing',
+				xtype: 'projectsettingsform',
+
+				items: [
+				{
+					xtype:'fieldset',
+					title: 'Signing options (for release build)',
+					defaults: {
+						labelWidth: 180
 					},
-                    {
-                        xtype:'fieldset',
-                        title: 'Signing options (for release build)',
-                        defaults: {
-                            labelWidth: 130
-                        },
-                        items: [
-                            {
-                                xtype: 'textfield',
-                                name: 'signingKeyStore',
-                                fieldLabel: 'Keystore',
-                                anchor: '100%'
-                            },
-                            {
-                                xtype: 'textfield',
-                                name: 'signingKeyStorePass',
-                                fieldLabel: 'Keystore Password',
-                                anchor: '100%'
-                            },
-                            {
-                                xtype: 'textfield',
-                                name: 'signingKeyAlias',
-                                fieldLabel: 'Key Alias',
-                                anchor: '100%'
-                            },
-                            {
-                                xtype: 'textfield',
-                                name: 'signingKeyPass',
-                                fieldLabel: 'Key Password',
-                                anchor: '100%'
-                            }
-                        ]
-                    }
-                ]
+					items: [
+						{
+							xtype: 'textfield',
+							name: 'developerKeyfilePassword',
+							fieldLabel: 'Author Keyfile Password',
+							anchor: '100%'
+						},
+						{
+							xtype: 'textfield',
+							name: 'distributor1KeyfilePassword',
+							fieldLabel: 'Distribution 1 Keyfile Password',
+							anchor: '100%'
+						},
+						{
+							xtype: 'textfield',
+							name: 'distributor2KeyfilePassword',
+							fieldLabel: 'Distribution 2 Keyfile Password',
+							anchor: '100%'
+						}
+					]
+				}
+				]
+			},
+			{
+				xtype: 'projectresources',
+				storeName: 'project.TizenResources'
 			}
-		)
+		]
+
+		})
 
 		this.callParent( arguments )
 	}
