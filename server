@@ -8,6 +8,9 @@ var requirejs = require( 'requirejs' ),
 
 requirejs.config( {
 	baseUrl: spellPath + '/src',
+	paths: {
+		'spell-shared': spellPath + '/node_modules/spell-shared'
+	},
 	nodeRequire: require
 } )
 
