@@ -396,7 +396,6 @@ Ext.define('Spelled.controller.Projects', {
 		]
 
 		Ext.copyTo( config, generalValues, 'loadingScene,screenMode,orientation,projectId,version' )
-		config.quadTreeSize       = parseInt( generalValues.quadTreeSize, 10 )
 		config.defaultLanguage    = languageValues.defaultLanguage
 
 		//HACK: should be removed after qualityLevels support has been added
