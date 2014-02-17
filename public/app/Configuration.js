@@ -42,14 +42,13 @@ Ext.define( 'Spelled.Configuration', {
 
 	getSpellCliPath: function() {
 		var spellCliPath = Spelled.app.platform.getConfig().spellCliPath + '/spellcli'
-
-		return !this.isInNodeWebkitDevEnvironment() ? spellCliPath : '../../../' + spellCliPath
+		return this.isInNodeWebkitDevEnvironment() ? '../' + spellCliPath : spellCliPath
 	},
 
 	getSpellCorePath: function() {
 		var spellCorePath =  Spelled.app.platform.getConfig().spellCorePath
 
-		return !this.isInNodeWebkitDevEnvironment() ? spellCorePath : '../../../' + spellCorePath
+		return this.isInNodeWebkitDevEnvironment() ? '../' + spellCorePath : spellCorePath
 	},
 
 	getDocumentationServerUrl: function() {
