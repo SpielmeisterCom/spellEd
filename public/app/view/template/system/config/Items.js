@@ -9,11 +9,15 @@ Ext.define('Spelled.view.template.system.config.Items' ,{
 	frame: true,
 	flex: 2,
 
+    overflowY: 'auto',
+    overflowX: 'hidden',
+
 	initComponent: function() {
 		Ext.applyIf( this, {
 			items: [
 				{
 					xtype: 'defaultpropertygrid',
+                    hideHeaders: true,
 					source: this.formatSystemSceneConfig( this.source ),
 					listeners: {
 						propertychange: Ext.bind( this.onPropertyChange, this ),
