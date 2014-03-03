@@ -155,7 +155,7 @@ Ext.define( 'Spelled.controller.NodeWebKit', {
 			path             = require( 'path' ),
 			pathUtil         = require( 'pathUtil' ),
 			execPathDir      = path.dirname( process.execPath ),
-			demoFolderName   = Spelled.Configuration.demoProjectsFolder,
+			demoFolderName   = Spelled.Configuration.getDemoProjectsFolder(),
 			demoProjectsPath = fs.existsSync( path.join( execPathDir, demoFolderName ) )
 				? path.join( execPathDir, demoFolderName )
 				: path.join( execPathDir, '..', demoFolderName )

@@ -56,6 +56,10 @@ Ext.define( 'Spelled.Configuration', {
 		return this.documentationServerURL + this.version + '/'
 	},
 
+	getDemoProjectsFolder     : function() {
+		return Spelled.Configuration.isDevEnvironment() ? '../' + this.demoProjectsFolder : this.demoProjectsFolder
+	},
+
 	appName                : 'SpellJS',
 	configFileName         : 'spellConfig.json',
 	defaultConfigFileName  : 'defaultSpellConfig.json',
