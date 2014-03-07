@@ -55,6 +55,10 @@ Ext.define( 'Spelled.Configuration', {
 		return this.documentationServerURL + this.version + '/'
 	},
 
+	getDemoProjectsFolder     : function() {
+		return Spelled.Configuration.isDevEnvironment() ? '../' + this.demoProjectsFolder : this.demoProjectsFolder
+	},
+
 	appName                : 'SpellJS',
 	configFileName         : 'spellConfig.json',
 	defaultConfigFileName  : 'defaultSpellConfig.json',
@@ -64,7 +68,7 @@ Ext.define( 'Spelled.Configuration', {
 	updateServerUrl        : 'http://backoffice.spielmeister.com/spelljs-desktop-latest-version.json',
 	demoServerHostname     : 'spelled-demo.spelljs.com',
 	demoStagingServer      : 'spelled-demo.spelljs.staging',
-	version                : '0.9.15',
+	version                : '0.9.16',
 	buildNumber	           : '99999',
 	buildTimeStamp	       : '2099-01-01T01:00:00.000+01:00',
 	storageVersion         : 1,
