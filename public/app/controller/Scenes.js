@@ -852,10 +852,13 @@ Ext.define('Spelled.controller.Scenes', {
 
 		defaultSystems.each(
 			function( item ) {
-				var system       = systemStore.getByTemplateId( item.get('systemId') ),
-					systemConfig = { id: system.getFullName(), config: system.getConfigForScene() }
+				var system = systemStore.getByTemplateId( item.get('systemId') )
 
-				systems[ item.get('executionGroupId') ].push( systemConfig )
+                if( system ) {
+                    var	systemConfig = { id: system.getFullName(), config: system.getConfigForScene() }
+
+                    systems[ item.get('executionGroupId') ].push( systemConfig )
+                }
 			}
 		)
 
