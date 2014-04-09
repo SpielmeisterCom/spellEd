@@ -8,6 +8,12 @@ Ext.define('Spelled.view.project.settings.Web' ,{
 
         Ext.applyIf( this, {
                 items: [
+                    {
+                        boxLabel: 'Use CSS (reference) pixels',
+                        xtype: 'checkbox',
+                        inputValue: true,
+                        name: 'cssReferencePixels'
+                    },
 					{
 						boxLabel: 'Generate HTML5 build',
 						xtype: 'checkbox',
