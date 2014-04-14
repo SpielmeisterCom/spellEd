@@ -7,6 +7,20 @@ Ext.define(
 
 		data : [
 			{
+				pluginId: 'iap',
+				name: 'In-App-Purchase',
+				getValues: function() {
+					var values = {}
+					values.active = this.down( 'checkbox[name="active"]' ).getValue()
+
+					return values
+				},
+				setValues: function( values ) {
+					this.down( 'checkbox[name="active"]' ).setValue( values.active )
+				},
+				fields: []
+			},
+			{
 				pluginId: 'ouya',
 				name: 'Ouya',
 				getValues: function() {
