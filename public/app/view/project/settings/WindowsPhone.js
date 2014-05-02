@@ -23,31 +23,18 @@ Ext.define('Spelled.view.project.settings.WindowsPhone' ,{
 							labelWidth: 130
 						},
 						items: [
-
-							{
-								xtype: 'textfield',
-								name: 'displayName',
-								fieldLabel: 'Display name',
-								anchor: '100%'
-							},
-							{
-								xtype: 'textfield',
-								name: 'publisher',
-								fieldLabel: 'Publisher',
-								anchor: '100%'
-							},
-							{
-								xtype: 'textfield',
-								name: 'author',
-								fieldLabel: 'Author',
-								anchor: '100%'
-							},
-							{
-								xtype: 'textfield',
-								name: 'description',
-								fieldLabel: 'Description',
-								anchor: '100%'
-							}
+                            {
+                                xtype: 'textfield',
+                                name: 'PhoneProductId',
+                                fieldLabel: 'PhoneProductId',
+                                anchor: '100%'
+                            },
+                            {
+                                xtype: 'textfield',
+                                name: 'PhonePublisherId',
+                                fieldLabel: 'PhonePublisherId',
+                                anchor: '100%'
+                            }
 						]
 					}
 				]
