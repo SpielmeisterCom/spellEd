@@ -19,6 +19,17 @@ Ext.define( 'Spelled.Converter' ,{
 		return parts.join( '.' )
 	},
 
+	getQualityFilePath: function( filePath, qualityLevel ) {
+		var parts = filePath.split( '.' )
+
+		var extension = parts.pop()
+
+		parts.push( qualityLevel )
+		parts.push( extension )
+
+		return parts.join( '.' )
+	},
+
 	generateCacheContent: function( item ) {
 		var content = []
 

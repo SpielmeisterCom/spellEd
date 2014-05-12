@@ -144,17 +144,25 @@ Ext.define('Spelled.model.Asset', {
 		return this.getId().replace( ".json", "." + this.getFile().split( "." ).pop() )
 	},
 
-    getFilePath: function( projectName, language ) {
+    getFilePath: function( projectName, language, qualityLevel ) {
 		var filePath = Spelled.Converter.toWorkspaceUrl( projectName + "/library/" + this.get( 'namespace').split( "." ).join( "/" ) + "/" + this.getFile() )
+
+		var newFilePath = filePath
 
 		if( this.get( 'localized' ) && language && language != 'default' ) {
 			var localization = this.get( 'localization'),
 				extension    = localization[ language ]
 
-			return Spelled.Converter.getLocalizedFilePath( filePath, extension, language )
+			newFilePath = Spelled.Converter.getLocalizedFilePath( filePath, extension, language )
 		} else {
-			return filePath
+			newFilePath = filePath
 		}
+
+		if( qualityLevel && this.get( 'qualityLevels' ) ) {
+			newFilePath = Spelled.Converter.getQualityFilePath( filePath, qualityLevel )
+		}
+
+		return newFilePath
     },
 
     toSpellEngineMessageFormat: function() {

@@ -609,7 +609,7 @@ Ext.define('Spelled.controller.Assets', {
 			View           = this.getAssetInspectorConfigView(),
 			view           = new View(),
 			project        = this.application.getActiveProject(),
-			src            = asset.getFilePath( project.get('name'), project.getDefaultLanguageKey() )
+			src            = asset.getFilePath( project.get('name'), project.getDefaultLanguageKey(), project.getDefaultQualityLevel() )
 
 		view.loadRecord( asset )
 

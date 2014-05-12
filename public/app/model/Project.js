@@ -49,6 +49,13 @@ Ext.define('Spelled.model.Project', {
 		return this.get( 'config' ).defaultLanguage
 	},
 
+	getDefaultQualityLevel: function() {
+		var qualityLevels    = this.get( 'config' ).qualityLevels
+			hasQualityLevels = qualityLevels && Ext.isObject( qualityLevels ) && Ext.Object.getKeys( qualityLevels ).length > 0
+
+		return hasQualityLevels ? 1 : null
+	},
+
 	unDirty:function() {
 		this.dirty = false
 		this.getScenes().each( function( scene ){ scene.unDirty() } )
