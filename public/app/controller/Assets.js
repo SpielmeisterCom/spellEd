@@ -383,7 +383,8 @@ Ext.define('Spelled.controller.Assets', {
 	fieldRenderHelper: function( type, fieldSet, asset ) {
 		if( asset && asset.isReadonly() ) return
 
-		var localized = asset && asset.get( 'localized' )
+		var localized    = asset && asset.get( 'localized'),
+			qualityLevel = asset && asset.get( 'qualityLevels' )
 
 		switch( type ) {
 			case this.TYPE_ANIMATION:
