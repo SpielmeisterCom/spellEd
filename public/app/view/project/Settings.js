@@ -5,6 +5,7 @@ Ext.define('Spelled.view.project.Settings' ,{
 	requires: [
 		'Ext.form.FieldContainer',
 		'Spelled.view.project.settings.Resources',
+		'Spelled.view.project.settings.QualityLevels',
 		'Spelled.view.project.settings.Windows',
 		'Spelled.view.project.settings.WindowsPhone'
 	],
@@ -33,6 +34,9 @@ Ext.define('Spelled.view.project.Settings' ,{
 						{
 							xtype: 'projectlanguagesettings'
 						},
+	                    {
+		                    xtype: 'projectqualitysettings'
+	                    },
                         {
                             xtype: 'projectandroidsettings'
                         },

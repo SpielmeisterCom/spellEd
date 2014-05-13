@@ -56,6 +56,31 @@ Ext.define('Spelled.model.Project', {
 		return hasQualityLevels ? 1 : null
 	},
 
+	getQualityLevelsStore: function() {
+		var qualityLevels = this.get( 'config' ).qualityLevels
+
+		var store = Ext.create( 'Ext.data.ArrayStore',{
+				fields: [
+					'name',
+					'level'
+				]
+			}
+		)
+
+		var tmpData= []
+
+		Ext.Object.each(
+			qualityLevels,
+			function( key, value ) {
+				tmpData.push( [ key, value ] )
+			}
+		)
+
+		store.add( tmpData )
+
+		return store
+	},
+
 	unDirty:function() {
 		this.dirty = false
 		this.getScenes().each( function( scene ){ scene.unDirty() } )

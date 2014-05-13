@@ -14,6 +14,7 @@ Ext.define('Spelled.controller.Projects', {
 		'Spelled.view.project.settings.Web',
 		'Spelled.view.project.settings.Plugins',
 		'Spelled.view.project.settings.SupportedLanguageContextMenu',
+		'Spelled.view.project.settings.QualityLevelsContextMenu',
 
 		'Spelled.view.project.resources.Image',
 		'Spelled.view.project.resources.Certificate',
@@ -41,7 +42,8 @@ Ext.define('Spelled.controller.Projects', {
 		'project.settings.AddLanguage',
 		'project.settings.Web',
 		'project.settings.Plugins',
-		'project.settings.SupportedLanguageContextMenu'
+		'project.settings.SupportedLanguageContextMenu',
+	    'project.settings.QualityLevelsContextMenu'
     ],
 
     stores: [
@@ -108,6 +110,18 @@ Ext.define('Spelled.controller.Projects', {
 				showContextMenu: this.showSupportedLanguageContextMenu,
 				showAddLanguage: this.showAddLanguageHandler
 			},
+	        'qualitylevelscontextmenu [action="remove"]': {
+		        click: this.removeQualityLevel
+	        },
+	        'projectqualitysettings grid[name="qualityLevels"]': {
+		        itemcontextmenu: this.showQualityLevelsContextMenu,
+		        itemmouseenter: Ext.bind( this.application.showGridActionColumn, this.application ),
+		        itemmouseleave: this.application.hideActions
+	        },
+	        projectqualitysettings: {
+		        addQualityLevel: this.addQualityLevel,
+		        showContextMenu: this.showQualityLevelsContextMenu
+	        },
 			'spelledmenu [action="showLoadProject"]': {
 				click: this.showLoadProject
 			},
@@ -366,10 +380,29 @@ Ext.define('Spelled.controller.Projects', {
 		window.close()
 	},
 
+	removeQualityLevel: function( button ) {
+		var view     = button.up( 'menu' ),
+			qualityLevels = view.ownerView
+
+		qualityLevels.store.remove( qualityLevels )
+	},
+
+	showQualityLevelsContextMenu: function( grid, record, cell, idx, e ) {
+
+		this.application.fireEvent( 'showcontextmenu', this.getProjectSettingsQualityLevelsContextMenuView(), e, record )
+	},
+
+	addQualityLevel: function( button ) {
+		var grid = button.down( 'grid' )
+
+		grid.getStore().add( { name: 'Name', level: 99 } )
+	},
+
 	setProjectSettings: function( button ) {
 		var window        = button.up( 'window' ),
 			generalConfig = window.down( 'projectgeneralsettings' ),
 			languageConf  = window.down( 'projectlanguagesettings' ),
+			qualityConf   = window.down( 'projectqualitysettings' ),
             androidConf   = window.down( 'projectandroidsettings' ),
             iosConf       = window.down( 'projectiossettings' ),
 			tizenConf     = window.down( 'projecttizensettings' ),
@@ -396,13 +429,9 @@ Ext.define('Spelled.controller.Projects', {
 		]
 
 		Ext.copyTo( config, generalValues, 'loadingScene,screenMode,orientation,projectId,version' )
-		config.defaultLanguage    = languageValues.defaultLanguage
+		config.defaultLanguage = languageValues.defaultLanguage
 
-		//HACK: should be removed after qualityLevels support has been added
-		var projectConfig = project.get( 'config' )
-		if( projectConfig.qualityLevels ) {
-			config.qualityLevels = projectConfig.qualityLevels
-		}
+		config.qualityLevels = qualityConf.getTransformedQualityData()
 
 		project.set( 'config', config )
 		project.setDirty()
@@ -511,6 +540,7 @@ Ext.define('Spelled.controller.Projects', {
 				config   = project.get( 'config' ),
 				general  = view.down( 'projectgeneralsettings' ),
 				language = view.down( 'projectlanguagesettings'),
+				quality  = view.down( 'projectqualitysettings'),
                 ios      = view.down( 'projectiossettings'),
                 android  = view.down( 'projectandroidsettings'),
 				tizen    = view.down( 'projecttizensettings'),
@@ -522,6 +552,8 @@ Ext.define('Spelled.controller.Projects', {
 			store.sort( 'name' )
 			language.down( 'combo[name="defaultLanguage"]' ).bindStore( store )
 			language.down( 'grid[name="supportedLanguages"]' ).reconfigure( store )
+
+			quality.down( 'grid[name="qualityLevels"]' ).reconfigure( project.getQualityLevelsStore() )
 
 			general.loadRecord( project )
 			language.loadRecord( project )
