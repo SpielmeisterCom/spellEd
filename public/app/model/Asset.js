@@ -159,7 +159,7 @@ Ext.define('Spelled.model.Asset', {
 		}
 
 		if( qualityLevel && this.get( 'qualityLevels' ) ) {
-			newFilePath = Spelled.Converter.getQualityFilePath( filePath, qualityLevel )
+			newFilePath = Spelled.Converter.getQualityFilePath( newFilePath, qualityLevel )
 		}
 
 		return newFilePath

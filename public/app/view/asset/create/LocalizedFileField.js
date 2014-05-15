@@ -40,7 +40,7 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
 
 					qualityLevels.each(
 						function( qualityLevel ) {
-							this.createAssetFileFieldTab( qualityTabPanel, qualityLevel.get( 'name' ), qualityLevel.get( 'name' ) )
+							this.createAssetFileFieldTab( qualityTabPanel, qualityLevel.get( 'name' ), qualityLevel.get( 'name' ), [ tab.key, qualityLevel.get( 'level' ) ].join( '.' ) )
 						},
 						this
 					)
@@ -75,15 +75,17 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
 		if( tabPanel.up( 'form' ).getRecord() ) tabPanel.setActiveTab( 0 )
 	},
 
-	createAssetFileFieldTab: function( panel, name, id ) {
-		var fileField = { xtype: 'assetfilefield', name: id	},
+	createAssetFileFieldTab: function( panel, name, id, assetFieldId ) {
+		assetFieldId = ( assetFieldId ) ? assetFieldId : id
+
+		var fileField = { xtype: 'assetfilefield', name: assetFieldId },
 			items     = []
 
 		if( this.fileFields && Ext.isArray( this.fileFields ) ) {
 			Ext.each(
 				this.fileFields,
 				function( item ) {
-					item.name = id
+					item.name = assetFieldId
 					items.push( item )
 				}
 			)
@@ -112,15 +114,18 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
 			this.fireEvent( 'qualitychange', cmp, newValue )
 		} else {
 			this.fireEvent( 'localizechange', cmp, newValue )
-			this.fireEvent( 'qualitychange', cmp, cmp.down( 'checkbox[name="qualityLevel"]').getValue() )
+			this.fireEvent( 'qualitychange', cmp, cmp.down( 'checkbox[name="qualityLevels"]').getValue() )
 		}
 	},
 
 	updatePreview: function( tabPanel, newCard ) {
 		var form        = tabPanel.up( 'form' ),
 			asset       = form.getRecord(),
-			languageTab = form.down( 'tabpanel[name="localization"]').getActiveTab(),
-			language    = languageTab.key,
+			languageTab = form.down( 'tabpanel[name="localization"]').getActiveTab()
+
+		if( !languageTab ) return
+
+		var	language    = languageTab.key,
 			qualityLevelTabPanel = languageTab.down( 'tabpanel[name="qualityLevels"]'),
 			activeTab   = languageTab,
 			qualityLevel
@@ -151,7 +156,7 @@ Ext.define('Spelled.view.asset.create.LocalizedFileField', {
 				{
 					xtype: 'checkbox',
 					fieldLabel: 'Quality Levels',
-					name: 'qualityLevel',
+					name: 'qualityLevels',
 					listeners: {
 						change: Ext.bind( me.fireChangeEvent, me, [true], true )
 					}

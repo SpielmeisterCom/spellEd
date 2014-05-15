@@ -752,7 +752,8 @@ Ext.define('Spelled.controller.Assets', {
 			file      = fileField.fileRawInput,
 			name      = asset.get( 'name' ),
 			localized = asset.get( 'localized'),
-			isSound   = asset.isSound
+			isSound   = asset.isSound,
+			hasQualityLevel = asset.get( 'qualityLevels')
 
 		// Closure to capture the file information.
 		reader.onload = (function(theFile) {
@@ -760,8 +761,10 @@ Ext.define('Spelled.controller.Assets', {
 				var result    = e.target.result,
 					extension = theFile.type.split( "/").pop()
 
-				if( localized ) {
-					var language      = fileField.getName(),
+				if( localized || hasQualityLevel ) {
+					var parts         = fileField.getName().split( '.' ),
+						language      = parts[ 0 ],
+						qualityLevel  = parts[ 1 ],
 						localizations = asset.get( 'localization' )
 
 					if( Ext.isObject( localizations ) && !isSound ) {
@@ -771,6 +774,9 @@ Ext.define('Spelled.controller.Assets', {
 					asset.setLocalizedFileInfo( extension, language )
 					extension = Spelled.Converter.localizeExtension( language, extension )
 
+					if( hasQualityLevel ) {
+						extension = Spelled.Converter.getQualityFilePath( extension, qualityLevel )
+					}
 				} else if( !isSound ) {
 					asset.removeResource()
 					asset.setFile( [ name , extension ].join( '.' ) )
@@ -841,7 +847,6 @@ Ext.define('Spelled.controller.Assets', {
 		var project = this.application.getActiveProject(),
 			src     = asset.getFilePath( project.get('name'), language, project.getQualityLevel( qualityLevel ) )
 
-console.log( language + " + " + qualityLevel + " => " + src )
 		container.load( src )
 	},
 
