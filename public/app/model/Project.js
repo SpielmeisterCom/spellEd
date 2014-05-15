@@ -56,6 +56,16 @@ Ext.define('Spelled.model.Project', {
 		return hasQualityLevels ? 1 : null
 	},
 
+	getQualityLevel: function( key ) {
+		var qualityLevels = this.get( 'config' ).qualityLevels
+
+		if( key && qualityLevels && Ext.isObject( qualityLevels ) ) {
+			return qualityLevels[ key ]
+		} else {
+			return false
+		}
+	},
+
 	getQualityLevelsStore: function() {
 		var qualityLevels = this.get( 'config' ).qualityLevels
 

@@ -6,8 +6,7 @@ Ext.define('Spelled.view.asset.create.Appearance', {
 
 	requires: [
 		'Ext.form.field.File',
-		'Spelled.view.asset.create.LocalizedFileField',
-		'Spelled.view.asset.edit.QualityLevels'
+		'Spelled.view.asset.create.LocalizedFileField'
 	],
 
 	items: [
@@ -18,9 +17,6 @@ Ext.define('Spelled.view.asset.create.Appearance', {
 		},
 		{
 			xtype: 'localizedfilefield'
-		},
-		{
-			xtype: 'qualitylevels'
 		}
 	]
 });

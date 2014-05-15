@@ -176,6 +176,7 @@ Ext.define('Spelled.controller.Assets', {
 			},
 			'localizedfilefield': {
 				localizechange: this.addLocalizationFileFields,
+				qualitychange: this.addQualityFileFields,
 				updatepreview: this.updateLocalizationPreview
 			}
         })
@@ -423,6 +424,14 @@ Ext.define('Spelled.controller.Assets', {
 			localized = !!localized
 
 		panel.createLanguageTabs( localized, project.getSupportedLanguages() )
+	},
+
+	addQualityFileFields: function( cmp, hasQualityLevel ) {
+		var panel           = cmp.down( 'localizedfilefield'),
+			project         = this.application.getActiveProject(),
+			hasQualityLevel = !!hasQualityLevel
+
+		panel.createQualityTabs( hasQualityLevel, project.getQualityLevelsStore() )
 	},
 
 	addInputMapForm: function( fieldSet, asset ) {
@@ -828,10 +837,11 @@ Ext.define('Spelled.controller.Assets', {
 		this.application.fireEvent( 'selectnamespacefrombutton', view, button )
     },
 
-	updateLocalizationPreview: function( container, asset, language ) {
+	updateLocalizationPreview: function( container, asset, language, qualityLevel ) {
 		var project = this.application.getActiveProject(),
-			src     = asset.getFilePath( project.get('name'), language )
+			src     = asset.getFilePath( project.get('name'), language, project.getQualityLevel( qualityLevel ) )
 
+console.log( language + " + " + qualityLevel + " => " + src )
 		container.load( src )
 	},
 
