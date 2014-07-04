@@ -15,6 +15,9 @@
 
 Point your browser to http://127.0.0.1:3000
 
+## Debugging the standalone (node-webkit) version
+* Just run `./debug_nw`
+
 ## Create a spell workspace with demo projects
 
 * `mkdir spellWorkspace`
