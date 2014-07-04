@@ -1,9 +1,9 @@
 #!/bin/sh
 
 CURRENT_VERSION=0.8.4
-SRC_URL_LINUX=http://files:download@files.spielmeister.com/node-webkit/node-webkit-v$CURRENT_VERSION-linux-x64.tar.gz
-SRC_URL_WINDOWS=http://files:download@files.spielmeister.com/node-webkit/node-webkit-v$CURRENT_VERSION-win-ia32.zip
-SRC_URL_OSX=http://files:download@files.spielmeister.com/node-webkit/node-webkit-v$CURRENT_VERSION-osx-ia32.zip
+SRC_URL_LINUX=https://s3.amazonaws.com/node-webkit/v$CURRENT_VERSION/node-webkit-v$CURRENT_VERSION-linux-x64.tar.gz
+SRC_URL_WINDOWS=https://s3.amazonaws.com/node-webkit/v$CURRENT_VERSION/node-webkit-v$CURRENT_VERSION-win-ia32.zip
+SRC_URL_OSX=https://s3.amazonaws.com/node-webkit/v$CURRENT_VERSION/node-webkit-v$CURRENT_VERSION-osx-ia32.zip
 
 UNAME=$(uname -sm)
 EXEC=nw
