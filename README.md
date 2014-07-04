@@ -10,6 +10,7 @@
 * `cd spellEd`
 * `git submodule init`
 * `git submodule update`
+* adjust paths in spellConfig.json if needed
 * `./start_dev_spelledserver $PATH_TO_YOUR_SPELL_WORKSPACE`
 
 Point your browser to http://127.0.0.1:3000
