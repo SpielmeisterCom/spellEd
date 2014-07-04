@@ -1,12 +1,12 @@
 [submodule "modules/acorn"]
 	path = modules/acorn
-	url = ssh://git@stash.spielmeister.com:7999/spelled/acorn.git
+	url = https://github.com/Spielmeister/acorn.git
 [submodule "modules/tern"]
 	path = modules/tern
-	url = ssh://git@stash.spielmeister.com:7999/spelled/tern.git
+	url = https://github.com/Spielmeister/tern.git
 [submodule "node_modules"]
 	path = node_modules
-	url = ssh://git@stash.spielmeister.com:7999/spellcommon/node_modules.git
+	url = https://github.com/Spielmeister/node_modules.git
 [submodule "modules/spellCli"]
 	path = modules/spellCli
-	url = ssh://git@stash.spielmeister.com:7999/spellcli/spellcli.git
+	url = https://github.com/Spielmeister/spellCli.git
