@@ -9,4 +9,4 @@ fi
 
 PARAMS="-r $WORKSPACE"
 
-node ./server start-server $PARAMS
+nodejs ./server start-server $PARAMS
